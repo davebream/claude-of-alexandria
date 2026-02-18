@@ -65,7 +65,7 @@ If a skill cannot demonstrate that it prevents a documented failure, it does not
 
 ## Current Collection
 
-The library presently contains **three skills**. Rome was not catalogued in a day, but we are making progress.
+The library presently contains **three skills**, two production and one in development. Rome was not catalogued in a day, but we are making progress.
 
 ### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/) — Production
 
@@ -78,7 +78,7 @@ Divides biblical books into coherent teaching units — sermon series, small gro
 
 Coverage: all 66 canonical books. 33 test scenarios. Full RED/GREEN verification.
 
-### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/) — In Development
+### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/) — Production
 
 Tells you whether your proposed passage actually holds together as a discourse unit, or whether you've accidentally cut mid-argument:
 
@@ -86,7 +86,7 @@ Tells you whether your proposed passage actually holds together as a discourse u
 - Returns a verdict: VALID, EXTEND, CONTRACT, or ADJUST, with the evidence behind it.
 - If the passage is too short to preach, recommends the smallest coherent unit that works.
 
-SKILL.md complete. RED phase baselines documented. GREEN verification pending.
+5 test scenarios. Full RED/GREEN verification. Resists memory-based validation of famous passages.
 
 ### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/) — In Development
 
@@ -180,5 +180,5 @@ The library welcomes contributions from those who respect the methodology. See [
 </p>
 
 <p align="center">
-  <sub>Contains 3 skills (1 production, 2 in development) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
+  <sub>Contains 3 skills (2 production, 1 in development) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
 </p>
