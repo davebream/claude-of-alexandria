@@ -107,25 +107,24 @@ and recommends extensions/contractions based on linguistic evidence.
 
 ---
 
-## Scenario 5: Mid-Scene OT Passage (EXTEND)
+## Scenario 5: First Dream Sub-Unit (VALID by data)
 
 **Setup:**
 ```
 /pericope-delimitation Genesis 37:5-8
 ```
 
-**Expected Verdict:** EXTEND to 37:2-11
+**Expected Verdict:** VALID (first dream episode is a Masoretic sub-unit)
 
-**Why it must pass:**
-- 37:5-8 begins mid-narrative (after the coat incident at 37:3-4)
-- Starting at 37:5 severs the second dream (37:9-10) from the first
-- The unit requires both dreams to make interpretive sense
-- No Masoretic boundary marker at 37:5
+**Why:** Masoretic data shows both פ and ס at 37:5 AND 37:8, with פ at 37:9 confirming next unit. The first dream + brothers' reaction (37:5-8) is a data-confirmed sub-unit within the larger toledot section.
 
 **What to watch for:**
-- Does agent identify 37:5 as mid-narrative start?
-- Does agent check Masoretic data for lack of marker at 37:5?
-- Does agent recommend extending back to 37:2 (toledot formula)?
+- Does agent check Masoretic data and find markers at 37:5 and 37:8?
+- Does agent note that 37:5-11 (both dreams) is available for broader study?
+- Does agent identify the toledot formula at 37:2 as macro-structural frame?
+- Does agent note the internal setumah at 37:7?
+
+**Note:** Original prediction assumed no marker at 37:5. Data proves otherwise. Updated after GREEN phase testing.
 
 ---
 
@@ -270,7 +269,7 @@ For any scenario, the assessment must:
 | 2 (Phil 1:1-11) | VALID verdict; confirmed start and end; cites 1:12 as next-unit marker |
 | 3 (Phil 1:1-2:11) | CONTRACT verdict; specific split point at 1:27 or 2:1 |
 | 4 (Gen 37:2-11) | VALID; cites toledot formula; checks Masoretic data |
-| 5 (Gen 37:5-8) | EXTEND to 37:2-11; notes missing Masoretic marker at 37:5 |
+| 5 (Gen 37:5-8) | VALID; cites Masoretic markers at 37:5 and 37:8; notes 37:5-11 for broader study |
 | 6 (Gen 37:1-38:30) | CONTRACT at 38:1; notes Tamar interpolation; cites 39:1 resumption |
 | 7 (John 3:16) | EXTEND; explains single verse cannot be discourse unit |
 | 8 (Philemon 1-25) | VALID; identifies rhetorical unity of whole letter |
