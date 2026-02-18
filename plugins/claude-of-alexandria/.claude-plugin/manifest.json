@@ -1,0 +1,30 @@
+{
+  "name": "claude-of-alexandria",
+  "version": "0.1.0",
+  "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application",
+  "author": "davebream",
+  "license": "MIT",
+  "skills": [
+    "skills/biblical-segmentation",
+    "skills/exegetical-notes",
+    "skills/pericope-delimitation"
+  ],
+  "keywords": [
+    "biblical-scholarship",
+    "exegesis",
+    "hermeneutics",
+    "theology",
+    "genre-analysis",
+    "biblical-interpretation",
+    "bible-study",
+    "teaching"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davebream/claude-of-alexandria.git"
+  },
+  "homepage": "https://github.com/davebream/claude-of-alexandria#readme",
+  "bugs": {
+    "url": "https://github.com/davebream/claude-of-alexandria/issues"
+  }
+}
