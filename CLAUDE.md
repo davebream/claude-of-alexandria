@@ -117,6 +117,32 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 
 ---
 
+## Changelog
+
+`CHANGELOG.md` lives at the repository root. You will maintain it.
+
+### When to Update
+
+Update `CHANGELOG.md` as part of every release commit (`chore(release): bump version`). Do not defer it. Do not update it separately.
+
+### Format
+
+Follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Entries go under the new version heading, grouped by type:
+
+- **Added** — new features, skills, commands
+- **Changed** — changes to existing behavior
+- **Fixed** — bug fixes
+- **Removed** — removed features
+
+### Rules
+
+- One entry per user-facing change. Internal refactors and test additions do not need entries.
+- Write for users, not for developers. "Added `allowed-tools` to commands so users are not prompted for permissions" — not "feat(commands): allowed-tools".
+- Version heading format: `## [X.Y.Z] - YYYY-MM-DD`
+- Update the version in `marketplace.json` and tag git in the same release commit.
+
+---
+
 ## What Gets Committed
 
 **✅ Commit to Git:**
@@ -124,7 +150,7 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 - All files in `plugins/claude-of-alexandria/skills/` directory
 - Exactly 3 test files per skill in `tests/skills/{skill-name}/`
 - All files in `docs/` directory
-- `README.md` and `CLAUDE.md`
+- `README.md`, `CLAUDE.md`, and `CHANGELOG.md`
 
 **❌ Do not commit:**
 
@@ -165,6 +191,7 @@ claude-of-alexandria/
 │   ├── plans/                    # Implementation plans (YYYY-MM-DD-name.md)
 │   └── reviews/                  # Code and architecture reviews
 ├── CLAUDE.md                     # You are here
+├── CHANGELOG.md                  # Version history (Keep a Changelog format)
 └── README.md                     # Public documentation
 ```
 
