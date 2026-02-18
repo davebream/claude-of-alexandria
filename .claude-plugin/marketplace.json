@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "claude-of-alexandria",
-      "source": "./claude-of-alexandria",
+      "source": "./plugins/claude-of-alexandria",
       "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
       "version": "1.0.0",
       "author": {
