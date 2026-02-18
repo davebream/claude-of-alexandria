@@ -100,10 +100,13 @@ Full RED/GREEN verification. Runs pericope check before generating notes — if 
 
 ## Installation
 
-### From Claude Marketplace
+### From Claude Code Marketplace
 
-```bash
-claude marketplace install davebream/claude-of-alexandria
+In any Claude Code session:
+
+```
+/plugin marketplace add davebream/claude-of-alexandria
+/plugin install claude-of-alexandria@claude-of-alexandria
 ```
 
 That's it. The scrolls are now on your shelf.
@@ -123,10 +126,9 @@ ln -s $(pwd)/plugins/claude-of-alexandria ~/.claude/plugins/claude-of-alexandria
 
 ### Verifying Your Library Card
 
-Restart Claude, then:
+Restart Claude Code, then:
 
-```bash
-# In a Claude session
+```
 /skills
 ```
 
