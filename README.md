@@ -65,7 +65,7 @@ If a skill cannot demonstrate that it prevents a documented failure, it does not
 
 ## Current Collection
 
-The library presently contains **three skills**, two production and one in development. Rome was not catalogued in a day, but we are making progress.
+The library presently contains **three skills**, all production. Rome was not catalogued in a day, but we are making progress.
 
 ### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/) — Production
 
@@ -88,7 +88,7 @@ Tells you whether your proposed passage actually holds together as a discourse u
 
 5 test scenarios. Full RED/GREEN verification. Resists memory-based validation of famous passages.
 
-### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/) — In Development
+### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/) — Production
 
 Produces exegetical notes for sermon or teaching preparation, with the kind of data verification that training memory alone cannot provide:
 
@@ -96,7 +96,7 @@ Produces exegetical notes for sermon or teaching preparation, with the kind of d
 - Parser-verified lexical data. When the skill says χαίρω appears 9 times in Philippians, that number came from a parser, not a guess.
 - 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment. You always know which kind of evidence you're looking at.
 
-SKILL.md complete. RED phase baselines documented. GREEN verification pending.
+Full RED/GREEN verification. Runs pericope check before generating notes — if you hand it a severed passage, it tells you before wasting your time on the analysis.
 
 ## Installation
 
@@ -180,5 +180,5 @@ The library welcomes contributions from those who respect the methodology. See [
 </p>
 
 <p align="center">
-  <sub>Contains 3 skills (2 production, 1 in development) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
+  <sub>Contains 3 skills (all production) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
 </p>
