@@ -1,0 +1,56 @@
+Claude of Alexandria
+Copyright 2026 davebream (https://github.com/davebream/claude-of-alexandria)
+
+This project incorporates data from third-party sources under separate licenses:
+
+-------------------------------------------------------------------------------
+
+LEVINSOHN GREEK NEW TESTAMENT DISCOURSE FEATURES (LGNTDF)
+Source: https://github.com/biblicalhumanities/levinsohn
+License: SIL International Custom License
+
+  Copyright 2016 SIL International
+
+  Permission is granted to use, reproduce, and distribute this data provided
+  that:
+  - Attribution is given: "LGNTDF references marked 'LGNTDF' are from
+    Levinsohn Greek New Testament Discourse Features, Copyright 2016
+    SIL International"
+  - Commercial sale of the LGNTDF data as a standalone product is prohibited
+  - Commercial works in which LGNTDF data constitutes more than 25% of total
+    content require a separate licensing agreement with SIL International
+
+  NOTE: The file reference/levinsohn/README.md previously misidentified this
+  license as CC-BY-SA. The correct license is the SIL International Custom
+  License described above.
+
+-------------------------------------------------------------------------------
+
+SEFARIA MASORETIC PARAGRAPH DATA (Petuchot/Setumot)
+Source: https://github.com/Sefaria/Sefaria-Export
+Underlying text: Westminster Leningrad Codex — Public Domain
+Sefaria metadata: Creative Commons Attribution-ShareAlike (CC BY-SA)
+
+  The Westminster Leningrad Codex text is in the Public Domain.
+  Sefaria's metadata contributions (paragraph structure, connections) are
+  licensed under CC BY-SA. See https://www.sefaria.org/donate for details.
+
+-------------------------------------------------------------------------------
+
+MORPHGNT / SBL GREEK NEW TESTAMENT VOCABULARY DATA
+Source: https://github.com/morphgnt/sblgnt
+License: Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0)
+
+  Copyright MorphGNT Project
+  https://creativecommons.org/licenses/by-sa/3.0/
+
+-------------------------------------------------------------------------------
+
+OPENSCHRIPTURES HEBREW BIBLE MORPHOLOGICAL DATABASE (morphhb)
+Source: https://github.com/openscriptures/morphhb
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+  Copyright Open Scriptures
+  https://creativecommons.org/licenses/by/4.0/
+
+-------------------------------------------------------------------------------
