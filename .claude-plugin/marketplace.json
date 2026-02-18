@@ -2,7 +2,7 @@
   "name": "claude-of-alexandria",
   "owner": {
     "name": "@davebream",
-    "email": "davebream@example.com"
+    "email": "dawid.leszczynski@hey.com"
   },
   "metadata": {
     "description": "AI agent skills for rigorous biblical study built on faithful exegetical principles",
@@ -12,12 +12,16 @@
   "plugins": [
     {
       "name": "claude-of-alexandria",
-      "source": "./plugins/claude-of-alexandria",
+      "source": "./claude-of-alexandria",
       "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
       "version": "0.1.0",
       "author": {
-        "name": "@davebream"
+        "name": "@davebream",
+        "email": "dawid.leszczynski@hey.com"
       },
+      "homepage": "https://github.com/davebream/claude-of-alexandria#readme",
+      "repository": "https://github.com/davebream/claude-of-alexandria",
+      "license": "GPL-3.0",
       "keywords": [
         "biblical-scholarship",
         "exegesis",

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application",
   "author": "davebream",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "skills": [
     "skills/biblical-segmentation",
     "skills/exegetical-notes",

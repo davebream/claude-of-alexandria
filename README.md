@@ -11,7 +11,7 @@
 <p align="center">
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-1%20(biblical--segmentation)-orange" alt="Skills"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-3-orange" alt="Skills"></a>
   <a href="#hermeneutical-framework"><img src="https://img.shields.io/badge/theology-peer--reviewed-purple" alt="Theology"></a>
 </p>
 
