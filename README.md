@@ -31,7 +31,7 @@ The original Library of Alexandria housed roughly 400,000 scrolls and employed a
 
 - **Rigorous biblical scholarship** — Linguistic analysis, historical context, and theological integration. We do not guess.
 - **Theological integrity** — Anti-moralism mandate, Christ-centeredness, and gospel focus. We do not moralize.
-- **Zero recurring costs** — Leverages the internal knowledge of frontier models. We do not charge subscription fees. The ancient library was publicly funded and we respect the tradition.
+- **Zero recurring costs** — Runs on what frontier models already know. We do not charge subscription fees. The ancient library was publicly funded and we respect the tradition.
 - **Skill-based architecture** — Modular, composable, stateless skills. We do not build monoliths. We learned that lesson in 48 BC.
 
 ## "But Surely Modern AI Handles Scripture Well Enough?"
@@ -80,23 +80,23 @@ Coverage: all 66 canonical books. 33 test scenarios. Full RED/GREEN verification
 
 ### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/) — In Development
 
-Assesses whether a proposed passage constitutes a coherent discourse unit for preaching or teaching:
+Tells you whether your proposed passage actually holds together as a discourse unit, or whether you've accidentally cut mid-argument:
 
-- **Data-grounded boundary checks.** Levinsohn discourse features (NT) and Masoretic paragraph markers (OT), not intuition.
-- **Structured verdicts.** VALID, EXTEND, CONTRACT, or ADJUST — with specific evidence for each.
-- **Minimum viable pericope.** If the passage is too short, suggests the smallest coherent unit.
+- Checks boundaries against Levinsohn discourse features (NT) and Masoretic paragraph markers (OT). Not your intuition. Data.
+- Returns a verdict: VALID, EXTEND, CONTRACT, or ADJUST, with the evidence behind it.
+- If the passage is too short to preach, recommends the smallest coherent unit that works.
 
-Status: SKILL.md complete. RED phase baselines documented. GREEN verification pending.
+SKILL.md complete. RED phase baselines documented. GREEN verification pending.
 
 ### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/) — In Development
 
-Produces structured, data-grounded exegetical analysis of a biblical passage for sermon or teaching preparation:
+Produces exegetical notes for sermon or teaching preparation, with the kind of data verification that training memory alone cannot provide:
 
-- **10-section schema.** Literary context through verification — no ad-hoc structure.
-- **Parser-verified lexical data.** Morphological parsing and vocabulary counts from data, not training memory.
-- **4-tier interpretive guardrails.** Linguistic, discourse, scholarly, and agent assessment — each labeled.
+- 10-section schema from literary context through verification. No making it up as you go.
+- Parser-verified lexical data. When the skill says χαίρω appears 9 times in Philippians, that number came from a parser, not a guess.
+- 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment. You always know which kind of evidence you're looking at.
 
-Status: SKILL.md complete. RED phase baselines documented. GREEN verification pending.
+SKILL.md complete. RED phase baselines documented. GREEN verification pending.
 
 ## Installation
 
@@ -158,20 +158,11 @@ These are not suggestions. They are load-bearing walls.
 
 ## Acknowledgments
 
-**Linguistic Foundations:**
+**Linguistic foundations:** Stephen H. Levinsohn (Greek NT discourse analysis) and the Sefaria Project (Masoretic Text paragraph data).
 
-- **Stephen H. Levinsohn** — Greek New Testament discourse analysis
-- **Sefaria Project** — Masoretic Text paragraph data
+**Hermeneutical framework:** Historical-grammatical method, Antiochene School through Protestant Reformers. Boundaries respect discourse structure, or they are not boundaries.
 
-**Hermeneutical Framework:**
-
-- **Historical-Grammatical Method** (Antiochene School → Protestant Reformers → this repository)
-- **Literary Context** — Boundaries must respect discourse structure, not violate it
-
-**Architectural Inspiration:**
-
-- The original Library of Alexandria (destroyed, but the organizational principles endure)
-- The `superpowers` writing-skills methodology (Test-Driven Documentation)
+**Architectural inspiration:** The original Library of Alexandria (destroyed, but the organizational principles endure) and the `superpowers` writing-skills methodology for test-driven documentation.
 
 ## Contributing
 
