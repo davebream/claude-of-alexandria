@@ -25,14 +25,16 @@ Or as we say in the stacks: _structured frameworks that prevent your AI from com
 
 You have entered the library.
 
-The original Library of Alexandria housed roughly 400,000 scrolls and employed a classification system that was, by modern standards, vibes-based. We have improved upon this. Our collection is smaller — three skills, at present — but each scroll has been rigorously tested against the systematic failures of frontier language models, which is more than Zenodotus ever managed.
+The original Library of Alexandria housed — depending on which ancient source you trust — somewhere between 40,000 and 700,000 scrolls, organised by Callimachus' *Pinakes*: the world's first systematic library catalogue. Centuries later, the same city produced Clement of Alexandria, Origen, and the Catechetical School — scholars who brought that same cataloguing rigour to the systematic study of Scripture.
+
+We carry both traditions. Our collection is smaller — three skills, at present — but each has been rigorously tested against the systematic failures of frontier language models. Zenodotus would approve of the methodology, if not the medium.
 
 **Claude of Alexandria** is a [Claude](https://claude.ai/code) plugin providing analytical skills for biblical study and teaching preparation. The system prioritizes:
 
 - **Rigorous biblical scholarship** — Linguistic analysis, historical context, and theological integration. We do not guess.
 - **Theological integrity** — Anti-moralism mandate, Christ-centeredness, and gospel focus. We do not moralize.
 - **Zero recurring costs** — Runs on what frontier models already know. We do not charge subscription fees. The ancient library was publicly funded and we respect the tradition.
-- **Skill-based architecture** — Modular, composable, stateless skills. We do not build monoliths. We learned that lesson in 48 BC.
+- **Skill-based architecture** — Modular, composable, stateless skills. We do not build monoliths. The original library learned that lesson the hard way — repeatedly, across several centuries.
 
 ## "But Surely Modern AI Handles Scripture Well Enough?"
 
@@ -162,9 +164,11 @@ These are not suggestions. They are load-bearing walls.
 
 **Linguistic foundations:** Stephen H. Levinsohn (Greek NT discourse analysis) and the Sefaria Project (Masoretic Text paragraph data).
 
-**Hermeneutical framework:** Historical-grammatical method, Antiochene School through Protestant Reformers. Boundaries respect discourse structure, or they are not boundaries.
+**Hermeneutical framework:** Historical-grammatical method. The Alexandrian school gave us systematic textual criticism — Origen's *Hexapla* set the standard — while the Antiochene school insisted that interpretation stay anchored to the historical sense. The Reformers inherited both traditions. So do we.
 
-**Architectural inspiration:** The original Library of Alexandria (destroyed, but the organizational principles endure) and the `superpowers` writing-skills methodology for test-driven documentation.
+**Namesake:** Clement of Alexandria (c. 150–215 AD), who demonstrated that rigorous scholarship and faithful theology are not in tension. The Catechetical School he led produced Origen, Athanasius, and a tradition of biblical scholarship that endures two millennia later.
+
+**Architectural inspiration:** The Library of Alexandria — which declined gradually across centuries, not in a single dramatic fire — and the `superpowers` writing-skills methodology for test-driven documentation.
 
 ## Contributing
 
@@ -172,13 +176,13 @@ The library welcomes contributions from those who respect the methodology. See [
 
 ## License
 
-[GNU General Public License v3.0](LICENSE) — You are free to use, study, and redistribute this work. Any derivative must remain open under the same terms. The methodology stays free. The Ptolemies would have charged you; we chose a different path.
+[GNU General Public License v3.0](LICENSE) — You are free to use, study, and redistribute this work. Any derivative must remain open under the same terms. The methodology stays free. The Ptolemies funded their library to attract scholars from across the Mediterranean; we share the instinct, if not the budget.
 
 ---
 
 <p align="center">
   <strong>Disclaimer</strong><br>
-  <em>This project is an independent, open-source initiative and is not affiliated with, endorsed by, or sponsored by Anthropic PBC. "Claude" refers to Anthropic's AI assistant, for which this plugin is designed. The original Library of Alexandria is also not a sponsor, being unavailable for comment since approximately 48 BC.</em>
+  <em>This project is an independent, open-source initiative and is not affiliated with, endorsed by, or sponsored by Anthropic PBC. "Claude" refers to Anthropic's AI assistant, for which this plugin is designed. Neither the Library of Alexandria nor the Catechetical School has provided sponsorship, both institutions having been unavailable for comment for some centuries now.</em>
 </p>
 
 <p align="center">
