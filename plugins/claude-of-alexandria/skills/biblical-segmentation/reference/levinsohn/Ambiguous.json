@@ -1,0 +1,2326 @@
+{
+  "feature": "Ambiguous",
+  "description": "Marked but ambiguous constituent order.",
+  "references": [
+    {
+      "verse": "Matt 5:36",
+      "word": "μίαν τρίχα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 5:42",
+      "word": "τὸν θέλοντα ἀπὸ σοῦ δανίσασθαι μὴ ἀποστραφῇς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 6:15",
+      "word": "ὁ πατὴρ ὑμῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 6:19",
+      "word": "σὴς καὶ βρῶσις ἀφανίζει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "ἑνὸς ἀνθέξεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 7:8",
+      "word": "πᾶς γὰρ ὁ αἰτῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 7:8",
+      "word": "ὁ ζητῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 7:8",
+      "word": "τῷ κρούοντι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 7:22",
+      "word": "τῷ σῷ ὀνόματι ἐπροφητεύσαμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 8:16",
+      "word": "πάντας τοὺς κακῶς ἔχοντας ἐθεράπευσεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 9:17",
+      "word": "ἀμφότεροι συντηροῦνται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 9:22",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 10:8",
+      "word": "δωρεὰν ἐλάβετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 12:10",
+      "word": "τοῖς σάββασιν θεραπεῦσαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 13:6",
+      "word": "διὰ τὸ μὴ ἔχειν ῥίζαν ἐξηράνθη",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 14:9",
+      "word": "διὰ τοὺς ὅρκους καὶ τοὺς συνανακειμένους",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 16:21",
+      "word": "τῇ τρίτῃ ἡμέρᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 17:23",
+      "word": "τῇ τρίτῃ ἡμέρᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 18:28",
+      "word": "τι ὀφείλεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 20:19",
+      "word": "τῇ τρίτῃ ἡμέρᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 23:13",
+      "word": "τοὺς εἰσερχομένους ἀφίετε εἰσελθεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 24:13",
+      "word": "οὗτος σωθήσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 25:30",
+      "word": "τὸν ἀχρεῖον δοῦλον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 26:25",
+      "word": "σὺ εἶπας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 26:64",
+      "word": "σὺ εἶπας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 27:4",
+      "word": "σὺ ὄψῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Matt 27:11",
+      "word": "σὺ λέγεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 1:39",
+      "word": "τὰ δαιμόνια ἐκβάλλων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 2:13",
+      "word": "πᾶς ὁ ὄχλος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 2:18",
+      "word": "οἱ μαθηταὶ ἰωάννου καὶ οἱ μαθηταὶ τῶν φαρισαίων νηστεύουσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 3:25",
+      "word": "οἰκία ἐφ’ ἑαυτὴν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 4:6",
+      "word": "διὰ τὸ μὴ ἔχειν ῥίζαν ἐξηράνθη",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 4:7",
+      "word": "καρπὸν οὐκ ἔδωκεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 4:34",
+      "word": "τοῖς ἰδίοις μαθηταῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 4:38",
+      "word": "ἐπὶ τὸ προσκεφάλαιον καθεύδων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 5:30",
+      "word": "ἐξ αὐτοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 5:34",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 6:26",
+      "word": "διὰ τοὺς ὅρκους καὶ τοὺς ἀνακειμένους",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 6:48",
+      "word": "περὶ τετάρτην φυλακὴν τῆς νυκτὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 8:31",
+      "word": "μετὰ τρεῖς ἡμέρας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 9:3",
+      "word": "γναφεὺς ἐπὶ τῆς γῆς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 9:12",
+      "word": "πολλὰ πάθῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 9:31",
+      "word": "μετὰ τρεῖς ἡμέρας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 9:49",
+      "word": "πυρὶ ἁλισθήσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:1",
+      "word": "ὡς εἰώθει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:2",
+      "word": "γυναῖκα ἀπολῦσαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:14",
+      "word": "τῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:14",
+      "word": "τοιούτων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:34",
+      "word": "μετὰ τρεῖς ἡμέρας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 10:52",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 11:3",
+      "word": "ὁ κύριος αὐτοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 11:15",
+      "word": "τὰς τραπέζας τῶν κολλυβιστῶν καὶ τὰς καθέδρας τῶν πωλούντων τὰς περιστερὰς κατέστρεψεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 11:25",
+      "word": "ὁ πατὴρ ὑμῶν ὁ ἐν τοῖς οὐρανοῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 11:32",
+      "word": "ἅπαντες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 12:40",
+      "word": "προφάσει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 13:5",
+      "word": "τις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 13:25",
+      "word": "ἐκ τοῦ οὐρανοῦ πίπτοντες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 13:34",
+      "word": "τῷ θυρωρῷ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:6",
+      "word": "τί αὐτῇ κόπους",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:7",
+      "word": "ὅταν θέλητε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:14",
+      "word": "τὸ πάσχα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:36",
+      "word": "πάντα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:49",
+      "word": "ἐν τῷ ἱερῷ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:67",
+      "word": "καὶ σὺ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Mark 14:69",
+      "word": "οὗτος ἐξ αὐτῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 1:10",
+      "word": "πᾶν τὸ πλῆθος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 1:10",
+      "word": "τοῦ λαοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 2:38",
+      "word": "αὐτῇ τῇ ὥρᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 3:5",
+      "word": "πᾶσα φάραγξ πληρωθήσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 3:5",
+      "word": "πᾶν ὄρος καὶ βουνὸς ταπεινωθήσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 3:8",
+      "word": "πατέρα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 3:17",
+      "word": "τὸ πτύον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 4:20",
+      "word": "πάντων οἱ ὀφθαλμοὶ ἐν τῇ συναγωγῇ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 4:21",
+      "word": "σήμερον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 4:23",
+      "word": "ὅσα ἠκούσαμεν γενόμενα εἰς τὴν καφαρναοὺμ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 4:41",
+      "word": "αὐτὸν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 5:34",
+      "word": "τοὺς υἱοὺς τοῦ νυμφῶνος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:7",
+      "word": "ἐν τῷ σαββάτῳ θεραπεύει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:23",
+      "word": "κατὰ τὰ αὐτὰ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:26",
+      "word": "κατὰ τὰ αὐτὰ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:34",
+      "word": "καὶ ἁμαρτωλοὶ ἁμαρτωλοῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:38",
+      "word": "ᾧ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:38",
+      "word": "μέτρῳ μετρεῖτε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 6:42",
+      "word": "τὴν ἐν τῷ ὀφθαλμῷ σου δοκὸν οὐ βλέπων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 7:42",
+      "word": "ἀμφοτέροις ἐχαρίσατο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 7:47",
+      "word": "ὀλίγον ἀγαπᾷ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 7:50",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 8:13",
+      "word": "ῥίζαν οὐκ ἔχουσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 8:21",
+      "word": "τὸν λόγον τοῦ θεοῦ ἀκούοντες καὶ ποιοῦντες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 8:45",
+      "word": "οἱ ὄχλοι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 8:48",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 9:22",
+      "word": "τῇ τρίτῃ ἡμέρᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 10:6",
+      "word": "ἐκεῖ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 11:10",
+      "word": "πᾶς γὰρ ὁ αἰτῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 11:10",
+      "word": "ὁ ζητῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 11:10",
+      "word": "τῷ κρούοντι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 11:13",
+      "word": "ὁ πατὴρ ὁ ἐξ οὐρανοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 11:52",
+      "word": "τοὺς εἰσερχομένους ἐκωλύσατε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 12:12",
+      "word": "τὸ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 12:12",
+      "word": "ἅγιον πνεῦμα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 12:24",
+      "word": "ὁ θεὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 12:33",
+      "word": "κλέπτης οὐκ ἐγγίζει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 12:33",
+      "word": "σὴς διαφθείρει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 13:31",
+      "word": "ἡρῴδης",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 13:35",
+      "word": "εὐλογημένος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 14:20",
+      "word": "διὰ τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 14:33",
+      "word": "πᾶς ἐξ ὑμῶν ὃς οὐκ ἀποτάσσεται πᾶσιν τοῖς ἑαυτοῦ ὑπάρχουσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 15:17",
+      "word": "λιμῷ ὧδε ἀπόλλυμαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 15:31",
+      "word": "πάντα τὰ ἐμὰ σά",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:1",
+      "word": "ἄνθρωπός τις ἦν πλούσιος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:9",
+      "word": "ἑαυτοῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:10",
+      "word": "καὶ ἐν πολλῷ ἄδικός",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:13",
+      "word": "ἑνὸς ἀνθέξεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:16",
+      "word": "πᾶς εἰς αὐτὴν βιάζεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:17",
+      "word": "τὸν οὐρανὸν καὶ τὴν γῆν παρελθεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 16:26",
+      "word": "πρὸς ἡμᾶς διαπερῶσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 17:22",
+      "word": "μίαν τῶν ἡμερῶν τοῦ υἱοῦ τοῦ ἀνθρώπου ἰδεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:2",
+      "word": "τὸν θεὸν μὴ φοβούμενος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:2",
+      "word": "ἄνθρωπον μὴ ἐντρεπόμενος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:4",
+      "word": "τὸν θεὸν οὐ φοβοῦμαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:4",
+      "word": "ἄνθρωπον ἐντρέπομαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:6",
+      "word": "ὁ κριτὴς τῆς ἀδικίας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:16",
+      "word": "τῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:16",
+      "word": "τοιούτων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:21",
+      "word": "ταῦτα πάντα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:33",
+      "word": "τῇ ἡμέρᾳ τῇ τρίτῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 18:42",
+      "word": "ἡ πίστις σου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 19:8",
+      "word": "τινός τι ἐσυκοφάντησα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 19:27",
+      "word": "τοὺς ἐχθρούς μου τούτους τοὺς μὴ θελήσαντάς με βασιλεῦσαι ἐπ’ αὐτοὺς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 19:31",
+      "word": "ὁ κύριος αὐτοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 19:38",
+      "word": "ἐν οὐρανῷ εἰρήνη",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 20:47",
+      "word": "προφάσει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 21:8",
+      "word": "ὁ καιρὸς ἤγγικεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 21:35",
+      "word": "ὡς παγίς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:11",
+      "word": "τὸ πάσχα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:15",
+      "word": "τοῦτο τὸ πάσχα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:19",
+      "word": "ὑπὲρ ὑμῶν διδόμενον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:20",
+      "word": "ὑπὲρ ὑμῶν ἐκχυννόμενον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:27",
+      "word": "ἐν μέσῳ ὑμῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:31",
+      "word": "ὁ σατανᾶς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:38",
+      "word": "μάχαιραι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:53",
+      "word": "αὕτη",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:59",
+      "word": "καὶ οὗτος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 22:61",
+      "word": "πρὶν ἀλέκτορα φωνῆσαι σήμερον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 23:32",
+      "word": "σὺν αὐτῷ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 24:1",
+      "word": "ὄρθρου βαθέως ἐπὶ τὸ μνῆμα ἦλθον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 24:7",
+      "word": "τῇ τρίτῃ ἡμέρᾳ ἀναστῆναι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Luke 24:39",
+      "word": "σάρκα καὶ ὀστέα οὐκ ἔχει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 2:18",
+      "word": "ταῦτα ποιεῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 2:19",
+      "word": "ἐν τρισὶν ἡμέραις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 2:23",
+      "word": "πολλοὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 2:25",
+      "word": "τις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 2:25",
+      "word": "αὐτὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 3:28",
+      "word": "αὐτοὶ ὑμεῖς μοι μαρτυρεῖτε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 4:35",
+      "word": "ὁ θερισμὸς ἔρχεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 5:27",
+      "word": "κρίσιν ποιεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 5:40",
+      "word": "ζωὴν ἔχητε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 5:45",
+      "word": "ἐγὼ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 6:50",
+      "word": "οὗτός",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 6:52",
+      "word": "ἡμῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 6:54",
+      "word": "ὁ τρώγων μου τὴν σάρκα καὶ πίνων μου τὸ αἷμα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 6:57",
+      "word": "κἀκεῖνος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:2",
+      "word": "πᾶς ὁ λαὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:6",
+      "word": "τῷ δακτύλῳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:24",
+      "word": "ἐγώ εἰμι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:25",
+      "word": "τὴν ἀρχὴν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:28",
+      "word": "ἐγώ εἰμι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:30",
+      "word": "πολλοὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:45",
+      "word": "ἐγὼ δὲ ὅτι τὴν ἀλήθειαν λέγω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 8:58",
+      "word": "πρὶν ἀβραὰμ γενέσθαι ἐγὼ εἰμί",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 9:32",
+      "word": "τυφλοῦ γεγεννημένου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:3",
+      "word": "τὰ ἴδια πρόβατα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:4",
+      "word": "τὰ ἴδια πάντα ἐκβάλῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:5",
+      "word": "ἀλλοτρίῳ δὲ οὐ μὴ ἀκολουθήσουσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:7",
+      "word": "ἐγώ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:14",
+      "word": "ἐγώ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 10:16",
+      "word": "κἀκεῖνα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:19",
+      "word": "πολλοὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:19",
+      "word": "ἐκ τῶν ἰουδαίων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:25",
+      "word": "ἐγώ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:32",
+      "word": "μου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:50",
+      "word": "εἷς ἄνθρωπος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 11:52",
+      "word": "καὶ τὰ τέκνα τοῦ θεοῦ τὰ διεσκορπισμένα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 12:17",
+      "word": "τὸν λάζαρον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 12:35",
+      "word": "ἔτι μικρὸν χρόνον τὸ φῶς ἐν ὑμῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 12:46",
+      "word": "ἐν τῇ σκοτίᾳ μὴ μείνῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 13:35",
+      "word": "ἐν τούτῳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 14:21",
+      "word": "ἐκεῖνός",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 15:5",
+      "word": "οὗτος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 17:8",
+      "word": "παρὰ σοῦ ἐξῆλθον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 19:12",
+      "word": "τοῦτον ἀπολύσῃς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "John 20:9",
+      "word": "ἐκ νεκρῶν ἀναστῆναι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 1:1",
+      "word": "τὸν μὲν πρῶτον λόγον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 1:4",
+      "word": "ἀπὸ ἱεροσολύμων μὴ χωρίζεσθαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 5:15",
+      "word": "κἂν ἡ σκιὰ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 5:42",
+      "word": "ἐν τῷ ἱερῷ καὶ κατ’ οἶκον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 8:26",
+      "word": "ἄγγελος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 8:26",
+      "word": "κυρίου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 9:5",
+      "word": "σὺ διώκεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 9:20",
+      "word": "ἐν ταῖς συναγωγαῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 9:21",
+      "word": "εἰς τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 10:15",
+      "word": "ὁ θεὸς ἐκαθάρισεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 10:15",
+      "word": "σὺ μὴ κοίνου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 10:38",
+      "word": "ὁ θεὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 11:9",
+      "word": "ὁ θεὸς ἐκαθάρισεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 11:9",
+      "word": "σὺ μὴ κοίνου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 11:21",
+      "word": "πολύς τε ἀριθμὸς ὁ πιστεύσας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 12:15",
+      "word": "πρὸς αὐτὴν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 13:18",
+      "word": "ὡς τεσσερακονταετῆ χρόνον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 13:23",
+      "word": "τούτου ὁ θεὸς ἀπὸ τοῦ σπέρματος κατ’ ἐπαγγελίαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 14:1",
+      "word": "κατὰ τὸ αὐτὸ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 16:18",
+      "word": "τῷ πνεύματι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 17:33",
+      "word": "οὕτως",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 18:10",
+      "word": "ἐγώ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 18:17",
+      "word": "οὐδὲν τούτων τῷ γαλλίωνι ἔμελεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 18:18",
+      "word": "τοῖς ἀδελφοῖς ἀποταξάμενος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 19:38",
+      "word": "πρός τινα λόγον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 20:18",
+      "word": "μεθ’ ὑμῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 20:28",
+      "word": "τὸ πνεῦμα τὸ ἅγιον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 20:31",
+      "word": "νύκτα καὶ ἡμέραν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 21:4",
+      "word": "τῷ παύλῳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 21:7",
+      "word": "τὸν πλοῦν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 22:8",
+      "word": "σὺ διώκεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 23:3",
+      "word": "πρὸς αὐτὸν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 23:31",
+      "word": "κατὰ τὸ διατεταγμένον αὐτοῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 23:35",
+      "word": "καὶ οἱ κατήγοροί σου παραγένωνται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 26:20",
+      "word": "τοῖς ἐν δαμασκῷ πρῶτόν τε καὶ ἱεροσολύμοις πᾶσάν τε τὴν χώραν τῆς ἰουδαίας καὶ τοῖς ἔθνεσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 27:19",
+      "word": "αὐτόχειρες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Acts 27:39",
+      "word": "τὴν γῆν οὐκ ἐπεγίνωσκον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 1:18",
+      "word": "τὴν ἀλήθειαν ἐν ἀδικίᾳ κατεχόντων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 1:20",
+      "word": "ἀπὸ κτίσεως κόσμου τοῖς ποιήμασιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 1:27",
+      "word": "ἄρσενες ἐν ἄρσεσιν τὴν ἀσχημοσύνην",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 2:23",
+      "word": "τὸν θεὸν ἀτιμάζεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 2:26",
+      "word": "τὰ δικαιώματα τοῦ νόμου φυλάσσῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 3:7",
+      "word": "ἐν τῷ ἐμῷ ψεύσματι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 3:12",
+      "word": "πάντες ἐξέκλιναν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 3:17",
+      "word": "ὁδὸν εἰρήνης οὐκ ἔγνωσαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 3:21",
+      "word": "χωρὶς νόμου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 3:31",
+      "word": "νόμον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 4:19",
+      "word": "μὴ ἀσθενήσας τῇ πίστει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 5:7",
+      "word": "τάχα τις καὶ τολμᾷ ἀποθανεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 5:17",
+      "word": "τοῦ ἑνὸς παραπτώματι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 7:19",
+      "word": "τοῦτο πράσσω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 8:9",
+      "word": "πνεῦμα θεοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 8:9",
+      "word": "πνεῦμα χριστοῦ οὐκ ἔχει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 8:26",
+      "word": "τὸ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 8:26",
+      "word": "τί προσευξώμεθα καθὸ δεῖ οὐκ οἴδαμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 9:13",
+      "word": "τὸν ἰακὼβ ἠγάπησα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 9:13",
+      "word": "τὸν δὲ ἠσαῦ ἐμίσησα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 9:16",
+      "word": "ἐλεῶντος θεοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 10:10",
+      "word": "καρδίᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 10:10",
+      "word": "στόματι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 10:21",
+      "word": "πρὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 10:21",
+      "word": "τὸν ἰσραὴλ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 11:36",
+      "word": "ἐξ αὐτοῦ καὶ δι’ αὐτοῦ καὶ εἰς αὐτὸν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 12:10",
+      "word": "εἰς ἀλλήλους φιλόστοργοι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 14:3",
+      "word": "ὁ θεὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 14:4",
+      "word": "τῷ ἰδίῳ κυρίῳ στήκει ἢ πίπτει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 14:15",
+      "word": "διὰ βρῶμα ὁ ἀδελφός σου λυπεῖται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:6",
+      "word": "ὁμοθυμαδὸν ἐν ἑνὶ στόματι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:9",
+      "word": "τῷ ὀνόματί σου ψαλῶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:12",
+      "word": "ἔθνη ἐλπιοῦσιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:21",
+      "word": "οἷς οὐκ ἀνηγγέλη περὶ αὐτοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:21",
+      "word": "οἳ οὐκ ἀκηκόασιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rom 15:24",
+      "word": "ἀπὸ μέρους ἐμπλησθῶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 1:19",
+      "word": "τὴν σύνεσιν τῶν συνετῶν ἀθετήσω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 1:28",
+      "word": "τὰ ὄντα καταργήσῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 2:1",
+      "word": "ἦλθον οὐ καθ’ ὑπεροχὴν λόγου ἢ σοφίας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 2:10",
+      "word": "ἡμῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 2:13",
+      "word": "πνευματικοῖς πνευματικὰ συγκρίνοντες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 3:5",
+      "word": "ὁ κύριος ἔδωκεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 3:11",
+      "word": "θεμέλιον γὰρ ἄλλον οὐδεὶς δύναται θεῖναι παρὰ τὸν κείμενον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 3:13",
+      "word": "ἡ γὰρ ἡμέρα δηλώσει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 4:4",
+      "word": "οὐδὲν γὰρ ἐμαυτῷ σύνοιδα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 6:5",
+      "word": "οὕτως",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 6:12",
+      "word": "πάντα μοι ἔξεστιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 7:16",
+      "word": "τὴν γυναῖκα σώσεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 7:17",
+      "word": "οὕτως περιπατείτω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 7:20",
+      "word": "ἐν ταύτῃ μενέτω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 7:36",
+      "word": "ὃ θέλει ποιείτω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 8:11",
+      "word": "χριστὸς ἀπέθανεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 8:13",
+      "word": "βρῶμα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 8:13",
+      "word": "τὸν ἀδελφόν μου σκανδαλίσω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 9:15",
+      "word": "οὐδεὶς κενώσει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 9:20",
+      "word": "ἰουδαίους κερδήσω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 10:9",
+      "word": "ὑπὸ τῶν ὄφεων ἀπώλλυντο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 10:19",
+      "word": "εἰδωλόθυτόν τί",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 10:19",
+      "word": "εἴδωλόν τί",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 11:26",
+      "word": "τὸ ποτήριον πίνητε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 12:2",
+      "word": "πρὸς τὰ εἴδωλα τὰ ἄφωνα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "εἰς ἓν σῶμα ἐβαπτίσθημεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "ἓν πνεῦμα ἐποτίσθημεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 12:29",
+      "word": "πάντες ἀπόστολοι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 14:29",
+      "word": "προφῆται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 15:18",
+      "word": "καὶ οἱ κοιμηθέντες ἐν χριστῷ ἀπώλοντο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 15:21",
+      "word": "δι’ ἀνθρώπου θάνατος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 15:21",
+      "word": "δι’ ἀνθρώπου ἀνάστασις νεκρῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Cor 16:5",
+      "word": "μακεδονίαν γὰρ διέρχομαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 1:9",
+      "word": "ἐν ἑαυτοῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "τι χαρίζεσθε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "ἐγὼ ὃ κεχάρισμαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "τι κεχάρισμαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 4:2",
+      "word": "τῇ φανερώσει τῆς ἀληθείας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 4:6",
+      "word": "ἐκ σκότους φῶς λάμψει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 4:8",
+      "word": "ἐν παντὶ θλιβόμενοι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 5:21",
+      "word": "ὑπὲρ ἡμῶν ἁμαρτίαν ἐποίησεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 6:16",
+      "word": "ἡμεῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 7:2",
+      "word": "οὐδένα ἠδικήσαμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 7:16",
+      "word": "ἐν παντὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 11:6",
+      "word": "ἐν παντὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 11:24",
+      "word": "πεντάκις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 11:25",
+      "word": "τρὶς ἐραβδίσθην",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 11:25",
+      "word": "νυχθήμερον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Cor 13:10",
+      "word": "διὰ τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 2:19",
+      "word": "χριστῷ συνεσταύρωμαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 3:12",
+      "word": "ὁ ποιήσας αὐτὰ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 4:25",
+      "word": "σινᾶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 5:4",
+      "word": "τῆς χάριτος ἐξεπέσατε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 5:16",
+      "word": "ἐπιθυμίαν σαρκὸς οὐ μὴ τελέσητε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 5:24",
+      "word": "τὴν σάρκα ἐσταύρωσαν σὺν τοῖς παθήμασιν καὶ ταῖς ἐπιθυμίαις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 6:7",
+      "word": "θεὸς οὐ μυκτηρίζεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 6:9",
+      "word": "καιρῷ γὰρ ἰδίῳ θερίσομεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 6:10",
+      "word": "καιρὸν ἔχομεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Gal 6:12",
+      "word": "τῷ σταυρῷ τοῦ χριστοῦ μὴ διώκωνται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 3:10",
+      "word": "ἡ πολυποίκιλος σοφία τοῦ θεοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 3:17",
+      "word": "ἐν ἀγάπῃ ἐρριζωμένοι καὶ τεθεμελιωμένοι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 4:19",
+      "word": "ἑαυτοὺς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 4:26",
+      "word": "ὁ ἥλιος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 5:6",
+      "word": "μηδεὶς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Eph 5:33",
+      "word": "τὴν ἑαυτοῦ γυναῖκα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Phil 2:22",
+      "word": "τὴν δὲ δοκιμὴν αὐτοῦ γινώσκετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Phil 3:8",
+      "word": "τὰ πάντα ἐζημιώθην",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 1:7",
+      "word": "πιστὸς ὑπὲρ ὑμῶν διάκονος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 1:16",
+      "word": "εἴτε θρόνοι εἴτε κυριότητες εἴτε ἀρχαὶ εἴτε ἐξουσίαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 2:19",
+      "word": "διὰ τῶν ἁφῶν καὶ συνδέσμων ἐπιχορηγούμενον καὶ συμβιβαζόμενον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 3:13",
+      "word": "πρός τινα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 3:16",
+      "word": "ἐν τῇ χάριτι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Col 4:7",
+      "word": "τὰ κατ’ ἐμὲ πάντα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 2:7",
+      "word": "τροφὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 2:15",
+      "word": "ἡμᾶς ἐκδιωξάντων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 2:15",
+      "word": "θεῷ μὴ ἀρεσκόντων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 2:15",
+      "word": "πᾶσιν ἀνθρώποις ἐναντίων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 2:16",
+      "word": "τοῖς ἔθνεσιν λαλῆσαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 3:6",
+      "word": "ἡμᾶς ἰδεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 4:6",
+      "word": "ἔκδικος κύριος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 5:10",
+      "word": "ἅμα σὺν αὐτῷ ζήσωμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 5:16",
+      "word": "πάντοτε χαίρετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 5:19",
+      "word": "τὸ πνεῦμα μὴ σβέννυτε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 5:20",
+      "word": "προφητείας μὴ ἐξουθενεῖτε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Thess 5:21",
+      "word": "τὸ καλὸν κατέχετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 1:16",
+      "word": "διὰ τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 3:4",
+      "word": "τέκνα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 4:10",
+      "word": "εἰς τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 4:12",
+      "word": "τῆς νεότητος καταφρονείτω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 4:14",
+      "word": "ἐν σοὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 4:16",
+      "word": "τοῦτο γὰρ ποιῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 5:8",
+      "word": "τῶν ἰδίων καὶ μάλιστα οἰκείων οὐ προνοεῖ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 5:8",
+      "word": "τὴν πίστιν ἤρνηται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 5:10",
+      "word": "ἁγίων πόδας ἔνιψεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 5:19",
+      "word": "κατὰ πρεσβυτέρου κατηγορίαν μὴ παραδέχου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 6:2",
+      "word": "ταῦτα δίδασκε καὶ παρακάλει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 6:8",
+      "word": "τούτοις ἀρκεσθησόμεθα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Tim 6:20",
+      "word": "τὴν παραθήκην φύλαξον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 1:13",
+      "word": "παρ’ ἐμοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 2:4",
+      "word": "τῷ στρατολογήσαντι ἀρέσῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 2:18",
+      "word": "περὶ τὴν ἀλήθειαν ἠστόχησαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 4:5",
+      "word": "τὴν διακονίαν σου πληροφόρησον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 4:11",
+      "word": "λουκᾶς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Tim 4:12",
+      "word": "τύχικον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Titus 3:10",
+      "word": "μετὰ μίαν καὶ δευτέραν νουθεσίαν παραιτοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 1:10",
+      "word": "σὺ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 1:10",
+      "word": "κύριε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:8",
+      "word": "πάντα ὑποτεταγμένα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "χάριτι θεοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:10",
+      "word": "πολλοὺς υἱοὺς εἰς δόξαν ἀγαγόντα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:10",
+      "word": "τὸν ἀρχηγὸν τῆς σωτηρίας αὐτῶν διὰ παθημάτων τελειῶσαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:15",
+      "word": "φόβῳ θανάτου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 2:15",
+      "word": "διὰ παντὸς τοῦ ζῆν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 3:3",
+      "word": "ὁ κατασκευάσας αὐτόν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 3:6",
+      "word": "τὴν παρρησίαν καὶ τὸ καύχημα τῆς ἐλπίδος κατάσχωμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 5:14",
+      "word": "διὰ τὴν ἕξιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 6:13",
+      "word": "τῷ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 6:13",
+      "word": "ἀβραὰμ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 6:18",
+      "word": "διὰ δύο πραγμάτων ἀμεταθέτων ἐν οἷς ἀδύνατον ψεύσασθαι τὸν θεόν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 7:4",
+      "word": "δεκάτην",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 7:6",
+      "word": "τὸν ἔχοντα τὰς ἐπαγγελίας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 7:26",
+      "word": "τοιοῦτος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 8:12",
+      "word": "τῶν ἁμαρτιῶν αὐτῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 9:6",
+      "word": "εἰς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 9:6",
+      "word": "τὴν πρώτην σκηνὴν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 9:8",
+      "word": "τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 9:14",
+      "word": "διὰ πνεύματος αἰωνίου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 9:15",
+      "word": "διὰ τοῦτο",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:1",
+      "word": "τοὺς προσερχομένους τελειῶσαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:2",
+      "word": "ἅπαξ κεκαθαρισμένους",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:5",
+      "word": "θυσίαν καὶ προσφορὰν οὐκ ἠθέλησας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:6",
+      "word": "ὁλοκαυτώματα καὶ περὶ ἁμαρτίας οὐκ εὐδόκησας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:9",
+      "word": "τὸ δεύτερον στήσῃ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:29",
+      "word": "τὸ πνεῦμα τῆς χάριτος ἐνυβρίσας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 10:36",
+      "word": "τὸ θέλημα τοῦ θεοῦ ποιήσαντες",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 11:30",
+      "word": "τὰ τείχη ἰεριχὼ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 11:40",
+      "word": "περὶ ἡμῶν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 12:7",
+      "word": "εἰς παιδείαν ὑπομένετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 12:10",
+      "word": "πρὸς ὀλίγας ἡμέρας",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 13:1",
+      "word": "ἡ φιλαδελφία μενέτω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 13:2",
+      "word": "τῆς φιλοξενίας μὴ ἐπιλανθάνεσθε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Heb 13:10",
+      "word": "φαγεῖν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Jas 1:11",
+      "word": "ἐν ταῖς πορείαις αὐτοῦ μαρανθήσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Jas 5:4",
+      "word": "ἀφ’ ὑμῶν κράζει",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Jas 5:8",
+      "word": "ἡ παρουσία τοῦ κυρίου ἤγγικεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 2:15",
+      "word": "οὕτως",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 2:17",
+      "word": "πάντας τιμήσατε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 2:17",
+      "word": "τὴν ἀδελφότητα ἀγαπᾶτε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 2:17",
+      "word": "τὸν θεὸν φοβεῖσθε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 3:9",
+      "word": "εἰς τοῦτο ἐκλήθητε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 3:18",
+      "word": "ἅπαξ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 3:18",
+      "word": "ὑμᾶς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 5:1",
+      "word": "τοῦ χριστοῦ παθημάτων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 5:1",
+      "word": "μελλούσης ἀποκαλύπτεσθαι δόξης",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1Pet 5:5",
+      "word": "ὑπερηφάνοις ἀντιτάσσεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 1:8",
+      "word": "ὑμῖν ὑπάρχοντα καὶ πλεονάζοντα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 1:19",
+      "word": "φωσφόρος",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:2",
+      "word": "πολλοὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:3",
+      "word": "ἐν πλεονεξίᾳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:3",
+      "word": "ἔκπαλαι οὐκ ἀργεῖ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:8",
+      "word": "βλέμματι γὰρ καὶ ἀκοῇ ὁ δίκαιος ἐγκατοικῶν ἐν αὐτοῖς ἡμέραν ἐξ ἡμέρας ψυχὴν δικαίαν ἀνόμοις ἔργοις ἐβασάνιζεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:9",
+      "word": "εὐσεβεῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 2:9",
+      "word": "ἀδίκους",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 3:1",
+      "word": "ταύτην ἤδη",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 3:9",
+      "word": "τινας ἀπολέσθαι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "2Pet 3:11",
+      "word": "τούτων οὕτως πάντων λυομένων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 2:18",
+      "word": "ἐσχάτη ὥρα ἐστίν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 2:19",
+      "word": "ἐξ ἡμῶν ἐξῆλθαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 2:21",
+      "word": "πᾶν ψεῦδος ἐκ τῆς ἀληθείας οὐκ ἔστιν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 2:22",
+      "word": "ἰησοῦς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 3:2",
+      "word": "τέκνα θεοῦ ἐσμεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 3:10",
+      "word": "ἐν τούτῳ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 5:1",
+      "word": "ἐκ τοῦ θεοῦ γεγέννηται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "1John 5:6",
+      "word": "τὸ πνεῦμά",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "3John 1:3",
+      "word": "ἐν ἀληθείᾳ περιπατεῖς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Jude 1:6",
+      "word": "δεσμοῖς ἀϊδίοις ὑπὸ ζόφον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 1:11",
+      "word": "ὃ βλέπεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 2:3",
+      "word": "ὑπομονὴν ἔχεις",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 2:23",
+      "word": "τὰ τέκνα αὐτῆς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 2:25",
+      "word": "ὃ ἔχετε",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 2:27",
+      "word": "τὰ σκεύη τὰ κεραμικὰ συντρίβεται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 2:28",
+      "word": "κἀγὼ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 3:5",
+      "word": "οὕτως",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 3:19",
+      "word": "ὅσους ἐὰν φιλῶ ἐλέγχω καὶ παιδεύω",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 6:6",
+      "word": "τὸ ἔλαιον καὶ τὸν οἶνον",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 6:8",
+      "word": "ὁ ᾅδης",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 8:9",
+      "word": "τὸ τρίτον τῶν πλοίων",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 10:4",
+      "word": "αὐτὰ γράψῃς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 11:2",
+      "word": "τὴν αὐλὴν τὴν ἔξωθεν τοῦ ναοῦ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 11:2",
+      "word": "τὴν πόλιν τὴν ἁγίαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 11:14",
+      "word": "ἡ οὐαὶ ἡ δευτέρα",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 16:20",
+      "word": "πᾶσα νῆσος ἔφυγεν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 16:20",
+      "word": "ὄρη οὐχ εὑρέθησαν",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 17:16",
+      "word": "τὰς σάρκας αὐτῆς φάγονται",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 18:7",
+      "word": "χήρα οὐκ εἰμὶ",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 19:5",
+      "word": "ἀπὸ τοῦ θρόνου",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 21:3",
+      "word": "αὐτὸς ὁ θεὸς",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 21:6",
+      "word": "τῷ διψῶντι",
+      "type": "Ambiguous"
+    },
+    {
+      "verse": "Rev 21:13",
+      "word": "ἀπὸ ἀνατολῆς",
+      "type": "Ambiguous"
+    }
+  ]
+}

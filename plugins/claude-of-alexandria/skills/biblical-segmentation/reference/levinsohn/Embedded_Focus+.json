@@ -1,0 +1,7361 @@
+{
+  "feature": "Embedded Focus+",
+  "description": "A constituent of a phrase or embedded clause preposed for focal prominence.",
+  "references": [
+    {
+      "verse": "Matt 2:7",
+      "word": "φαινομένου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 3:7",
+      "word": "μελλούσης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 3:11",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 4:6",
+      "word": "υἱὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 4:6",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 4:24",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 5:30",
+      "word": "ἡ δεξιά σου χεὶρ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 5:36",
+      "word": "λευκὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 5:36",
+      "word": "ἢ μέλαιναν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 5:40",
+      "word": "τὸν χιτῶνά σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 6:5",
+      "word": "ἐν ταῖς συναγωγαῖς καὶ ἐν ταῖς γωνίαις τῶν πλατειῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 6:23",
+      "word": "πονηρὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 6:23",
+      "word": "σκότος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 6:30",
+      "word": "εἰς κλίβανον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 6:30",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:11",
+      "word": "πονηροὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:11",
+      "word": "δόματα ἀγαθὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:13",
+      "word": "στενῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:17",
+      "word": "σαπρὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:22",
+      "word": "σῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:22",
+      "word": "σῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 7:22",
+      "word": "σῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 8:16",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 8:20",
+      "word": "ποῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 8:22",
+      "word": "ἑαυτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 8:26",
+      "word": "δειλοί",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 9:11",
+      "word": "μετὰ τῶν τελωνῶν καὶ ἁμαρτωλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 9:12",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:11",
+      "word": "ἄξιός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:27",
+      "word": "εἰς τὸ οὖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:28",
+      "word": "τὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:28",
+      "word": "ψυχὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:28",
+      "word": "καὶ ψυχὴν καὶ σῶμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:30",
+      "word": "πᾶσαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 10:40",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:7",
+      "word": "ὑπὸ ἀνέμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:8",
+      "word": "ἐν μαλακοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:8",
+      "word": "τὰ μαλακὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:19",
+      "word": "τελωνῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:19",
+      "word": "καὶ ἁμαρτωλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:21",
+      "word": "ἐν τύρῳ καὶ σιδῶνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:22",
+      "word": "τύρῳ καὶ σιδῶνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:22",
+      "word": "ἢ ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:23",
+      "word": "ἐν σοδόμοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:24",
+      "word": "γῇ σοδόμων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 11:24",
+      "word": "ἢ σοί",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:10",
+      "word": "χεῖρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:10",
+      "word": "ξηράν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:26",
+      "word": "τὸν σατανᾶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:27",
+      "word": "ἐν βεελζεβοὺλ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:31",
+      "word": "τοῦ πνεύματος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:35",
+      "word": "ἀγαθοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:35",
+      "word": "πονηροῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 12:43",
+      "word": "ἀκάθαρτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:2",
+      "word": "εἰς πλοῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:10",
+      "word": "ἐν παραβολαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:13",
+      "word": "ἐν παραβολαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:19",
+      "word": "παρὰ τὴν ὁδὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "ἐπὶ τὰ πετρώδη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "μετὰ χαρᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:22",
+      "word": "εἰς τὰς ἀκάνθας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:23",
+      "word": "ἐπὶ τὴν καλὴν γῆν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:26",
+      "word": "καρπὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:27",
+      "word": "καλὸν σπέρμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:33",
+      "word": "ἀλεύρου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:40",
+      "word": "πυρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 13:55",
+      "word": "τοῦ τέκτονος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 14:26",
+      "word": "ἐπὶ τῆς θαλάσσης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 14:28",
+      "word": "σὺ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 14:35",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 15:3",
+      "word": "καὶ ὑμεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 15:5",
+      "word": "ἐξ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 15:20",
+      "word": "ἀνίπτοις χερσὶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 16:24",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 16:28",
+      "word": "ὧδε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 17:4",
+      "word": "ὧδε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 17:10",
+      "word": "ἠλίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 17:19",
+      "word": "ἡμεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 17:24",
+      "word": "τὰ δίδραχμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:1",
+      "word": "μείζων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:8",
+      "word": "ἡ χείρ σου ἢ ὁ πούς σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:8",
+      "word": "δύο χεῖρας ἢ δύο πόδας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:9",
+      "word": "δύο ὀφθαλμοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:17",
+      "word": "καὶ τῆς ἐκκλησίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:19",
+      "word": "δύο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:19",
+      "word": "ἐξ ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 18:33",
+      "word": "κἀγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 19:6",
+      "word": "ὁ θεὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 19:10",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 19:17",
+      "word": "εἰς τὴν ζωὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 19:21",
+      "word": "τέλειος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 20:22",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 20:23",
+      "word": "ἐμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 20:26",
+      "word": "μέγας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 20:30",
+      "word": "ἰησοῦς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 21:20",
+      "word": "παραχρῆμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 21:21",
+      "word": "τῷ ὄρει τούτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 21:24",
+      "word": "ἐν ποίᾳ ἐξουσίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 21:27",
+      "word": "ἐν ποίᾳ ἐξουσίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 22:43",
+      "word": "ἐν πνεύματι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 22:45",
+      "word": "υἱὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 23:2",
+      "word": "τῆς μωϋσέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 23:24",
+      "word": "τὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 23:24",
+      "word": "κάμηλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 24:32",
+      "word": "τὰ φύλλα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 24:43",
+      "word": "ὁ κλέπτης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 24:44",
+      "word": "ᾗ οὐ δοκεῖτε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 24:46",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 25:16",
+      "word": "τὰ πέντε τάλαντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 25:18",
+      "word": "τὸ ἓν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 25:20",
+      "word": "τὰ πέντε τάλαντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 25:24",
+      "word": "τὸ ἓν τάλαντον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 25:34",
+      "word": "ἡτοιμασμένην ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 26:10",
+      "word": "κόπους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 26:28",
+      "word": "περὶ πολλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 26:34",
+      "word": "ταύτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 26:39",
+      "word": "δυνατόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 27:13",
+      "word": "πόσα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 27:33",
+      "word": "κρανίου τόπος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 27:34",
+      "word": "μετὰ χολῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 27:40",
+      "word": "ἐν τρισὶν ἡμέραις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Matt 27:54",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 1:10",
+      "word": "ὡς περιστερὰν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 1:32",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 1:34",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 1:45",
+      "word": "φανερῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:7",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:17",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:18",
+      "word": "σοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:19",
+      "word": "μετ’",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:21",
+      "word": "ἐπίβλημα ῥάκους ἀγνάφου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:24",
+      "word": "τοῖς σάββασιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 2:26",
+      "word": "σὺν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:1",
+      "word": "ἐξηραμμένην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:3",
+      "word": "τὴν ξηρὰν χεῖρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:6",
+      "word": "μετὰ τῶν ἡρῳδιανῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:7",
+      "word": "πολὺ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:12",
+      "word": "φανερὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:14",
+      "word": "ἀποστόλους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:20",
+      "word": "ἄρτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:22",
+      "word": "ἀπὸ ἱεροσολύμων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:24",
+      "word": "ἐφ’ ἑαυτὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:25",
+      "word": "οἰκία",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:29",
+      "word": "αἰωνίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 3:34",
+      "word": "περὶ αὐτὸν κύκλῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:1",
+      "word": "εἰς πλοῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:13",
+      "word": "πάσας τὰς παραβολὰς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:16",
+      "word": "ἐπὶ τὰ πετρώδη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:18",
+      "word": "εἰς τὰς ἀκάνθας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:19",
+      "word": "περὶ τὰ λοιπὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:20",
+      "word": "ἐπὶ τὴν γῆν τὴν καλὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 4:40",
+      "word": "δειλοί",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 5:30",
+      "word": "δύναμιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:2",
+      "word": "διὰ τῶν χειρῶν αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:5",
+      "word": "ὀλίγοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:21",
+      "word": "δεῖπνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:23",
+      "word": "ὅ τι ἐάν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:31",
+      "word": "φαγεῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:37",
+      "word": "δηναρίων διακοσίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:51",
+      "word": "λίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 6:55",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:2",
+      "word": "κοιναῖς χερσίν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:3",
+      "word": "πυγμῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:11",
+      "word": "ἐξ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:15",
+      "word": "ἔξωθεν τοῦ ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:15",
+      "word": "ἐκ τοῦ ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:18",
+      "word": "ἔξωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 7:20",
+      "word": "ἐκ τοῦ ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 8:19",
+      "word": "τοὺς πέντε ἄρτους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 8:19",
+      "word": "κλασμάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 8:34",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:1",
+      "word": "ὧδε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "ὧδε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "σοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "μωϋσεῖ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "ἠλίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:9",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:10",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:28",
+      "word": "ἡμεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:35",
+      "word": "πρῶτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:37",
+      "word": "ἓν τῶν τοιούτων παιδίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:37",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:38",
+      "word": "ἐν τῷ ὀνόματί σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:41",
+      "word": "χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:43",
+      "word": "τὰς δύο χεῖρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:45",
+      "word": "ὁ πούς σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:45",
+      "word": "τοὺς δύο πόδας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:47",
+      "word": "ὁ ὀφθαλμός σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:47",
+      "word": "μονόφθαλμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:47",
+      "word": "δύο ὀφθαλμοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 9:50",
+      "word": "ἄναλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:8",
+      "word": "μία",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:9",
+      "word": "ὁ θεὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:38",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:38",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:39",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:39",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:40",
+      "word": "ἐμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 10:43",
+      "word": "μέγας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 11:19",
+      "word": "ὀψὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 11:27",
+      "word": "ἐν τῷ ἱερῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 11:29",
+      "word": "ἐν ποίᾳ ἐξουσίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 11:33",
+      "word": "ἐν ποίᾳ ἐξουσίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:1",
+      "word": "ἐν παραβολαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:25",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:34",
+      "word": "νουνεχῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:38",
+      "word": "ἐν στολαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:40",
+      "word": "προφάσει",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 12:40",
+      "word": "μακρὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 13:17",
+      "word": "ἐν γαστρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 13:28",
+      "word": "ἁπαλὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 14:6",
+      "word": "κόπους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 14:29",
+      "word": "καὶ πάντες",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 14:30",
+      "word": "ταύτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 14:30",
+      "word": "δὶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 14:35",
+      "word": "δυνατόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 15:22",
+      "word": "γολγοθᾶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 15:22",
+      "word": "κρανίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 15:40",
+      "word": "ἀπὸ μακρόθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 16:2",
+      "word": "λίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 16:12",
+      "word": "ἑτέρᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Mark 16:18",
+      "word": "θανάσιμόν τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 1:1",
+      "word": "πεπληροφορημένων ἐν ἡμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 1:2",
+      "word": "ἀπ’ ἀρχῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 1:2",
+      "word": "αὐτόπται καὶ ὑπηρέται",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 1:4",
+      "word": "περὶ ὧν κατηχήθης λόγων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 1:74",
+      "word": "ἐκ χειρὸς ἐχθρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 2:35",
+      "word": "ἐκ πολλῶν καρδιῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 2:44",
+      "word": "ἡμέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 3:7",
+      "word": "μελλούσης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 3:18",
+      "word": "πολλὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 3:18",
+      "word": "καὶ ἕτερα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 4:3",
+      "word": "υἱὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 4:9",
+      "word": "υἱὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 4:20",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 4:24",
+      "word": "δεκτός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 4:43",
+      "word": "καὶ ταῖς ἑτέραις πόλεσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:7",
+      "word": "ἑτέρῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:30",
+      "word": "μετὰ τῶν τελωνῶν καὶ ἁμαρτωλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:31",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:34",
+      "word": "μετ’",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:36",
+      "word": "ἐπίβλημα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 5:36",
+      "word": "ἀπὸ ἱματίου καινοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:6",
+      "word": "ἑτέρῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:8",
+      "word": "ξηρὰν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:32",
+      "word": "ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:33",
+      "word": "ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:34",
+      "word": "ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:38",
+      "word": "ᾧ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:38",
+      "word": "μέτρῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:41",
+      "word": "ἰδίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:42",
+      "word": "ἐν τῷ ὀφθαλμῷ σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 6:45",
+      "word": "ἀγαθοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:2",
+      "word": "κακῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:9",
+      "word": "ἀκολουθοῦντι αὐτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:12",
+      "word": "ἱκανὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:24",
+      "word": "ὑπὸ ἀνέμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:25",
+      "word": "ἐν μαλακοῖς ἱματίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:25",
+      "word": "ἐν ἱματισμῷ ἐνδόξῳ καὶ τρυφῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:28",
+      "word": "ἐν γεννητοῖς γυναικῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:32",
+      "word": "ἐν ἀγορᾷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:42",
+      "word": "πλεῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:43",
+      "word": "τὸ πλεῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 7:47",
+      "word": "ὀλίγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:14",
+      "word": "εἰς τὰς ἀκάνθας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:15",
+      "word": "καλῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:16",
+      "word": "λύχνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:21",
+      "word": "τὸν λόγον τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:35",
+      "word": "καθήμενον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 8:43",
+      "word": "ἰατροῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:3",
+      "word": "δύο χιτῶνας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:23",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:27",
+      "word": "αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:48",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:48",
+      "word": "μικρότερος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:49",
+      "word": "ἐν τῷ ὀνόματί σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:56",
+      "word": "ἑτέραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:58",
+      "word": "ποῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 9:60",
+      "word": "ἑαυτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:6",
+      "word": "ἐκεῖ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:12",
+      "word": "σοδόμοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:12",
+      "word": "ἢ τῇ πόλει ἐκείνῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:13",
+      "word": "ἐν τύρῳ καὶ σιδῶνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:13",
+      "word": "ἐν σάκκῳ καὶ σποδῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:14",
+      "word": "τύρῳ καὶ σιδῶνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:14",
+      "word": "ἢ ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:16",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:18",
+      "word": "ὡς ἀστραπὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:24",
+      "word": "ὑμεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:36",
+      "word": "πλησίον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 10:42",
+      "word": "ἀγαθὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:13",
+      "word": "πονηροὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:13",
+      "word": "δόματα ἀγαθὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:17",
+      "word": "ἐφ’ ἑαυτὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:18",
+      "word": "καὶ ὁ σατανᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:19",
+      "word": "ἐν βεελζεβοὺλ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:20",
+      "word": "ἐν δακτύλῳ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:22",
+      "word": "ἰσχυρότερος αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:24",
+      "word": "ἀκάθαρτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:24",
+      "word": "ἀνύδρων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:26",
+      "word": "ἕτερα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:30",
+      "word": "τοῖς νινευίταις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:33",
+      "word": "λύχνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:34",
+      "word": "πονηρὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 11:53",
+      "word": "δεινῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:3",
+      "word": "ἐν τῇ σκοτίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:3",
+      "word": "πρὸς τὸ οὖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:10",
+      "word": "εἰς τὸ ἅγιον πνεῦμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:21",
+      "word": "εἰς θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:26",
+      "word": "ἐλάχιστον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:26",
+      "word": "περὶ τῶν λοιπῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:28",
+      "word": "εἰς κλίβανον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:28",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:38",
+      "word": "ἐν τῇ δευτέρᾳ κἂν ἐν τῇ τρίτῃ φυλακῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:39",
+      "word": "ὁ κλέπτης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:52",
+      "word": "ἐν ἑνὶ οἴκῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 12:57",
+      "word": "καὶ ἀφ’ ἑαυτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:11",
+      "word": "πνεῦμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:11",
+      "word": "ἀσθενείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:21",
+      "word": "ἀλεύρου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:24",
+      "word": "στενῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:25",
+      "word": "ἔξω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 13:33",
+      "word": "σήμερον καὶ αὔριον καὶ τῇ ἐχομένῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:5",
+      "word": "τίνος ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:5",
+      "word": "εἰς φρέαρ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:9",
+      "word": "σὲ καὶ αὐτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:9",
+      "word": "ἔσχατον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:10",
+      "word": "ἔσχατον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:28",
+      "word": "πύργον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:31",
+      "word": "ἑτέρῳ βασιλεῖ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:31",
+      "word": "μετὰ εἴκοσι χιλιάδων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:32",
+      "word": "πόρρω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 14:35",
+      "word": "οὔτε εἰς γῆν οὔτε εἰς κοπρίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 15:8",
+      "word": "δραχμὰς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 15:12",
+      "word": "ἐπιβάλλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 15:30",
+      "word": "σιτευτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:9",
+      "word": "αἰωνίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:10",
+      "word": "ἄδικός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:11",
+      "word": "τῷ ἀδίκῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:17",
+      "word": "τοῦ νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:30",
+      "word": "ἀπὸ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:31",
+      "word": "μωϋσέως καὶ τῶν προφητῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 16:31",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:2",
+      "word": "τῶν μικρῶν τούτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:4",
+      "word": "ἑπτάκις τῆς ἡμέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:4",
+      "word": "ἑπτάκις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:7",
+      "word": "δοῦλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:7",
+      "word": "ἀροτριῶντα ἢ ποιμαίνοντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 17:24",
+      "word": "εἰς τὴν ὑπ’ οὐρανὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 18:1",
+      "word": "πάντοτε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 18:4",
+      "word": "οὐ φοβοῦμαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 18:4",
+      "word": "ἐντρέπομαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 18:6",
+      "word": "ὁ κριτὴς τῆς ἀδικίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 18:24",
+      "word": "περίλυπον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 19:17",
+      "word": "ἐν ἐλαχίστῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 19:24",
+      "word": "τὰς δέκα μνᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 19:37",
+      "word": "ὧν εἶδον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:8",
+      "word": "ἐν ποίᾳ ἐξουσίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:27",
+      "word": "ἀνάστασιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:35",
+      "word": "τοῦ αἰῶνος ἐκείνου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:35",
+      "word": "καὶ τῆς ἀναστάσεως τῆς ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:36",
+      "word": "τῆς ἀναστάσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 20:41",
+      "word": "δαυὶδ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 21:11",
+      "word": "κατὰ τόπους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 21:11",
+      "word": "ἀπ’ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 21:23",
+      "word": "ἐν γαστρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:19",
+      "word": "ὑπὲρ ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:20",
+      "word": "καινὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:20",
+      "word": "ὑπὲρ ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:41",
+      "word": "λίθου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:45",
+      "word": "κοιμωμένους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:50",
+      "word": "τοῦ ἀρχιερέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:61",
+      "word": "ἀλέκτορα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:65",
+      "word": "ἕτερα πολλὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 22:71",
+      "word": "μαρτυρίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:8",
+      "word": "ὑπ’ αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:19",
+      "word": "διὰ στάσιν τινὰ γενομένην ἐν τῇ πόλει καὶ φόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:25",
+      "word": "διὰ στάσιν καὶ φόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:31",
+      "word": "ἐν τῷ ὑγρῷ ξύλῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:32",
+      "word": "ἕτεροι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 23:40",
+      "word": "αὐτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:10",
+      "word": "μαγδαληνὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:14",
+      "word": "τῶν συμβεβηκότων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:38",
+      "word": "τεταραγμένοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:38",
+      "word": "διαλογισμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:42",
+      "word": "ἰχθύος ὀπτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Luke 24:49",
+      "word": "ἐξ ὕψους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 1:15",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 1:27",
+      "word": "ὀπίσω μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 1:31",
+      "word": "ἐν ὕδατι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 1:47",
+      "word": "ἀληθῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 1:48",
+      "word": "φωνῆσαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 2:6",
+      "word": "κατὰ τὸν καθαρισμὸν τῶν ἰουδαίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 2:9",
+      "word": "οἶνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 2:10",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 2:10",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 2:16",
+      "word": "τὰς περιστερὰς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:1",
+      "word": "νικόδημος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:2",
+      "word": "σὺ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:12",
+      "word": "τὰ ἐπίγεια",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:12",
+      "word": "ἐὰν εἴπω ὑμῖν τὰ ἐπουράνια",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:13",
+      "word": "ἐκ τοῦ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:20",
+      "word": "ὁ φαῦλα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:31",
+      "word": "ἄνωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 3:31",
+      "word": "ἐκ τοῦ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:9",
+      "word": "ἰουδαῖος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:9",
+      "word": "παρ’ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:9",
+      "word": "γυναικὸς σαμαρίτιδος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:14",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:18",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:23",
+      "word": "ἀληθινοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:34",
+      "word": "ἐμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:38",
+      "word": "ὑμεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:42",
+      "word": "διὰ τὴν σὴν λαλιὰν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:48",
+      "word": "σημεῖα καὶ τέρατα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 4:52",
+      "word": "κομψότερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:18",
+      "word": "πατέρα ἴδιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:19",
+      "word": "τὸν πατέρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:19",
+      "word": "ἐκεῖνος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:24",
+      "word": "τὸν λόγον μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:29",
+      "word": "τὰ ἀγαθὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:29",
+      "word": "τὰ φαῦλα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:43",
+      "word": "ἄλλος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:47",
+      "word": "ἐκείνου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 5:47",
+      "word": "ἐμοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:12",
+      "word": "περισσεύσαντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:18",
+      "word": "ἀνέμου μεγάλου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:24",
+      "word": "ἰησοῦς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:33",
+      "word": "ζωὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:50",
+      "word": "ἐκ τοῦ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:51",
+      "word": "ἐκ τοῦ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:51",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:51",
+      "word": "τοῦ κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:57",
+      "word": "ζῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 6:58",
+      "word": "ἐξ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:4",
+      "word": "ἐν κρυπτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:4",
+      "word": "ταῦτα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:8",
+      "word": "ἐμὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:13",
+      "word": "παρρησίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:16",
+      "word": "ἐμὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:17",
+      "word": "τὸ θέλημα αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:18",
+      "word": "ἀφ’ ἑαυτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:23",
+      "word": "περιτομὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:24",
+      "word": "δικαίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:31",
+      "word": "οὗτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 7:37",
+      "word": "ἐσχάτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:3",
+      "word": "ἐπὶ μοιχείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:16",
+      "word": "πέμψας με",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:17",
+      "word": "δύο ἀνθρώπων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:18",
+      "word": "πέμψας με",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:19",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:21",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:22",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:25",
+      "word": "τὴν ἀρχὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:39",
+      "word": "τέκνα τοῦ ἀβραάμ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:43",
+      "word": "τὴν λαλιὰν τὴν ἐμὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:45",
+      "word": "τὴν ἀλήθειαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:46",
+      "word": "ἀλήθειαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:51",
+      "word": "ἐμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 8:52",
+      "word": "τὸν λόγον μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:8",
+      "word": "προσαίτης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:16",
+      "word": "ἐκ τῶν φαρισαίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:17",
+      "word": "σὺ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:25",
+      "word": "ἁμαρτωλός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:27",
+      "word": "πάλιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:31",
+      "word": "θεοσεβὴς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:31",
+      "word": "τὸ θέλημα αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 9:40",
+      "word": "μετ’ αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:9",
+      "word": "δι’ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:21",
+      "word": "τυφλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:24",
+      "word": "σὺ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:29",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:32",
+      "word": "αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:33",
+      "word": "καλοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:35",
+      "word": "ἐκείνους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:35",
+      "word": "ὁ λόγος τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:38",
+      "word": "ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 10:40",
+      "word": "τὸ πρῶτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 11:20",
+      "word": "ἰησοῦς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 11:27",
+      "word": "εἰς τὸν κόσμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 12:16",
+      "word": "ἐπ’ αὐτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 12:26",
+      "word": "ἐμοί",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 12:26",
+      "word": "εἰμὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 12:42",
+      "word": "καὶ ἐκ τῶν ἀρχόντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 12:47",
+      "word": "μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 13:15",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 13:20",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 13:35",
+      "word": "ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 14:10",
+      "word": "ἐν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 14:12",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 14:14",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 14:19",
+      "word": "ἐγὼ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 14:24",
+      "word": "πέμψαντός με",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:4",
+      "word": "καρπὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:4",
+      "word": "ἐν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:7",
+      "word": "ἐν ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:10",
+      "word": "τὰς ἐντολάς μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:13",
+      "word": "ταύτης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:19",
+      "word": "ἐκ τοῦ κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:20",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:20",
+      "word": "τὸν λόγον μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:23",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:24",
+      "word": "τὰ ἔργα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 15:25",
+      "word": "ἐν τῷ νόμῳ αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 17:3",
+      "word": "αἰώνιος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 17:5",
+      "word": "τὸν κόσμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 17:18",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:3",
+      "word": "ἐκ τῶν ἀρχιερέων καὶ ἐκ τῶν φαρισαίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:6",
+      "word": "ἐγώ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:8",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:10",
+      "word": "τοῦ ἀρχιερέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:21",
+      "word": "με",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:30",
+      "word": "κακὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 18:36",
+      "word": "ἐκ τοῦ κόσμου τούτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:12",
+      "word": "βασιλέα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:17",
+      "word": "κρανίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:23",
+      "word": "ἑκάστῳ στρατιώτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:29",
+      "word": "ὄξους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:31",
+      "word": "παρασκευὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:35",
+      "word": "αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:37",
+      "word": "ἑτέρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 19:42",
+      "word": "ἐγγὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 20:5",
+      "word": "κείμενα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "John 21:24",
+      "word": "αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 1:1",
+      "word": "πρῶτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 1:10",
+      "word": "ἀτενίζοντες",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 1:21",
+      "word": "συνελθόντων ἡμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 1:21 - 2",
+      "word": "ἐν παντὶ χρόνῳ ᾧ εἰσῆλθεν καὶ ἐξῆλθεν ἐφ’ ἡμᾶς ὁ κύριος ἰησοῦς ἀρξάμενος ἀπὸ τοῦ βαπτίσματος ἰωάννου ἕως τῆς ἡμέρας ἧς ἀνελήμφθη ἀφ’ ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 2:4",
+      "word": "ἑτέραις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 2:13",
+      "word": "γλεύκους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 2:14",
+      "word": "τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 2:23",
+      "word": "τῇ ὡρισμένῃ βουλῇ καὶ προγνώσει τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 3:2",
+      "word": "χωλὸς ἐκ κοιλίας μητρὸς αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 3:10",
+      "word": "πρὸς τὴν ἐλεημοσύνην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 3:12",
+      "word": "ἰδίᾳ δυνάμει ἢ εὐσεβείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:9",
+      "word": "ἐν τίνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:16",
+      "word": "γνωστὸν σημεῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:17",
+      "word": "ἐπὶ πλεῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:19",
+      "word": "δίκαιόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:19",
+      "word": "ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:25",
+      "word": "τοῦ πατρὸς ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:25",
+      "word": "στόματος δαυὶδ παιδός σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 4:34",
+      "word": "κτήτορες χωρίων ἢ οἰκιῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 5:1",
+      "word": "ἁνανίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 5:25",
+      "word": "ἐν τῷ ἱερῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 5:39",
+      "word": "ἐκ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 7:56",
+      "word": "ἐκ δεξιῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 7:56",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 8:14",
+      "word": "ἐν ἱεροσολύμοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 8:16",
+      "word": "ἐπ’ οὐδενὶ αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 8:20",
+      "word": "διὰ χρημάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 8:32",
+      "word": "ἐπὶ σφαγὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:2",
+      "word": "τινας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:2",
+      "word": "τῆς ὁδοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:9",
+      "word": "ἡμέρας τρεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:11",
+      "word": "σαῦλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:12",
+      "word": "ἁνανίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:16",
+      "word": "ὑπὲρ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 9:39",
+      "word": "μετ’",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 10:17",
+      "word": "ἐν ἑαυτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 10:30",
+      "word": "τὴν ἐνάτην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 10:36",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 10:45",
+      "word": "ἐκ περιτομῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 11:3",
+      "word": "ἀκροβυστίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 11:5",
+      "word": "τέσσαρσιν ἀρχαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 11:17",
+      "word": "ἴσην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 11:29",
+      "word": "ἐν τῇ ἰουδαίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 12:5",
+      "word": "ἐκτενῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 12:17",
+      "word": "ἕτερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:1",
+      "word": "ἡρῴδου τοῦ τετραάρχου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:25",
+      "word": "ἐμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:25",
+      "word": "τὸ ὑπόδημα τῶν ποδῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:27",
+      "word": "κατὰ πᾶν σάββατον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:32",
+      "word": "πρὸς τοὺς πατέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:33",
+      "word": "ἐν τῷ ψαλμῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:36",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:38",
+      "word": "ἐν νόμῳ μωϋσέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:45",
+      "word": "ὑπὸ παύλου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:46",
+      "word": "πρῶτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:46",
+      "word": "ἀξίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 13:46",
+      "word": "τῆς αἰωνίου ζωῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 14:3",
+      "word": "σημεῖα καὶ τέρατα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 14:8",
+      "word": "ἀδύνατος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 14:8",
+      "word": "τοῖς ποσὶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 14:16",
+      "word": "παρῳχημέναις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 15:5",
+      "word": "ἀπὸ τῆς αἱρέσεως τῶν φαρισαίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 15:21",
+      "word": "κατὰ πόλιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 15:23",
+      "word": "κατὰ τὴν ἀντιόχειαν καὶ συρίαν καὶ κιλικίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 16:15",
+      "word": "πιστὴν τῷ κυρίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 16:27",
+      "word": "ἀνεῳγμένας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 16:37",
+      "word": "ἀνθρώπους ῥωμαίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:6",
+      "word": "τὴν οἰκουμένην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:13",
+      "word": "ἀπὸ τῆς θεσσαλονίκης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:19",
+      "word": "ὑπὸ σοῦ λαλουμένη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:22",
+      "word": "κατὰ πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:24",
+      "word": "χειροποιήτοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 17:28",
+      "word": "καθ’ ὑμᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 18:2",
+      "word": "ποντικὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 18:3",
+      "word": "τὸ ὁμότεχνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 18:15",
+      "word": "ζητήματά",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 18:20",
+      "word": "ἐπὶ πλείονα χρόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:2",
+      "word": "ἔστιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:3",
+      "word": "ἰωάννου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:10",
+      "word": "πάντας τοὺς κατοικοῦντας τὴν ἀσίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:14",
+      "word": "τινος σκευᾶ ἰουδαίου ἀρχιερέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:19",
+      "word": "τὰ περίεργα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:21",
+      "word": "καὶ ῥώμην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:24",
+      "word": "δημήτριος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:24",
+      "word": "τις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:26",
+      "word": "διὰ χειρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:27",
+      "word": "τῆς μεγάλης θεᾶς ἀρτέμιδος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:36",
+      "word": "κατεσταλμένους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:36",
+      "word": "μηδὲν προπετὲς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:39",
+      "word": "τι περαιτέρω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 19:39",
+      "word": "ἐννόμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 20:21",
+      "word": "εἰς θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 20:38",
+      "word": "τὸ πρόσωπον αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:13",
+      "word": "οὐ μόνον δεθῆναι ἀλλὰ καὶ ἀποθανεῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:14",
+      "word": "τοῦ κυρίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:16",
+      "word": "ἀρχαίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:21",
+      "word": "κατὰ τὰ ἔθνη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:27",
+      "word": "ἀπὸ τῆς ἀσίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 21:39",
+      "word": "οὐκ ἀσήμου πόλεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 22:3",
+      "word": "πατρῴου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 22:5",
+      "word": "ἐκεῖσε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 22:9",
+      "word": "σὺν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 23:11",
+      "word": "καὶ εἰς ῥώμην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 23:20",
+      "word": "τι ἀκριβέστερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 23:35",
+      "word": "καὶ οἱ κατήγοροί σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:4",
+      "word": "ἐπὶ πλεῖόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:5",
+      "word": "τῶν ναζωραίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:10",
+      "word": "ἐκ πολλῶν ἐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:14",
+      "word": "ἐν τοῖς προφήταις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:17",
+      "word": "ἐλεημοσύνας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:17",
+      "word": "καὶ προσφοράς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:19",
+      "word": "ἀπὸ τῆς ἀσίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:19",
+      "word": "ἐπὶ σοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:22",
+      "word": "λυσίας ὁ χιλίαρχος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:24",
+      "word": "εἰς χριστὸν ἰησοῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 24:27",
+      "word": "χάριτα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:4",
+      "word": "ἐν τάχει",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:7",
+      "word": "ἀπὸ ἱεροσολύμων καταβεβηκότες",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:9",
+      "word": "τοῖς ἰουδαίοις χάριν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:10",
+      "word": "ἐπὶ τοῦ βήματος καίσαρος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:11",
+      "word": "ἄξιον θανάτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:14",
+      "word": "πλείους ἡμέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:21",
+      "word": "τοῦ σεβαστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 25:26",
+      "word": "ἀσφαλές τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:2",
+      "word": "ἐπὶ σοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:4",
+      "word": "ἀπ’ ἀρχῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:8",
+      "word": "ἄπιστον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:10",
+      "word": "παρὰ τῶν ἀρχιερέων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:11",
+      "word": "ἔξω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:14",
+      "word": "διώκεις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:20",
+      "word": "ἄξια τῆς μετανοίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:22",
+      "word": "οἱ προφῆται",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:24",
+      "word": "μεγάλῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:25",
+      "word": "ἀληθείας καὶ σωφροσύνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:26",
+      "word": "ἐν γωνίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:29",
+      "word": "καὶ ἐγώ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 26:31",
+      "word": "θανάτου ἢ δεσμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:11",
+      "word": "ὑπὸ παύλου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:23",
+      "word": "τοῦ θεοῦ οὗ εἰμι ἐγὼ ᾧ καὶ λατρεύω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:27",
+      "word": "τεσσαρεσκαιδεκάτη νὺξ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:33",
+      "word": "τεσσαρεσκαιδεκάτην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:33",
+      "word": "ἡμέραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:34",
+      "word": "οὐδενὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:34",
+      "word": "ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:42",
+      "word": "τῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 27:42",
+      "word": "στρατιωτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:3",
+      "word": "φρυγάνων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:4",
+      "word": "κρεμάμενον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:4",
+      "word": "ἐκ τῆς χειρὸς αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:7",
+      "word": "τρεῖς ἡμέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:8",
+      "word": "πυρετοῖς καὶ δυσεντερίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:16",
+      "word": "φυλάσσοντι αὐτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Acts 28:19",
+      "word": "τοῦ ἔθνους μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:12",
+      "word": "ἐν ἀλλήλοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:14",
+      "word": "ἕλλησίν τε καὶ βαρβάροις σοφοῖς τε καὶ ἀνοήτοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:15",
+      "word": "καὶ ὑμῖν τοῖς ἐν ῥώμῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:20",
+      "word": "ἀπὸ κτίσεως κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:20",
+      "word": "ἀΐδιος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:21",
+      "word": "ἀσύνετος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:23",
+      "word": "ἀφθάρτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:27",
+      "word": "τὴν ἀντιμισθίαν ἣν ἔδει τῆς πλάνης αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:28",
+      "word": "τὸν θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:30",
+      "word": "γονεῦσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 1:32",
+      "word": "τὸ δικαίωμα τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:7",
+      "word": "δόξαν καὶ τιμὴν καὶ ἀφθαρσίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:12",
+      "word": "ἀνόμως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:12",
+      "word": "ἐν νόμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:14",
+      "word": "φύσει",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:17",
+      "word": "ἰουδαῖος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:19",
+      "word": "ὁδηγὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:23",
+      "word": "ἐν νόμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:27",
+      "word": "ἐκ φύσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:27",
+      "word": "διὰ γράμματος καὶ περιτομῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 2:28",
+      "word": "ἐν τῷ φανερῷ ἐν σαρκὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:5",
+      "word": "θεοῦ δικαιοσύνην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:7",
+      "word": "ἐν τῷ ἐμῷ ψεύσματι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:7",
+      "word": "ὡς ἁμαρτωλὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:9",
+      "word": "πάντας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:21",
+      "word": "χωρὶς νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:26",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:29",
+      "word": "ἰουδαίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 3:29",
+      "word": "μόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 4:3",
+      "word": "ἡ γραφὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 4:12",
+      "word": "ἐν ἀκροβυστίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 4:13",
+      "word": "κληρονόμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 4:13",
+      "word": "κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 4:14",
+      "word": "ἐκ νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:8",
+      "word": "ἔτι ἁμαρτωλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:10",
+      "word": "ἐχθροὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:12",
+      "word": "δι’ ἑνὸς ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:15",
+      "word": "τοῦ ἑνὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:17",
+      "word": "τοῦ ἑνὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:17",
+      "word": "τὴν περισσείαν τῆς χάριτος καὶ τῆς δωρεᾶς τῆς δικαιοσύνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 5:19",
+      "word": "ἁμαρτωλοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 6:5",
+      "word": "σύμφυτοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 6:6",
+      "word": "παλαιὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 6:13",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 6:20",
+      "word": "δοῦλοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:2",
+      "word": "ὕπανδρος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:2",
+      "word": "ζῶντι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:4",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:16",
+      "word": "τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:17",
+      "word": "οἰκοῦσα ἐν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:19",
+      "word": "θέλω ποιῶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:19",
+      "word": "οὐ θέλω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:20",
+      "word": "τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:20",
+      "word": "οἰκοῦσα ἐν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:22",
+      "word": "ἔσω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 7:23",
+      "word": "ἕτερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:3",
+      "word": "τὸν ἑαυτοῦ υἱὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:4",
+      "word": "μὴ κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:5",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:8",
+      "word": "ἐν σαρκὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:8",
+      "word": "θεῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:12",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:13",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:14",
+      "word": "πνεύματι θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:18",
+      "word": "οὐκ ἄξια",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:18",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:18",
+      "word": "μέλλουσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:23",
+      "word": "τὴν ἀπαρχὴν τοῦ πνεύματος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:25",
+      "word": "ὃ οὐ βλέπομεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:28",
+      "word": "κατὰ πρόθεσιν κλητοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:32",
+      "word": "τοῦ ἰδίου υἱοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 8:32",
+      "word": "ὑπὲρ ἡμῶν πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:3",
+      "word": "ἀνάθεμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:9",
+      "word": "ἐπαγγελίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:11",
+      "word": "κατ’ ἐκλογὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:16",
+      "word": "ἐλεῶντος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:21",
+      "word": "ἐκ τοῦ αὐτοῦ φυράματος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:21",
+      "word": "εἰς τιμὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 9:26",
+      "word": "οὐ λαός μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 10:3",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 10:5",
+      "word": "ποιήσας αὐτὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 10:6",
+      "word": "ἐκ πίστεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:5",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:11",
+      "word": "αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:16",
+      "word": "ἡ ἀπαρχὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:16",
+      "word": "ἡ ῥίζα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:17",
+      "word": "ἀγριέλαιος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:17",
+      "word": "συγκοινωνὸς τῆς ῥίζης τῆς πιότητος τῆς ἐλαίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:21",
+      "word": "τῶν κατὰ φύσιν κλάδων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:24",
+      "word": "ἐκ τῆς κατὰ φύσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:24",
+      "word": "παρὰ φύσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:30",
+      "word": "τούτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:31",
+      "word": "ὑμετέρῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 11:34",
+      "word": "σύμβουλος αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "πολλὰ μέλη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "τὴν αὐτὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 12:5",
+      "word": "ἀλλήλων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 12:20",
+      "word": "τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:1",
+      "word": "ὑπὸ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:2",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:3",
+      "word": "ἀγαθῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:4",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:4",
+      "word": "τὸ κακὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:4",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 13:4",
+      "word": "τὸ κακὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 14:4",
+      "word": "ἀλλότριον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 14:14",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 14:18",
+      "word": "ἐν τούτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 14:20",
+      "word": "διὰ προσκόμματος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:1",
+      "word": "τὰ ἀσθενήματα τῶν ἀδυνάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:1",
+      "word": "ἑαυτοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:5",
+      "word": "τὸ αὐτὸ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:18",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:20",
+      "word": "ἐπ’ ἀλλότριον θεμέλιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:24",
+      "word": "διαπορευόμενος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:26",
+      "word": "κοινωνίαν τινὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:27",
+      "word": "τοῖς πνευματικοῖς αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:27",
+      "word": "καὶ ἐν τοῖς σαρκικοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:31",
+      "word": "εὐπρόσδεκτος τοῖς ἁγίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 15:32",
+      "word": "ἐν χαρᾷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 16:5",
+      "word": "κατ’ οἶκον αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 16:17",
+      "word": "τὰς διχοστασίας καὶ τὰ σκάνδαλα παρὰ τὴν διδαχὴν ἣν ὑμεῖς ἐμάθετε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 16:25",
+      "word": "χρόνοις αἰωνίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rom 16:26",
+      "word": "εἰς ὑπακοὴν πίστεως εἰς πάντα τὰ ἔθνη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 1:15",
+      "word": "ἐμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 1:16",
+      "word": "στεφανᾶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 1:24",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 1:24",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 2:4",
+      "word": "πειθοῖ[ς] σοφίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 2:7",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 2:9",
+      "word": "ἐπὶ καρδίαν ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 2:13",
+      "word": "διδακτοῖς ἀνθρωπίνης σοφίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 3:9",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 3:9",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 3:13",
+      "word": "ὁποῖόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 3:18",
+      "word": "σοφὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 4:3",
+      "word": "ἀνθρωπίνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 4:13",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 4:14",
+      "word": "ὡς τέκνα μου ἀγαπητὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 4:15",
+      "word": "μυρίους παιδαγωγοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:2",
+      "word": "τὸ ἔργον τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:3",
+      "word": "οὕτως τοῦτο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:7",
+      "word": "παλαιὰν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:7",
+      "word": "νέον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:11",
+      "word": "ἀδελφὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 5:12",
+      "word": "τοὺς ἔξω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 6:2",
+      "word": "ἐν ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 6:9",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 6:15",
+      "word": "πόρνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 6:16",
+      "word": "ἓν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 6:17",
+      "word": "ἓν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:21",
+      "word": "ἐλεύθερος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:22",
+      "word": "ἐν κυρίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:22",
+      "word": "ἐλεύθερος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:26",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:26",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:36",
+      "word": "ἀσχημονεῖν ἐπὶ τὴν παρθένον αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:36",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 7:40",
+      "word": "ἐμὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 8:6",
+      "word": "εἷς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 8:6",
+      "word": "εἷς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 8:10",
+      "word": "ἐν εἰδωλείῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 8:10",
+      "word": "τὰ εἰδωλόθυτα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 8:13",
+      "word": "βρῶμα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:2",
+      "word": "ἄλλοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:5",
+      "word": "λοιποὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:9",
+      "word": "μωϋσέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:10",
+      "word": "ἐπ’ ἐλπίδι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:10",
+      "word": "ἐπ’ ἐλπίδι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:12",
+      "word": "ἄλλοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:13",
+      "word": "τὰ ἱερὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:13",
+      "word": "τῷ θυσιαστηρίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:14",
+      "word": "τὸ εὐαγγέλιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:17",
+      "word": "ἑκὼν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:18",
+      "word": "ὁ μισθός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:24",
+      "word": "ἐν σταδίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:25",
+      "word": "φθαρτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 9:26",
+      "word": "ἀέρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:24",
+      "word": "τὸ ἑαυτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:25",
+      "word": "ἐν μακέλλῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:29",
+      "word": "ἄλλης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:30",
+      "word": "χάριτι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:33",
+      "word": "ἐμαυτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 10:33",
+      "word": "ἀλλὰ τὸ τῶν πολλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:3",
+      "word": "παντὸς ἀνδρὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:4",
+      "word": "κατὰ κεφαλῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:16",
+      "word": "φιλόνεικος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:18",
+      "word": "σχίσματα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:19",
+      "word": "αἱρέσεις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:20",
+      "word": "κυριακὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "καινὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 11:31",
+      "word": "ἑαυτοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:2",
+      "word": "ἔθνη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:3",
+      "word": "ἐν πνεύματι θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:8",
+      "word": "αὐτὸ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:9",
+      "word": "αὐτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:9",
+      "word": "ἑνὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "ἕν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "μέλη πολλὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "πολλὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:20",
+      "word": "πολλὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:20",
+      "word": "ἓν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:22",
+      "word": "δοκοῦντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:22",
+      "word": "ἀσθενέστερα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:23",
+      "word": "ἀτιμότερα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:24",
+      "word": "τῷ ὑστερουμένῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 12:26",
+      "word": "πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 13:1",
+      "word": "ταῖς γλώσσαις τῶν ἀνθρώπων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 13:2",
+      "word": "ὄρη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 13:2",
+      "word": "ἀγάπην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 13:3",
+      "word": "ἀγάπην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:6",
+      "word": "γλώσσαις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:7",
+      "word": "φωνὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:7",
+      "word": "διαστολὴν τοῖς φθόγγοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:8",
+      "word": "ἄδηλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:8",
+      "word": "φωνὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:9",
+      "word": "εὔσημον λόγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:9",
+      "word": "εἰς ἀέρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:12",
+      "word": "ζηλωταί",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:12",
+      "word": "πνευμάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:18",
+      "word": "πάντων ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:27",
+      "word": "γλώσσῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:30",
+      "word": "ἄλλῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:30",
+      "word": "καθημένῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:33",
+      "word": "ἀκαταστασίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:33",
+      "word": "ἀλλὰ εἰρήνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:35",
+      "word": "τι μαθεῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:37",
+      "word": "προφήτης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 14:37",
+      "word": "ἢ πνευματικός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:12",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:14",
+      "word": "χριστὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:16",
+      "word": "νεκροὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:17",
+      "word": "χριστὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:19",
+      "word": "ἐν τῇ ζωῇ ταύτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:19",
+      "word": "μόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:21",
+      "word": "δι’ ἀνθρώπου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:26",
+      "word": "ἔσχατος ἐχθρὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:27",
+      "word": "πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:32",
+      "word": "κατὰ ἄνθρωπον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:40",
+      "word": "τῶν ἐπουρανίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:45",
+      "word": "πρῶτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:45",
+      "word": "ἔσχατος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:47",
+      "word": "πρῶτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:47",
+      "word": "δεύτερος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 15:50",
+      "word": "βασιλείαν θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 16:4",
+      "word": "ἄξιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 16:4",
+      "word": "κἀμὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Cor 16:19",
+      "word": "κατ’ οἶκον αὐτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 1:10",
+      "word": "τηλικούτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 1:19",
+      "word": "δι’ ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 2:9",
+      "word": "εἰς πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 2:14",
+      "word": "πάντοτε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 2:14",
+      "word": "τὴν ὀσμὴν τῆς γνώσεως αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:5",
+      "word": "ἀφ’ ἑαυτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:7",
+      "word": "ἐν γράμμασιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:9",
+      "word": "τῇ διακονίᾳ τῆς κατακρίσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:10",
+      "word": "ὑπερβαλλούσης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:11",
+      "word": "τὸ καταργούμενον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:14",
+      "word": "παλαιᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 3:18",
+      "word": "ἀνακεκαλυμμένῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 4:16",
+      "word": "ἔξω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 4:16",
+      "word": "ἔσω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 4:17",
+      "word": "παραυτίκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:1",
+      "word": "ἐπίγειος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:2",
+      "word": "ἐπενδύσασθαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:10",
+      "word": "πάντας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "ἀφορμὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "καυχήματος ὑπὲρ ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "ἐν προσώπῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "καὶ μὴ ἐν καρδίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 5:17",
+      "word": "καινὴ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 6:4",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 7:8",
+      "word": "καὶ πρὸς ὥραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 7:10",
+      "word": "κατὰ θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 7:10",
+      "word": "τοῦ κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 7:11",
+      "word": "κατὰ θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 7:14",
+      "word": "ἐν ἀληθείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:2",
+      "word": "κατὰ βάθους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:7",
+      "word": "ἐν παντὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:8",
+      "word": "ἑτέρων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:9",
+      "word": "ἐκείνου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:14",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:14",
+      "word": "ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:14",
+      "word": "ἐκείνων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:14",
+      "word": "ἐκείνων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:14",
+      "word": "ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 8:19",
+      "word": "αὐτοῦ τοῦ κυρίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 9:14",
+      "word": "ὑπερβάλλουσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 9:15",
+      "word": "ἀνεκδιηγήτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:2",
+      "word": "παρὼν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:2",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:7",
+      "word": "χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:7",
+      "word": "αὐτὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:8",
+      "word": "περισσότερόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:12",
+      "word": "ἑαυτοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:15",
+      "word": "ἀλλοτρίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:18",
+      "word": "ἑαυτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 10:18",
+      "word": "ὁ κύριος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:2",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "ἄλλον ἰησοῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "ὃν οὐκ ἐκηρύξαμεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "πνεῦμα ἕτερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "ὃ οὐκ ἐλάβετε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:18",
+      "word": "πολλοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:20",
+      "word": "καταδουλοῖ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 11:25",
+      "word": "νυχθήμερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 12:15",
+      "word": "περισσοτέρως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Cor 13:3",
+      "word": "ἐν ἐμοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:6",
+      "word": "ἕτερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:8",
+      "word": "ἡμεῖς ἢ ἄγγελος ἐξ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:10",
+      "word": "ἀνθρώποις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:10",
+      "word": "χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:14",
+      "word": "πατρικῶν μου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 1:17",
+      "word": "πρὸ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:3",
+      "word": "ἕλλην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:4",
+      "word": "παρεισάκτους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:6",
+      "word": "οὐδέν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:9",
+      "word": "στῦλοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:14",
+      "word": "ἰουδαῖος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:14",
+      "word": "ἐθνικῶς καὶ οὐχὶ ἰουδαϊκῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:15",
+      "word": "ἐξ ἐθνῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 2:21",
+      "word": "διὰ νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:9",
+      "word": "πιστῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:10",
+      "word": "ἐξ ἔργων νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:15",
+      "word": "ἀνθρώπου κεκυρωμένην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:17",
+      "word": "μετὰ τετρακόσια καὶ τριάκοντα ἔτη γεγονὼς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:18",
+      "word": "ἐκ νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:23",
+      "word": "μέλλουσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:23",
+      "word": "ἀποκαλυφθῆναι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 3:29",
+      "word": "τοῦ ἀβραὰμ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:1",
+      "word": "νήπιός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:9",
+      "word": "ἀσθενῆ καὶ πτωχὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:9",
+      "word": "πάλιν ἄνωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:21",
+      "word": "ὑπὸ νόμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:25",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:26",
+      "word": "ἄνω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:28",
+      "word": "κατὰ ἰσαὰκ ἐπαγγελίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:29",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:31",
+      "word": "παιδίσκης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 4:31",
+      "word": "τῆς ἐλευθέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:3",
+      "word": "ὅλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:9",
+      "word": "μικρὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:9",
+      "word": "ὅλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:11",
+      "word": "περιτομὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:14",
+      "word": "πᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:14",
+      "word": "ἑνὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:18",
+      "word": "πνεύματι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 5:21",
+      "word": "τὰ τοιαῦτα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:2",
+      "word": "ἀλλήλων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:4",
+      "word": "εἰς ἑαυτὸν μόνον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:4",
+      "word": "καὶ οὐκ εἰς τὸν ἕτερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:9",
+      "word": "τὸ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:9",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Gal 6:16",
+      "word": "τῷ κανόνι τούτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 2:8",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:5",
+      "word": "ἑτέραις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:10",
+      "word": "πολυποίκιλος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:16",
+      "word": "ἔσω",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:19",
+      "word": "ὑπερβάλλουσαν τῆς γνώσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:20",
+      "word": "ὑπὲρ πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 3:20",
+      "word": "ὧν αἰτούμεθα ἢ νοοῦμεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:17",
+      "word": "καὶ τὰ ἔθνη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:22",
+      "word": "προτέραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:22",
+      "word": "παλαιὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:24",
+      "word": "καινὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:24",
+      "word": "κατὰ θεὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 4:25",
+      "word": "ἀλλήλων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 5:12",
+      "word": "κρυφῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 5:13",
+      "word": "πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 5:27",
+      "word": "ἔνδοξον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 5:29",
+      "word": "ποτε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 6:5",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 6:8",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 6:8",
+      "word": "ἀγαθόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Eph 6:9",
+      "word": "καὶ αὐτῶν καὶ ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 2:1",
+      "word": "τις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 2:22",
+      "word": "πατρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:1",
+      "word": "τὰ αὐτὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:9",
+      "word": "ἐμὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:9",
+      "word": "διὰ πίστεως χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:9",
+      "word": "ἐκ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:15",
+      "word": "τι ἑτέρως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 3:19",
+      "word": "τὰ ἐπίγεια",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phil 4:11",
+      "word": "ἐν οἷς εἰμι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 1:2",
+      "word": "ἐν κολοσσαῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 1:2",
+      "word": "πιστοῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 1:7",
+      "word": "πιστὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:3",
+      "word": "πάντες οἱ θησαυροὶ τῆς σοφίας καὶ γνώσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:5",
+      "word": "καὶ τῇ σαρκὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:5",
+      "word": "εἰς χριστὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:8",
+      "word": "κενῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:14",
+      "word": "καθ’ ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:20",
+      "word": "ὡς ζῶντες ἐν κόσμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 2:23",
+      "word": "λόγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 3:9",
+      "word": "παλαιὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 3:13",
+      "word": "καὶ ὁ κύριος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 3:22",
+      "word": "κατὰ σάρκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 4:15",
+      "word": "ἐν λαοδικείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 4:15",
+      "word": "κατ’ οἶκον αὐτῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 4:16",
+      "word": "λαοδικέων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Col 4:18",
+      "word": "ἐμῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 2:6",
+      "word": "ἐξ ἀνθρώπων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 2:7",
+      "word": "χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 2:9",
+      "word": "νυκτὸς καὶ ἡμέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 2:15",
+      "word": "καὶ τὸν κύριον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 3:4",
+      "word": "πρὸς ὑμᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 5:3",
+      "word": "ἐν γαστρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Thess 5:23",
+      "word": "ὁλόκληρον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 1:5",
+      "word": "δικαίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 2:6",
+      "word": "ἑαυτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:2",
+      "word": "ἀτόπων καὶ πονηρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:6",
+      "word": "ἀτάκτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:9",
+      "word": "τύπον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:12",
+      "word": "μετὰ ἡσυχίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:12",
+      "word": "ἑαυτῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Thess 3:17",
+      "word": "ἐμῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:2",
+      "word": "γνησίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:5",
+      "word": "καθαρᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:10",
+      "word": "ὑγιαινούσῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:13",
+      "word": "πρότερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:15",
+      "word": "πάσης ἀποδοχῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:16",
+      "word": "ἅπασαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 1:18",
+      "word": "προαγούσας ἐπὶ σὲ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 2:2",
+      "word": "ἐν ὑπεροχῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 2:8",
+      "word": "ὁσίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:2",
+      "word": "ἀνεπίλημπτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:2",
+      "word": "μιᾶς γυναικὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:5",
+      "word": "τοῦ ἰδίου οἴκου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:7",
+      "word": "μαρτυρίαν καλὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:7",
+      "word": "ἀπὸ τῶν ἔξωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:8",
+      "word": "οἴνῳ πολλῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:9",
+      "word": "καθαρᾷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:12",
+      "word": "μιᾶς γυναικὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:15",
+      "word": "ἐν οἴκῳ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 3:16",
+      "word": "τῆς εὐσεβείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 4:1",
+      "word": "ὑστέροις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 4:8",
+      "word": "πρὸς πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 4:9",
+      "word": "πάσης ἀποδοχῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 4:10",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 4:12",
+      "word": "τῆς νεότητος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:3",
+      "word": "ὄντως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:4",
+      "word": "τέκνα ἢ ἔκγονα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:5",
+      "word": "ὄντως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:6",
+      "word": "σπαταλῶσα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:8",
+      "word": "τῶν ἰδίων καὶ μάλιστα οἰκείων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:8",
+      "word": "ἀπίστου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:9",
+      "word": "ἑνὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:11",
+      "word": "νεωτέρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:16",
+      "word": "ὄντως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:17",
+      "word": "καλῶς προεστῶτες",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:23",
+      "word": "πυκνάς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 5:25",
+      "word": "ἄλλως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:1",
+      "word": "πάσης τιμῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:2",
+      "word": "πιστοὺς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:2",
+      "word": "τῆς εὐεργεσίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:3",
+      "word": "ὑγιαίνουσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:3",
+      "word": "κατ’ εὐσέβειαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:10",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:12",
+      "word": "αἰωνίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:12",
+      "word": "καλὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:12",
+      "word": "πολλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:15",
+      "word": "μακάριος καὶ μόνος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:16",
+      "word": "μόνος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:17",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:19",
+      "word": "ὄντως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:20",
+      "word": "βεβήλους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Tim 6:20",
+      "word": "ψευδωνύμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 1:5",
+      "word": "ἀνυποκρίτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 1:16",
+      "word": "ὀνησιφόρου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 1:18",
+      "word": "ἐν ἐφέσῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:4",
+      "word": "τοῦ βίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:6",
+      "word": "πρῶτον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:14",
+      "word": "ἐπ’ οὐδὲν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:16",
+      "word": "βεβήλους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:17",
+      "word": "ὡς γάγγραινα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:18",
+      "word": "τινων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:22",
+      "word": "νεωτερικὰς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:22",
+      "word": "καθαρᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:23",
+      "word": "μωρὰς καὶ ἀπαιδεύτους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:24",
+      "word": "ἤπιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 2:26",
+      "word": "τοῦ διαβόλου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 3:2",
+      "word": "γονεῦσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 3:7",
+      "word": "εἰς ἐπίγνωσιν ἀληθείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 3:8",
+      "word": "ἰάννης καὶ ἰαμβρῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 3:12",
+      "word": "εὐσεβῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 3:17",
+      "word": "τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 4:3",
+      "word": "ὑγιαινούσης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 4:7",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 4:8",
+      "word": "τῆς δικαιοσύνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 4:10",
+      "word": "νῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Tim 4:19",
+      "word": "ὀνησιφόρου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:2",
+      "word": "ἀψευδὴς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:6",
+      "word": "μιᾶς γυναικὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:7",
+      "word": "ἀνέγκλητον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:7",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:9",
+      "word": "κατὰ τὴν διδαχὴν πιστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 1:9",
+      "word": "τοὺς ἀντιλέγοντας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 2:3",
+      "word": "οἴνῳ πολλῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 2:4",
+      "word": "φιλάνδρους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 3:1",
+      "word": "πρὸς πᾶν ἔργον ἀγαθὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 3:4",
+      "word": "ἡ χρηστότης καὶ ἡ φιλανθρωπία",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 3:4",
+      "word": "τοῦ σωτῆρος ἡμῶν θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 3:7",
+      "word": "κληρονόμοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Titus 3:8",
+      "word": "καλῶν ἔργων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phlm 1:2",
+      "word": "κατ’ οἶκόν σου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phlm 1:10",
+      "word": "τοῦ ἐμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phlm 1:18",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Phlm 1:19",
+      "word": "ἐμῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:1",
+      "word": "περισσοτέρως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:2",
+      "word": "δι’ ἀγγέλων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:8",
+      "word": "πάντα ὑποτεταγμένα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "βραχύ τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "διὰ τὸ πάθημα τοῦ θανάτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "χάριτι θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "ὑπὲρ παντὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:14",
+      "word": "τὸ κράτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 2:14",
+      "word": "τοῦ θανάτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 3:1",
+      "word": "κλήσεως ἐπουρανίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 3:4",
+      "word": "πάντα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 3:7",
+      "word": "τῆς φωνῆς αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 3:15",
+      "word": "τῆς φωνῆς αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 4:6",
+      "word": "τινὰς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 4:6",
+      "word": "πρότερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 4:7",
+      "word": "τῆς φωνῆς αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 4:8",
+      "word": "ἰησοῦς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 5:14",
+      "word": "τὰ αἰσθητήρια γεγυμνασμένα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 6:1",
+      "word": "τῆς ἀρχῆς τοῦ χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 6:2",
+      "word": "βαπτισμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 6:7",
+      "word": "ἐπ’ αὐτῆς ἐρχόμενον πολλάκις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 6:12",
+      "word": "διὰ πίστεως καὶ μακροθυμίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 6:20",
+      "word": "κατὰ τὴν τάξιν μελχισέδεκ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:5",
+      "word": "τὴν ἱερατείαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:11",
+      "word": "λευιτικῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:11",
+      "word": "κατὰ τὴν τάξιν μελχισέδεκ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:12",
+      "word": "νόμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:20",
+      "word": "ἱερεῖς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:23",
+      "word": "θανάτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:27",
+      "word": "καθ’ ἡμέραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 7:27",
+      "word": "ὑπὲρ τῶν ἰδίων ἁμαρτιῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 8:2",
+      "word": "τῶν ἁγίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 8:2",
+      "word": "καὶ τῆς σκηνῆς τῆς ἀληθινῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:4",
+      "word": "χρυσοῦν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:4",
+      "word": "θυμιατήριον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:6",
+      "word": "τὰς λατρείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:7",
+      "word": "τοῦ λαοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:8",
+      "word": "τῶν ἁγίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:9",
+      "word": "κατὰ συνείδησιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:10",
+      "word": "καιροῦ διορθώσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:11",
+      "word": "γενομένων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:13",
+      "word": "τῆς σαρκὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:15",
+      "word": "διαθήκης καινῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:15",
+      "word": "ἐπὶ τῇ πρώτῃ διαθήκῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:27",
+      "word": "ἅπαξ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:28",
+      "word": "πολλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 9:28",
+      "word": "ἀπεκδεχομένοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:1",
+      "word": "κατ’ ἐνιαυτὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:27",
+      "word": "φοβερὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:27",
+      "word": "τις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:27",
+      "word": "ἐσθίειν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:29",
+      "word": "τὸν υἱὸν τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:32",
+      "word": "πρότερον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:34",
+      "word": "κρείττονα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 10:34",
+      "word": "καὶ μένουσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:1",
+      "word": "ἐλπιζομένων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:1",
+      "word": "πραγμάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:1",
+      "word": "οὐ βλεπομένων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:6",
+      "word": "μισθαποδότης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:7",
+      "word": "κατὰ πίστιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:10",
+      "word": "τοὺς θεμελίους ἔχουσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:14",
+      "word": "τοιαῦτα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:15",
+      "word": "ἐκείνης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:15",
+      "word": "ἀφ’ ἧς ἐξέβησαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:17",
+      "word": "τὰς ἐπαγγελίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:19",
+      "word": "ἐκ νεκρῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:23",
+      "word": "ἀστεῖον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:25",
+      "word": "ἁμαρτίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:27",
+      "word": "τὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:27",
+      "word": "ἀόρατον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 11:36",
+      "word": "ἐμπαιγμῶν καὶ μαστίγων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:3",
+      "word": "τοιαύτην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:3",
+      "word": "εἰς ἑαυτὸν ἀντιλογίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:9",
+      "word": "τῆς σαρκὸς ἡμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:11",
+      "word": "χαρᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:11",
+      "word": "ἀλλὰ λύπης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:17",
+      "word": "μετανοίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:19",
+      "word": "σάλπιγγος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:20",
+      "word": "θηρίον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:24",
+      "word": "διαθήκης νέας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:24",
+      "word": "κρεῖττον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:24",
+      "word": "παρὰ τὸν ἅβελ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:25",
+      "word": "ἐπὶ γῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:25",
+      "word": "τὸν ἀπ’ οὐρανῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 12:27",
+      "word": "τῶν σαλευομένων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 13:3",
+      "word": "αὐτοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 13:10",
+      "word": "τῇ σκηνῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 13:17",
+      "word": "λόγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Heb 13:23",
+      "word": "τάχιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:1",
+      "word": "θεοῦ καὶ κυρίου ἰησοῦ χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:5",
+      "word": "διδόντος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:5",
+      "word": "πᾶσιν ἁπλῶς καὶ μὴ ὀνειδίζοντος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:17",
+      "word": "τροπῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:18",
+      "word": "κτισμάτων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:23",
+      "word": "ἀκροατὴς λόγου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:23",
+      "word": "καὶ οὐ ποιητής",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:24",
+      "word": "ὁποῖος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:25",
+      "word": "ἀκροατὴς ἐπιλησμονῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 1:26",
+      "word": "θρησκὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:2",
+      "word": "ῥυπαρᾷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:7",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:10",
+      "word": "ὅλον τὸν νόμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:10",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:14",
+      "word": "πίστιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:14",
+      "word": "ἔργα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:25",
+      "word": "ἑτέρᾳ ὁδῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 2:26",
+      "word": "τὸ σῶμα χωρὶς πνεύματος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:2",
+      "word": "ἐν λόγῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:3",
+      "word": "εἰς τὰ στόματα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:4",
+      "word": "ἐλαχίστου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:5",
+      "word": "μικρὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:5",
+      "word": "ἡλίκον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:5",
+      "word": "ἡλίκην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:6",
+      "word": "ὅλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:9",
+      "word": "καθ’ ὁμοίωσιν θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:13",
+      "word": "καλῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:13",
+      "word": "πραΰτητι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:14",
+      "word": "ζῆλον πικρὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:14",
+      "word": "καὶ ἐριθείαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:15",
+      "word": "ἄνωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:16",
+      "word": "φαῦλον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 3:17",
+      "word": "ἄνωθεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 4:4",
+      "word": "φίλος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 4:4",
+      "word": "τοῦ κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 4:14",
+      "word": "πρὸς ὀλίγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 4:17",
+      "word": "καλὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 5:12",
+      "word": "ἄλλον τινὰ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jas 5:15",
+      "word": "ἁμαρτίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:3",
+      "word": "κατὰ τὸ πολὺ αὐτοῦ ἔλεος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:5",
+      "word": "ἐν δυνάμει θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:10",
+      "word": "περὶ τῆς εἰς ὑμᾶς χάριτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:11",
+      "word": "εἰς χριστὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:13",
+      "word": "φερομένην ὑμῖν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:14",
+      "word": "πρότερον ἐν τῇ ἀγνοίᾳ ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:17",
+      "word": "πατέρα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:17",
+      "word": "ἀπροσωπολήμπτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:18",
+      "word": "ματαίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:18",
+      "word": "πατροπαραδότου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 1:21",
+      "word": "δόξαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:2",
+      "word": "λογικὸν ἄδολον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:9",
+      "word": "ἐκ σκότους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:11",
+      "word": "σαρκικῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:12",
+      "word": "καλῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:13",
+      "word": "ἀνθρωπίνῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:16",
+      "word": "θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:19",
+      "word": "διὰ συνείδησιν θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:20",
+      "word": "ἁμαρτάνοντες καὶ κολαφιζόμενοι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:20",
+      "word": "ἀγαθοποιοῦντες καὶ πάσχοντες",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 2:25",
+      "word": "ὡς πρόβατα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:2",
+      "word": "ἐν φόβῳ ἁγνὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:3",
+      "word": "ἔξωθεν ἐμπλοκῆς τριχῶν καὶ περιθέσεως χρυσίων ἢ ἐνδύσεως ἱματίων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:4",
+      "word": "κρυπτὸς τῆς καρδίας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:4",
+      "word": "πραέως καὶ ἡσυχίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:5",
+      "word": "ἅγιαι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:7",
+      "word": "ἀσθενεστέρῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:10",
+      "word": "ζωὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:13",
+      "word": "τοῦ ἀγαθοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:16",
+      "word": "ἐν χριστῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:19",
+      "word": "ἐν φυλακῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:21",
+      "word": "σαρκὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 3:21",
+      "word": "συνειδήσεως ἀγαθῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:1",
+      "word": "αὐτὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:2",
+      "word": "ἀνθρώπων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:2",
+      "word": "ἐπίλοιπον ἐν σαρκὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:3",
+      "word": "παρεληλυθὼς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:4",
+      "word": "αὐτὴν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:7",
+      "word": "πάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:10",
+      "word": "καλοὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:10",
+      "word": "ποικίλης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:12",
+      "word": "πρὸς πειρασμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 4:18",
+      "word": "μόλις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:1",
+      "word": "καὶ τῆς μελλούσης ἀποκαλύπτεσθαι δόξης",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:4",
+      "word": "ἀμαράντινον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:4",
+      "word": "στέφανον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:5",
+      "word": "ἀλλήλοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:6",
+      "word": "κραταιὰν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:9",
+      "word": "ἐν τῷ κόσμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:10",
+      "word": "αἰώνιον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:12",
+      "word": "πιστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:12",
+      "word": "ἀληθῆ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1Pet 5:13",
+      "word": "ἐν βαβυλῶνι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:1",
+      "word": "ἰσότιμον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:1",
+      "word": "πίστιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:3",
+      "word": "θείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:4",
+      "word": "θείας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:4",
+      "word": "φύσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:4",
+      "word": "ἐν ἐπιθυμίᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:12",
+      "word": "ἀεὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:15",
+      "word": "ἑκάστοτε",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:18",
+      "word": "ἐξ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 1:21",
+      "word": "ὑπὸ πνεύματος ἁγίου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:4",
+      "word": "ἀγγέλων ἁμαρτησάντων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:4",
+      "word": "σειραῖς ζόφου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:5",
+      "word": "ἀρχαίου κόσμου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:5",
+      "word": "ὄγδοον νῶε δικαιοσύνης κήρυκα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:5",
+      "word": "κατακλυσμὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:6",
+      "word": "πόλεις σοδόμων καὶ γομόρρας",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:6",
+      "word": "καταστροφῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:6",
+      "word": "ὑπόδειγμα μελλόντων ἀσεβέ[σ]ιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:7",
+      "word": "δίκαιον λὼτ καταπονούμενον ὑπὸ τῆς τῶν ἀθέσμων ἐν ἀσελγείᾳ ἀναστροφῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:9",
+      "word": "εἰς ἡμέραν κρίσεως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:10",
+      "word": "ὀπίσω σαρκὸς ἐν ἐπιθυμίᾳ μιασμοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:10",
+      "word": "κυριότητος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:11",
+      "word": "ἰσχύϊ καὶ δυνάμει",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:13",
+      "word": "ἐν ἡμέρᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:17",
+      "word": "ὑπὸ λαίλαπος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 2:18",
+      "word": "ἐν πλάνῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "2Pet 3:7",
+      "word": "τῷ αὐτῷ λόγῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 1:6",
+      "word": "κοινωνίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 1:7",
+      "word": "ἐν τῷ φωτὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 1:7",
+      "word": "αὐτός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 1:8",
+      "word": "οὐκ ἔχομεν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:6",
+      "word": "ἐκεῖνος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:9",
+      "word": "ἐν τῷ φωτὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:9",
+      "word": "τὸν ἀδελφὸν αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:18",
+      "word": "ἀντίχριστος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:19",
+      "word": "ἦσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:24",
+      "word": "ἀπ’ ἀρχῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:27",
+      "word": "ἀληθές",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 2:29",
+      "word": "δίκαιός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 3:10",
+      "word": "ἐν τούτῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:2",
+      "word": "ἐν σαρκὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:11",
+      "word": "οὕτως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:12",
+      "word": "τετελειωμένη",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:13",
+      "word": "ἐν αὐτῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:17",
+      "word": "παρρησίαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:17",
+      "word": "ἐκεῖνός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 4:20",
+      "word": "τὸν ἀδελφὸν αὐτοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 5:9",
+      "word": "τὴν μαρτυρίαν τῶν ἀνθρώπων",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 5:14",
+      "word": "τι",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "1John 5:20",
+      "word": "ἀληθινὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:1",
+      "word": "ἰησοῦ χριστοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:1",
+      "word": "ἐν θεῷ πατρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:3",
+      "word": "ἅπαξ παραδοθείσῃ τοῖς ἁγίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:6",
+      "word": "δεσμοῖς ἀϊδίοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:7",
+      "word": "τὸν ὅμοιον τρόπον τούτοις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:7",
+      "word": "πυρὸς αἰωνίου δίκην",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:9",
+      "word": "τῷ διαβόλῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:9",
+      "word": "τοῦ μωϋσέως",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "φυσικῶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "ὡς τὰ ἄλογα ζῷα",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:12",
+      "word": "ἐν ταῖς ἀγάπαις ὑμῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:20",
+      "word": "ἁγιωτάτῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Jude 1:23",
+      "word": "ἀπὸ τῆς σαρκὸς ἐσπιλωμένον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 1:3",
+      "word": "ἐν αὐτῇ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 1:15",
+      "word": "ἐν καμίνῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:1",
+      "word": "ἐν ἐφέσῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:8",
+      "word": "ἐν σμύρνῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:9",
+      "word": "ἰουδαίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:12",
+      "word": "ἐν περγάμῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:13",
+      "word": "ὁ σατανᾶς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:17",
+      "word": "ὄνομα καινὸν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 2:18",
+      "word": "ἐν θυατείροις",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:1",
+      "word": "ἐν σάρδεσιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:3",
+      "word": "ποίαν ὥραν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:7",
+      "word": "ἐν φιλαδελφείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:9",
+      "word": "ἰουδαίους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:14",
+      "word": "ἐν λαοδικείᾳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:16",
+      "word": "χλιαρὸς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 3:16",
+      "word": "καὶ οὔτε ζεστὸς οὔτε ψυχρός",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 4:4",
+      "word": "εἴκοσι τέσσαρας πρεσβυτέρους",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 5:4",
+      "word": "ἄξιος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 6:3",
+      "word": "δευτέρου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 6:5",
+      "word": "τρίτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 6:7",
+      "word": "τετάρτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 7:17",
+      "word": "ζωῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 8:8",
+      "word": "πυρὶ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 9:1",
+      "word": "ἐκ τοῦ οὐρανοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 9:20",
+      "word": "βλέπειν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 10:11",
+      "word": "πάλιν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 11:4",
+      "word": "ἐνώπιον τοῦ κυρίου τῆς γῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 11:16",
+      "word": "ἐνώπιον τοῦ θεοῦ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 12:12",
+      "word": "ὀλίγον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 13:6",
+      "word": "ἐν τῷ οὐρανῷ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 13:10",
+      "word": "ἐν μαχαίρῃ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 13:12",
+      "word": "πρώτου",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 14:4",
+      "word": "μετὰ γυναικῶν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 14:13",
+      "word": "ἐν κυρίῳ",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 15:1",
+      "word": "ἄλλο",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 15:1",
+      "word": "μέγα καὶ θαυμαστόν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 18:17",
+      "word": "ἐπὶ τόπον",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 18:17",
+      "word": "τὴν θάλασσαν",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 20:15",
+      "word": "ἐν τῇ βίβλῳ τῆς ζωῆς",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 21:1",
+      "word": "πρῶτος",
+      "type": "Embedded Focus+"
+    },
+    {
+      "verse": "Rev 21:1",
+      "word": "πρώτη",
+      "type": "Embedded Focus+"
+    }
+  ]
+}

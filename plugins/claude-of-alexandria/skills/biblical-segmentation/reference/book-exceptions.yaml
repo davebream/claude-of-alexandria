@@ -1,0 +1,138 @@
+# Book Exceptions - Special Handling Rules
+# Used by SKILL.md Iron Rules to enforce integrity safeguards
+# Last updated: 2026-01-19
+
+# Micro-books: Too short to divide into many sessions
+# Max sessions enforced by Rule 1 to prevent artificial subdivision
+micro_books:
+  philemon:
+    max_sessions: 2  # Absolute limit enforced by skill
+    recommended: 1   # Preferred: treat as single unit
+    rationale: "Single unified rhetorical appeal (25 verses)"
+    pair_suggestions: [colossians, ephesians_6:21-24]  # Same author, related themes
+
+  2_john:
+    max_sessions: 1
+    recommended: 1
+    rationale: "13 verses; single exhortation"
+    pair_suggestions: [3_john, 1_john_selections]
+
+  3_john:
+    max_sessions: 1
+    recommended: 1
+    rationale: "15 verses; single letter"
+    pair_suggestions: [2_john, philemon]
+
+  jude:
+    max_sessions: 2
+    recommended: 1
+    rationale: "Unified typological argument (Cain/Balaam/Korah triad)"
+    pair_suggestions: [2_peter]
+
+  obadiah:
+    max_sessions: 2
+    recommended: 1
+    rationale: "21 verses; single oracle against Edom"
+    pair_suggestions: [jonah, nahum]
+
+# Anthology books: Pre-segmented collections that resist session-count logic
+# Rule 2: Switch to curation mode instead of mechanical division
+anthology_books:
+  psalms:
+    mode: curation  # Don't divide by session count; curate selections instead
+    note: "150 pre-segmented units; session-count logic does not apply"
+    options:
+      - by_five_books: "Book I (1-41), II (42-72), III (73-89), IV (90-106), V (107-150)"
+      - by_genre: "Laments, hymns, royal psalms, wisdom psalms"
+      - by_collection: "Psalms of Ascent (120-134), Hallelujah Psalms (146-150)"
+      - thematic: "Group by theme across collections"
+
+  proverbs:
+    mode: curation
+    note: "Discrete sayings; session-count logic does not apply"
+    options:
+      - by_collection: "Solomon I (10:1-22:16), Sayings of Wise (22:17-24:34), Solomon II (25-29), Agur (30), Lemuel (31)"
+      - thematic: "Group by topic (money, speech, family, etc.)"
+
+# Contested books: Multiple valid structural frameworks exist
+# Rule 4: MUST present 2+ options representing different scholarly traditions
+contested_books:
+  hebrews:
+    genre_dispute: "Epistle vs sermonic homily"  # Affects structural approach
+    special_handling: true  # Triggers multi-framework requirement
+    frameworks:
+      - epistolary: "Standard letter structure with opening/body/closing"
+      - exposition_exhortation: "Alternating doctrinal exposition and pastoral exhortation (Guthrie)"
+    methodology_notes: |
+      Genre genuinely disputed. Structure follows alternating pattern:
+      doctrinal exposition → pastoral exhortation. Guthrie (1994) maps
+      this pattern. Divisions should respect the rhythm.
+
+  revelation:
+    structure_dispute: "Linear progression vs recapitulation"
+    special_handling: true
+    frameworks:
+      - linear: "Events progress chronologically through seals/trumpets/bowls to end"
+      - recapitulation: "Seals, trumpets, and bowls each cover the same period from different angles"
+    methodology_notes: |
+      Major structural debate. Seven churches (chs. 1-3) clearly delimited.
+      Seals/trumpets/bowls relationship is disputed. MUST present both views.
+
+  isaiah:
+    structure_dispute: "Unified canonical reading vs three-part critical division"
+    special_handling: true
+    frameworks:
+      - unified: "Read as single literary composition with intentional coherence"
+      - three_part: "First Isaiah (1-39), Deutero-Isaiah (40-55), Trito-Isaiah (56-66)"
+      - two_part: "Judgment (1-39) and Comfort (40-66)"
+    methodology_notes: |
+      Present options compatible with both canonical and critical readings.
+      Don't privilege one tradition's approach.
+
+  zechariah:
+    structure_dispute: "Chs. 1-8 vs 9-14 distinctiveness"
+    special_handling: true
+    frameworks:
+      - unified: "Single prophetic work with thematic development"
+      - two_part: "Dated visions (1-8) + undated oracles (9-14)"
+    methodology_notes: |
+      Scholarly debate on unity. Both frameworks defensible.
+
+  job:
+    primary_genre: wisdom_dialogue
+    secondary_elements: [prose_frame, poetry, hymn]
+    special_handling: true
+    methodology_notes: |
+      Complex structure: Prose frame (1-2, 42:7-17) + poetic dialogue (3-31) +
+      Elihu speeches (32-37) + God speeches (38-41). Respect these boundaries.
+
+  song_of_songs:
+    genre_dispute: "Dramatic structure vs anthology vs allegory"
+    special_handling: true
+    frameworks:
+      - dramatic: "Two or three speakers with dialogue progression"
+      - anthology: "Collection of love poems without narrative arc"
+    methodology_notes: |
+      Dramatic structure debated. Present speaker-based and thematic options.
+
+# Complex genre books: Mix primary genre with embedded secondary genres
+# Segmentation must respect genre transitions (narrative ↔ law, narrative ↔ discourse)
+complex_genre_books:
+  exodus:
+    primary_genre: ot_narrative  # Overarching genre determines default methodology
+    secondary_elements: [torah_law]  # Embedded genres require boundary awareness
+    embedded_locations: "chs. 20-23 (Covenant Code), 25-31, 35-40 (Tabernacle)"
+    methodology_notes: "Narrative frame; law collections form distinct units"
+
+  mark:
+    primary_genre: gospel_narrative
+    secondary_elements: [apocalyptic]
+    embedded_locations: "ch. 13 (Olivet Discourse)"
+    methodology_notes: "Ch. 13 is single unit; do not subdivide with narrative markers"
+
+  romans:
+    primary_genre: epistle
+    secondary_elements: [diatribe, exposition]
+    methodology_notes: |
+      Chs. 9-11 form tightly integrated unit on Israel that resists subdivision.
+      Diatribal Q&A patterns in chs. 2-4, 6, 9 create internal structure.

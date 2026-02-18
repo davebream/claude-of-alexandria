@@ -1,0 +1,2436 @@
+{
+  "feature": "Historical Present",
+  "description": "Highlights not the speech or act to which it refers but the event(s) that follow (DFNTG §12.2).",
+  "references": [
+    {
+      "verse": "Matt 2:13",
+      "word": "φαίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 2:19",
+      "word": "φαίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 3:1",
+      "word": "παραγίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 3:3",
+      "word": "ἐστιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 3:13",
+      "word": "παραγίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 3:15",
+      "word": "ἀφίησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:5",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:8",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:8",
+      "word": "δείκνυσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:11",
+      "word": "ἀφίησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 4:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 8:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 8:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 8:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 8:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 8:26",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:14",
+      "word": "προσέρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:28",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:28",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 9:37",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 12:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 13:28",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 13:29",
+      "word": "φησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 13:51",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 14:8",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 14:17",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 14:31",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 15:1",
+      "word": "προσέρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 15:12",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 15:33",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 15:34",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 16:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 17:1",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 17:1",
+      "word": "ἀναφέρει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 17:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 17:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 18:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 18:32",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:7",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:9",
+      "word": "λέγω",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:10",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:18",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 19:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:7",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:22",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:23",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 20:33",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:31",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:31",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:41",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 21:42",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:16",
+      "word": "ἀποστέλλουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:21",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:42",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 22:43",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 25:11",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 25:19",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 25:19",
+      "word": "συναίρει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:31",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:35",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:36",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:36",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:40",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:40",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:40",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:45",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:45",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:52",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:64",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 26:71",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 27:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 27:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 27:22",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 27:38",
+      "word": "σταυροῦνται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Matt 28:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:12",
+      "word": "ἐκβάλλει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:21",
+      "word": "εἰσπορεύονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:30",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:37",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:40",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:41",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 1:44",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:3",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:4",
+      "word": "χαλῶσι",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:14",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:15",
+      "word": "γίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:18",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:18",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 2:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:3",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:13",
+      "word": "ἀναβαίνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:13",
+      "word": "προσκαλεῖται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:20",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:20",
+      "word": "συνέρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:31",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:32",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:33",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 3:34",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:1",
+      "word": "συνάγεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:35",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:36",
+      "word": "παραλαμβάνουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:37",
+      "word": "γίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:38",
+      "word": "ἐγείρουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 4:38",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:15",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:15",
+      "word": "θεωροῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:22",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:22",
+      "word": "πίπτει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:23",
+      "word": "παρακαλεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:35",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:36",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:38",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:38",
+      "word": "θεωρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:39",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:40",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:40",
+      "word": "εἰσπορεύεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 5:41",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:1",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:1",
+      "word": "ἀκολουθοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:7",
+      "word": "προσκαλεῖται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:30",
+      "word": "συνάγονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:31",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:37",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:38",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:48",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 6:50",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:1",
+      "word": "συνάγονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:5",
+      "word": "ἐπερωτῶσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:18",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:28",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:32",
+      "word": "φέρουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:32",
+      "word": "παρακαλοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 7:34",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:1",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:6",
+      "word": "παραγγέλλει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:19",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:20",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:22",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:22",
+      "word": "φέρουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:22",
+      "word": "παρακαλοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:29",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 8:33",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 9:2",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 9:2",
+      "word": "ἀναφέρει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 9:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 9:35",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:1",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:1",
+      "word": "συμπορεύονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:11",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:16",
+      "word": "κατευλόγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:23",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:24",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:35",
+      "word": "προσπορεύονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:42",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:46",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 10:49",
+      "word": "φωνοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:1",
+      "word": "ἐγγίζουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:1",
+      "word": "ἀποστέλλει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:2",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:4",
+      "word": "λύουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:7",
+      "word": "φέρουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:7",
+      "word": "ἐπιβάλλουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:15",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:27",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:27",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:33",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 11:33",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 12:13",
+      "word": "ἀποστέλλουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 12:14",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 12:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 12:18",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 13:1",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:12",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:13",
+      "word": "ἀποστέλλει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:17",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:30",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:32",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:32",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:33",
+      "word": "παραλαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:34",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:37",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:37",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:37",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:41",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:41",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:43",
+      "word": "παραγίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:45",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:51",
+      "word": "κρατοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:53",
+      "word": "συνέρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:61",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:63",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:66",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 14:67",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:2",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:16",
+      "word": "συγκαλοῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:17",
+      "word": "ἐνδιδύσκουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:17",
+      "word": "περιτιθέασιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:20",
+      "word": "ἐξάγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:21",
+      "word": "ἀγγαρεύουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:22",
+      "word": "φέρουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:24",
+      "word": "σταυροῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:24",
+      "word": "διαμερίζονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 15:27",
+      "word": "σταυροῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 16:2",
+      "word": "ἔρχονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 16:4",
+      "word": "θεωροῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Mark 16:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 7:40",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 8:49",
+      "word": "ἔρχεταί",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 11:37",
+      "word": "ἐρωτᾷ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 11:45",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 13:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 16:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 16:23",
+      "word": "ὁρᾷ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 16:29",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 17:37",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 19:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 24:12",
+      "word": "βλέπει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Luke 24:36",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:15",
+      "word": "μαρτυρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:29",
+      "word": "βλέπει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:29",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:36",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:39",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:41",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:41",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:43",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:43",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:45",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:45",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:46",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:47",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:48",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 1:51",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:3",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:9",
+      "word": "φωνεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 2:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 3:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:5",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:7",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:11",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:26",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:28",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:34",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:49",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 4:50",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 5:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 5:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 5:14",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 6:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 6:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 6:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 6:19",
+      "word": "θεωροῦσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 6:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 7:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 7:50",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 8:3",
+      "word": "ἄγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 8:4",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 8:39",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 9:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 9:13",
+      "word": "ἄγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 9:17",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:8",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:11",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:23",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:24",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:34",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:38",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:39",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:39",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:40",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 11:44",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:22",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:22",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:22",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 12:23",
+      "word": "ἀποκρίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:4",
+      "word": "ἐγείρεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:4",
+      "word": "τίθησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:5",
+      "word": "βάλλει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:6",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:24",
+      "word": "νεύει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:26",
+      "word": "ἀποκρίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:26",
+      "word": "λαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:26",
+      "word": "δίδωσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:31",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:36",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:37",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 13:38",
+      "word": "ἀποκρίνεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 14:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 14:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 14:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 14:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 14:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 16:29",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:3",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:26",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:28",
+      "word": "ἄγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:29",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 18:38",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:14",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:26",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 19:28",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:1",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:1",
+      "word": "βλέπει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:2",
+      "word": "τρέχει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:2",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:2",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:5",
+      "word": "βλέπει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:6",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:6",
+      "word": "θεωρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:12",
+      "word": "θεωρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:13",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:13",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:14",
+      "word": "θεωρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:18",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:26",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:27",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 20:29",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:3",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:3",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:9",
+      "word": "βλέπουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:13",
+      "word": "ἔρχεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:13",
+      "word": "λαμβάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:13",
+      "word": "δίδωσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:20",
+      "word": "βλέπει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "John 21:22",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 2:38",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 7:48",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 8:36",
+      "word": "φησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 10:11",
+      "word": "θεωρεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 10:27",
+      "word": "εὑρίσκει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 10:31",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 12:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 19:35",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 21:37",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 22:2",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 23:18",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 25:5",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 25:22",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 25:24",
+      "word": "φησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 26:24",
+      "word": "φησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Acts 26:25",
+      "word": "φησίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 9:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 9:17",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 9:25",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:5",
+      "word": "γράφει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:11",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:11",
+      "word": "πᾶς ὁ πιστεύων ἐπ’ αὐτῷ οὐ καταισχυνθήσεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:16",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:19",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:20",
+      "word": "ἀποτολμᾷ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 10:21",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 11:2",
+      "word": "ἐντυγχάνει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 11:4",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 11:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 15:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rom 15:12",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 1:6",
+      "word": "εἰσαγάγῃ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 1:6",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 1:7",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 8:5",
+      "word": "φησιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 8:8",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Heb 10:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 4:5",
+      "word": "ἐκπορεύονται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 5:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 5:9",
+      "word": "ᾄδουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 6:16",
+      "word": "λέγουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 7:10",
+      "word": "κράζουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 10:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 10:11",
+      "word": "λέγουσίν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 12:2",
+      "word": "κράζει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 12:4",
+      "word": "σύρει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 13:12",
+      "word": "ποιεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 13:12",
+      "word": "ποιεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 13:13",
+      "word": "ποιεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 13:14",
+      "word": "πλανᾷ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 13:16",
+      "word": "ποιεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 14:3",
+      "word": "ᾄδουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 15:3",
+      "word": "ᾄδουσιν",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 17:15",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:15",
+      "word": "ἐκπορεύεται",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:15",
+      "word": "πατεῖ",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 19:16",
+      "word": "ἔχει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 21:5",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 22:9",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 22:10",
+      "word": "λέγει",
+      "type": "Historical Present"
+    },
+    {
+      "verse": "Rev 22:20",
+      "word": "λέγει",
+      "type": "Historical Present"
+    }
+  ]
+}

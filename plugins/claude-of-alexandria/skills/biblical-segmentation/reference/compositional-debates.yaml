@@ -1,0 +1,33 @@
+# Compositional Debates Reference
+# Books with significant partition/composite theories requiring transparency notes
+# Last updated: 2026-01-19
+#
+# Purpose: Provide standardized compositional notes for Book Overview sections
+# Usage: Agent checks this file when generating output; if book found, inject note
+#
+# Structure:
+#   book_name:
+#     consensus_level: high | moderate | low
+#     note: Pre-written paragraph for Book Overview (ready to inject)
+#
+# Criteria for inclusion:
+#   - Significant scholarly discussion of compositional integrity
+#   - NOT included: Authorship debates (Pastorals, Ephesians) - different category
+#   - NOT included: Minor interpolation theories (1 Cor 14:34-35, etc.)
+#
+# Note format: 2-3 sentences acknowledging debate, stating canonical treatment,
+# explaining boundaries emerge from textual markers regardless of theory.
+
+2_corinthians:
+  consensus_level: high  # Widely discussed; multiple competing theories
+  note: "Scholars debate whether 2 Corinthians is unified or composite (partition theories propose 2-5 letter fragments). The abrupt tonal shift at 10:1 ('severe letter') and standalone collection appeals (8-9) are primary evidence. All options below assume canonical unity; partition boundaries naturally emerge at epistolary markers regardless of compositional theory."
+
+philippians:
+  consensus_level: moderate  # Discussed, but no consensus on boundaries (16+ theories)
+  note: "Some scholars propose Philippians comprises 2-3 letter fragments (especially 3:2-4:3 as separate). However, at least 16 different partition theories exist with no consensus on boundaries. All options below treat canonical form; natural divisions follow epistolary markers."
+
+# romans:
+# consensus_level: low  # Minority position only
+# note: "Some scholars view Romans 16 as separate letter fragment, though minority position. All options treat 1-16 as unified; chapter 16 greetings function naturally as letter closing."
+# COMMENTED: Low consensus - include only if specifically requested or if user raises question
+# Reason: Not significant enough debate to warrant automatic inclusion

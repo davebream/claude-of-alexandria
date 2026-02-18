@@ -1,0 +1,8450 @@
+{
+  "metadata": {
+    "source": "OpenScriptures morphhb / OSHB",
+    "repository": "https://github.com/openscriptures/morphhb",
+    "license": "CC BY 4.0",
+    "extraction_date": "2026-02-18",
+    "note": "Verse-level morphological data. Morph codes follow OSHB tagging system."
+  },
+  "book": "Haggai",
+  "summary": {
+    "total_words": 601,
+    "total_verses": 38,
+    "by_pos": {
+      "noun": 272,
+      "adjective": 18,
+      "o": 7,
+      "verb": 114,
+      "preposition": 37,
+      "a": 7,
+      "adverb": 13,
+      "pronoun": 23,
+      "particle": 45,
+      "suffix": 51,
+      "conjunction": 6,
+      "c": 8
+    }
+  },
+  "verses": {
+    "1:1": [
+      {
+        "text": "בִּ/שְׁנַ֤ת",
+        "strongs": [
+          "H8141"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שְׁתַּ֨יִם֙",
+        "strongs": [
+          "H8147"
+        ],
+        "morph_code": "HAcfda",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "feminine",
+          "number": "dual",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לְ/דָרְיָ֣וֶשׁ",
+        "strongs": [
+          "H1867"
+        ],
+        "morph_code": "HR/Np",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/מֶּ֔לֶךְ",
+        "strongs": [
+          "H4428"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בַּ/חֹ֨דֶשׁ֙",
+        "strongs": [
+          "H2320"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/שִּׁשִּׁ֔י",
+        "strongs": [
+          "H8345"
+        ],
+        "morph_code": "HTd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/י֥וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HR/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אֶחָ֖ד",
+        "strongs": [
+          "H259"
+        ],
+        "morph_code": "HAcmsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לַ/חֹ֑דֶשׁ",
+        "strongs": [
+          "H2320"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הָיָ֨ה",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "דְבַר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֜ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בְּ/יַד",
+        "strongs": [
+          "H3027"
+        ],
+        "morph_code": "HR/Ncbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֣י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/נָּבִ֗יא",
+        "strongs": [
+          "H5030"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "זְרֻבָּבֶ֤ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שְׁאַלְתִּיאֵל֙",
+        "strongs": [
+          "H7597a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "פַּחַ֣ת",
+        "strongs": [
+          "H6346"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוּדָ֔ה",
+        "strongs": [
+          "H3063"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יְהוֹשֻׁ֧עַ",
+        "strongs": [
+          "H3091"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹצָדָ֛ק",
+        "strongs": [
+          "H3087"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/כֹּהֵ֥ן",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גָּד֖וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "1:2": [
+      {
+        "text": "כֹּ֥ה",
+        "strongs": [
+          "H3541"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אָמַ֛ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֖וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לֵ/אמֹ֑ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הָ/עָ֤ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּה֙",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אָֽמְר֔וּ",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3cp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "common",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "לֹ֥א",
+        "strongs": [
+          "H3808"
+        ],
+        "morph_code": "HTn",
+        "pos": "particle"
+      },
+      {
+        "text": "עֶת",
+        "strongs": [
+          "H6256"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בֹּ֛א",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HVqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct"
+        }
+      },
+      {
+        "text": "עֶת",
+        "strongs": [
+          "H6256"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בֵּ֥ית",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֖ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "לְ/הִבָּנֽוֹת",
+        "strongs": [
+          "H1129"
+        ],
+        "morph_code": "HR/VNc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Niphal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "1:3": [
+      {
+        "text": "וַֽ/יְהִי֙",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "דְּבַר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֔ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בְּ/יַד",
+        "strongs": [
+          "H3027"
+        ],
+        "morph_code": "HR/Ncbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֥י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/נָּבִ֖יא",
+        "strongs": [
+          "H5030"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "1:4": [
+      {
+        "text": "הַ/עֵ֤ת",
+        "strongs": [
+          "H6256"
+        ],
+        "morph_code": "HTi/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לָ/כֶם֙",
+        "strongs": [],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אַתֶּ֔ם",
+        "strongs": [
+          "H859d"
+        ],
+        "morph_code": "HPp2mp",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "לָ/שֶׁ֖בֶת",
+        "strongs": [
+          "H3427"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/בָתֵּי/כֶ֣ם",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HR/Ncmpc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "סְפוּנִ֑ים",
+        "strongs": [
+          "H5603"
+        ],
+        "morph_code": "HVqsmpa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "passive_participle",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "וְ/הַ/בַּ֥יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HC/Td/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֖ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "חָרֵֽב",
+        "strongs": [
+          "H2720b"
+        ],
+        "morph_code": "HAamsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "a"
+        }
+      }
+    ],
+    "1:5": [
+      {
+        "text": "וְ/עַתָּ֕ה",
+        "strongs": [
+          "H6258"
+        ],
+        "morph_code": "HC/D",
+        "pos": "adverb",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כֹּ֥ה",
+        "strongs": [
+          "H3541"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אָמַ֖ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֑וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שִׂ֥ימוּ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "לְבַבְ/כֶ֖ם",
+        "strongs": [
+          "H3824"
+        ],
+        "morph_code": "HNcmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "דַּרְכֵי/כֶֽם",
+        "strongs": [
+          "H1870"
+        ],
+        "morph_code": "HNcbpc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "1:6": [
+      {
+        "text": "זְרַעְתֶּ֨ם",
+        "strongs": [
+          "H2232"
+        ],
+        "morph_code": "HVqp2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "הַרְבֵּ֜ה",
+        "strongs": [
+          "H7235a"
+        ],
+        "morph_code": "HVha",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "וְ/הָבֵ֣א",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HC/Vha",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "infinitive_absolute",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "מְעָ֗ט",
+        "strongs": [
+          "H4592"
+        ],
+        "morph_code": "HAamsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "a"
+        }
+      },
+      {
+        "text": "אָכ֤וֹל",
+        "strongs": [
+          "H398"
+        ],
+        "morph_code": "HVqa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "וְ/אֵין",
+        "strongs": [
+          "H369"
+        ],
+        "morph_code": "HC/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לְ/שָׂבְעָה֙",
+        "strongs": [
+          "H7654"
+        ],
+        "morph_code": "HR/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שָׁת֣וֹ",
+        "strongs": [
+          "H8354"
+        ],
+        "morph_code": "HVqa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "וְ/אֵין",
+        "strongs": [
+          "H369"
+        ],
+        "morph_code": "HC/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לְ/שָׁכְרָ֔ה",
+        "strongs": [
+          "H7937"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "לָב֖וֹשׁ",
+        "strongs": [
+          "H3847"
+        ],
+        "morph_code": "HVqa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "וְ/אֵין",
+        "strongs": [
+          "H369"
+        ],
+        "morph_code": "HC/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לְ/חֹ֣ם",
+        "strongs": [
+          "H2527"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "ל֑/וֹ",
+        "strongs": [],
+        "morph_code": "HR/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/הַ֨/מִּשְׂתַּכֵּ֔ר",
+        "strongs": [
+          "H7936b"
+        ],
+        "morph_code": "HC/Td/Vtrmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hithpael",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction",
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "מִשְׂתַּכֵּ֖ר",
+        "strongs": [
+          "H7936b"
+        ],
+        "morph_code": "HVtrmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hithpael",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "צְר֥וֹר",
+        "strongs": [
+          "H6872a"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "נָקֽוּב",
+        "strongs": [
+          "H5344a"
+        ],
+        "morph_code": "HVqsmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "passive_participle",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      }
+    ],
+    "1:7": [
+      {
+        "text": "כֹּ֥ה",
+        "strongs": [
+          "H3541"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אָמַ֖ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֑וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שִׂ֥ימוּ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "לְבַבְ/כֶ֖ם",
+        "strongs": [
+          "H3824"
+        ],
+        "morph_code": "HNcmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "דַּרְכֵי/כֶֽם",
+        "strongs": [
+          "H1870"
+        ],
+        "morph_code": "HNcbpc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "1:8": [
+      {
+        "text": "עֲל֥וּ",
+        "strongs": [
+          "H5927"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "הָ/הָ֛ר",
+        "strongs": [
+          "H2022"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/הֲבֵאתֶ֥ם",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HC/Vhq2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "sequential_perfect",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "עֵ֖ץ",
+        "strongs": [
+          "H6086"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וּ/בְנ֣וּ",
+        "strongs": [
+          "H1129"
+        ],
+        "morph_code": "HC/Vqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/בָּ֑יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶרְצֶה",
+        "strongs": [
+          "H7521"
+        ],
+        "morph_code": "HC/Vqi1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "בּ֥/וֹ",
+        "strongs": [],
+        "morph_code": "HR/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "ו/אכבד",
+        "strongs": [
+          "H3513"
+        ],
+        "morph_code": "HC/VNi1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Niphal",
+          "conjugation": "imperfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶכָּבְדָ֖ה",
+        "strongs": [
+          "H3513"
+        ],
+        "morph_code": "HC/VNh1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Niphal",
+          "conjugation": "cohortative",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אָמַ֥ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָֽה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      }
+    ],
+    "1:9": [
+      {
+        "text": "פָּנֹ֤ה",
+        "strongs": [
+          "H6437"
+        ],
+        "morph_code": "HVqa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַרְבֵּה֙",
+        "strongs": [
+          "H7235a"
+        ],
+        "morph_code": "HVha",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "infinitive_absolute"
+        }
+      },
+      {
+        "text": "וְ/הִנֵּ֣ה",
+        "strongs": [
+          "H2009"
+        ],
+        "morph_code": "HC/Tm",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לִ/מְעָ֔ט",
+        "strongs": [
+          "H4592"
+        ],
+        "morph_code": "HR/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וַ/הֲבֵאתֶ֥ם",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HC/Vhp2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "perfect",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/בַּ֖יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/נָפַ֣חְתִּי",
+        "strongs": [
+          "H5301"
+        ],
+        "morph_code": "HC/Vqp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "ב֑/וֹ",
+        "strongs": [],
+        "morph_code": "HR/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יַ֣עַן",
+        "strongs": [
+          "H3282"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "מֶ֗ה",
+        "strongs": [
+          "H4100"
+        ],
+        "morph_code": "HTi",
+        "pos": "particle"
+      },
+      {
+        "text": "נְאֻם֙",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֔וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יַ֗עַן",
+        "strongs": [
+          "H3282"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "בֵּיתִ/י֙",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HNcmsc/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "אֲשֶׁר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HTr",
+        "pos": "particle"
+      },
+      {
+        "text": "ה֣וּא",
+        "strongs": [
+          "H1931"
+        ],
+        "morph_code": "HPp3ms",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "חָרֵ֔ב",
+        "strongs": [
+          "H2720b"
+        ],
+        "morph_code": "HAamsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "a"
+        }
+      },
+      {
+        "text": "וְ/אַתֶּ֥ם",
+        "strongs": [
+          "H859d"
+        ],
+        "morph_code": "HC/Pp2mp",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "רָצִ֖ים",
+        "strongs": [
+          "H7323"
+        ],
+        "morph_code": "HVqrmpa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "אִ֥ישׁ",
+        "strongs": [
+          "H376"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לְ/בֵיתֽ/וֹ",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HR/Ncmsc/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      }
+    ],
+    "1:10": [
+      {
+        "text": "עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "כֵּ֣ן",
+        "strongs": [
+          "H3651c"
+        ],
+        "morph_code": "HTm",
+        "pos": "particle"
+      },
+      {
+        "text": "עֲלֵי/כֶ֔ם",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "כָּלְא֥וּ",
+        "strongs": [
+          "H3607"
+        ],
+        "morph_code": "HVqp3cp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "common",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "שָמַ֖יִם",
+        "strongs": [
+          "H8064"
+        ],
+        "morph_code": "HNcmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מִ/טָּ֑ל",
+        "strongs": [
+          "H2919"
+        ],
+        "morph_code": "HR/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/הָ/אָ֖רֶץ",
+        "strongs": [
+          "H776"
+        ],
+        "morph_code": "HC/Td/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "כָּלְאָ֥ה",
+        "strongs": [
+          "H3607"
+        ],
+        "morph_code": "HVqp3fs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְבוּלָֽ/הּ",
+        "strongs": [
+          "H2981"
+        ],
+        "morph_code": "HNcmsc/Sp3fs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "1:11": [
+      {
+        "text": "וָ/אֶקְרָ֨א",
+        "strongs": [
+          "H7121"
+        ],
+        "morph_code": "HC/Vqw1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חֹ֜רֶב",
+        "strongs": [
+          "H2721a"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הָ/אָ֣רֶץ",
+        "strongs": [
+          "H776"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הֶ/הָרִ֗ים",
+        "strongs": [
+          "H2022"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/דָּגָן֙",
+        "strongs": [
+          "H1715"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/תִּיר֣וֹשׁ",
+        "strongs": [
+          "H8492"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/יִּצְהָ֔ר",
+        "strongs": [
+          "H3323"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַ֛ל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אֲשֶׁ֥ר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HTr",
+        "pos": "particle"
+      },
+      {
+        "text": "תּוֹצִ֖יא",
+        "strongs": [
+          "H3318"
+        ],
+        "morph_code": "HVhi3fs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "הָ/אֲדָמָ֑ה",
+        "strongs": [
+          "H127"
+        ],
+        "morph_code": "HTd/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הָֽ/אָדָם֙",
+        "strongs": [
+          "H120"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/בְּהֵמָ֔ה",
+        "strongs": [
+          "H929"
+        ],
+        "morph_code": "HTd/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַ֖ל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְגִ֥יעַ",
+        "strongs": [
+          "H3018"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "כַּפָּֽיִם",
+        "strongs": [
+          "H3709"
+        ],
+        "morph_code": "HNcfda",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "dual",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "1:12": [
+      {
+        "text": "וַ/יִּשְׁמַ֣ע",
+        "strongs": [
+          "H8085"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "זְרֻבָּבֶ֣ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּֽן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שַׁלְתִּיאֵ֡ל",
+        "strongs": [
+          "H7597b"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וִ/יהוֹשֻׁ֣עַ",
+        "strongs": [
+          "H3091"
+        ],
+        "morph_code": "HC/Np",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹצָדָק֩",
+        "strongs": [
+          "H3087"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/כֹּהֵ֨ן",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גָּד֜וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/כֹ֣ל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HC/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "שְׁאֵרִ֣ית",
+        "strongs": [
+          "H7611"
+        ],
+        "morph_code": "HNcfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הָ/עָ֗ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/קוֹל֙",
+        "strongs": [
+          "H6963a"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "אֱלֹֽהֵי/הֶ֔ם",
+        "strongs": [
+          "H430"
+        ],
+        "morph_code": "HNcmpc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַל",
+        "strongs": [
+          "H5921a"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "דִּבְרֵי֙",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmpc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "חַגַּ֣י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/נָּבִ֔יא",
+        "strongs": [
+          "H5030"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "כַּ/אֲשֶׁ֥ר",
+        "strongs": [
+          "H834d"
+        ],
+        "morph_code": "HR/Tr",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שְׁלָח֖/וֹ",
+        "strongs": [
+          "H7971"
+        ],
+        "morph_code": "HVqp3ms/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "אֱלֹהֵי/הֶ֑ם",
+        "strongs": [
+          "H430"
+        ],
+        "morph_code": "HNcmpc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יִּֽירְא֥וּ",
+        "strongs": [
+          "H3372"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הָ/עָ֖ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "מִ/פְּנֵ֥י",
+        "strongs": [
+          "H6440"
+        ],
+        "morph_code": "HR/Ncbpc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָֽה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      }
+    ],
+    "1:13": [
+      {
+        "text": "וַ֠/יֹּאמֶר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֞י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "מַלְאַ֧ךְ",
+        "strongs": [
+          "H4397"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֛ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בְּ/מַלְאֲכ֥וּת",
+        "strongs": [
+          "H4400"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָ֖ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "לָ/עָ֣ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹ֑ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אֲנִ֥י",
+        "strongs": [
+          "H589"
+        ],
+        "morph_code": "HPp1cs",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "1"
+        }
+      },
+      {
+        "text": "אִתְּ/כֶ֖ם",
+        "strongs": [
+          "H854"
+        ],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָֽה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      }
+    ],
+    "1:14": [
+      {
+        "text": "וַ/יָּ֣עַר",
+        "strongs": [
+          "H5782"
+        ],
+        "morph_code": "HC/Vhw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָ֡ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "רוּחַ֩",
+        "strongs": [
+          "H7307"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "זְרֻבָּבֶ֨ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שַׁלְתִּיאֵ֜ל",
+        "strongs": [
+          "H7597b"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "פַּחַ֣ת",
+        "strongs": [
+          "H6346"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוּדָ֗ה",
+        "strongs": [
+          "H3063"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וְ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "ר֨וּחַ֙",
+        "strongs": [
+          "H7307"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹשֻׁ֤עַ",
+        "strongs": [
+          "H3091"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹצָדָק֙",
+        "strongs": [
+          "H3087"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/כֹּהֵ֣ן",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גָּד֔וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְֽ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "ר֔וּחַ",
+        "strongs": [
+          "H7307"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "כֹּ֖ל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שְׁאֵרִ֣ית",
+        "strongs": [
+          "H7611"
+        ],
+        "morph_code": "HNcfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הָ/עָ֑ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יָּבֹ֨אוּ֙",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יַּעֲשׂ֣וּ",
+        "strongs": [
+          "H6213a"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "מְלָאכָ֔ה",
+        "strongs": [
+          "H4399"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בְּ/בֵית",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֖וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "אֱלֹהֵי/הֶֽם",
+        "strongs": [
+          "H430"
+        ],
+        "morph_code": "HNcmpc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "1:15": [
+      {
+        "text": "בְּ/י֨וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "עֶשְׂרִ֧ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HAcbpa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/אַרְבָּעָ֛ה",
+        "strongs": [
+          "H702"
+        ],
+        "morph_code": "HC/Acmsa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לַ/חֹ֖דֶשׁ",
+        "strongs": [
+          "H2320"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בַּ/שִּׁשִּׁ֑י",
+        "strongs": [
+          "H8345"
+        ],
+        "morph_code": "HRd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בִּ/שְׁנַ֥ת",
+        "strongs": [
+          "H8141"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שְׁתַּ֖יִם",
+        "strongs": [
+          "H8147"
+        ],
+        "morph_code": "HAcfda",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "feminine",
+          "number": "dual",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לְ/דָרְיָ֥וֶשׁ",
+        "strongs": [
+          "H1867"
+        ],
+        "morph_code": "HR/Np",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/מֶּֽלֶךְ",
+        "strongs": [
+          "H4428"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      }
+    ],
+    "2:1": [
+      {
+        "text": "בַּ/שְּׁבִיעִ֕י",
+        "strongs": [
+          "H7637"
+        ],
+        "morph_code": "HRd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/עֶשְׂרִ֥ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HR/Acbpa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶחָ֖ד",
+        "strongs": [
+          "H259"
+        ],
+        "morph_code": "HC/Acmsa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לַ/חֹ֑דֶשׁ",
+        "strongs": [
+          "H2320"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הָיָה֙",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "דְּבַר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֔ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בְּ/יַד",
+        "strongs": [
+          "H3027"
+        ],
+        "morph_code": "HR/Ncbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֥י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/נָּבִ֖יא",
+        "strongs": [
+          "H5030"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:2": [
+      {
+        "text": "אֱמָר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "נָ֗א",
+        "strongs": [
+          "H4994"
+        ],
+        "morph_code": "HTe",
+        "pos": "particle"
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "זְרֻבָּבֶ֤ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שַׁלְתִּיאֵל֙",
+        "strongs": [
+          "H7597b"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "פַּחַ֣ת",
+        "strongs": [
+          "H6346"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוּדָ֔ה",
+        "strongs": [
+          "H3063"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יְהוֹשֻׁ֥עַ",
+        "strongs": [
+          "H3091"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹצָדָ֖ק",
+        "strongs": [
+          "H3087"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/כֹּהֵ֣ן",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גָּד֑וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "שְׁאֵרִ֥ית",
+        "strongs": [
+          "H7611"
+        ],
+        "morph_code": "HNcfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הָ/עָ֖ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:3": [
+      {
+        "text": "מִ֤י",
+        "strongs": [
+          "H4310"
+        ],
+        "morph_code": "HTi",
+        "pos": "particle"
+      },
+      {
+        "text": "בָ/כֶם֙",
+        "strongs": [],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/נִּשְׁאָ֔ר",
+        "strongs": [
+          "H7604"
+        ],
+        "morph_code": "HTd/VNrmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Niphal",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֲשֶׁ֤ר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HTr",
+        "pos": "particle"
+      },
+      {
+        "text": "רָאָה֙",
+        "strongs": [
+          "H7200"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/בַּ֣יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֔ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בִּ/כְבוֹד֖/וֹ",
+        "strongs": [
+          "H3519"
+        ],
+        "morph_code": "HR/Ncbsc/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "הָ/רִאשׁ֑וֹן",
+        "strongs": [
+          "H7223"
+        ],
+        "morph_code": "HTd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וּ/מָ֨ה",
+        "strongs": [
+          "H4100"
+        ],
+        "morph_code": "HC/Ti",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אַתֶּ֜ם",
+        "strongs": [
+          "H859d"
+        ],
+        "morph_code": "HPp2mp",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "רֹאִ֤ים",
+        "strongs": [
+          "H7200"
+        ],
+        "morph_code": "HVqrmpa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "אֹת/וֹ֙",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "עַ֔תָּה",
+        "strongs": [
+          "H6258"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "הֲ/ל֥וֹא",
+        "strongs": [
+          "H3808"
+        ],
+        "morph_code": "HTi/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "כָמֹ֛/הוּ",
+        "strongs": [
+          "H3644"
+        ],
+        "morph_code": "HR/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "כְּ/אַ֖יִן",
+        "strongs": [
+          "H369"
+        ],
+        "morph_code": "HR/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/עֵינֵי/כֶֽם",
+        "strongs": [
+          "H5869a"
+        ],
+        "morph_code": "HR/Ncbdc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      }
+    ],
+    "2:4": [
+      {
+        "text": "וְ/עַתָּ֣ה",
+        "strongs": [
+          "H6258"
+        ],
+        "morph_code": "HC/D",
+        "pos": "adverb",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חֲזַ֣ק",
+        "strongs": [
+          "H2388"
+        ],
+        "morph_code": "HVqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "זְרֻבָּבֶ֣ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֡ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וַ/חֲזַ֣ק",
+        "strongs": [
+          "H2388"
+        ],
+        "morph_code": "HC/Vqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יְהוֹשֻׁ֣עַ",
+        "strongs": [
+          "H3091"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוֹצָדָק֩",
+        "strongs": [
+          "H3087"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/כֹּהֵ֨ן",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גָּד֜וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/חֲזַ֨ק",
+        "strongs": [
+          "H2388"
+        ],
+        "morph_code": "HC/Vqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "עַ֥ם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הָ/אָ֛רֶץ",
+        "strongs": [
+          "H776"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֖ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וַֽ/עֲשׂ֑וּ",
+        "strongs": [
+          "H6213a"
+        ],
+        "morph_code": "HC/Vqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כִּֽי",
+        "strongs": [
+          "H3588a"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "אֲנִ֣י",
+        "strongs": [
+          "H589"
+        ],
+        "morph_code": "HPp1cs",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "1"
+        }
+      },
+      {
+        "text": "אִתְּ/כֶ֔ם",
+        "strongs": [
+          "H854"
+        ],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻ֖ם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָאֽוֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "2:5": [
+      {
+        "text": "אֶֽת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/דָּבָ֞ר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֲשֶׁר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HTr",
+        "pos": "particle"
+      },
+      {
+        "text": "כָּרַ֤תִּי",
+        "strongs": [
+          "H3772"
+        ],
+        "morph_code": "HVqp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אִתְּ/כֶם֙",
+        "strongs": [
+          "H854"
+        ],
+        "morph_code": "HR/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בְּ/צֵאתְ/כֶ֣ם",
+        "strongs": [
+          "H3318"
+        ],
+        "morph_code": "HR/Vqc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition",
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "מִ/מִּצְרַ֔יִם",
+        "strongs": [
+          "H4714"
+        ],
+        "morph_code": "HR/Np",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/רוּחִ֖/י",
+        "strongs": [
+          "H7307"
+        ],
+        "morph_code": "HC/Ncbsc/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "conjunction",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "עֹמֶ֣דֶת",
+        "strongs": [
+          "H5975"
+        ],
+        "morph_code": "HVqrfsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "active_participle",
+          "gender": "feminine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "בְּ/תוֹכְ/כֶ֑ם",
+        "strongs": [
+          "H8432"
+        ],
+        "morph_code": "HR/Ncmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "אַל",
+        "strongs": [
+          "H408"
+        ],
+        "morph_code": "HTn",
+        "pos": "particle"
+      },
+      {
+        "text": "תִּירָֽאוּ",
+        "strongs": [
+          "H3372"
+        ],
+        "morph_code": "HVqj2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "jussive",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      }
+    ],
+    "2:6": [
+      {
+        "text": "כִּ֣י",
+        "strongs": [
+          "H3588a"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "כֹ֤ה",
+        "strongs": [
+          "H3541"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אָמַר֙",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֔וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "ע֥וֹד",
+        "strongs": [
+          "H5750"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אַחַ֖ת",
+        "strongs": [
+          "H259"
+        ],
+        "morph_code": "HAcfsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מְעַ֣ט",
+        "strongs": [
+          "H4592"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הִ֑יא",
+        "strongs": [
+          "H1931"
+        ],
+        "morph_code": "HPp3fs",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "וַ/אֲנִ֗י",
+        "strongs": [
+          "H589"
+        ],
+        "morph_code": "HC/Pp1cs",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "מַרְעִישׁ֙",
+        "strongs": [
+          "H7493"
+        ],
+        "morph_code": "HVhrmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/שָּׁמַ֣יִם",
+        "strongs": [
+          "H8064"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הָ/אָ֔רֶץ",
+        "strongs": [
+          "H776"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/יָּ֖ם",
+        "strongs": [
+          "H3220"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הֶ/חָרָבָֽה",
+        "strongs": [
+          "H2724"
+        ],
+        "morph_code": "HR/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:7": [
+      {
+        "text": "וְ/הִרְעַשְׁתִּי֙",
+        "strongs": [
+          "H7493"
+        ],
+        "morph_code": "HC/Vhp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הַ/גּוֹיִ֔ם",
+        "strongs": [
+          "H1471a"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וּ/בָ֖אוּ",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HC/Vqp3cp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "common",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חֶמְדַּ֣ת",
+        "strongs": [
+          "H2532a"
+        ],
+        "morph_code": "HNcfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הַ/גּוֹיִ֑ם",
+        "strongs": [
+          "H1471a"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וּ/מִלֵּאתִ֞י",
+        "strongs": [
+          "H4390"
+        ],
+        "morph_code": "HC/Vpp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Piel",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/בַּ֤יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּה֙",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "כָּב֔וֹד",
+        "strongs": [
+          "H3519"
+        ],
+        "morph_code": "HNcbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "אָמַ֖ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָאֽוֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "2:8": [
+      {
+        "text": "לִ֥/י",
+        "strongs": [],
+        "morph_code": "HR/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/כֶּ֖סֶף",
+        "strongs": [
+          "H3701"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/לִ֣/י",
+        "strongs": [],
+        "morph_code": "HC/R/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "conjunction",
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זָּהָ֑ב",
+        "strongs": [
+          "H2091"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻ֖ם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָאֽוֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "2:9": [
+      {
+        "text": "גָּד֣וֹל",
+        "strongs": [
+          "H1419a"
+        ],
+        "morph_code": "HAamsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "a"
+        }
+      },
+      {
+        "text": "יִֽהְיֶ֡ה",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HVqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "כְּבוֹד֩",
+        "strongs": [
+          "H3519"
+        ],
+        "morph_code": "HNcbsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הַ/בַּ֨יִת",
+        "strongs": [
+          "H1004b"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֤ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הָ/אַֽחֲרוֹן֙",
+        "strongs": [
+          "H314"
+        ],
+        "morph_code": "HTd/Aamsa",
+        "pos": "a",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "מִן",
+        "strongs": [
+          "H4480a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הָ֣/רִאשׁ֔וֹן",
+        "strongs": [
+          "H7223"
+        ],
+        "morph_code": "HTd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אָמַ֖ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֑וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וּ/בַ/מָּק֤וֹם",
+        "strongs": [
+          "H4725"
+        ],
+        "morph_code": "HC/Rd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּה֙",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֶתֵּ֣ן",
+        "strongs": [
+          "H5414"
+        ],
+        "morph_code": "HVqi1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "שָׁל֔וֹם",
+        "strongs": [
+          "H7965"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "נְאֻ֖ם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָאֽוֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "2:10": [
+      {
+        "text": "בְּ/עֶשְׂרִ֤ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HR/Acbpa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אַרְבָּעָה֙",
+        "strongs": [
+          "H702"
+        ],
+        "morph_code": "HC/Acmsa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לַ/תְּשִׁיעִ֔י",
+        "strongs": [
+          "H8671"
+        ],
+        "morph_code": "HRd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בִּ/שְׁנַ֥ת",
+        "strongs": [
+          "H8141"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שְׁתַּ֖יִם",
+        "strongs": [
+          "H8147"
+        ],
+        "morph_code": "HAcfda",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "feminine",
+          "number": "dual",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לְ/דָרְיָ֑וֶשׁ",
+        "strongs": [
+          "H1867"
+        ],
+        "morph_code": "HR/Np",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הָיָה֙",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "דְּבַר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֔ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "חַגַּ֥י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "הַ/נָּבִ֖יא",
+        "strongs": [
+          "H5030"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:11": [
+      {
+        "text": "כֹּ֥ה",
+        "strongs": [
+          "H3541"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "אָמַ֖ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֑וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שְׁאַל",
+        "strongs": [
+          "H7592"
+        ],
+        "morph_code": "HVqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "נָ֧א",
+        "strongs": [
+          "H4994"
+        ],
+        "morph_code": "HTe",
+        "pos": "particle"
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/כֹּהֲנִ֛ים",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "תּוֹרָ֖ה",
+        "strongs": [
+          "H8451"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:12": [
+      {
+        "text": "הֵ֣ן",
+        "strongs": [
+          "H2005"
+        ],
+        "morph_code": "HTm",
+        "pos": "particle"
+      },
+      {
+        "text": "יִשָּׂא",
+        "strongs": [
+          "H5375"
+        ],
+        "morph_code": "HVqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אִ֨ישׁ",
+        "strongs": [
+          "H376"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בְּשַׂר",
+        "strongs": [
+          "H1320"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "קֹ֜דֶשׁ",
+        "strongs": [
+          "H6944"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בִּ/כְנַ֣ף",
+        "strongs": [
+          "H3671"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בִּגְד֗/וֹ",
+        "strongs": [
+          "H899b"
+        ],
+        "morph_code": "HNcmsc/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "וְ/נָגַ֣ע",
+        "strongs": [
+          "H5060"
+        ],
+        "morph_code": "HC/Vqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "בִּ֠/כְנָפ/וֹ",
+        "strongs": [
+          "H3671"
+        ],
+        "morph_code": "HR/Ncfsc/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַ/לֶּ֨חֶם",
+        "strongs": [
+          "H3899"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/נָּזִ֜יד",
+        "strongs": [
+          "H5138"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/יַּ֧יִן",
+        "strongs": [
+          "H3196"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "שֶׁ֛מֶן",
+        "strongs": [
+          "H8081"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מַאֲכָ֖ל",
+        "strongs": [
+          "H3978"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הֲ/יִקְדָּ֑שׁ",
+        "strongs": [
+          "H6942"
+        ],
+        "morph_code": "HTi/Vqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יַּעֲנ֧וּ",
+        "strongs": [
+          "H6030b"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/כֹּהֲנִ֛ים",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יֹּאמְר֖וּ",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לֹֽא",
+        "strongs": [
+          "H3808"
+        ],
+        "morph_code": "HTn",
+        "pos": "particle"
+      }
+    ],
+    "2:13": [
+      {
+        "text": "וַ/יֹּ֣אמֶר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֔י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "אִם",
+        "strongs": [
+          "H518a"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "יִגַּ֧ע",
+        "strongs": [
+          "H5060"
+        ],
+        "morph_code": "HVqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "טְמֵא",
+        "strongs": [
+          "H2931"
+        ],
+        "morph_code": "HAamsc",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "a"
+        }
+      },
+      {
+        "text": "נֶ֛פֶשׁ",
+        "strongs": [
+          "H5315"
+        ],
+        "morph_code": "HNcbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בְּ/כָל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אֵ֖לֶּה",
+        "strongs": [
+          "H428"
+        ],
+        "morph_code": "HPdxcp",
+        "pos": "pronoun"
+      },
+      {
+        "text": "הֲ/יִטְמָ֑א",
+        "strongs": [
+          "H2930a"
+        ],
+        "morph_code": "HTi/Vqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יַּעֲנ֧וּ",
+        "strongs": [
+          "H6030b"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/כֹּהֲנִ֛ים",
+        "strongs": [
+          "H3548"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וַ/יֹּאמְר֖וּ",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HC/Vqw3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יִטְמָֽא",
+        "strongs": [
+          "H2930a"
+        ],
+        "morph_code": "HVqi3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      }
+    ],
+    "2:14": [
+      {
+        "text": "וַ/יַּ֨עַן",
+        "strongs": [
+          "H6030b"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חַגַּ֜י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וַ/יֹּ֗אמֶר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כֵּ֣ן",
+        "strongs": [
+          "H3651c"
+        ],
+        "morph_code": "HTm",
+        "pos": "particle"
+      },
+      {
+        "text": "הָֽ/עָם",
+        "strongs": [
+          "H5971a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ֠/זֶּה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/כֵן",
+        "strongs": [
+          "H3651c"
+        ],
+        "morph_code": "HC/Tm",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גּ֨וֹי",
+        "strongs": [
+          "H1471a"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֤ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לְ/פָנַ/י֙",
+        "strongs": [
+          "H6440"
+        ],
+        "morph_code": "HR/Ncbpc/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "preposition",
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֔ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וְ/כֵ֖ן",
+        "strongs": [
+          "H3651c"
+        ],
+        "morph_code": "HC/Tm",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מַעֲשֵׂ֣ה",
+        "strongs": [
+          "H4639"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְדֵי/הֶ֑ם",
+        "strongs": [
+          "H3027"
+        ],
+        "morph_code": "HNcbdc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "וַ/אֲשֶׁ֥ר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HC/Tr",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "יַקְרִ֛יבוּ",
+        "strongs": [
+          "H7126"
+        ],
+        "morph_code": "HVhi3mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "imperfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "שָׁ֖ם",
+        "strongs": [
+          "H8033"
+        ],
+        "morph_code": "HD",
+        "pos": "adverb"
+      },
+      {
+        "text": "טָמֵ֥א",
+        "strongs": [
+          "H2931"
+        ],
+        "morph_code": "HAamsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "a"
+        }
+      },
+      {
+        "text": "הֽוּא",
+        "strongs": [
+          "H1931"
+        ],
+        "morph_code": "HPp3ms",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      }
+    ],
+    "2:15": [
+      {
+        "text": "וְ/עַתָּה֙",
+        "strongs": [
+          "H6258"
+        ],
+        "morph_code": "HC/D",
+        "pos": "adverb",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "שִֽׂימוּ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "נָ֣א",
+        "strongs": [
+          "H4994"
+        ],
+        "morph_code": "HTe",
+        "pos": "particle"
+      },
+      {
+        "text": "לְבַבְ/כֶ֔ם",
+        "strongs": [
+          "H3824"
+        ],
+        "morph_code": "HNcmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "מִן",
+        "strongs": [
+          "H4480a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַ/יּ֥וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֖ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וָ/מָ֑עְלָ/ה",
+        "strongs": [
+          "H4605"
+        ],
+        "morph_code": "HC/D/Sd",
+        "pos": "suffix",
+        "parsing": {
+          "prefixes": [
+            "conjunction",
+            "adverb"
+          ]
+        }
+      },
+      {
+        "text": "מִ/טֶּ֧רֶם",
+        "strongs": [
+          "H2962"
+        ],
+        "morph_code": "HR/D",
+        "pos": "adverb",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "שֽׂוּם",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct"
+        }
+      },
+      {
+        "text": "אֶ֛בֶן",
+        "strongs": [
+          "H68"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "אֶ֖בֶן",
+        "strongs": [
+          "H68"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בְּ/הֵיכַ֥ל",
+        "strongs": [
+          "H1964"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "יְהוָֽה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      }
+    ],
+    "2:16": [
+      {
+        "text": "מִֽ/הְיוֹתָ֥/ם",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HR/Vqc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "preposition",
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "בָּא֙",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "עֲרֵמַ֣ת",
+        "strongs": [
+          "H6194"
+        ],
+        "morph_code": "HNcfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "עֶשְׂרִ֔ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HAcbpa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/הָיְתָ֖ה",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HC/Vqp3fs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "עֲשָׂרָ֑ה",
+        "strongs": [
+          "H6235"
+        ],
+        "morph_code": "HAcmsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בָּ֣א",
+        "strongs": [
+          "H935"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַ/יֶּ֗קֶב",
+        "strongs": [
+          "H3342"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לַ/חְשֹׂף֙",
+        "strongs": [
+          "H2834"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "חֲמִשִּׁ֣ים",
+        "strongs": [
+          "H2572"
+        ],
+        "morph_code": "HAcbpa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "פּוּרָ֔ה",
+        "strongs": [
+          "H6333"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/הָיְתָ֖ה",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HC/Vqp3fs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "עֶשְׂרִֽים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HAcbpa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ],
+    "2:17": [
+      {
+        "text": "הִכֵּ֨יתִי",
+        "strongs": [
+          "H5221"
+        ],
+        "morph_code": "HVhp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶתְ/כֶ֜ם",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בַּ/שִּׁדָּפ֤וֹן",
+        "strongs": [
+          "H7711b"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וּ/בַ/יֵּֽרָקוֹן֙",
+        "strongs": [
+          "H3420"
+        ],
+        "morph_code": "HC/Rd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וּ/בַ/בָּרָ֔ד",
+        "strongs": [
+          "H1259"
+        ],
+        "morph_code": "HC/Rd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אֵ֖ת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "כָּל",
+        "strongs": [
+          "H3605"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מַעֲשֵׂ֣ה",
+        "strongs": [
+          "H4639"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְדֵי/כֶ֑ם",
+        "strongs": [
+          "H3027"
+        ],
+        "morph_code": "HNcbdc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֵין",
+        "strongs": [
+          "H369"
+        ],
+        "morph_code": "HC/Tn",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "אֶתְ/כֶ֥ם",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֵלַ֖/י",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָֽה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      }
+    ],
+    "2:18": [
+      {
+        "text": "שִׂימוּ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "נָ֣א",
+        "strongs": [
+          "H4994"
+        ],
+        "morph_code": "HTe",
+        "pos": "particle"
+      },
+      {
+        "text": "לְבַבְ/כֶ֔ם",
+        "strongs": [
+          "H3824"
+        ],
+        "morph_code": "HNcmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "מִן",
+        "strongs": [
+          "H4480a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַ/יּ֥וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֖ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וָ/מָ֑עְלָ/ה",
+        "strongs": [
+          "H4605"
+        ],
+        "morph_code": "HC/D/Sd",
+        "pos": "suffix",
+        "parsing": {
+          "prefixes": [
+            "conjunction",
+            "adverb"
+          ]
+        }
+      },
+      {
+        "text": "מִ/יּוֹם֩",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HR/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "עֶשְׂרִ֨ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HAcbpa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/אַרְבָּעָ֜ה",
+        "strongs": [
+          "H702"
+        ],
+        "morph_code": "HC/Acmsa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לַ/תְּשִׁיעִ֗י",
+        "strongs": [
+          "H8671"
+        ],
+        "morph_code": "HRd/Aomsa",
+        "pos": "o",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "לְ/מִן",
+        "strongs": [
+          "H4480a"
+        ],
+        "morph_code": "HR/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/יּ֛וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֲשֶׁר",
+        "strongs": [
+          "H834a"
+        ],
+        "morph_code": "HTr",
+        "pos": "particle"
+      },
+      {
+        "text": "יֻסַּ֥ד",
+        "strongs": [
+          "H3245"
+        ],
+        "morph_code": "HVPp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Pual",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "הֵֽיכַל",
+        "strongs": [
+          "H1964"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֖ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "שִׂ֥ימוּ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HVqv2mp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "לְבַבְ/כֶֽם",
+        "strongs": [
+          "H3824"
+        ],
+        "morph_code": "HNcmsc/Sp2mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "2:19": [
+      {
+        "text": "הַ/ע֤וֹד",
+        "strongs": [
+          "H5750"
+        ],
+        "morph_code": "HTi/D",
+        "pos": "adverb",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֨רַע֙",
+        "strongs": [
+          "H2233"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "בַּ/מְּגוּרָ֔ה",
+        "strongs": [
+          "H4035"
+        ],
+        "morph_code": "HRd/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עַד",
+        "strongs": [
+          "H5704"
+        ],
+        "morph_code": "HC/R",
+        "pos": "preposition",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/גֶּ֨פֶן",
+        "strongs": [
+          "H1612"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/הַ/תְּאֵנָ֧ה",
+        "strongs": [
+          "H8384"
+        ],
+        "morph_code": "HC/Td/Ncfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/הָ/רִמּ֛וֹן",
+        "strongs": [
+          "H7416"
+        ],
+        "morph_code": "HC/Td/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction",
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/עֵ֥ץ",
+        "strongs": [
+          "H6086"
+        ],
+        "morph_code": "HC/Ncmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זַּ֖יִת",
+        "strongs": [
+          "H2132"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "לֹ֣א",
+        "strongs": [
+          "H3808"
+        ],
+        "morph_code": "HTn",
+        "pos": "particle"
+      },
+      {
+        "text": "נָשָׂ֑א",
+        "strongs": [
+          "H5375"
+        ],
+        "morph_code": "HVqp3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "מִן",
+        "strongs": [
+          "H4480a"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "הַ/יּ֥וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HTd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "הַ/זֶּ֖ה",
+        "strongs": [
+          "H2088"
+        ],
+        "morph_code": "HTd/Pdxms",
+        "pos": "pronoun",
+        "parsing": {
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "אֲבָרֵֽךְ",
+        "strongs": [
+          "H1288"
+        ],
+        "morph_code": "HVpi1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Piel",
+          "conjugation": "imperfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular"
+        }
+      }
+    ],
+    "2:20": [
+      {
+        "text": "וַ/יְהִ֨י",
+        "strongs": [
+          "H1961"
+        ],
+        "morph_code": "HC/Vqw3ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "wayyiqtol",
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "דְבַר",
+        "strongs": [
+          "H1697"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֤ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "שֵׁנִית֙",
+        "strongs": [
+          "H8145"
+        ],
+        "morph_code": "HAofsa",
+        "pos": "adjective",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "ordinal"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "חַגַּ֔י",
+        "strongs": [
+          "H2292a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בְּ/עֶשְׂרִ֧ים",
+        "strongs": [
+          "H6242"
+        ],
+        "morph_code": "HR/Acbpa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אַרְבָּעָ֛ה",
+        "strongs": [
+          "H702"
+        ],
+        "morph_code": "HC/Acmsa",
+        "pos": "c",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "לַ/חֹ֖דֶשׁ",
+        "strongs": [
+          "H2320"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "לֵ/אמֹֽר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      }
+    ],
+    "2:21": [
+      {
+        "text": "אֱמֹ֕ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HVqv2ms",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "imperative",
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶל",
+        "strongs": [
+          "H413"
+        ],
+        "morph_code": "HR",
+        "pos": "preposition"
+      },
+      {
+        "text": "זְרֻבָּבֶ֥ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "פַּֽחַת",
+        "strongs": [
+          "H6346"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוּדָ֖ה",
+        "strongs": [
+          "H3063"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "לֵ/אמֹ֑ר",
+        "strongs": [
+          "H559"
+        ],
+        "morph_code": "HR/Vqc",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "infinitive_construct",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אֲנִ֣י",
+        "strongs": [
+          "H589"
+        ],
+        "morph_code": "HPp1cs",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "1"
+        }
+      },
+      {
+        "text": "מַרְעִ֔ישׁ",
+        "strongs": [
+          "H7493"
+        ],
+        "morph_code": "HVhrmsa",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "active_participle",
+          "gender": "masculine",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HTo",
+        "pos": "particle"
+      },
+      {
+        "text": "הַ/שָּׁמַ֖יִם",
+        "strongs": [
+          "H8064"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/אֶת",
+        "strongs": [
+          "H853"
+        ],
+        "morph_code": "HC/To",
+        "pos": "particle",
+        "parsing": {
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "הָ/אָֽרֶץ",
+        "strongs": [
+          "H776"
+        ],
+        "morph_code": "HTd/Ncbsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      }
+    ],
+    "2:22": [
+      {
+        "text": "וְ/הָֽפַכְתִּי֙",
+        "strongs": [
+          "H2015"
+        ],
+        "morph_code": "HC/Vqq1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "sequential_perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "כִּסֵּ֣א",
+        "strongs": [
+          "H3678"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מַמְלָכ֔וֹת",
+        "strongs": [
+          "H4467"
+        ],
+        "morph_code": "HNcfpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/הִ֨שְׁמַדְתִּ֔י",
+        "strongs": [
+          "H8045"
+        ],
+        "morph_code": "HC/Vhq1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Hiphil",
+          "conjugation": "sequential_perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "חֹ֖זֶק",
+        "strongs": [
+          "H2392"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "מַמְלְכ֣וֹת",
+        "strongs": [
+          "H4467"
+        ],
+        "morph_code": "HNcfpc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "plural",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "הַ/גּוֹיִ֑ם",
+        "strongs": [
+          "H1471a"
+        ],
+        "morph_code": "HTd/Ncmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "וְ/הָפַכְתִּ֤י",
+        "strongs": [
+          "H2015"
+        ],
+        "morph_code": "HC/Vqq1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "sequential_perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "מֶרְכָּבָה֙",
+        "strongs": [
+          "H4818"
+        ],
+        "morph_code": "HNcfsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/רֹ֣כְבֶ֔י/הָ",
+        "strongs": [
+          "H7392"
+        ],
+        "morph_code": "HC/Vqrmpc/Sp3fs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "feminine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction",
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "וְ/יָרְד֤וּ",
+        "strongs": [
+          "H3381"
+        ],
+        "morph_code": "HC/Vqq3cp",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "sequential_perfect",
+          "person": "3",
+          "gender": "common",
+          "number": "plural",
+          "prefixes": [
+            "conjunction"
+          ]
+        }
+      },
+      {
+        "text": "סוּסִים֙",
+        "strongs": [
+          "H5483b"
+        ],
+        "morph_code": "HNcmpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "וְ/רֹ֣כְבֵי/הֶ֔ם",
+        "strongs": [
+          "H7392"
+        ],
+        "morph_code": "HC/Vqrmpc/Sp3mp",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "plural",
+          "prefixes": [
+            "conjunction",
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "אִ֖ישׁ",
+        "strongs": [
+          "H376"
+        ],
+        "morph_code": "HNcmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "בְּ/חֶ֥רֶב",
+        "strongs": [
+          "H2719"
+        ],
+        "morph_code": "HR/Ncfsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "feminine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "אָחִֽי/ו",
+        "strongs": [
+          "H251"
+        ],
+        "morph_code": "HNcmsc/Sp3ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      }
+    ],
+    "2:23": [
+      {
+        "text": "בַּ/יּ֣וֹם",
+        "strongs": [
+          "H3117"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "הַ/ה֣וּא",
+        "strongs": [
+          "H1931"
+        ],
+        "morph_code": "HTd/Pp3ms",
+        "pos": "pronoun",
+        "parsing": {
+          "person": "3",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "particle"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֣ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָא֡וֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "אֶ֠קָּחֲ/ךָ",
+        "strongs": [
+          "H3947"
+        ],
+        "morph_code": "HVqi1cs/Sp2ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "זְרֻבָּבֶ֨ל",
+        "strongs": [
+          "H2216"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "בֶּן",
+        "strongs": [
+          "H1121a"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "שְׁאַלְתִּיאֵ֤ל",
+        "strongs": [
+          "H7597a"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "עַבְדִּ/י֙",
+        "strongs": [
+          "H5650"
+        ],
+        "morph_code": "HNcmsc/Sp1cs",
+        "pos": "suffix",
+        "parsing": {
+          "person": "1",
+          "prefixes": [
+            "noun"
+          ]
+        }
+      },
+      {
+        "text": "נְאֻם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֔ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "וְ/שַׂמְתִּ֖י/ךָ",
+        "strongs": [
+          "H7760a"
+        ],
+        "morph_code": "HC/Vqp1cs/Sp2ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "conjunction",
+            "verb"
+          ]
+        }
+      },
+      {
+        "text": "כַּֽ/חוֹתָ֑ם",
+        "strongs": [
+          "H2368"
+        ],
+        "morph_code": "HRd/Ncmsa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "absolute",
+          "noun_type": "common",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "כִּֽי",
+        "strongs": [
+          "H3588a"
+        ],
+        "morph_code": "HC",
+        "pos": "conjunction"
+      },
+      {
+        "text": "בְ/ךָ֣",
+        "strongs": [],
+        "morph_code": "HR/Sp2ms",
+        "pos": "suffix",
+        "parsing": {
+          "person": "2",
+          "gender": "masculine",
+          "number": "singular",
+          "prefixes": [
+            "preposition"
+          ]
+        }
+      },
+      {
+        "text": "בָחַ֔רְתִּי",
+        "strongs": [
+          "H977"
+        ],
+        "morph_code": "HVqp1cs",
+        "pos": "verb",
+        "parsing": {
+          "stem": "Qal",
+          "conjugation": "perfect",
+          "person": "1",
+          "gender": "common",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "נְאֻ֖ם",
+        "strongs": [
+          "H5002"
+        ],
+        "morph_code": "HNcmsc",
+        "pos": "noun",
+        "parsing": {
+          "gender": "masculine",
+          "number": "singular",
+          "state": "construct",
+          "noun_type": "common"
+        }
+      },
+      {
+        "text": "יְהוָ֥ה",
+        "strongs": [
+          "H3068"
+        ],
+        "morph_code": "HNp",
+        "pos": "noun",
+        "parsing": {
+          "noun_type": "proper"
+        }
+      },
+      {
+        "text": "צְבָאֽוֹת",
+        "strongs": [
+          "H6635b"
+        ],
+        "morph_code": "HNcbpa",
+        "pos": "noun",
+        "parsing": {
+          "gender": "both",
+          "number": "plural",
+          "state": "absolute",
+          "noun_type": "common"
+        }
+      }
+    ]
+  }
+}

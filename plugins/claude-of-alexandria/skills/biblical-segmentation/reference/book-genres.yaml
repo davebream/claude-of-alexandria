@@ -1,0 +1,92 @@
+# Book Genres - Genre mapping for all 66 books
+# Used to select appropriate segmentation markers from genre-methodology.yaml
+# Genre determines primary methodology; exceptions noted inline
+# Last updated: 2026-01-19
+
+# Old Testament - Pentateuch
+# Note: Mixed genres (narrative + law) handled specially
+genesis: ot_narrative
+exodus: ot_narrative  # Has embedded law collections
+leviticus: torah_law
+numbers: ot_narrative  # Has embedded law collections
+deuteronomy: torah_law  # Sermonic frame
+
+# Old Testament - Historical Books
+joshua: ot_narrative
+judges: ot_narrative
+ruth: ot_narrative
+1_samuel: ot_narrative
+2_samuel: ot_narrative
+1_kings: ot_narrative
+2_kings: ot_narrative
+1_chronicles: ot_narrative
+2_chronicles: ot_narrative
+ezra: ot_narrative
+nehemiah: ot_narrative
+esther: ot_narrative
+
+# Old Testament - Poetry/Wisdom
+# Hebrew poetry uses parallelism and stanza breaks, not narrative markers
+job: wisdom  # Complex structure - see book-exceptions
+psalms: hebrew_poetry  # Anthology - see book-exceptions (use curation mode)
+proverbs: wisdom  # Anthology - see book-exceptions (use curation mode)
+ecclesiastes: wisdom
+song_of_songs: hebrew_poetry  # Genre disputed - see book-exceptions
+
+# Old Testament - Major Prophets
+isaiah: prophetic  # Structure contested - see book-exceptions
+jeremiah: prophetic
+lamentations: hebrew_poetry
+ezekiel: prophetic
+daniel: prophetic  # Chs. 1-6 narrative, 7-12 apocalyptic
+
+# Old Testament - Minor Prophets
+hosea: prophetic
+joel: prophetic
+amos: prophetic
+obadiah: prophetic  # Micro-book - see book-exceptions
+jonah: ot_narrative  # Prophetic book but NARRATIVE genre
+micah: prophetic
+nahum: prophetic
+habakkuk: prophetic
+zephaniah: prophetic
+haggai: prophetic
+zechariah: prophetic  # Structure contested - see book-exceptions
+malachi: prophetic
+
+# New Testament - Gospels & Acts
+# Gospels use narrative markers + discourse boundaries
+matthew: gospel_narrative
+mark: gospel_narrative  # Embedded apocalyptic in ch. 13
+luke: gospel_narrative
+john: gospel_narrative
+acts: ot_narrative  # Narrative genre, not gospel
+
+# New Testament - Pauline Epistles
+# Epistles use argument flow, not scene changes
+romans: epistle  # Complex structure - see book-exceptions
+1_corinthians: epistle
+2_corinthians: epistle
+galatians: epistle
+ephesians: epistle
+philippians: epistle
+colossians: epistle
+1_thessalonians: epistle
+2_thessalonians: epistle
+1_timothy: epistle
+2_timothy: epistle
+titus: epistle
+philemon: epistle  # Micro-book - see book-exceptions
+
+# New Testament - General Epistles
+hebrews: epistle  # Genre disputed - see book-exceptions
+james: epistle
+1_peter: epistle
+2_peter: epistle
+1_john: epistle
+2_john: epistle  # Micro-book - see book-exceptions
+3_john: epistle  # Micro-book - see book-exceptions
+jude: epistle  # Micro-book - see book-exceptions
+
+# New Testament - Apocalyptic
+revelation: apocalyptic  # Structure contested - see book-exceptions

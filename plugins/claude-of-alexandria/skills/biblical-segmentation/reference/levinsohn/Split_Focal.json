@@ -1,0 +1,3206 @@
+{
+  "feature": "Split Focal",
+  "description": "The second part of a focal constituent with only the first part in P2 (NonNarr §5.5, DFNTG §4.4).",
+  "references": [
+    {
+      "verse": "Matt 1:20",
+      "word": "ἁγίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 2:18",
+      "word": "κλαυθμὸς καὶ ὀδυρμὸς πολύς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 4:3",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 4:6",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 4:9",
+      "word": "πάντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 4:16",
+      "word": "μέγα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 5:34",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 5:35",
+      "word": "τῶν ποδῶν αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 5:35",
+      "word": "τοῦ μεγάλου βασιλέως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 5:36",
+      "word": "ἢ μέλαιναν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "καὶ μαμωνᾷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 6:26",
+      "word": "αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 7:9",
+      "word": "ἄνθρωπος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 8:9",
+      "word": "ὑπὸ ἐξουσίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 8:10",
+      "word": "ἐν τῷ ἰσραὴλ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 9:13",
+      "word": "καὶ οὐ θυσίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 10:10",
+      "word": "τῆς τροφῆς αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 10:15",
+      "word": "γῇ σοδόμων καὶ γομόρρων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 11:19",
+      "word": "καὶ ἁμαρτωλῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 11:22",
+      "word": "ἢ ὑμῖν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 11:24",
+      "word": "ἢ σοί",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 11:29",
+      "word": "καὶ ταπεινὸς τῇ καρδίᾳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:7",
+      "word": "καὶ οὐ θυσίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:8",
+      "word": "τοῦ σαββάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:10",
+      "word": "ξηράν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:11",
+      "word": "ἄνθρωπος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:27",
+      "word": "ὑμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 12:44",
+      "word": "ὅθεν ἐξῆλθον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 13:32",
+      "word": "πάντων τῶν σπερμάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 14:6",
+      "word": "τοῦ ἡρῴδου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 15:14",
+      "word": "ὁδηγοὶ τυφλῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 16:23",
+      "word": "ἐμοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 19:11",
+      "word": "ἀλλ’ οἷς δέδοται",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 19:30",
+      "word": "πρῶτοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 21:12",
+      "word": "καὶ τὰς καθέδρας τῶν πωλούντων τὰς περιστεράς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 21:33",
+      "word": "οἰκοδεσπότης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 22:40",
+      "word": "καὶ οἱ προφῆται",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 23:9",
+      "word": "ὑμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 23:31",
+      "word": "τῶν φονευσάντων τοὺς προφήτας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 25:24",
+      "word": "ἄνθρωπος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 25:34",
+      "word": "ἀπὸ καταβολῆς κόσμου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 26:38",
+      "word": "ἕως θανάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 27:15",
+      "word": "δέσμιον ὃν ἤθελον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 27:21",
+      "word": "ἀπὸ τῶν δύο",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 27:24",
+      "word": "ἀπὸ τοῦ αἵματος τούτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 27:40",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 27:43",
+      "word": "υἱός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Matt 28:2",
+      "word": "μέγας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 2:28",
+      "word": "καὶ τοῦ σαββάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 3:28",
+      "word": "τὰ ἁμαρτήματα καὶ αἱ βλασφημίαι ὅσα ἐὰν βλασφημήσωσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 3:29",
+      "word": "αἰωνίου ἁμαρτήματος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 4:11",
+      "word": "τῆς βασιλείας τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 4:21",
+      "word": "ἢ ὑπὸ τὴν κλίνην",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 4:30",
+      "word": "παραβολῇ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 4:31",
+      "word": "πάντων τῶν σπερμάτων τῶν ἐπὶ τῆς γῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 7:4",
+      "word": "ἃ παρέλαβον κρατεῖν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 7:15",
+      "word": "ἔξωθεν τοῦ ἀνθρώπου εἰσπορευόμενον εἰς αὐτὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 8:4",
+      "word": "ἐπ’ ἐρημίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 8:5",
+      "word": "ἄρτους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 9:8",
+      "word": "ἀλλὰ τὸν ἰησοῦν μόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 9:22",
+      "word": "καὶ εἰς ὕδατα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 9:37",
+      "word": "ἀλλὰ τὸν ἀποστείλαντά με",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 10:31",
+      "word": "πρῶτοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 11:2",
+      "word": "ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 11:13",
+      "word": "σύκων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 11:17",
+      "word": "πᾶσιν τοῖς ἔθνεσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 11:30",
+      "word": "ἢ ἐξ ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 12:6",
+      "word": "υἱὸν ἀγαπητόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 12:33",
+      "word": "πάντων τῶν ὁλοκαυτωμάτων καὶ θυσιῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 12:34",
+      "word": "ἀπὸ τῆς βασιλείας τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 12:37",
+      "word": "υἱός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 12:43",
+      "word": "τῶν βαλλόντων εἰς τὸ γαζοφυλάκιον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 14:34",
+      "word": "ἕως θανάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 14:62",
+      "word": "τῆς δυνάμεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 14:64",
+      "word": "θανάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 15:14",
+      "word": "κακόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 16:6",
+      "word": "τὸν ναζαρηνὸν τὸν ἐσταυρωμένον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 16:17",
+      "word": "ταῦτα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Mark 16:17",
+      "word": "καιναῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 1:2",
+      "word": "τοῦ λόγου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 1:14",
+      "word": "καὶ ἀγαλλίασις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 2:19",
+      "word": "τὰ ῥήματα ταῦτα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 2:25",
+      "word": "ἅγιον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 3:19",
+      "word": "πονηρῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 3:23",
+      "word": "ἰωσὴφ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:3",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:9",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:14",
+      "word": "περὶ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:20",
+      "word": "ἐν τῇ συναγωγῇ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:22",
+      "word": "ἰωσὴφ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 4:28",
+      "word": "ἐν τῇ συναγωγῇ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 6:3",
+      "word": "ὃ ἐποίησεν δαυὶδ ὅτε ἐπείνασεν αὐτὸς καὶ οἱ μετ’ αὐτοῦ ὄντες",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 6:5",
+      "word": "τοῦ σαββάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 6:27",
+      "word": "τοῖς ἀκούουσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 6:35",
+      "word": "ἐπὶ τοὺς ἀχαρίστους καὶ πονηρούς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 7:6",
+      "word": "ἀπὸ τῆς οἰκίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 7:8",
+      "word": "ὑπὸ ἐξουσίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 7:12",
+      "word": "ἱκανὸς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 7:36",
+      "word": "τῶν φαρισαίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 8:25",
+      "word": "καὶ τῷ ὕδατι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 8:27",
+      "word": "ἀλλ’ ἐν τοῖς μνήμασιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 8:30",
+      "word": "ὄνομά",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 8:42",
+      "word": "ὡς ἐτῶν δώδεκα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 8:47",
+      "word": "καὶ ὡς ἰάθη παραχρῆμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 10:5",
+      "word": "οἰκίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 10:7",
+      "word": "τοῦ μισθοῦ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 10:12",
+      "word": "ἢ τῇ πόλει ἐκείνῃ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 10:14",
+      "word": "ἢ ὑμῖν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 11:27",
+      "word": "γυνὴ ἐκ τοῦ ὄχλου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 11:33",
+      "word": "οὐδὲ ὑπὸ τὸν μόδιον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 11:33",
+      "word": "ἀλλ’ ἐπὶ τὴν λυχνίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 12:15",
+      "word": "ἐκ τῶν ὑπαρχόντων αὐτῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 12:41",
+      "word": "καὶ πρὸς πάντας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 12:51",
+      "word": "ἐν τῇ γῇ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 13:4",
+      "word": "παρὰ πάντας τοὺς ἀνθρώπους τοὺς κατοικοῦντας ἰερουσαλήμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 13:6",
+      "word": "πεφυτευμένην ἐν τῷ ἀμπελῶνι αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 13:11",
+      "word": "ἀσθενείας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 13:14",
+      "word": "καὶ μὴ τῇ ἡμέρᾳ τοῦ σαββάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 14:19",
+      "word": "πέντε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 15:8",
+      "word": "δέκα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 16:13",
+      "word": "καὶ μαμωνᾷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 17:7",
+      "word": "ἀροτριῶντα ἢ ποιμαίνοντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 19:11",
+      "word": "ἰερουσαλὴμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 19:16",
+      "word": "μνᾶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 19:19",
+      "word": "πέντε πόλεων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 19:30",
+      "word": "ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 20:4",
+      "word": "ἢ ἐξ ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 20:11",
+      "word": "δοῦλον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 20:35",
+      "word": "καὶ τῆς ἀναστάσεως τῆς ἐκ νεκρῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 20:36",
+      "word": "θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 20:38",
+      "word": "νεκρῶν ἀλλὰ ζώντων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 22:23",
+      "word": "ἐξ αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 22:30",
+      "word": "τοῦ ἰσραήλ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 23:4",
+      "word": "αἴτιον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 23:8",
+      "word": "ὑπ’ αὐτοῦ γινόμενον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 23:14",
+      "word": "αἴτιον ὧν κατηγορεῖτε κατ’ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 23:28",
+      "word": "καὶ ἐπὶ τὰ τέκνα ὑμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Luke 23:54",
+      "word": "παρασκευῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 1:49",
+      "word": "τοῦ ἰσραήλ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 2:11",
+      "word": "ἀρχὴν τῶν σημείων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 2:15",
+      "word": "τά τε πρόβατα καὶ τοὺς βόας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 2:15",
+      "word": "τὸ κέρμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 3:2",
+      "word": "διδάσκαλος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 3:2",
+      "word": "ἃ σὺ ποιεῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 3:28",
+      "word": "ἔμπροσθεν ἐκείνου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:1",
+      "word": "ἢ ἰωάννης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:2",
+      "word": "ἀλλ’ οἱ μαθηταὶ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:12",
+      "word": "τοῦ πατρὸς ἡμῶν ἰακώβ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:12",
+      "word": "καὶ οἱ υἱοὶ αὐτοῦ καὶ τὰ θρέμματα αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:23",
+      "word": "τοὺς προσκυνοῦντας αὐτόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:32",
+      "word": "ἣν ὑμεῖς οὐκ οἴδατε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:35",
+      "word": "πρὸς θερισμόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:39",
+      "word": "τῶν σαμαριτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:45",
+      "word": "ὅσα ἐποίησεν ἐν ἱεροσολύμοις ἐν τῇ ἑορτῇ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 4:52",
+      "word": "ἐν ᾗ κομψότερον ἔσχεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:6",
+      "word": "χρόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:14",
+      "word": "τι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:18",
+      "word": "τῷ θεῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:20",
+      "word": "ἃ αὐτὸς ποιεῖ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:20",
+      "word": "ἔργα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 5:38",
+      "word": "ἐν ὑμῖν μένοντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:23",
+      "word": "πλοιά[ρια]",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:24",
+      "word": "οὐδὲ οἱ μαθηταὶ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:27",
+      "word": "ὁ θεός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:30",
+      "word": "σημεῖον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:55",
+      "word": "βρῶσις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 6:55",
+      "word": "πόσις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:12",
+      "word": "πολὺς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:22",
+      "word": "ἀλλ’ ἐκ τῶν πατέρων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:31",
+      "word": "ὧν οὗτος ἐποίησεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:38",
+      "word": "ὕδατος ζῶντος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:44",
+      "word": "ἐξ αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:48",
+      "word": "ἢ ἐκ τῶν φαρισαίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 7:50",
+      "word": "ἐξ αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:19",
+      "word": "οὔτε τὸν πατέρα μου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:26",
+      "word": "περὶ ὑμῶν λαλεῖν καὶ κρίνειν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:34",
+      "word": "τῆς ἁμαρτίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:40",
+      "word": "ἣν ἤκουσα παρὰ τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:44",
+      "word": "καὶ ὁ πατὴρ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:52",
+      "word": "καὶ οἱ προφῆται",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 8:53",
+      "word": "τοῦ πατρὸς ἡμῶν ἀβραάμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 9:3",
+      "word": "οὔτε οἱ γονεῖς αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 9:5",
+      "word": "τοῦ κόσμου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 9:28",
+      "word": "ἐκείνου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 9:28",
+      "word": "μαθηταί",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 10:1",
+      "word": "καὶ λῃστής",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 10:2",
+      "word": "τῶν προβάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 10:8",
+      "word": "καὶ λῃσταί",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 10:33",
+      "word": "ἀλλὰ περὶ βλασφημίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 10:41",
+      "word": "οὐδέν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 11:9",
+      "word": "τῆς ἡμέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 11:17",
+      "word": "ἡμέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 11:47",
+      "word": "σημεῖα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:2",
+      "word": "ἐκ τῶν ἀνακειμένων σὺν αὐτῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:11",
+      "word": "τῶν ἰουδαίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:18",
+      "word": "τὸ σημεῖον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:30",
+      "word": "ἀλλὰ δι’ ὑμᾶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:31",
+      "word": "τοῦ κόσμου τούτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:37",
+      "word": "σημεῖα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 12:47",
+      "word": "τῶν ῥημάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:2",
+      "word": "ἰούδας σίμωνος ἰσκαριώτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:6",
+      "word": "τοὺς πόδας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:10",
+      "word": "ἀλλ’ οὐχὶ πάντες",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:14",
+      "word": "τοὺς πόδας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:28",
+      "word": "τῶν ἀνακειμένων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 13:35",
+      "word": "ἐν ἀλλήλοις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 14:22",
+      "word": "καὶ οὐχὶ τῷ κόσμῳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 15:24",
+      "word": "ἃ οὐδεὶς ἄλλος ἐποίησεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 16:2",
+      "word": "τῷ θεῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 17:4",
+      "word": "ὃ δέδωκάς μοι ἵνα ποιήσω",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 17:9",
+      "word": "ἀλλὰ περὶ ὧν δέδωκάς μοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 17:20",
+      "word": "μόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 18:26",
+      "word": "οὗ ἀπέκοψεν πέτρος τὸ ὠτίον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 18:38",
+      "word": "αἰτίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 19:20",
+      "word": "τῶν ἰουδαίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 19:21",
+      "word": "τῶν ἰουδαίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 19:32",
+      "word": "καὶ τοῦ ἄλλου τοῦ συσταυρωθέντος αὐτῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 19:36",
+      "word": "αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 19:40",
+      "word": "τοῖς ἰουδαίοις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 20:7",
+      "word": "ἀλλὰ χωρὶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 21:12",
+      "word": "τῶν μαθητῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "John 21:25",
+      "word": "τὸν κόσμον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 1:2",
+      "word": "οὓς ἐξελέξατο",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 1:5",
+      "word": "ἁγίῳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 1:19",
+      "word": "πᾶσι τοῖς κατοικοῦσιν ἰερουσαλήμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 1:21 - 2",
+      "word": "ἐν παντὶ χρόνῳ ᾧ εἰσῆλθεν καὶ ἐξῆλθεν ἐφ’ ἡμᾶς ὁ κύριος ἰησοῦς ἀρξάμενος ἀπὸ τοῦ βαπτίσματος ἰωάννου ἕως τῆς ἡμέρας ἧς ἀνελήμφθη ἀφ’ ἡμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 1:24",
+      "word": "ἕνα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 2:36",
+      "word": "καὶ χριστὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 2:39",
+      "word": "καὶ τοῖς τέκνοις ὑμῶν καὶ πᾶσιν τοῖς εἰς μακράν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 3:21",
+      "word": "αὐτοῦ προφητῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 3:22",
+      "word": "ὡς ἐμέ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:12",
+      "word": "ἕτερον ὑπὸ τὸν οὐρανὸν τὸ δεδομένον ἐν ἀνθρώποις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:13",
+      "word": "καὶ ἰδιῶται",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:14",
+      "word": "ἑστῶτα τὸν τεθεραπευμένον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:19",
+      "word": "μᾶλλον ἢ τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:22",
+      "word": "πλειόνων τεσσεράκοντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:25",
+      "word": "στόματος δαυὶδ παιδός σου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 4:33",
+      "word": "τῆς ἀναστάσεως τοῦ κυρίου ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 5:29",
+      "word": "θεῷ μᾶλλον ἢ ἀνθρώποις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 5:31",
+      "word": "καὶ ἄφεσιν ἁμαρτιῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 7:5",
+      "word": "καὶ τῷ σπέρματι αὐτοῦ μετ’ αὐτόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 7:11",
+      "word": "καὶ θλῖψις μεγάλη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 7:13",
+      "word": "τῷ φαραὼ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 7:19",
+      "word": "αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 7:56",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 8:9",
+      "word": "μέγαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 8:24",
+      "word": "ὧν εἰρήκατε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 9:2",
+      "word": "τῆς ὁδοῦ ὄντας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 9:36",
+      "word": "μαθήτρια ὀνόματι ταβιθά",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 9:38",
+      "word": "τῇ ἰόππῃ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 10:28",
+      "word": "ἄνθρωπον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 12:15",
+      "word": "αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 12:22",
+      "word": "καὶ οὐκ ἀνθρώπου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 13:15",
+      "word": "ἐν ὑμῖν λόγος παρακλήσεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 13:33",
+      "word": "τῷ δευτέρῳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 13:46",
+      "word": "τῆς αἰωνίου ζωῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 14:8",
+      "word": "τοῖς ποσὶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 14:15",
+      "word": "ὑμῖν ἄνθρωποι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 14:17",
+      "word": "καὶ καιροὺς καρποφόρους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 15:28",
+      "word": "βάρος πλὴν τούτων τῶν ἐπάναγκες",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 16:1",
+      "word": "ὀνόματι τιμόθεος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 16:23",
+      "word": "πληγὰς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 16:26",
+      "word": "μέγας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 16:28",
+      "word": "κακόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 17:18",
+      "word": "καταγγελεὺς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 17:24",
+      "word": "κύριος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 17:29",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 18:10",
+      "word": "πολὺς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 18:12",
+      "word": "τῆς ἀχαΐας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 18:15",
+      "word": "περὶ λόγου καὶ ὀνομάτων καὶ νόμου τοῦ καθ’ ὑμᾶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 18:15",
+      "word": "τούτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 18:24",
+      "word": "ἐν ταῖς γραφαῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 19:34",
+      "word": "μία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 19:35",
+      "word": "ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 19:35",
+      "word": "τῆς μεγάλης ἀρτέμιδος καὶ τοῦ διοπετοῦς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 20:20",
+      "word": "τῶν συμφερόντων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 20:26",
+      "word": "ἀπὸ τοῦ αἵματος πάντων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 20:37",
+      "word": "πάντων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:10",
+      "word": "προφήτης ὀνόματι ἅγαβος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:18",
+      "word": "οἱ πρεσβύτεροι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:20",
+      "word": "τῶν πεπιστευκότων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:21",
+      "word": "ἀπὸ μωϋσέως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:23",
+      "word": "ὅ σοι λέγομεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:31",
+      "word": "ἰερουσαλήμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 21:39",
+      "word": "ἰουδαῖος ταρσεὺς τῆς κιλικίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 22:2",
+      "word": "ἡσυχίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 22:3",
+      "word": "τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 22:5",
+      "word": "καὶ πᾶν τὸ πρεσβυτέριον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 22:9",
+      "word": "τοῦ λαλοῦντός μοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 22:15",
+      "word": "ὧν ἑώρακας καὶ ἤκουσας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 23:9",
+      "word": "ἢ ἄγγελος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 23:10",
+      "word": "στάσεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 23:29",
+      "word": "ἔγκλημα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:11",
+      "word": "ἡμέραι δώδεκα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:12",
+      "word": "οὔτε ἐν ταῖς συναγωγαῖς οὔτε κατὰ τὴν πόλιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:15",
+      "word": "δικαίων τε καὶ ἀδίκων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:16",
+      "word": "πρὸς τὸν θεὸν καὶ τοὺς ἀνθρώπους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:17",
+      "word": "καὶ προσφοράς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:19",
+      "word": "πρὸς ἐμέ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:20",
+      "word": "ἀδίκημα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 24:23",
+      "word": "τῶν ἰδίων αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:5",
+      "word": "ἄτοπον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:11",
+      "word": "ὧν οὗτοι κατηγοροῦσίν μου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:13",
+      "word": "τινῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:18",
+      "word": "ὧν ἐγὼ ὑπενόουν πονηρῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:19",
+      "word": "καὶ περί τινος ἰησοῦ τεθνηκότος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 25:25",
+      "word": "θανάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:3",
+      "word": "πάντων τῶν κατὰ ἰουδαίους ἐθῶν τε καὶ ζητημάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:9",
+      "word": "πολλὰ ἐναντία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:13",
+      "word": "φῶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:22",
+      "word": "τῆς ἀπὸ τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:22",
+      "word": "ὧν τε οἱ προφῆται ἐλάλησαν μελλόντων γίνεσθαι καὶ μωϋσῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:24",
+      "word": "γράμματα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 26:26",
+      "word": "οὐθέν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:8",
+      "word": "λασαία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:12",
+      "word": "πρὸς παραχειμασίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:16",
+      "word": "καλούμενον καῦδα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:22",
+      "word": "ἐξ ὑμῶν πλὴν τοῦ πλοίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:27",
+      "word": "χώραν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 27:33",
+      "word": "ἡμέραν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Acts 28:4",
+      "word": "ἐκ τῆς χειρὸς αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 1:7",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 1:11",
+      "word": "χάρισμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 1:11",
+      "word": "πνευματικὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 2:19",
+      "word": "τυφλῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 3:29",
+      "word": "μόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 4:10",
+      "word": "ἢ ἐν ἀκροβυστίᾳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 4:11",
+      "word": "περιτομῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 4:13",
+      "word": "κόσμου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 4:13",
+      "word": "ἀλλὰ διὰ δικαιοσύνης πίστεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 5:1",
+      "word": "πρὸς τὸν θεὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 6:16",
+      "word": "ᾧ ὑπακούετε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 6:20",
+      "word": "τῆς ἁμαρτίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 6:20",
+      "word": "τῇ δικαιοσύνῃ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 7:24",
+      "word": "ἄνθρωπος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 8:1",
+      "word": "κατάκριμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 9:2",
+      "word": "μεγάλη καὶ ἀδιάλειπτος ὀδύνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 11:24",
+      "word": "ἀγριελαίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "πρᾶξιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 14:19",
+      "word": "καὶ τὰ τῆς οἰκοδομῆς τῆς εἰς ἀλλήλους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 15:8",
+      "word": "περιτομῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 15:14",
+      "word": "ἀγαθωσύνης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 15:27",
+      "word": "αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rom 16:2",
+      "word": "καὶ ἐμοῦ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 1:3",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 1:30",
+      "word": "ἀπὸ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 2:11",
+      "word": "ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 2:12",
+      "word": "ἀλλὰ τὸ πνεῦμα τὸ ἐκ τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 3:2",
+      "word": "οὐ βρῶμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 3:7",
+      "word": "οὔτε ὁ ποτίζων ἀλλ’ ὁ αὐξάνων θεός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 3:9",
+      "word": "συνεργοί",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 3:11",
+      "word": "παρὰ τὸν κείμενον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 4:3",
+      "word": "ἢ ὑπὸ ἀνθρωπίνης ἡμέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 4:7",
+      "word": "ὃ οὐκ ἔλαβες",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 4:14",
+      "word": "ἀλλ’ ὡς τέκνα μου ἀγαπητὰ νουθετῶ[ν]",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 4:20",
+      "word": "ἀλλ’ ἐν δυνάμει",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 4:21",
+      "word": "ἢ ἐν ἀγάπῃ πνεύματί τε πραΰτητος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 5:1",
+      "word": "τοῦ πατρὸς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 6:2",
+      "word": "κριτηρίων ἐλαχίστων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:4",
+      "word": "ἀλλὰ ὁ ἀνήρ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:4",
+      "word": "ἀλλὰ ἡ γυνή",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:7",
+      "word": "χάρισμα ἐκ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:9",
+      "word": "γαμῆσαι ἢ πυροῦσθαι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:12",
+      "word": "ἄπιστον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 7:22",
+      "word": "χριστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 9:2",
+      "word": "ἀπόστολος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 9:18",
+      "word": "ὁ μισθός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 9:19",
+      "word": "ἐκ πάντων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:4",
+      "word": "πόμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:16",
+      "word": "τοῦ αἵματος τοῦ χριστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:21",
+      "word": "καὶ ποτήριον δαιμονίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:21",
+      "word": "καὶ τραπέζης δαιμονίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:32",
+      "word": "καὶ ἕλλησιν καὶ τῇ ἐκκλησίᾳ τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 10:33",
+      "word": "ἀλλὰ τὸ τῶν πολλῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 11:5",
+      "word": "καὶ τὸ αὐτὸ τῇ ἐξυρημένῃ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 11:16",
+      "word": "οὐδὲ αἱ ἐκκλησίαι τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 11:24",
+      "word": "τὸ σῶμα τὸ ὑπὲρ ὑμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "ἐν τῷ ἐμῷ αἵματι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 11:27",
+      "word": "τοῦ σώματος καὶ τοῦ αἵματος τοῦ κυρίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "σῶμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 12:22",
+      "word": "ἀσθενέστερα ὑπάρχειν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 12:24",
+      "word": "τιμήν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 12:30",
+      "word": "ἰαμάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 13:1",
+      "word": "καὶ τῶν ἀγγέλων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:2",
+      "word": "ἀλλὰ θεῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:2",
+      "word": "μυστήρια",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:8",
+      "word": "φωνὴν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:12",
+      "word": "πνευμάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:20",
+      "word": "ταῖς φρεσὶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:28",
+      "word": "καὶ τῷ θεῷ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:30",
+      "word": "καθημένῳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:33",
+      "word": "ἀλλὰ εἰρήνης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:37",
+      "word": "ἢ πνευματικός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:37",
+      "word": "ἐντολή",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 14:39",
+      "word": "γλώσσαις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 15:19",
+      "word": "μόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 15:58",
+      "word": "ἀμετακίνητοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Cor 16:9",
+      "word": "μεγάλη καὶ ἐνεργής",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 1:7",
+      "word": "τῶν παθημάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 1:9",
+      "word": "ἐφ’ ἑαυτοῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 1:13",
+      "word": "ἀλλ’ ἢ ἃ ἀναγινώσκετε ἢ καὶ ἐπιγινώσκετε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 1:24",
+      "word": "τῆς χαρᾶς ὑμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 2:4",
+      "word": "ἣν ἔχω περισσοτέρως εἰς ὑμᾶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 4:5",
+      "word": "ἀλλὰ ἰησοῦν χριστὸν κύριον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 5:7",
+      "word": "οὐ διὰ εἴδους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "καυχήματος ὑπὲρ ἡμῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 5:12",
+      "word": "καὶ μὴ ἐν καρδίᾳ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 5:15",
+      "word": "ἀλλὰ τῷ ὑπὲρ αὐτῶν ἀποθανόντι καὶ ἐγερθέντι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 6:16",
+      "word": "ζῶντος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 7:1",
+      "word": "τὰς ἐπαγγελίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 7:4",
+      "word": "παρρησία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 7:4",
+      "word": "καύχησις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 7:5",
+      "word": "ἄνεσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 7:11",
+      "word": "σπουδήν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 8:3",
+      "word": "καὶ παρὰ δύναμιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 8:12",
+      "word": "οὐ καθὸ οὐκ ἔχει",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 10:5",
+      "word": "πᾶν ὕψωμα ἐπαιρόμενον κατὰ τῆς γνώσεως τοῦ θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 10:13",
+      "word": "ἀλλὰ κατὰ τὸ μέτρον τοῦ κανόνος οὗ ἐμέρισεν ἡμῖν ὁ θεὸς μέτρου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 10:18",
+      "word": "ἀλλὰ ὃν ὁ κύριος συνίστησιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "ὃν οὐκ ἐκηρύξαμεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Cor 11:4",
+      "word": "ὃ οὐκ ἐλάβετε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 1:3",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 1:7",
+      "word": "οἱ ταράσσοντες ὑμᾶς καὶ θέλοντες μεταστρέψαι τὸ εὐαγγέλιον τοῦ χριστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 1:10",
+      "word": "ἢ τὸν θεόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 1:14",
+      "word": "τῶν πατρικῶν μου παραδόσεων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 2:6",
+      "word": "ἀνθρώπου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 2:9",
+      "word": "κοινωνίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 3:2",
+      "word": "ἢ ἐξ ἀκοῆς πίστεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 3:7",
+      "word": "ἀβραάμ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 3:16",
+      "word": "καὶ τῷ σπέρματι αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 3:23",
+      "word": "ἀποκαλυφθῆναι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 4:2",
+      "word": "καὶ οἰκονόμους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 4:10",
+      "word": "καὶ μῆνας καὶ καιροὺς καὶ ἐνιαυτούς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 4:31",
+      "word": "τῆς ἐλευθέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 5:6",
+      "word": "οὔτε ἀκροβυστία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 6:4",
+      "word": "καὶ οὐκ εἰς τὸν ἕτερον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 6:11",
+      "word": "γράμμασιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 6:15",
+      "word": "οὔτε ἀκροβυστία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Gal 6:16",
+      "word": "καὶ ἔλεος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 2:4",
+      "word": "ἐν ἐλέει",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 2:10",
+      "word": "ποίημα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 3:20",
+      "word": "ὧν αἰτούμεθα ἢ νοοῦμεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 4:1",
+      "word": "τῆς κλήσεως ἧς ἐκλήθητε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 5:12",
+      "word": "καὶ λέγειν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 5:30",
+      "word": "τοῦ σώματος αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 5:33",
+      "word": "ὡς ἑαυτόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 6:8",
+      "word": "ἀγαθόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 6:17",
+      "word": "καὶ τὴν μάχαιραν τοῦ πνεύματος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Eph 6:23",
+      "word": "καὶ ἀγάπη μετὰ πίστεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 1:17",
+      "word": "οὐχ ἁγνῶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 1:30",
+      "word": "οἷον εἴδετε ἐν ἐμοὶ καὶ νῦν ἀκούετε ἐν ἐμοί",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 2:1",
+      "word": "παράκλησις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 2:4",
+      "word": "ἀλλὰ καὶ τὰ ἑτέρων ἕκαστοι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 2:7",
+      "word": "ὡς ἄνθρωπος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 2:10",
+      "word": "ἐπουρανίων καὶ ἐπιγείων καὶ καταχθονίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 2:21",
+      "word": "οὐ τὰ ἰησοῦ χριστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 3:4",
+      "word": "ἄλλος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 3:20",
+      "word": "κύριον ἰησοῦν χριστόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phil 4:15",
+      "word": "ἐκκλησία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Col 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Col 2:23",
+      "word": "σοφίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Col 3:2",
+      "word": "μὴ τὰ ἐπὶ τῆς γῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Col 4:9",
+      "word": "τὰ ὧδε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 1:1",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 1:6",
+      "word": "καὶ τοῦ κυρίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 2:14",
+      "word": "τῶν ἐκκλησιῶν τοῦ θεοῦ τῶν οὐσῶν ἐν τῇ ἰουδαίᾳ ἐν χριστῷ ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 2:15",
+      "word": "ἰησοῦν καὶ τοὺς προφήτας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 3:6",
+      "word": "ἀγαθὴν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 5:3",
+      "word": "ὄλεθρος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Thess 5:5",
+      "word": "καὶ υἱοὶ ἡμέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Thess 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 1:15",
+      "word": "καὶ πάσης ἀποδοχῆς ἄξιος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 2:12",
+      "word": "οὐδὲ αὐθεντεῖν ἀνδρός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:6",
+      "word": "τοῦ διαβόλου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:7",
+      "word": "ἀπὸ τῶν ἔξωθεν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:7",
+      "word": "καὶ παγίδα τοῦ διαβόλου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:12",
+      "word": "καὶ τῶν ἰδίων οἴκων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:13",
+      "word": "καλὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 3:13",
+      "word": "καὶ πολλὴν παρρησίαν ἐν πίστει τῇ ἐν χριστῷ ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:6",
+      "word": "διάκονος χριστοῦ ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:8",
+      "word": "ζωῆς τῆς νῦν καὶ τῆς μελλούσης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:9",
+      "word": "καὶ πάσης ἀποδοχῆς ἄξιος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:12",
+      "word": "τῶν πιστῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:15",
+      "word": "πᾶσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 4:16",
+      "word": "καὶ τοὺς ἀκούοντάς σου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 5:18",
+      "word": "τοῦ μισθοῦ αὐτοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 6:2",
+      "word": "καὶ ἀγαπητοὶ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Tim 6:16",
+      "word": "ἀπρόσιτον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 1:13",
+      "word": "ὑγιαινόντων λόγων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 2:10",
+      "word": "τῆς ἐν χριστῷ ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 3:9",
+      "word": "πᾶσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 4:5",
+      "word": "εὐαγγελιστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 4:13",
+      "word": "καὶ τὰ βιβλία μάλιστα τὰς μεμβράνας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Tim 4:14",
+      "word": "κακὰ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 1:6",
+      "word": "πιστά",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 1:16",
+      "word": "καὶ ἀπειθεῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 2:8",
+      "word": "φαῦλον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 2:10",
+      "word": "ἀγαθήν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 3:2",
+      "word": "πραΰτητα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 3:4",
+      "word": "τοῦ σωτῆρος ἡμῶν θεοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Titus 3:12",
+      "word": "ἢ τύχικον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phlm 1:3",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Phlm 1:7",
+      "word": "καὶ παράκλησιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 1:4",
+      "word": "ὄνομα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 1:5",
+      "word": "τῶν ἀγγέλων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 1:10",
+      "word": "κύριε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 2:3",
+      "word": "σωτηρίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 2:14",
+      "word": "τοῦ θανάτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 2:15",
+      "word": "δουλείας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 2:17",
+      "word": "καὶ πιστὸς ἀρχιερεὺς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 3:2",
+      "word": "τῷ ποιήσαντι αὐτὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 3:3",
+      "word": "δόξης παρὰ μωϋσῆν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 4:7",
+      "word": "ἡμέραν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 4:8",
+      "word": "ἡμέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 4:11",
+      "word": "ὑποδείγματι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 4:12",
+      "word": "καὶ ἐνεργὴς καὶ τομώτερος ὑπὲρ πᾶσαν μάχαιραν δίστομον καὶ διϊκνούμενος ἄχρι μερισμοῦ ψυχῆς καὶ πνεύματος ἁρμῶν τε καὶ μυελῶν καὶ κριτικὸς ἐνθυμήσεων καὶ ἐννοιῶν καρδίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 5:11",
+      "word": "καὶ δυσερμήνευτος λέγειν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 5:11",
+      "word": "ταῖς ἀκοαῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:1 - 2",
+      "word": "μετανοίας ἀπὸ νεκρῶν ἔργων καὶ πίστεως ἐπὶ θεόν βαπτισμῶν διδαχῆς ἐπιθέσεώς τε χειρῶν ἀναστάσεώς τε νεκρῶν καὶ κρίματος αἰωνίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:4",
+      "word": "πνεύματος ἁγίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:5",
+      "word": "θεοῦ ῥῆμα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:11",
+      "word": "σπουδὴν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:13",
+      "word": "μείζονος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:16",
+      "word": "ἀντιλογίας πέρας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 6:19",
+      "word": "τῆς ψυχῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:4",
+      "word": "ὁ πατριάρχης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:11",
+      "word": "ἱερέα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:18",
+      "word": "προαγούσης ἐντολῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:22",
+      "word": "ἔγγυος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:23",
+      "word": "ἱερεῖς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:24",
+      "word": "τὴν ἱερωσύνην",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 7:26",
+      "word": "ἀρχιερεύς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 8:1",
+      "word": "ἀρχιερέα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 8:2",
+      "word": "καὶ τῆς σκηνῆς τῆς ἀληθινῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 8:5",
+      "word": "τῶν ἐπουρανίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 8:6",
+      "word": "λειτουργίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 8:6",
+      "word": "διαθήκης μεσίτης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 9:4",
+      "word": "θυμιατήριον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 9:9",
+      "word": "μὴ δυνάμεναι κατὰ συνείδησιν τελειῶσαι τὸν λατρεύοντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 9:16",
+      "word": "τοῦ διαθεμένου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 9:22",
+      "word": "πάντα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 9:24",
+      "word": "ἅγια",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:1",
+      "word": "τῶν μελλόντων ἀγαθῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:2",
+      "word": "συνείδησιν ἁμαρτιῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:11",
+      "word": "θυσίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:12",
+      "word": "θυσίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:29",
+      "word": "χείρονος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:32",
+      "word": "παθημάτων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 10:34",
+      "word": "καὶ μένουσαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:1",
+      "word": "οὐ βλεπομένων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:4",
+      "word": "παρὰ κάϊν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:6",
+      "word": "ὅτι ἔστιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:7",
+      "word": "κληρονόμος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:15",
+      "word": "ἀφ’ ἧς ἐξέβησαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:16",
+      "word": "αὐτῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:25",
+      "word": "ἁμαρτίας ἀπόλαυσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:34",
+      "word": "ἀλλοτρίων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 11:38",
+      "word": "καὶ ὄρεσιν καὶ σπηλαίοις καὶ ταῖς ὀπαῖς τῆς γῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:1",
+      "word": "νέφος μαρτύρων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:1",
+      "word": "πάντα καὶ τὴν εὐπερίστατον ἁμαρτίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:3",
+      "word": "εἰς ἑαυτὸν ἀντιλογίαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:8",
+      "word": "παιδείας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:11",
+      "word": "ἀλλὰ λύπης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:11",
+      "word": "δικαιοσύνης",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:14",
+      "word": "καὶ τὸν ἁγιασμόν οὗ χωρὶς οὐδεὶς ὄψεται τὸν κύριον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:21",
+      "word": "καὶ ἔντρομος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 12:24",
+      "word": "παρὰ τὸν ἅβελ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 13:8",
+      "word": "καὶ εἰς τοὺς αἰῶνας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 13:9",
+      "word": "οὐ βρώμασιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Heb 13:17",
+      "word": "καὶ μὴ στενάζοντες",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 1:2",
+      "word": "ποικίλοις",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 1:5",
+      "word": "πᾶσιν ἁπλῶς καὶ μὴ ὀνειδίζοντος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 1:13",
+      "word": "κακῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 1:23",
+      "word": "καὶ οὐ ποιητής",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 2:8",
+      "word": "βασιλικὸν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 2:15",
+      "word": "καὶ λειπόμενοι τῆς ἐφημέρου τροφῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 2:24",
+      "word": "καὶ οὐκ ἐκ πίστεως μόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 3:8",
+      "word": "ἀνθρώπων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 3:14",
+      "word": "καὶ ἐριθείαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 4:4",
+      "word": "τοῦ κόσμου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 4:6",
+      "word": "χάριν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 5:10",
+      "word": "τῆς κακοπαθίας καὶ τῆς μακροθυμίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 5:11",
+      "word": "καὶ οἰκτίρμων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jas 5:17",
+      "word": "ὁμοιοπαθὴς ἡμῖν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 1:13",
+      "word": "ἐν ἀποκαλύψει ἰησοῦ χριστοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 1:18",
+      "word": "πατροπαραδότου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 1:23",
+      "word": "καὶ μένοντος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 2:7",
+      "word": "τοῖς πιστεύουσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 2:9",
+      "word": "τοῦ ἐκ σκότους ὑμᾶς καλέσαντος εἰς τὸ θαυμαστὸν αὐτοῦ φῶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 2:16",
+      "word": "τῆς κακίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 3:16",
+      "word": "ἀγαθήν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 3:17",
+      "word": "ἢ κακοποιοῦντας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 4:2",
+      "word": "χρόνον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1Pet 5:4",
+      "word": "στέφανον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:1",
+      "word": "πίστιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:2",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:3",
+      "word": "τὰ πρὸς ζωὴν καὶ εὐσέβειαν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:4",
+      "word": "ἐπαγγέλματα",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:4",
+      "word": "φύσεως",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:9",
+      "word": "τοῦ καθαρισμοῦ τῶν πάλαι αὐτοῦ ἁμαρτιῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:16",
+      "word": "τῆς ἐκείνου μεγαλειότητος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 1:17",
+      "word": "τοιᾶσδε",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 2:14",
+      "word": "μεστοὺς μοιχαλίδος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 2:16",
+      "word": "ἰδίας παρανομίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 2:19",
+      "word": "τῆς φθορᾶς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 3:1",
+      "word": "δευτέραν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 3:1",
+      "word": "ἐπιστολήν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "2Pet 3:5",
+      "word": "καὶ γῆ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1John 1:5",
+      "word": "οὐδεμία",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1John 1:9",
+      "word": "καὶ δίκαιος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1John 2:20",
+      "word": "ἀπὸ τοῦ ἁγίου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "1John 5:13",
+      "word": "αἰώνιον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "3John 1:4",
+      "word": "χαράν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jude 1:2",
+      "word": "καὶ εἰρήνη καὶ ἀγάπη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jude 1:9",
+      "word": "βλασφημίας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jude 1:18",
+      "word": "τῶν ἀσεβειῶν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Jude 1:22",
+      "word": "διακρινομένους",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 1:4",
+      "word": "καὶ εἰρήνη",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 2:24",
+      "word": "τοῖς λοιποῖς τοῖς ἐν θυατείροις ὅσοι οὐκ ἔχουσιν τὴν διδαχὴν ταύτην οἵτινες οὐκ ἔγνωσαν τὰ βαθέα τοῦ σατανᾶ ὡς λέγουσιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 3:8",
+      "word": "δύναμιν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 3:15",
+      "word": "οὔτε ζεστός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 3:15",
+      "word": "ἢ ζεστός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 3:16",
+      "word": "καὶ οὔτε ζεστὸς οὔτε ψυχρός",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 5:3",
+      "word": "ἐν τῷ οὐρανῷ οὐδὲ ἐπὶ τῆς γῆς οὐδὲ ὑποκάτω τῆς γῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 9:20",
+      "word": "οὔτε ἀκούειν οὔτε περιπατεῖν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 15:1",
+      "word": "μέγα καὶ θαυμαστόν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 16:3",
+      "word": "τὰ ἐν τῇ θαλάσσῃ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 16:18",
+      "word": "μέγας",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 17:14",
+      "word": "καὶ βασιλεὺς βασιλέων",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 17:15",
+      "word": "καὶ ἔθνη καὶ γλῶσσαι",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 17:16",
+      "word": "καὶ γυμνὴν",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 18:7",
+      "word": "βασανισμὸν καὶ πένθος",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 18:24",
+      "word": "καὶ πάντων τῶν ἐσφαγμένων ἐπὶ τῆς γῆς",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 19:10",
+      "word": "καὶ τῶν ἀδελφῶν σου τῶν ἐχόντων τὴν μαρτυρίαν ἰησοῦ",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 21:22",
+      "word": "καὶ τὸ ἀρνίον",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 22:9",
+      "word": "καὶ τῶν ἀδελφῶν σου τῶν προφητῶν καὶ τῶν τηρούντων τοὺς λόγους τοῦ βιβλίου τούτου",
+      "type": "Split Focal"
+    },
+    {
+      "verse": "Rev 22:12",
+      "word": "αὐτοῦ",
+      "type": "Split Focal"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "feature": "Futuristic Present",
+  "description": "Highlights not the speech or act to which it refers but the event(s) that follow (DFNTG §12.2).",
+  "references": [
+    {
+      "verse": "Rev 1:7",
+      "word": "ἔρχεται",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 3:7",
+      "word": "ἀνοίγει",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 9:6",
+      "word": "φεύγει",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 9:12",
+      "word": "ἔρχεται",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 11:9",
+      "word": "βλέπουσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 11:9",
+      "word": "οὐκ ἀφίουσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 11:10",
+      "word": "χαίρουσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 11:10",
+      "word": "εὐφραίνονται",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 18:11",
+      "word": "κλαίουσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 18:11",
+      "word": "πενθοῦσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 21:24",
+      "word": "φέρουσιν",
+      "type": "Futuristic Present"
+    },
+    {
+      "verse": "Rev 22:5",
+      "word": "ἔχουσιν",
+      "type": "Futuristic Present"
+    }
+  ]
+}

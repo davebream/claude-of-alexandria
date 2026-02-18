@@ -1,0 +1,8129 @@
+{
+  "metadata": {
+    "source": "MorphGNT/SBLGNT",
+    "repository": "https://github.com/morphgnt/sblgnt",
+    "license": "CC BY-SA 3.0",
+    "extraction_date": "2026-02-18",
+    "parsing_format": "[person][tense][voice][mood][case][number][gender][degree]",
+    "note": "Verse-level morphological data for all words in book"
+  },
+  "book": "2 Thessalonians",
+  "summary": {
+    "total_words": 820,
+    "total_verses": 47,
+    "by_pos": {
+      "noun": 201,
+      "conjunction": 109,
+      "article": 111,
+      "preposition": 88,
+      "personal_pronoun": 87,
+      "verb": 121,
+      "adverb": 39,
+      "adjective": 39,
+      "relative_pronoun": 13,
+      "demonstrative_pronoun": 6,
+      "interrogative_pronoun": 6
+    }
+  },
+  "verses": {
+    "1:1": [
+      {
+        "text": "Παῦλος",
+        "normalized": "Παῦλος",
+        "lemma": "Παῦλος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "Σιλουανὸς",
+        "normalized": "Σιλουανός",
+        "lemma": "Σιλουανός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "Τιμόθεος",
+        "normalized": "Τιμόθεος",
+        "lemma": "Τιμόθεος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐκκλησίᾳ",
+        "normalized": "ἐκκλησίᾳ",
+        "lemma": "ἐκκλησία",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "Θεσσαλονικέων",
+        "normalized": "Θεσσαλονικέων",
+        "lemma": "Θεσσαλονικεύς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "θεῷ",
+        "normalized": "θεῷ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πατρὶ",
+        "normalized": "πατρί",
+        "lemma": "πατήρ",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κυρίῳ",
+        "normalized": "κυρίῳ",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστῷ",
+        "normalized": "Χριστῷ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:2": [
+      {
+        "text": "χάρις",
+        "normalized": "χάρις",
+        "lemma": "χάρις",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "εἰρήνη",
+        "normalized": "εἰρήνη",
+        "lemma": "εἰρήνη",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀πατρὸς",
+        "normalized": "πατρός",
+        "lemma": "πατήρ",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:3": [
+      {
+        "text": "Εὐχαριστεῖν",
+        "normalized": "εὐχαριστεῖν",
+        "lemma": "εὐχαριστέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ὀφείλομεν",
+        "normalized": "ὀφείλομεν",
+        "lemma": "ὀφείλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεῷ",
+        "normalized": "θεῷ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πάντοτε",
+        "normalized": "πάντοτε",
+        "lemma": "πάντοτε",
+        "pos": "adverb"
+      },
+      {
+        "text": "περὶ",
+        "normalized": "περί",
+        "lemma": "περί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καθὼς",
+        "normalized": "καθώς",
+        "lemma": "καθώς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἄξιόν",
+        "normalized": "ἄξιον",
+        "lemma": "ἄξιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἐστιν",
+        "normalized": "ἐστί(ν)",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑπεραυξάνει",
+        "normalized": "ὑπεραυξάνει",
+        "lemma": "ὑπεραυξάνω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "πίστις",
+        "normalized": "πίστις",
+        "lemma": "πίστις",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πλεονάζει",
+        "normalized": "πλεονάζει",
+        "lemma": "πλεονάζω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀγάπη",
+        "normalized": "ἀγάπη",
+        "lemma": "ἀγάπη",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἑνὸς",
+        "normalized": "ἑνός",
+        "lemma": "εἷς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἑκάστου",
+        "normalized": "ἑκάστου",
+        "lemma": "ἕκαστος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πάντων",
+        "normalized": "πάντων",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἀλλήλους",
+        "normalized": "ἀλλήλους",
+        "lemma": "ἀλλήλων",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:4": [
+      {
+        "text": "ὥστε",
+        "normalized": "ὥστε",
+        "lemma": "ὥστε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "αὐτοὺς",
+        "normalized": "αὐτούς",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμᾶς",
+        "normalized": "ἡμᾶς",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "⸀ἐγκαυχᾶσθαι",
+        "normalized": "ἐγκαυχᾶσθαι",
+        "lemma": "ἐγκαυχάομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ταῖς",
+        "normalized": "ταῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐκκλησίαις",
+        "normalized": "ἐκκλησίαις",
+        "lemma": "ἐκκλησία",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑπὲρ",
+        "normalized": "ὑπέρ",
+        "lemma": "ὑπέρ",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὑπομονῆς",
+        "normalized": "ὑπομονῆς",
+        "lemma": "ὑπομονή",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πίστεως",
+        "normalized": "πίστεως",
+        "lemma": "πίστις",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "πᾶσιν",
+        "normalized": "πᾶσι(ν)",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "διωγμοῖς",
+        "normalized": "διωγμοῖς",
+        "lemma": "διωγμός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ταῖς",
+        "normalized": "ταῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "θλίψεσιν",
+        "normalized": "θλίψεσι(ν)",
+        "lemma": "θλῖψις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "αἷς",
+        "normalized": "αἷς",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀνέχεσθε",
+        "normalized": "ἀνέχεσθε",
+        "lemma": "ἀνέχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      }
+    ],
+    "1:5": [
+      {
+        "text": "ἔνδειγμα",
+        "normalized": "ἔνδειγμα",
+        "lemma": "ἔνδειγμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "δικαίας",
+        "normalized": "δικαίας",
+        "lemma": "δίκαιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "κρίσεως",
+        "normalized": "κρίσεως",
+        "lemma": "κρίσις",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καταξιωθῆναι",
+        "normalized": "καταξιωθῆναι",
+        "lemma": "καταξιόω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "βασιλείας",
+        "normalized": "βασιλείας",
+        "lemma": "βασιλεία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑπὲρ",
+        "normalized": "ὑπέρ",
+        "lemma": "ὑπέρ",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἧς",
+        "normalized": "ἧς",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "adverb"
+      },
+      {
+        "text": "πάσχετε",
+        "normalized": "πάσχετε",
+        "lemma": "πάσχω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      }
+    ],
+    "1:6": [
+      {
+        "text": "εἴπερ",
+        "normalized": "εἴπερ",
+        "lemma": "εἴπερ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δίκαιον",
+        "normalized": "δίκαιον",
+        "lemma": "δίκαιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "παρὰ",
+        "normalized": "παρά",
+        "lemma": "παρά",
+        "pos": "preposition"
+      },
+      {
+        "text": "θεῷ",
+        "normalized": "θεῷ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀνταποδοῦναι",
+        "normalized": "ἀνταποδοῦναι",
+        "lemma": "ἀνταποδίδωμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θλίβουσιν",
+        "normalized": "θλίβουσι(ν)",
+        "lemma": "θλίβω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "θλῖψιν",
+        "normalized": "θλῖψιν",
+        "lemma": "θλῖψις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "1:7": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θλιβομένοις",
+        "normalized": "θλιβομένοις",
+        "lemma": "θλίβω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "passive",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἄνεσιν",
+        "normalized": "ἄνεσιν",
+        "lemma": "ἄνεσις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "μεθ’",
+        "normalized": "μετά",
+        "lemma": "μετά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀποκαλύψει",
+        "normalized": "ἀποκαλύψει",
+        "lemma": "ἀποκάλυψις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀπ’",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "οὐρανοῦ",
+        "normalized": "οὐρανοῦ",
+        "lemma": "οὐρανός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μετ’",
+        "normalized": "μετά",
+        "lemma": "μετά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἀγγέλων",
+        "normalized": "ἀγγέλων",
+        "lemma": "ἄγγελος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δυνάμεως",
+        "normalized": "δυνάμεως",
+        "lemma": "δύναμις",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "αὐτοῦ",
+        "normalized": "αὐτοῦ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:8": [
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "φλογὶ",
+        "normalized": "φλογί",
+        "lemma": "φλόξ",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "πυρός",
+        "normalized": "πυρός",
+        "lemma": "πῦρ",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "διδόντος",
+        "normalized": "διδόντος",
+        "lemma": "δίδωμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐκδίκησιν",
+        "normalized": "ἐκδίκησιν",
+        "lemma": "ἐκδίκησις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "εἰδόσι",
+        "normalized": "εἰδόσι(ν)",
+        "lemma": "οἶδα",
+        "pos": "verb",
+        "parsing": {
+          "tense": "perfect",
+          "voice": "active",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεὸν",
+        "normalized": "θεόν",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "ὑπακούουσιν",
+        "normalized": "ὑπακούουσι(ν)",
+        "lemma": "ὑπακούω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "εὐαγγελίῳ",
+        "normalized": "εὐαγγελίῳ",
+        "lemma": "εὐαγγέλιον",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:9": [
+      {
+        "text": "οἵτινες",
+        "normalized": "οἵτινες",
+        "lemma": "ὅστις",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δίκην",
+        "normalized": "δίκην",
+        "lemma": "δίκη",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τίσουσιν",
+        "normalized": "τίσουσι(ν)",
+        "lemma": "τίνω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὄλεθρον",
+        "normalized": "ὄλεθρον",
+        "lemma": "ὄλεθρος",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "αἰώνιον",
+        "normalized": "αἰώνιον",
+        "lemma": "αἰώνιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "προσώπου",
+        "normalized": "προσώπου",
+        "lemma": "πρόσωπον",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "δόξης",
+        "normalized": "δόξης",
+        "lemma": "δόξα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἰσχύος",
+        "normalized": "ἰσχύος",
+        "lemma": "ἰσχύς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "αὐτοῦ",
+        "normalized": "αὐτοῦ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "1:10": [
+      {
+        "text": "ὅταν",
+        "normalized": "ὅταν",
+        "lemma": "ὅταν",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἔλθῃ",
+        "normalized": "ἔλθῃ",
+        "lemma": "ἔρχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἐνδοξασθῆναι",
+        "normalized": "ἐνδοξασθῆναι",
+        "lemma": "ἐνδοξάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἁγίοις",
+        "normalized": "ἁγίοις",
+        "lemma": "ἅγιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "αὐτοῦ",
+        "normalized": "αὐτοῦ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "θαυμασθῆναι",
+        "normalized": "θαυμασθῆναι",
+        "lemma": "θαυμάζω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "πᾶσιν",
+        "normalized": "πᾶσι(ν)",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πιστεύσασιν",
+        "normalized": "πιστεύσασι(ν)",
+        "lemma": "πιστεύω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐπιστεύθη",
+        "normalized": "ἐπιστεύθη",
+        "lemma": "πιστεύω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "μαρτύριον",
+        "normalized": "μαρτύριον",
+        "lemma": "μαρτύριον",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐφ’",
+        "normalized": "ἐπί",
+        "lemma": "ἐπί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἡμέρᾳ",
+        "normalized": "ἡμέρᾳ",
+        "lemma": "ἡμέρα",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐκείνῃ",
+        "normalized": "ἐκείνῃ",
+        "lemma": "ἐκεῖνος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "1:11": [
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὃ",
+        "normalized": "ὅ",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "adverb"
+      },
+      {
+        "text": "προσευχόμεθα",
+        "normalized": "προσευχόμεθα",
+        "lemma": "προσεύχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "πάντοτε",
+        "normalized": "πάντοτε",
+        "lemma": "πάντοτε",
+        "pos": "adverb"
+      },
+      {
+        "text": "περὶ",
+        "normalized": "περί",
+        "lemma": "περί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀξιώσῃ",
+        "normalized": "ἀξιώσῃ",
+        "lemma": "ἀξιόω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "κλήσεως",
+        "normalized": "κλήσεως",
+        "lemma": "κλῆσις",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεὸς",
+        "normalized": "θεός",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πληρώσῃ",
+        "normalized": "πληρώσῃ",
+        "lemma": "πληρόω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "πᾶσαν",
+        "normalized": "πᾶσαν",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εὐδοκίαν",
+        "normalized": "εὐδοκίαν",
+        "lemma": "εὐδοκία",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀγαθωσύνης",
+        "normalized": "ἀγαθωσύνης",
+        "lemma": "ἀγαθωσύνη",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἔργον",
+        "normalized": "ἔργον",
+        "lemma": "ἔργον",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "πίστεως",
+        "normalized": "πίστεως",
+        "lemma": "πίστις",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "δυνάμει",
+        "normalized": "δυνάμει",
+        "lemma": "δύναμις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "1:12": [
+      {
+        "text": "ὅπως",
+        "normalized": "ὅπως",
+        "lemma": "ὅπως",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐνδοξασθῇ",
+        "normalized": "ἐνδοξασθῇ",
+        "lemma": "ἐνδοξάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ὄνομα",
+        "normalized": "ὄνομα",
+        "lemma": "ὄνομα",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑμεῖς",
+        "normalized": "ὑμεῖς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "αὐτῷ",
+        "normalized": "αὐτῷ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κατὰ",
+        "normalized": "κατά",
+        "lemma": "κατά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "χάριν",
+        "normalized": "χάριν",
+        "lemma": "χάρις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:1": [
+      {
+        "text": "Ἐρωτῶμεν",
+        "normalized": "ἐρωτῶμεν",
+        "lemma": "ἐρωτάω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑπὲρ",
+        "normalized": "ὑπέρ",
+        "lemma": "ὑπέρ",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "παρουσίας",
+        "normalized": "παρουσίας",
+        "lemma": "παρουσία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐπισυναγωγῆς",
+        "normalized": "ἐπισυναγωγῆς",
+        "lemma": "ἐπισυναγωγή",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐπ’",
+        "normalized": "ἐπί",
+        "lemma": "ἐπί",
+        "pos": "preposition"
+      },
+      {
+        "text": "αὐτόν",
+        "normalized": "αὐτόν",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:2": [
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "ταχέως",
+        "normalized": "ταχέως",
+        "lemma": "ταχέως",
+        "pos": "adverb"
+      },
+      {
+        "text": "σαλευθῆναι",
+        "normalized": "σαλευθῆναι",
+        "lemma": "σαλεύω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "νοὸς",
+        "normalized": "νοός",
+        "lemma": "νοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀μηδὲ",
+        "normalized": "μηδέ",
+        "lemma": "μηδέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "θροεῖσθαι",
+        "normalized": "θροεῖσθαι",
+        "lemma": "θροέομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "μήτε",
+        "normalized": "μήτε",
+        "lemma": "μήτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "πνεύματος",
+        "normalized": "πνεύματος",
+        "lemma": "πνεῦμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "μήτε",
+        "normalized": "μήτε",
+        "lemma": "μήτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "λόγου",
+        "normalized": "λόγου",
+        "lemma": "λόγος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μήτε",
+        "normalized": "μήτε",
+        "lemma": "μήτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δι’",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἐπιστολῆς",
+        "normalized": "ἐπιστολῆς",
+        "lemma": "ἐπιστολή",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὡς",
+        "normalized": "ὡς",
+        "lemma": "ὡς",
+        "pos": "adverb"
+      },
+      {
+        "text": "δι’",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὡς",
+        "normalized": "ὡς",
+        "lemma": "ὡς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐνέστηκεν",
+        "normalized": "ἐνέστηκε(ν)",
+        "lemma": "ἐνίστημι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "perfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἡμέρα",
+        "normalized": "ἡμέρα",
+        "lemma": "ἡμέρα",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:3": [
+      {
+        "text": "μή",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "τις",
+        "normalized": "τὶς",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐξαπατήσῃ",
+        "normalized": "ἐξαπατήσῃ",
+        "lemma": "ἐξαπατάω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "κατὰ",
+        "normalized": "κατά",
+        "lemma": "κατά",
+        "pos": "preposition"
+      },
+      {
+        "text": "μηδένα",
+        "normalized": "μηδένα",
+        "lemma": "μηδείς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τρόπον",
+        "normalized": "τρόπον",
+        "lemma": "τρόπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐὰν",
+        "normalized": "ἐάν",
+        "lemma": "ἐάν",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἔλθῃ",
+        "normalized": "ἔλθῃ",
+        "lemma": "ἔρχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀποστασία",
+        "normalized": "ἀποστασία",
+        "lemma": "ἀποστασία",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "πρῶτον",
+        "normalized": "πρῶτον",
+        "lemma": "πρῶτος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἀποκαλυφθῇ",
+        "normalized": "ἀποκαλυφθῇ",
+        "lemma": "ἀποκαλύπτω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἄνθρωπος",
+        "normalized": "ἄνθρωπος",
+        "lemma": "ἄνθρωπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "⸀ἀνομίας",
+        "normalized": "ἀνομίας",
+        "lemma": "ἀνομία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "υἱὸς",
+        "normalized": "υἱός",
+        "lemma": "υἱός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀπωλείας",
+        "normalized": "ἀπωλείας",
+        "lemma": "ἀπώλεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "2:4": [
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀντικείμενος",
+        "normalized": "ἀντικείμενος",
+        "lemma": "ἀντίκειμαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑπεραιρόμενος",
+        "normalized": "ὑπεραιρόμενος",
+        "lemma": "ὑπεραίρομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐπὶ",
+        "normalized": "ἐπί",
+        "lemma": "ἐπί",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάντα",
+        "normalized": "πάντα",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "λεγόμενον",
+        "normalized": "λεγόμενον",
+        "lemma": "λέγω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "passive",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεὸν",
+        "normalized": "θεόν",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἢ",
+        "normalized": "ἤ",
+        "lemma": "ἤ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "σέβασμα",
+        "normalized": "σέβασμα",
+        "lemma": "σέβασμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ὥστε",
+        "normalized": "ὥστε",
+        "lemma": "ὥστε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "αὐτὸν",
+        "normalized": "αὐτόν",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸν",
+        "normalized": "τόν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ναὸν",
+        "normalized": "ναόν",
+        "lemma": "ναός",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καθίσαι",
+        "normalized": "καθίσαι",
+        "lemma": "καθίζω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἀποδεικνύντα",
+        "normalized": "ἀποδεικνύντα",
+        "lemma": "ἀποδείκνυμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἑαυτὸν",
+        "normalized": "ἑαυτόν",
+        "lemma": "ἑαυτοῦ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἔστιν",
+        "normalized": "ἐστί(ν)",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "θεός",
+        "normalized": "θεός",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:5": [
+      {
+        "text": "οὐ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "μνημονεύετε",
+        "normalized": "μνημονεύετε",
+        "lemma": "μνημονεύω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἔτι",
+        "normalized": "ἔτι",
+        "lemma": "ἔτι",
+        "pos": "adverb"
+      },
+      {
+        "text": "ὢν",
+        "normalized": "ὤν",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πρὸς",
+        "normalized": "πρός",
+        "lemma": "πρός",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ταῦτα",
+        "normalized": "ταῦτα",
+        "lemma": "οὗτος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἔλεγον",
+        "normalized": "ἔλεγον",
+        "lemma": "λέγω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "imperfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      }
+    ],
+    "2:6": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "νῦν",
+        "normalized": "νῦν",
+        "lemma": "νῦν",
+        "pos": "adverb"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "κατέχον",
+        "normalized": "κατέχον",
+        "lemma": "κατέχω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "οἴδατε",
+        "normalized": "οἴδατε",
+        "lemma": "οἶδα",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "perfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἀποκαλυφθῆναι",
+        "normalized": "ἀποκαλυφθῆναι",
+        "lemma": "ἀποκαλύπτω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "αὐτὸν",
+        "normalized": "αὐτόν",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ἑαυτοῦ",
+        "normalized": "ἑαυτοῦ",
+        "lemma": "ἑαυτοῦ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καιρῷ",
+        "normalized": "καιρῷ",
+        "lemma": "καιρός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:7": [
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "γὰρ",
+        "normalized": "γάρ",
+        "lemma": "γάρ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μυστήριον",
+        "normalized": "μυστήριον",
+        "lemma": "μυστήριον",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἤδη",
+        "normalized": "ἤδη",
+        "lemma": "ἤδη",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἐνεργεῖται",
+        "normalized": "ἐνεργεῖται",
+        "lemma": "ἐνεργέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀνομίας",
+        "normalized": "ἀνομίας",
+        "lemma": "ἀνομία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "μόνον",
+        "normalized": "μόνον",
+        "lemma": "μόνος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κατέχων",
+        "normalized": "κατέχων",
+        "lemma": "κατέχω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἄρτι",
+        "normalized": "ἄρτι",
+        "lemma": "ἄρτι",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἕως",
+        "normalized": "ἕως",
+        "lemma": "ἕως",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐκ",
+        "normalized": "ἐκ",
+        "lemma": "ἐκ",
+        "pos": "preposition"
+      },
+      {
+        "text": "μέσου",
+        "normalized": "μέσου",
+        "lemma": "μέσος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "γένηται",
+        "normalized": "γένηται",
+        "lemma": "γίνομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      }
+    ],
+    "2:8": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τότε",
+        "normalized": "τότε",
+        "lemma": "τότε",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἀποκαλυφθήσεται",
+        "normalized": "ἀποκαλυφθήσεται",
+        "lemma": "ἀποκαλύπτω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "passive",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἄνομος",
+        "normalized": "ἄνομος",
+        "lemma": "ἄνομος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὃν",
+        "normalized": "ὅν",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀Ἰησοῦς",
+        "normalized": "Ἰησοῦς",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ἀνελεῖ",
+        "normalized": "ἀνελεῖ",
+        "lemma": "ἀναιρέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "πνεύματι",
+        "normalized": "πνεύματι",
+        "lemma": "πνεῦμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "στόματος",
+        "normalized": "στόματος",
+        "lemma": "στόμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "αὐτοῦ",
+        "normalized": "αὐτοῦ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "καταργήσει",
+        "normalized": "καταργήσει",
+        "lemma": "καταργέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐπιφανείᾳ",
+        "normalized": "ἐπιφανείᾳ",
+        "lemma": "ἐπιφάνεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "παρουσίας",
+        "normalized": "παρουσίας",
+        "lemma": "παρουσία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "αὐτοῦ",
+        "normalized": "αὐτοῦ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:9": [
+      {
+        "text": "οὗ",
+        "normalized": "οὗ",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐστιν",
+        "normalized": "ἐστί(ν)",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "παρουσία",
+        "normalized": "παρουσία",
+        "lemma": "παρουσία",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "κατ’",
+        "normalized": "κατά",
+        "lemma": "κατά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἐνέργειαν",
+        "normalized": "ἐνέργειαν",
+        "lemma": "ἐνέργεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Σατανᾶ",
+        "normalized": "Σατανᾶ",
+        "lemma": "Σατανᾶς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάσῃ",
+        "normalized": "πάσῃ",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "δυνάμει",
+        "normalized": "δυνάμει",
+        "lemma": "δύναμις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "σημείοις",
+        "normalized": "σημείοις",
+        "lemma": "σημεῖον",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τέρασιν",
+        "normalized": "τέρασι(ν)",
+        "lemma": "τέρας",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ψεύδους",
+        "normalized": "ψεύδους",
+        "lemma": "ψεῦδος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      }
+    ],
+    "2:10": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάσῃ",
+        "normalized": "πάσῃ",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀπάτῃ",
+        "normalized": "ἀπάτῃ",
+        "lemma": "ἀπάτη",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "⸀ἀδικίας",
+        "normalized": "ἀδικίας",
+        "lemma": "ἀδικία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀπολλυμένοις",
+        "normalized": "ἀπολλυμένοις",
+        "lemma": "ἀπόλλυμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀνθ’",
+        "normalized": "ἀντί",
+        "lemma": "ἀντί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὧν",
+        "normalized": "ὧν",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀγάπην",
+        "normalized": "ἀγάπην",
+        "lemma": "ἀγάπη",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀληθείας",
+        "normalized": "ἀληθείας",
+        "lemma": "ἀλήθεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "οὐκ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἐδέξαντο",
+        "normalized": "ἐδέξαντο",
+        "lemma": "δέχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "σωθῆναι",
+        "normalized": "σωθῆναι",
+        "lemma": "σῴζω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "αὐτούς",
+        "normalized": "αὐτούς",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:11": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τοῦτο",
+        "normalized": "τοῦτο",
+        "lemma": "οὗτος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "⸀πέμπει",
+        "normalized": "πέμπει",
+        "lemma": "πέμπω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "αὐτοῖς",
+        "normalized": "αὐτοῖς",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεὸς",
+        "normalized": "θεός",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐνέργειαν",
+        "normalized": "ἐνέργειαν",
+        "lemma": "ἐνέργεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "πλάνης",
+        "normalized": "πλάνης",
+        "lemma": "πλάνη",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "πιστεῦσαι",
+        "normalized": "πιστεῦσαι",
+        "lemma": "πιστεύω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "αὐτοὺς",
+        "normalized": "αὐτούς",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ψεύδει",
+        "normalized": "ψεύδει",
+        "lemma": "ψεῦδος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      }
+    ],
+    "2:12": [
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κριθῶσιν",
+        "normalized": "κριθῶσι(ν)",
+        "lemma": "κρίνω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "⸀πάντες",
+        "normalized": "πάντες",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "οἱ",
+        "normalized": "οἱ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "πιστεύσαντες",
+        "normalized": "πιστεύσαντες",
+        "lemma": "πιστεύω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀληθείᾳ",
+        "normalized": "ἀληθείᾳ",
+        "lemma": "ἀλήθεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀλλὰ",
+        "normalized": "ἀλλά",
+        "lemma": "ἀλλά",
+        "pos": "conjunction"
+      },
+      {
+        "text": "εὐδοκήσαντες",
+        "normalized": "εὐδοκήσαντες",
+        "lemma": "εὐδοκέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀδικίᾳ",
+        "normalized": "ἀδικίᾳ",
+        "lemma": "ἀδικία",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "2:13": [
+      {
+        "text": "Ἡμεῖς",
+        "normalized": "ἡμεῖς",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὀφείλομεν",
+        "normalized": "ὀφείλομεν",
+        "lemma": "ὀφείλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εὐχαριστεῖν",
+        "normalized": "εὐχαριστεῖν",
+        "lemma": "εὐχαριστέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεῷ",
+        "normalized": "θεῷ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πάντοτε",
+        "normalized": "πάντοτε",
+        "lemma": "πάντοτε",
+        "pos": "adverb"
+      },
+      {
+        "text": "περὶ",
+        "normalized": "περί",
+        "lemma": "περί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀδελφοὶ",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἠγαπημένοι",
+        "normalized": "ἠγαπημένοι",
+        "lemma": "ἀγαπάω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "perfect",
+          "voice": "passive",
+          "mood": "participle",
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑπὸ",
+        "normalized": "ὑπό",
+        "lemma": "ὑπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "εἵλατο",
+        "normalized": "εἵλατο",
+        "lemma": "αἱρέομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "middle",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεὸς",
+        "normalized": "θεός",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ἀπαρχὴν",
+        "normalized": "ἀπαρχήν",
+        "lemma": "ἀπαρχή",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "σωτηρίαν",
+        "normalized": "σωτηρίαν",
+        "lemma": "σωτηρία",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἁγιασμῷ",
+        "normalized": "ἁγιασμῷ",
+        "lemma": "ἁγιασμός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πνεύματος",
+        "normalized": "πνεύματος",
+        "lemma": "πνεῦμα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πίστει",
+        "normalized": "πίστει",
+        "lemma": "πίστις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀληθείας",
+        "normalized": "ἀληθείας",
+        "lemma": "ἀλήθεια",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "2:14": [
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "⸀ὃ",
+        "normalized": "ὅ",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἐκάλεσεν",
+        "normalized": "ἐκάλεσε(ν)",
+        "lemma": "καλέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "εὐαγγελίου",
+        "normalized": "εὐαγγελίου",
+        "lemma": "εὐαγγέλιον",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "περιποίησιν",
+        "normalized": "περιποίησιν",
+        "lemma": "περιποίησις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "δόξης",
+        "normalized": "δόξης",
+        "lemma": "δόξα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "2:15": [
+      {
+        "text": "ἄρα",
+        "normalized": "ἄρα",
+        "lemma": "ἄρα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "οὖν",
+        "normalized": "οὖν",
+        "lemma": "οὖν",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "στήκετε",
+        "normalized": "στήκετε",
+        "lemma": "στήκω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κρατεῖτε",
+        "normalized": "κρατεῖτε",
+        "lemma": "κρατέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τὰς",
+        "normalized": "τάς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "παραδόσεις",
+        "normalized": "παραδόσεις",
+        "lemma": "παράδοσις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἃς",
+        "normalized": "ἅς",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐδιδάχθητε",
+        "normalized": "ἐδιδάχθητε",
+        "lemma": "διδάσκω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἴτε",
+        "normalized": "εἴτε",
+        "lemma": "εἴτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "λόγου",
+        "normalized": "λόγου",
+        "lemma": "λόγος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "εἴτε",
+        "normalized": "εἴτε",
+        "lemma": "εἴτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δι’",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἐπιστολῆς",
+        "normalized": "ἐπιστολῆς",
+        "lemma": "ἐπιστολή",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      }
+    ],
+    "2:16": [
+      {
+        "text": "Αὐτὸς",
+        "normalized": "αὐτός",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦς",
+        "normalized": "Ἰησοῦς",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστὸς",
+        "normalized": "Χριστός",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "⸀θεὸς",
+        "normalized": "θεός",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πατὴρ",
+        "normalized": "πατήρ",
+        "lemma": "πατήρ",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀγαπήσας",
+        "normalized": "ἀγαπήσας",
+        "lemma": "ἀγαπάω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμᾶς",
+        "normalized": "ἡμᾶς",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δοὺς",
+        "normalized": "δούς",
+        "lemma": "δίδωμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "παράκλησιν",
+        "normalized": "παράκλησιν",
+        "lemma": "παράκλησις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "αἰωνίαν",
+        "normalized": "αἰωνίαν",
+        "lemma": "αἰώνιος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐλπίδα",
+        "normalized": "ἐλπίδα",
+        "lemma": "ἐλπίς",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀγαθὴν",
+        "normalized": "ἀγαθήν",
+        "lemma": "ἀγαθός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "χάριτι",
+        "normalized": "χάριτι",
+        "lemma": "χάρις",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "2:17": [
+      {
+        "text": "παρακαλέσαι",
+        "normalized": "παρακαλέσαι",
+        "lemma": "παρακαλέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "optative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τὰς",
+        "normalized": "τάς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καρδίας",
+        "normalized": "καρδίας",
+        "lemma": "καρδία",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "⸀στηρίξαι",
+        "normalized": "στηρίξαι",
+        "lemma": "στηρίζω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "optative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "παντὶ",
+        "normalized": "παντί",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἔργῳ",
+        "normalized": "ἔργῳ",
+        "lemma": "ἔργον",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "λόγῳ",
+        "normalized": "λόγῳ",
+        "lemma": "λόγος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀγαθῷ",
+        "normalized": "ἀγαθῷ",
+        "lemma": "ἀγαθός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:1": [
+      {
+        "text": "Τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "λοιπὸν",
+        "normalized": "λοιπόν",
+        "lemma": "λοιπός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "προσεύχεσθε",
+        "normalized": "προσεύχεσθε",
+        "lemma": "προσεύχομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "περὶ",
+        "normalized": "περί",
+        "lemma": "περί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "λόγος",
+        "normalized": "λόγος",
+        "lemma": "λόγος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τρέχῃ",
+        "normalized": "τρέχῃ",
+        "lemma": "τρέχω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δοξάζηται",
+        "normalized": "δοξάζηται",
+        "lemma": "δοξάζω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "καθὼς",
+        "normalized": "καθώς",
+        "lemma": "καθώς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "adverb"
+      },
+      {
+        "text": "πρὸς",
+        "normalized": "πρός",
+        "lemma": "πρός",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:2": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ῥυσθῶμεν",
+        "normalized": "ῥυσθῶμεν",
+        "lemma": "ῥύομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῶν",
+        "normalized": "τῶν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀτόπων",
+        "normalized": "ἀτόπων",
+        "lemma": "ἄτοπος",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πονηρῶν",
+        "normalized": "πονηρῶν",
+        "lemma": "πονηρός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀνθρώπων",
+        "normalized": "ἀνθρώπων",
+        "lemma": "ἄνθρωπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "οὐ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "γὰρ",
+        "normalized": "γάρ",
+        "lemma": "γάρ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "πάντων",
+        "normalized": "πάντων",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "πίστις",
+        "normalized": "πίστις",
+        "lemma": "πίστις",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      }
+    ],
+    "3:3": [
+      {
+        "text": "πιστὸς",
+        "normalized": "πιστός",
+        "lemma": "πιστός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δέ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐστιν",
+        "normalized": "ἐστί(ν)",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὃς",
+        "normalized": "ὅς",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "στηρίξει",
+        "normalized": "στηρίξει",
+        "lemma": "στηρίζω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "φυλάξει",
+        "normalized": "φυλάξει",
+        "lemma": "φυλάσσω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πονηροῦ",
+        "normalized": "πονηροῦ",
+        "lemma": "πονηρός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:4": [
+      {
+        "text": "πεποίθαμεν",
+        "normalized": "πεποίθαμεν",
+        "lemma": "πείθω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "perfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "κυρίῳ",
+        "normalized": "κυρίῳ",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐφ’",
+        "normalized": "ἐπί",
+        "lemma": "ἐπί",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἃ",
+        "normalized": "ἅ",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "⸀παραγγέλλομεν",
+        "normalized": "παραγγέλλομεν",
+        "lemma": "παραγγέλλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ποιεῖτε",
+        "normalized": "ποιεῖτε",
+        "lemma": "ποιέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ποιήσετε",
+        "normalized": "ποιήσετε",
+        "lemma": "ποιέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "future",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:5": [
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κατευθύναι",
+        "normalized": "κατευθύναι",
+        "lemma": "κατευθύνω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "optative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τὰς",
+        "normalized": "τάς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καρδίας",
+        "normalized": "καρδίας",
+        "lemma": "καρδία",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀγάπην",
+        "normalized": "ἀγάπην",
+        "lemma": "ἀγάπη",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "θεοῦ",
+        "normalized": "θεοῦ",
+        "lemma": "θεός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ὑπομονὴν",
+        "normalized": "ὑπομονήν",
+        "lemma": "ὑπομονή",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:6": [
+      {
+        "text": "Παραγγέλλομεν",
+        "normalized": "παραγγέλλομεν",
+        "lemma": "παραγγέλλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὀνόματι",
+        "normalized": "ὀνόματι",
+        "lemma": "ὄνομα",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "στέλλεσθαι",
+        "normalized": "στέλλεσθαι",
+        "lemma": "στέλλομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀπὸ",
+        "normalized": "ἀπό",
+        "lemma": "ἀπό",
+        "pos": "preposition"
+      },
+      {
+        "text": "παντὸς",
+        "normalized": "παντός",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀδελφοῦ",
+        "normalized": "ἀδελφοῦ",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀτάκτως",
+        "normalized": "ἀτάκτως",
+        "lemma": "ἀτάκτως",
+        "pos": "adverb"
+      },
+      {
+        "text": "περιπατοῦντος",
+        "normalized": "περιπατοῦντος",
+        "lemma": "περιπατέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "κατὰ",
+        "normalized": "κατά",
+        "lemma": "κατά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "παράδοσιν",
+        "normalized": "παράδοσιν",
+        "lemma": "παράδοσις",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἣν",
+        "normalized": "ἥν",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "⸀παρελάβοσαν",
+        "normalized": "παρελάβοσαν",
+        "lemma": "παραλαμβάνω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "παρ’",
+        "normalized": "παρά",
+        "lemma": "παρά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:7": [
+      {
+        "text": "αὐτοὶ",
+        "normalized": "αὐτοί",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "γὰρ",
+        "normalized": "γάρ",
+        "lemma": "γάρ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "οἴδατε",
+        "normalized": "οἴδατε",
+        "lemma": "οἶδα",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "perfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "πῶς",
+        "normalized": "πῶς",
+        "lemma": "πῶς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δεῖ",
+        "normalized": "δεῖ",
+        "lemma": "δέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "μιμεῖσθαι",
+        "normalized": "μιμεῖσθαι",
+        "lemma": "μιμέομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἡμᾶς",
+        "normalized": "ἡμᾶς",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "οὐκ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἠτακτήσαμεν",
+        "normalized": "ἠτακτήσαμεν",
+        "lemma": "ἀτακτέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:8": [
+      {
+        "text": "οὐδὲ",
+        "normalized": "οὐδέ",
+        "lemma": "οὐδέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δωρεὰν",
+        "normalized": "δωρεάν",
+        "lemma": "δωρεάν",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἄρτον",
+        "normalized": "ἄρτον",
+        "lemma": "ἄρτος",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐφάγομεν",
+        "normalized": "ἐφάγομεν",
+        "lemma": "ἐσθίω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "παρά",
+        "normalized": "παρά",
+        "lemma": "παρά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τινος",
+        "normalized": "τινός",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀλλ’",
+        "normalized": "ἀλλά",
+        "lemma": "ἀλλά",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "κόπῳ",
+        "normalized": "κόπῳ",
+        "lemma": "κόπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μόχθῳ",
+        "normalized": "μόχθῳ",
+        "lemma": "μόχθος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "νυκτὸς",
+        "normalized": "νυκτός",
+        "lemma": "νύξ",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἡμέρας",
+        "normalized": "ἡμέρας",
+        "lemma": "ἡμέρα",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐργαζόμενοι",
+        "normalized": "ἐργαζόμενοι",
+        "lemma": "ἐργάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "πρὸς",
+        "normalized": "πρός",
+        "lemma": "πρός",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἐπιβαρῆσαί",
+        "normalized": "ἐπιβαρῆσαι",
+        "lemma": "ἐπιβαρέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "τινα",
+        "normalized": "τινά",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:9": [
+      {
+        "text": "οὐχ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "conjunction"
+      },
+      {
+        "text": "οὐκ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἔχομεν",
+        "normalized": "ἔχομεν",
+        "lemma": "ἔχω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐξουσίαν",
+        "normalized": "ἐξουσίαν",
+        "lemma": "ἐξουσία",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἀλλ’",
+        "normalized": "ἀλλά",
+        "lemma": "ἀλλά",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἑαυτοὺς",
+        "normalized": "ἑαυτούς",
+        "lemma": "ἑαυτοῦ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τύπον",
+        "normalized": "τύπον",
+        "lemma": "τύπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δῶμεν",
+        "normalized": "δῶμεν",
+        "lemma": "δίδωμι",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "εἰς",
+        "normalized": "εἰς",
+        "lemma": "εἰς",
+        "pos": "preposition"
+      },
+      {
+        "text": "τὸ",
+        "normalized": "τό",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "μιμεῖσθαι",
+        "normalized": "μιμεῖσθαι",
+        "lemma": "μιμέομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "ἡμᾶς",
+        "normalized": "ἡμᾶς",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:10": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "adverb"
+      },
+      {
+        "text": "γὰρ",
+        "normalized": "γάρ",
+        "lemma": "γάρ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὅτε",
+        "normalized": "ὅτε",
+        "lemma": "ὅτε",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἦμεν",
+        "normalized": "ἦμεν",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "imperfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "πρὸς",
+        "normalized": "πρός",
+        "lemma": "πρός",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμᾶς",
+        "normalized": "ὑμᾶς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τοῦτο",
+        "normalized": "τοῦτο",
+        "lemma": "οὗτος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "παρηγγέλλομεν",
+        "normalized": "παρηγγέλλομεν",
+        "lemma": "παραγγέλλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "imperfect",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὅτι",
+        "normalized": "ὅτι",
+        "lemma": "ὅτι",
+        "pos": "adverb"
+      },
+      {
+        "text": "εἴ",
+        "normalized": "εἰ",
+        "lemma": "εἰ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τις",
+        "normalized": "τὶς",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "οὐ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "θέλει",
+        "normalized": "θέλει",
+        "lemma": "θέλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ἐργάζεσθαι",
+        "normalized": "ἐργάζεσθαι",
+        "lemma": "ἐργάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "μηδὲ",
+        "normalized": "μηδέ",
+        "lemma": "μηδέ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ἐσθιέτω",
+        "normalized": "ἐσθιέτω",
+        "lemma": "ἐσθίω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "imperative",
+          "number": "singular"
+        }
+      }
+    ],
+    "3:11": [
+      {
+        "text": "ἀκούομεν",
+        "normalized": "ἀκούομεν",
+        "lemma": "ἀκούω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "γάρ",
+        "normalized": "γάρ",
+        "lemma": "γάρ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τινας",
+        "normalized": "τινάς",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "περιπατοῦντας",
+        "normalized": "περιπατοῦντας",
+        "lemma": "περιπατέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀτάκτως",
+        "normalized": "ἀτάκτως",
+        "lemma": "ἀτάκτως",
+        "pos": "adverb"
+      },
+      {
+        "text": "μηδὲν",
+        "normalized": "μηδέν",
+        "lemma": "μηδείς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἐργαζομένους",
+        "normalized": "ἐργαζομένους",
+        "lemma": "ἐργάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀλλὰ",
+        "normalized": "ἀλλά",
+        "lemma": "ἀλλά",
+        "pos": "conjunction"
+      },
+      {
+        "text": "περιεργαζομένους",
+        "normalized": "περιεργαζομένους",
+        "lemma": "περιεργάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "accusative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:12": [
+      {
+        "text": "τοῖς",
+        "normalized": "τοῖς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τοιούτοις",
+        "normalized": "τοιούτοις",
+        "lemma": "τοιοῦτος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "παραγγέλλομεν",
+        "normalized": "παραγγέλλομεν",
+        "lemma": "παραγγέλλω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "παρακαλοῦμεν",
+        "normalized": "παρακαλοῦμεν",
+        "lemma": "παρακαλέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "κυρίῳ",
+        "normalized": "κυρίῳ",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστῷ",
+        "normalized": "Χριστῷ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μετὰ",
+        "normalized": "μετά",
+        "lemma": "μετά",
+        "pos": "preposition"
+      },
+      {
+        "text": "ἡσυχίας",
+        "normalized": "ἡσυχίας",
+        "lemma": "ἡσυχία",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐργαζόμενοι",
+        "normalized": "ἐργαζόμενοι",
+        "lemma": "ἐργάζομαι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τὸν",
+        "normalized": "τόν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἑαυτῶν",
+        "normalized": "ἑαυτῶν",
+        "lemma": "ἑαυτοῦ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἄρτον",
+        "normalized": "ἄρτον",
+        "lemma": "ἄρτος",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐσθίωσιν",
+        "normalized": "ἐσθίωσι(ν)",
+        "lemma": "ἐσθίω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:13": [
+      {
+        "text": "ὑμεῖς",
+        "normalized": "ὑμεῖς",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "δέ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἀδελφοί",
+        "normalized": "ἀδελφοί",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "vocative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "⸀ἐγκακήσητε",
+        "normalized": "ἐγκακήσητε",
+        "lemma": "ἐγκακέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "subjunctive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "καλοποιοῦντες",
+        "normalized": "καλοποιοῦντες",
+        "lemma": "καλοποιέω",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "active",
+          "mood": "participle",
+          "case": "nominative",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:14": [
+      {
+        "text": "Εἰ",
+        "normalized": "εἰ",
+        "lemma": "εἰ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "δέ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "τις",
+        "normalized": "τὶς",
+        "lemma": "τις",
+        "pos": "interrogative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "οὐχ",
+        "normalized": "οὐ",
+        "lemma": "οὐ",
+        "pos": "adverb"
+      },
+      {
+        "text": "ὑπακούει",
+        "normalized": "ὑπακούει",
+        "lemma": "ὑπακούω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "τῷ",
+        "normalized": "τῷ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "λόγῳ",
+        "normalized": "λόγῳ",
+        "lemma": "λόγος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐπιστολῆς",
+        "normalized": "ἐπιστολῆς",
+        "lemma": "ἐπιστολή",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦτον",
+        "normalized": "τοῦτον",
+        "lemma": "οὗτος",
+        "pos": "demonstrative_pronoun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "σημειοῦσθε",
+        "normalized": "σημειοῦσθε",
+        "lemma": "σημειόομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "⸀μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "⸀συναναμίγνυσθαι",
+        "normalized": "συναναμίγνυσθαι",
+        "lemma": "συναναμίγνυμι",
+        "pos": "verb",
+        "parsing": {
+          "tense": "present",
+          "voice": "middle",
+          "mood": "infinitive"
+        }
+      },
+      {
+        "text": "αὐτῷ",
+        "normalized": "αὐτῷ",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἵνα",
+        "normalized": "ἵνα",
+        "lemma": "ἵνα",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐντραπῇ",
+        "normalized": "ἐντραπῇ",
+        "lemma": "ἐντρέπω",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "passive",
+          "mood": "subjunctive",
+          "number": "singular"
+        }
+      }
+    ],
+    "3:15": [
+      {
+        "text": "καὶ",
+        "normalized": "καί",
+        "lemma": "καί",
+        "pos": "conjunction"
+      },
+      {
+        "text": "μὴ",
+        "normalized": "μή",
+        "lemma": "μή",
+        "pos": "adverb"
+      },
+      {
+        "text": "ὡς",
+        "normalized": "ὡς",
+        "lemma": "ὡς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἐχθρὸν",
+        "normalized": "ἐχθρόν",
+        "lemma": "ἐχθρός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡγεῖσθε",
+        "normalized": "ἡγεῖσθε",
+        "lemma": "ἡγέομαι",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "middle",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ἀλλὰ",
+        "normalized": "ἀλλά",
+        "lemma": "ἀλλά",
+        "pos": "conjunction"
+      },
+      {
+        "text": "νουθετεῖτε",
+        "normalized": "νουθετεῖτε",
+        "lemma": "νουθετέω",
+        "pos": "verb",
+        "parsing": {
+          "person": "2",
+          "tense": "present",
+          "voice": "active",
+          "mood": "imperative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "ὡς",
+        "normalized": "ὡς",
+        "lemma": "ὡς",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ἀδελφόν",
+        "normalized": "ἀδελφόν",
+        "lemma": "ἀδελφός",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      }
+    ],
+    "3:16": [
+      {
+        "text": "Αὐτὸς",
+        "normalized": "αὐτός",
+        "lemma": "αὐτός",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "δὲ",
+        "normalized": "δέ",
+        "lemma": "δέ",
+        "pos": "conjunction"
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῆς",
+        "normalized": "τῆς",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εἰρήνης",
+        "normalized": "εἰρήνης",
+        "lemma": "εἰρήνη",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "δῴη",
+        "normalized": "δῴη",
+        "lemma": "δίδωμι",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "aorist",
+          "voice": "active",
+          "mood": "optative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "ὑμῖν",
+        "normalized": "ὑμῖν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "dative",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "τὴν",
+        "normalized": "τήν",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "εἰρήνην",
+        "normalized": "εἰρήνην",
+        "lemma": "εἰρήνη",
+        "pos": "noun",
+        "parsing": {
+          "case": "accusative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "διὰ",
+        "normalized": "διά",
+        "lemma": "διά",
+        "pos": "preposition"
+      },
+      {
+        "text": "παντὸς",
+        "normalized": "παντός",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "παντὶ",
+        "normalized": "παντί",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τρόπῳ",
+        "normalized": "τρόπῳ",
+        "lemma": "τρόπος",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κύριος",
+        "normalized": "κύριος",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μετὰ",
+        "normalized": "μετά",
+        "lemma": "μετά",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάντων",
+        "normalized": "πάντων",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      }
+    ],
+    "3:17": [
+      {
+        "text": "Ὁ",
+        "normalized": "ὁ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἀσπασμὸς",
+        "normalized": "ἀσπασμός",
+        "lemma": "ἀσπασμός",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "τῇ",
+        "normalized": "τῇ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐμῇ",
+        "normalized": "ἐμῇ",
+        "lemma": "ἐμός",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "χειρὶ",
+        "normalized": "χειρί",
+        "lemma": "χείρ",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "Παύλου",
+        "normalized": "Παύλου",
+        "lemma": "Παῦλος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ὅ",
+        "normalized": "ὅ",
+        "lemma": "ὅς",
+        "pos": "relative_pronoun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἐστιν",
+        "normalized": "ἐστί(ν)",
+        "lemma": "εἰμί",
+        "pos": "verb",
+        "parsing": {
+          "person": "3",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      },
+      {
+        "text": "σημεῖον",
+        "normalized": "σημεῖον",
+        "lemma": "σημεῖον",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "neuter"
+        }
+      },
+      {
+        "text": "ἐν",
+        "normalized": "ἐν",
+        "lemma": "ἐν",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάσῃ",
+        "normalized": "πάσῃ",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "ἐπιστολῇ",
+        "normalized": "ἐπιστολῇ",
+        "lemma": "ἐπιστολή",
+        "pos": "noun",
+        "parsing": {
+          "case": "dative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "οὕτως",
+        "normalized": "οὕτω(ς)",
+        "lemma": "οὕτω(ς)",
+        "pos": "adverb"
+      },
+      {
+        "text": "γράφω",
+        "normalized": "γράφω",
+        "lemma": "γράφω",
+        "pos": "verb",
+        "parsing": {
+          "person": "1",
+          "tense": "present",
+          "voice": "active",
+          "mood": "indicative",
+          "number": "singular"
+        }
+      }
+    ],
+    "3:18": [
+      {
+        "text": "ἡ",
+        "normalized": "ἡ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "χάρις",
+        "normalized": "χάρις",
+        "lemma": "χάρις",
+        "pos": "noun",
+        "parsing": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        }
+      },
+      {
+        "text": "τοῦ",
+        "normalized": "τοῦ",
+        "lemma": "ὁ",
+        "pos": "article",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "κυρίου",
+        "normalized": "κυρίου",
+        "lemma": "κύριος",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "ἡμῶν",
+        "normalized": "ἡμῶν",
+        "lemma": "ἐγώ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      },
+      {
+        "text": "Ἰησοῦ",
+        "normalized": "Ἰησοῦ",
+        "lemma": "Ἰησοῦς",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "Χριστοῦ",
+        "normalized": "Χριστοῦ",
+        "lemma": "Χριστός",
+        "pos": "noun",
+        "parsing": {
+          "case": "genitive",
+          "number": "singular",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "μετὰ",
+        "normalized": "μετά",
+        "lemma": "μετά",
+        "pos": "preposition"
+      },
+      {
+        "text": "πάντων",
+        "normalized": "πάντων",
+        "lemma": "πᾶς",
+        "pos": "adjective",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural",
+          "gender": "masculine"
+        }
+      },
+      {
+        "text": "⸀ὑμῶν",
+        "normalized": "ὑμῶν",
+        "lemma": "σύ",
+        "pos": "personal_pronoun",
+        "parsing": {
+          "case": "genitive",
+          "number": "plural"
+        }
+      }
+    ]
+  }
+}

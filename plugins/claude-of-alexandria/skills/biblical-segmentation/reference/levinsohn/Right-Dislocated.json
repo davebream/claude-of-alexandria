@@ -1,0 +1,1181 @@
+{
+  "feature": "Right-Dislocated",
+  "description": "Point of departure - A type of SENTENCE in which one of the CONSTITUENTS appears in FINAL position and its CANONICAL position is filled by a PRONOUN with the same REFERENCE, e.g. ... He’s always late, that chap.",
+  "references": [
+    {
+      "verse": "Matt 2:3",
+      "word": "καὶ πᾶσα ἱεροσόλυμα μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 5:24",
+      "word": "ἔμπροσθεν τοῦ θυσιαστηρίου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 9:19",
+      "word": "καὶ οἱ μαθηταὶ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 12:3",
+      "word": "καὶ οἱ μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 12:4",
+      "word": "οὐδὲ τοῖς μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 13:8",
+      "word": "ὃ μὲν ἑκατόν ὃ δὲ ἑξήκοντα ὃ δὲ τριάκοντα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 18:25",
+      "word": "καὶ τὴν γυναῖκα καὶ τὰ τέκνα καὶ πάντα ὅσα ἔχει",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 20:12",
+      "word": "τοῖς βαστάσασι τὸ βάρος τῆς ἡμέρας καὶ τὸν καύσωνα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 23:10",
+      "word": "ὁ χριστός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 23:17",
+      "word": "ὁ χρυσὸς ἢ ὁ ναὸς ὁ ἁγιάσας τὸν χρυσόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 23:19",
+      "word": "τὸ δῶρον ἢ τὸ θυσιαστήριον τὸ ἁγιάζον τὸ δῶρον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 24:33",
+      "word": "ἐπὶ θύραις",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 24:36",
+      "word": "οὐδὲ οἱ ἄγγελοι τῶν οὐρανῶν οὐδὲ ὁ υἱός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 25:31",
+      "word": "καὶ πάντες οἱ ἄγγελοι μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 26:47",
+      "word": "καὶ μετ’ αὐτοῦ ὄχλος πολὺς μετὰ μαχαιρῶν καὶ ξύλων ἀπὸ τῶν ἀρχιερέων καὶ πρεσβυτέρων τοῦ λαοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Matt 27:17",
+      "word": "ἰησοῦν τὸν βαραββᾶν ἢ ἰησοῦν τὸν λεγόμενον χριστόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 1:24",
+      "word": "ὁ ἅγιος τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 2:20",
+      "word": "ἐν ἐκείνῃ τῇ ἡμέρᾳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 2:21",
+      "word": "τὸ καινὸν τοῦ παλαιοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 2:22",
+      "word": "καὶ οἱ ἀσκοί",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 2:25",
+      "word": "αὐτὸς καὶ οἱ μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 3:7 - 8",
+      "word": "καὶ ἀπὸ τῆς ἰουδαίας καὶ ἀπὸ ἱεροσολύμων καὶ ἀπὸ τῆς ἰδουμαίας καὶ πέραν τοῦ ἰορδάνου καὶ περὶ τύρον καὶ σιδῶνα πλῆθος πολὺ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 4:8",
+      "word": "ἓν τριάκοντα καὶ ἓν ἑξήκοντα καὶ ἓν ἑκατόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 4:20",
+      "word": "ἓν τριάκοντα καὶ ἓν ἑξήκοντα καὶ ἓν ἑκατόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 5:13",
+      "word": "ὡς δισχίλιοι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 6:8",
+      "word": "μὴ ἄρτον μὴ πήραν μὴ εἰς τὴν ζώνην χαλκόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 6:23",
+      "word": "ἕως ἡμίσους τῆς βασιλείας μου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 7:4",
+      "word": "βαπτισμοὺς ποτηρίων καὶ ξεστῶν καὶ χαλκίων καὶ κλινῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 7:21 - 2",
+      "word": "πορνεῖαι κλοπαί φόνοι μοιχεῖαι πλεονεξίαι πονηρίαι δόλος ἀσέλγεια ὀφθαλμὸς πονηρός βλασφημία ὑπερηφανία ἀφροσύνη",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 9:5",
+      "word": "σοὶ μίαν καὶ μωϋσεῖ μίαν καὶ ἠλίᾳ μίαν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 10:30",
+      "word": "οἰκίας καὶ ἀδελφοὺς καὶ ἀδελφὰς καὶ μητέρας καὶ τέκνα καὶ ἀγροὺς μετὰ διωγμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 10:46",
+      "word": "καὶ τῶν μαθητῶν αὐτοῦ καὶ ὄχλου ἱκανοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 12:5",
+      "word": "καὶ πολλοὺς ἄλλους οὓς μὲν δέροντες οὓς δὲ ἀποκτέννοντες",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 12:44",
+      "word": "ὅλον τὸν βίον αὐτῆς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 13:4",
+      "word": "πάντα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 13:29",
+      "word": "ἐπὶ θύραις",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 13:32",
+      "word": "οὐδὲ οἱ ἄγγελοι ἐν οὐρανῷ οὐδὲ ὁ υἱός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 13:34",
+      "word": "ἑκάστῳ τὸ ἔργον αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 13:35",
+      "word": "ἢ ὀψὲ ἢ μεσονύκτιον ἢ ἀλεκτοροφωνίας ἢ πρωΐ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 14:18",
+      "word": "ὁ ἐσθίων μετ’ ἐμοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 14:43",
+      "word": "καὶ μετ’ αὐτοῦ ὄχλος μετὰ μαχαιρῶν καὶ ξύλων παρὰ τῶν ἀρχιερέων καὶ τῶν γραμματέων καὶ τῶν πρεσβυτέρων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 14:67",
+      "word": "τοῦ ἰησοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 15:27",
+      "word": "ἕνα ἐκ δεξιῶν καὶ ἕνα ἐξ εὐωνύμων αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Mark 15:41",
+      "word": "καὶ ἄλλαι πολλαὶ αἱ συναναβᾶσαι αὐτῷ εἰς ἱεροσόλυμα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 1:35",
+      "word": "υἱὸς θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 1:64",
+      "word": "καὶ ἡ γλῶσσα αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 1:65",
+      "word": "τοὺς περιοικοῦντας αὐτούς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 2:3",
+      "word": "ἕκαστος εἰς τὴν ἑαυτοῦ πόλιν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 4:34",
+      "word": "ὁ ἅγιος τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 5:10",
+      "word": "ὁμοίως δὲ καὶ ἰάκωβον καὶ ἰωάννην υἱοὺς ζεβεδαίου οἳ ἦσαν κοινωνοὶ τῷ σίμωνι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 5:23",
+      "word": "εἰπεῖν ἀφέωνταί σοι αἱ ἁμαρτίαι σου ἢ εἰπεῖν ἔγειρε καὶ περιπάτει",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 5:33",
+      "word": "ὁμοίως καὶ οἱ τῶν φαρισαίων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 5:35",
+      "word": "ἐν ἐκείναις ταῖς ἡμέραις",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 6:3",
+      "word": "αὐτὸς καὶ οἱ μετ’ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 6:17 - 8",
+      "word": "καὶ ὄχλος πολὺς μαθητῶν αὐτοῦ καὶ πλῆθος πολὺ τοῦ λαοῦ ἀπὸ πάσης τῆς ἰουδαίας καὶ ἰερουσαλὴμ καὶ τῆς παραλίου τύρου καὶ σιδῶνος οἳ ἦλθον ἀκοῦσαι αὐτοῦ καὶ ἰαθῆναι ἀπὸ τῶν νόσων αὐτῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 7:17",
+      "word": "καὶ πάσῃ τῇ περιχώρῳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 7:29",
+      "word": "καὶ οἱ τελῶναι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 8:1",
+      "word": "καὶ οἱ δώδεκα σὺν αὐτῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 8:2 - 3",
+      "word": "καὶ γυναῖκές τινες αἳ ἦσαν τεθεραπευμέναι ἀπὸ πνευμάτων πονηρῶν καὶ ἀσθενειῶν μαρία ἡ καλουμένη μαγδαληνή ἀφ’ ἧς δαιμόνια ἑπτὰ ἐξεληλύθει καὶ ἰωάννα γυνὴ χουζᾶ ἐπιτρόπου ἡρῴδου καὶ σουσάννα καὶ ἕτεραι πολλαί αἵτινες διηκόνουν αὐτοῖς ἐκ τῶν ὑπαρχόντων αὐταῖς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 8:9",
+      "word": "ἡ παραβολή",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 8:22",
+      "word": "καὶ οἱ μαθηταὶ αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 8:51",
+      "word": "εἰ μὴ πέτρον καὶ ἰωάννην καὶ ἰάκωβον καὶ τὸν πατέρα τῆς παιδὸς καὶ τὴν μητέρα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 9:3",
+      "word": "μήτε ῥάβδον μήτε πήραν μήτε ἄρτον μήτε ἀργύριον μήτε ἀνὰ δύο χιτῶνας ἔχειν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 9:33",
+      "word": "μίαν σοὶ καὶ μίαν μωϋσεῖ καὶ μίαν ἠλίᾳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 11:51",
+      "word": "ἀπὸ αἵματος ἅβελ ἕως αἵματος ζαχαρίου τοῦ ἀπολομένου μεταξὺ τοῦ θυσιαστηρίου καὶ τοῦ οἴκου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 18:18",
+      "word": "ἄρχων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 19:47",
+      "word": "καὶ οἱ πρῶτοι τοῦ λαοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 21:35",
+      "word": "ὡς παγίς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 22:14",
+      "word": "καὶ οἱ ἀπόστολοι σὺν αὐτῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 22:27",
+      "word": "ὁ ἀνακείμενος ἢ ὁ διακονῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Luke 23:49",
+      "word": "καὶ γυναῖκες αἱ συνακολουθοῦσαι αὐτῷ ἀπὸ τῆς γαλιλαίας ὁρῶσαι ταῦτα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 1:12",
+      "word": "τοῖς πιστεύουσιν εἰς τὸ ὄνομα αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 1:27",
+      "word": "ὁ ὀπίσω μου ἐρχόμενος οὗ οὐκ εἰμὶ ἐγὼ ἄξιος ἵνα λύσω αὐτοῦ τὸν ἱμάντα τοῦ ὑποδήματος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 1:35",
+      "word": "καὶ ἐκ τῶν μαθητῶν αὐτοῦ δύο",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 1:45",
+      "word": "ἰησοῦν υἱὸν τοῦ ἰωσὴφ τὸν ἀπὸ ναζαρέτ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 2:9",
+      "word": "οἱ ἠντληκότες τὸ ὕδωρ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 4:25",
+      "word": "ὁ λεγόμενος χριστός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 4:26",
+      "word": "ὁ λαλῶν σοι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 4:36",
+      "word": "καὶ ὁ θερίζων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 5:29",
+      "word": "οἱ τὰ ἀγαθὰ ποιήσαντες εἰς ἀνάστασιν ζωῆς οἱ δὲ τὰ φαῦλα πράξαντες εἰς ἀνάστασιν κρίσεως",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 6:11",
+      "word": "ὁμοίως καὶ ἐκ τῶν ὀψαρίων ὅσον ἤθελον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 6:60",
+      "word": "ἐκ τῶν μαθητῶν αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 6:71",
+      "word": "εἷς ἐκ τῶν δώδεκα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 7:50",
+      "word": "ὁ ἐλθὼν πρὸς αὐτὸν τὸ πρότερον εἷς ὢν ἐξ αὐτῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 8:40",
+      "word": "ἄνθρωπον ὃς τὴν ἀλήθειαν ὑμῖν λελάληκα ἣν ἤκουσα παρὰ τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 8:41",
+      "word": "τὸν θεόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 9:2",
+      "word": "οὗτος ἢ οἱ γονεῖς αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 9:13",
+      "word": "τόν ποτε τυφλόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 9:24",
+      "word": "ὃς ἦν τυφλὸς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 9:40",
+      "word": "οἱ μετ’ αὐτοῦ ὄντες",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 13:14",
+      "word": "ὁ κύριος καὶ ὁ διδάσκαλος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 13:23",
+      "word": "ὃν ἠγάπα ὁ ἰησοῦς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 14:17",
+      "word": "τὸ πνεῦμα τῆς ἀληθείας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 17:23",
+      "word": "ἐγὼ ἐν αὐτοῖς καὶ σὺ ἐν ἐμοί",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 18:32",
+      "word": "ὃν εἶπεν σημαίνων ποίῳ θανάτῳ ἤμελλεν ἀποθνῄσκειν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "John 20:12",
+      "word": "ἕνα πρὸς τῇ κεφαλῇ καὶ ἕνα πρὸς τοῖς ποσίν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 1:11",
+      "word": "ὃν τρόπον ἐθεάσασθε αὐτὸν πορευόμενον εἰς τὸν οὐρανόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 2:19",
+      "word": "αἷμα καὶ πῦρ καὶ ἀτμίδα καπνοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 2:36",
+      "word": "τοῦτον τὸν ἰησοῦν ὃν ὑμεῖς ἐσταυρώσατε",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 3:17",
+      "word": "ὥσπερ καὶ οἱ ἄρχοντες ὑμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 4:13",
+      "word": "καὶ ἰωάννου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 5:32",
+      "word": "καὶ τὸ πνεῦμα τὸ ἅγιον ὃ ἔδωκεν ὁ θεὸς τοῖς πειθαρχοῦσιν αὐτῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 7:5",
+      "word": "οὐδὲ βῆμα ποδὸς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 8:1",
+      "word": "πλὴν τῶν ἀποστόλων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 8:34",
+      "word": "περὶ ἑαυτοῦ ἢ περὶ ἑτέρου τινός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 8:38",
+      "word": "ὅ τε φίλιππος καὶ ὁ εὐνοῦχος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 12:13",
+      "word": "ὀνόματι ῥόδη",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 13:27",
+      "word": "καὶ τὰς φωνὰς τῶν προφητῶν τὰς κατὰ πᾶν σάββατον ἀναγινωσκομένας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 13:41",
+      "word": "ἔργον ὃ οὐ μὴ πιστεύσητε ἐάν τις ἐκδιηγῆται ὑμῖν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 15:17",
+      "word": "καὶ πάντα τὰ ἔθνη ἐφ’ οὓς ἐπικέκληται τὸ ὄνομά μου ἐπ’ αὐτούς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 16:15",
+      "word": "καὶ ὁ οἶκος αὐτῆς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 17:3",
+      "word": "ὁ ἰησοῦς ὃν ἐγὼ καταγγέλλω ὑμῖν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 17:7",
+      "word": "ἰησοῦν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 17:12",
+      "word": "καὶ τῶν ἑλληνίδων γυναικῶν τῶν εὐσχημόνων καὶ ἀνδρῶν οὐκ ὀλίγοι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 18:18",
+      "word": "καὶ σὺν αὐτῷ πρίσκιλλα καὶ ἀκύλας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 19:10",
+      "word": "ἰουδαίους τε καὶ ἕλληνας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 21:16",
+      "word": "μνάσωνί τινι κυπρίῳ ἀρχαίῳ μαθητῇ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 23:6",
+      "word": "υἱὸς φαρισαίων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 25:14",
+      "word": "δέσμιος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Acts 26:13",
+      "word": "καὶ τοὺς σὺν ἐμοὶ πορευομένους",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 1:4",
+      "word": "ἰησοῦ χριστοῦ τοῦ κυρίου ἡμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 1:12",
+      "word": "ὑμῶν τε καὶ ἐμοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 1:20",
+      "word": "ἥ τε ἀΐδιος αὐτοῦ δύναμις καὶ θειότης",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 2:9",
+      "word": "ἰουδαίου τε πρῶτον καὶ ἕλληνος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 2:10",
+      "word": "ἰουδαίῳ τε πρῶτον καὶ ἕλληνι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 3:10",
+      "word": "οὐδὲ εἷς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 3:22",
+      "word": "δικαιοσύνη δὲ θεοῦ διὰ πίστεως ἰησοῦ χριστοῦ εἰς πάντας τοὺς πιστεύοντας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 4:11",
+      "word": "σφραγῖδα τῆς δικαιοσύνης τῆς πίστεως τῆς ἐν τῇ ἀκροβυστίᾳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 8:23",
+      "word": "τὴν ἀπολύτρωσιν τοῦ σώματος ἡμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 8:28",
+      "word": "τοῖς κατὰ πρόθεσιν κλητοῖς οὖσιν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 9:10",
+      "word": "ἰσαὰκ τοῦ πατρὸς ἡμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 9:12",
+      "word": "οὐκ ἐξ ἔργων ἀλλ’ ἐκ τοῦ καλοῦντος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 9:20",
+      "word": "ὁ ἀνταποκρινόμενος τῷ θεῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 10:8",
+      "word": "ἐν τῷ στόματί σου καὶ ἐν τῇ καρδίᾳ σου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 11:13",
+      "word": "τοῖς ἔθνεσιν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 12:1",
+      "word": "τὴν λογικὴν λατρείαν ὑμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 13:4",
+      "word": "ἔκδικος εἰς ὀργὴν τῷ τὸ κακὸν πράσσοντι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 13:7",
+      "word": "τῷ τὸν φόρον τὸν φόρον τῷ τὸ τέλος τὸ τέλος τῷ τὸν φόβον τὸν φόβον τῷ τὴν τιμὴν τὴν τιμήν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 14:4",
+      "word": "ὁ κρίνων ἀλλότριον οἰκέτην",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rom 14:13",
+      "word": "ἢ σκάνδαλον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 1:2",
+      "word": "αὐτῶν καὶ ἡμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 1:5",
+      "word": "ἐν παντὶ λόγῳ καὶ πάσῃ γνώσει",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 1:28",
+      "word": "τὰ μὴ ὄντα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 1:30",
+      "word": "δικαιοσύνη τε καὶ ἁγιασμὸς καὶ ἀπολύτρωσις",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 2:10",
+      "word": "καὶ τὰ βάθη τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 3:14",
+      "word": "ὃ ἐποικοδόμησεν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 4:9",
+      "word": "ὡς ἐπιθανατίους",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 4:13",
+      "word": "πάντων περίψημα ἕως ἄρτι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 5:7",
+      "word": "χριστός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 6:3",
+      "word": "μήτιγε βιωτικά",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 7:10",
+      "word": "οὐκ ἐγὼ ἀλλὰ ὁ κύριος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 8:11",
+      "word": "ὁ ἀδελφὸς δι’ ὃν χριστὸς ἀπέθανεν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 10:27",
+      "word": "τῶν ἀπίστων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "εἴτε ἰουδαῖοι εἴτε ἕλληνες εἴτε δοῦλοι εἴτε ἐλεύθεροι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 14:7",
+      "word": "εἴτε αὐλὸς εἴτε κιθάρα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 15:20",
+      "word": "ἀπαρχὴ τῶν κεκοιμημένων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Cor 15:57",
+      "word": "τῷ διδόντι ἡμῖν τὸ νῖκος διὰ τοῦ κυρίου ἡμῶν ἰησοῦ χριστοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 1:12",
+      "word": "τὸ μαρτύριον τῆς συνειδήσεως ἡμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 1:19",
+      "word": "δι’ ἐμοῦ καὶ σιλουανοῦ καὶ τιμοθέου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 5:1",
+      "word": "οἰκίαν ἀχειροποίητον αἰώνιον ἐν τοῖς οὐρανοῖς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 8:7",
+      "word": "πίστει καὶ λόγῳ καὶ γνώσει καὶ πάσῃ σπουδῇ καὶ τῇ ἐξ ἡμῶν ἐν ὑμῖν ἀγάπῃ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 11:31",
+      "word": "ὁ ὢν εὐλογητὸς εἰς τοὺς αἰῶνας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 12:12",
+      "word": "σημείοις τε καὶ τέρασιν καὶ δυνάμεσιν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Cor 13:9",
+      "word": "τὴν ὑμῶν κατάρτισιν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Gal 3:29",
+      "word": "κατ’ ἐπαγγελίαν κληρονόμοι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Gal 4:14",
+      "word": "ὡς χριστὸν ἰησοῦν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Gal 4:22",
+      "word": "ἕνα ἐκ τῆς παιδίσκης καὶ ἕνα ἐκ τῆς ἐλευθέρας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Gal 6:16",
+      "word": "καὶ ἐπὶ τὸν ἰσραὴλ τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Eph 1:10",
+      "word": "τὰ ἐπὶ τοῖς οὐρανοῖς καὶ τὰ ἐπὶ τῆς γῆς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Eph 1:10",
+      "word": "ἐν αὐτῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Eph 1:12",
+      "word": "τοὺς προηλπικότας ἐν τῷ χριστῷ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Eph 2:14",
+      "word": "τὴν ἔχθραν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Col 1:20",
+      "word": "εἴτε τὰ ἐπὶ τῆς γῆς εἴτε τὰ ἐν τοῖς οὐρανοῖς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Col 1:27",
+      "word": "ἡ ἐλπὶς τῆς δόξης",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Col 2:2",
+      "word": "χριστοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Col 3:4",
+      "word": "ἡ ζωὴ ὑμῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Col 4:18",
+      "word": "παύλου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Thess 1:10",
+      "word": "ἰησοῦν τὸν ῥυόμενον ἡμᾶς ἐκ τῆς ὀργῆς τῆς ἐρχομένης",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Thess 2:6",
+      "word": "οὔτε ἀφ’ ὑμῶν οὔτε ἀπ’ ἄλλων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Thess 2:10",
+      "word": "καὶ ὁ θεός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Thess 2:18",
+      "word": "ἐγὼ μὲν παῦλος καὶ ἅπαξ καὶ δίς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Thess 1:9",
+      "word": "ὄλεθρον αἰώνιον ἀπὸ προσώπου τοῦ κυρίου καὶ ἀπὸ τῆς δόξης τῆς ἰσχύος αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Thess 1:10",
+      "word": "ἐν τῇ ἡμέρᾳ ἐκείνῃ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Thess 2:7",
+      "word": "τῆς ἀνομίας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Thess 3:17",
+      "word": "παύλου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Tim 1:13",
+      "word": "τὸ πρότερον ὄντα βλάσφημον καὶ διώκτην καὶ ὑβριστήν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Tim 2:5",
+      "word": "ἄνθρωπος χριστὸς ἰησοῦς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Tim 2:7",
+      "word": "διδάσκαλος ἐθνῶν ἐν πίστει καὶ ἀληθείᾳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Tim 5:17",
+      "word": "μάλιστα οἱ κοπιῶντες ἐν λόγῳ καὶ διδασκαλίᾳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Tim 6:2",
+      "word": "οἱ τῆς εὐεργεσίας ἀντιλαμβανόμενοι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Tim 2:15",
+      "word": "ἐργάτην ἀνεπαίσχυντον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Tim 3:15",
+      "word": "τὰ δυνάμενά σε σοφίσαι εἰς σωτηρίαν διὰ πίστεως τῆς ἐν χριστῷ ἰησοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Tim 4:8",
+      "word": "ὁ δίκαιος κριτής",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 5:14",
+      "word": "τῶν διὰ τὴν ἕξιν τὰ αἰσθητήρια γεγυμνασμένα ἐχόντων πρὸς διάκρισιν καλοῦ τε καὶ κακοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 6:18",
+      "word": "οἱ καταφυγόντες κρατῆσαι τῆς προκειμένης ἐλπίδος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 6:20",
+      "word": "ἰησοῦς",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 8:11",
+      "word": "ἀπὸ μικροῦ ἕως μεγάλου αὐτῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 9:2",
+      "word": "ἡ πρώτη",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Heb 11:17",
+      "word": "ὁ τὰς ἐπαγγελίας ἀναδεξάμενος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 1:8",
+      "word": "ἀνὴρ δίψυχος ἀκατάστατος ἐν πάσαις ταῖς ὁδοῖς αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 3:6",
+      "word": "ἡ σπιλοῦσα ὅλον τὸ σῶμα καὶ φλογίζουσα τὸν τροχὸν τῆς γενέσεως καὶ φλογιζομένη ὑπὸ τῆς γεέννης",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 3:8",
+      "word": "ἀκατάστατον κακόν μεστὴ ἰοῦ θανατηφόρου",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 4:12",
+      "word": "ὁ δυνάμενος σῶσαι καὶ ἀπολέσαι",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 4:12",
+      "word": "ὁ κρίνων τὸν πλησίον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Jas 4:14",
+      "word": "ἡ πρὸς ὀλίγον φαινομένη ἔπειτα καὶ ἀφανιζομένη",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Pet 2:4",
+      "word": "λίθον ζῶντα ὑπὸ ἀνθρώπων μὲν ἀποδεδοκιμασμένον παρὰ δὲ θεῷ ἐκλεκτὸν ἔντιμον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Pet 3:7",
+      "word": "τῷ γυναικείῳ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Pet 3:20",
+      "word": "ἀπειθήσασίν ποτε",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Pet 3:21",
+      "word": "βάπτισμα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1Pet 3:21",
+      "word": "οὐ σαρκὸς ἀπόθεσις ῥύπου ἀλλὰ συνειδήσεως ἀγαθῆς ἐπερώτημα εἰς θεόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2Pet 2:10",
+      "word": "μάλιστα δὲ τοὺς ὀπίσω σαρκὸς ἐν ἐπιθυμίᾳ μιασμοῦ πορευομένους καὶ κυριότητος καταφρονοῦντας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 2:1",
+      "word": "ἰησοῦν χριστὸν δίκαιον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 2:17",
+      "word": "καὶ ἡ ἐπιθυμία αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 2:22",
+      "word": "ὁ ἀρνούμενος τὸν πατέρα καὶ τὸν υἱόν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 3:10",
+      "word": "καὶ ὁ μὴ ἀγαπῶν τὸν ἀδελφὸν αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 5:6",
+      "word": "ἰησοῦς χριστός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 5:8",
+      "word": "τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 5:13",
+      "word": "τοῖς πιστεύουσιν εἰς τὸ ὄνομα τοῦ υἱοῦ τοῦ θεοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 5:15",
+      "word": "ὃ ἐὰν αἰτώμεθα",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "1John 5:16",
+      "word": "τοῖς ἁμαρτάνουσιν μὴ πρὸς θάνατον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "2John 1:7",
+      "word": "οἱ μὴ ὁμολογοῦντες ἰησοῦν χριστὸν ἐρχόμενον ἐν σαρκί",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 5:11",
+      "word": "καὶ τῶν ζῴων καὶ τῶν πρεσβυτέρων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 7:11",
+      "word": "καὶ τῶν πρεσβυτέρων καὶ τῶν τεσσάρων ζῴων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 8:12",
+      "word": "καὶ ἡ νὺξ ὁμοίως",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 9:18",
+      "word": "ἐκ τοῦ πυρὸς καὶ τοῦ καπνοῦ καὶ τοῦ θείου τοῦ ἐκπορευομένου ἐκ τῶν στομάτων αὐτῶν",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 12:7",
+      "word": "ὁ μιχαὴλ καὶ οἱ ἄγγελοι αὐτοῦ τοῦ πολεμῆσαι μετὰ τοῦ δράκοντος",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 12:7",
+      "word": "καὶ οἱ ἄγγελοι αὐτοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 14:12",
+      "word": "οἱ τηροῦντες τὰς ἐντολὰς τοῦ θεοῦ καὶ τὴν πίστιν ἰησοῦ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 16:18",
+      "word": "τηλικοῦτος σεισμὸς οὕτω μέγας",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 17:5",
+      "word": "μυστήριον",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 18:12 - 3",
+      "word": "γόμον χρυσοῦ καὶ ἀργύρου καὶ λίθου τιμίου καὶ μαργαριτῶν καὶ βυσσίνου καὶ πορφύρας καὶ σιρικοῦ καὶ κοκκίνου καὶ πᾶν ξύλον θύϊνον καὶ πᾶν σκεῦος ἐλεφάντινον καὶ πᾶν σκεῦος ἐκ ξύλου τιμιωτάτου καὶ χαλκοῦ καὶ σιδήρου καὶ μαρμάρου καὶ κιννάμωμον καὶ ἄμωμον καὶ θυμιάματα καὶ μύρον καὶ λίβανον καὶ οἶνον καὶ ἔλαιον καὶ σεμίδαλιν καὶ σῖτον καὶ κτήνη καὶ πρόβατα καὶ ἵππων καὶ ῥεδῶν καὶ σωμάτων καὶ ψυχὰς ἀνθρώπων",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 20:8",
+      "word": "τὸν γὼγ καὶ μαγώγ",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 20:14",
+      "word": "ἡ λίμνη τοῦ πυρός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 21:3",
+      "word": "αὐτῶν θεός",
+      "type": "Right-Dislocated"
+    },
+    {
+      "verse": "Rev 22:19",
+      "word": "τῶν γεγραμμένων ἐν τῷ βιβλίῳ τούτῳ",
+      "type": "Right-Dislocated"
+    }
+  ]
+}

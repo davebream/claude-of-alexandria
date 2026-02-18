@@ -1,0 +1,36 @@
+{
+  "feature": "Historical Perfect",
+  "description": "Highlights not the speech or act to which it refers but the event(s) that follow (DFNTG §12.2).",
+  "references": [
+    {
+      "verse": "John 1:15",
+      "word": "κέκραγεν",
+      "type": "Historical Perfect"
+    },
+    {
+      "verse": "2Cor 12:9",
+      "word": "εἴρηκέν",
+      "type": "Historical Perfect"
+    },
+    {
+      "verse": "Rev 5:7",
+      "word": "εἴληφεν",
+      "type": "Historical Perfect"
+    },
+    {
+      "verse": "Rev 7:14",
+      "word": "εἴρηκα",
+      "type": "Historical Perfect"
+    },
+    {
+      "verse": "Rev 8:5",
+      "word": "εἴληφεν",
+      "type": "Historical Perfect"
+    },
+    {
+      "verse": "Rev 19:13",
+      "word": "κέκληται",
+      "type": "Historical Perfect"
+    }
+  ]
+}

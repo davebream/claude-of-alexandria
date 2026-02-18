@@ -1,0 +1,2011 @@
+{
+  "feature": "Left-Dislocation",
+  "description": "Point of departure - A type of SENTENCE in which one of the CONSTITUENTS appears in INITIAL position and its CANONICAL position is filled by a PRONOUN or a full LEXICAL NOUN PHRASE with the same REFERENCE, e.g. John, I like him/the old chap.”",
+  "references": [
+    {
+      "verse": "Matt 4:16",
+      "word": "τοῖς καθημένοις ἐν χώρᾳ καὶ σκιᾷ θανάτου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 5:19",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 5:19",
+      "word": "ἂν ποιήσῃ καὶ διδάξῃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 5:39",
+      "word": "ὅστις σε ῥαπίζει εἰς τὴν δεξιὰν σιαγόνα σου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 5:40",
+      "word": "τῷ θέλοντί σοι κριθῆναι καὶ τὸν χιτῶνά σου λαβεῖν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 5:41",
+      "word": "ὅστις σε ἀγγαρεύσει μίλιον ἕν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 6:21",
+      "word": "ὅπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 6:21",
+      "word": "ἐστιν ὁ θησαυρός σου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 7:12",
+      "word": "πάντα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 7:12",
+      "word": "ὅσα ἐὰν θέλητε ἵνα ποιῶσιν ὑμῖν οἱ ἄνθρωποι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:11",
+      "word": "εἰς ἣν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:11",
+      "word": "ἂν πόλιν ἢ κώμην εἰσέλθητε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:14",
+      "word": "ὃς ἂν μὴ δέξηται ὑμᾶς μηδὲ ἀκούσῃ τοὺς λόγους ὑμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:22",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:22",
+      "word": "ὑπομείνας εἰς τέλος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:32",
+      "word": "πᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:32",
+      "word": "ὅστις ὁμολογήσει ἐν ἐμοὶ ἔμπροσθεν τῶν ἀνθρώπων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:33",
+      "word": "ὅστις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:33",
+      "word": "ἂν ἀρνήσηταί με ἔμπροσθεν τῶν ἀνθρώπων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 10:42",
+      "word": "ὃς ἂν ποτίσῃ ἕνα τῶν μικρῶν τούτων ποτήριον ψυχροῦ μόνον εἰς ὄνομα μαθητοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:32",
+      "word": "ὃς ἐὰν εἴπῃ λόγον κατὰ τοῦ υἱοῦ τοῦ ἀνθρώπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:32",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:32",
+      "word": "ἂν εἴπῃ κατὰ τοῦ πνεύματος τοῦ ἁγίου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:36",
+      "word": "πᾶν ῥῆμα ἀργὸν ὃ λαλήσουσιν οἱ ἄνθρωποι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:40",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:40",
+      "word": "ἦν ἰωνᾶς ἐν τῇ κοιλίᾳ τοῦ κήτους τρεῖς ἡμέρας καὶ τρεῖς νύκτας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:50",
+      "word": "ὅστις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 12:50",
+      "word": "ἂν ποιήσῃ τὸ θέλημα τοῦ πατρός μου τοῦ ἐν οὐρανοῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:12",
+      "word": "ὅστις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:12",
+      "word": "ἔχει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:12",
+      "word": "ὅστις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:12",
+      "word": "οὐκ ἔχει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "ἐπὶ τὰ πετρώδη σπαρείς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:22",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:22",
+      "word": "εἰς τὰς ἀκάνθας σπαρείς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:23",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:23",
+      "word": "ἐπὶ τὴν καλὴν γῆν σπαρείς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:38",
+      "word": "τὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:38",
+      "word": "καλὸν σπέρμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:40",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:40",
+      "word": "συλλέγεται τὰ ζιζάνια καὶ πυρὶ [κατα]καίεται",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 13:56",
+      "word": "αἱ ἀδελφαὶ αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 15:11",
+      "word": "τὸ ἐκπορευόμενον ἐκ τοῦ στόματος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:4",
+      "word": "ὅστις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:4",
+      "word": "ταπεινώσει ἑαυτὸν ὡς τὸ παιδίον τοῦτο",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:6",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:6",
+      "word": "ἂν σκανδαλίσῃ ἕνα τῶν μικρῶν τούτων τῶν πιστευόντων εἰς ἐμέ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:20",
+      "word": "οὗ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 18:20",
+      "word": "εἰσιν δύο ἢ τρεῖς συνηγμένοι εἰς τὸ ἐμὸν ὄνομα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 19:28",
+      "word": "ὑμεῖς οἱ ἀκολουθήσαντές μοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 20:23",
+      "word": "τὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 20:23",
+      "word": "καθίσαι ἐκ δεξιῶν μου καὶ ἐξ εὐωνύμων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 21:41",
+      "word": "κακοὺς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 21:42",
+      "word": "λίθον ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 21:44",
+      "word": "ἐφ’ ὃν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 21:44",
+      "word": "ἂν πέσῃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 23:16",
+      "word": "ὃς ἂν ὀμόσῃ ἐν τῷ ναῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 23:18",
+      "word": "ὃς ἂν ὀμόσῃ ἐν τῷ θυσιαστηρίῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 24:13",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 24:13",
+      "word": "ὑπομείνας εἰς τέλος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 24:27",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 24:27",
+      "word": "ἡ ἀστραπὴ ἐξέρχεται ἀπὸ ἀνατολῶν καὶ φαίνεται ἕως δυσμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 24:28",
+      "word": "ὅπου ἐὰν ᾖ τὸ πτῶμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 25:29",
+      "word": "τοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 25:29",
+      "word": "μὴ ἔχοντος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 26:23",
+      "word": "ὁ ἐμβάψας μετ’ ἐμοῦ τὴν χεῖρα ἐν τῷ τρυβλίῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Matt 26:48",
+      "word": "ὃν ἂν φιλήσω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 3:35",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 3:35",
+      "word": "ἂν ποιήσῃ τὸ θέλημα τοῦ θεοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 4:25",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 4:25",
+      "word": "ἔχει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 4:25",
+      "word": "ὃς οὐκ ἔχει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 6:10",
+      "word": "ὅπου ἐὰν εἰσέλθητε εἰς οἰκίαν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 6:11",
+      "word": "καὶ ὃς ἂν τόπος μὴ δέξηται ὑμᾶς μηδὲ ἀκούσωσιν ὑμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 6:16",
+      "word": "ὃν ἐγὼ ἀπεκεφάλισα ἰωάννην",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 7:20",
+      "word": "τὸ ἐκ τοῦ ἀνθρώπου ἐκπορευόμενον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 7:36",
+      "word": "ὅσον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 7:36",
+      "word": "αὐτοῖς διεστέλλετο",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 8:38",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 8:38",
+      "word": "ἐὰν ἐπαισχυνθῇ με καὶ τοὺς ἐμοὺς λόγους ἐν τῇ γενεᾷ ταύτῃ τῇ μοιχαλίδι καὶ ἁμαρτωλῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 9:41",
+      "word": "ὃς γὰρ ἂν ποτίσῃ ὑμᾶς ποτήριον ὕδατος ἐν ὀνόματι ὅτι χριστοῦ ἐστε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 9:42",
+      "word": "ὃς ἂν σκανδαλίσῃ ἕνα τῶν μικρῶν τούτων τῶν πιστευόντων εἰς ἐμέ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 11:23",
+      "word": "ὃς ἂν εἴπῃ τῷ ὄρει τούτῳ ἄρθητι καὶ βλήθητι εἰς τὴν θάλασσαν καὶ μὴ διακριθῇ ἐν τῇ καρδίᾳ αὐτοῦ ἀλλὰ πιστεύῃ ὅτι ὃ λαλεῖ γίνεται",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 11:24",
+      "word": "πάντα ὅσα προσεύχεσθε καὶ αἰτεῖσθε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 12:10",
+      "word": "λίθον ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 12:29",
+      "word": "κύριος ὁ θεὸς ἡμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 12:40",
+      "word": "οἱ κατεσθίοντες τὰς οἰκίας τῶν χηρῶν καὶ προφάσει μακρὰ προσευχόμενοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 13:11",
+      "word": "ὃ ἐὰν δοθῇ ὑμῖν ἐν ἐκείνῃ τῇ ὥρᾳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 13:13",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 13:13",
+      "word": "ὑπομείνας εἰς τέλος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Mark 14:44",
+      "word": "ὃν ἂν φιλήσω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 1:36",
+      "word": "ἐλισάβετ ἡ συγγενίς σου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 6:31",
+      "word": "καθὼς θέλετε ἵνα ποιῶσιν ὑμῖν οἱ ἄνθρωποι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 6:47",
+      "word": "πᾶς ὁ ἐρχόμενος πρός με καὶ ἀκούων μου τῶν λόγων καὶ ποιῶν αὐτούς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:14",
+      "word": "τὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:14",
+      "word": "εἰς τὰς ἀκάνθας πεσόν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:15",
+      "word": "τὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:15",
+      "word": "ἐν τῇ καλῇ γῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:18",
+      "word": "ὃς ἂν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:18",
+      "word": "ἔχῃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 8:18",
+      "word": "ὃς ἂν μὴ ἔχῃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:4",
+      "word": "εἰς ἣν ἂν οἰκίαν εἰσέλθητε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:5",
+      "word": "ὅσοι ἂν μὴ δέχωνται ὑμᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:24",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:24",
+      "word": "ἂν ἀπολέσῃ τὴν ψυχὴν αὐτοῦ ἕνεκεν ἐμοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:26",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:26",
+      "word": "ἂν ἐπαισχυνθῇ με καὶ τοὺς ἐμοὺς λόγους",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:48",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 9:48",
+      "word": "μικρότερος ἐν πᾶσιν ὑμῖν ὑπάρχων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 11:30",
+      "word": "καθὼς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 11:30",
+      "word": "ἐγένετο ἰωνᾶς τοῖς νινευίταις σημεῖον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:8",
+      "word": "πᾶς ὃς ἂν ὁμολογήσῃ ἐν ἐμοὶ ἔμπροσθεν τῶν ἀνθρώπων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:10",
+      "word": "πᾶς ὃς ἐρεῖ λόγον εἰς τὸν υἱὸν τοῦ ἀνθρώπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:34",
+      "word": "ὅπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:34",
+      "word": "ἐστιν ὁ θησαυρὸς ὑμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:48",
+      "word": "παντὶ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:48",
+      "word": "ᾧ ἐδόθη πολύ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 12:48",
+      "word": "ᾧ παρέθεντο πολύ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 13:4",
+      "word": "ἐκεῖνοι οἱ δεκαοκτὼ ἐφ’ οὓς ἔπεσεν ὁ πύργος ἐν τῷ σιλωὰμ καὶ ἀπέκτεινεν αὐτούς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 13:34",
+      "word": "ἰερουσαλὴμ ἰερουσαλήμ ἡ ἀποκτείνουσα τοὺς προφήτας καὶ λιθοβολοῦσα τοὺς ἀπεσταλμένους πρὸς αὐτήν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 17:24",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 17:24",
+      "word": "ἡ ἀστραπὴ ἀστράπτουσα ἐκ τῆς ὑπὸ τὸν οὐρανὸν εἰς τὴν ὑπ’ οὐρανὸν λάμπει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 17:26",
+      "word": "καθὼς ἐγένετο ἐν ταῖς ἡμέραις νῶε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 17:37",
+      "word": "ὅπου τὸ σῶμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 20:17",
+      "word": "λίθον ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 20:18",
+      "word": "ἐφ’ ὃν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 20:18",
+      "word": "ἂν πέσῃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 21:6",
+      "word": "ταῦτα ἃ θεωρεῖτε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 21:20",
+      "word": "ὅταν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Luke 21:20",
+      "word": "ἴδητε κυκλουμένην ὑπὸ στρατοπέδων ἰερουσαλήμ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:12",
+      "word": "ὅσοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:12",
+      "word": "ἔλαβον αὐτόν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:18",
+      "word": "μονογενὴς θεὸς ὁ ὢν εἰς τὸν κόλπον τοῦ πατρὸς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:31",
+      "word": "ἵνα φανερωθῇ τῷ ἰσραὴλ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:33",
+      "word": "ὁ πέμψας με βαπτίζειν ἐν ὕδατι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 1:33",
+      "word": "ἐφ’ ὃν ἂν ἴδῃς τὸ πνεῦμα καταβαῖνον καὶ μένον ἐπ’ αὐτόν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 3:14",
+      "word": "καθὼς μωϋσῆς ὕψωσεν τὸν ὄφιν ἐν τῇ ἐρήμῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 3:26",
+      "word": "ὃς ἦν μετὰ σοῦ πέραν τοῦ ἰορδάνου ᾧ σὺ μεμαρτύρηκας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 3:32",
+      "word": "ὃ ἑώρακεν καὶ ἤκουσεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:11",
+      "word": "ὁ ποιήσας με ὑγιῆ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:19",
+      "word": "ἃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:19",
+      "word": "ἂν ἐκεῖνος ποιῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:21",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:21",
+      "word": "ὁ πατὴρ ἐγείρει τοὺς νεκροὺς καὶ ζῳοποιεῖ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:26",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:26",
+      "word": "ὁ πατὴρ ἔχει ζωὴν ἐν ἑαυτῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:36",
+      "word": "τὰ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:36",
+      "word": "ἔργα ἃ δέδωκέν μοι ὁ πατὴρ ἵνα τελειώσω αὐτά",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:37",
+      "word": "ὁ πέμψας με πατὴρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 5:38",
+      "word": "ὃν ἀπέστειλεν ἐκεῖνος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 6:39",
+      "word": "πᾶν ὃ δέδωκέν μοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 6:46",
+      "word": "ὁ ὢν παρὰ τοῦ θεοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 6:57",
+      "word": "καὶ ὁ τρώγων με",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 7:10",
+      "word": "ὡς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 7:10",
+      "word": "ἀνέβησαν οἱ ἀδελφοὶ αὐτοῦ εἰς τὴν ἑορτήν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 7:18",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 7:18",
+      "word": "ζητῶν τὴν δόξαν τοῦ πέμψαντος αὐτὸν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 7:38",
+      "word": "ὁ πιστεύων εἰς ἐμέ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 8:26",
+      "word": "κἀγὼ ἃ ἤκουσα παρ’ αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 8:28",
+      "word": "ὅταν ὑψώσητε τὸν υἱὸν τοῦ ἀνθρώπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 8:28",
+      "word": "καθὼς ἐδίδαξέν με ὁ πατὴρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 9:31",
+      "word": "ἐάν τις θεοσεβὴς ᾖ καὶ τὸ θέλημα αὐτοῦ ποιῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 10:1",
+      "word": "ὁ μὴ εἰσερχόμενος διὰ τῆς θύρας εἰς τὴν αὐλὴν τῶν προβάτων ἀλλὰ ἀναβαίνων ἀλλαχόθεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 10:25",
+      "word": "τὰ ἔργα ἃ ἐγὼ ποιῶ ἐν τῷ ὀνόματι τοῦ πατρός μου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 11:6",
+      "word": "ὡς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 11:6",
+      "word": "ἤκουσεν ὅτι ἀσθενεῖ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:16",
+      "word": "ὅτε ἐδοξάσθη ἰησοῦς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:26",
+      "word": "ὅπου εἰμὶ ἐγὼ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:48",
+      "word": "ὁ λόγος ὃν ἐλάλησα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:49",
+      "word": "ὁ πέμψας με πατὴρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:50",
+      "word": "ἃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:50",
+      "word": "ἐγὼ λαλῶ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 12:50",
+      "word": "καθὼς εἴρηκέν μοι ὁ πατήρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 13:27",
+      "word": "μετὰ τὸ ψωμίον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:12",
+      "word": "ὁ πιστεύων εἰς ἐμὲ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:13",
+      "word": "ὅ τι ἂν αἰτήσητε ἐν τῷ ὀνόματί μου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:21",
+      "word": "ὁ ἔχων τὰς ἐντολάς μου καὶ τηρῶν αὐτὰς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:26",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:26",
+      "word": "παράκλητος τὸ πνεῦμα τὸ ἅγιον ὃ πέμψει ὁ πατὴρ ἐν τῷ ὀνόματί μου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 14:31",
+      "word": "καθὼς ἐνετείλατό μοι ὁ πατήρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 15:2",
+      "word": "πᾶν κλῆμα ἐν ἐμοὶ μὴ φέρον καρπὸν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 15:2",
+      "word": "πᾶν τὸ καρπὸν φέρον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 15:4",
+      "word": "καθὼς τὸ κλῆμα οὐ δύναται καρπὸν φέρειν ἀφ’ ἑαυτοῦ ἐὰν μὴ μένῃ ἐν τῇ ἀμπέλῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 15:5",
+      "word": "ὁ μένων ἐν ἐμοὶ κἀγὼ ἐν αὐτῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 15:19",
+      "word": "ὅτι δὲ ἐκ τοῦ κόσμου οὐκ ἐστέ ἀλλ’ ἐγὼ ἐξελεξάμην ὑμᾶς ἐκ τοῦ κόσμου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 17:2",
+      "word": "πᾶν ὃ δέδωκας αὐτῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 17:24",
+      "word": "ὃ δέδωκάς μοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 18:9",
+      "word": "οὓς δέδωκάς μοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 18:11",
+      "word": "τὸ ποτήριον ὃ δέδωκέν μοι ὁ πατὴρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "John 20:23",
+      "word": "ἄν τινων ἀφῆτε τὰς ἁμαρτίας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 1:21 - 2",
+      "word": "τῶν συνελθόντων ἡμῖν ἀνδρῶν ἐν παντὶ χρόνῳ ᾧ εἰσῆλθεν καὶ ἐξῆλθεν ἐφ’ ἡμᾶς ὁ κύριος ἰησοῦς ἀρξάμενος ἀπὸ τοῦ βαπτίσματος ἰωάννου ἕως τῆς ἡμέρας ἧς ἀνελήμφθη ἀφ’ ἡμῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 2:22",
+      "word": "ἰησοῦν τὸν ναζωραῖον ἄνδρα ἀποδεδειγμένον ἀπὸ τοῦ θεοῦ εἰς ὑμᾶς δυνάμεσι καὶ τέρασι καὶ σημείοις οἷς ἐποίησεν δι’ αὐτοῦ ὁ θεὸς ἐν μέσῳ ὑμῶν καθὼς αὐτοὶ οἴδατε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 3:6",
+      "word": "ὃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 3:6",
+      "word": "ἔχω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 4:10",
+      "word": "ἐν τῷ ὀνόματι ἰησοῦ χριστοῦ τοῦ ναζωραίου ὃν ὑμεῖς ἐσταυρώσατε ὃν ὁ θεὸς ἤγειρεν ἐκ νεκρῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 4:36",
+      "word": "ἰωσὴφ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 4:36",
+      "word": "ὁ ἐπικληθεὶς βαρναβᾶς ἀπὸ τῶν ἀποστόλων ὅ ἐστιν μεθερμηνευόμενον υἱὸς παρακλήσεως λευίτης κύπριος τῷ γένει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 7:35",
+      "word": "τοῦτον τὸν μωϋσῆν ὃν ἠρνήσαντο εἰπόντες τίς σε κατέστησεν ἄρχοντα καὶ δικαστήν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 7:40",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 7:40",
+      "word": "μωϋσῆς οὗτος ὃς ἐξήγαγεν ἡμᾶς ἐκ γῆς αἰγύπτου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 8:19",
+      "word": "ᾧ ἐὰν ἐπιθῶ τὰς χεῖρας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 8:32",
+      "word": "ὡς πρόβατον ἐπὶ σφαγὴν ἤχθη καὶ ὡς ἀμνὸς ἐναντίον τοῦ κείραντος αὐτὸν ἄφωνος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 10:36",
+      "word": "τὸν λόγον ὃν ἀπέστειλεν τοῖς υἱοῖς ἰσραὴλ εὐαγγελιζόμενος εἰρήνην διὰ ἰησοῦ χριστοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 10:38",
+      "word": "ἰησοῦν τὸν ἀπὸ ναζαρέθ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 11:29",
+      "word": "τῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 11:29",
+      "word": "μαθητῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 15:32",
+      "word": "ἰούδας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 15:32",
+      "word": "καὶ σιλᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 15:38",
+      "word": "τὸν ἀποστάντα ἀπ’ αὐτῶν ἀπὸ παμφυλίας καὶ μὴ συνελθόντα αὐτοῖς εἰς τὸ ἔργον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 17:6",
+      "word": "οἱ τὴν οἰκουμένην ἀναστατώσαντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 17:23",
+      "word": "ὃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 17:23",
+      "word": "ἀγνοοῦντες εὐσεβεῖτε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 17:24",
+      "word": "ὁ θεὸς ὁ ποιήσας τὸν κόσμον καὶ πάντα τὰ ἐν αὐτῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 19:12",
+      "word": "καὶ ἐπὶ τοὺς ἀσθενοῦντας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 23:11",
+      "word": "ὡς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 23:11",
+      "word": "διεμαρτύρω τὰ περὶ ἐμοῦ εἰς ἰερουσαλήμ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Acts 24:14",
+      "word": "κατὰ τὴν ὁδὸν ἣν λέγουσιν αἵρεσιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 2:17",
+      "word": "εἰ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 2:17 - 20",
+      "word": "σὺ ἰουδαῖος ἐπονομάζῃ καὶ ἐπαναπαύῃ νόμῳ καὶ καυχᾶσαι ἐν θεῷ καὶ γινώσκεις τὸ θέλημα καὶ δοκιμάζεις τὰ διαφέροντα κατηχούμενος ἐκ τοῦ νόμου πέποιθάς τε σεαυτὸν ὁδηγὸν εἶναι τυφλῶν φῶς τῶν ἐν σκότει παιδευτὴν ἀφρόνων διδάσκαλον νηπίων ἔχοντα τὴν μόρφωσιν τῆς γνώσεως καὶ τῆς ἀληθείας ἐν τῷ νόμῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 3:19",
+      "word": "ὅσα ὁ νόμος λέγει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 4:5",
+      "word": "τῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 4:5",
+      "word": "μὴ ἐργαζομένῳ πιστεύοντι δὲ ἐπὶ τὸν δικαιοῦντα τὸν ἀσεβῆ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 5:15",
+      "word": "οὐχ ὡς τὸ παράπτωμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 5:18",
+      "word": "ὡς δι’ ἑνὸς παραπτώματος εἰς πάντας ἀνθρώπους εἰς κατάκριμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 5:19",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 5:19",
+      "word": "διὰ τῆς παρακοῆς τοῦ ἑνὸς ἀνθρώπου ἁμαρτωλοὶ κατεστάθησαν οἱ πολλοί",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 5:21",
+      "word": "ὥσπερ ἐβασίλευσεν ἡ ἁμαρτία ἐν τῷ θανάτῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:4",
+      "word": "ὥσπερ ἠγέρθη χριστὸς ἐκ νεκρῶν διὰ τῆς δόξης τοῦ πατρός",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:10",
+      "word": "ὃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:10",
+      "word": "ἀπέθανεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:10",
+      "word": "ὃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:10",
+      "word": "ζῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:16",
+      "word": "ᾧ παριστάνετε ἑαυτοὺς δούλους εἰς ὑπακοήν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:19",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 6:19",
+      "word": "παρεστήσατε τὰ μέλη ὑμῶν δοῦλα τῇ ἀκαθαρσίᾳ καὶ τῇ ἀνομίᾳ εἰς τὴν ἀνομίαν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:10",
+      "word": "ἡ ἐντολὴ ἡ εἰς ζωήν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:15",
+      "word": "ὃ θέλω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:15",
+      "word": "ὃ μισῶ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:16",
+      "word": "ὃ οὐ θέλω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:19",
+      "word": "οὐ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:19",
+      "word": "ὃ θέλω ποιῶ ἀγαθόν ἀλλὰ ὃ οὐ θέλω κακὸν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:20",
+      "word": "ὃ οὐ θέλω ἐγὼ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 7:21",
+      "word": "τῷ θέλοντι ἐμοὶ ποιεῖν τὸ καλόν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:3",
+      "word": "τὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:3",
+      "word": "ἀδύνατον τοῦ νόμου ἐν ᾧ ἠσθένει διὰ τῆς σαρκός",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:14",
+      "word": "ὅσοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:14",
+      "word": "πνεύματι θεοῦ ἄγονται",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:23",
+      "word": "καὶ αὐτοὶ τὴν ἀπαρχὴν τοῦ πνεύματος ἔχοντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "οὓς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "προώρισεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "οὓς ἐκάλεσεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "οὓς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "ἐδικαίωσεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 9:6",
+      "word": "οὐ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 9:6",
+      "word": "πάντες οἱ ἐξ ἰσραὴλ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 9:8",
+      "word": "οὐ τὰ τέκνα τῆς σαρκὸς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 9:26",
+      "word": "ἐν τῷ τόπῳ οὗ ἐρρέθη αὐτοῖς οὐ λαός μου ὑμεῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 11:7",
+      "word": "ὃ ἐπιζητεῖ ἰσραήλ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 11:30",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 11:30",
+      "word": "ὑμεῖς ποτε ἠπειθήσατε τῷ θεῷ νῦν δὲ ἠλεήθητε τῇ τούτων ἀπειθείᾳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "καθάπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "ἐν ἑνὶ σώματι πολλὰ μέλη ἔχομεν τὰ δὲ μέλη πάντα οὐ τὴν αὐτὴν ἔχει πρᾶξιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 14:14",
+      "word": "τῷ λογιζομένῳ τι κοινὸν εἶναι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 14:22",
+      "word": "σὺ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rom 16:25 - 6",
+      "word": "τῷ δὲ δυναμένῳ ὑμᾶς στηρίξαι κατὰ τὸ εὐαγγέλιόν μου καὶ τὸ κήρυγμα ἰησοῦ χριστοῦ κατὰ ἀποκάλυψιν μυστηρίου χρόνοις αἰωνίοις σεσιγημένου φανερωθέντος δὲ νῦν διά τε γραφῶν προφητικῶν κατ’ ἐπιταγὴν τοῦ αἰωνίου θεοῦ εἰς ὑπακοὴν πίστεως εἰς πάντα τὰ ἔθνη γνωρισθέντος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 1:18",
+      "word": "τοῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 1:18",
+      "word": "σῳζομένοις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 2:9",
+      "word": "ἃ ὀφθαλμὸς οὐκ εἶδεν καὶ οὖς οὐκ ἤκουσεν καὶ ἐπὶ καρδίαν ἀνθρώπου οὐκ ἀνέβη",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 6:4",
+      "word": "τοὺς ἐξουθενημένους ἐν τῇ ἐκκλησίᾳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 7:13",
+      "word": "γυνὴ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 7:17",
+      "word": "ἑκάστῳ ὡς ἐμέρισεν ὁ κύριος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 7:17",
+      "word": "ἕκαστον ὡς κέκληκεν ὁ θεός",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 7:20",
+      "word": "ἐν τῇ κλήσει ᾗ ἐκλήθη",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 7:24",
+      "word": "ἐν ᾧ ἐκλήθη",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 11:12",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 11:12",
+      "word": "ἡ γυνὴ ἐκ τοῦ ἀνδρός",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 11:14",
+      "word": "ἀνὴρ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 11:15",
+      "word": "γυνὴ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "καθάπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 12:12",
+      "word": "τὸ σῶμα ἕν ἐστιν καὶ μέλη πολλὰ ἔχει πάντα δὲ τὰ μέλη τοῦ σώματος πολλὰ ὄντα ἕν ἐστιν σῶμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 12:15",
+      "word": "ἐὰν εἴπῃ ὁ πούς ὅτι οὐκ εἰμὶ χείρ οὐκ εἰμὶ ἐκ τοῦ σώματος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 12:16",
+      "word": "ἐὰν εἴπῃ τὸ οὖς ὅτι οὐκ εἰμὶ ὀφθαλμός οὐκ εἰμὶ ἐκ τοῦ σώματος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 12:23",
+      "word": "ἃ δοκοῦμεν ἀτιμότερα εἶναι τοῦ σώματος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 14:7",
+      "word": "ὅμως τὰ ἄψυχα φωνὴν διδόντα εἴτε αὐλὸς εἴτε κιθάρα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:22",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:22",
+      "word": "ἐν τῷ ἀδὰμ πάντες ἀποθνῄσκουσιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:28",
+      "word": "ὅταν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:28",
+      "word": "ὑποταγῇ αὐτῷ τὰ πάντα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:37",
+      "word": "ὃ σπείρεις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:48",
+      "word": "οἷος ὁ χοϊκός",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:48",
+      "word": "οἷος ὁ ἐπουράνιος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:54",
+      "word": "ὅταν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 15:54",
+      "word": "τὸ φθαρτὸν τοῦτο ἐνδύσηται ἀφθαρσίαν καὶ τὸ θνητὸν τοῦτο ἐνδύσηται ἀθανασίαν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 16:1",
+      "word": "ὥσπερ διέταξα ταῖς ἐκκλησίαις τῆς γαλατίας",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 16:2",
+      "word": "ὅταν ἔλθω",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Cor 16:3",
+      "word": "οὓς ἐὰν δοκιμάσητε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 1:5",
+      "word": "καθὼς περισσεύει τὰ παθήματα τοῦ χριστοῦ εἰς ἡμᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 1:7",
+      "word": "ὡς κοινωνοί ἐστε τῶν παθημάτων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "καὶ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "ἐγὼ ὃ κεχάρισμαι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 7:6",
+      "word": "ὁ παρακαλῶν τοὺς ταπεινοὺς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 7:14",
+      "word": "ὡς πάντα ἐν ἀληθείᾳ ἐλαλήσαμεν ὑμῖν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 8:6",
+      "word": "καθὼς προενήρξατο",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 8:11",
+      "word": "καθάπερ ἡ προθυμία τοῦ θέλειν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 10:7",
+      "word": "καθὼς αὐτὸς χριστοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 10:11",
+      "word": "οἷοί ἐσμεν τῷ λόγῳ δι’ ἐπιστολῶν ἀπόντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 10:18",
+      "word": "οὐ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 10:18",
+      "word": "ὁ ἑαυτὸν συνιστάνων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 11:21",
+      "word": "ἐν ᾧ δ’ ἄν τις τολμᾷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Cor 12:17",
+      "word": "τινα ὧν ἀπέσταλκα πρὸς ὑμᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 1:20",
+      "word": "ἃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 1:20",
+      "word": "γράφω ὑμῖν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 2:6",
+      "word": "ἀπὸ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 2:6",
+      "word": "τῶν δοκούντων εἶναί τι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 2:6",
+      "word": "ὁποῖοί ποτε ἦσαν οὐδέν μοι διαφέρει πρόσωπον ὁ θεὸς ἀνθρώπου οὐ λαμβάνει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 2:18",
+      "word": "ἃ κατέλυσα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 3:7",
+      "word": "οἱ ἐκ πίστεως",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 4:29",
+      "word": "ὥσπερ τότε ὁ κατὰ σάρκα γεννηθεὶς ἐδίωκεν τὸν κατὰ πνεῦμα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 5:17",
+      "word": "ἃ ἐὰν θέλητε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 6:7",
+      "word": "ὃ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 6:7",
+      "word": "ἐὰν σπείρῃ ἄνθρωπος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 6:12",
+      "word": "ὅσοι θέλουσιν εὐπροσωπῆσαι ἐν σαρκί",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Gal 6:16",
+      "word": "ὅσοι τῷ κανόνι τούτῳ στοιχήσουσιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Eph 2:11",
+      "word": "ὑμεῖς τὰ ἔθνη ἐν σαρκί οἱ λεγόμενοι ἀκροβυστία ὑπὸ τῆς λεγομένης περιτομῆς ἐν σαρκὶ χειροποιήτου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Eph 3:1",
+      "word": "ἐγὼ παῦλος ὁ δέσμιος τοῦ χριστοῦ ἰησοῦ ὑπὲρ ὑμῶν τῶν ἐθνῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Eph 3:20",
+      "word": "τῷ δὲ δυναμένῳ ὑπὲρ πάντα ποιῆσαι ὑπερεκπερισσοῦ ὧν αἰτούμεθα ἢ νοοῦμεν κατὰ τὴν δύναμιν τὴν ἐνεργουμένην ἐν ἡμῖν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Eph 4:10",
+      "word": "ὁ καταβὰς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Eph 5:24",
+      "word": "ὡς ἡ ἐκκλησία ὑποτάσσεται τῷ χριστῷ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 1:22",
+      "word": "εἰ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 1:22",
+      "word": "τὸ ζῆν ἐν σαρκί",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 3:7",
+      "word": "ἅτινα ἦν μοι κέρδη",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 3:16",
+      "word": "εἰς ὃ ἐφθάσαμεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 4:8",
+      "word": "ὅσα ἐστὶν ἀληθῆ ὅσα σεμνά ὅσα δίκαια ὅσα ἁγνά ὅσα προσφιλῆ ὅσα εὔφημα εἴ τις ἀρετὴ καὶ εἴ τις ἔπαινος",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Phil 4:9",
+      "word": "ἃ καὶ ἐμάθετε καὶ παρελάβετε καὶ ἠκούσατε καὶ εἴδετε ἐν ἐμοί",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Col 1:16",
+      "word": "εἴτε θρόνοι εἴτε κυριότητες εἴτε ἀρχαὶ εἴτε ἐξουσίαι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Col 3:13",
+      "word": "καθὼς καὶ ὁ κύριος ἐχαρίσατο ὑμῖν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Col 3:17",
+      "word": "πᾶν ὅ τι ἐὰν ποιῆτε ἐν λόγῳ ἢ ἐν ἔργῳ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Col 4:11",
+      "word": "οἱ ὄντες ἐκ περιτομῆς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 2:4",
+      "word": "καθὼς δεδοκιμάσμεθα ὑπὸ τοῦ θεοῦ πιστευθῆναι τὸ εὐαγγέλιον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 3:6",
+      "word": "ἐλθόντος τιμοθέου πρὸς ἡμᾶς ἀφ’ ὑμῶν καὶ εὐαγγελισαμένου ἡμῖν τὴν πίστιν καὶ τὴν ἀγάπην ὑμῶν καὶ ὅτι ἔχετε μνείαν ἡμῶν ἀγαθὴν πάντοτε ἐπιποθοῦντες ἡμᾶς ἰδεῖν καθάπερ καὶ ἡμεῖς ὑμᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 4:14",
+      "word": "εἰ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 4:14",
+      "word": "πιστεύομεν ὅτι ἰησοῦς ἀπέθανεν καὶ ἀνέστη",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 5:2",
+      "word": "ὡς κλέπτης ἐν νυκτὶ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Thess 5:3",
+      "word": "ὅταν λέγωσιν εἰρήνη καὶ ἀσφάλεια",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Thess 3:17",
+      "word": "ὁ ἀσπασμὸς τῇ ἐμῇ χειρὶ παύλου ὅ ἐστιν σημεῖον ἐν πάσῃ ἐπιστολῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Tim 2:2",
+      "word": "ἃ ἤκουσας παρ’ ἐμοῦ διὰ πολλῶν μαρτύρων",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Tim 3:8",
+      "word": "ὃν τρόπον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Tim 3:8",
+      "word": "ἰάννης καὶ ἰαμβρῆς ἀντέστησαν μωϋσεῖ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "τὸν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 2:9",
+      "word": "βραχύ τι παρ’ ἀγγέλους ἠλαττωμένον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 2:11",
+      "word": "ὅ τε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 2:11",
+      "word": "ἁγιάζων καὶ οἱ ἁγιαζόμενοι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 4:10",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 4:10",
+      "word": "εἰσελθὼν εἰς τὴν κατάπαυσιν αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 5:3",
+      "word": "καθὼς περὶ τοῦ λαοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Heb 9:27",
+      "word": "καθ’ ὅσον ἀπόκειται τοῖς ἀνθρώποις ἅπαξ ἀποθανεῖν μετὰ δὲ τοῦτο κρίσις",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 1:25",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 1:25",
+      "word": "παρακύψας εἰς νόμον τέλειον τὸν τῆς ἐλευθερίας καὶ παραμείνας οὐκ ἀκροατὴς ἐπιλησμονῆς γενόμενος ἀλλὰ ποιητὴς ἔργου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 1:26",
+      "word": "εἴ τις δοκεῖ θρησκὸς εἶναι μὴ χαλιναγωγῶν γλῶσσαν αὐτοῦ ἀλλὰ ἀπατῶν καρδίαν αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 2:26",
+      "word": "ὥσπερ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 2:26",
+      "word": "τὸ σῶμα χωρὶς πνεύματος νεκρόν ἐστιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 3:2",
+      "word": "εἴ τις ἐν λόγῳ οὐ πταίει",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 3:16",
+      "word": "ὅπου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 3:16",
+      "word": "ζῆλος καὶ ἐριθεία",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 4:17",
+      "word": "εἰδότι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jas 4:17",
+      "word": "καλὸν ποιεῖν καὶ μὴ ποιοῦντι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Pet 2:7",
+      "word": "λίθος ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Pet 2:20",
+      "word": "εἰ ἀγαθοποιοῦντες καὶ πάσχοντες ὑπομενεῖτε",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Pet 5:10",
+      "word": "ὁ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1Pet 5:10",
+      "word": "θεὸς πάσης χάριτος ὁ καλέσας ὑμᾶς εἰς τὴν αἰώνιον αὐτοῦ δόξαν ἐν χριστῷ ἰησοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Pet 2:19",
+      "word": "ᾧ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2Pet 2:19",
+      "word": "τις ἥττηται",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 1:1",
+      "word": "ὃ ἦν ἀπ’ ἀρχῆς ὃ ἀκηκόαμεν ὃ ἑωράκαμεν τοῖς ὀφθαλμοῖς ἡμῶν ὃ ἐθεασάμεθα καὶ αἱ χεῖρες ἡμῶν ἐψηλάφησαν περὶ τοῦ λόγου τῆς ζωῆς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 2:5",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 2:5",
+      "word": "ἂν τηρῇ αὐτοῦ τὸν λόγον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 2:6",
+      "word": "καθὼς ἐκεῖνος περιεπάτησεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 2:24",
+      "word": "ὑμεῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 2:27",
+      "word": "ὑμεῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 3:17",
+      "word": "ὃς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 3:17",
+      "word": "ἂν ἔχῃ τὸν βίον τοῦ κόσμου καὶ θεωρῇ τὸν ἀδελφὸν αὐτοῦ χρείαν ἔχοντα καὶ κλείσῃ τὰ σπλάγχνα αὐτοῦ ἀπ’ αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "1John 4:15",
+      "word": "ὃς ἐὰν ὁμολογήσῃ ὅτι ἰησοῦς ἐστιν ὁ υἱὸς τοῦ θεοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "2John 1:9",
+      "word": "ὁ μένων ἐν τῇ διδαχῇ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "3John 1:9",
+      "word": "ὁ φιλοπρωτεύων αὐτῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "ὅσα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "φυσικῶς ὡς τὰ ἄλογα ζῷα ἐπίστανται",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 1:5 - 6",
+      "word": "τῷ ἀγαπῶντι ἡμᾶς καὶ λύσαντι ἡμᾶς ἐκ τῶν ἁμαρτιῶν ἡμῶν ἐν τῷ αἵματι αὐτοῦ καὶ ἐποίησεν ἡμᾶς βασιλείαν ἱερεῖς τῷ θεῷ καὶ πατρὶ αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 1:20",
+      "word": "τὸ μυστήριον τῶν ἑπτὰ ἀστέρων οὓς εἶδες ἐπὶ τῆς δεξιᾶς μου καὶ τὰς ἑπτὰ λυχνίας τὰς χρυσᾶς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 2:7",
+      "word": "τῷ νικῶντι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 2:17",
+      "word": "τῷ νικῶντι",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 2:26",
+      "word": "ὁ νικῶν καὶ ὁ τηρῶν ἄχρι τέλους τὰ ἔργα μου",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 3:12",
+      "word": "ὁ νικῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 3:21",
+      "word": "ὁ νικῶν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 4:8",
+      "word": "τὰ τέσσαρα ζῷα",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 6:4",
+      "word": "τῷ καθημένῳ ἐπ’ αὐτὸν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 6:8",
+      "word": "ὁ καθήμενος ἐπάνω αὐτοῦ",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 17:11",
+      "word": "τὸ θηρίον ὃ ἦν καὶ οὐκ ἔστιν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 17:16",
+      "word": "τὰ δέκα κέρατα ἃ εἶδες καὶ τὸ θηρίον",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 18:7",
+      "word": "ὅσα ἐδόξασεν αὐτὴν καὶ ἐστρηνίασεν",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 21:8",
+      "word": "τοῖς",
+      "type": "Left-Dislocation"
+    },
+    {
+      "verse": "Rev 21:8",
+      "word": "δειλοῖς καὶ ἀπίστοις καὶ ἐβδελυγμένοις καὶ φονεῦσιν καὶ πόρνοις καὶ φαρμάκοις καὶ εἰδωλολάτραις καὶ πᾶσιν τοῖς ψευδέσιν",
+      "type": "Left-Dislocation"
+    }
+  ]
+}
