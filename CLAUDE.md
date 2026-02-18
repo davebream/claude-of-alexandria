@@ -121,7 +121,7 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 
 **✅ Commit to Git:**
 
-- All files in `skills/` directory
+- All files in `plugins/claude-of-alexandria/skills/` directory
 - Exactly 3 test files per skill in `tests/skills/{skill-name}/`
 - All files in `docs/` directory
 - `README.md` and `CLAUDE.md`
@@ -143,18 +143,25 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/). Your commit
 
 ```
 claude-of-alexandria/
-├── .claude-plugin/               # Plugin configuration
-│   └── manifest.json            # Plugin metadata
-├── skills/                       # The skill collection
-│   └── skill-name/
-│       ├── SKILL.md             # Main skill file (YAML frontmatter + content)
-│       └── README.md            # Development notes and context
-├── tests/                        # All test evidence
+├── .claude-plugin/
+│   └── marketplace.json          # Marketplace configuration
+├── plugins/
+│   └── claude-of-alexandria/     # The plugin
+│       ├── .claude-plugin/
+│       │   └── manifest.json     # Plugin manifest (skills array)
+│       ├── skills/               # The skill collection
+│       │   └── skill-name/
+│       │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)
+│       │       └── README.md     # Development notes and context
+│       ├── CLAUDE.md             # Plugin-level copy
+│       └── README.md             # Plugin documentation
+├── tests/                        # All test evidence (root level)
 │   └── skills/
 │       └── skill-name/
-│           ├── scenarios.md     # Pressure test cases
-│           ├── baseline.md      # RED phase evidence
-│           └── verification.md  # GREEN phase proof
+│           ├── scenarios.md      # Pressure test cases
+│           ├── baseline.md       # RED phase evidence
+│           └── verification.md   # GREEN phase proof
+├── docs/                         # Plans, reviews, roadmaps
 ├── CLAUDE.md                     # You are here
 └── README.md                     # Public documentation
 ```
@@ -203,8 +210,8 @@ Verify every item. No exceptions.
 - [ ] `tests/skills/skill-name/scenarios.md` exists with concrete test cases
 - [ ] `tests/skills/skill-name/baseline.md` exists with documented failures
 - [ ] `tests/skills/skill-name/verification.md` exists with correction proof
-- [ ] `skills/skill-name/SKILL.md` exists with YAML frontmatter
-- [ ] `skills/skill-name/README.md` exists with development notes
+- [ ] `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` exists with YAML frontmatter
+- [ ] `plugins/claude-of-alexandria/skills/skill-name/README.md` exists with development notes
 - [ ] Theological guardrails satisfied — no moralism, no context violations
 - [ ] Commit message follows Conventional Commits
 

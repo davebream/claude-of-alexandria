@@ -25,7 +25,7 @@ Or as we say in the stacks: _structured frameworks that prevent your AI from com
 
 You have entered the library.
 
-The original Library of Alexandria housed roughly 400,000 scrolls and employed a classification system that was, by modern standards, vibes-based. We have improved upon this. Our collection is smaller — one skill, at present — but each scroll has been rigorously tested against the systematic failures of frontier language models, which is more than Zenodotus ever managed.
+The original Library of Alexandria housed roughly 400,000 scrolls and employed a classification system that was, by modern standards, vibes-based. We have improved upon this. Our collection is smaller — three skills, at present — but each scroll has been rigorously tested against the systematic failures of frontier language models, which is more than Zenodotus ever managed.
 
 **Claude of Alexandria** is a [Claude](https://claude.ai/code) plugin providing analytical skills for biblical study and teaching preparation. The system prioritizes:
 
@@ -65,9 +65,9 @@ If a skill cannot demonstrate that it prevents a documented failure, it does not
 
 ## Current Collection
 
-The library presently contains **one skill**. Rome was not catalogued in a day.
+The library presently contains **three skills**. Rome was not catalogued in a day, but we are making progress.
 
-### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/)
+### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/) — Production
 
 Divides biblical books into coherent teaching units — sermon series, small groups, devotional reading — with integrity safeguards that would make a Masoretic scribe nod approvingly:
 
@@ -76,7 +76,27 @@ Divides biblical books into coherent teaching units — sermon series, small gro
 - **Validates against ancient manuscript markers.** Masoretic פ/ס divisions, Levinsohn discourse features. The scribes marked these boundaries for a reason.
 - **Handles contested books with multiple frameworks.** Isaiah's unity debate gets frameworks, not a false consensus.
 
-Coverage: all 66 canonical books. We are nothing if not thorough.
+Coverage: all 66 canonical books. 33 test scenarios. Full RED/GREEN verification.
+
+### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/) — In Development
+
+Assesses whether a proposed passage constitutes a coherent discourse unit for preaching or teaching:
+
+- **Data-grounded boundary checks.** Levinsohn discourse features (NT) and Masoretic paragraph markers (OT), not intuition.
+- **Structured verdicts.** VALID, EXTEND, CONTRACT, or ADJUST — with specific evidence for each.
+- **Minimum viable pericope.** If the passage is too short, suggests the smallest coherent unit.
+
+Status: SKILL.md complete. RED phase baselines documented. GREEN verification pending.
+
+### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/) — In Development
+
+Produces structured, data-grounded exegetical analysis of a biblical passage for sermon or teaching preparation:
+
+- **10-section schema.** Literary context through verification — no ad-hoc structure.
+- **Parser-verified lexical data.** Morphological parsing and vocabulary counts from data, not training memory.
+- **4-tier interpretive guardrails.** Linguistic, discourse, scholarly, and agent assessment — each labeled.
+
+Status: SKILL.md complete. RED phase baselines documented. GREEN verification pending.
 
 ## Installation
 
@@ -169,5 +189,5 @@ The library welcomes contributions from those who respect the methodology. See [
 </p>
 
 <p align="center">
-  <sub>Production-ready. Currently contains 1 skill supporting all 66 biblical books.<br>More scrolls forthcoming. The cataloguing continues.</sub>
+  <sub>Contains 3 skills (1 production, 2 in development) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
 </p>

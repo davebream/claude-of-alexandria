@@ -3,7 +3,9 @@
 **Repository:** claude-of-alexandria (biblical-segmentation skill)
 **Total Items:** 11 (4 Critical, 4 High, 3 Nice-to-Have)
 **Completion:** `[----------] 0/11 complete`
-**Last Updated:** 2026-01-19
+**Last Updated:** 2026-02-18
+
+> **Note (2026-02-18):** This roadmap was written before the marketplace conversion. All paths referencing `skills/biblical-segmentation/...` now live at `plugins/claude-of-alexandria/skills/biblical-segmentation/...`. The item descriptions remain accurate; only the path prefix changed.
 
 ---
 
