@@ -1,0 +1,168 @@
+# Genre Methodology - Markers and methods per genre
+# Each genre has distinct structural markers that signal natural boundaries
+# Genre from book-genres.yaml determines which markers to apply
+# Last updated: 2026-01-19
+
+# Methodology per genre
+# Structure: description, primary_markers, boundary_signals, challenges
+genres:
+  ot_narrative:
+    description: "Old Testament historical narrative"
+    primary_markers:  # Markers listed in priority order
+      - scene_changes: "Shift in location, time, or participants"  # Most reliable boundary
+      - toledot_formulas: "'These are the generations of...' (Genesis)"
+      - participant_shifts: "New character enters/exits"
+      - wayyiqtol_chains: "Hebrew narrative verb form; breaks signal boundaries"
+    boundary_signals:
+      - "Scene change (location or time shift)"
+      - "New participant introduction"
+      - "Temporal marker ('After these things...', 'In those days...')"
+      - "Toledot formula (Genesis)"
+    challenges:
+      - "Long continuous narratives may have few natural breaks"
+      - "Embedded units (poems, speeches) interrupt narrative flow"
+
+  gospel_narrative:
+    description: "Matthew, Mark, Luke, John"
+    primary_markers:
+      - geographical_transitions: "'And Jesus went to...', 'When they came to...'"
+      - temporal_phrases: "'After this...', 'The next day...', 'In those days...'"
+      - intercalation: "Markan sandwich — story A interrupted by B, returns to A"
+      - summary_statements: "Transitional summaries of Jesus' activity"
+    boundary_signals:
+      - "Geographical transition"
+      - "Temporal marker"
+      - "Character entrance/exit"
+      - "Summary statement"
+    challenges:
+      - "Discourse insertions (sermons, parables) within narrative"
+      - "Synoptic parallels may suggest different divisions"
+
+  epistle:
+    description: "New Testament letters"
+    primary_markers:
+      - epistolary_frame: "Prescript, thanksgiving, body, paraenesis, closing"  # Macro-structure
+      - disclosure_formulas: "'I want you to know...', 'I do not want you to be ignorant...'"  # Topic intro
+      - topic_shifts: "'Now concerning...', 'But about...', 'Finally...'"
+      - vocative_address: "'Brothers...', 'Beloved...'"
+    boundary_signals:
+      - "Disclosure formula"
+      - "Vocative address shift"
+      - "Topic transition marker ('Now concerning...')"
+      - "Transitional conjunction with topic change"
+    challenges:
+      - "Rhetorical vs epistolary structure debate"
+      - "Embedded hymns, confessions, or catechetical material"
+
+  prophetic:
+    description: "Isaiah-Malachi prophetic books"
+    primary_markers:
+      - messenger_formula: "'Thus says the LORD...'"
+      - oracle_boundaries: "'The word of the LORD came to...', 'Oracle concerning...'"
+      - vision_reports: "'I saw...', 'The LORD showed me...'"
+      - woe_oracles: "'Woe to...'"
+    boundary_signals:
+      - "Messenger formula"
+      - "Oracle superscription"
+      - "Vision introduction"
+      - "Woe formula"
+    challenges:
+      - "Oracle collections may be thematically rearranged"
+      - "Prose/poetry alternation"
+
+  apocalyptic:
+    description: "Daniel 7-12, Revelation"
+    primary_markers:
+      - vision_sequences: "Numbered visions, 'I saw...'"
+      - in_the_spirit: "'I was in the Spirit...'"
+      - septets: "Groups of seven (seals, trumpets, bowls)"
+      - throne_room_scenes: "Heavenly worship interludes"
+    boundary_signals:
+      - "Vision introduction"
+      - "'In the Spirit' marker"
+      - "Septet transitions"
+      - "Heavenly interlude"
+    challenges:
+      - "Recapitulation vs linear progression debate"
+      - "Symbolic imagery makes boundaries less clear"
+
+  hebrew_poetry:
+    description: "Psalms, Lamentations, Song of Songs"
+    primary_markers:
+      - superscriptions: "Psalm titles, authorship notes"
+      - acrostics: "Alphabetic structure (Ps 119, Lamentations)"
+      - refrains: "Repeated phrases marking strophes"
+      - selah: "Musical/liturgical marker"
+    boundary_signals:
+      - "Superscription"
+      - "Acrostic letter transition"
+      - "Refrain"
+      - "Doxology (Psalms book endings)"
+    challenges:
+      - "Strophic structure often disputed"
+      - "Collection boundaries within books"
+
+  wisdom:
+    description: "Proverbs, Ecclesiastes, Job"
+    primary_markers:
+      - thematic_clusters: "Grouped sayings on similar topics"
+      - numerical_sayings: "'Three things...four things...'"
+      - editorial_frames: "Superscriptions identifying collections"
+      - dialogue_structure: "Job's speech cycles"
+    boundary_signals:
+      - "Collection superscription"
+      - "Thematic shift"
+      - "Speaker change (Job)"
+    challenges:
+      - "Proverbs: discrete sayings resist larger grouping"
+      - "Job: dialogue cycles + Elihu + divine speeches"
+
+  torah_law:
+    description: "Legal sections of Pentateuch"
+    primary_markers:
+      - legal_collections: "Covenant Code, Holiness Code, Deuteronomic Code"
+      - case_law_clusters: "Casuistic law groupings"
+      - speech_formulas: "'The LORD spoke to Moses saying...'"
+    boundary_signals:
+      - "Speech formula"
+      - "Legal collection boundary"
+      - "Topical shift in case law"
+    challenges:
+      - "Narrative-law integration in Exodus, Numbers"
+      - "Deuteronomy's sermonic frame around law"
+
+# Embedded genre handling
+# When secondary genre appears within primary (e.g., law in narrative, discourse in gospel)
+embedded_genres:
+  rules:  # Integrity safeguards to prevent splitting embedded units
+    - "Identify where secondary genre begins/ends"
+    - "Do not split embedded unit mid-way"
+    - "Note genre shift in session description"
+    - "Consider embedded unit as single session if short"
+
+# Thematic methodology (supplementary to structural)
+# Only applies when thematic triggers fire; never replaces structural options
+thematic_methodologies:
+  vocabulary_based:
+    name: "Vocabulary-Based Thematic"
+    description: "Division based on lemma frequency patterns and term clustering"
+    requires:
+      - vocabulary_data: "vocabulary_parser.py must return valid data for book"
+      - scholarly_citation: "Web search must find relevant commentary"
+      - clustering_or_explicit: "Either 60%+ clustering OR explicit user request"
+    markers:
+      - lemma_introduction: "Where key term first appears in significant concentration"
+      - term_clustering: "Chapter ranges with ≥60% of occurrences"
+      - thematic_climax: "Peak usage or theological resolution point"
+      - theme_resolution: "Where thematic argument concludes"
+    integrity_rules:
+      - "Structural integrity safeguards still apply"
+      - "Adjust thematic boundaries to nearest structurally-valid point"
+      - "Document adjustments in Markers column"
+    applicable_genres:
+      - epistle
+      - prophetic
+      - ot_narrative
+    not_applicable:
+      - hebrew_poetry  # Use curation mode
+      - wisdom  # Discrete sayings resist thematic tracking

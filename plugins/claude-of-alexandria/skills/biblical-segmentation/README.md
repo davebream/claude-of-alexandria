@@ -1,0 +1,137 @@
+# Biblical Segmentation
+
+An AI agent skill for dividing biblical books into teaching sessions with scholarly integrity.
+
+## What is this?
+
+**Biblical Segmentation** is a Claude Code skill that helps pastors, teachers, and study leaders divide biblical books into coherent units for sermon series, small groups, or devotional reading.
+
+## The Problem
+
+When planning a teaching series, you face competing pressures:
+
+- **User requests** - "Give me 8 sessions on Romans" (but Romans has natural 4-part or 16-part structures)
+- **Micro-books** - "Divide Philemon into 4 weeks" (but it's 25 verses)
+- **Contested books** - "Outline Revelation" (linear progression vs. recapitulation cycles?)
+- **Quick answers** - "Just pick something that works" (bypassing structural analysis)
+
+AI agents, even frontier models, make predictable errors under these pressures:
+- Inventing arbitrary divisions to satisfy session counts
+- Presenting single frameworks for contested books as if consensus exists
+- Auto-selecting options instead of presenting choices
+- Ignoring ancient manuscript paragraph markers
+
+## The Solution
+
+This skill enforces **non-negotiable integrity safeguards** while providing **multiple scholarly-grounded options**:
+
+1. **Hard limits** - Refuses impossible divisions (e.g., Philemon can't be 4 sessions)
+2. **Mandatory alternatives** - Always presents 2-4 options, never auto-selects
+3. **Contested book frameworks** - Shows multiple valid structures (Revelation: linear + recapitulation)
+4. **Ancient manuscript validation** - Uses Masoretic paragraph markers (פ/ס) for OT, Levinsohn discourse features for NT
+5. **Transparent methodology** - Every boundary justified with textual evidence
+
+## Example
+
+**User request:**
+```
+Help me divide Genesis 37-50 (Joseph narrative) into 8 sessions for a sermon series.
+```
+
+**Skill output:**
+- ★★★★★ Fit Assessment (Joseph's arc fits 6-10 sessions naturally; 8 is excellent)
+- Book overview (genre, structure, compositional debates if applicable)
+- **4 segmentation options:**
+  - Narrative Arc (8 sessions following plot progression)
+  - Character Focus (7 sessions emphasizing Joseph, Judah, Jacob)
+  - Thematic Parallels (9 sessions tracking themes like providence, forgiveness)
+  - Geographic Movement (8 sessions following Canaan ↔ Egypt transitions)
+- Each option includes:
+  - Methodology and "Best for" line (preaching context)
+  - Session table with passages, titles, verses, **markers**, synopsis
+  - Strengths/limitations analysis
+- Comparative notes (where options agree/diverge)
+- **Data sources** (Masoretic paragraph markers from Sefaria-Export)
+
+**Markers column example:**
+```
+פ at 39:1 confirms boundary; geographic return to Egypt; new participant (Potiphar); scene shifts from Judah (ch. 38) back to Joseph
+```
+
+## Usage
+
+In a Claude Code session:
+
+```
+Use biblical-segmentation to divide Ephesians into 6 sessions for a small group study.
+```
+
+The skill will:
+1. Check book type (micro-book? anthology? contested?)
+2. Load genre-appropriate methodology
+3. Consult discourse data (Levinsohn for NT Greek)
+4. Generate 2-4 options with boundary validation
+5. Save output to `~/.claude/bible-segmentation/ephesians/YYYY-MM-DD-6sessions.md`
+
+## File Structure
+
+```
+skills/biblical-segmentation/
+├── SKILL.md                    # The skill itself (YAML frontmatter + instructions)
+├── README.md                   # This file
+├── reference/                  # Data files
+│   ├── book-exceptions.yaml    # Micro-books, anthologies, contested books
+│   ├── book-genres.yaml        # 66 books mapped to genres
+│   ├── genre-methodology.yaml  # Segmentation markers per genre
+│   ├── compositional-debates.yaml  # Partition theory notes (2 Cor, Philippians)
+│   ├── levinsohn/              # 34 NT books with discourse features (XML)
+│   └── masoretic/              # 39 OT books with פ/ס paragraph markers (JSON)
+├── scripts/
+│   ├── levinsohn_parser.py     # Extract NT discourse features
+│   └── sefaria_paragraphs.py   # Extract OT Masoretic markers
+└── templates/                  # Output templates
+```
+
+## Data Sources
+
+### Old Testament (Hebrew)
+- **Sefaria-Export** (Masoretic Text, Leningrad Codex)
+  - Source: https://github.com/Sefaria/Sefaria-Export
+  - Provides petuchot (פ) and setumah (ס) paragraph markers
+  - Used to validate session boundaries against ancient manuscript tradition
+
+### New Testament (Greek)
+- **Levinsohn GNT Discourse Features** (dataset 2016; book: Levinsohn 2000)
+  - Citation: Levinsohn, Stephen H. (dataset 2016; book: Levinsohn 2000). *Levinsohn Greek New Testament Discourse Features*. SIL International.
+  - Text basis: NA28/UBS5 critical text
+  - Features analyzed: Historical Present, Point of Departure, Left-Dislocation, Reported Speech, Tail-Head Linkage
+  - Used to identify paragraph and section boundaries from discourse grammar
+
+## The Iron Rules
+
+The skill enforces seven non-negotiable rules:
+
+1. **Micro-Book Limits** - Philemon max 2 sessions, 2 John max 1, etc. (refuses impossible divisions)
+2. **Anthology Mode** - Psalms/Proverbs use curation (by genre, collection, theme), not session counts
+3. **Always Present Options** - Never auto-selects, even if user says "just pick for me"
+4. **Contested Books Require Multiple Frameworks** - Revelation, Isaiah, Hebrews, Zechariah, Job, Song of Songs
+5. **Integrity Safeguards** - Won't bisect sentences, split arguments from conclusions, or violate literary structure
+6. **Validation Requests** - Honest assessment of user-provided divisions, not polite approval
+7. **External Standards** - Lectionaries/tradition treated as metadata, not structure
+
+## Development
+
+This skill is built using Test-Driven Development. See `tests/skills/biblical-segmentation/` for:
+- `scenarios.md` - Pressure test scenarios
+- `baseline.md` - Documented failures without the skill
+- `verification.md` - Proof the skill corrects failures
+
+## Acknowledgments
+
+**Linguistic Foundations:**
+- **Stephen H. Levinsohn** - Greek New Testament discourse analysis
+- **Sefaria Project** - Masoretic Text paragraph data
+
+**Hermeneutical Framework:**
+- **Historical-Grammatical Method** (Antiochene School, Protestant Reformers)
+- **Literary Context** - Boundaries must respect discourse structure, not violate it

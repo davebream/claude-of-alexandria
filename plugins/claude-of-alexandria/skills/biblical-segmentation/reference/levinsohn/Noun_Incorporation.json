@@ -1,0 +1,406 @@
+{
+  "feature": "Noun Incorporation",
+  "description": "Some nominal objects that appear to be in P2 may precede their verb because they have been “incorporated” (Rosen 1989) in the verb phrase. Typically, the phrase consists of an indefinite noun and a “light verb” such as “do, give, have, make, take” (Wikipedia entry on Light Verbs).",
+  "references": [
+    {
+      "verse": "Matt 3:14",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 5:21",
+      "word": "ἔνοχος",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 5:22",
+      "word": "ἔνοχος",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 5:22",
+      "word": "ἔνοχος",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 5:22",
+      "word": "ἔνοχος",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 6:8",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 7:29",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 9:6",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 9:12",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 11:16",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 12:14",
+      "word": "συμβούλιον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:31",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:33",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:44",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:45",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:47",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 13:52",
+      "word": "ὅμοιός",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 14:16",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 15:2",
+      "word": "ἄρτον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 20:1",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 21:3",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 22:15",
+      "word": "συμβούλιον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 27:1",
+      "word": "συμβούλιον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 27:7",
+      "word": "συμβούλιον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Matt 28:12",
+      "word": "συμβούλιόν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 1:22",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 2:10",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 2:17",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 2:23",
+      "word": "ὁδὸν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 2:25",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 11:3",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Mark 15:15",
+      "word": "ἱκανὸν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 5:24",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 5:31",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 6:48",
+      "word": "ὅμοιός",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 6:49",
+      "word": "ὅμοιός",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 7:32",
+      "word": "ὅμοιοί",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 9:11",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 13:19",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 13:21",
+      "word": "ὁμοία",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 13:22",
+      "word": "πορείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 15:7",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 19:17",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 19:31",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Luke 19:34",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 2:25",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 5:26",
+      "word": "ζωὴν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 7:23",
+      "word": "ὑγιῆ",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 10:18",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 10:18",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 13:29",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 16:30",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 19:10",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "John 19:10",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Acts 2:45",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Acts 4:35",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Acts 21:13",
+      "word": "ἑτοίμως",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Rom 14:12",
+      "word": "λόγον",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Cor 7:37",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Cor 11:10",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Cor 12:24",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "2Cor 12:14",
+      "word": "ἑτοίμως",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Eph 1:16",
+      "word": "μνείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Eph 4:28",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Thess 1:2",
+      "word": "μνείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Thess 1:8",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Thess 4:9",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Thess 4:12",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Thess 5:1",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Tim 1:12",
+      "word": "χάριν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "2Tim 1:3",
+      "word": "χάριν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "2Tim 1:5",
+      "word": "ὑπόμνησιν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Heb 5:12",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Heb 5:12",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1Pet 4:5",
+      "word": "ἑτοίμως",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1John 2:27",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "1John 3:17",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Rev 3:17",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Rev 11:6",
+      "word": "ἐξουσίαν",
+      "type": "Noun Incorporation"
+    },
+    {
+      "verse": "Rev 21:23",
+      "word": "χρείαν",
+      "type": "Noun Incorporation"
+    }
+  ]
+}

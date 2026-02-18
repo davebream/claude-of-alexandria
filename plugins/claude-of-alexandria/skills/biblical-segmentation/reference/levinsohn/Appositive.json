@@ -1,0 +1,1141 @@
+{
+  "feature": "Appositive",
+  "description": "Appositive",
+  "references": [
+    {
+      "verse": "Matt 2:11",
+      "word": "χρυσὸν καὶ λίβανον καὶ σμύρναν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 4:18",
+      "word": "σίμωνα τὸν λεγόμενον πέτρον καὶ ἀνδρέαν τὸν ἀδελφὸν αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 4:21",
+      "word": "ἰάκωβον τὸν τοῦ ζεβεδαίου καὶ ἰωάννην τὸν ἀδελφὸν αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 9:8",
+      "word": "τὸν δόντα ἐξουσίαν τοιαύτην τοῖς ἀνθρώποις",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 12:24",
+      "word": "ἄρχοντι τῶν δαιμονίων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 14:20",
+      "word": "δώδεκα κοφίνους πλήρεις",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 17:4",
+      "word": "σοὶ μίαν καὶ μωϋσεῖ μίαν καὶ ἠλίᾳ μίαν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 22:10",
+      "word": "πονηρούς τε καὶ ἀγαθούς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 23:23",
+      "word": "τὴν κρίσιν καὶ τὸ ἔλεος καὶ τὴν πίστιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Matt 27:38",
+      "word": "εἷς ἐκ δεξιῶν καὶ εἷς ἐξ εὐωνύμων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 2:7",
+      "word": "ὁ θεός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 5:15",
+      "word": "τὸν ἐσχηκότα τὸν λεγιῶνα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 8:8",
+      "word": "ἑπτὰ σπυρίδας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 9:43",
+      "word": "εἰς τὸ πῦρ τὸ ἄσβεστον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 10:18",
+      "word": "ὁ θεός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Mark 14:43",
+      "word": "εἷς τῶν δώδεκα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 1:19",
+      "word": "ὁ παρεστηκὼς ἐνώπιον τοῦ θεοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 1:36",
+      "word": "τῇ καλουμένῃ στείρᾳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 2:21",
+      "word": "τὸ κληθὲν ὑπὸ τοῦ ἀγγέλου πρὸ τοῦ συλλημφθῆναι αὐτὸν ἐν τῇ κοιλίᾳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 4:31",
+      "word": "πόλιν τῆς γαλιλαίας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 8:28",
+      "word": "ἰησοῦ υἱὲ τοῦ θεοῦ τοῦ ὑψίστου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 9:17",
+      "word": "κλασμάτων κόφινοι δώδεκα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 12:33",
+      "word": "θησαυρὸν ἀνέκλειπτον ἐν τοῖς οὐρανοῖς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 18:11",
+      "word": "ἅρπαγες ἄδικοι μοιχοί ἢ καὶ ὡς οὗτος ὁ τελώνης",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 18:13",
+      "word": "τῷ ἁμαρτωλῷ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 18:19",
+      "word": "ὁ θεός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 20:27",
+      "word": "οἱ [ἀντι]λέγοντες ἀνάστασιν μὴ εἶναι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 20:46",
+      "word": "τῶν θελόντων περιπατεῖν ἐν στολαῖς καὶ φιλούντων ἀσπασμοὺς ἐν ταῖς ἀγοραῖς καὶ πρωτοκαθεδρίας ἐν ταῖς συναγωγαῖς καὶ πρωτοκλισίας ἐν τοῖς δείπνοις",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 22:1",
+      "word": "ἡ λεγομένη πάσχα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 22:66",
+      "word": "ἀρχιερεῖς τε καὶ γραμματεῖς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 23:35",
+      "word": "ὁ ἐκλεκτός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Luke 24:24",
+      "word": "καθὼς καὶ αἱ γυναῖκες εἶπον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 1:14",
+      "word": "δόξαν ὡς μονογενοῦς παρὰ πατρός πλήρης χάριτος καὶ ἀληθείας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 1:29",
+      "word": "ὁ αἴρων τὴν ἁμαρτίαν τοῦ κόσμου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 1:41",
+      "word": "σίμωνα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 1:44",
+      "word": "ἐκ τῆς πόλεως ἀνδρέου καὶ πέτρου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 3:13",
+      "word": "ὁ υἱὸς τοῦ ἀνθρώπου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 5:23",
+      "word": "τὸν πέμψαντα αὐτόν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 5:45",
+      "word": "μωϋσῆς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 6:1",
+      "word": "τῆς τιβεριάδος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 6:4",
+      "word": "ἡ ἑορτὴ τῶν ἰουδαίων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 6:8",
+      "word": "ἀνδρέας ὁ ἀδελφὸς σίμωνος πέτρου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 7:37",
+      "word": "τῇ μεγάλῃ τῆς ἑορτῆς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 9:16",
+      "word": "ὁ ἄνθρωπος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 9:18",
+      "word": "τοῦ ἀναβλέψαντος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:1",
+      "word": "λάζαρος ἀπὸ βηθανίας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:18",
+      "word": "ὡς ἀπὸ σταδίων δεκαπέντε",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:27",
+      "word": "ὁ υἱὸς τοῦ θεοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:27",
+      "word": "ὁ εἰς τὸν κόσμον ἐρχόμενος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:37",
+      "word": "ὁ ἀνοίξας τοὺς ὀφθαλμοὺς τοῦ τυφλοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:39",
+      "word": "μάρθα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 11:49",
+      "word": "καϊάφας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 12:1",
+      "word": "ὅπου ἦν λάζαρος ὃν ἤγειρεν ἐκ νεκρῶν ἰησοῦς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 12:4",
+      "word": "εἷς ἐκ τῶν μαθητῶν αὐτοῦ ὁ μέλλων αὐτὸν παραδιδόναι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 12:13",
+      "word": "καὶ ὁ βασιλεὺς τοῦ ἰσραήλ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 15:26",
+      "word": "τὸ πνεῦμα τῆς ἀληθείας ὃ παρὰ τοῦ πατρὸς ἐκπορεύεται",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 16:13",
+      "word": "τὸ πνεῦμα τῆς ἀληθείας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 17:3",
+      "word": "τὸν μόνον ἀληθινὸν θεὸν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 17:3",
+      "word": "ἰησοῦν χριστόν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 19:23",
+      "word": "ἑκάστῳ στρατιώτῃ μέρος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 19:39",
+      "word": "ὁ ἐλθὼν πρὸς αὐτὸν νυκτὸς τὸ πρῶτον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 20:8",
+      "word": "ὁ ἐλθὼν πρῶτος εἰς τὸ μνημεῖον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "John 21:11",
+      "word": "ἑκατὸν πεντήκοντα τριῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 3:20",
+      "word": "χριστὸν ἰησοῦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 5:14",
+      "word": "πλήθη ἀνδρῶν τε καὶ γυναικῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 6:5",
+      "word": "ἄνδρα πλήρης πίστεως καὶ πνεύματος ἁγίου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 7:14",
+      "word": "ἐν ψυχαῖς ἑβδομήκοντα πέντε",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 7:32",
+      "word": "ὁ θεὸς ἀβραὰμ καὶ ἰσαὰκ καὶ ἰακώβ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 7:43",
+      "word": "τοὺς τύπους οὓς ἐποιήσατε προσκυνεῖν αὐτοῖς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 9:2",
+      "word": "ἄνδρας τε καὶ γυναῖκας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 9:12",
+      "word": "ἁνανίαν ὀνόματι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 9:17",
+      "word": "ἰησοῦς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 9:17",
+      "word": "ὁ ὀφθείς σοι ἐν τῇ ὁδῷ ᾗ ἤρχου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 10:41",
+      "word": "ἡμῖν οἵτινες συνεφάγομεν καὶ συνεπίομεν αὐτῷ μετὰ τὸ ἀναστῆναι αὐτὸν ἐκ νεκρῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:1",
+      "word": "ὅ τε βαρναβᾶς καὶ συμεὼν ὁ καλούμενος νίγερ καὶ λούκιος ὁ κυρηναῖος μαναήν τε ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ σαῦλος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:6",
+      "word": "ψευδοπροφήτην ἰουδαῖον ᾧ ὄνομα βαριησοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:7",
+      "word": "ἀνδρὶ συνετῷ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:9",
+      "word": "ὁ καὶ παῦλος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:21",
+      "word": "ἄνδρα ἐκ φυλῆς βενιαμίν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:23",
+      "word": "ἰησοῦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 13:33",
+      "word": "ἡμῖν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 14:6",
+      "word": "λύστραν καὶ δέρβην",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 15:22",
+      "word": "ἄνδρας ἡγουμένους ἐν τοῖς ἀδελφοῖς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 15:26",
+      "word": "ἀνθρώποις παραδεδωκόσι τὰς ψυχὰς αὐτῶν ὑπὲρ τοῦ ὀνόματος τοῦ κυρίου ἡμῶν ἰησοῦ χριστοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 16:12",
+      "word": "κολωνία",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 19:22",
+      "word": "τιμόθεον καὶ ἔραστον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Acts 19:29",
+      "word": "μακεδόνας συνεκδήμους παύλου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 1:16",
+      "word": "ἰουδαίῳ τε πρῶτον καὶ ἕλληνι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 2:1",
+      "word": "πᾶς ὁ κρίνων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 2:3",
+      "word": "ὁ κρίνων τοὺς τὰ τοιαῦτα πράσσοντας καὶ ποιῶν αὐτά",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 2:27",
+      "word": "τὸν διὰ γράμματος καὶ περιτομῆς παραβάτην νόμου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 3:5",
+      "word": "ὁ ἐπιφέρων τὴν ὀργήν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 4:16",
+      "word": "οὐ τῷ ἐκ τοῦ νόμου μόνον ἀλλὰ καὶ τῷ ἐκ πίστεως ἀβραάμ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 4:17",
+      "word": "τοῦ ζῳοποιοῦντος τοὺς νεκροὺς καὶ καλοῦντος τὰ μὴ ὄντα ὡς ὄντα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 4:24",
+      "word": "τοῖς πιστεύουσιν ἐπὶ τὸν ἐγείραντα ἰησοῦν τὸν κύριον ἡμῶν ἐκ νεκρῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 7:4",
+      "word": "τῷ ἐκ νεκρῶν ἐγερθέντι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 7:18",
+      "word": "τοῦτ’ ἔστιν ἐν τῇ σαρκί μου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 8:4",
+      "word": "τοῖς μὴ κατὰ σάρκα περιπατοῦσιν ἀλλὰ κατὰ πνεῦμα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 8:17",
+      "word": "κληρονόμοι μὲν θεοῦ συγκληρονόμοι δὲ χριστοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 9:30",
+      "word": "δικαιοσύνην δὲ τὴν ἐκ πίστεως",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 12:2",
+      "word": "τὸ ἀγαθὸν καὶ εὐάρεστον καὶ τέλειον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 15:12",
+      "word": "καὶ ὁ ἀνιστάμενος ἄρχειν ἐθνῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 16:3",
+      "word": "τοὺς συνεργούς μου ἐν χριστῷ ἰησοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 16:7",
+      "word": "τοὺς συγγενεῖς μου καὶ συναιχμαλώτους μου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rom 16:22",
+      "word": "ὁ γράψας τὴν ἐπιστολὴν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 2:6",
+      "word": "τῶν καταργουμένων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 3:1",
+      "word": "ὡς νηπίοις ἐν χριστῷ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 5:1",
+      "word": "καὶ τοιαύτη πορνεία ἥτις οὐδὲ ἐν τοῖς ἔθνεσιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 8:10",
+      "word": "τὸν ἔχοντα γνῶσιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 12:18",
+      "word": "ἓν ἕκαστον αὐτῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 13:13",
+      "word": "τὰ τρία ταῦτα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 15:52",
+      "word": "ἐν ῥιπῇ ὀφθαλμοῦ ἐν τῇ ἐσχάτῃ σάλπιγγι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Cor 16:21",
+      "word": "παύλου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "2Cor 5:10",
+      "word": "εἴτε ἀγαθὸν εἴτε φαῦλον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Gal 2:20",
+      "word": "τῇ τοῦ υἱοῦ τοῦ θεοῦ τοῦ ἀγαπήσαντός με καὶ παραδόντος ἑαυτὸν ὑπὲρ ἐμοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Gal 4:24",
+      "word": "μία μὲν ἀπὸ ὄρους σινᾶ εἰς δουλείαν γεννῶσα ἥτις ἐστὶν ἁγάρ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:3",
+      "word": "ὁ εὐλογήσας ἡμᾶς ἐν πάσῃ εὐλογίᾳ πνευματικῇ ἐν τοῖς ἐπουρανίοις ἐν χριστῷ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:7",
+      "word": "τὴν ἄφεσιν τῶν παραπτωμάτων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:13",
+      "word": "τὸ εὐαγγέλιον τῆς σωτηρίας ὑμῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:17",
+      "word": "ὁ πατὴρ τῆς δόξης",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:19",
+      "word": "τοὺς πιστεύοντας κατὰ τὴν ἐνέργειαν τοῦ κράτους τῆς ἰσχύος αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 1:23",
+      "word": "τὸ πλήρωμα τοῦ τὰ πάντα ἐν πᾶσιν πληρουμένου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 2:11",
+      "word": "οἱ λεγόμενοι ἀκροβυστία ὑπὸ τῆς λεγομένης περιτομῆς ἐν σαρκὶ χειροποιήτου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 3:1",
+      "word": "ὁ δέσμιος τοῦ χριστοῦ ἰησοῦ ὑπὲρ ὑμῶν τῶν ἐθνῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 4:1",
+      "word": "ὁ δέσμιος ἐν κυρίῳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 4:6",
+      "word": "ὁ ἐπὶ πάντων καὶ διὰ πάντων καὶ ἐν πᾶσιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 4:15",
+      "word": "χριστός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 6:21",
+      "word": "τί πράσσω",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Eph 6:21",
+      "word": "ὁ ἀγαπητὸς ἀδελφὸς καὶ πιστὸς διάκονος ἐν κυρίῳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:8",
+      "word": "ὁ καὶ δηλώσας ἡμῖν τὴν ὑμῶν ἀγάπην ἐν πνεύματι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:14",
+      "word": "τὴν ἄφεσιν τῶν ἁμαρτιῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:15",
+      "word": "πρωτότοκος πάσης κτίσεως",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:16",
+      "word": "τὰ ὁρατὰ καὶ τὰ ἀόρατα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:18",
+      "word": "πρωτότοκος ἐκ τῶν νεκρῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 1:26",
+      "word": "τὸ μυστήριον τὸ ἀποκεκρυμμένον ἀπὸ τῶν αἰώνων καὶ ἀπὸ τῶν γενεῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 3:5",
+      "word": "πορνείαν ἀκαθαρσίαν πάθος ἐπιθυμίαν κακήν καὶ τὴν πλεονεξίαν ἥτις ἐστὶν εἰδωλολατρία",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 3:8",
+      "word": "ὀργήν θυμόν κακίαν βλασφημίαν αἰσχρολογίαν ἐκ τοῦ στόματος ὑμῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 3:10",
+      "word": "τὸν ἀνακαινούμενον εἰς ἐπίγνωσιν κατ’ εἰκόνα τοῦ κτίσαντος αὐτόν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 4:7",
+      "word": "ὁ ἀγαπητὸς ἀδελφὸς καὶ πιστὸς διάκονος καὶ σύνδουλος ἐν κυρίῳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Col 4:12",
+      "word": "ὁ ἐξ ὑμῶν δοῦλος χριστοῦ ἰησοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Thess 2:4",
+      "word": "τῷ δοκιμάζοντι τὰς καρδίας ἡμῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Thess 2:12",
+      "word": "τοῦ καλοῦντος ὑμᾶς εἰς τὴν ἑαυτοῦ βασιλείαν καὶ δόξαν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Thess 3:2",
+      "word": "τὸν ἀδελφὸν ἡμῶν καὶ συνεργὸν τοῦ θεοῦ ἐν τῷ εὐαγγελίῳ τοῦ χριστοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Thess 4:8",
+      "word": "τὸν καὶ διδόντα τὸ πνεῦμα αὐτοῦ τὸ ἅγιον εἰς ὑμᾶς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Thess 5:10",
+      "word": "τοῦ ἀποθανόντος ὑπὲρ ἡμῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "2Thess 2:3 - 4",
+      "word": "ὁ υἱὸς τῆς ἀπωλείας ὁ ἀντικείμενος καὶ ὑπεραιρόμενος ἐπὶ πάντα λεγόμενον θεὸν ἢ σέβασμα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 1:12",
+      "word": "χριστῷ ἰησοῦ τῷ κυρίῳ ἡμῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 3:15",
+      "word": "στῦλος καὶ ἑδραίωμα τῆς ἀληθείας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 4:10",
+      "word": "μάλιστα πιστῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 6:15",
+      "word": "ὁ βασιλεὺς τῶν βασιλευόντων καὶ κύριος τῶν κυριευόντων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 6:16",
+      "word": "ὁ μόνος ἔχων ἀθανασίαν φῶς οἰκῶν ἀπρόσιτον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Tim 6:17",
+      "word": "τῷ παρέχοντι ἡμῖν πάντα πλουσίως εἰς ἀπόλαυσιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "2Tim 1:8",
+      "word": "τὸν δέσμιον αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "2Tim 4:1",
+      "word": "τοῦ μέλλοντος κρίνειν ζῶντας καὶ νεκρούς καὶ τὴν ἐπιφάνειαν αὐτοῦ καὶ τὴν βασιλείαν αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Titus 1:12",
+      "word": "ἴδιος αὐτῶν προφήτης",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 2:15",
+      "word": "ὅσοι φόβῳ θανάτου διὰ παντὸς τοῦ ζῆν ἔνοχοι ἦσαν δουλείας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 3:1",
+      "word": "ἰησοῦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 4:7",
+      "word": "σήμερον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 4:14",
+      "word": "ἰησοῦν τὸν υἱὸν τοῦ θεοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 7:26",
+      "word": "ὅσιος ἄκακος ἀμίαντος κεχωρισμένος ἀπὸ τῶν ἁμαρτωλῶν καὶ ὑψηλότερος τῶν οὐρανῶν γενόμενος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 9:10",
+      "word": "δικαιώματα σαρκὸς μέχρι καιροῦ διορθώσεως ἐπικείμενα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 12:2",
+      "word": "ἰησοῦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 12:24",
+      "word": "ἰησοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Heb 13:20",
+      "word": "τὸν κύριον ἡμῶν ἰησοῦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Jas 1:25",
+      "word": "τὸν τῆς ἐλευθερίας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 1:7",
+      "word": "πολυτιμότερον χρυσίου τοῦ ἀπολλυμένου διὰ πυρὸς δὲ δοκιμαζομένου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 1:9",
+      "word": "σωτηρίαν ψυχῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 1:19",
+      "word": "χριστοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 1:21",
+      "word": "τὸν ἐγείραντα αὐτὸν ἐκ νεκρῶν καὶ δόξαν αὐτῷ δόντα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 2:6",
+      "word": "ἐκλεκτὸν ἔντιμον",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 5:12",
+      "word": "ὑμῖν τοῦ πιστοῦ ἀδελφοῦ ὡς λογίζομαι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1Pet 5:13",
+      "word": "ὁ υἱός μου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1John 2:16",
+      "word": "ἡ ἐπιθυμία τῆς σαρκὸς καὶ ἡ ἐπιθυμία τῶν ὀφθαλμῶν καὶ ἡ ἀλαζονεία τοῦ βίου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "1John 5:20",
+      "word": "ἐν τῷ υἱῷ αὐτοῦ ἰησοῦ χριστῷ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Jude 1:4",
+      "word": "οἱ πάλαι προγεγραμμένοι εἰς τοῦτο τὸ κρίμα ἀσεβεῖς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Jude 1:14",
+      "word": "ἑνὼχ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 1:5",
+      "word": "ὁ μάρτυς ὁ πιστός ὁ πρωτότοκος τῶν νεκρῶν καὶ ὁ ἄρχων τῶν βασιλέων τῆς γῆς",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 1:8",
+      "word": "ὁ ὢν καὶ ὁ ἦν καὶ ὁ ἐρχόμενος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 1:8",
+      "word": "ὁ παντοκράτωρ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 1:11",
+      "word": "εἰς ἔφεσον καὶ εἰς σμύρναν καὶ εἰς πέργαμον καὶ εἰς θυάτειρα καὶ εἰς σάρδεις καὶ εἰς φιλαδέλφειαν καὶ εἰς λαοδίκειαν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 1:14",
+      "word": "ὡς χιὼν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 2:1",
+      "word": "ὁ περιπατῶν ἐν μέσῳ τῶν ἑπτὰ λυχνιῶν τῶν χρυσῶν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 2:13",
+      "word": "ὅπου ὁ θρόνος τοῦ σατανᾶ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 2:14",
+      "word": "ὅτι ἔχεις ἐκεῖ κρατοῦντας τὴν διδαχὴν βαλαάμ ὃς ἐδίδασκεν τῷ βαλὰκ βαλεῖν σκάνδαλον ἐνώπιον τῶν υἱῶν ἰσραὴλ φαγεῖν εἰδωλόθυτα καὶ πορνεῦσαι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 2:18",
+      "word": "ὁ ἔχων τοὺς ὀφθαλμοὺς αὐτοῦ ὡς φλόγα πυρὸς καὶ οἱ πόδες αὐτοῦ ὅμοιοι χαλκολιβάνῳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 2:20",
+      "word": "ἡ λέγουσα ἑαυτὴν προφῆτιν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 3:7",
+      "word": "ὁ ἀληθινός ὁ ἔχων τὴν κλεῖν δαυίδ ὁ ἀνοίγων καὶ οὐδεὶς κλείσει καὶ κλείων καὶ οὐδεὶς ἀνοίγει",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 3:9",
+      "word": "τῶν λεγόντων ἑαυτοὺς ἰουδαίους εἶναι καὶ οὐκ εἰσὶν ἀλλὰ ψεύδονται",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 3:12",
+      "word": "τῆς καινῆς ἰερουσαλὴμ ἡ καταβαίνουσα ἐκ τοῦ οὐρανοῦ ἀπὸ τοῦ θεοῦ μου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 3:14",
+      "word": "ὁ μάρτυς ὁ πιστὸς καὶ ἀληθινός ἡ ἀρχὴ τῆς κτίσεως τοῦ θεοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 4:8",
+      "word": "ὁ παντοκράτωρ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 4:8",
+      "word": "ὁ ἦν καὶ ὁ ὢν καὶ ὁ ἐρχόμενος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 4:9",
+      "word": "τῷ ζῶντι εἰς τοὺς αἰῶνας τῶν αἰώνων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 5:5",
+      "word": "ἡ ῥίζα δαυίδ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 7:4",
+      "word": "ἑκατὸν τεσσεράκοντα τέσσαρες χιλιάδες",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 7:10",
+      "word": "τῷ καθημένῳ ἐπὶ τῷ θρόνῳ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 9:11",
+      "word": "τὸν ἄγγελον τῆς ἀβύσσου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 9:14",
+      "word": "ὁ ἔχων τὴν σάλπιγγα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 10:6",
+      "word": "ὃς ἔκτισεν τὸν οὐρανὸν καὶ τὰ ἐν αὐτῷ καὶ τὴν γῆν καὶ τὰ ἐν αὐτῇ καὶ τὴν θάλασσαν καὶ τὰ ἐν αὐτῇ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 10:7",
+      "word": "τοὺς προφήτας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 11:17",
+      "word": "κύριε ὁ θεὸς ὁ παντοκράτωρ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 11:17",
+      "word": "ὁ ὢν καὶ ὁ ἦν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 11:18",
+      "word": "τοῖς προφήταις καὶ τοῖς ἁγίοις καὶ τοῖς φοβουμένοις τὸ ὄνομά σου τοὺς μικροὺς καὶ τοὺς μεγάλους",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 12:9",
+      "word": "ὁ καλούμενος διάβολος καὶ ὁ σατανᾶς ὁ πλανῶν τὴν οἰκουμένην ὅλην",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 12:10",
+      "word": "ὁ κατηγορῶν αὐτοὺς ἐνώπιον τοῦ θεοῦ ἡμῶν ἡμέρας καὶ νυκτός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 12:17",
+      "word": "τῶν τηρούντων τὰς ἐντολὰς τοῦ θεοῦ καὶ ἐχόντων τὴν μαρτυρίαν ἰησοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 13:6",
+      "word": "τοὺς ἐν τῷ οὐρανῷ σκηνοῦντας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 13:16",
+      "word": "τοὺς μικροὺς καὶ τοὺς μεγάλους καὶ τοὺς πλουσίους καὶ τοὺς πτωχούς καὶ τοὺς ἐλευθέρους καὶ τοὺς δούλους",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 15:1",
+      "word": "ἀγγέλους ἑπτὰ ἔχοντας πληγὰς ἑπτὰ τὰς ἐσχάτας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 16:9",
+      "word": "τοῦ ἔχοντος τὴν ἐξουσίαν ἐπὶ τὰς πληγὰς ταύτας",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 16:14",
+      "word": "τοῦ παντοκράτορος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 17:7",
+      "word": "τοῦ ἔχοντος τὰς ἑπτὰ κεφαλὰς καὶ τὰ δέκα κέρατα",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 18:8",
+      "word": "θάνατος καὶ πένθος καὶ λιμός",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 18:8",
+      "word": "ὁ κρίνας αὐτήν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 18:9",
+      "word": "οἱ μετ’ αὐτῆς πορνεύσαντες καὶ στρηνιάσαντες",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:5",
+      "word": "οἱ μικροὶ καὶ οἱ μεγάλοι",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:6",
+      "word": "ὁ παντοκράτωρ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:15",
+      "word": "τοῦ παντοκράτορος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:16",
+      "word": "βασιλεὺς βασιλέων καὶ κύριος κυρίων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:18",
+      "word": "ἐλευθέρων τε καὶ δούλων καὶ μικρῶν καὶ μεγάλων",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 19:20",
+      "word": "ὁ ποιήσας τὰ σημεῖα ἐνώπιον αὐτοῦ ἐν οἷς ἐπλάνησεν τοὺς λαβόντας τὸ χάραγμα τοῦ θηρίου καὶ τοὺς προσκυνοῦντας τῇ εἰκόνι αὐτοῦ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 21:2",
+      "word": "ἰερουσαλὴμ καινὴν",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 21:6",
+      "word": "ἡ ἀρχὴ καὶ τὸ τέλος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 21:9",
+      "word": "τὴν γυναῖκα τοῦ ἀρνίου",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 21:10",
+      "word": "ἰερουσαλὴμ",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 22:13",
+      "word": "ὁ πρῶτος καὶ ὁ ἔσχατος",
+      "type": "Appositive"
+    },
+    {
+      "verse": "Rev 22:13",
+      "word": "ἡ ἀρχὴ καὶ τὸ τέλος",
+      "type": "Appositive"
+    }
+  ]
+}

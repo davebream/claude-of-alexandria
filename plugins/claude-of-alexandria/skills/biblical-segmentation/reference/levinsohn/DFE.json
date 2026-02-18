@@ -1,0 +1,2886 @@
+{
+  "feature": "DFE",
+  "description": "Constituents that may be moved from their default position to the end of a proposition to give them focal prominence include verbs, pronominals and objects that follow adjuncts (NonNarr §5.3, DFNTG §3.5). Such constituents, also called ‘dominant focal elements’or DFEs (Heimedinger 1999:167).",
+  "references": [
+    {
+      "verse": "Matt 1:20",
+      "word": "ἐνθυμηθέντος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 1:20",
+      "word": "τὴν γυναῖκά σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 1:21",
+      "word": "ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 1:23",
+      "word": "ἐμμανουήλ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 1:25",
+      "word": "ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 2:1",
+      "word": "ἐν ἡμέραις ἡρῴδου τοῦ βασιλέως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 3:6",
+      "word": "ὑπ’ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 3:11",
+      "word": "εἰς μετάνοιαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 3:13",
+      "word": "πρὸς τὸν ἰωάννην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 4:1",
+      "word": "ὑπὸ τοῦ πνεύματος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 4:6",
+      "word": "τὸν πόδα σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 4:13",
+      "word": "ἐν ὁρίοις ζαβουλὼν καὶ νεφθαλίμ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:10",
+      "word": "καὶ ἐπὶ γῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:16",
+      "word": "σκυθρωποί",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:19",
+      "word": "ἀφανίζει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "μισήσει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "ἀγαπήσει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "ἀνθέξεται",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:24",
+      "word": "καταφρονήσει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:27",
+      "word": "πῆχυν ἕνα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 6:34",
+      "word": "ἡ κακία αὐτῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 7:5",
+      "word": "τὴν δοκόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 7:6",
+      "word": "τοῖς κυσὶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 7:16",
+      "word": "σταφυλὰς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 7:16",
+      "word": "σῦκα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 8:6",
+      "word": "παραλυτικός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 8:11",
+      "word": "ἐν τῇ βασιλείᾳ τῶν οὐρανῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 8:28",
+      "word": "εἰς τὴν χώραν τῶν γαδαρηνῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 8:30",
+      "word": "ἀγέλη χοίρων πολλῶν βοσκομένη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 8:32",
+      "word": "εἰς τὴν θάλασσαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 10:18",
+      "word": "εἰς μαρτύριον αὐτοῖς καὶ τοῖς ἔθνεσιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 10:19",
+      "word": "τί λαλήσητε",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 10:22",
+      "word": "διὰ τὸ ὄνομά μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 11:2",
+      "word": "τὰ ἔργα τοῦ χριστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 11:11",
+      "word": "μείζων ἰωάννου τοῦ βαπτιστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 12:19",
+      "word": "τὴν φωνὴν αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 12:40",
+      "word": "τρεῖς ἡμέρας καὶ τρεῖς νύκτας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 12:40",
+      "word": "τρεῖς ἡμέρας καὶ τρεῖς νύκτας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 13:30",
+      "word": "τὰ ζιζάνια",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 13:34",
+      "word": "τοῖς ὄχλοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 13:41",
+      "word": "πάντα τὰ σκάνδαλα καὶ τοὺς ποιοῦντας τὴν ἀνομίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 13:43",
+      "word": "ἐν τῇ βασιλείᾳ τοῦ πατρὸς αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 13:52",
+      "word": "καινὰ καὶ παλαιά",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 14:8",
+      "word": "τὴν κεφαλὴν ἰωάννου τοῦ βαπτιστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 14:13",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 14:23",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 14:34",
+      "word": "εἰς γεννησαρέτ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 15:1",
+      "word": "φαρισαῖοι καὶ γραμματεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 15:31",
+      "word": "ὑγιεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 15:33",
+      "word": "ἄρτοι τοσοῦτοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 17:1",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 18:8",
+      "word": "κυλλὸν ἢ χωλὸν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 18:12",
+      "word": "ἑκατὸν πρόβατα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 20:2",
+      "word": "ἐκ δηναρίου τὴν ἡμέραν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 20:3",
+      "word": "ἀργοὺς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 20:10",
+      "word": "καὶ αὐτοί",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 20:21",
+      "word": "ἐν τῇ βασιλείᾳ σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 22:21",
+      "word": "καίσαρι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 22:21",
+      "word": "τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 22:46",
+      "word": "οὐκέτι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 24:9",
+      "word": "διὰ τὸ ὄνομά μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 24:21",
+      "word": "θλῖψις μεγάλη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 24:24",
+      "word": "καὶ τοὺς ἐκλεκτούς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 26:18",
+      "word": "πρὸς τὸν δεῖνα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 26:44",
+      "word": "πάλιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 26:53",
+      "word": "πλείω δώδεκα λεγιῶνας ἀγγέλων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 27:37",
+      "word": "τὴν αἰτίαν αὐτοῦ γεγραμμένην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 27:51",
+      "word": "εἰς δύο",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 27:53",
+      "word": "μετὰ τὴν ἔγερσιν αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Matt 28:8",
+      "word": "μετὰ φόβου καὶ χαρᾶς μεγάλης",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 1:9",
+      "word": "ὑπὸ ἰωάννου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 1:13",
+      "word": "τεσσεράκοντα ἡμέρας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 1:23",
+      "word": "ἄνθρωπος ἐν πνεύματι ἀκαθάρτῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 1:39",
+      "word": "εἰς ὅλην τὴν γαλιλαίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 1:44",
+      "word": "ἃ προσέταξεν μωϋσῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 2:2",
+      "word": "μηδὲ τὰ πρὸς τὴν θύραν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 3:16",
+      "word": "πέτρον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 4:2",
+      "word": "πολλὰ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 4:38",
+      "word": "καθεύδων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:1",
+      "word": "εἰς τὴν χώραν τῶν γερασηνῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:2",
+      "word": "ἄνθρωπος ἐν πνεύματι ἀκαθάρτῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:11",
+      "word": "ἀγέλη χοίρων μεγάλη βοσκομένη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:19",
+      "word": "πρὸς τοὺς σοὺς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:20",
+      "word": "ὅσα ἐποίησεν αὐτῷ ὁ ἰησοῦς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:25",
+      "word": "δώδεκα ἔτη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 5:27",
+      "word": "ὄπισθεν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 6:25",
+      "word": "τὴν κεφαλὴν ἰωάννου τοῦ βαπτιστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 6:31",
+      "word": "εἰς ἔρημον τόπον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 6:32",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 6:37",
+      "word": "ὑμεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 6:45",
+      "word": "πρὸς βηθσαϊδάν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 7:17",
+      "word": "ἀπὸ τοῦ ὄχλου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 7:33",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 9:2",
+      "word": "κατ’ ἰδίαν μόνους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 9:35",
+      "word": "ἔσχατος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 9:35",
+      "word": "διάκονος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 10:30",
+      "word": "ζωὴν αἰώνιον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 10:45",
+      "word": "λύτρον ἀντὶ πολλῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 11:4",
+      "word": "ἔξω ἐπὶ τοῦ ἀμφόδου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 11:11",
+      "word": "εἰς τὸ ἱερὸν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 12:2",
+      "word": "δοῦλον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 13:3",
+      "word": "πέτρος καὶ ἰάκωβος καὶ ἰωάννης καὶ ἀνδρέας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 13:22",
+      "word": "τοὺς ἐκλεκτούς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 14:55",
+      "word": "μαρτυρίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 15:17",
+      "word": "ἀκάνθινον στέφανον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Mark 15:38",
+      "word": "ἀπ’ ἄνωθεν ἕως κάτω",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:3",
+      "word": "ἀκριβῶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:5",
+      "word": "ἱερεύς τις ὀνόματι ζαχαρίας ἐξ ἐφημερίας ἀβιά",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:6",
+      "word": "ἄμεμπτοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:17",
+      "word": "λαὸν κατεσκευασμένον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:27",
+      "word": "πρὸς παρθένον ἐμνηστευμένην ἀνδρὶ ᾧ ὄνομα ἰωσὴφ ἐξ οἴκου δαυὶδ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:31",
+      "word": "ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:33",
+      "word": "εἰς τοὺς αἰῶνας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:37",
+      "word": "πᾶν ῥῆμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:39",
+      "word": "εἰς πόλιν ἰούδα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:55",
+      "word": "εἰς τὸν αἰῶνα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:75",
+      "word": "πάσαις ταῖς ἡμέραις ἡμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:77",
+      "word": "τῷ λαῷ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 1:78",
+      "word": "διὰ σπλάγχνα ἐλέους θεοῦ ἡμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:2",
+      "word": "κυρηνίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:4",
+      "word": "εἰς πόλιν δαυὶδ ἥτις καλεῖται βηθλέεμ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:11",
+      "word": "σωτὴρ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:13",
+      "word": "πλῆθος στρατιᾶς οὐρανίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:21",
+      "word": "ἰησοῦς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:27",
+      "word": "εἰς τὸ ἱερόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:29",
+      "word": "ἐν εἰρήνῃ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:39",
+      "word": "εἰς πόλιν ἑαυτῶν ναζαρέθ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 2:41",
+      "word": "τῇ ἑορτῇ τοῦ πάσχα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 3:2",
+      "word": "ἐν τῇ ἐρήμῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:1",
+      "word": "ἐν τῇ ἐρήμῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:11",
+      "word": "τὸν πόδα σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:14",
+      "word": "εἰς τὴν γαλιλαίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:16",
+      "word": "εἰς τὴν συναγωγὴν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:18",
+      "word": "ἄφεσιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:18",
+      "word": "ἀνάβλεψιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:19",
+      "word": "δεκτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:25",
+      "word": "ἐν τῷ ἰσραήλ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:26",
+      "word": "πρὸς γυναῖκα χήραν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 4:27",
+      "word": "ἐπὶ ἐλισαίου τοῦ προφήτου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 5:18",
+      "word": "ἄνθρωπον ὃς ἦν παραλελυμένος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 5:19",
+      "word": "ἔμπροσθεν τοῦ ἰησοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 6:22",
+      "word": "ἕνεκα τοῦ υἱοῦ τοῦ ἀνθρώπου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 6:23",
+      "word": "οἱ πατέρες αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 6:26",
+      "word": "οἱ πατέρες αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 7:37",
+      "word": "ἁμαρτωλός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 8:29",
+      "word": "εἰς τὰς ἐρήμους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 8:33",
+      "word": "εἰς τὴν λίμνην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 9:10",
+      "word": "εἰς πόλιν καλουμένην βηθσαϊδά",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 9:13",
+      "word": "ὑμεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 9:13",
+      "word": "βρώματα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 9:14",
+      "word": "πεντήκοντα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 9:36",
+      "word": "οὐδὲν ὧν ἑώρακαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 10:1",
+      "word": "εἰς πᾶσαν πόλιν καὶ τόπον οὗ ἤμελλεν αὐτὸς ἔρχεσθαι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 10:23",
+      "word": "κατ’ ἰδίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 11:46",
+      "word": "φορτία δυσβάστακτα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 12:1",
+      "word": "τῶν φαρισαίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 12:12",
+      "word": "ἃ δεῖ εἰπεῖν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 12:42",
+      "word": "τὸ σιτομέτριον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 12:52",
+      "word": "πέντε ἐν ἑνὶ οἴκῳ διαμεμερισμένοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 13:10",
+      "word": "ἐν τοῖς σάββασιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 13:16",
+      "word": "δέκα καὶ ὀκτὼ ἔτη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 13:16",
+      "word": "τῇ ἡμέρᾳ τοῦ σαββάτου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 14:7",
+      "word": "παραβολήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 15:10",
+      "word": "ἐπὶ ἑνὶ ἁμαρτωλῷ μετανοοῦντι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 16:19",
+      "word": "λαμπρῶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 16:22",
+      "word": "εἰς τὸν κόλπον ἀβραάμ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 16:24",
+      "word": "ὕδατος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 18:9",
+      "word": "τὴν παραβολὴν ταύτην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 19:29",
+      "word": "πρὸς τὸ ὄρος τὸ καλούμενον ἐλαιῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 19:42",
+      "word": "τὰ πρὸς εἰρήνην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 19:47",
+      "word": "ἐν τῷ ἱερῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:10",
+      "word": "δοῦλον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:10",
+      "word": "κενόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:16",
+      "word": "ἄλλοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:25",
+      "word": "καίσαρι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:25",
+      "word": "τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:28",
+      "word": "τῷ ἀδελφῷ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:37",
+      "word": "τὸν θεὸν ἀβραὰμ καὶ θεὸν ἰσαὰκ καὶ θεὸν ἰακώβ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 20:43",
+      "word": "ὑποπόδιον τῶν ποδῶν σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 21:1",
+      "word": "πλουσίους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 21:12",
+      "word": "ἕνεκεν τοῦ ὀνόματός μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 21:17",
+      "word": "διὰ τὸ ὄνομά μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 21:27",
+      "word": "μετὰ δυνάμεως καὶ δόξης πολλῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:18",
+      "word": "ἕως οὗ ἡ βασιλεία τοῦ θεοῦ ἔλθῃ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:29",
+      "word": "βασιλείαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:30",
+      "word": "ἐν τῇ βασιλείᾳ μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:34",
+      "word": "ἀλέκτωρ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:38",
+      "word": "δύο",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 22:39",
+      "word": "εἰς τὸ ὄρος τῶν ἐλαιῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 23:12",
+      "word": "μετ’ ἀλλήλων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 23:55",
+      "word": "αὐτῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 24:27",
+      "word": "τὰ περὶ ἑαυτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 24:33",
+      "word": "τοὺς ἕνδεκα καὶ τοὺς σὺν αὐτοῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 24:44",
+      "word": "περὶ ἐμοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 24:46",
+      "word": "τῇ τρίτῃ ἡμέρᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Luke 24:47",
+      "word": "εἰς πάντα τὰ ἔθνη",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 1:19",
+      "word": "ἱερεῖς καὶ λευίτας",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 1:41",
+      "word": "τὸν ἀδελφὸν τὸν ἴδιον",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 2:14",
+      "word": "τοὺς πωλοῦντας βόας καὶ πρόβατα καὶ περιστερὰς καὶ τοὺς κερματιστὰς καθημένους",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 2:16",
+      "word": "οἶκον ἐμπορίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 3:25",
+      "word": "περὶ καθαρισμοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 3:30",
+      "word": "αὐξάνειν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 3:30",
+      "word": "ἐλαττοῦσθαι",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 5:2",
+      "word": "κολυμβήθρα ἡ ἐπιλεγομένη ἑβραϊστὶ βηθζαθὰ",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 5:6",
+      "word": "κατακείμενον",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 5:24",
+      "word": "εἰς τὴν ζωήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 6:4",
+      "word": "τὸ πάσχα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 6:11",
+      "word": "ὅσον ἤθελον",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 6:15",
+      "word": "αὐτὸς μόνος",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 6:49",
+      "word": "τὸ μάννα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 7:39",
+      "word": "οἱ πιστεύσαντες εἰς αὐτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 7:43",
+      "word": "δι’ αὐτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 8:35",
+      "word": "εἰς τὸν αἰῶνα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 8:55",
+      "word": "ψεύστης",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 10:23",
+      "word": "ἐν τῇ στοᾷ τοῦ σολομῶνος",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 10:40",
+      "word": "εἰς τὸν τόπον ὅπου ἦν ἰωάννης τὸ πρῶτον βαπτίζων",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:6",
+      "word": "δύο ἡμέρας",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:7",
+      "word": "πάλιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:24",
+      "word": "ἐν τῇ ἐσχάτῃ ἡμέρᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:44",
+      "word": "κειρίαις",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:54",
+      "word": "εἰς ἐφραὶμ λεγομένην πόλιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:55",
+      "word": "τὸ πάσχα τῶν ἰουδαίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 11:55",
+      "word": "πρὸ τοῦ πάσχα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 13:1",
+      "word": "πρὸς τὸν πατέρα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 14:21",
+      "word": "ἐμαυτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 17:5",
+      "word": "παρὰ σοί",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 17:6",
+      "word": "τοῖς ἀνθρώποις οὓς ἔδωκάς μοι ἐκ τοῦ κόσμου",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 18:9",
+      "word": "οὐδένα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 18:13",
+      "word": "πρῶτον",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 18:15",
+      "word": "σίμων πέτρος καὶ ἄλλος μαθητής",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 18:29",
+      "word": "πρὸς αὐτοὺς",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:6",
+      "word": "ὑμεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:9",
+      "word": "πάλιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:11",
+      "word": "οὐδεμίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:13",
+      "word": "εἰς τόπον λεγόμενον λιθόστρωτον",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:17",
+      "word": "γολγοθα",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:25",
+      "word": "ἡ μήτηρ αὐτοῦ καὶ ἡ ἀδελφὴ τῆς μητρὸς αὐτοῦ μαρία ἡ τοῦ κλωπᾶ καὶ μαρία ἡ μαγδαληνή",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:34",
+      "word": "αἷμα καὶ ὕδωρ",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 19:41",
+      "word": "κῆπος",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 21:11",
+      "word": "μεστὸν ἰχθύων μεγάλων",
+      "type": "DFE"
+    },
+    {
+      "verse": "John 21:20",
+      "word": "ἐπὶ τὸ στῆθος αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 1:3",
+      "word": "ἐν πολλοῖς τεκμηρίοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 1:12",
+      "word": "ἀπὸ ὄρους τοῦ καλουμένου ἐλαιῶνος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 1:15",
+      "word": "ὡσεὶ ἑκατὸν εἴκοσι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 1:16",
+      "word": "περὶ ἰούδα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 1:19",
+      "word": "ἁκελδαμάχ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:2",
+      "word": "ἦχος ὥσπερ φερομένης πνοῆς βιαίας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:7",
+      "word": "γαλιλαῖοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:11",
+      "word": "τὰ μεγαλεῖα τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:17",
+      "word": "ἐπὶ πᾶσαν σάρκα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:25",
+      "word": "διὰ παντός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:35",
+      "word": "ὑποπόδιον τῶν ποδῶν σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:38",
+      "word": "εἰς ἄφεσιν τῶν ἁμαρτιῶν ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:41",
+      "word": "ψυχαὶ ὡσεὶ τρισχίλιαι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:43",
+      "word": "φόβος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 2:47",
+      "word": "ἐπὶ τὸ αὐτό",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 3:1",
+      "word": "ἐπὶ τὴν ὥραν τῆς προσευχῆς τὴν ἐνάτην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 3:2",
+      "word": "πρὸς τὴν θύραν τοῦ ἱεροῦ τὴν λεγομένην ὡραίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 4:2",
+      "word": "τὴν ἀνάστασιν τὴν ἐκ νεκρῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 4:17",
+      "word": "μηδενὶ ἀνθρώπων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 4:27",
+      "word": "ἡρῴδης τε καὶ πόντιος πιλᾶτος σὺν ἔθνεσιν καὶ λαοῖς ἰσραήλ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 5:20",
+      "word": "πάντα τὰ ῥήματα τῆς ζωῆς ταύτης",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 5:36",
+      "word": "ἀριθμὸς ὡς τετρακοσίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 6:1",
+      "word": "αἱ χῆραι αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:28",
+      "word": "τὸν αἰγύπτιον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:30",
+      "word": "ἄγγελος ἐν φλογὶ πυρὸς βάτου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:36",
+      "word": "ἔτη τεσσεράκοντα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:37",
+      "word": "ὡς ἐμέ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:39",
+      "word": "εἰς αἴγυπτον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 7:45",
+      "word": "ἕως τῶν ἡμερῶν δαυίδ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 8:1",
+      "word": "διωγμὸς μέγας ἐπὶ τὴν ἐκκλησίαν τὴν ἐν ἱεροσολύμοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 8:2",
+      "word": "ἄνδρες εὐλαβεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 8:6",
+      "word": "ὁμοθυμαδὸν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 8:32",
+      "word": "ἄφωνος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 8:33",
+      "word": "ἡ ζωὴ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 9:2",
+      "word": "πρὸς τὰς συναγωγάς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 9:11",
+      "word": "σαῦλον ὀνόματι ταρσέα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 9:18",
+      "word": "ὡς λεπίδες",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 9:19",
+      "word": "ἡμέρας τινὰς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 9:43",
+      "word": "παρά τινι σίμωνι βυρσεῖ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 10:3",
+      "word": "ἄγγελον τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 10:11",
+      "word": "σκεῦός τι ὡς ὀθόνην μεγάλην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 10:27",
+      "word": "πολλούς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 10:42",
+      "word": "κριτὴς ζώντων καὶ νεκρῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 10:43",
+      "word": "πάντα τὸν πιστεύοντα εἰς αὐτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 11:5",
+      "word": "ὅραμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 11:5",
+      "word": "σκεῦός τι ὡς ὀθόνην μεγάλην τέσσαρσιν ἀρχαῖς καθιεμένην ἐκ τοῦ οὐρανοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 11:11",
+      "word": "πρός με",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 11:26",
+      "word": "χριστιανούς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 11:30",
+      "word": "διὰ χειρὸς βαρναβᾶ καὶ σαύλου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 13:1",
+      "word": "προφῆται καὶ διδάσκαλοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 13:23",
+      "word": "σωτῆρα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 13:24",
+      "word": "παντὶ τῷ λαῷ ἰσραήλ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:1",
+      "word": "πολὺ πλῆθος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:10",
+      "word": "ὀρθός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:19",
+      "word": "ἰουδαῖοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:20",
+      "word": "εἰς δέρβην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:23",
+      "word": "πρεσβυτέρους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 14:27",
+      "word": "θύραν πίστεως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 15:14",
+      "word": "λαὸν τῷ ὀνόματι αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 15:22",
+      "word": "ἰούδαν τὸν καλούμενον βαρσαββᾶν καὶ σιλᾶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 15:33",
+      "word": "πρὸς τοὺς ἀποστείλαντας αὐτούς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 15:35",
+      "word": "τὸν λόγον τοῦ κυρίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 16:13",
+      "word": "παρὰ ποταμὸν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 16:19",
+      "word": "ἐπὶ τοὺς ἄρχοντας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 16:33",
+      "word": "παραχρῆμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 16:37",
+      "word": "ἀκατακρίτους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:4",
+      "word": "πλῆθος πολύ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:4",
+      "word": "οὐκ ὀλίγαι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:5",
+      "word": "ἄνδρας τινὰς πονηροὺς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:12",
+      "word": "οὐκ ὀλίγοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:17",
+      "word": "τοῖς ἰουδαίοις καὶ τοῖς σεβομένοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:17",
+      "word": "πρὸς τοὺς παρατυγχάνοντας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:26",
+      "word": "πᾶν ἔθνος ἀνθρώπων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 17:32",
+      "word": "καὶ πάλιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 18:4",
+      "word": "κατὰ πᾶν σάββατον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 18:5",
+      "word": "ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 18:9",
+      "word": "τῷ παύλῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 18:18",
+      "word": "τὴν κεφαλήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 18:28",
+      "word": "ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:12",
+      "word": "σουδάρια ἢ σιμικίνθια",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:13",
+      "word": "τὸ ὄνομα τοῦ κυρίου ἰησοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:19",
+      "word": "μυριάδας πέντε",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:22",
+      "word": "δύο τῶν διακονούντων αὐτῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:23",
+      "word": "τάραχος οὐκ ὀλίγος περὶ τῆς ὁδοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 19:24",
+      "word": "οὐκ ὀλίγην ἐργασίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 20:6",
+      "word": "ἀπὸ φιλίππων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 20:6",
+      "word": "ἄχρι ἡμερῶν πέντε",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 20:21",
+      "word": "τὴν εἰς θεὸν μετάνοιαν καὶ πίστιν εἰς τὸν κύριον ἡμῶν ἰησοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:5",
+      "word": "ἕως ἔξω τῆς πόλεως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:19",
+      "word": "διὰ τῆς διακονίας αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:29",
+      "word": "σὺν αὐτῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:35",
+      "word": "διὰ τὴν βίαν τοῦ ὄχλου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:38",
+      "word": "τοὺς τετρακισχιλίους ἄνδρας τῶν σικαρίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 21:40",
+      "word": "τῷ λαῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 22:3",
+      "word": "παρὰ τοὺς πόδας γαμαλιὴλ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 22:4",
+      "word": "ἄνδρας τε καὶ γυναῖκας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 22:18",
+      "word": "ἐξ ἰερουσαλήμ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 22:19",
+      "word": "τοὺς πιστεύοντας ἐπὶ σέ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 22:22",
+      "word": "τὸν τοιοῦτον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 23:31",
+      "word": "εἰς τὴν ἀντιπατρίδα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 23:33",
+      "word": "τῷ ἡγεμόνι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 24:18",
+      "word": "οὐ μετὰ ὄχλου οὐδὲ μετὰ θορύβου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 28:23",
+      "word": "πλείονες",
+      "type": "DFE"
+    },
+    {
+      "verse": "Acts 28:31",
+      "word": "ἀκωλύτως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:3",
+      "word": "περὶ τοῦ υἱοῦ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:4",
+      "word": "ἐξ ἀναστάσεως νεκρῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:8",
+      "word": "περὶ πάντων ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:9",
+      "word": "ἐν τῷ εὐαγγελίῳ τοῦ υἱοῦ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:16",
+      "word": "παντὶ τῷ πιστεύοντι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:18",
+      "word": "ἐπὶ πᾶσαν ἀσέβειαν καὶ ἀδικίαν ἀνθρώπων τῶν τὴν ἀλήθειαν ἐν ἀδικίᾳ κατεχόντων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 1:24",
+      "word": "εἰς ἀκαθαρσίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 3:8",
+      "word": "λέγειν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 5:16",
+      "word": "εἰς κατάκριμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 5:16",
+      "word": "εἰς δικαίωμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 5:18",
+      "word": "εἰς κατάκριμα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 5:18",
+      "word": "εἰς δικαίωσιν ζωῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 6:13",
+      "word": "ὅπλα ἀδικίας τῇ ἁμαρτίᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 6:13",
+      "word": "ὅπλα δικαιοσύνης τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 7:18",
+      "word": "ἀγαθόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 8:21",
+      "word": "εἰς τὴν ἐλευθερίαν τῆς δόξης τῶν τέκνων τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 9:3",
+      "word": "ὑπὲρ τῶν ἀδελφῶν μου τῶν συγγενῶν μου κατὰ σάρκα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 9:9",
+      "word": "υἱός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 9:22",
+      "word": "σκεύη ὀργῆς κατηρτισμένα εἰς ἀπώλειαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 9:25",
+      "word": "λαόν μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 9:25",
+      "word": "ἠγαπημένην",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 11:13",
+      "word": "ἀπόστολος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 11:26",
+      "word": "ὁ ῥυόμενος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 12:1",
+      "word": "θυσίαν ζῶσαν ἁγίαν εὐάρεστον τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 12:6",
+      "word": "διάφορα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 12:10",
+      "word": "φιλόστοργοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 12:11",
+      "word": "μὴ ὀκνηροί",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 14:22",
+      "word": "ὁ μὴ κρίνων ἑαυτὸν ἐν ᾧ δοκιμάζει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 15:2",
+      "word": "πρὸς οἰκοδομήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 15:11",
+      "word": "τὸν κύριον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 15:13",
+      "word": "ἐν δυνάμει πνεύματος ἁγίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 16:2",
+      "word": "ἀξίως τῶν ἁγίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 16:20",
+      "word": "ἐν τάχει",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rom 16:22",
+      "word": "ἐν κυρίῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 2:7",
+      "word": "εἰς δόξαν ἡμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 4:6",
+      "word": "δι’ ὑμᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 4:17",
+      "word": "ἐν κυρίῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 5:1",
+      "word": "πορνεία",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 6:5",
+      "word": "οὐδεὶς σοφός",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 7:5",
+      "word": "πρὸς καιρόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 9:22",
+      "word": "ἀσθενής",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 10:8",
+      "word": "εἴκοσι τρεῖς χιλιάδες",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 10:13",
+      "word": "καὶ τὴν ἔκβασιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 11:10",
+      "word": "διὰ τοὺς ἀγγέλους",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 11:23",
+      "word": "ὃ καὶ παρέδωκα ὑμῖν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "εἰς τὴν ἐμὴν ἀνάμνησιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 12:18",
+      "word": "καθὼς ἠθέλησεν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 13:12",
+      "word": "ἐν αἰνίγματι",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 14:11",
+      "word": "βάρβαρος",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:3",
+      "word": "ὃ καὶ παρέλαβον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:3",
+      "word": "κατὰ τὰς γραφὰς",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:33",
+      "word": "ὁμιλίαι κακαί",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:55",
+      "word": "τὸ νῖκος",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:55",
+      "word": "τὸ κέντρον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 15:58",
+      "word": "πάντοτε",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Cor 16:19",
+      "word": "ἀκύλας καὶ πρίσκα",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 2:5",
+      "word": "πάντας ὑμᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 2:16",
+      "word": "εἰς θάνατον",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 2:16",
+      "word": "εἰς ζωήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 3:1",
+      "word": "συστατικῶν ἐπιστολῶν πρὸς ὑμᾶς ἢ ἐξ ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 5:16",
+      "word": "χριστόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 8:22",
+      "word": "πολλάκις",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Cor 10:15",
+      "word": "εἰς περισσείαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 1:6",
+      "word": "εἰς ἕτερον εὐαγγέλιον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 1:17",
+      "word": "πρὸς τοὺς πρὸ ἐμοῦ ἀποστόλους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 2:17",
+      "word": "διάκονος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 2:20",
+      "word": "οὐκέτι ἐγώ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 3:16",
+      "word": "καὶ τῷ σπέρματί σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 3:19",
+      "word": "ἐπήγγελται",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 3:19",
+      "word": "ἐν χειρὶ μεσίτου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 4:18",
+      "word": "πάντοτε",
+      "type": "DFE"
+    },
+    {
+      "verse": "Gal 5:7",
+      "word": "καλῶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 1:14",
+      "word": "εἰς ἔπαινον τῆς δόξης αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 2:7",
+      "word": "τὸ ὑπερβάλλον πλοῦτος τῆς χάριτος αὐτοῦ ἐν χρηστότητι ἐφ’ ἡμᾶς ἐν χριστῷ ἰησοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 2:16",
+      "word": "διὰ τοῦ σταυροῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 3:16",
+      "word": "εἰς τὸν ἔσω ἄνθρωπον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 3:17",
+      "word": "ἐν ταῖς καρδίαις ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 3:17",
+      "word": "ἐρριζωμένοι καὶ τεθεμελιωμένοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 4:22",
+      "word": "τὸν παλαιὸν ἄνθρωπον τὸν φθειρόμενον κατὰ τὰς ἐπιθυμίας τῆς ἀπάτης",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 4:28",
+      "word": "τὸ ἀγαθόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 5:19",
+      "word": "τῷ κυρίῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 5:20",
+      "word": "τῷ θεῷ καὶ πατρί",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 6:5",
+      "word": "ὡς τῷ χριστῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 6:18",
+      "word": "ἐν πνεύματι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 6:18",
+      "word": "περὶ πάντων τῶν ἁγίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Eph 6:22",
+      "word": "εἰς αὐτὸ τοῦτο",
+      "type": "DFE"
+    },
+    {
+      "verse": "Phil 3:7",
+      "word": "ζημίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Phil 3:17",
+      "word": "ἡμᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 2:9",
+      "word": "σωματικῶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 2:19",
+      "word": "ἐπιχορηγούμενον καὶ συμβιβαζόμενον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 3:3",
+      "word": "ἐν τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 3:12",
+      "word": "σπλάγχνα οἰκτιρμοῦ χρηστότητα ταπεινοφροσύνην πραΰτητα μακροθυμίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 3:16",
+      "word": "τῷ θεῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Col 3:22",
+      "word": "τοῖς κατὰ σάρκα κυρίοις",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 1:4",
+      "word": "τὴν ἐκλογὴν ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 1:6",
+      "word": "μετὰ χαρᾶς πνεύματος ἁγίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 1:9",
+      "word": "ἀπὸ τῶν εἰδώλων",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:2",
+      "word": "ἐν φιλίπποις",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:9",
+      "word": "τὸν κόπον ἡμῶν καὶ τὸν μόχθον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:13",
+      "word": "τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:13",
+      "word": "λόγον θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:17",
+      "word": "προσώπῳ οὐ καρδίᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 2:19",
+      "word": "ἐν τῇ αὐτοῦ παρουσίᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 3:6",
+      "word": "ἀφ’ ὑμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 3:7",
+      "word": "ἐφ’ ὑμῖν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 3:7",
+      "word": "διὰ τῆς ὑμῶν πίστεως",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 4:6",
+      "word": "τὸν ἀδελφὸν αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 4:13",
+      "word": "περὶ τῶν κοιμωμένων",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 4:17",
+      "word": "εἰς ἀπάντησιν τοῦ κυρίου εἰς ἀέρα",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Thess 5:13",
+      "word": "διὰ τὸ ἔργον αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Thess 1:6",
+      "word": "θλῖψιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Thess 3:1",
+      "word": "περὶ ἡμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Thess 3:16",
+      "word": "ἐν παντὶ τρόπῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Tim 4:3",
+      "word": "τοῖς πιστοῖς καὶ ἐπεγνωκόσι τὴν ἀλήθειαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Tim 5:2",
+      "word": "ἐν πάσῃ ἁγνείᾳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Tim 6:6",
+      "word": "ἡ εὐσέβεια μετὰ αὐταρκείας",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Tim 6:16",
+      "word": "δύναται",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Tim 1:3",
+      "word": "ἐν καθαρᾷ συνειδήσει",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Tim 1:3",
+      "word": "νυκτὸς καὶ ἡμέρας",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Tim 1:9",
+      "word": "πρὸ χρόνων αἰωνίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Titus 1:5",
+      "word": "πρεσβυτέρους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Titus 1:16",
+      "word": "ἀδόκιμοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Titus 2:3",
+      "word": "ἱεροπρεπεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Phlm 1:11",
+      "word": "ἄχρηστον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 2:7",
+      "word": "παρ’ ἀγγέλους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 3:3",
+      "word": "ὁ κατασκευάσας αὐτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 3:5",
+      "word": "ὡς θεράπων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 4:3",
+      "word": "οἱ πιστεύσαντες",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 4:4",
+      "word": "οὕτως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 4:4",
+      "word": "ἀπὸ πάντων τῶν ἔργων αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 4:15",
+      "word": "χωρὶς ἁμαρτίας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 4:16",
+      "word": "τῷ θρόνῳ τῆς χάριτος",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 5:8",
+      "word": "τὴν ὑπακοήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 5:9",
+      "word": "αἴτιος σωτηρίας αἰωνίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 5:10",
+      "word": "ἀρχιερεὺς κατὰ τὴν τάξιν μελχισέδεκ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 6:9",
+      "word": "τὰ κρείσσονα καὶ ἐχόμενα σωτηρίας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 6:17",
+      "word": "τὸ ἀμετάθετον τῆς βουλῆς αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 8:4",
+      "word": "κατὰ νόμον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 8:8",
+      "word": "διαθήκην καινήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 9:19",
+      "word": "παντὶ τῷ λαῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 9:25",
+      "word": "ἐν αἵματι ἀλλοτρίῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 10:7",
+      "word": "τὸ θέλημά σου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 10:10",
+      "word": "ἐφάπαξ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 10:14",
+      "word": "τοὺς ἁγιαζομένους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 10:22",
+      "word": "ἐν πληροφορίᾳ πίστεως",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 10:22",
+      "word": "ὕδατι καθαρῷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 11:4",
+      "word": "τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 11:9",
+      "word": "ὡς ἀλλοτρίαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 11:26",
+      "word": "τὸν ὀνειδισμὸν τοῦ χριστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 11:32",
+      "word": "περὶ γεδεών βαράκ σαμψών ἰεφθάε δαυίδ τε καὶ σαμουὴλ καὶ τῶν προφητῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Heb 13:17",
+      "word": "ὡς λόγον ἀποδώσοντες",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 1:18",
+      "word": "κτισμάτων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 2:2",
+      "word": "ἀνὴρ χρυσοδακτύλιος ἐν ἐσθῆτι λαμπρᾷ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 2:3",
+      "word": "καλῶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 2:9",
+      "word": "ὡς παραβάται",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 2:18",
+      "word": "τὴν πίστιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 3:13",
+      "word": "ἐν πραΰτητι σοφίας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 5:7",
+      "word": "ἕως τῆς παρουσίας τοῦ κυρίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 5:9",
+      "word": "κατ’ ἀλλήλων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 5:10",
+      "word": "τοὺς προφήτας οἳ ἐλάλησαν ἐν τῷ ὀνόματι κυρίου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Jas 5:17",
+      "word": "ἐνιαυτοὺς τρεῖς καὶ μῆνας ἕξ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:3",
+      "word": "δι’ ἀναστάσεως ἰησοῦ χριστοῦ ἐκ νεκρῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:4",
+      "word": "εἰς ὑμᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:5",
+      "word": "εἰς σωτηρίαν ἑτοίμην ἀποκαλυφθῆναι ἐν καιρῷ ἐσχάτῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:7",
+      "word": "ἐν ἀποκαλύψει ἰησοῦ χριστοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:20",
+      "word": "δι’ ὑμᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:22",
+      "word": "εἰς φιλαδελφίαν ἀνυπόκριτον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 1:23",
+      "word": "διὰ λόγου ζῶντος θεοῦ καὶ μένοντος",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 2:6",
+      "word": "λίθον ἀκρογωνιαῖον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 2:18",
+      "word": "τοῖς δεσπόταις",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 2:24",
+      "word": "ἐπὶ τὸ ξύλον",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 3:4",
+      "word": "πολυτελές",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 3:7",
+      "word": "ὡς ἀσθενεστέρῳ σκεύει",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 4:6",
+      "word": "σαρκὶ",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 4:6",
+      "word": "πνεύματι",
+      "type": "DFE"
+    },
+    {
+      "verse": "1Pet 4:9",
+      "word": "ἄνευ γογγυσμοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 1:5",
+      "word": "τὴν ἀρετήν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 1:17",
+      "word": "τιμὴν καὶ δόξαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 2:11",
+      "word": "βλάσφημον κρίσιν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 2:18",
+      "word": "τοὺς ὀλίγως ἀποφεύγοντας τοὺς ἐν πλάνῃ ἀναστρεφομένους",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 3:1",
+      "word": "τὴν εἰλικρινῆ διάνοιαν",
+      "type": "DFE"
+    },
+    {
+      "verse": "2Pet 3:3",
+      "word": "ἐν ἐμπαιγμονῇ ἐμπαῖκται",
+      "type": "DFE"
+    },
+    {
+      "verse": "1John 4:10",
+      "word": "ἱλασμὸν περὶ τῶν ἁμαρτιῶν ἡμῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "1John 4:14",
+      "word": "σωτῆρα τοῦ κόσμου",
+      "type": "DFE"
+    },
+    {
+      "verse": "2John 1:3",
+      "word": "ἐν ἀληθείᾳ καὶ ἀγάπῃ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 1:1",
+      "word": "τῷ δούλῳ αὐτοῦ ἰωάννῃ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 1:9",
+      "word": "διὰ τὸν λόγον τοῦ θεοῦ καὶ τὴν μαρτυρίαν ἰησοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 1:13",
+      "word": "ζώνην χρυσᾶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 1:16",
+      "word": "ἀστέρας ἑπτὰ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 1:17",
+      "word": "ὡς νεκρός",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 2:26",
+      "word": "τὰ ἔργα μου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 3:21",
+      "word": "ἐν τῷ θρόνῳ αὐτοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 4:6",
+      "word": "τέσσαρα ζῷα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 5:6",
+      "word": "ἀρνίον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 5:9",
+      "word": "ἐκ πάσης φυλῆς καὶ γλώσσης καὶ λαοῦ καὶ ἔθνους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 5:10",
+      "word": "βασιλείαν καὶ ἱερεῖς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 6:9",
+      "word": "τὰς ψυχὰς τῶν ἐσφαγμένων διὰ τὸν λόγον τοῦ θεοῦ καὶ διὰ τὴν μαρτυρίαν ἣν εἶχον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 7:11",
+      "word": "ἐπὶ τὰ πρόσωπα αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 8:1",
+      "word": "ὡς ἡμιώριον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 8:4",
+      "word": "ἐνώπιον τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 8:10",
+      "word": "ἀστὴρ μέγας",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 9:2",
+      "word": "ὡς καπνὸς καμίνου μεγάλης",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 10:2",
+      "word": "βιβλαρίδιον ἠνεῳγμένον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 10:10",
+      "word": "ὡς μέλι γλυκὺ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 11:12",
+      "word": "ἐν τῇ νεφέλῃ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 11:13",
+      "word": "ὀνόματα ἀνθρώπων χιλιάδες ἑπτὰ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 12:15",
+      "word": "ὕδωρ ὡς ποταμόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 13:1",
+      "word": "θηρίον ἀναβαῖνον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 13:13",
+      "word": "ἐνώπιον τῶν ἀνθρώπων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 14:4",
+      "word": "ἀπαρχὴ τῷ θεῷ καὶ τῷ ἀρνίῳ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 14:14",
+      "word": "στέφανον χρυσοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 14:15",
+      "word": "τῷ καθημένῳ ἐπὶ τῆς νεφέλης",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 14:20",
+      "word": "ἀπὸ σταδίων χιλίων ἑξακοσίων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 15:6",
+      "word": "ζώνας χρυσᾶς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 16:13",
+      "word": "πνεύματα τρία ἀκάθαρτα ὡς βάτραχοι",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 16:17",
+      "word": "ἀπὸ τοῦ θρόνου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 16:21",
+      "word": "ἐπὶ τοὺς ἀνθρώπους",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 17:5",
+      "word": "βαβυλὼν ἡ μεγάλη ἡ μήτηρ τῶν πορνῶν καὶ τῶν βδελυγμάτων τῆς γῆς",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 17:6",
+      "word": "θαῦμα μέγα",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 19:5",
+      "word": "πάντες οἱ δοῦλοι αὐτοῦ καὶ οἱ φοβούμενοι αὐτόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 19:16",
+      "word": "ὄνομα γεγραμμένον",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 20:4",
+      "word": "χίλια ἔτη",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 20:10",
+      "word": "εἰς τοὺς αἰῶνας τῶν αἰώνων",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 20:12",
+      "word": "κατὰ τὰ ἔργα αὐτῶν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:2",
+      "word": "ἀπὸ τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:6",
+      "word": "δωρεάν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:10",
+      "word": "ἐπὶ ὄρος μέγα καὶ ὑψηλόν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:10",
+      "word": "ἀπὸ τοῦ θεοῦ",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:15",
+      "word": "κάλαμον χρυσοῦν",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 21:17",
+      "word": "ἑκατὸν τεσσεράκοντα τεσσάρων πηχῶν μέτρον ἀνθρώπου",
+      "type": "DFE"
+    },
+    {
+      "verse": "Rev 22:2",
+      "word": "ἐν μέσῳ τῆς πλατείας αὐτῆς",
+      "type": "DFE"
+    }
+  ]
+}

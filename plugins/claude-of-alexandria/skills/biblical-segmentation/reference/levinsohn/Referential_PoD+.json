@@ -1,0 +1,3256 @@
+{
+  "feature": "Referential PoD+",
+  "description": "Topical prominence - In Greek, prominence is given to active participants and props who are the current centre of attention (NARR §4.6) by omitting the article (DFNTG §§9.2.3-9.4), by adding αυτος ‘-self’ (e.g. in 1 Th 3:11), by using the proximal demonstrative οὗτος (NARR chap. 9, Appendix 1; e.g. in 3:3), and by postposing the constituent concerned (e.g. Mt 14:29). If such constituents are in postion P1, they are demonstrating topical prominence (e.g. 1 Th 2:1).",
+  "references": [
+    {
+      "verse": "Matt 1:19",
+      "word": "ἰωσὴφ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 1:20",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 1:22",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 1:22",
+      "word": "ὅλον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 2:7",
+      "word": "ἡρῴδης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 2:16",
+      "word": "ἡρῴδης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 3:3",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 3:4",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 3:4",
+      "word": "ὁ ἰωάννης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 3:17",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 4:3",
+      "word": "οἱ λίθοι οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 5:19",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 5:37",
+      "word": "τὸ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 5:37",
+      "word": "περισσὸν τούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 6:32",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 6:32",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 6:33",
+      "word": "ταῦτα πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 7:12",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 9:3",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 9:18",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 10:5",
+      "word": "τούτους τοὺς δώδεκα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 11:7",
+      "word": "τούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 11:10",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 12:23",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 12:24",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:19",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:22",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:23",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:34",
+      "word": "ταῦτα πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:38",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 13:55",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 14:2",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 15:8",
+      "word": "ὁ λαὸς οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 17:5",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 19:26",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 20:12",
+      "word": "οὗτοι οἱ ἔσχατοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:1",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:4",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:11",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:26",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:38",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 21:42",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 23:23",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 24:8",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 24:8",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:11",
+      "word": "ἐμὲ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:26",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:28",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:33",
+      "word": "ἐγὼ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:56",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:56",
+      "word": "ὅλον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:61",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:62",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 26:71",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 27:32",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 27:37",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 27:46",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 27:57",
+      "word": "καὶ αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Matt 27:58",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 2:7",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 4:18",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 6:3",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 6:16",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 6:17",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 6:17",
+      "word": "ὁ ἡρῴδης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 6:21",
+      "word": "ἡρῴδης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 7:2",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 7:6",
+      "word": "οὗτος ὁ λαὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 7:23",
+      "word": "πάντα ταῦτα τὰ πονηρὰ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 8:12",
+      "word": "ἡ γενεὰ αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 9:7",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 9:21",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 9:29",
+      "word": "τοῦτο τὸ γένος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 10:10",
+      "word": "περὶ τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 10:20",
+      "word": "ταῦτα πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:7",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:10",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:36",
+      "word": "αὐτὸς δαυὶδ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:40",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:43",
+      "word": "ἡ χήρα αὕτη ἡ πτωχὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:44",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 12:44",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 13:13",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 14:7",
+      "word": "ἐμὲ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 14:22",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 14:24",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 14:27",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 14:60",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 15:39",
+      "word": "οὗτος ὁ ἄνθρωπος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 15:43",
+      "word": "καὶ αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 16:1",
+      "word": "μαρία ἡ μαγδαληνὴ καὶ μαρία ἡ τοῦ ἰακώβου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Mark 16:8",
+      "word": "καὶ αὐτὸς ὁ ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 1:32",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 1:36",
+      "word": "καὶ αὐτὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 1:36",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:2",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:25",
+      "word": "ὁ ἄνθρωπος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:34",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:35",
+      "word": "σοῦ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:35",
+      "word": "αὐτῆς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:36",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 2:52",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 3:23",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 3:23",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 4:1",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 5:6",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 6:23",
+      "word": "κατὰ τὰ αὐτὰ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 6:26",
+      "word": "κατὰ τὰ αὐτὰ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:2",
+      "word": "ἑκατοντάρχου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:2",
+      "word": "τινος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:27",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:28",
+      "word": "μείζων ἐν γεννητοῖς γυναικῶν ἰωάννου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:44",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:45",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 7:46",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 8:8",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 8:13",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 8:14",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 8:15",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:9",
+      "word": "ἰωάννην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:20",
+      "word": "πέτρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:24",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:26",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:34",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 9:35",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 10:42",
+      "word": "μαριὰμ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 11:29",
+      "word": "ἡ γενεὰ αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 11:42",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 12:30",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 12:30",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 12:31",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 12:56",
+      "word": "τὸν καιρὸν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 12:56",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 13:2",
+      "word": "οἱ γαλιλαῖοι οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 13:16",
+      "word": "ταύτην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 13:17",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 14:30",
+      "word": "οὗτος ὁ ἄνθρωπος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 15:2",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 15:24",
+      "word": "οὗτος ὁ υἱός μου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 15:32",
+      "word": "ὁ ἀδελφός σου οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 16:1",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 16:25",
+      "word": "λάζαρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 18:21",
+      "word": "ταῦτα πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 19:27",
+      "word": "τοὺς ἐχθρούς μου τούτους τοὺς μὴ θελήσαντάς με βασιλεῦσαι ἐπ’ αὐτοὺς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:6",
+      "word": "ἰωάννην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:14",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:17",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:28",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:37",
+      "word": "καὶ μωϋσῆς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:42",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:42",
+      "word": "δαυὶδ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 20:47",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 21:3",
+      "word": "ἡ χήρα αὕτη ἡ πτωχὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 21:4",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 21:4",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 21:4",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 21:24",
+      "word": "ἰερουσαλὴμ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:19",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:19",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:20",
+      "word": "τοῦτο τὸ ποτήριον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:41",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:48",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 22:71",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:2",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:6",
+      "word": "πιλᾶτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:13",
+      "word": "πιλᾶτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:24",
+      "word": "πιλᾶτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:35",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:41",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:46",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:47",
+      "word": "ὁ ἄνθρωπος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:51",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 23:52",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 24:36",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Luke 24:40",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:2",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:7",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:7",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:15",
+      "word": "ἰωάννης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:18",
+      "word": "θεὸν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:28",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:33",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 1:34",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 2:22",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 2:24",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 2:24",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:2",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:10",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:26",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:29",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:29",
+      "word": "ἡ χαρὰ ἡ ἐμὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 3:32",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 4:18",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 4:42",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 4:44",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 4:44",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 4:47",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:6",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:16",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:19",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:23",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:34",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 5:38",
+      "word": "τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:6",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:6",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:9",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:14",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:15",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:27",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:42",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:50",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:59",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 6:71",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:15",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:18",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:22",
+      "word": "μωϋσῆς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:25",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:26",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:27",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:39",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:39",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:40",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:41",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 7:49",
+      "word": "ὁ ὄχλος οὗτος ὁ μὴ γινώσκων τὸν νόμον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:1",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:4",
+      "word": "αὕτη ἡ γυνὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:6",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:20",
+      "word": "ταῦτα τὰ ῥήματα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:30",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:40",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 8:59",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:6",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:19",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:20",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:22",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:24",
+      "word": "οὗτος ὁ ἄνθρωπος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:29",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 9:30",
+      "word": "ἐν τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 10:3",
+      "word": "τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 10:6",
+      "word": "ταύτην τὴν παροιμίαν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 10:18",
+      "word": "ταύτην τὴν ἐντολὴν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 10:21",
+      "word": "ταῦτα τὰ ῥήματα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 10:25",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:4",
+      "word": "αὕτη ἡ ἀσθένεια",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:11",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:20",
+      "word": "μαριὰμ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:28",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:33",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:38",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 11:47",
+      "word": "οὗτος ὁ ἄνθρωπος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:5",
+      "word": "τοῦτο τὸ μύρον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:16",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:16",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:21",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:33",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:36",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:41",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 12:44",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 13:17",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 13:21",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 13:28",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 14:25",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 15:5",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 15:11",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 15:17",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 15:21",
+      "word": "ταῦτα πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:1",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:3",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:4",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:4",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:6",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:25",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 16:33",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 17:1",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 17:13",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 17:21",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 17:25",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 18:1",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 18:4",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 18:22",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 19:20",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 19:20",
+      "word": "τὸν τίτλον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 19:26",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:11",
+      "word": "μαρία",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:14",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:15",
+      "word": "ἐκείνη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:20",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:22",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 20:31",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 21:14",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 21:19",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 21:19",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 21:21",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "John 21:24",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 1:9",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 1:11",
+      "word": "οὗτος ὁ ἰησοῦς ὁ ἀναλημφθεὶς ἀφ’ ὑμῶν εἰς τὸν οὐρανὸν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 1:14",
+      "word": "οὗτοι πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 1:18",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 1:19",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:7",
+      "word": "ἅπαντες οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:15",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:16",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:23",
+      "word": "τοῦτον τῇ ὡρισμένῃ βουλῇ καὶ προγνώσει τοῦ θεοῦ ἔκδοτον διὰ χειρὸς ἀνόμων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:32",
+      "word": "τοῦτον τὸν ἰησοῦν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 2:38",
+      "word": "πέτρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 3:1",
+      "word": "πέτρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 3:1",
+      "word": "καὶ ἰωάννης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 4:8",
+      "word": "πέτρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 4:11",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 5:31",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 6:8",
+      "word": "στέφανος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 6:13",
+      "word": "ὁ ἄνθρωπος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 6:14",
+      "word": "ἰησοῦς ὁ ναζωραῖος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:1",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:19",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:35",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:36",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:37",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:38",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 7:60",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:1",
+      "word": "σαῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:3",
+      "word": "σαῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:5",
+      "word": "φίλιππος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:10",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:20",
+      "word": "πέτρος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:26",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:39",
+      "word": "πνεῦμα κυρίου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 8:40",
+      "word": "φίλιππος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:20",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:21",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:22",
+      "word": "σαῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:22",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:26",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:27",
+      "word": "βαρναβᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:32",
+      "word": "πέτρον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 9:36",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:6",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:15",
+      "word": "φωνὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:16",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:32",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:36",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:40",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:42",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 10:43",
+      "word": "τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 11:10",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 12:19",
+      "word": "ἡρῴδης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 12:25",
+      "word": "βαρναβᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 12:25",
+      "word": "καὶ σαῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:7",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:9",
+      "word": "σαῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:13",
+      "word": "ἰωάννης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:23",
+      "word": "τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:23",
+      "word": "ἀπὸ τοῦ σπέρματος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:33",
+      "word": "ταύτην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:38",
+      "word": "διὰ τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 13:39",
+      "word": "ἐν τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 14:9",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 14:18",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:14",
+      "word": "συμεὼν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:15",
+      "word": "τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:21",
+      "word": "μωϋσῆς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:32",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:35",
+      "word": "παῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:35",
+      "word": "καὶ βαρναβᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:37",
+      "word": "βαρναβᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:38",
+      "word": "παῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 15:40",
+      "word": "παῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:3",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:17",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:17",
+      "word": "οὗτοι οἱ ἄνθρωποι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:18",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:20",
+      "word": "οὗτοι οἱ ἄνθρωποι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:25",
+      "word": "παῦλος καὶ σιλᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 16:26",
+      "word": "πάντων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 17:6",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 17:7",
+      "word": "οὗτοι πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 17:11",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 17:24",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 18:25",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 18:26",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:1",
+      "word": "παῦλον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:4",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:10",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:17",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:26",
+      "word": "ὁ παῦλος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:30",
+      "word": "παύλου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 19:40",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 20:5",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 20:30",
+      "word": "ἐξ ὑμῶν αὐτῶν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 20:34",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 20:36",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 21:9",
+      "word": "τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 21:20",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 21:24",
+      "word": "τούτους",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 21:28",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 22:19",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 22:20",
+      "word": "καὶ αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 22:26",
+      "word": "ὁ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 22:26",
+      "word": "ἄνθρωπος οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 23:7",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 23:22",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 23:27",
+      "word": "τὸν ἄνδρα τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 24:9",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 25:1",
+      "word": "φῆστος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 25:11",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 25:22",
+      "word": "ἀγρίππας",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 25:25",
+      "word": "αὐτοῦ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 25:25",
+      "word": "τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 26:1",
+      "word": "ἀγρίππας",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 26:24",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 26:32",
+      "word": "ἀγρίππας",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 27:31",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 27:34",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 28:9",
+      "word": "τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 28:22",
+      "word": "περὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Acts 28:22",
+      "word": "τῆς αἱρέσεως ταύτης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 1:12",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 2:14",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 3:23",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 3:31",
+      "word": "νόμον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 4:9",
+      "word": "ὁ μακαρισμὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 4:9",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 5:6",
+      "word": "χριστὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 7:10",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 7:18",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 7:24",
+      "word": "ἐκ τοῦ σώματος τοῦ θανάτου τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:9",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:14",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:21",
+      "word": "καὶ αὐτὴ ἡ κτίσις",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:26",
+      "word": "αὐτὸ τὸ πνεῦμα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "τούτους",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "τούτους",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 8:30",
+      "word": "τούτους",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 9:8",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 10:6",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 10:7",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 10:8",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 10:12",
+      "word": "ὁ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 10:12",
+      "word": "αὐτὸς κύριος πάντων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 11:7",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 11:31",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 16:18",
+      "word": "οἱ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rom 16:18",
+      "word": "τοιοῦτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 3:23",
+      "word": "χριστὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 4:6",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 6:11",
+      "word": "ταῦτά",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 6:12",
+      "word": "ἐγὼ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 7:6",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 7:12",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 7:13",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 7:26",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 7:35",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 8:1",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 8:3",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 8:9",
+      "word": "ἡ ἐξουσία ὑμῶν αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:1",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:2",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:3",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:4",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:6",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:11",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:28",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 10:31",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 11:24",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 11:24",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "τοῦτο τὸ ποτήριον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:11",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:11",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "ἐν ἑνὶ πνεύματι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:23",
+      "word": "τούτοις",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:29",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:29",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:29",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:29",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:30",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:30",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 12:30",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 14:23",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 14:26",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 14:40",
+      "word": "πάντα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 15:3",
+      "word": "χριστὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 15:51",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 15:51",
+      "word": "πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 15:54",
+      "word": "τὸ φθαρτὸν τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Cor 15:54",
+      "word": "τὸ θνητὸν τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 1:9",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 1:17",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 2:16",
+      "word": "πρὸς ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 3:13",
+      "word": "μωϋσῆς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 3:14",
+      "word": "τὸ αὐτὸ κάλυμμα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 7:11",
+      "word": "αὐτὸ τοῦτο τὸ κατὰ θεὸν λυπηθῆναι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 8:10",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 9:5",
+      "word": "ταύτην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 10:1",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 10:1",
+      "word": "ἐγὼ παῦλος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 10:11",
+      "word": "τοιοῦτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 11:10",
+      "word": "ἡ καύχησις αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 11:13",
+      "word": "οἱ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 11:13",
+      "word": "τοιοῦτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 11:14",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 11:14",
+      "word": "ὁ σατανᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Cor 12:13",
+      "word": "αὐτὸς ἐγὼ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 2:18",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 3:7",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 4:24",
+      "word": "αὗται",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 5:17",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 5:23",
+      "word": "κατὰ τῶν τοιούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Gal 6:7",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Eph 2:8",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Eph 5:23",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Eph 5:32",
+      "word": "τὸ μυστήριον τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Eph 6:1",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Eph 6:8",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 1:7",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 1:19",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 1:22",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 1:25",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 1:28",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 2:11",
+      "word": "πᾶσα γλῶσσα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 2:23",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 2:29",
+      "word": "τοὺς τοιούτους",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phil 3:7",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Col 2:4",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Col 3:20",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Col 4:11",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 2:1",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 3:3",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 3:11",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 3:11",
+      "word": "ὁ θεὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 4:9",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 4:9",
+      "word": "ὑμεῖς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 4:14",
+      "word": "ἰησοῦς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 4:16",
+      "word": "αὐτὸς ὁ κύριος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 5:2",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 5:18",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 5:23",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 5:23",
+      "word": "ὁ θεὸς τῆς εἰρήνης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Thess 5:23",
+      "word": "ὁλόκληρον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 1:4",
+      "word": "αὐτοὺς ἡμᾶς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 2:16",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 2:16",
+      "word": "ὁ κύριος ἡμῶν ἰησοῦς χριστὸς καὶ ὁ θεὸς ὁ πατὴρ ἡμῶν ὁ ἀγαπήσας ἡμᾶς καὶ δοὺς παράκλησιν αἰωνίαν καὶ ἐλπίδα ἀγαθὴν ἐν χάριτι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:7",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:12",
+      "word": "τοῖς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:12",
+      "word": "τοιούτοις",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:14",
+      "word": "τοῦτον",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:16",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Thess 3:16",
+      "word": "ὁ κύριος τῆς εἰρήνης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 2:3",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 2:14",
+      "word": "ἀδὰμ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 3:10",
+      "word": "καὶ οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 3:14",
+      "word": "ταῦτά",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 4:6",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 5:4",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 5:21",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Tim 5:24",
+      "word": "τινῶν ἀνθρώπων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Tim 2:2",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Titus 1:13",
+      "word": "ἡ μαρτυρία αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Titus 2:15",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Titus 3:8",
+      "word": "ταῦτά",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phlm 1:9",
+      "word": "τοιοῦτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phlm 1:12",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Phlm 1:18",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 2:14",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 6:3",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 7:1",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 7:1",
+      "word": "ὁ μελχισέδεκ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 7:5",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 7:27",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:6",
+      "word": "τούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:11",
+      "word": "χριστὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:11",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:20",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:23",
+      "word": "αὐτὰ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 9:23",
+      "word": "τὰ ἐπουράνια",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 10:12",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 10:20",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 11:11",
+      "word": "καὶ αὐτὴ σάρρα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 11:12",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 11:16",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 11:39",
+      "word": "οὗτοι πάντες",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 13:11",
+      "word": "τούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Heb 13:15",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 1:23",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 1:25",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 1:26",
+      "word": "τούτου",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 2:5",
+      "word": "ὁ θεὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 2:6",
+      "word": "οἱ πλούσιοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 2:6",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 2:7",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 3:2",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 3:10",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jas 4:16",
+      "word": "πᾶσα καύχησις τοιαύτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 1:25",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 2:7",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 2:20",
+      "word": "τοῦτο",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 2:24",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 3:18",
+      "word": "χριστὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 3:20",
+      "word": "τοῦτ’",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 4:1",
+      "word": "χριστοῦ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 4:10",
+      "word": "ἕκαστος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 4:15",
+      "word": "τις ὑμῶν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 5:9",
+      "word": "τὰ αὐτὰ τῶν παθημάτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 5:10",
+      "word": "αὐτὸς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1Pet 5:12",
+      "word": "ταύτην",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 1:8",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 1:10",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 1:18",
+      "word": "ταύτην τὴν φωνὴν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 2:12",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 2:17",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 2:19",
+      "word": "αὐτοὶ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2Pet 3:14",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 1:4",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 2:1",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 2:5",
+      "word": "ἀληθῶς ἐν τούτῳ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 2:26",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 2:27",
+      "word": "τὸ αὐτοῦ χρῖσμα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 4:3",
+      "word": "τοῦτό",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 4:12",
+      "word": "θεὸν",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 5:6",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 5:11",
+      "word": "αὕτη ἡ ζωὴ",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 5:13",
+      "word": "ταῦτα",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "1John 5:20",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2John 1:7",
+      "word": "οὗτός",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "2John 1:9",
+      "word": "οὗτος",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:8",
+      "word": "καὶ οὗτοι ἐνυπνιαζόμενοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:10",
+      "word": "ἐν τούτοις",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:12",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:16",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Jude 1:19",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 1:4",
+      "word": "ἰωάννης",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 7:13",
+      "word": "οὗτοι οἱ περιβεβλημένοι τὰς στολὰς τὰς λευκὰς",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 7:14",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 11:4",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 11:6",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 11:10",
+      "word": "οὗτοι οἱ δύο προφῆται",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 14:4",
+      "word": "οὗτοί",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 14:4",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 14:4",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 17:13",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 17:14",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 17:16",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 19:9",
+      "word": "οὗτοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 20:5",
+      "word": "αὕτη",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 20:6",
+      "word": "ἐπὶ τούτων",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 21:5",
+      "word": "οὗτοι οἱ λόγοι",
+      "type": "Referential PoD+"
+    },
+    {
+      "verse": "Rev 22:6",
+      "word": "οὗτοι οἱ λόγοι",
+      "type": "Referential PoD+"
+    }
+  ]
+}

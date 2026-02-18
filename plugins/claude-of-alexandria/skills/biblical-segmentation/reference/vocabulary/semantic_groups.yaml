@@ -1,0 +1,193 @@
+metadata:
+  description: Curated theological word families for biblical study
+  purpose: Connect related concepts across OT and NT for thematic analysis
+  semantic_groups_count: 13
+  creation_date: '2026-01-21'
+  sources:
+    - MorphGNT/SBLGNT (NT Greek lemmas)
+    - OpenScriptures/morphhb (OT Hebrew via Strong's numbers)
+  license: CC BY-SA 4.0
+  notes: |
+    Each semantic group contains:
+    - description: Theological concept overview
+    - nt_lemmas: Greek lemmas with English glosses
+    - ot_strongs: Strong's numbers with Hebrew and English glosses
+
+    Glosses are lexical meanings, not contextual interpretations.
+
+semantic_groups:
+  joy:
+    description: Joy, rejoicing, gladness, delight - emotions of celebration and exultation
+    nt_lemmas:
+      χαρά: joy, gladness
+      χαίρω: rejoice, be glad
+      εὐφραίνω: make glad, gladden
+      ἀγαλλιάω: exult, rejoice greatly
+    ot_strongs:
+      H8057:
+        hebrew: שִׂמְחָה
+        gloss: joy, gladness, mirth
+      H8055:
+        hebrew: שָׂמַח
+        gloss: rejoice, be glad
+      H1523:
+        hebrew: גִּיל
+        gloss: rejoice, exult
+      H7797:
+        hebrew: שׂוּשׂ
+        gloss: rejoice, be joyful
+
+  faith:
+    description: Faith, trust, belief, faithfulness - reliance on God and His promises
+    nt_lemmas:
+      πίστις: faith, trust, belief
+      πιστεύω: believe, trust, have faith
+      πιστός: faithful, trustworthy, believing
+    ot_strongs:
+      H530:
+        hebrew: אֱמוּנָה
+        gloss: faithfulness, firmness, steadfastness
+      H539:
+        hebrew: אָמַן
+        gloss: believe, trust, be firm
+
+  love:
+    description: Love, affection, devotion - divine and human love relationships
+    nt_lemmas:
+      ἀγάπη: love (self-sacrificial)
+      ἀγαπάω: love (verb)
+      φιλέω: love, have affection for
+      φιλία: friendship, affection
+    ot_strongs:
+      H157:
+        hebrew: אָהַב
+        gloss: love, have affection
+      H160:
+        hebrew: אַהֲבָה
+        gloss: love (noun)
+      H2617:
+        hebrew: חֶסֶד
+        gloss: lovingkindness, steadfast love, covenant loyalty
+
+  righteousness:
+    description: Righteousness, justice, uprightness - right standing and ethical conduct
+    nt_lemmas:
+      δικαιοσύνη: righteousness, justice
+      δίκαιος: righteous, just
+      δικαιόω: justify, declare righteous
+    ot_strongs:
+      H6664:
+        hebrew: צֶדֶק
+        gloss: righteousness, rightness
+      H6663:
+        hebrew: צָדַק
+        gloss: be righteous, be just
+      H6666:
+        hebrew: צְדָקָה
+        gloss: righteousness, righteous deed
+
+  covenant:
+    description: Covenant, testament - binding agreements between God and His people
+    nt_lemmas:
+      διαθήκη: covenant, testament, will
+    ot_strongs:
+      H1285:
+        hebrew: בְּרִית
+        gloss: covenant, alliance, pledge
+
+  glory:
+    description: Glory, honor, majesty - divine radiance and splendor
+    nt_lemmas:
+      δόξα: glory, splendor, brightness
+      δοξάζω: glorify, honor, praise
+    ot_strongs:
+      H3519:
+        hebrew: כָּבוֹד
+        gloss: glory, honor, weight, abundance
+
+  salvation:
+    description: Salvation, deliverance, rescue - God's saving work
+    nt_lemmas:
+      σωτηρία: salvation, deliverance
+      σῴζω: save, rescue, deliver
+      σωτήρ: savior, deliverer
+    ot_strongs:
+      H3444:
+        hebrew: יְשׁוּעָה
+        gloss: salvation, deliverance, rescue
+      H3467:
+        hebrew: יָשַׁע
+        gloss: save, deliver, help
+
+  holiness:
+    description: Holiness, sanctification, consecration - set apart for God
+    nt_lemmas:
+      ἅγιος: holy, sacred, saint
+      ἁγιασμός: holiness, sanctification
+      ἁγιάζω: sanctify, make holy, consecrate
+    ot_strongs:
+      H6944:
+        hebrew: קֹדֶשׁ
+        gloss: holiness, sacredness, apartness
+      H6918:
+        hebrew: קָדוֹשׁ
+        gloss: holy, sacred
+
+  spirit:
+    description: Spirit, breath, wind - divine and human spirit, Holy Spirit
+    nt_lemmas:
+      πνεῦμα: spirit, breath, wind
+      πνευματικός: spiritual
+    ot_strongs:
+      H7307:
+        hebrew: רוּחַ
+        gloss: spirit, breath, wind
+
+  wisdom:
+    description: Wisdom, understanding, skill - practical and theological knowledge
+    nt_lemmas:
+      σοφία: wisdom, insight
+      σοφός: wise, skilled
+    ot_strongs:
+      H2451:
+        hebrew: חָכְמָה
+        gloss: wisdom, skill
+      H2449:
+        hebrew: חָכַם
+        gloss: be wise, act wisely
+
+  peace:
+    description: Peace, wholeness, well-being - reconciliation and harmony
+    nt_lemmas:
+      εἰρήνη: peace, harmony, rest
+    ot_strongs:
+      H7965:
+        hebrew: שָׁלוֹם
+        gloss: peace, completeness, welfare, well-being
+
+  grace:
+    description: Grace, favor, kindness - unmerited divine favor
+    nt_lemmas:
+      χάρις: grace, favor, kindness
+      χαρίζομαι: give graciously, forgive
+    ot_strongs:
+      H2580:
+        hebrew: חֵן
+        gloss: grace, favor, charm
+      H2603:
+        hebrew: חָנַן
+        gloss: be gracious, show favor
+
+  truth:
+    description: Truth, reality, reliability - faithfulness and veracity
+    nt_lemmas:
+      ἀλήθεια: truth, reality
+      ἀληθής: true, genuine
+      ἀληθινός: true, real, genuine
+    ot_strongs:
+      H571:
+        hebrew: אֱמֶת
+        gloss: truth, faithfulness, reliability
+      H539:
+        hebrew: אָמַן
+        gloss: be firm, be faithful, be true

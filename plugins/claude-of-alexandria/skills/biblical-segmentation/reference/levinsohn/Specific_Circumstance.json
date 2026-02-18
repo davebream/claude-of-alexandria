@@ -1,0 +1,296 @@
+{
+  "feature": "Specific Circumstance",
+  "description": "The function of ἐγενετο ‘it came about’ and an immediately following temporal expression varies with the author (see DFNTG §10.3). In Matthew’s Gospel, it usually marks major divisions in the book (e.g. Mt 7:28). In Luke-Acts, in contrast, ‘it picks out from the general background the specific circumstance for the foreground events that are to follow’ (ibid.), as in Acts 9:37 (see also Mt 9:10).",
+  "references": [
+    {
+      "verse": "Matt 7:28",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Matt 9:10",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Matt 11:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Matt 13:53",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Matt 19:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Matt 26:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Mark 1:9",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Mark 2:23",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Mark 4:4",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 1:8",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 1:23",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 1:41",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 1:59",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 2:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 2:6",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 2:15",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 2:46",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 3:21",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 5:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 5:12",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 5:17",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 6:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 6:6",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 6:12",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 7:11",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 8:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 8:22",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:18",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:28",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:29",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:33",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:37",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 9:51",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 11:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 11:14",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 11:27",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 14:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 17:11",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 17:14",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 18:35",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 19:15",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 19:29",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 20:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 24:4",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 24:15",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 24:30",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Luke 24:51",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 3:23",
+      "word": "ἔσται",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 4:5",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 9:32",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 9:37",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 9:43",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 14:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 16:16",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 19:1",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 22:6",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 22:17",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    },
+    {
+      "verse": "Acts 28:17",
+      "word": "ἐγένετο",
+      "type": "Specific Circumstance"
+    }
+  ]
+}

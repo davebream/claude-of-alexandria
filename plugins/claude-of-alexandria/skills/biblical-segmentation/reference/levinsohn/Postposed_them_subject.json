@@ -1,0 +1,416 @@
+{
+  "feature": "Postposed them subject",
+  "description": "When a subject is postposed to the end of its clause (following nominals or adjuncts), it is marked ThS+ (e.g. Lk 1:41 [twice]). Such postposing typically marks as salient the participant who performs the next event in chronological sequence in the story (see Levinsohn 2014).",
+  "references": [
+    {
+      "verse": "Matt 14:29",
+      "word": "ὁ πέτρος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Mark 3:24",
+      "word": "ἡ βασιλεία ἐκείνη",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Mark 7:29",
+      "word": "τὸ δαιμόνιον",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Mark 8:12",
+      "word": "σημεῖον",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Mark 10:32",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 1:41",
+      "word": "ἡ ἐλισάβετ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 1:41",
+      "word": "ἡ ἐλισάβετ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 1:44",
+      "word": "τὸ βρέφος ἐν τῇ κοιλίᾳ μου",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 1:49",
+      "word": "ὁ δυνατός",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 2:15",
+      "word": "οἱ ἄγγελοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 2:49",
+      "word": "με",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 3:16",
+      "word": "ὁ ἰωάννης",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 5:21",
+      "word": "οἱ γραμματεῖς καὶ οἱ φαρισαῖοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 7:6",
+      "word": "ὁ ἑκατοντάρχης",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 7:18",
+      "word": "οἱ μαθηταὶ αὐτοῦ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 7:18",
+      "word": "ὁ ἰωάννης",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 8:11",
+      "word": "ἡ παραβολή",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 16:3",
+      "word": "ὁ οἰκονόμος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 18:5",
+      "word": "τὴν χήραν ταύτην",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 19:42",
+      "word": "καὶ σὺ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 21:20",
+      "word": "ἰερουσαλήμ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 21:34",
+      "word": "ἡ ἡμέρα ἐκείνη",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 23:46",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 24:11",
+      "word": "τὰ ῥήματα ταῦτα",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Luke 24:26",
+      "word": "τὸν χριστὸν",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 1:40",
+      "word": "εἷς ἐκ τῶν δύο τῶν ἀκουσάντων παρὰ ἰωάννου καὶ ἀκολουθησάντων αὐτῷ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 2:9",
+      "word": "ὁ ἀρχιτρίκλινος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 2:12",
+      "word": "αὐτὸς καὶ ἡ μήτηρ αὐτοῦ καὶ οἱ ἀδελφοὶ αὐτοῦ καὶ οἱ μαθηταὶ αὐτοῦ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 2:13",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 3:19",
+      "word": "τὰ ἔργα",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 3:24",
+      "word": "ὁ ἰωάννης",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 4:28",
+      "word": "ἡ γυνὴ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 6:3",
+      "word": "ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 6:5",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 6:11",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 7:28",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 7:28",
+      "word": "ὁ πέμψας με",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 11:8",
+      "word": "οἱ ἰουδαῖοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 12:1",
+      "word": "ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 12:34",
+      "word": "τὸν υἱὸν τοῦ ἀνθρώπου",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 13:30",
+      "word": "ἐκεῖνος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 18:33",
+      "word": "ὁ πιλᾶτος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 19:4",
+      "word": "ὁ πιλᾶτος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 19:19",
+      "word": "ὁ πιλᾶτος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 19:30",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 19:31",
+      "word": "ἡ ἡμέρα ἐκείνου τοῦ σαββάτου",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 20:10",
+      "word": "οἱ μαθηταί",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "John 21:15",
+      "word": "ὁ ἰησοῦς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 1:16",
+      "word": "τὴν γραφὴν",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 4:12",
+      "word": "ἡ σωτηρία",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 4:12",
+      "word": "ἡμᾶς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 5:4",
+      "word": "τὸ πρᾶγμα τοῦτο",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 5:38",
+      "word": "ἡ βουλὴ αὕτη ἢ τὸ ἔργον τοῦτο",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 7:6",
+      "word": "ὁ θεὸς",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 7:11",
+      "word": "οἱ πατέρες ἡμῶν",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 8:39",
+      "word": "ὁ εὐνοῦχος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 9:10",
+      "word": "ὁ κύριος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 9:15",
+      "word": "οὗτος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 9:24",
+      "word": "ἡ ἐπιβουλὴ αὐτῶν",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 9:40",
+      "word": "ὁ πέτρος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 10:34",
+      "word": "ὁ θεός",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 12:6",
+      "word": "ὁ ἡρῴδης",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 13:13",
+      "word": "οἱ περὶ παῦλον",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 15:36",
+      "word": "παῦλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 16:28",
+      "word": "ὁ παῦλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 16:38",
+      "word": "οἱ ῥαβδοῦχοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 17:13",
+      "word": "ὁ λόγος τοῦ θεοῦ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 18:5",
+      "word": "ὁ παῦλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 19:26",
+      "word": "οἱ διὰ χειρῶν γινόμενοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 20:25",
+      "word": "ὑμεῖς πάντες",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 21:11",
+      "word": "οἱ ἰουδαῖοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 21:37",
+      "word": "ὁ παῦλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 22:25",
+      "word": "ὁ παῦλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 23:12",
+      "word": "οἱ ἰουδαῖοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 23:13",
+      "word": "οἱ ταύτην τὴν συνωμοσίαν ποιησάμενοι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 23:19",
+      "word": "ὁ χιλίαρχος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 24:2",
+      "word": "ὁ τέρτυλλος",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 24:27",
+      "word": "ὁ φῆλιξ",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Acts 27:10",
+      "word": "τὸν πλοῦν",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "1Cor 15:12",
+      "word": "τινες",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "2Pet 1:21",
+      "word": "ἄνθρωποι",
+      "type": "Postposed them subject"
+    },
+    {
+      "verse": "Rev 14:11",
+      "word": "οἱ προσκυνοῦντες τὸ θηρίον καὶ τὴν εἰκόνα αὐτοῦ καὶ εἴ τις λαμβάνει τὸ χάραγμα τοῦ ὀνόματος αὐτοῦ",
+      "type": "Postposed them subject"
+    }
+  ]
+}

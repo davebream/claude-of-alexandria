@@ -1,0 +1,1231 @@
+{
+  "feature": "Embedded DFE",
+  "description": "'Dominant focal elements' embedded within a constituent in P1.",
+  "references": [
+    {
+      "verse": "Matt 1:19",
+      "word": "δειγματίσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 1:20",
+      "word": "γεννηθὲν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 5:32",
+      "word": "γαμήσῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 5:40",
+      "word": "κριθῆναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 5:42",
+      "word": "δανίσασθαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 6:32",
+      "word": "ἁπάντων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 6:33",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 12:15",
+      "word": "πάντας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:20",
+      "word": "ἀκούων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:22",
+      "word": "ἀκούων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:23",
+      "word": "ἀκούων καὶ συνιείς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:34",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:51",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 13:56",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 16:25",
+      "word": "σῶσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 20:6",
+      "word": "ἀργοί",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 20:7",
+      "word": "ἐμισθώσατο",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 23:36",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 24:2",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 26:35",
+      "word": "ἀποθανεῖν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 26:42",
+      "word": "πίω",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 26:56",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Matt 27:47",
+      "word": "ἑστηκότων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 2:4",
+      "word": "κατέκειτο",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 4:24",
+      "word": "μετρεῖτε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 5:26",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 6:49",
+      "word": "περιπατοῦντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 8:27",
+      "word": "εἶναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 8:35",
+      "word": "σῶσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 9:18",
+      "word": "καταλάβῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 9:22",
+      "word": "δύνῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 10:20",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 10:32",
+      "word": "συμβαίνειν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 10:44",
+      "word": "δοῦλος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 10:51",
+      "word": "ποιήσω",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 11:1",
+      "word": "πρὸς τὸ ὄρος τῶν ἐλαιῶν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 11:5",
+      "word": "ἑστηκότων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 12:34",
+      "word": "ἐπερωτῆσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 13:30",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 14:60",
+      "word": "καταμαρτυροῦσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Mark 16:15",
+      "word": "ἅπαντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 1:70",
+      "word": "ἀπ’ αἰῶνος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 1:79",
+      "word": "ἐν σκότει καὶ σκιᾷ θανάτου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 2:18",
+      "word": "πρὸς αὐτούς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 3:1",
+      "word": "ἰτουραίας καὶ τραχωνίτιδος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 4:6",
+      "word": "ἅπασαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 6:49",
+      "word": "χωρὶς θεμελίου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 8:43",
+      "word": "ἀπὸ ἐτῶν δώδεκα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 9:17",
+      "word": "κόφινοι δώδεκα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 9:18",
+      "word": "εἶναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 10:5",
+      "word": "οἰκίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 10:9",
+      "word": "ἀσθενεῖς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 10:11",
+      "word": "εἰς τοὺς πόδας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 11:11",
+      "word": "τὸν πατέρα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 11:19",
+      "word": "κριταὶ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 11:36",
+      "word": "σκοτεινόν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 12:1",
+      "word": "πρῶτον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 12:30",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 12:58",
+      "word": "ἐπ’ ἄρχοντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 14:8",
+      "word": "εἰς γάμους",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 14:34",
+      "word": "μωρανθῇ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 15:4",
+      "word": "ἓν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 16:10",
+      "word": "ἄδικος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 16:15",
+      "word": "ἐν ἀνθρώποις",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 16:18",
+      "word": "γαμῶν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 17:33",
+      "word": "περιποιήσασθαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 18:21",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 18:31",
+      "word": "τῷ υἱῷ τοῦ ἀνθρώπου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 19:48",
+      "word": "ἅπας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 20:6",
+      "word": "ἅπας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 21:1",
+      "word": "τὰ δῶρα αὐτῶν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 21:12",
+      "word": "πάντων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 21:24",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 22:18",
+      "word": "ἔλθῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 22:19",
+      "word": "ἀνάμνησιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 22:23",
+      "word": "μέλλων πράσσειν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Luke 24:9",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 1:16",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 1:41",
+      "word": "τὸν ἴδιον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 2:23",
+      "word": "ἐν τῇ ἑορτῇ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 4:45",
+      "word": "ἐν τῇ ἑορτῇ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 5:18",
+      "word": "ἀποκτεῖναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 5:43",
+      "word": "τῷ ἰδίῳ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 6:32",
+      "word": "τὸν ἀληθινόν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 7:1",
+      "word": "ἀποκτεῖναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 7:18",
+      "word": "τὴν ἰδίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 7:19",
+      "word": "ζητεῖτε ἀποκτεῖναι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 8:36",
+      "word": "ἐλευθερώσῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 8:58",
+      "word": "γενέσθαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 9:21",
+      "word": "βλέπει",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 9:32",
+      "word": "γεγεννημένου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 10:5",
+      "word": "τὴν φωνήν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 11:8",
+      "word": "λιθάσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 15:2",
+      "word": "φέρον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 15:21",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 15:26",
+      "word": "ἐκπορεύεται",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 16:13",
+      "word": "πάσῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 17:10",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 19:31",
+      "word": "ἐν τῷ σαββάτῳ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 19:33",
+      "word": "τεθνηκότα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 20:25",
+      "word": "τὸν τύπον τῶν ἥλων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "John 21:6",
+      "word": "ἑλκύσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 1:14",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 1:25",
+      "word": "τὸν ἴδιον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 2:3",
+      "word": "γλῶσσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 2:14",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 4:13",
+      "word": "παρρησίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 4:29",
+      "word": "πάσης",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 5:4",
+      "word": "ἐξουσίᾳ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 7:14",
+      "word": "ἑβδομήκοντα πέντε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 7:50",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 8:40",
+      "word": "πάσας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 9:4",
+      "word": "διώκεις",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 9:21",
+      "word": "τοὺς ἐπικαλουμένους τὸ ὄνομα τοῦτο",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 10:15",
+      "word": "ἐκαθάρισεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 11:9",
+      "word": "ἐκαθάρισεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 13:29",
+      "word": "γεγραμμένα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 13:37",
+      "word": "ἤγειρεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 16:10",
+      "word": "εἶδεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 16:26",
+      "word": "πᾶσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 16:27",
+      "word": "ἀναιρεῖν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 17:7",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 18:5",
+      "word": "ὅ τε σιλᾶς καὶ ὁ τιμόθεος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 19:38",
+      "word": "λόγον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 20:28",
+      "word": "τοῦ ἰδίου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 20:32",
+      "word": "πᾶσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 21:23",
+      "word": "λέγομεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 21:26",
+      "word": "ἡ προσφορά",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 22:1",
+      "word": "ἀπολογίας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 22:7",
+      "word": "διώκεις",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 22:29",
+      "word": "ἀνετάζειν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 23:7",
+      "word": "εἰπόντος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 23:21",
+      "word": "ἄνδρες πλείους τεσσεράκοντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 27:20",
+      "word": "πᾶσα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 28:17",
+      "word": "πρώτους",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Acts 28:21",
+      "word": "πονηρόν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 2:26",
+      "word": "φυλάσσῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 2:27",
+      "word": "τελοῦσα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 3:22",
+      "word": "εἰς πάντας τοὺς πιστεύοντας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 8:37",
+      "word": "πᾶσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 12:4",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rom 16:16",
+      "word": "πᾶσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 1:21",
+      "word": "τὸν θεόν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 2:2",
+      "word": "ἐσταυρωμένον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 3:3",
+      "word": "ζῆλος καὶ ἔρις",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 3:12",
+      "word": "χρυσόν ἄργυρον λίθους τιμίους ξύλα χόρτον καλάμην",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 6:7",
+      "word": "ἀδικεῖσθε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 6:7",
+      "word": "ἀποστερεῖσθε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 7:17",
+      "word": "πάσαις",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 7:37",
+      "word": "ἑδραῖος",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 8:7",
+      "word": "τοῦ εἰδώλου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 9:3",
+      "word": "ἀνακρίνουσίν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 10:1",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 10:4",
+      "word": "πέτρας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 11:24",
+      "word": "ἀνάμνησιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 11:25",
+      "word": "ἀνάμνησιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 11:26",
+      "word": "πίνητε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 12:13",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 12:17",
+      "word": "ὀφθαλμός",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 12:17",
+      "word": "ἀκοή",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 13:2",
+      "word": "πάντα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 14:6",
+      "word": "ὠφελήσω",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 14:24",
+      "word": "προφητεύωσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 15:7",
+      "word": "πᾶσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 15:13",
+      "word": "οὐκ ἔστιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 15:22",
+      "word": "ἀποθνῄσκουσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 15:32",
+      "word": "οὐκ ἐγείρονται",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Cor 16:20",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 1:19",
+      "word": "υἱὸς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 2:5",
+      "word": "λελύπηκεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 2:10",
+      "word": "χαρίζεσθε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 2:15",
+      "word": "εὐωδία",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 3:1",
+      "word": "συνιστάνειν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 3:7",
+      "word": "διὰ τὴν δόξαν τοῦ προσώπου αὐτοῦ τὴν καταργουμένην",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 3:18",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 5:15",
+      "word": "ἀποθανόντι καὶ ἐγερθέντι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 7:7",
+      "word": "ἐπιπόθησιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 7:7",
+      "word": "ὀδυρμόν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 7:7",
+      "word": "ζῆλον ὑπὲρ ἐμοῦ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 7:14",
+      "word": "κεκαύχημαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 7:15",
+      "word": "ὑπακοήν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 8:12",
+      "word": "πρόκειται",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 10:11",
+      "word": "ἀπόντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 11:7",
+      "word": "εὐαγγέλιον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 11:8",
+      "word": "διακονίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 11:21",
+      "word": "τολμᾷ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 11:30",
+      "word": "δεῖ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 12:19",
+      "word": "οἰκοδομῆς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 13:2",
+      "word": "πᾶσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 13:9",
+      "word": "κατάρτισιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Cor 13:12",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 1:23",
+      "word": "ἐπόρθει",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 3:27",
+      "word": "ἐβαπτίσθητε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 3:29",
+      "word": "κληρονόμοι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 4:19",
+      "word": "ὠδίνω",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 5:15",
+      "word": "δάκνετε καὶ κατεσθίετε",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Gal 6:10",
+      "word": "ἔχομεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 1:15",
+      "word": "πίστιν ἐν τῷ κυρίῳ ἰησοῦ καὶ τὴν ἀγάπην τὴν εἰς πάντας τοὺς ἁγίους",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 1:23",
+      "word": "πληρουμένου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 2:3",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 2:11",
+      "word": "χειροποιήτου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 3:9",
+      "word": "κτίσαντι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 4:19",
+      "word": "πάσης",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 5:3",
+      "word": "πᾶσα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Eph 5:29",
+      "word": "ἐμίσησεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Phil 1:13",
+      "word": "πᾶσιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Col 2:20",
+      "word": "ἀπὸ τῶν στοιχείων τοῦ κόσμου",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Col 4:6",
+      "word": "ἀποκρίνεσθαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Thess 4:14",
+      "word": "ἀπέθανεν καὶ ἀνέστη",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Thess 5:18",
+      "word": "εἰς ὑμᾶς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Thess 5:26",
+      "word": "πάντας",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Tim 6:13",
+      "word": "τὴν καλὴν ὁμολογίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Titus 2:15",
+      "word": "περιφρονείτω",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Heb 11:13",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Heb 11:39",
+      "word": "πάντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 1:13",
+      "word": "ἐν ἀποκαλύψει ἰησοῦ χριστοῦ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 1:17",
+      "word": "χρόνον",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 2:8",
+      "word": "ἀπειθοῦντες",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 2:15",
+      "word": "ἀγνωσίαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 3:1",
+      "word": "ἀναστροφῆς",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 3:20",
+      "word": "μακροθυμία",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 4:13",
+      "word": "παθήμασιν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 4:14",
+      "word": "πνεῦμα",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 4:17",
+      "word": "εὐαγγελίῳ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 5:1",
+      "word": "παθημάτων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 5:1",
+      "word": "δόξης",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1Pet 5:10",
+      "word": "ἐν χριστῷ ἰησοῦ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Pet 1:5",
+      "word": "πᾶσαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Pet 3:5",
+      "word": "λόγῳ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "2Pet 3:11",
+      "word": "πάντων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 1:6",
+      "word": "περιπατῶμεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 2:4",
+      "word": "μὴ τηρῶν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 2:6",
+      "word": "μένειν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 3:6",
+      "word": "μένων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 3:15",
+      "word": "μένουσαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 3:21",
+      "word": "μὴ καταγινώσκῃ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "1John 3:24",
+      "word": "ἔδωκεν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Jude 1:24",
+      "word": "ἀμώμους ἐν ἀγαλλιάσει",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 1:5",
+      "word": "ἐν τῷ αἵματι αὐτοῦ",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 1:7",
+      "word": "ἐξεκέντησαν",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 4:9",
+      "word": "τῷ καθημένῳ ἐπὶ τῷ θρόνῳ τῷ ζῶντι εἰς τοὺς αἰῶνας τῶν αἰώνων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 8:3",
+      "word": "πάντων",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 11:5",
+      "word": "ἀδικῆσαι",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 12:10",
+      "word": "ἡμέρας καὶ νυκτός",
+      "type": "Embedded DFE"
+    },
+    {
+      "verse": "Rev 19:9",
+      "word": "κεκλημένοι",
+      "type": "Embedded DFE"
+    }
+  ]
+}

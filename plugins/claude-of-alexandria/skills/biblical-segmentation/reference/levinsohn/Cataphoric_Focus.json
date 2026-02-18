@@ -1,0 +1,851 @@
+{
+  "feature": "Cataphoric Focus",
+  "description": "An expression that points forward to and highlights something which ‘is about to be expressed.’",
+  "references": [
+    {
+      "verse": "Matt 1:18",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Matt 2:5",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Matt 6:9",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Matt 10:2",
+      "word": "ταῦτα",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Matt 24:43",
+      "word": "ἐκεῖνο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 4:15",
+      "word": "οὗτοι",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 4:16",
+      "word": "οὗτοί",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 4:20",
+      "word": "ἐκεῖνοί",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 4:26",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 10:19",
+      "word": "τὰς ἐντολὰς",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 10:21",
+      "word": "ἕν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 12:10",
+      "word": "τὴν γραφὴν ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 12:24",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 12:31",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 16:17",
+      "word": "σημεῖα",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Mark 16:17",
+      "word": "ταῦτα",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 1:43",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 2:12",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 3:20",
+      "word": "καὶ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 4:23",
+      "word": "τὴν παραβολὴν ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 6:3",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 8:11",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 10:11",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 10:20",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 12:18",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 12:39",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 13:6",
+      "word": "ταύτην τὴν παραβολήν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 15:3",
+      "word": "τὴν παραβολὴν ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 18:9",
+      "word": "τὴν παραβολὴν ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 18:11",
+      "word": "ταῦτα",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 18:22",
+      "word": "ἕν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 19:31",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 20:9",
+      "word": "τὴν παραβολὴν ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 20:17",
+      "word": "τὸ γεγραμμένον τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 22:37",
+      "word": "τοῦτο τὸ γεγραμμένον",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Luke 24:44",
+      "word": "οὗτοι",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 1:19",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 3:19",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 5:18",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 6:29",
+      "word": "τοῦτό",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 6:39",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 6:40",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 8:47",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 9:25",
+      "word": "ἓν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 10:17",
+      "word": "διὰ τοῦτό",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 15:8",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 15:12",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 15:13",
+      "word": "ταύτης",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 16:17",
+      "word": "τοῦτο ὃ λέγει ἡμῖν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 16:19",
+      "word": "περὶ τούτου",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 17:3",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 21:1",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "John 21:23",
+      "word": "οὗτος ὁ λόγος",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 2:14",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 2:22",
+      "word": "τοὺς λόγους τούτους",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 7:6",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 8:32",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 9:21",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 13:34",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 13:47",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 15:28",
+      "word": "τούτων τῶν ἐπάναγκες",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 21:11",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 21:23",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 23:25",
+      "word": "τὸν τύπον τοῦτον",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 24:14",
+      "word": "τοῦτό",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 24:21",
+      "word": "περὶ μιᾶς ταύτης φωνῆς",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Acts 26:16",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 2:3",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 6:6",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 9:9",
+      "word": "οὗτος",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 9:17",
+      "word": "εἰς αὐτὸ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 10:6",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 11:27",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 13:9",
+      "word": "ἐν τῷ λόγῳ τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 13:11",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 14:9",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rom 14:13",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 1:12",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 4:1",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 7:29",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 7:37",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 9:3",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 11:17",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Cor 15:50",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 1:12",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 2:1",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 2:9",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 5:14",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 6:4",
+      "word": "ἐν παντὶ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 7:5",
+      "word": "ἐν παντὶ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 8:20",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 9:6",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 10:7",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 10:11",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 13:9",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Cor 13:10",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Gal 3:2",
+      "word": "τοῦτο μόνον",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Gal 3:17",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Gal 5:14",
+      "word": "ἐν ἑνὶ λόγῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Eph 4:17",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Eph 5:5",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Phil 1:6",
+      "word": "αὐτὸ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Phil 1:9",
+      "word": "καὶ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Phil 2:5",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Thess 2:13",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Thess 4:3",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Thess 4:15",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Thess 3:10",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Tim 1:9",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Tim 1:16",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Tim 1:18",
+      "word": "ταύτην τὴν παραγγελίαν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Tim 2:10",
+      "word": "ὃ πρέπει γυναιξὶν ἐπαγγελλομέναις θεοσέβειαν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Tim 5:10",
+      "word": "ἐν ἔργοις καλοῖς",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Tim 1:15",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Tim 2:19",
+      "word": "τὴν σφραγῖδα ταύτην",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Tim 3:1",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Titus 1:5",
+      "word": "τούτου χάριν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Phlm 1:15",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Heb 4:5",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Heb 8:10",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Heb 9:8",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Heb 10:16",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Jas 1:27",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Jas 2:12",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Jas 2:12",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Jas 4:1",
+      "word": "ἐντεῦθεν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Pet 2:15",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Pet 2:19",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1Pet 4:6",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Pet 1:20",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Pet 3:3",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Pet 3:5",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Pet 3:8",
+      "word": "ἓν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2Pet 3:8",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 1:5",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 2:3",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 2:5",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 2:25",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:1",
+      "word": "διὰ τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:8",
+      "word": "εἰς τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:10",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:11",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:16",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:23",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 3:24",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:2",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:9",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:10",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:13",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:17",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 4:21",
+      "word": "ταύτην τὴν ἐντολὴν",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:2",
+      "word": "ἐν τούτῳ",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:3",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:4",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:9",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:11",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "1John 5:14",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "2John 1:6",
+      "word": "αὕτη",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "3John 1:4",
+      "word": "τούτων",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 2:1",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 2:6",
+      "word": "τοῦτο",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 2:8",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 2:12",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 2:18",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 3:1",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 3:7",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 3:14",
+      "word": "τάδε",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 9:17",
+      "word": "οὕτως",
+      "type": "Cataphoric Focus"
+    },
+    {
+      "verse": "Rev 12:1",
+      "word": "σημεῖον μέγα",
+      "type": "Cataphoric Focus"
+    }
+  ]
+}
