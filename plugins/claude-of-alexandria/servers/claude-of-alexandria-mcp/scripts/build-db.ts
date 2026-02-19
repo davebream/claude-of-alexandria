@@ -22,12 +22,13 @@ interface LevinsohnFile {
 }
 
 function parseLevinsohnVerse(verseStr: string): { book: string; chapter: number; verse: number } | null {
-  // Format: "Matt 2:13" or "1Cor 3:1"
-  const spaceIdx = verseStr.lastIndexOf(' ');
+  // Format: "Matt 2:13" or "1Cor 3:1", or range "Mark 1:2 - 3" (strip range suffix, use start verse)
+  const normalized = verseStr.replace(/\s*-\s*\d+$/, '').trim();
+  const spaceIdx = normalized.lastIndexOf(' ');
   if (spaceIdx === -1) return null;
 
-  const bookAbbrev = verseStr.slice(0, spaceIdx).trim();
-  const chVerse = verseStr.slice(spaceIdx + 1).trim();
+  const bookAbbrev = normalized.slice(0, spaceIdx).trim();
+  const chVerse = normalized.slice(spaceIdx + 1).trim();
   const colonIdx = chVerse.indexOf(':');
   if (colonIdx === -1) return null;
 
