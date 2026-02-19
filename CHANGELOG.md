@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-19
+
+### Added
+
+- MCP server (`claude-of-alexandria-mcp`) exposing four query tools: `query_discourse_features`, `query_paragraph_breaks`, `query_vocabulary`, `query_morphology`
+- Pre-compiled SQLite database (71MB) bundling all reference data — no Python runtime required
+- Claude Desktop support via the bundled MCP server
+
+### Changed
+
+- `biblical-segmentation` and `exegetical-notes` skills now call MCP tools instead of Python scripts, improving reliability and removing runtime dependencies
+- Python parser scripts marked as archived (retained as reference for ETL validation)
+
 ## [1.2.0] - 2026-02-19
 
 ### Added

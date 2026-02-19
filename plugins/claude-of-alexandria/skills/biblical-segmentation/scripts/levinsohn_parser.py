@@ -13,6 +13,10 @@ Usage:
 Output:
     JSON with verse references for each discourse feature type.
 """
+# ARCHIVED: This script has been superseded by the claude-of-alexandria-mcp MCP server.
+# Retained as reference for data format and ETL validation baseline.
+# See: plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/scripts/build-db.ts
+
 
 import argparse
 import json

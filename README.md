@@ -126,6 +126,28 @@ cd claude-of-alexandria
 ln -s $(pwd)/plugins/claude-of-alexandria ~/.claude/plugins/claude-of-alexandria
 ```
 
+### Claude Desktop Setup
+
+The plugin ships an MCP server that provides biblical reference data (morphology, discourse features, vocabulary, paragraph markers). Claude Desktop needs to know how to start it.
+
+After installing the plugin via Claude Code marketplace, add this to your MCP settings (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "claude-of-alexandria-mcp": {
+      "command": "node",
+      "args": ["~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/dist/index.js"],
+      "env": {
+        "DATA_DIR": "~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/data"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Desktop after saving.
+
 ### Verifying Your Library Card
 
 Restart Claude Code, then:
