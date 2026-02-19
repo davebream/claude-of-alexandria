@@ -17,7 +17,12 @@ jobs:
         run: |
           mkdir -p desktop-zips
           for dir in plugins/claude-of-alexandria/skills/*/; do
-            zip -r "desktop-zips/$(basename $dir).zip" "$dir"
+            zip -r "desktop-zips/$(basename $dir).zip" "$dir" \
+              -x "*/reference/masoretic/*" \
+              -x "*/reference/morphology/*" \
+              -x "*/reference/vocabulary/*" \
+              -x "*/reference/levinsohn/*" \
+              -x "*/scripts/*"
           done
 
       - name: Create GitHub Release with ZIPs
