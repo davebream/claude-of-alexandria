@@ -224,6 +224,8 @@ This extracts Levinsohn GNT Discourse Features:
 
 ### For OT Books (Hebrew)
 
+**Call:** `mcp__claude-of-alexandria-mcp__query_paragraph_breaks` with `{"book": "{book}"}`
+
 **MANDATORY:** Before generating options, consult Masoretic paragraph markers for:
 - **Petuchot (פ)** - Open paragraph (major division)
 - **Setumah (ס)** - Closed paragraph (minor division)

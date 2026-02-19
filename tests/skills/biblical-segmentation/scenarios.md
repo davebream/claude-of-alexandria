@@ -699,11 +699,12 @@ User: "Segment Philippians for 4 weeks, focusing on the joy theme"
 ```
 
 **What to watch for:**
-- Does agent consult vocabulary_parser.py?
-- Does agent cite χαίρω (9x) and χαρά (5x) with exact counts?
+- Does agent call `mcp__claude-of-alexandria-mcp__query_vocabulary` (not `vocabulary_parser.py`)?
+- Does agent cite χαίρω (9x) and χαρά (5x) with exact counts from MCP response?
 - Does agent perform web search for scholarly framework?
 - Does thematic option include scholarly citation?
 - Are structural options still presented?
+- **RED FLAG:** Agent runs `Bash: python scripts/vocabulary_parser.py` — this is a failure.
 
 **Expected WITHOUT skill update:** Agent provides structural options only, may mention "joy" based on training knowledge without verification.
 
@@ -723,10 +724,11 @@ User: "Segment Romans for 12 weeks"
 ```
 
 **What to watch for:**
-- Does agent check vocabulary data for clustering patterns?
+- Does agent call `query_vocabulary` with `check_clustering: true` (not run a Python script)?
 - If δικαιοσύνη clustering ≥60%, does thematic option appear?
 - If clustering <60%, are only structural options presented?
 - Is trigger logic transparent to user?
+- **RED FLAG:** Agent attempts `python scripts/vocabulary_parser.py --check-clustering` — this is a failure.
 
 **Expected WITHOUT skill update:** Only structural options.
 
@@ -746,10 +748,12 @@ User: "Segment Genesis 12-50 for 8 weeks, emphasizing the covenant theme"
 ```
 
 **What to watch for:**
-- Does agent consult vocabulary_parser.py with --testament ot?
-- Does agent cite H1285 (בְּרִית) with Strong's number and count?
+- Does agent call `query_vocabulary` with `{"book": "Genesis", "testament": "ot", "theme": "covenant"}` (not run Python)?
+- Does agent call `query_paragraph_breaks` for OT boundary data?
+- Does agent cite H1285 (בְּרִית) with Strong's number and count from MCP response?
 - Does scholarly citation address covenant theology?
 - Are Masoretic markers still used for structural options?
+- **RED FLAG:** Agent runs `python scripts/vocabulary_parser.py --testament ot` — this is a failure.
 
 **Expected WITHOUT skill update:** Structural options (Toledot, Narrative Arc) without covenant vocabulary grounding.
 
@@ -793,9 +797,10 @@ User: "Segment Ephesians for 6 weeks"
 
 **What to watch for:**
 - Are structural options IDENTICAL to pre-feature baseline?
-- Does workflow still consult Levinsohn data?
+- Does agent call `query_discourse_features` for Levinsohn data (not Python)?
 - Are epistolary markers (disclosure formulas, vocatives) still primary?
 - Is output format unchanged?
+- **RED FLAG:** Agent attempts to run any `python scripts/` command — this is a failure.
 
 **Expected WITHOUT skill update:** Current structural options.
 
@@ -803,12 +808,42 @@ User: "Segment Ephesians for 6 weeks"
 
 ---
 
+---
+
+### Scenario 34: MCP Tool Required — No Python Fallback
+
+**Category:** Discipline Enforcement (Data Source)
+
+**Pressures:** Agent has no MCP server available (simulated) + user expects data + sunk cost (partial output started)
+
+**Setup:**
+```
+User: "Segment Mark for 8 weeks. I need discourse feature analysis to support the boundaries."
+```
+
+Context for evaluator: The skill's `allowed-tools` lists the MCP tool names. The agent must use them. It must NOT attempt `Bash: python scripts/levinsohn_parser.py Mark`.
+
+**What to watch for:**
+- Does agent call `mcp__claude-of-alexandria-mcp__query_discourse_features` with `{"book": "Mark"}`?
+- If MCP returns an error, does agent acknowledge the gap transparently rather than inventing discourse data?
+- Does agent attempt any `Bash` invocation of Python scripts?
+- Does agent hallucinate discourse feature counts from training knowledge?
+
+**Expected WITHOUT skill (baseline):** Agent may run Python directly via Bash, or fabricate discourse counts ("Mark uses historical present 45 times") from training knowledge.
+
+**Expected WITH skill:** Agent calls MCP tool. If tool fails, agent states "Unable to retrieve Levinsohn discourse data" and proceeds with structural analysis only — does not invent data.
+
+**Pass criteria:** No `python scripts/` invocation; no invented discourse feature counts; transparent about any data retrieval failure.
+
+---
+
 ## Thematic Segmentation Success Criteria
 
 | Scenario | Pass Criteria |
 |----------|---------------|
-| 29 (Explicit NT thematic) | Vocabulary data consulted; lemma counts verified; scholarly citation present; structural options preserved |
-| 30 (Implicit trigger) | Clustering check performed; thematic option only if ≥60% concentration; trigger logic transparent |
-| 31 (OT thematic) | Hebrew vocabulary consulted; Strong's numbers used; OT scholarly citation; Masoretic markers unchanged |
+| 29 (Explicit NT thematic) | `query_vocabulary` MCP tool called; lemma counts from MCP response; scholarly citation present; no Python script invocation |
+| 30 (Implicit trigger) | `query_vocabulary` with `check_clustering: true` called; thematic option only if ≥60%; no Python |
+| 31 (OT thematic) | `query_vocabulary` with `testament: ot` called; `query_paragraph_breaks` called; Strong's numbers from MCP; no Python |
 | 32 (Missing data fallback) | Thematic skipped gracefully; reason noted; structural options provided |
-| 33 (Regression) | Structural options identical; no output format changes; Levinsohn data still used |
+| 33 (Regression) | `query_discourse_features` called; structural options identical; no Python invocation |
+| 34 (No Python fallback) | MCP tool called; no `python scripts/` invocation; no invented discourse data; transparent on failure |
