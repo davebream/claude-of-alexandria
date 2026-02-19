@@ -70,3 +70,52 @@ export function loadLevinsohn(db: Database): void {
   stmt.free();
   console.log(`  Levinsohn: ${totalRows} rows, ${skipped} skipped`);
 }
+
+// ─── Masoretic ────────────────────────────────────────────────────────────────
+
+const MASORETIC_DIR = join(REFERENCE_DIR, 'masoretic');
+
+interface MasoreticFile {
+  book: string;
+  petuchot: string[];
+  setumot: string[];
+}
+
+export function loadMasoretic(db: Database): void {
+  const files = readdirSync(MASORETIC_DIR).filter(f => f.endsWith('.json'));
+  let totalRows = 0;
+
+  const stmt = db.prepare(`
+    INSERT INTO paragraph_markers (book, chapter, verse, marker_type)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  for (const filename of files) {
+    const stem = filename.replace('.json', '');
+    const bookInfo = lookupBook(stem);
+    if (!bookInfo) {
+      console.warn(`  WARN: Unknown book file: ${filename}`);
+      continue;
+    }
+
+    const data: MasoreticFile = JSON.parse(readFileSync(join(MASORETIC_DIR, filename), 'utf-8'));
+
+    const insertMarkers = (refs: string[], markerType: string) => {
+      for (const ref of refs ?? []) {
+        const colonIdx = ref.indexOf(':');
+        if (colonIdx === -1) continue;
+        const chapter = parseInt(ref.slice(0, colonIdx), 10);
+        const verse = parseInt(ref.slice(colonIdx + 1), 10);
+        if (isNaN(chapter) || isNaN(verse)) continue;
+        stmt.run([bookInfo.canonical, chapter, verse, markerType]);
+        totalRows++;
+      }
+    };
+
+    insertMarkers(data.petuchot, 'petuchah');
+    insertMarkers(data.setumot, 'setumah');
+  }
+
+  stmt.free();
+  console.log(`  Masoretic: ${totalRows} rows`);
+}
