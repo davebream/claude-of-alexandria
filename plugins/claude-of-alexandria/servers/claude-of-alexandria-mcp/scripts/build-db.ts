@@ -250,6 +250,41 @@ export function loadThematicKeywords(db: Database): void {
 
 // ─── Morphology ───────────────────────────────────────────────────────────────
 
+// Compact NT parsing JSON to reduce storage (~67% size reduction)
+const PARSING_KEY_MAP: Record<string, string> = {
+  case: 'c', number: 'n', gender: 'g', tense: 't',
+  voice: 'v', mood: 'm', person: 'p', degree: 'd',
+};
+const PARSING_VAL_MAP: Record<string, string> = {
+  nominative: 'nom', genitive: 'gen', dative: 'dat', accusative: 'acc', vocative: 'voc',
+  singular: 'sg', plural: 'pl', dual: 'du',
+  masculine: 'mas', feminine: 'fem', neuter: 'neu',
+  present: 'prs', aorist: 'aor', perfect: 'prf', imperfect: 'ipf',
+  future: 'fut', pluperfect: 'plpf',
+  active: 'act', middle: 'mid', passive: 'pas',
+  indicative: 'ind', subjunctive: 'sub', optative: 'opt',
+  imperative: 'imp', infinitive: 'inf', participle: 'ptc',
+  comparative: 'cmp', superlative: 'sup',
+};
+
+function compactNtParsing(parsing: Record<string, string>): string {
+  const out: Record<string, string> = {};
+  for (const [k, v] of Object.entries(parsing)) {
+    const ck = PARSING_KEY_MAP[k] ?? k;
+    const cv = PARSING_VAL_MAP[v] ?? v;
+    out[ck] = cv;
+  }
+  return JSON.stringify(out);
+}
+
+// Reverse map for decoding at query time (exported for use in tools)
+export const PARSING_KEY_EXPAND: Record<string, string> = Object.fromEntries(
+  Object.entries(PARSING_KEY_MAP).map(([k, v]) => [v, k])
+);
+export const PARSING_VAL_EXPAND: Record<string, string> = Object.fromEntries(
+  Object.entries(PARSING_VAL_MAP).map(([k, v]) => [v, k])
+);
+
 const MORPH_DIR = join(REFERENCE_DIR, 'morphology');
 
 // NT morphology word
@@ -327,6 +362,11 @@ export function loadMorphology(db: Database): void {
             normalized = w.morph_code ?? null;
           }
 
+          // NT: compact parsing JSON; OT: parsing null (morph_code already in normalized)
+          const parsingStr = (testament === 'nt' && word.parsing)
+            ? compactNtParsing(word.parsing as Record<string, string>)
+            : null;
+
           stmt.run([
             bookInfo.canonical,
             testament,
@@ -337,7 +377,7 @@ export function loadMorphology(db: Database): void {
             normalized,
             lemma,
             word.pos,
-            word.parsing ? JSON.stringify(word.parsing) : null,
+            parsingStr,
           ]);
           totalRows++;
         });
@@ -352,3 +392,37 @@ export function loadMorphology(db: Database): void {
   stmt.free();
   console.log(`\n  Morphology: ${totalRows} rows total`);
 }
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+
+const DB_PATH = join(__dirname, '../data/biblical.sqlite');
+
+async function main() {
+  console.log('Building biblical.sqlite...');
+  const start = Date.now();
+
+  const { createDatabase, saveDatabase } = await import('./create-schema');
+  const db = await createDatabase(DB_PATH);
+
+  console.log('Loading Levinsohn discourse features...');
+  loadLevinsohn(db);
+
+  console.log('Loading Masoretic paragraph markers...');
+  loadMasoretic(db);
+
+  console.log('Loading vocabulary and clusters...');
+  loadVocabulary(db);
+  loadThematicKeywords(db);
+
+  console.log('Loading morphology (this takes a while)...');
+  loadMorphology(db);
+
+  console.log('Saving database...');
+  saveDatabase(db, DB_PATH);
+  db.close();
+
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`Done in ${elapsed}s`);
+}
+
+main().catch(e => { console.error(e); process.exit(1); });
