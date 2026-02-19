@@ -1,0 +1,27 @@
+name: Package for Desktop
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create skill ZIPs
+        run: |
+          mkdir -p desktop-zips
+          for dir in plugins/claude-of-alexandria/skills/*/; do
+            zip -r "desktop-zips/$(basename $dir).zip" "$dir"
+          done
+
+      - name: Attach to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload ${{ github.ref_name }} desktop-zips/*.zip
