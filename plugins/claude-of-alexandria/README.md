@@ -2,6 +2,25 @@
 
 **Rigorous analytical skills for biblical study and teaching preparation.**
 
+## Architecture
+
+Version 1.3.0 replaced the bundled Python reference scripts with an MCP server backed by a pre-built SQLite database. Skills now call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — without requiring Python or any external runtime beyond Node.js.
+
+The result: the same data, delivered through a protocol that Claude Code and Claude Desktop both understand natively.
+
+## MCP Server
+
+The reference server exposes four tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+
+| Tool | Queries | Coverage |
+| ---- | ------- | -------- |
+| `query_discourse_features` | Levinsohn NT discourse features | NT |
+| `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
+| `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
+| `query_morphology` | Word-level morphological parsing | Both |
+
+Tech stack: TypeScript, sql.js (WebAssembly SQLite), MCP SDK. No Python needed.
+
 ## Available Skills
 
 ### biblical-segmentation
@@ -10,7 +29,7 @@ Divides biblical books into coherent teaching units with integrity safeguards:
 
 - **Refuses impossible divisions** - Won't pretend Philemon can be 12 sessions
 - **Presents multiple frameworks** - Because interpretation isn't a dictatorship
-- **Validates against ancient markers** - Masoretic פ/ס divisions, Levinsohn discourse features
+- **Validates against ancient markers** - Masoretic markers, Levinsohn discourse features
 - **Handles contested books** - Isaiah's unity debate gets frameworks, not false consensus
 
 **Coverage:** All 66 canonical books
@@ -64,4 +83,4 @@ All skills follow historical-grammatical method with theological guardrails:
 
 ## License
 
-MIT License - See repository root for details
+GNU General Public License v3.0 - See repository root for details.

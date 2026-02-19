@@ -102,7 +102,9 @@ Full RED/GREEN verification. Runs pericope check before generating notes — if 
 
 ## Installation
 
-### From Claude Code Marketplace
+Three paths into the library, depending on your reading room of choice.
+
+### Claude Code (Marketplace)
 
 In any Claude Code session:
 
@@ -111,9 +113,9 @@ In any Claude Code session:
 /plugin install claude-of-alexandria@claude-of-alexandria
 ```
 
-That's it. The scrolls are now on your shelf.
+The scrolls are now on your shelf. The MCP server is included and auto-configured — no additional setup required.
 
-### Manual Installation (Advanced)
+### Claude Code (Manual)
 
 If you prefer manual installation or want to contribute:
 
@@ -122,41 +124,86 @@ If you prefer manual installation or want to contribute:
 git clone https://github.com/davebream/claude-of-alexandria.git
 cd claude-of-alexandria
 
+# Build the MCP server (dist/ is gitignored — this step is not optional)
+cd plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp
+npm install && npm run build
+cd ../../../..
+
 # Symlink the plugin
 ln -s $(pwd)/plugins/claude-of-alexandria ~/.claude/plugins/claude-of-alexandria
 ```
 
-### Claude Desktop Setup
+Without the build step, skills fall back to training memory — which is precisely the failure mode this library exists to prevent.
 
-The plugin ships an MCP server that provides biblical reference data (morphology, discourse features, vocabulary, paragraph markers). Claude Desktop needs to know how to start it.
+### Claude Desktop
 
-After installing the plugin via Claude Code marketplace, add this to your MCP settings (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Claude Desktop requires three things: the skill frameworks (as project knowledge), the reference server (running locally), and the MCP configuration (so Claude Desktop knows where to find the server).
+
+**Step 1: Download the Skills**
+
+Download the skill ZIPs from the latest release:
+
+| Skill | Download |
+| ----- | -------- |
+| biblical-segmentation | [biblical-segmentation.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/biblical-segmentation.zip) |
+| pericope-delimitation | [pericope-delimitation.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/pericope-delimitation.zip) |
+| exegetical-notes | [exegetical-notes.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/exegetical-notes.zip) |
+
+Each ZIP contains the skill framework (`SKILL.md` and supporting files). The linguistic reference datasets are provided by the MCP server, not bundled in the ZIPs.
+
+Extract each ZIP. Add the contents of `SKILL.md` as project knowledge in Claude Desktop.
+
+**Step 2: Set Up the Reference Server**
+
+*Option A — From release tarball (no git clone needed):*
+
+Download [claude-of-alexandria-mcp.tar.gz](https://github.com/davebream/claude-of-alexandria/releases/latest/download/claude-of-alexandria-mcp.tar.gz) from the latest release. Extract it, then install production dependencies:
+
+```bash
+tar xzf claude-of-alexandria-mcp.tar.gz
+cd claude-of-alexandria-mcp
+npm ci --production
+```
+
+*Option B — From source:*
+
+```bash
+git clone https://github.com/davebream/claude-of-alexandria.git
+cd claude-of-alexandria/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp
+npm install && npm run build
+```
+
+Requires Node.js 18 or later.
+
+**Step 3: Configure Claude Desktop**
+
+Add the server to your Claude Desktop MCP configuration:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "claude-of-alexandria-mcp": {
       "command": "node",
-      "args": ["~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/dist/index.js"],
+      "args": ["/FULL/PATH/TO/servers/claude-of-alexandria-mcp/dist/index.js"],
       "env": {
-        "DATA_DIR": "~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/data"
+        "DATA_DIR": "/FULL/PATH/TO/servers/claude-of-alexandria-mcp/data"
       }
     }
   }
 }
 ```
 
+Replace `/FULL/PATH/TO/` with the actual path to your installation. If you installed via Claude Code marketplace, the paths are at `~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/` — skip the clone.
+
 Restart Claude Desktop after saving.
 
 ### Verifying Your Library Card
 
-Restart Claude Code, then:
-
-```
-/skills
-```
-
-You should see `biblical-segmentation` listed. If you do not, the shelving went poorly. Try again.
+- **Claude Code:** Run `/skills` and look for all three skills — `biblical-segmentation`, `pericope-delimitation`, and `exegetical-notes`.
+- **Claude Desktop:** Ask Claude to use `query_vocabulary` for any biblical book. If data returns, the server is working. If it does not, check the MCP configuration paths and restart.
 
 ### Usage
 
@@ -167,6 +214,21 @@ Use biblical-segmentation to divide Romans into 12 sessions for a sermon series.
 ```
 
 Consult the [plugin README](plugins/claude-of-alexandria/README.md) for detailed skill documentation.
+
+## The Reference Server
+
+Version 1.3.0 replaced the bundled Python parsing scripts with an MCP server backed by a pre-built SQLite database. The data is the same — Levinsohn discourse features, Masoretic paragraph markers, morphological parsings, vocabulary frequencies — but the delivery mechanism now speaks a protocol that both Claude Code and Claude Desktop understand natively.
+
+| Tool | What It Queries | Coverage |
+| ---- | --------------- | -------- |
+| `query_discourse_features` | Levinsohn NT discourse features | NT |
+| `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
+| `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both testaments |
+| `query_morphology` | Word-level morphological parsing | Both testaments |
+
+Skills call these tools automatically. You do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+
+Tech stack: TypeScript, sql.js (WebAssembly SQLite), MCP SDK. No Python runtime required.
 
 ## Hermeneutical Framework
 
