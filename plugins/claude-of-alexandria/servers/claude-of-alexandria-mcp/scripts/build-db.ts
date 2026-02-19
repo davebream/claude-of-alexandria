@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { Database } from 'sql.js';
+import yaml from 'js-yaml';
 import { lookupBook } from '../src/db/books';
 
 const REFERENCE_DIR = join(__dirname, '../../../skills/biblical-segmentation/reference');
@@ -118,4 +119,131 @@ export function loadMasoretic(db: Database): void {
 
   stmt.free();
   console.log(`  Masoretic: ${totalRows} rows`);
+}
+
+// ─── Vocabulary ───────────────────────────────────────────────────────────────
+
+const VOCAB_DIR = join(REFERENCE_DIR, 'vocabulary');
+
+const MIN_OCCURRENCES = 5;
+const MIN_CHAPTERS = 2;
+const MAX_CHAPTERS = 4;
+const CLUSTERING_THRESHOLD = 0.6;
+
+interface LemmaData {
+  total: number;
+  by_chapter: Record<number, number>;
+}
+
+interface VocabFile {
+  books: Record<string, {
+    total_lemmas: number;
+    lemmas: Record<string, LemmaData>;
+  }>;
+}
+
+function findBestCluster(
+  byChapter: Record<number, number>
+): { start: number; end: number; concentration: number } | null {
+  const chapters = Object.keys(byChapter).map(Number).sort((a, b) => a - b);
+  const total = Object.values(byChapter).reduce((a, b) => a + b, 0);
+
+  if (total < MIN_OCCURRENCES || chapters.length < MIN_CHAPTERS) return null;
+
+  let best = { start: 0, end: 0, concentration: 0 };
+
+  for (let size = MIN_CHAPTERS; size <= MAX_CHAPTERS; size++) {
+    for (let i = 0; i <= chapters.length - size; i++) {
+      const start = chapters[i];
+      const end = chapters[i + size - 1];
+      const inRange = chapters.slice(i, i + size).reduce(
+        (sum, ch) => sum + (byChapter[ch] ?? 0), 0
+      );
+      const concentration = inRange / total;
+      if (concentration > best.concentration) {
+        best = { start, end, concentration };
+      }
+    }
+  }
+
+  return best.concentration >= CLUSTERING_THRESHOLD ? best : null;
+}
+
+export function loadVocabulary(db: Database): void {
+  const vocabStmt = db.prepare(`
+    INSERT INTO vocabulary (book, testament, chapter, lemma, frequency)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+  const clusterStmt = db.prepare(`
+    INSERT INTO vocabulary_clusters (book, testament, lemma, concentration, chapter_start, chapter_end, total_occurrences)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  let vocabRows = 0;
+  let clusterRows = 0;
+
+  for (const testament of ['nt', 'ot'] as const) {
+    const filePath = join(VOCAB_DIR, `${testament}_lemmas.yaml`);
+    const data = yaml.load(readFileSync(filePath, 'utf-8')) as VocabFile;
+
+    for (const [bookDisplayName, bookData] of Object.entries(data.books ?? {})) {
+      const bookInfo = lookupBook(bookDisplayName);
+      if (!bookInfo) {
+        console.warn(`  WARN: Unknown book in ${testament}_lemmas.yaml: ${bookDisplayName}`);
+        continue;
+      }
+      const canonical = bookInfo.canonical;
+
+      for (const [lemma, lemmaData] of Object.entries(bookData.lemmas ?? {})) {
+        const byChapter = lemmaData.by_chapter ?? {};
+        for (const [chStr, freq] of Object.entries(byChapter)) {
+          vocabStmt.run([canonical, testament, parseInt(chStr, 10), lemma, freq]);
+          vocabRows++;
+        }
+
+        const cluster = findBestCluster(byChapter);
+        if (cluster) {
+          clusterStmt.run([
+            canonical, testament, lemma,
+            cluster.concentration, cluster.start, cluster.end,
+            lemmaData.total
+          ]);
+          clusterRows++;
+        }
+      }
+    }
+  }
+
+  vocabStmt.free();
+  clusterStmt.free();
+  console.log(`  Vocabulary: ${vocabRows} rows, ${clusterRows} clusters`);
+}
+
+export function loadThematicKeywords(db: Database): void {
+  const filePath = join(VOCAB_DIR, 'semantic_groups.yaml');
+  const data = yaml.load(readFileSync(filePath, 'utf-8')) as {
+    semantic_groups: Record<string, {
+      nt_lemmas: Record<string, string>;
+      ot_strongs: Record<string, unknown>;
+    }>;
+  };
+
+  const stmt = db.prepare(`
+    INSERT INTO thematic_keywords (theme, lemma, testament) VALUES (?, ?, ?)
+  `);
+
+  let rows = 0;
+  for (const [theme, group] of Object.entries(data.semantic_groups ?? {})) {
+    for (const lemma of Object.keys(group.nt_lemmas ?? {})) {
+      stmt.run([theme, lemma, 'nt']);
+      rows++;
+    }
+    for (const strongsNum of Object.keys(group.ot_strongs ?? {})) {
+      stmt.run([theme, strongsNum, 'ot']);
+      rows++;
+    }
+  }
+
+  stmt.free();
+  console.log(`  Thematic keywords: ${rows} rows`);
 }
