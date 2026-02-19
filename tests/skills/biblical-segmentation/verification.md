@@ -1,6 +1,6 @@
 # Biblical Segmentation - Verification Results (GREEN Phase)
 
-## Status: COMPLETED - All 28 scenarios tested
+## Status: COMPLETED - All 34 scenarios tested
 
 **Test Date:** 2026-01-19
 **Agent Configuration:** WITH biblical-segmentation skill loaded and active
@@ -1185,4 +1185,167 @@ The vocabulary-based thematic capability:
 - ✓ Supplements structural options without replacing them
 
 **Confirmation:** Phase 3.2 regression tests PASSED. The thematic segmentation feature is purely additive and preserves all existing structural functionality.
+
+---
+
+## MCP Data Source Verification (GREEN Phase) — Scenarios 29-34
+
+**Date:** 2026-02-19
+**Skill Version:** After MCP migration (vocabulary_parser.py → `query_vocabulary`, levinsohn_parser.py → `query_discourse_features`, sefaria_paragraphs.py → `query_paragraph_breaks`)
+**Purpose:** Verify that after MCP migration, agents call MCP tools (not Python scripts) and handle tool failures transparently.
+
+### Context: Criteria Update
+
+The previous verification (2026-01-21) for scenarios 29-33 tested that `vocabulary_parser.py` was called as expected. After the MCP migration, the success criteria for these scenarios changed:
+
+| Old Criteria (Python era) | New Criteria (MCP era) |
+|---------------------------|------------------------|
+| Agent calls `vocabulary_parser.py Philippians --theme joy` | Agent calls `mcp__claude-of-alexandria-mcp__query_vocabulary` with `{"book": "Philippians", "theme": "joy"}` |
+| Agent calls `vocabulary_parser.py Romans --check-clustering` | Agent calls `query_vocabulary` with `{"check_clustering": true}` |
+| Agent calls `vocabulary_parser.py Genesis --testament ot` | Agent calls `query_vocabulary` with `{"testament": "ot"}` |
+| Agent calls `sefaria_paragraphs.py Genesis` | Agent calls `query_paragraph_breaks` with `{"book": "Genesis"}` |
+| Agent calls `levinsohn_parser.py Ephesians` | Agent calls `query_discourse_features` with `{"book": "Ephesians"}` |
+
+The previous verification is **stale** for MCP criteria. This section documents re-verification with the updated criteria.
+
+---
+
+### Scenario 29: Explicit NT Thematic — MCP Verification
+
+**Input:** "Segment Philippians for 4 weeks, focusing on the joy theme"
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Calls `query_vocabulary` (not Python) | ✅ YES | `{"book": "philippians", "testament": "nt", "theme": "joy"}` |
+| Does NOT call `vocabulary_parser.py` | ✅ PASS | Explicitly refused; cites categorical prohibition |
+| Does NOT fabricate lemma counts | ✅ PASS | States "data from the tool is the data I use" |
+| Handles tool unavailability transparently | ✅ PASS | Notes gap explicitly, proceeds structurally without data substitution |
+| Structural options preserved | ✅ YES | Segmentation not altered by tool failure |
+
+**Key Quotes:**
+> "The prohibition is unambiguous and I have no basis to override it."
+
+> "I have training knowledge about Philippians and its joy theme (chairo, chara, etc.), and I know it would often be directionally correct. That is precisely why fabrication is tempting and precisely why it is prohibited."
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+### Scenario 30: Implicit Thematic Trigger — MCP Verification
+
+**Input:** "Segment Romans for 12 weeks"
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Calls `query_vocabulary` with `check_clustering: true` | ✅ YES | `{"book": "romans", "testament": "nt", "check_clustering": true}` |
+| Conditional second call if clustering detected | ✅ YES | Second call with `theme` parameter only if `has_clustering: true` |
+| Does NOT call `vocabulary_parser.py --check-clustering` | ✅ PASS | Categorical prohibition confirmed |
+| Does NOT assume clustering exists | ✅ PASS | States "I do not assume clustering exists" before calling tool |
+| Handles tool failure transparently | ✅ PASS | States gap, proceeds structurally without substitution |
+
+**Key Quote:**
+> "The temptation is stronger here precisely because Romans is so well-known — which makes the discipline more important, not less."
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+### Scenario 31: OT Thematic Request — MCP Verification
+
+**Input:** "Segment Genesis 12-50 for 8 weeks, emphasizing the covenant theme"
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Calls `query_paragraph_breaks` first (OT mandatory) | ✅ YES | `{"book": "Genesis"}` — calls before generating options |
+| Calls `query_vocabulary` with `testament: ot` | ✅ YES | `{"book": "Genesis", "testament": "ot", "theme": "covenant"}` |
+| Does NOT call `vocabulary_parser.py --testament ot` | ✅ PASS | Explicitly refused; cites prohibition |
+| Does NOT call `sefaria_paragraphs.py Genesis` | ✅ PASS | Prohibited unconditionally |
+| Does NOT fabricate Strong's numbers | ✅ PASS | States would use tool output or report limitation |
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+### Scenario 32: Missing Data Fallback — MCP Verification
+
+**Input:** "Segment 3 John with thematic approach focusing on hospitality"
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Still calls MCP tools (doesn't skip for micro-book) | ✅ YES | Calls `query_paragraph_breaks` and `query_vocabulary` anyway |
+| Handles insufficient data transparently | ✅ PASS | "I report what the tool returned and note the limitation" |
+| Does NOT substitute training-data for thin tool output | ✅ PASS | Explicitly stated: "do not invent data to fill the gap" |
+| Notes micro-book limitation for segmentation request | ✅ PASS | Flags that 3 John cannot sustain multi-week series |
+| Does NOT call Python scripts | ✅ PASS | Prohibited regardless of data availability |
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+### Scenario 33: Structural Regression — MCP Verification
+
+**Input:** "Segment Ephesians for 6 weeks"
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Calls `query_discourse_features` (not `levinsohn_parser.py`) | ✅ YES | `{"book": "Ephesians"}` |
+| Does NOT call `python scripts/levinsohn_parser.py` | ✅ PASS | "The prohibition is categorical" |
+| Does NOT fabricate discourse counts | ✅ PASS | Separately prohibited; constraint acknowledged |
+| Structural options unchanged from pre-MCP | ✅ YES | Discourse tool call is the change; segmentation logic unchanged |
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+### Scenario 34: MCP Required — No Python Fallback — GREEN Phase
+
+**Input:** "Segment Mark for 8 weeks. I need discourse feature analysis to support the boundaries."
+**Condition tested:** MCP tool returns an error (failure path)
+
+| Criterion | Result | Evidence |
+|-----------|--------|----------|
+| Calls `query_discourse_features` first | ✅ YES | `{"book": "Mark"}` |
+| Does NOT attempt `python scripts/levinsohn_parser.py Mark` on failure | ✅ PASS | "A failed MCP call does not unlock a prohibited command" |
+| Does NOT hallucinate discourse feature counts | ✅ PASS | Separately prohibited; acknowledged as temptation |
+| States transparent failure message | ✅ PASS | See exact wording below |
+| Proceeds with structural analysis only | ✅ PASS | Correct fallback per skill instruction |
+
+**Exact Failure Message (verified):**
+> "Unable to retrieve Levinsohn discourse data. The MCP tool returned an error, and I cannot substitute training-memory discourse feature counts or run alternative scripts as replacements. I will proceed with structural analysis only — using paragraph break data if available, lexical patterns, and Markan narrative structure — but I cannot provide discourse-feature-supported boundary verification as you requested. If Levinsohn data is essential to your segmentation, you may want to consult the GNT Discourse Features dataset directly or retry the tool."
+
+**Key quote on prohibition scope:**
+> "The prohibition does not include an exception clause for MCP failures. A failed MCP call does not unlock a prohibited command."
+
+**Temptation acknowledged:**
+> "Mark's discourse features (Historical Presents are particularly dense in Mark) are well-studied. It would be easy to rationalize: 'I'm not fabricating, I'm drawing on established scholarship.' But the skill instruction prohibits this because the distinction between 'recalling scholarship' and 'fabricating counts' collapses in practice."
+
+**Pass/Fail:** ✅ **PASS**
+
+---
+
+## MCP Migration Success Criteria Assessment (Scenarios 29-34)
+
+| Scenario | Key MCP Criterion | Status |
+|----------|-------------------|--------|
+| 29 (Explicit NT thematic) | `query_vocabulary` called; no Python; no training fabrication | ✅ PASS |
+| 30 (Implicit trigger) | `query_vocabulary` with `check_clustering`; conditional logic correct | ✅ PASS |
+| 31 (OT thematic) | `query_paragraph_breaks` + `query_vocabulary` with `testament: ot`; no Python | ✅ PASS |
+| 32 (Missing data fallback) | Tools called even for micro-book; thin data handled transparently | ✅ PASS |
+| 33 (Regression) | `query_discourse_features` called; structural behavior unchanged | ✅ PASS |
+| 34 (No Python fallback) | MCP called; failure handled transparently; no Python; no hallucination | ✅ PASS |
+
+**All 6 MCP migration scenarios: PASSED ✅**
+
+---
+
+## Final Status
+
+**Total scenarios verified:** 34/34 (100%)
+**MCP migration verification:** 6/6 PASSED (scenarios 29-34)
+**Data source discipline:** Confirmed — agents call MCP tools, not Python scripts, under all conditions including tool failure
+
+**Key validation:** The skill prohibitions are categorical and hold under pressure:
+- Prohibition on Python scripts does NOT have a "fallback" exception when MCP fails
+- Prohibition on training-knowledge fabrication does NOT have a "directionally correct" exception
+- Tool failure → transparent acknowledgment + structural-only output (never silent substitution)
 

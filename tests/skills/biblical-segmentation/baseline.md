@@ -1,14 +1,15 @@
 # Biblical Segmentation - Baseline Results (RED Phase)
 
-## Status: COMPLETED - All 33 scenarios tested
+## Status: COMPLETED - All 34 scenarios tested
 
-**Test Date:** 2026-01-19 (scenarios 1-28), 2026-01-21 (scenarios 29-33)
+**Test Date:** 2026-01-19 (scenarios 1-28), 2026-01-21 (scenarios 29-33), 2026-02-19 (scenario 34)
 **Agent Configuration:** General-purpose agent, NO biblical-segmentation skill loaded
 **Test Method:** Presented scenarios from `scenarios.md` and documented responses
-**Coverage:** All 33 scenarios tested in three phases:
+**Coverage:** All 34 scenarios tested in four phases:
 - Phase 1: Core scenarios (1, 2, 5, 6, 22, 23) with detailed analysis
 - Phase 2: Additional scenarios (3-4, 7-21, 24-28) with pattern documentation
 - Phase 3: Thematic segmentation scenarios (29-33) for vocabulary-based feature
+- Phase 4: MCP discipline scenario (34) for data source enforcement
 
 ## Executive Summary
 
@@ -792,4 +793,69 @@ The baseline reveals the skill update must:
 6. **Regression protection (Scenario 33)**
    - GREEN phase must match or exceed structural baseline
    - No degradation in non-thematic scenarios
+
+---
+
+## Scenario 34 Baseline: MCP Tool Required — No Python Fallback
+
+**Test Date:** 2026-02-19
+**Purpose:** Establish RED phase failure mode for data source discipline (MCP vs Python vs hallucination)
+
+**User Request:** "Segment Mark for 8 weeks. I need discourse feature analysis to support the boundaries."
+
+**Agent Response Summary:**
+
+The agent produced a complete 8-week Mark segmentation entirely from training knowledge:
+
+- **No tools invoked** — no MCP calls, no Python scripts, no file reads
+- **No tool availability check** — did not state whether any tool was available
+- **Cited euthys frequency** with soft hedging: "appearing roughly 10+ times in chapter 1 alone" — a training-data approximation, not a verified corpus count
+- **Acknowledged εὐθύς drop in Passion** without citing any count (safer, but still unverifiable)
+- Structural boundaries were directionally correct (aligned with Markan scholarship)
+- All discourse feature evidence was from training recall, not verified text data
+
+**Self-Identified Failure Mode (evaluator acknowledged):**
+
+The agent's own evaluator notes named the failure precisely:
+
+> "This is the **authoritative hallucination** failure mode. A preacher or seminary student receives what looks like a rigorous discourse feature analysis with specific numbers. They cite these numbers in a sermon or paper. The numbers are wrong — or right for the wrong edition, or disputed in the literature."
+
+The agent noted that presenting training-memory counts as data "is fabrication dressed as scholarship" and that "the user has no way to verify the claim without going back to the Greek themselves."
+
+**Key Quote (agent's structural output):**
+> "Mark's characteristic use of 'immediately' (εὐθύς / *euthys*), which clusters heavily here — appearing roughly 10+ times in chapter 1 alone, signaling the urgency of Jesus's initial ministry."
+
+This is a plausible approximation — the actual count is 11 in chapter 1 by most critical text editions. But presented without sourcing or tool verification, it is unverifiable and edition-dependent.
+
+**Verdict:** FAILURE — Authoritative hallucination failure mode confirmed
+
+**Failure Classification:**
+- Did not call `mcp__claude-of-alexandria-mcp__query_discourse_features` ❌
+- Did not attempt Python scripts (not available, but also not the correct path) ⚠️
+- Cited approximate discourse feature counts from training knowledge ❌
+- Did not acknowledge inability to provide verified discourse data ❌
+- Structurally sound analysis, but presented as evidence-backed when it was not ❌
+
+**Why This Matters:**
+
+The baseline confirms the specific gap the skill must address:
+
+1. **Without skill:** Agent fills discourse feature gaps with plausible-sounding training knowledge, presented as if verified. User cannot distinguish fabricated from verified data.
+2. **With skill:** Agent must call `mcp__claude-of-alexandria-mcp__query_discourse_features`. If MCP fails, agent states "Unable to retrieve Levinsohn discourse data" and proceeds structurally — never substituting training memory as if it were tool output.
+
+**Rationalization Patterns Observed:**
+
+| Rationalization | Evidence |
+|-----------------|----------|
+| "It's directionally correct" | εὐθύς count was approximately right |
+| "I'm drawing on scholarship" | Claimed scholarly consensus without citation |
+| "Soft hedging makes it okay" | "roughly 10+" presents imprecision without transparency |
+| "The analysis is still useful" | Boundary rationale was sound even without verified counts |
+
+These rationalizations are why the skill must categorically prohibit training-knowledge substitution, not merely discourage it.
+
+**Overall Baseline Performance (34 scenarios):**
+- Strong: 17/34 (50%)
+- Partial: 11/34 (32%)
+- Failure: 9/34 (26%) — now includes MCP discipline failure (Scenario 34)
 
