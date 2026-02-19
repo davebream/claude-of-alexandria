@@ -247,3 +247,108 @@ export function loadThematicKeywords(db: Database): void {
   stmt.free();
   console.log(`  Thematic keywords: ${rows} rows`);
 }
+
+// ─── Morphology ───────────────────────────────────────────────────────────────
+
+const MORPH_DIR = join(REFERENCE_DIR, 'morphology');
+
+// NT morphology word
+interface NtWordEntry {
+  text: string;
+  normalized?: string;
+  lemma: string;
+  pos: string;
+  parsing?: Record<string, string>;
+}
+
+// OT morphology word (different structure)
+interface OtWordEntry {
+  text: string;
+  strongs?: string[];
+  morph_code?: string;
+  pos: string;
+  parsing?: Record<string, string>;
+}
+
+interface MorphologyFile {
+  verses: Record<string, (NtWordEntry | OtWordEntry)[]>;
+}
+
+export function loadMorphology(db: Database): void {
+  const stmt = db.prepare(`
+    INSERT INTO morphology
+      (book, testament, chapter, verse, word_position, text, normalized, lemma, pos, parsing)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  let totalRows = 0;
+
+  for (const testament of ['nt', 'ot'] as const) {
+    const dir = join(MORPH_DIR, testament);
+    let files: string[];
+    try {
+      files = readdirSync(dir).filter(f => f.endsWith('.json'));
+    } catch {
+      console.warn(`  WARN: morphology/${testament}/ not found, skipping`);
+      continue;
+    }
+
+    for (const filename of files) {
+      const stem = filename.replace('.json', '');
+      const bookInfo = lookupBook(stem);
+      if (!bookInfo) {
+        console.warn(`  WARN: Unknown book file: morphology/${testament}/${filename}`);
+        continue;
+      }
+
+      const data: MorphologyFile = JSON.parse(
+        readFileSync(join(dir, filename), 'utf-8')
+      );
+
+      for (const [verseKey, words] of Object.entries(data.verses ?? {})) {
+        const colonIdx = verseKey.indexOf(':');
+        if (colonIdx === -1) continue;
+        const chapter = parseInt(verseKey.slice(0, colonIdx), 10);
+        const verse = parseInt(verseKey.slice(colonIdx + 1), 10);
+        if (isNaN(chapter) || isNaN(verse)) continue;
+
+        words.forEach((word, idx) => {
+          let lemma: string;
+          let normalized: string | null;
+
+          if (testament === 'nt') {
+            const w = word as NtWordEntry;
+            lemma = w.lemma ?? word.text;
+            normalized = w.normalized ?? null;
+          } else {
+            const w = word as OtWordEntry;
+            // Use first Strong's number as lemma, morph_code as normalized
+            lemma = (w.strongs && w.strongs.length > 0) ? w.strongs[0] : word.text;
+            normalized = w.morph_code ?? null;
+          }
+
+          stmt.run([
+            bookInfo.canonical,
+            testament,
+            chapter,
+            verse,
+            idx + 1,
+            word.text,
+            normalized,
+            lemma,
+            word.pos,
+            word.parsing ? JSON.stringify(word.parsing) : null,
+          ]);
+          totalRows++;
+        });
+      }
+
+      if (totalRows % 100_000 === 0 && totalRows > 0) {
+        process.stdout.write(`\r  Morphology: ${totalRows} rows...`);
+      }
+    }
+  }
+
+  stmt.free();
+  console.log(`\n  Morphology: ${totalRows} rows total`);
+}
