@@ -1,0 +1,66 @@
+import { z } from 'zod';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { getAllBooks } from '../db/books.js';
+import { query } from '../db/query.js';
+
+export const ListBooksInputSchema = {
+  testament: z.enum(['nt', 'ot']).optional().describe(
+    'Filter by testament. Omit to list all 66 books.'
+  ),
+  include_themes: z.boolean().optional().describe(
+    'Include available thematic keyword groups for vocabulary queries (default: false)'
+  ),
+};
+
+export type ListBooksInput = z.output<z.ZodObject<typeof ListBooksInputSchema>>;
+
+export const ListBooksOutputSchema = {
+  total: z.number(),
+  ot: z.array(z.string()).optional(),
+  nt: z.array(z.string()).optional(),
+  available_tools: z.array(z.string()),
+  themes: z.object({
+    ot: z.array(z.string()),
+    nt: z.array(z.string()),
+  }).optional(),
+};
+
+export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
+  const allBooks = getAllBooks();
+  const filtered = args.testament
+    ? allBooks.filter(b => b.testament === args.testament)
+    : allBooks;
+
+  const ot = filtered.filter(b => b.testament === 'ot').map(b => b.displayName);
+  const nt = filtered.filter(b => b.testament === 'nt').map(b => b.displayName);
+
+  const result: Record<string, unknown> = {
+    total: filtered.length,
+    ot: ot.length > 0 ? ot : undefined,
+    nt: nt.length > 0 ? nt : undefined,
+    available_tools: [
+      'query_morphology — word-level parsing for any book (OT + NT)',
+      'query_vocabulary — lemma frequencies + thematic keywords (OT + NT)',
+      'query_discourse_features — Levinsohn discourse markers (NT only)',
+      'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
+    ],
+  };
+
+  if (args.include_themes) {
+    const themeRows = await query(
+      'SELECT DISTINCT theme, testament FROM thematic_keywords ORDER BY testament, theme',
+      []
+    );
+    const themes: Record<string, string[]> = { ot: [], nt: [] };
+    for (const row of themeRows) {
+      const t = row.testament as string;
+      if (t === 'ot' || t === 'nt') themes[t].push(row.theme as string);
+    }
+    result.themes = themes;
+  }
+
+  return {
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
+  };
+}
