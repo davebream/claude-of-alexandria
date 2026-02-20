@@ -1,4 +1,4 @@
-import { query } from '../db/query.js';
+import { query, type QueryResult } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 
 export async function queryVocabulary(args: Record<string, unknown>): Promise<unknown> {

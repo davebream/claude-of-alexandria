@@ -219,36 +219,37 @@ DISCOURSE_BOOKS = [
 ]
 
 PARA_BOOKS = [
-    ('genesis', 'genesis'),
-    ('deuteronomy', 'deuteronomy'),
-    ('psalms', 'psalms'),
+    ('Genesis', 'genesis'),
+    ('Deuteronomy', 'deuteronomy'),
+    ('Psalms', 'psalms'),
 ]
 
 
 def test_remote(client: MCPClient):
+    global passed, failed
+
     print('\n[Remote MCP — Discourse Features]')
     for book_name, book_canonical in DISCOURSE_BOOKS:
         try:
             result = client.call_tool('query_discourse_features', {'book': book_name})
             summary = result.get('summary', {})
-            remote_total = sum(summary.get(f, 0) for f in SEGMENTATION_FEATURES)
+            remote_total = sum(normalize(summary.get(f, 0)) for f in SEGMENTATION_FEATURES)
             db_counts = db_discourse(book_canonical)
-            db_total = sum(db_counts.get(f, 0) for f in SEGMENTATION_FEATURES)
+            db_total = sum(normalize(db_counts.get(f, 0)) for f in SEGMENTATION_FEATURES)
             check(f'{book_name} total (6 features)', db_total, remote_total)
         except Exception as e:
             print(f'  ERROR testing {book_name}: {e}')
-            global failed
             failed += 1
 
     print('\n[Remote MCP — Paragraph Markers]')
     for book_name, book_canonical in PARA_BOOKS:
         try:
-            result = client.call_tool('query_paragraph_breaks', {'book': book_name.title()})
+            result = client.call_tool('query_paragraph_breaks', {'book': book_name})
             db = db_paragraphs(book_canonical)
             summary = result.get('summary', {})
-            check(f'{book_name} petuchot', db['petuchot'], summary.get('petuchot', 0))
-            check(f'{book_name} setumot', db['setumot'], summary.get('setumot', 0))
-            check(f'{book_name} total', db['total'], summary.get('total', 0))
+            check(f'{book_name} petuchot', normalize(db['petuchot']), normalize(summary.get('petuchot', 0)))
+            check(f'{book_name} setumot', normalize(db['setumot']), normalize(summary.get('setumot', 0)))
+            check(f'{book_name} total', normalize(db['total']), normalize(summary.get('total', 0)))
         except Exception as e:
             print(f'  ERROR testing {book_name}: {e}')
             failed += 1
@@ -258,7 +259,7 @@ def test_remote(client: MCPClient):
         result = client.call_tool('query_vocabulary', {'book': 'Mark'})
         remote_lemmas = result.get('total_lemmas', len(result.get('lemmas', [])))
         db_lemmas = db_vocabulary('mark', 'nt')
-        check('Mark NT lemmas match', db_lemmas, remote_lemmas)
+        check('Mark NT lemmas match', normalize(db_lemmas), normalize(remote_lemmas))
     except Exception as e:
         print(f'  ERROR testing vocabulary: {e}')
         failed += 1
@@ -268,7 +269,7 @@ def test_remote(client: MCPClient):
         result = client.call_tool('query_morphology', {'book': 'John', 'range': '1:1-1:18'})
         remote_count = result.get('summary', {}).get('total_words', 0)
         db_count = db_morphology_count('john', 'nt', '1:1-1:18')
-        check('John 1:1-1:18 word count', db_count, remote_count)
+        check('John 1:1-1:18 word count', normalize(db_count), normalize(remote_count))
     except Exception as e:
         print(f'  ERROR testing morphology: {e}')
         failed += 1
@@ -278,7 +279,7 @@ def test_remote(client: MCPClient):
         result = client.call_tool('query_morphology', {'book': 'Genesis', 'range': '1:1-1:5'})
         remote_count = result.get('summary', {}).get('total_words', 0)
         db_count = db_morphology_count('genesis', 'ot', '1:1-1:5')
-        check('Genesis 1:1-1:5 word count', db_count, remote_count)
+        check('Genesis 1:1-1:5 word count', normalize(db_count), normalize(remote_count))
     except Exception as e:
         print(f'  ERROR testing OT morphology: {e}')
         failed += 1
