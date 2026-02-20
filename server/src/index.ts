@@ -1,76 +1,92 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-  type Tool,
-} from '@modelcontextprotocol/sdk/types.js';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { setDb } from './db/query.js';
-import { queryDiscourseFeatures } from './tools/discourse.js';
-import { queryParagraphBreaks } from './tools/paragraphs.js';
-import { queryVocabulary } from './tools/vocabulary.js';
-import { queryMorphology } from './tools/morphology.js';
+import { queryDiscourseFeatures, DiscourseInputSchema, DiscourseOutputSchema } from './tools/discourse.js';
+import { queryParagraphBreaks, ParagraphsInputSchema, ParagraphsOutputSchema } from './tools/paragraphs.js';
+import { queryVocabulary, VocabularyInputSchema, VocabularyOutputSchema } from './tools/vocabulary.js';
+import { queryMorphology, MorphologyInputSchema, MorphologyOutputSchema } from './tools/morphology.js';
+import { listBooks, ListBooksInputSchema, ListBooksOutputSchema } from './tools/list-books.js';
 
-// ─── Tool definitions (identical to local server) ─────────────────────────────
+// ─── Rich tool descriptions ───────────────────────────────────────────────────
 
-const TOOLS: Tool[] = [
-  {
-    name: 'query_discourse_features',
-    description: 'Query Levinsohn NT discourse features (historical present, left dislocation, etc.) for a given book and chapter range. NT books only.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        book: { type: 'string', description: 'NT book name (any common form)' },
-        features: { type: 'array', items: { type: 'string' }, description: 'Feature names to filter (default: 6 segmentation features)' },
-        chapter_range: { type: 'string', description: 'Chapter range: "3", "3-7", or omit for all' },
-      },
-      required: ['book'],
-    },
-  },
-  {
-    name: 'query_paragraph_breaks',
-    description: 'Query Masoretic paragraph markers (petuchah/setumah) for an OT book. OT books only.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        book: { type: 'string', description: 'OT book name (any common form)' },
-        chapter_range: { type: 'string', description: 'Chapter range: "3", "3-7", or omit for all' },
-      },
-      required: ['book'],
-    },
-  },
-  {
-    name: 'query_vocabulary',
-    description: 'Query vocabulary frequencies, thematic keyword matches, and clustering for any biblical book.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        book: { type: 'string', description: 'Book name (any common form)' },
-        testament: { type: 'string', enum: ['nt', 'ot'], description: 'Testament (default: derived from book)' },
-        theme: { type: 'string', description: 'Thematic keyword group (e.g., "joy", "faith")' },
-        check_clustering: { type: 'boolean', description: 'Include precomputed vocabulary clusters' },
-        min_frequency: { type: 'number', description: 'Minimum lemma frequency (default: 1)' },
-        limit: { type: 'number', description: 'Max lemmas returned (default: 200)' },
-      },
-      required: ['book'],
-    },
-  },
-  {
-    name: 'query_morphology',
-    description: 'Query morphological parsing data for a verse range.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        book: { type: 'string', description: 'Book name (any common form)' },
-        range: { type: 'string', description: 'Verse range: "1:1-1:11" or "1:6"' },
-        testament: { type: 'string', enum: ['nt', 'ot'], description: 'Testament (default: derived from book)' },
-        pos_filter: { type: 'string', description: 'Filter by part of speech' },
-        word_filter: { type: 'string', description: 'Filter by word form (matches text, normalized, lemma)' },
-      },
-      required: ['book', 'range'],
-    },
-  },
-];
+const DESC_LIST_BOOKS = `List all available biblical books and their testaments. Use this tool first to discover what data is available before querying specific tools.
+
+Optionally include available thematic keyword groups for use with query_vocabulary's theme parameter.
+
+Args:
+  - testament (string, optional): "nt" or "ot" to filter. Omit for all 66 books.
+  - include_themes (boolean, optional): Include available thematic keyword groups (default: false)
+
+Returns: { total, ot: string[], nt: string[], available_tools: string[], themes?: {ot: string[], nt: string[]} }`;
+
+const DESC_DISCOURSE = `Query Levinsohn's New Testament discourse features for a given book and chapter range.
+
+Returns discourse-grammatical features like historical present, left dislocation, tail-head linkage, and reported speech markers that signal narrative structure and information flow. NT books only.
+
+Args:
+  - book (string, required): NT book name in any common form (e.g., "John", "1 Cor", "Revelation", "Rom")
+  - features (string[], optional): Feature names to filter. Defaults to 6 segmentation features: historical_present, left_dislocation, referential_pod, situational_pod, reported_speech, tail_head_linkage. Use without filter first to see available_features in the response.
+  - chapter_range (string, optional): "3" for single chapter, "3-7" for range, omit for entire book
+
+Returns: { book, chapter_range, features: { [name]: [{chapter, verse, word, feature_description}] }, summary: { [name]: count }, available_features: string[] }
+
+Examples:
+  - Historical presents in Mark 1-5: book="Mark", chapter_range="1-5", features=["historical_present"]
+  - All discourse features in Romans: book="Romans"
+  - Left dislocations in John: book="John", features=["left_dislocation"]`;
+
+const DESC_PARAGRAPHS = `Query Masoretic paragraph markers (petuchah and setumah) for an Old Testament book.
+
+Petuchah (open) and setumah (closed) markers are ancient paragraph divisions in the Hebrew Masoretic text that indicate structural breaks in the narrative or discourse. OT books only.
+
+Args:
+  - book (string, required): OT book name in any common form (e.g., "Genesis", "Gen", "Psalms", "Isa")
+  - chapter_range (string, optional): "3" for single chapter, "3-7" for range, omit for entire book
+
+Returns: { book, chapter_range, markers: [{chapter, verse, type}], summary: {petuchot, setumot, total} }
+
+Examples:
+  - All markers in Genesis 1-3: book="Genesis", chapter_range="1-3"
+  - Paragraph structure of Isaiah: book="Isaiah"`;
+
+const DESC_VOCABULARY = `Query vocabulary frequencies, thematic keyword matches, and clustering data for any biblical book.
+
+Returns lemma frequencies broken down by chapter, with optional thematic filtering (e.g., "joy", "faith") and concentration clustering analysis. Works for both OT and NT books.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "Psalms")
+  - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
+  - theme (string, optional): Thematic keyword group to filter by (e.g., "joy", "faith", "covenant"). If the theme is not found, the error response lists all available themes for that testament.
+  - check_clustering (boolean, optional): Include precomputed vocabulary concentration clusters showing where lemmas are concentrated within the book
+  - min_frequency (number, optional): Minimum total lemma frequency to include (default: 1)
+  - limit (number, optional): Max lemmas returned (default: 200, max: 500)
+
+Returns (without theme): { response_type: "full", book, testament, lemmas: [{lemma, total, by_chapter: {ch: count}}], total_lemmas, returned, clustering }
+Returns (with theme): { response_type: "themed", book, testament, theme, thematic_matches: [{lemma, total, by_chapter}], clustering }
+
+Examples:
+  - Top vocabulary in Romans: book="Romans", min_frequency=5
+  - Joy-related words in Philippians: book="Philippians", theme="joy"
+  - Vocabulary clusters in Genesis: book="Genesis", check_clustering=true`;
+
+const DESC_MORPHOLOGY = `Query word-level morphological parsing data for a verse range in any biblical book.
+
+Returns each word with its surface form, normalized form, lemma, part of speech, and full grammatical parsing (case, number, gender, tense, voice, mood, person, degree where applicable).
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "John", "Gen", "Hebrews")
+  - range (string, required): Verse range as "chapter:verse-chapter:verse" (e.g., "1:1-1:11") or single verse "1:6"
+  - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
+  - pos_filter (string, optional): Filter by part of speech (e.g., "verb", "noun", "adjective", "preposition", "conjunction")
+  - word_filter (string, optional): Filter by exact word form — matches against surface text, normalized form, or lemma
+
+Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing: {case, number, gender, tense, voice, mood, person, degree} | null}], summary: {total_words, by_pos: {pos: count}} }
+
+Examples:
+  - All words in John 1:1-1:5: book="John", range="1:1-1:5"
+  - Only verbs in Romans 8:1-8:4: book="Romans", range="8:1-8:4", pos_filter="verb"
+  - Find occurrences of "logos" in John 1: book="John", range="1:1-1:18", word_filter="logos"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -99,15 +115,15 @@ function stableStringify(obj: Record<string, unknown>): string {
 async function cachedToolCall(
   name: string,
   args: Record<string, unknown>,
-  handler: () => Promise<unknown>
-): Promise<unknown> {
+  handler: () => Promise<CallToolResult>
+): Promise<CallToolResult> {
   const sortedArgs = stableStringify(args);
   const cacheKey = new Request(`https://cache/${name}/${encodeURIComponent(sortedArgs)}`);
   const cache = caches.default;
 
   const cached = await cache.match(cacheKey);
   if (cached) {
-    return JSON.parse(await cached.text()) as unknown;
+    return JSON.parse(await cached.text()) as CallToolResult;
   }
 
   const result = await handler();
@@ -120,52 +136,89 @@ async function cachedToolCall(
 
 // ─── MCP Server factory ───────────────────────────────────────────────────────
 
-// Per-request Server instance. The MCP SDK's Protocol.connect() is single-use
+// Per-request McpServer instance. The MCP SDK's Protocol.connect() is single-use
 // — calling it twice on the same Server throws "Already connected". Creating
 // per request is cheap (constructor only sets up handler maps, no I/O).
-function createServer(): Server {
-  const server = new Server(
-    { name: 'claude-of-alexandria-mcp', version: '1.5.0' },
+function createServer(): McpServer {
+  const server = new McpServer(
+    { name: 'claude-of-alexandria-mcp', version: '1.6.0' },
     { capabilities: { tools: {} } }
   );
 
-  server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
+  server.registerTool('list_books', {
+    title: 'List Biblical Books',
+    description: DESC_LIST_BOOKS,
+    inputSchema: ListBooksInputSchema,
+    outputSchema: ListBooksOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('list_books', args as unknown as Record<string, unknown>, () => listBooks(args))
+  );
 
-  server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    const { name, arguments: args } = request.params;
-    const toolArgs = (args ?? {}) as Record<string, unknown>;
+  server.registerTool('query_discourse_features', {
+    title: 'Query Discourse Features',
+    description: DESC_DISCOURSE,
+    inputSchema: DiscourseInputSchema,
+    outputSchema: DiscourseOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_discourse_features', args as unknown as Record<string, unknown>, () => queryDiscourseFeatures(args))
+  );
 
-    try {
-      let result: unknown;
+  server.registerTool('query_paragraph_breaks', {
+    title: 'Query Paragraph Breaks',
+    description: DESC_PARAGRAPHS,
+    inputSchema: ParagraphsInputSchema,
+    outputSchema: ParagraphsOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_paragraph_breaks', args as unknown as Record<string, unknown>, () => queryParagraphBreaks(args))
+  );
 
-      switch (name) {
-        case 'query_discourse_features':
-          result = await cachedToolCall(name, toolArgs, () => queryDiscourseFeatures(toolArgs));
-          break;
-        case 'query_paragraph_breaks':
-          result = await cachedToolCall(name, toolArgs, () => queryParagraphBreaks(toolArgs));
-          break;
-        case 'query_vocabulary':
-          result = await cachedToolCall(name, toolArgs, () => queryVocabulary(toolArgs));
-          break;
-        case 'query_morphology':
-          result = await cachedToolCall(name, toolArgs, () => queryMorphology(toolArgs));
-          break;
-        default:
-          return {
-            content: [{ type: 'text', text: JSON.stringify({ error: { code: 'UNKNOWN_TOOL', message: `Unknown tool: ${name}` } }) }],
-            isError: true,
-          };
-      }
+  server.registerTool('query_vocabulary', {
+    title: 'Query Vocabulary',
+    description: DESC_VOCABULARY,
+    inputSchema: VocabularyInputSchema,
+    outputSchema: VocabularyOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_vocabulary', args as unknown as Record<string, unknown>, () => queryVocabulary(args))
+  );
 
-      return { content: [{ type: 'text', text: JSON.stringify(result) }] };
-    } catch (error) {
-      return {
-        content: [{ type: 'text', text: `Database error: ${error instanceof Error ? error.message : String(error)}` }],
-        isError: true,
-      };
-    }
-  });
+  server.registerTool('query_morphology', {
+    title: 'Query Morphology',
+    description: DESC_MORPHOLOGY,
+    inputSchema: MorphologyInputSchema,
+    outputSchema: MorphologyOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_morphology', args as unknown as Record<string, unknown>, () => queryMorphology(args))
+  );
 
   return server;
 }
@@ -194,12 +247,12 @@ export default {
       try {
         await env.DB.prepare('SELECT 1').first();
         return new Response(
-          JSON.stringify({ status: 'ok', version: '1.5.0', db: 'connected' }),
+          JSON.stringify({ status: 'ok', version: '1.6.0', db: 'connected' }),
           { headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       } catch {
         return new Response(
-          JSON.stringify({ status: 'degraded', version: '1.5.0', db: 'unreachable' }),
+          JSON.stringify({ status: 'degraded', version: '1.6.0', db: 'unreachable' }),
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }
