@@ -51,4 +51,5 @@ jobs:
         run: |
           gh release create ${{ github.ref_name }} desktop-zips/* \
             --title "Release ${{ github.ref_name }}" \
-            --generate-notes
+            --generate-notes \
+            --clobber
