@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "claude-of-alexandria-mcp": {
-      "url": "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
+      "url": "https://coa.davebream.com/mcp"
     }
   }
 }

@@ -3,6 +3,10 @@ main = "src/index.ts"
 compatibility_date = "2024-12-01"
 account_id = "7d7460979a3138cddb0fadf8c8eed195"
 
+routes = [
+  { pattern = "coa.davebream.com", custom_domain = true }
+]
+
 [[d1_databases]]
 binding = "DB"
 database_name = "claude-of-alexandria"

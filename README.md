@@ -174,7 +174,7 @@ Add the server to your Claude Desktop MCP configuration:
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
+        "https://coa.davebream.com/mcp"
       ]
     }
   }
