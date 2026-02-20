@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-02-20
+
+### Added
+
+- Remote MCP server deployed to Cloudflare Workers + D1 — no local Node.js required
+- Health check endpoint (`GET /health`) with D1 connectivity probe
+- CORS support for all MCP endpoint responses
+- Response caching via Workers Cache API (24-hour TTL) for static biblical reference data
+
+### Changed
+
+- `.mcp.json` now uses a single `url` field instead of `node` command + local server path
+- Morphology tool defaults to 5000-row limit to prevent unbounded responses
+
+### Removed
+
+- Local Node.js/SQLite MCP server (`servers/claude-of-alexandria-mcp/`)
+- `biblical.sqlite` database file (71 MB) from repository
+- MCP server tarball from GitHub Actions release workflow
+
 ## [1.4.0] - 2026-02-20
 
 ### Added
