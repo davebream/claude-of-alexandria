@@ -1,24 +1,80 @@
+import { z } from 'zod';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query, type QueryResult } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 
-export async function queryVocabulary(args: Record<string, unknown>): Promise<unknown> {
-  const bookInput = args.book as string;
+export const VocabularyInputSchema = {
+  book: z.string().describe('Book name (any common form, e.g., "Romans", "Gen", "Psalms")'),
+  testament: z.enum(['nt', 'ot']).optional().describe('Testament — auto-detected from book if omitted'),
+  theme: z.string().optional().describe('Thematic keyword group (e.g., "joy", "faith", "covenant"). Use list_books tool to see available themes.'),
+  check_clustering: z.boolean().optional().describe('Include precomputed vocabulary concentration clusters'),
+  min_frequency: z.number().optional().describe('Minimum total lemma frequency to include (default: 1)'),
+  limit: z.number().optional().describe('Max lemmas returned (default: 200, max: 500)'),
+};
+
+export type VocabularyInput = z.output<z.ZodObject<typeof VocabularyInputSchema>>;
+
+const CHARACTER_LIMIT = 25_000;
+
+const LemmaEntry = z.object({
+  lemma: z.string(),
+  total: z.number(),
+  by_chapter: z.record(z.string(), z.number()),
+});
+
+const ClusteringSchema = z.object({
+  has_clustering: z.boolean(),
+  notable_count: z.number(),
+  clusters: z.array(z.object({
+    lemma: z.string(),
+    concentration: z.unknown(),
+    chapter_range: z.string(),
+    total_occurrences: z.unknown(),
+  })),
+}).nullable();
+
+export const VocabularyOutputSchema = {
+  response_type: z.enum(['full', 'themed']).describe('Discriminator: "full" when no theme filter, "themed" when theme filter used'),
+  book: z.string(),
+  testament: z.string(),
+  // Present when response_type = "full"
+  lemmas: z.array(LemmaEntry).optional(),
+  total_lemmas: z.number().optional(),
+  returned: z.number().optional(),
+  // Present when response_type = "themed"
+  theme: z.string().optional(),
+  thematic_matches: z.array(LemmaEntry).optional(),
+  // Always present when check_clustering = true
+  clustering: ClusteringSchema.optional(),
+  // Present when truncated
+  truncated: z.boolean().optional(),
+  truncation_message: z.string().optional(),
+};
+
+export async function queryVocabulary(args: VocabularyInput): Promise<CallToolResult> {
+  const bookInput = args.book;
   const bookInfo = lookupBook(bookInput);
 
   if (!bookInfo) {
-    return { error: { code: 'BOOK_NOT_FOUND', message: `Book '${bookInput}' not found.`, suggestions: suggestBooks(bookInput) } };
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'BOOK_NOT_FOUND', message: `Book '${bookInput}' not found.`, suggestions: suggestBooks(bookInput) } }) }],
+      isError: true,
+    };
   }
 
-  const testament = (args.testament as string | undefined) ?? bookInfo.testament;
+  const testament = args.testament ?? bookInfo.testament;
   if (testament !== 'nt' && testament !== 'ot') {
-    return { error: { code: 'INVALID_TESTAMENT', message: `Invalid testament: '${testament}'. Use 'nt' or 'ot'.` } };
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_TESTAMENT', message: `Invalid testament: '${testament}'. Use 'nt' or 'ot'.` } }) }],
+      isError: true,
+    };
   }
 
-  const theme = args.theme as string | undefined;
-  const checkClustering = args.check_clustering as boolean | undefined;
+  const theme = args.theme;
+  const checkClustering = args.check_clustering;
   const MAX_VOCABULARY_LIMIT = 500;
-  const minFrequency = Math.max(0, (args.min_frequency as number | undefined) ?? 1);
-  const limit = Math.min(Math.max(1, (args.limit as number | undefined) ?? 200), MAX_VOCABULARY_LIMIT);
+  const minFrequency = Math.max(0, args.min_frequency ?? 1);
+  const limit = Math.min(Math.max(1, args.limit ?? 200), MAX_VOCABULARY_LIMIT);
 
   if (theme) {
     const themeCheck = await query(
@@ -31,11 +87,8 @@ export async function queryVocabulary(args: Record<string, unknown>): Promise<un
         [testament]
       );
       return {
-        error: {
-          code: 'INVALID_THEME',
-          message: `Theme '${theme}' not found for ${testament.toUpperCase()}.`,
-          available_themes: allThemes.map(r => r.theme),
-        },
+        content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_THEME', message: `Theme '${theme}' not found for ${testament.toUpperCase()}.`, available_themes: allThemes.map(r => r.theme) } }) }],
+        isError: true,
       };
     }
   }
@@ -77,7 +130,7 @@ export async function queryVocabulary(args: Record<string, unknown>): Promise<un
   // D1 limits SQL variables to ~100 per statement, so we cannot use IN (?,?,?...) for
   // large lemma lists. Instead, reproduce the ranking subquery inline so the by-chapter
   // lookup uses only a fixed number of bound parameters regardless of result size.
-  let byChapterRows: import('../db/query.js').QueryResult;
+  let byChapterRows: QueryResult;
   if (lemmaRows.length === 0) {
     byChapterRows = [];
   } else if (theme) {
@@ -148,12 +201,31 @@ export async function queryVocabulary(args: Record<string, unknown>): Promise<un
   }
 
   if (theme) {
-    return {
+    const result = {
+      response_type: 'themed' as const,
       book: bookInfo.displayName,
       testament,
       theme,
       thematic_matches: lemmaList,
       clustering,
+    };
+    const serialized = JSON.stringify(result);
+    if (serialized.length > CHARACTER_LIMIT) {
+      const truncatedList = lemmaList.slice(0, Math.ceil(lemmaList.length / 2));
+      const truncatedResult = {
+        ...result,
+        thematic_matches: truncatedList,
+        truncated: true,
+        truncation_message: `Response truncated from ${lemmaList.length} to ${truncatedList.length} lemmas. Use min_frequency or limit parameters to narrow results.`,
+      };
+      return {
+        content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
+        structuredContent: truncatedResult,
+      };
+    }
+    return {
+      content: [{ type: 'text', text: serialized }],
+      structuredContent: result,
     };
   }
 
@@ -163,12 +235,33 @@ export async function queryVocabulary(args: Record<string, unknown>): Promise<un
   );
   const totalLemmas = (totalResult[0]?.cnt as number) ?? 0;
 
-  return {
+  const result = {
+    response_type: 'full' as const,
     book: bookInfo.displayName,
     testament,
     lemmas: lemmaList,
     total_lemmas: totalLemmas,
     returned: lemmaList.length,
     clustering,
+  };
+  const serialized = JSON.stringify(result);
+  if (serialized.length > CHARACTER_LIMIT) {
+    const truncatedList = lemmaList.slice(0, Math.ceil(lemmaList.length / 2));
+    const truncatedResult = {
+      ...result,
+      lemmas: truncatedList,
+      returned: truncatedList.length,
+      truncated: true,
+      truncation_message: `Response truncated from ${lemmaList.length} to ${truncatedList.length} lemmas. Use min_frequency or limit parameters to narrow results.`,
+    };
+    return {
+      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
+      structuredContent: truncatedResult,
+    };
+  }
+
+  return {
+    content: [{ type: 'text', text: serialized }],
+    structuredContent: result,
   };
 }

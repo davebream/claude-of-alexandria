@@ -1,30 +1,64 @@
+import { z } from 'zod';
+import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseChapterRange } from './utils.js';
+
+export const DiscourseInputSchema = {
+  book: z.string().describe('NT book name (any common form, e.g., "John", "1 Cor", "Romans")'),
+  features: z.array(z.string()).optional().describe(
+    'Feature names to filter. Defaults to 6 segmentation features: historical_present, left_dislocation, referential_pod, situational_pod, reported_speech, tail_head_linkage'
+  ),
+  chapter_range: z.string().optional().describe('Chapter range: "3" (single), "3-7" (range), or omit for all chapters'),
+};
+
+export type DiscourseInput = z.output<z.ZodObject<typeof DiscourseInputSchema>>;
+
+export const DiscourseOutputSchema = {
+  book: z.string(),
+  chapter_range: z.string(),
+  features: z.record(z.string(), z.array(z.object({
+    chapter: z.number(),
+    verse: z.number(),
+    word: z.string().nullable(),
+    feature_description: z.string().nullable(),
+  }))),
+  summary: z.record(z.string(), z.number()),
+  available_features: z.array(z.string()),
+};
 
 const DEFAULT_FEATURES = [
   'historical_present', 'left_dislocation', 'referential_pod',
   'situational_pod', 'reported_speech', 'tail_head_linkage',
 ];
 
-export async function queryDiscourseFeatures(args: Record<string, unknown>): Promise<unknown> {
-  const bookInput = args.book as string;
+export async function queryDiscourseFeatures(args: DiscourseInput): Promise<CallToolResult> {
+  const bookInput = args.book;
   const bookInfo = lookupBook(bookInput);
 
   if (!bookInfo) {
-    return { error: { code: 'BOOK_NOT_FOUND', message: `Book '${bookInput}' not found.`, suggestions: suggestBooks(bookInput) } };
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'BOOK_NOT_FOUND', message: `Book '${bookInput}' not found.`, suggestions: suggestBooks(bookInput) } }) }],
+      isError: true,
+    };
   }
   if (bookInfo.testament !== 'nt') {
-    return { error: { code: 'TESTAMENT_MISMATCH', message: `Discourse features are NT only. '${bookInfo.displayName}' is an OT book.` } };
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'TESTAMENT_MISMATCH', message: `Discourse features are NT only. '${bookInfo.displayName}' is an OT book.` } }) }],
+      isError: true,
+    };
   }
 
-  const chapterRange = args.chapter_range as string | undefined;
+  const chapterRange = args.chapter_range;
   const rangeResult = parseChapterRange(chapterRange);
   if ('error' in rangeResult) {
-    return { error: { code: 'INVALID_RANGE', message: rangeResult.error } };
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: rangeResult.error } }) }],
+      isError: true,
+    };
   }
 
-  const requestedFeatures = (args.features as string[] | undefined) ?? DEFAULT_FEATURES;
+  const requestedFeatures = args.features ?? DEFAULT_FEATURES;
 
   let sql = 'SELECT chapter, verse, feature, feature_description, word FROM discourse_features WHERE book = ?';
   const params: unknown[] = [bookInfo.canonical];
@@ -64,11 +98,16 @@ export async function queryDiscourseFeatures(args: Record<string, unknown>): Pro
     summary[feature] = (summary[feature] ?? 0) + 1;
   }
 
-  return {
+  const result = {
     book: bookInfo.displayName,
     chapter_range: chapterRange ?? 'all',
     features,
     summary,
     available_features: availableFeatures,
+  };
+
+  return {
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
