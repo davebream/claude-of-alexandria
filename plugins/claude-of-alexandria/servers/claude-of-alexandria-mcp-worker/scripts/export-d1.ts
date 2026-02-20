@@ -55,7 +55,6 @@ async function main() {
   ];
 
   let dataSql = '-- Small tables (discourse_features, paragraph_markers, vocabulary, vocabulary_clusters, thematic_keywords)\n';
-  dataSql += 'BEGIN TRANSACTION;\n\n';
 
   for (const { name, cols } of smallTables) {
     const stmt = db.prepare(`SELECT ${cols.join(', ')} FROM ${name}`);
@@ -68,7 +67,6 @@ async function main() {
     }
   }
 
-  dataSql += 'COMMIT;\n';
   writeFileSync(join(OUT_DIR, 'data.sql'), dataSql);
   console.log('Wrote d1-seed/data.sql');
 
@@ -92,9 +90,7 @@ async function main() {
     const batchNum = String(i + 1).padStart(3, '0');
     const filename = `morphology-${batchNum}.sql`;
     let sql = `-- Morphology batch ${i + 1}/${totalBatches} (rows ${offset + 1}-${offset + rows.length})\n`;
-    sql += 'BEGIN TRANSACTION;\n\n';
-    sql += rowsToInsertStatements('morphology', rows, morphCols) + '\n\n';
-    sql += 'COMMIT;\n';
+    sql += rowsToInsertStatements('morphology', rows, morphCols) + '\n';
     writeFileSync(join(OUT_DIR, filename), sql);
     process.stdout.write(`\r  Wrote ${filename} (${i + 1}/${totalBatches})`);
   }
