@@ -210,6 +210,15 @@ export default {
       return new Response('Not Found', { status: 404, headers: CORS_HEADERS });
     }
 
+    // Stateless Workers cannot maintain long-lived SSE connections.
+    // Return 405 for GET so MCP clients (mcp-remote, Claude Code) fall back to POST-only mode.
+    if (request.method !== 'POST') {
+      return new Response('Method Not Allowed', {
+        status: 405,
+        headers: { Allow: 'POST, OPTIONS', ...CORS_HEADERS },
+      });
+    }
+
     // Inject D1 binding for this request
     setDb(env.DB);
 
