@@ -1,6 +1,6 @@
 {
   "name": "claude-of-alexandria-mcp-worker",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
@@ -10,7 +10,8 @@
     "seed-d1": "bash scripts/seed-d1.sh"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.10.0"
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250214.0",
