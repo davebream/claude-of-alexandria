@@ -9,11 +9,13 @@ export function setDb(db: D1Database) {
 }
 
 export async function query(sql: string, params: unknown[] = []): Promise<QueryResult> {
-  const result = await _db.prepare(sql).bind(...params).all();
+  const stmt = _db.prepare(sql);
+  const result = params.length > 0 ? await stmt.bind(...params).all() : await stmt.all();
   return result.results as QueryResult;
 }
 
 export async function queryFirst(sql: string, params: unknown[] = []): Promise<Record<string, unknown> | null> {
-  const result = await _db.prepare(sql).bind(...params).first();
+  const stmt = _db.prepare(sql);
+  const result = params.length > 0 ? await stmt.bind(...params).first() : await stmt.first();
   return result as Record<string, unknown> | null;
 }

@@ -88,12 +88,20 @@ const CORS_HEADERS = {
 // Cache MCP tool results keyed by tool name + sorted args JSON.
 // Biblical reference data is static — entries never need invalidation.
 // Cache intercepts inside the CallTool handler before MCP serialization.
+function stableStringify(obj: Record<string, unknown>): string {
+  return JSON.stringify(obj, (_, v) =>
+    v && typeof v === 'object' && !Array.isArray(v)
+      ? Object.fromEntries(Object.entries(v as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b)))
+      : v
+  );
+}
+
 async function cachedToolCall(
   name: string,
   args: Record<string, unknown>,
   handler: () => Promise<unknown>
 ): Promise<unknown> {
-  const sortedArgs = JSON.stringify(args, Object.keys(args).sort());
+  const sortedArgs = stableStringify(args);
   const cacheKey = new Request(`https://cache/${name}/${encodeURIComponent(sortedArgs)}`);
   const cache = caches.default;
 
