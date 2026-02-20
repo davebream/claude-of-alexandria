@@ -124,20 +124,15 @@ If you prefer manual installation or want to contribute:
 git clone https://github.com/davebream/claude-of-alexandria.git
 cd claude-of-alexandria
 
-# Build the MCP server (dist/ is gitignored — this step is not optional)
-cd plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp
-npm install && npm run build
-cd ../../../..
-
 # Symlink the plugin
 ln -s $(pwd)/plugins/claude-of-alexandria ~/.claude/plugins/claude-of-alexandria
 ```
 
-Without the build step, skills fall back to training memory — which is precisely the failure mode this library exists to prevent.
+The MCP server runs remotely on Cloudflare Workers — no local build step required.
 
 ### Claude Desktop
 
-Claude Desktop requires three things: the skill frameworks (as project knowledge), the reference server (running locally), and the MCP configuration (so Claude Desktop knows where to find the server).
+Claude Desktop requires two things: the skill frameworks (as project knowledge) and the MCP configuration (so Claude Desktop knows where to find the server).
 
 **Step 1: Download the Skills**
 
@@ -149,33 +144,11 @@ Download the skill ZIPs from the latest release:
 | pericope-delimitation | [pericope-delimitation.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/pericope-delimitation.zip) |
 | exegetical-notes | [exegetical-notes.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/exegetical-notes.zip) |
 
-Each ZIP contains the skill framework (`SKILL.md` and supporting files). The linguistic reference datasets are provided by the MCP server, not bundled in the ZIPs.
+Each ZIP contains the skill framework (`SKILL.md` and supporting files). The linguistic reference datasets are provided by the remote MCP server.
 
 Extract each ZIP. Add the contents of `SKILL.md` as project knowledge in Claude Desktop.
 
-**Step 2: Set Up the Reference Server**
-
-*Option A — From release tarball (no git clone needed):*
-
-Download [claude-of-alexandria-mcp.tar.gz](https://github.com/davebream/claude-of-alexandria/releases/latest/download/claude-of-alexandria-mcp.tar.gz) from the latest release. Extract it, then install production dependencies:
-
-```bash
-tar xzf claude-of-alexandria-mcp.tar.gz
-cd claude-of-alexandria-mcp
-npm ci --production
-```
-
-*Option B — From source:*
-
-```bash
-git clone https://github.com/davebream/claude-of-alexandria.git
-cd claude-of-alexandria/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp
-npm install && npm run build
-```
-
-Requires Node.js 18 or later.
-
-**Step 3: Configure Claude Desktop**
+**Step 2: Configure Claude Desktop**
 
 Add the server to your Claude Desktop MCP configuration:
 
@@ -186,17 +159,13 @@ Add the server to your Claude Desktop MCP configuration:
 {
   "mcpServers": {
     "claude-of-alexandria-mcp": {
-      "command": "node",
-      "args": ["/FULL/PATH/TO/servers/claude-of-alexandria-mcp/dist/index.js"],
-      "env": {
-        "DATA_DIR": "/FULL/PATH/TO/servers/claude-of-alexandria-mcp/data"
-      }
+      "url": "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
     }
   }
 }
 ```
 
-Replace `/FULL/PATH/TO/` with the actual path to your installation. If you installed via Claude Code marketplace, the paths are at `~/.claude/plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/` — skip the clone.
+No local installation or Node.js required. The server runs on Cloudflare Workers.
 
 Restart Claude Desktop after saving.
 
@@ -217,7 +186,7 @@ Consult the [plugin README](plugins/claude-of-alexandria/README.md) for detailed
 
 ## The Reference Server
 
-Version 1.3.0 replaced the bundled Python parsing scripts with an MCP server backed by a pre-built SQLite database. The data is the same — Levinsohn discourse features, Masoretic paragraph markers, morphological parsings, vocabulary frequencies — but the delivery mechanism now speaks a protocol that both Claude Code and Claude Desktop understand natively.
+Version 1.5.0 moved the MCP server to Cloudflare Workers + D1 (edge SQLite), eliminating all local installation requirements. The data is the same — Levinsohn discourse features, Masoretic paragraph markers, morphological parsings, vocabulary frequencies — delivered over HTTP from a globally distributed edge network.
 
 | Tool | What It Queries | Coverage |
 | ---- | --------------- | -------- |
@@ -228,7 +197,7 @@ Version 1.3.0 replaced the bundled Python parsing scripts with an MCP server bac
 
 Skills call these tools automatically. You do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
-Tech stack: TypeScript, sql.js (WebAssembly SQLite), MCP SDK. No Python runtime required.
+Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime required.
 
 ## Hermeneutical Framework
 

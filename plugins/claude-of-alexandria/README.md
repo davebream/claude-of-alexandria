@@ -4,9 +4,9 @@
 
 ## Architecture
 
-Version 1.3.0 replaced the bundled Python reference scripts with an MCP server backed by a pre-built SQLite database. Skills now call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — without requiring Python or any external runtime beyond Node.js.
+Version 1.5.0 moved the MCP server to Cloudflare Workers + D1 (edge SQLite). Skills call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — with no local installation required.
 
-The result: the same data, delivered through a protocol that Claude Code and Claude Desktop both understand natively.
+The result: the same data, delivered from a globally distributed edge network over HTTP.
 
 ## MCP Server
 
@@ -19,7 +19,7 @@ The reference server exposes four tools. Skills call these automatically; you do
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
 | `query_morphology` | Word-level morphological parsing | Both |
 
-Tech stack: TypeScript, sql.js (WebAssembly SQLite), MCP SDK. No Python needed.
+Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 
 ## Available Skills
 
