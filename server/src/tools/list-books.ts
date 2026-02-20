@@ -25,6 +25,13 @@ export const ListBooksOutputSchema = {
   }).optional(),
 };
 
+const AVAILABLE_TOOLS = [
+  'query_morphology — word-level parsing for any book (OT + NT)',
+  'query_vocabulary — lemma frequencies + thematic keywords (OT + NT)',
+  'query_discourse_features — Levinsohn discourse markers (NT only)',
+  'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
+] as const;
+
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
   const allBooks = getAllBooks();
   const filtered = args.testament
@@ -34,30 +41,35 @@ export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
   const ot = filtered.filter(b => b.testament === 'ot').map(b => b.displayName);
   const nt = filtered.filter(b => b.testament === 'nt').map(b => b.displayName);
 
-  const result: Record<string, unknown> = {
-    total: filtered.length,
-    ot: ot.length > 0 ? ot : undefined,
-    nt: nt.length > 0 ? nt : undefined,
-    available_tools: [
-      'query_morphology — word-level parsing for any book (OT + NT)',
-      'query_vocabulary — lemma frequencies + thematic keywords (OT + NT)',
-      'query_discourse_features — Levinsohn discourse markers (NT only)',
-      'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
-    ],
-  };
-
   if (args.include_themes) {
     const themeRows = await query(
       'SELECT DISTINCT theme, testament FROM thematic_keywords ORDER BY testament, theme',
       []
     );
-    const themes: Record<string, string[]> = { ot: [], nt: [] };
+    const themes: { ot: string[]; nt: string[] } = { ot: [], nt: [] };
     for (const row of themeRows) {
       const t = row.testament as string;
       if (t === 'ot' || t === 'nt') themes[t].push(row.theme as string);
     }
-    result.themes = themes;
+    const result = {
+      total: filtered.length,
+      ot: ot.length > 0 ? ot : undefined,
+      nt: nt.length > 0 ? nt : undefined,
+      available_tools: [...AVAILABLE_TOOLS],
+      themes,
+    };
+    return {
+      content: [{ type: 'text', text: JSON.stringify(result) }],
+      structuredContent: result,
+    };
   }
+
+  const result = {
+    total: filtered.length,
+    ot: ot.length > 0 ? ot : undefined,
+    nt: nt.length > 0 ? nt : undefined,
+    available_tools: [...AVAILABLE_TOOLS],
+  };
 
   return {
     content: [{ type: 'text', text: JSON.stringify(result) }],

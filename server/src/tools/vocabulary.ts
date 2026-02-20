@@ -27,9 +27,9 @@ const ClusteringSchema = z.object({
   notable_count: z.number(),
   clusters: z.array(z.object({
     lemma: z.string(),
-    concentration: z.unknown(),
+    concentration: z.number(),
     chapter_range: z.string(),
-    total_occurrences: z.unknown(),
+    total_occurrences: z.number(),
   })),
 }).nullable();
 
@@ -192,10 +192,10 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
       has_clustering: clusterRows.length > 0,
       notable_count: clusterRows.length,
       clusters: clusterRows.map(r => ({
-        lemma: r.lemma,
-        concentration: r.concentration,
+        lemma: r.lemma as string,
+        concentration: r.concentration as number,
         chapter_range: `${r.chapter_start}-${r.chapter_end}`,
-        total_occurrences: r.total_occurrences,
+        total_occurrences: r.total_occurrences as number,
       })),
     };
   }
