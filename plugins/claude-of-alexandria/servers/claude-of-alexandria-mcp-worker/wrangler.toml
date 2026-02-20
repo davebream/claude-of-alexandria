@@ -1,8 +1,9 @@
 name = "claude-of-alexandria-mcp"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
+account_id = "7d7460979a3138cddb0fadf8c8eed195"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "claude-of-alexandria"
-database_id = "REPLACE_WITH_ID_FROM_WRANGLER_D1_CREATE"
+database_id = "b78d74b2-3d31-4cf0-ad4c-743d298e2e6e"
