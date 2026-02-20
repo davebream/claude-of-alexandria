@@ -1,11 +1,7 @@
 {
   "mcpServers": {
     "claude-of-alexandria-mcp": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/claude-of-alexandria-mcp/dist/index.js"],
-      "env": {
-        "DATA_DIR": "${CLAUDE_PLUGIN_ROOT}/servers/claude-of-alexandria-mcp/data"
-      }
+      "url": "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
     }
   }
 }
