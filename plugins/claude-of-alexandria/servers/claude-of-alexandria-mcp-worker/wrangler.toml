@@ -1,0 +1,8 @@
+name = "claude-of-alexandria-mcp"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "claude-of-alexandria"
+database_id = "REPLACE_WITH_ID_FROM_WRANGLER_D1_CREATE"
