@@ -74,15 +74,46 @@ export async function queryVocabulary(args: Record<string, unknown>): Promise<un
 
   const lemmaRows = await query(sql, params);
 
-  const lemmaNames = lemmaRows.map(r => r.lemma as string);
-  const byChapterRows = lemmaNames.length > 0
-    ? await query(
-        `SELECT lemma, chapter, frequency FROM vocabulary
-         WHERE book = ? AND testament = ? AND lemma IN (${lemmaNames.map(() => '?').join(',')})
-         ORDER BY lemma, chapter`,
-        [canonical, testament, ...lemmaNames]
-      )
-    : [];
+  // D1 limits SQL variables to ~100 per statement, so we cannot use IN (?,?,?...) for
+  // large lemma lists. Instead, reproduce the ranking subquery inline so the by-chapter
+  // lookup uses only a fixed number of bound parameters regardless of result size.
+  let byChapterRows: import('../db/query.js').QueryResult;
+  if (lemmaRows.length === 0) {
+    byChapterRows = [];
+  } else if (theme) {
+    byChapterRows = await query(
+      `SELECT v.lemma, v.chapter, v.frequency FROM vocabulary v
+       JOIN thematic_keywords tk ON tk.lemma = v.lemma AND tk.testament = v.testament
+       WHERE v.book = ? AND v.testament = ? AND tk.theme = ?
+         AND v.lemma IN (
+           SELECT lemma FROM (
+             SELECT v2.lemma, SUM(v2.frequency) as total
+             FROM vocabulary v2
+             JOIN thematic_keywords tk2 ON tk2.lemma = v2.lemma AND tk2.testament = v2.testament
+             WHERE v2.book = ? AND v2.testament = ? AND tk2.theme = ?
+             GROUP BY v2.lemma
+           ) WHERE total >= ?
+           ORDER BY total DESC LIMIT ?
+         )
+       ORDER BY v.lemma, v.chapter`,
+      [canonical, testament, theme, canonical, testament, theme, minFrequency, limit]
+    );
+  } else {
+    byChapterRows = await query(
+      `SELECT v.lemma, v.chapter, v.frequency FROM vocabulary v
+       WHERE v.book = ? AND v.testament = ?
+         AND v.lemma IN (
+           SELECT lemma FROM (
+             SELECT lemma, SUM(frequency) as total FROM vocabulary
+             WHERE book = ? AND testament = ?
+             GROUP BY lemma
+           ) WHERE total >= ?
+           ORDER BY total DESC LIMIT ?
+         )
+       ORDER BY v.lemma, v.chapter`,
+      [canonical, testament, canonical, testament, minFrequency, limit]
+    );
+  }
 
   const byChapterMap: Record<string, Record<string, number>> = {};
   for (const row of byChapterRows) {
