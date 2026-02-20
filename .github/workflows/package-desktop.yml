@@ -13,11 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
       - name: Create skill ZIPs
         run: |
           mkdir -p desktop-zips
@@ -30,20 +25,6 @@ jobs:
               -x "./reference/levinsohn/*" \
               -x "./scripts/*")
           done
-
-      - name: Build MCP server tarball
-        run: |
-          cd plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp
-          npm ci
-          npm run build
-          cd ../../../..
-          mkdir -p desktop-zips
-          tar czf desktop-zips/claude-of-alexandria-mcp.tar.gz \
-            -C plugins/claude-of-alexandria/servers \
-            claude-of-alexandria-mcp/dist \
-            claude-of-alexandria-mcp/data/biblical.sqlite \
-            claude-of-alexandria-mcp/package.json \
-            claude-of-alexandria-mcp/package-lock.json
 
       - name: Create or update GitHub Release
         env:
