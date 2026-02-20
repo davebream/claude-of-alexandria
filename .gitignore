@@ -59,4 +59,4 @@ build/
 htmlcov/
 
 # D1 seed files (generated — do not commit)
-plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/d1-seed/
+server/d1-seed/
