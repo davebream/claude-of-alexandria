@@ -155,6 +155,7 @@ Download the skill ZIPs from the latest release:
 | biblical-segmentation | [biblical-segmentation.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/biblical-segmentation.zip) |
 | pericope-delimitation | [pericope-delimitation.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/pericope-delimitation.zip) |
 | exegetical-notes | [exegetical-notes.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/exegetical-notes.zip) |
+| consult-biblical-scholar | [consult-biblical-scholar.zip](https://github.com/davebream/claude-of-alexandria/releases/latest/download/consult-biblical-scholar.zip) |
 
 Each ZIP contains the skill framework (`SKILL.md` and supporting files). The linguistic reference datasets are provided by the remote MCP server.
 
