@@ -5,17 +5,17 @@ on:
     branches:
       - main
     paths:
-      - 'plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/src/**'
-      - 'plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/wrangler.toml'
-      - 'plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/package.json'
-      - 'plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/package-lock.json'
+      - 'server/src/**'
+      - 'server/wrangler.toml'
+      - 'server/package.json'
+      - 'server/package-lock.json'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker
+        working-directory: server
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp-worker/package-lock.json
+          cache-dependency-path: server/package-lock.json
 
       - name: Install dependencies
         run: npm ci
