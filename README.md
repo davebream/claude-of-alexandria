@@ -11,7 +11,7 @@
 <p align="center">
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-3-orange" alt="Skills"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-4-orange" alt="Skills"></a>
   <a href="#hermeneutical-framework"><img src="https://img.shields.io/badge/theology-peer--reviewed-purple" alt="Theology"></a>
 </p>
 
@@ -67,7 +67,7 @@ If a skill cannot demonstrate that it prevents a documented failure, it does not
 
 ## Current Collection
 
-The library presently contains **three skills**, all production. Rome was not catalogued in a day, but we are making progress.
+The library presently contains **four skills**, all production. Rome was not catalogued in a day, but we are making progress.
 
 ### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/) — Production
 
@@ -99,6 +99,18 @@ Produces exegetical notes for sermon or teaching preparation, with the kind of d
 - 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment. You always know which kind of evidence you're looking at.
 
 Full RED/GREEN verification. Runs pericope check before generating notes — if you hand it a severed passage, it tells you before wasting your time on the analysis.
+
+### [consult-biblical-scholar](plugins/claude-of-alexandria/skills/consult-biblical-scholar/) — Production
+
+Scholarly Q&A for biblical texts. Three auto-detected modes:
+
+- **MEANING** — lexical and linguistic explanation, grounded in morphology and vocabulary data
+- **VALIDATE** — checks an analogy, sermon illustration, or theological claim against the text; returns a formal verdict (SUPPORTED / COMPATIBLE / NOT SUPPORTED / INSUFFICIENT DATA)
+- **CROSS-REFERENCE** — finds related passages with scholarly evidence, not memory associations
+
+Graduated confidence (HIGH / MEDIUM / LOW / CANNOT ANSWER) declared before every answer. Hard epistemic limits: the skill pushes back when MCP data and scholarly sources are insufficient, rather than speculating.
+
+Full RED/GREEN verification. 6 test scenarios.
 
 ## Installation
 
@@ -159,13 +171,17 @@ Add the server to your Claude Desktop MCP configuration:
 {
   "mcpServers": {
     "claude-of-alexandria-mcp": {
-      "url": "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://claude-of-alexandria-mcp.breamcode.workers.dev/mcp"
+      ]
     }
   }
 }
 ```
 
-No local installation or Node.js required. The server runs on Cloudflare Workers.
+Requires Node.js. `mcp-remote` bridges the remote server to Claude Desktop's stdio transport. No local database or compiled server required.
 
 Restart Claude Desktop after saving.
 
@@ -239,5 +255,5 @@ The library welcomes contributions from those who respect the methodology. See [
 </p>
 
 <p align="center">
-  <sub>Contains 3 skills (all production) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
+  <sub>Contains 4 skills (all production) supporting all 66 biblical books.<br>The cataloguing continues.</sub>
 </p>
