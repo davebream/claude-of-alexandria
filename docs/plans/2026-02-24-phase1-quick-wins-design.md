@@ -1,9 +1,15 @@
 # Phase 1: Quick Wins + Argument-Flow Skill
 
 > **Date:** 2026-02-24
-> **Status:** Design approved, pending implementation
+> **Status:** Revised per design review, ready for planning
 > **Scope:** Q1 (OT quotes MCP tool), Q2 (semantic groups expansion), Q5 (conjunction pattern), S2 (argument-flow skill)
 > **Source:** [StudyWith Review Gap Analysis](../reviews/2026-02-24-studywith-review-gap-analysis.md)
+>
+> ### Revision History
+> | Rev | Date | Changes |
+> |-----|------|---------|
+> | v1 | 2026-02-24 | Initial design |
+> | v2 | 2026-02-24 | Address design review: normalize ot_quotes schema to junction table, extract parseVerseRange to utils.ts, always-array ot_sources, richer summary, testament gate, quote_type column, ot_book filter normalization via lookupBook, add list-books.ts to files changed, genre-in-D1 decision (YAML-only), remove stale plugin.json skills array ref, add merge rules, add YAML validation step |
 
 ---
 
@@ -46,30 +52,57 @@ STEPBible ot_in_nt_refs.json (493 entries)
   License: CC BY 4.0 (GitHub repo) / CC BY-NC 3.0 (blogspot) — CONFIRM BEFORE SHIPPING
 
 Merge script (Python):
-  1. Normalize verse formats (Levinsohn "Matt 1:23" → STEPBible "Matt.1:23")
+  1. Normalize verse formats (Levinsohn "Matt 1:23" → STEPBible "Matt.1.23")
   2. Join on NT verse reference
-  3. Add ot_source field from STEPBible
+  3. Populate ot_quote_sources from STEPBible OT refs
   4. Handle many-to-many (Levinsohn splits multi-part quotes per verse)
   5. Output d1-seed/ot-quotes.sql
 ```
+
+### Merge Rules
+
+| Scenario | Resolution |
+|----------|------------|
+| **Levinsohn entry matches STEPBible by NT ref** | Merge: use Levinsohn Greek text + STEPBible OT source(s) |
+| **Levinsohn entry, no STEPBible match** | Keep entry, `ot_quote_sources` empty (OT source unknown). Log for manual review. |
+| **STEPBible entry, no Levinsohn match** | Keep entry with STEPBible English text in place of Greek. Flag `quote_type = 'allusion'` as likely candidate. Log for review. |
+| **Multiple Levinsohn entries for same verse** | Each gets its own `ot_quotes` row (they represent different quoted phrases in the same verse) |
+| **STEPBible has multiple OT refs for one NT ref** | Each OT ref becomes a separate `ot_quote_sources` row linked to the same `ot_quotes` entry |
+| **Verse format ambiguity** | Normalize all refs through `lookupBook()` canonical names before matching |
+
+The merge script should produce a `merge-report.json` listing: matched count, Levinsohn-only count, STEPBible-only count, and any entries that need manual review.
 
 **License fallback:** If STEPBible confirms NC-only, author the OT source mappings ourselves using Blue Letter Bible parallel passages (~900 entries, publicly viewable) as scholarly reference. It's 493 entries, not thousands.
 
 ### D1 Schema
 
 ```sql
+-- Parent table: one row per NT quotation occurrence
 CREATE TABLE ot_quotes (
   id INTEGER PRIMARY KEY,
   nt_book TEXT NOT NULL,
   nt_chapter INTEGER NOT NULL,
   nt_verse INTEGER NOT NULL,
   greek_text TEXT NOT NULL,
-  ot_source TEXT,              -- e.g. "Isa 7:14" (nullable until merge complete)
-  ot_source_multiple TEXT      -- semicolon-separated when multiple sources
+  quote_type TEXT NOT NULL DEFAULT 'direct'  -- 'direct', 'allusion', 'echo' (future classification)
 );
 CREATE INDEX idx_ot_quotes_nt ON ot_quotes(nt_book, nt_chapter, nt_verse);
-CREATE INDEX idx_ot_quotes_ot ON ot_quotes(ot_source);
+
+-- Junction table: one row per OT source reference (many-to-many)
+-- A single NT quotation may draw from multiple OT passages (composite quotes).
+CREATE TABLE ot_quote_sources (
+  id INTEGER PRIMARY KEY,
+  quote_id INTEGER NOT NULL REFERENCES ot_quotes(id),
+  ot_book TEXT NOT NULL,
+  ot_chapter INTEGER NOT NULL,
+  ot_verse INTEGER NOT NULL,
+  ot_verse_end INTEGER        -- nullable; set when source spans multiple verses
+);
+CREATE INDEX idx_ot_sources_quote ON ot_quote_sources(quote_id);
+CREATE INDEX idx_ot_sources_book ON ot_quote_sources(ot_book, ot_chapter, ot_verse);
 ```
+
+**Why junction table?** The original design had `ot_source` / `ot_source_multiple` dual-fields — an anti-pattern that forces string parsing at query time and can't be indexed for OT book filtering. The normalized schema gives us one row per link, clean indexes, and proper foreign key integrity.
 
 ### MCP Tool Interface
 
@@ -79,26 +112,59 @@ CREATE INDEX idx_ot_quotes_ot ON ot_quotes(ot_source);
 // Annotations: readOnlyHint: true, idempotentHint: true
 
 Input:
-  book: string     // required — NT book name
-  range?: string   // optional — "8:28-8:39" chapter:verse range
-  ot_book?: string // optional — filter by OT source book
+  book: string     // required — NT book name (any common form via lookupBook)
+  range?: string   // optional — "8:28-8:39" chapter:verse range (uses shared parseVerseRange)
+  ot_book?: string // optional — filter by OT source book (normalized via lookupBook: "Isaiah", "Isa", "isa" all work)
 
 Output:
   {
     book: string,
     range?: string,
     quotes: [{
-      nt_ref: string,      // "Rom 8:36"
-      greek_text: string,  // quoted Greek
-      ot_source: string    // "Ps 44:22"
+      nt_ref: string,        // "Rom 8:36"
+      greek_text: string,    // quoted Greek
+      quote_type: string,    // "direct" | "allusion" | "echo"
+      ot_sources: [{         // ALWAYS an array, even for single-source quotes
+        book: string,        // "Psalms"
+        chapter: number,     // 44
+        verse: number,       // 22
+        verse_end?: number,  // nullable — set when source spans verses
+        ref: string          // "Ps 44:22" (display format)
+      }]
     }],
-    summary: { total: number }
+    summary: {
+      total: number,
+      nt_books_covered: number,
+      ot_books_referenced: string[]   // distinct OT source books
+    }
   }
+```
+
+**Testament gate:** If the input `book` resolves to an OT book via `lookupBook()`, return an error:
+```json
+{ "error": { "code": "WRONG_TESTAMENT", "message": "query_ot_quotes is for NT books only. '${book}' is an OT book." } }
 ```
 
 ### Server Implementation
 
-New file: `server/src/tools/ot-quotes.ts` following same pattern as existing tools (Zod input/output schemas, D1 query, book name normalization via `resolveBook()`).
+**Prerequisite refactor:** Extract `parseVerseRange()` from `server/src/tools/morphology.ts` to `server/src/tools/utils.ts` and export it. Currently this function is private to morphology.ts but is needed by both `queryMorphology` and the new `queryOtQuotes`. The existing `utils.ts` already has `parseChapterRange()` — this is the natural home.
+
+```typescript
+// server/src/tools/utils.ts — add export
+export interface VerseRange {
+  startChapter: number;
+  startVerse: number;
+  endChapter: number;
+  endVerse: number;
+}
+export function parseVerseRange(range: string): VerseRange | { error: string } { ... }
+```
+
+Update `morphology.ts` to import from `utils.ts` instead of defining locally.
+
+**New file:** `server/src/tools/ot-quotes.ts` following same pattern as existing tools (Zod input/output schemas, D1 query via junction table JOIN, book name normalization via `lookupBook()`).
+
+**Query pattern:** JOIN `ot_quotes` with `ot_quote_sources` to produce the nested `ot_sources` array per quote. Group by `ot_quotes.id` in application code (D1 returns flat rows).
 
 Register in `server/src/index.ts` with `server.registerTool('query_ot_quotes', ...)`.
 
@@ -139,12 +205,21 @@ flesh:
 
 Existing 13 groups get `primary_genres` added retroactively.
 
+### Genre Tags: YAML-Only (Not in D1)
+
+The `primary_genres` field lives in `semantic_groups.yaml` only — it is **not** added to the `thematic_keywords` D1 table. Rationale: genre filtering is a client-side concern (skills read the YAML at invocation time), not a query-time concern. The D1 table stores theme→lemma mappings for vocabulary queries; adding genre there would duplicate data that already lives in YAML and create a sync problem.
+
 ### Changes Required
 
 1. **`semantic_groups.yaml`** — append 56 new groups with Greek/Hebrew terms and `primary_genres`
 2. **`thematic_keywords` D1 table** — new seed SQL file with INSERT statements for all new theme→lemma mappings
 3. **`list_books` tool** — already returns themes; will automatically pick up new groups from D1
 4. **`metadata` block in YAML** — update `semantic_groups_count: 69`
+5. **YAML validation** — after writing all 69 groups, validate:
+   - Every group has `description`, `primary_genres` (non-empty array), and at least one of `nt_lemmas`/`ot_strongs`
+   - No duplicate keys
+   - All `primary_genres` values are from the canonical set: `epistle`, `gospel_narrative`, `ot_narrative`, `prophetic`, `apocalyptic`, `hebrew_poetry`, `wisdom`, `torah_law`
+   - Run `python3 -c "import yaml; yaml.safe_load(open('semantic_groups.yaml'))"` as a smoke test
 
 ### Complete Group List (69 total)
 
@@ -526,17 +601,24 @@ Per CLAUDE.md, this skill requires the full RED-GREEN-REFACTOR cycle:
 
 ```
 1. Q2: Semantic groups expansion (YAML + D1 seed)
+   a. Write 56 new groups in semantic_groups.yaml with primary_genres
+   b. Add primary_genres to existing 13 groups
+   c. Run YAML validation (schema check + smoke test)
+   d. Generate thematic-keywords-expansion.sql
    — No dependencies, enables better vocabulary queries immediately
 
 2. Q1: query_ot_quotes MCP tool
-   a. Write merge script (Python)
-   b. Download + merge datasets
-   c. Generate d1-seed/ot-quotes.sql
-   d. Add D1 schema
-   e. Implement server/src/tools/ot-quotes.ts
-   f. Register in index.ts
-   g. Update skill allowed-tools
-   h. Deploy
+   a. Extract parseVerseRange() from morphology.ts → utils.ts (prerequisite refactor)
+   b. Update morphology.ts to import from utils.ts (verify no behavior change)
+   c. Write merge script (Python) with merge rules
+   d. Download + merge datasets, produce merge-report.json
+   e. Generate d1-seed/ot-quotes.sql (both tables)
+   f. Add D1 schema (ot_quotes + ot_quote_sources)
+   g. Implement server/src/tools/ot-quotes.ts (with testament gate, lookupBook normalization)
+   h. Register in index.ts
+   i. Update list-books.ts AVAILABLE_TOOLS array
+   j. Update skill allowed-tools
+   k. Deploy
 
 3. Q5: Conjunction pattern in exegetical-notes
    — Small doc change, no dependencies
@@ -555,17 +637,23 @@ Per CLAUDE.md, this skill requires the full RED-GREEN-REFACTOR cycle:
 
 | File | Change |
 |------|--------|
+| **Q2: Semantic Groups** | |
 | `plugins/.../reference/vocabulary/semantic_groups.yaml` | Expand from 13 to 69 groups with genre tags |
-| `server/d1-seed/schema.sql` | Add `ot_quotes` table |
-| `server/d1-seed/ot-quotes.sql` | New — seed data from merged Levinsohn + STEPBible |
 | `server/d1-seed/thematic-keywords-expansion.sql` | New — INSERT statements for 56 new theme groups |
+| **Q1: OT Quotes** | |
+| `server/src/tools/utils.ts` | Add exported `parseVerseRange()` + `VerseRange` type (extracted from morphology.ts) |
+| `server/src/tools/morphology.ts` | Remove local `parseVerseRange()`, import from utils.ts |
+| `server/d1-seed/schema.sql` | Add `ot_quotes` + `ot_quote_sources` tables |
+| `server/d1-seed/ot-quotes.sql` | New — seed data from merged Levinsohn + STEPBible |
 | `server/src/tools/ot-quotes.ts` | New — query tool implementation |
 | `server/src/index.ts` | Register `query_ot_quotes` tool |
+| `server/src/tools/list-books.ts` | Update `AVAILABLE_TOOLS` array to include `query_ot_quotes` |
+| **Q5: Conjunction Pattern** | |
 | `plugins/.../skills/exegetical-notes/SKILL.md` | Add conjunction pattern + `query_ot_quotes` to allowed-tools |
 | `plugins/.../skills/consult-biblical-scholar/SKILL.md` | Add `query_ot_quotes` to allowed-tools |
+| **S2: Argument Flow** | |
 | `plugins/.../skills/argument-flow/SKILL.md` | New — full skill file |
 | `plugins/.../skills/argument-flow/README.md` | New — development notes |
 | `tests/skills/argument-flow/scenarios.md` | New — test scenarios |
 | `tests/skills/argument-flow/baseline.md` | New — RED phase evidence |
 | `tests/skills/argument-flow/verification.md` | New — GREEN phase proof |
-| `plugins/.../.claude-plugin/plugin.json` | Add argument-flow to skills array |
