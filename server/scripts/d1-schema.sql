@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS thematic_keywords (
   testament TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_thematic_unique ON thematic_keywords(theme, lemma, testament);
 
 CREATE TABLE IF NOT EXISTS morphology (
   id INTEGER PRIMARY KEY,
@@ -67,3 +68,24 @@ CREATE TABLE IF NOT EXISTS morphology (
 -- for better D1 performance on the common query pattern in queryMorphology()
 CREATE INDEX IF NOT EXISTS idx_morph_range ON morphology(book, testament, chapter, verse);
 CREATE INDEX IF NOT EXISTS idx_morph_lemma ON morphology(lemma);
+
+CREATE TABLE IF NOT EXISTS ot_quotes (
+  id INTEGER PRIMARY KEY,
+  nt_book TEXT NOT NULL,
+  nt_chapter INTEGER NOT NULL,
+  nt_verse INTEGER NOT NULL,
+  greek_text TEXT NOT NULL,
+  quote_type TEXT NOT NULL DEFAULT 'direct'
+);
+CREATE INDEX IF NOT EXISTS idx_ot_quotes_nt ON ot_quotes(nt_book, nt_chapter, nt_verse);
+
+CREATE TABLE IF NOT EXISTS ot_quote_sources (
+  id INTEGER PRIMARY KEY,
+  quote_id INTEGER NOT NULL REFERENCES ot_quotes(id),
+  ot_book TEXT NOT NULL,
+  ot_chapter INTEGER NOT NULL,
+  ot_verse INTEGER NOT NULL,
+  ot_verse_end INTEGER
+);
+CREATE INDEX IF NOT EXISTS idx_ot_sources_quote ON ot_quote_sources(quote_id);
+CREATE INDEX IF NOT EXISTS idx_ot_sources_book ON ot_quote_sources(ot_book, ot_chapter, ot_verse);
