@@ -1,7 +1,7 @@
 ---
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
-allowed-tools: Read, Glob, WebSearch, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology
+allowed-tools: Read, Glob, WebSearch, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology, mcp__claude-of-alexandria-mcp__query_ot_quotes
 ---
 
 # Consult Biblical Scholar
@@ -67,6 +67,7 @@ Do not compose the answer from training data and then call MCP to verify. Call M
 | `query_discourse_features` | Always | If relevant | If relevant | ✅ | — |
 | `query_paragraph_breaks` | Always | Rarely | Rarely | — | ✅ |
 | `query_vocabulary` | If word-focused | Rarely | Always | ✅ | ✅ |
+| `query_ot_quotes` | If OT refs | Rarely | Always (NT) | ✅ | — |
 
 **MCP call format:**
 
