@@ -188,10 +188,10 @@ git commit -m "feat(data): add remaining 28 semantic groups, total 69 with genre
 
 **Step 1: Add UNIQUE constraint to thematic_keywords schema**
 
-In `server/d1-seed/schema.sql`, add a UNIQUE constraint so `INSERT OR IGNORE` works correctly:
+In `server/scripts/d1-schema.sql` (the tracked schema file — `server/d1-seed/` is gitignored), add a UNIQUE constraint so `INSERT OR IGNORE` works correctly:
 
 ```sql
--- Add after the existing thematic_keywords table (idempotent — safe to re-run)
+-- Add after the existing thematic_keywords index (line 51)
 CREATE UNIQUE INDEX IF NOT EXISTS idx_thematic_unique ON thematic_keywords(theme, lemma, testament);
 ```
 
@@ -259,8 +259,10 @@ echo "  Thematic keywords expansion imported."
 
 **Step 6: Commit**
 
+Note: `server/d1-seed/` is gitignored (generated files). Only commit the tracked schema, generator script, and seed script.
+
 ```bash
-git add server/d1-seed/schema.sql server/scripts/gen-thematic-keywords.py server/d1-seed/thematic-keywords-expansion.sql server/scripts/seed-d1.sh
+git add server/scripts/d1-schema.sql server/scripts/gen-thematic-keywords.py server/scripts/seed-d1.sh
 git commit -m "feat(data): generate thematic keywords SQL for 69 semantic groups"
 ```
 
@@ -327,11 +329,11 @@ git commit -m "refactor(server): extract parseVerseRange to shared utils"
 ## Task 6: Add `ot_quotes` + `ot_quote_sources` D1 Schema
 
 **Files:**
-- Modify: `server/d1-seed/schema.sql`
+- Modify: `server/scripts/d1-schema.sql` (the tracked schema — `server/d1-seed/` is gitignored)
 
 **Step 1: Append new table definitions**
 
-Add to the end of `server/d1-seed/schema.sql`:
+Add to the end of `server/scripts/d1-schema.sql`:
 
 ```sql
 CREATE TABLE IF NOT EXISTS ot_quotes (
@@ -359,7 +361,7 @@ CREATE INDEX IF NOT EXISTS idx_ot_sources_book ON ot_quote_sources(ot_book, ot_c
 **Step 2: Commit**
 
 ```bash
-git add server/d1-seed/schema.sql
+git add server/scripts/d1-schema.sql
 git commit -m "feat(server): add ot_quotes and ot_quote_sources D1 schema"
 ```
 
@@ -571,7 +573,7 @@ def main():
         quote_id += 1
 
         quote_lines.append(
-            f"INSERT INTO ot_quotes (id, nt_book, nt_chapter, nt_verse, greek_text, quote_type) "
+            f"INSERT OR REPLACE INTO ot_quotes (id, nt_book, nt_chapter, nt_verse, greek_text, quote_type) "
             f"VALUES ({quote_id}, '{book}', {chapter}, {verse}, '{greek}', 'direct');"
         )
 
@@ -583,7 +585,7 @@ def main():
             for ot_src in step_by_ref[key]:
                 source_id += 1
                 source_lines.append(
-                    f"INSERT INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
+                    f"INSERT OR REPLACE INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
                     f"VALUES ({source_id}, {quote_id}, '{ot_src['book']}', {ot_src['chapter']}, {ot_src['verse']}, {ot_src.get('verse_end') or 'NULL'});"
                 )
         else:
@@ -599,14 +601,14 @@ def main():
 
         # No Greek text for STEPBible-only entries
         quote_lines.append(
-            f"INSERT INTO ot_quotes (id, nt_book, nt_chapter, nt_verse, greek_text, quote_type) "
+            f"INSERT OR REPLACE INTO ot_quotes (id, nt_book, nt_chapter, nt_verse, greek_text, quote_type) "
             f"VALUES ({quote_id}, '{book}', {chapter}, {verse}, '', 'allusion');"
         )
 
         for ot_src in step_by_ref[key]:
             source_id += 1
             source_lines.append(
-                f"INSERT INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
+                f"INSERT OR REPLACE INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
                 f"VALUES ({source_id}, {quote_id}, '{ot_src['book']}', {ot_src['chapter']}, {ot_src['verse']}, {ot_src.get('verse_end') or 'NULL'});"
             )
 
@@ -653,18 +655,23 @@ npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/ot-quotes.sql" --remote
 echo "  OT quotes imported."
 ```
 
-**Step 7: Add STEPBible download to .gitignore**
+**Step 7: Add generated/downloaded files to .gitignore**
 
-Add to `.gitignore` (create if not exists):
+Add to `.gitignore`:
 ```
 # STEPBible downloaded data (re-downloadable, not committed)
 server/scripts/ot_in_nt_refs.json
+
+# Merge report (build artifact, regenerable)
+server/scripts/merge-report.json
 ```
 
 **Step 8: Commit**
 
+Note: `server/d1-seed/ot-quotes.sql` is gitignored (generated). Only commit the merge script, seed script, and .gitignore.
+
 ```bash
-git add server/scripts/merge-ot-quotes.py server/d1-seed/ot-quotes.sql server/scripts/merge-report.json server/scripts/seed-d1.sh .gitignore
+git add server/scripts/merge-ot-quotes.py server/scripts/seed-d1.sh .gitignore
 git commit -m "feat(data): merge Levinsohn + STEPBible OT quotation data"
 ```
 
@@ -738,7 +745,7 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
   // Testament gate: OT quotes tool is NT-only
   if (bookInfo.testament === 'ot') {
     return {
-      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'WRONG_TESTAMENT', message: `query_ot_quotes is for NT books only. '${bookInfo.displayName}' is an OT book.` } }) }],
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'TESTAMENT_MISMATCH', message: `query_ot_quotes is for NT books only. '${bookInfo.displayName}' is an OT book.` } }) }],
       isError: true,
     };
   }
@@ -812,16 +819,18 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
       });
     }
     if (row.ot_book) {
-      const otBook = row.ot_book as string;
+      const otCanonical = row.ot_book as string;
+      const otBookInfo = lookupBook(otCanonical);
+      const otDisplayName = otBookInfo ? otBookInfo.displayName : otCanonical;
       const otChapter = row.ot_chapter as number;
       const otVerse = row.ot_verse as number;
       const otVerseEnd = row.ot_verse_end as number | null;
       quotesMap.get(qid)!.ot_sources.push({
-        book: otBook,
+        book: otDisplayName,
         chapter: otChapter,
         verse: otVerse,
         verse_end: otVerseEnd,
-        ref: formatOtRef(otBook, otChapter, otVerse, otVerseEnd),
+        ref: formatOtRef(otCanonical, otChapter, otVerse, otVerseEnd),
       });
     }
   }
@@ -953,9 +962,11 @@ With:
 [OT quotations or allusions (call query_ot_quotes for NT passages)]
 ```
 
-**Step 3: Update consult-biblical-scholar allowed-tools**
+**Step 3: Update consult-biblical-scholar**
 
-In `plugins/claude-of-alexandria/skills/consult-biblical-scholar/SKILL.md`, add `query_ot_quotes` to the allowed-tools frontmatter in the same pattern.
+In `plugins/claude-of-alexandria/skills/consult-biblical-scholar/SKILL.md`:
+1. Add `mcp__claude-of-alexandria-mcp__query_ot_quotes` to the `allowed-tools` frontmatter
+2. Add `query_ot_quotes` to the CROSS-REFERENCE mode tool table in the skill body (per design doc)
 
 **Step 4: Commit**
 
@@ -1014,48 +1025,67 @@ git commit -m "feat(skills): add conjunction querying pattern for epistle genre"
 
 **Prerequisite:** Tasks 4-8 must be complete. Seed data must be ready.
 
-**Step 1: Bump server version FIRST**
+**Step 1: Update CHANGELOG.md**
+
+Add a `## [1.7.0] - 2026-02-XX` section (use actual date) to `CHANGELOG.md` with entries for all Phase 1 changes:
+
+```markdown
+## [1.7.0] - 2026-02-XX
+
+### Added
+- `query_ot_quotes` MCP tool — query OT quotations within NT passages with OT source references
+- 56 new semantic groups (69 total) with genre tags for vocabulary queries
+- Conjunction querying pattern for epistle genre analysis in exegetical-notes
+- `argument-flow` skill for mapping clause-level logical flow in epistolary passages
+
+### Changed
+- Existing 13 semantic groups now include `primary_genres` field
+- `parseVerseRange` extracted to shared utils (available to all tools)
+- exegetical-notes and consult-biblical-scholar skills updated with `query_ot_quotes` access
+```
+
+**Step 2: Bump server version**
 
 Update version in `server/package.json` and `server/src/index.ts` (McpServer constructor + health check) to `1.7.0`.
 
-**Step 2: Typecheck after version bump**
+**Step 3: Typecheck after version bump**
 
 Run: `cd server && npm run typecheck`
 
 Expected: No errors.
 
-**Step 3: Commit version bump**
+**Step 4: Commit version bump + changelog**
 
 ```bash
-git add server/package.json server/src/index.ts
+git add server/package.json server/src/index.ts CHANGELOG.md
 git commit -m "chore(release): bump server version to 1.7.0"
 ```
 
-**Step 4: Seed the expanded thematic keywords**
+**Step 5: Seed the expanded thematic keywords**
 
 Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/thematic-keywords-expansion.sql --remote`
 
 Expected: No errors.
 
-**Step 5: Seed the OT quotes schema**
+**Step 6: Seed the OT quotes schema**
 
-Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/schema.sql --remote`
+Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=../scripts/d1-schema.sql --remote`
 
 Expected: No errors (IF NOT EXISTS guards prevent duplicates).
 
-**Step 6: Seed the OT quotes data**
+**Step 7: Seed the OT quotes data**
 
 Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/ot-quotes.sql --remote`
 
 Expected: No errors.
 
-**Step 7: Deploy the Worker**
+**Step 8: Deploy the Worker**
 
 Run: `cd server && npm run deploy`
 
 Expected: Successful deployment to `coa.davebream.com`.
 
-**Step 8: Verify deployment**
+**Step 9: Verify deployment**
 
 Run: `curl -s https://coa.davebream.com/health | python3 -m json.tool`
 
@@ -1371,12 +1401,13 @@ Expected: Clean working tree.
 
 **Step 2: Verify file structure matches design**
 
-Confirm these exist:
+Confirm these tracked files exist:
 ```
-plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml  (69 groups)
-server/d1-seed/schema.sql                (includes ot_quotes + ot_quote_sources)
-server/d1-seed/ot-quotes.sql             (seed data)
-server/d1-seed/thematic-keywords-expansion.sql  (56 new themes)
+plugins/.../skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml  (69 groups)
+server/scripts/d1-schema.sql             (includes ot_quotes + ot_quote_sources + UNIQUE constraint)
+server/scripts/gen-thematic-keywords.py  (thematic keywords generator)
+server/scripts/merge-ot-quotes.py        (OT quotes merge script)
+server/scripts/seed-d1.sh               (updated with new seed files)
 server/src/tools/utils.ts                (parseVerseRange exported)
 server/src/tools/morphology.ts           (imports from utils)
 server/src/tools/ot-quotes.ts            (new tool)
@@ -1389,6 +1420,13 @@ plugins/.../skills/argument-flow/README.md         (new)
 tests/skills/argument-flow/scenarios.md            (new)
 tests/skills/argument-flow/baseline.md             (new)
 tests/skills/argument-flow/verification.md         (new)
+CHANGELOG.md                             (updated with [1.7.0] section)
+```
+
+And confirm these generated (gitignored) files exist locally:
+```
+server/d1-seed/thematic-keywords-expansion.sql  (generated by gen-thematic-keywords.py)
+server/d1-seed/ot-quotes.sql                    (generated by merge-ot-quotes.py)
 ```
 
 **Step 3: Run final typecheck**
