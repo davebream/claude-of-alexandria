@@ -3,6 +3,7 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { expandParsing } from '../db/parsing.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
+import { parseVerseRange, type VerseRange } from './utils.js';
 
 export const MorphologyInputSchema = {
   book: z.string().describe('Book name (any common form, e.g., "John", "Gen", "Hebrews")'),
@@ -32,29 +33,6 @@ export const MorphologyOutputSchema = {
     by_pos: z.record(z.string(), z.number()),
   }),
 };
-
-interface VerseRange {
-  startChapter: number;
-  startVerse: number;
-  endChapter: number;
-  endVerse: number;
-}
-
-function parseVerseRange(range: string): VerseRange | { error: string } {
-  const parts = range.split('-');
-  if (parts.length === 1) {
-    const [ch, v] = parts[0].split(':').map(Number);
-    if (isNaN(ch) || isNaN(v)) return { error: `Invalid verse range: "${range}"` };
-    return { startChapter: ch, startVerse: v, endChapter: ch, endVerse: v };
-  }
-  if (parts.length === 2) {
-    const [sCh, sV] = parts[0].split(':').map(Number);
-    const [eCh, eV] = parts[1].split(':').map(Number);
-    if ([sCh, sV, eCh, eV].some(isNaN)) return { error: `Invalid verse range: "${range}"` };
-    return { startChapter: sCh, startVerse: sV, endChapter: eCh, endVerse: eV };
-  }
-  return { error: `Invalid verse range: "${range}"` };
-}
 
 const DEFAULT_MORPHOLOGY_LIMIT = 5000;
 
