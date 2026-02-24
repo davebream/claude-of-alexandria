@@ -158,7 +158,7 @@ async function cachedToolCall(
 // per request is cheap (constructor only sets up handler maps, no I/O).
 function createServer(): McpServer {
   const server = new McpServer(
-    { name: 'claude-of-alexandria-mcp', version: '1.6.0' },
+    { name: 'claude-of-alexandria-mcp', version: '1.7.0' },
     { capabilities: { tools: {} } }
   );
 
@@ -279,12 +279,12 @@ export default {
       try {
         await env.DB.prepare('SELECT 1').first();
         return new Response(
-          JSON.stringify({ status: 'ok', version: '1.6.0', db: 'connected' }),
+          JSON.stringify({ status: 'ok', version: '1.7.0', db: 'connected' }),
           { headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       } catch {
         return new Response(
-          JSON.stringify({ status: 'degraded', version: '1.6.0', db: 'unreachable' }),
+          JSON.stringify({ status: 'degraded', version: '1.7.0', db: 'unreachable' }),
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }

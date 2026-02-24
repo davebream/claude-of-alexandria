@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-02-24
+
+### Added
+
+- `query_ot_quotes` MCP tool — OT quotations in NT passages, merging Levinsohn OT_quotes.json (691 entries) and STEPBible ot-in-nt data (471 entries) into 939 quotes with 1138 source references; supports verse range and OT book filters
+- `argument-flow` skill — map the logical argument of an NT epistle passage using discourse markers and morphological data; produces a numbered proposition chain, connective analysis, and preachable summary
+
+### Changed
+
+- Semantic groups expanded from 13 to 69 (added `primary_genres` field for genre-aware vocabulary; new groups cover Pauline, General Epistles, Gospels, Hebrew Poetry, Wisdom, Prophetic, OT Narrative, and Apocalyptic sub-themes)
+- `exegetical-notes` skill: added `query_ot_quotes` to `allowed-tools`; Section 8 now calls the MCP tool instead of referencing a static JSON file; added epistle-specific conjunction querying pattern with nine-connective reference table
+- `consult-biblical-scholar` skill: added `query_ot_quotes` to `allowed-tools` and cross-reference tool table
+
 ## [1.5.1] - 2026-02-21
 
 ### Fixed
