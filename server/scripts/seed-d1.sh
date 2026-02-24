@@ -17,6 +17,11 @@ echo "Importing small tables..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/data.sql" --remote
 echo "  Small tables imported."
 
+# Thematic keywords expansion
+echo "Importing thematic keywords expansion..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/thematic-keywords-expansion.sql" --remote
+echo "  Thematic keywords expansion imported."
+
 # Morphology in batches
 echo "Importing morphology..."
 chunk_count=0
