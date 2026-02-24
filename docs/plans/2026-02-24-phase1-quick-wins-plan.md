@@ -15,7 +15,7 @@
 ## Task 1: Add `primary_genres` to Existing 13 Semantic Groups
 
 **Files:**
-- Modify: `plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml`
+- Modify: `plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml`
 
 **Step 1: Add `primary_genres` field to each existing group**
 
@@ -59,14 +59,14 @@ Leave count at 13 for now — Task 2 will set it to 69.
 
 **Step 3: Validate YAML loads**
 
-Run: `python3 -c "import yaml; d=yaml.safe_load(open('plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml')); print(f'{len(d[\"semantic_groups\"])} groups loaded'); assert all('primary_genres' in v for v in d['semantic_groups'].values()), 'Missing primary_genres'"`
+Run: `python3 -c "import yaml; d=yaml.safe_load(open('plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml')); print(f'{len(d[\"semantic_groups\"])} groups loaded'); assert all('primary_genres' in v for v in d['semantic_groups'].values()), 'Missing primary_genres'"`
 
 Expected: `13 groups loaded` (no assertion error)
 
 **Step 4: Commit**
 
 ```bash
-git add plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml
+git add plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml
 git commit -m "feat(data): add primary_genres to existing 13 semantic groups"
 ```
 
@@ -75,7 +75,7 @@ git commit -m "feat(data): add primary_genres to existing 13 semantic groups"
 ## Task 2: Add 56 New Semantic Groups (Batch 1 — 28 groups)
 
 **Files:**
-- Modify: `plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml`
+- Modify: `plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml`
 
 **Step 1: Append first 28 groups**
 
@@ -114,14 +114,14 @@ Example for `suffering`:
 
 **Step 2: Validate YAML**
 
-Run: `python3 -c "import yaml; d=yaml.safe_load(open('plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml')); print(f'{len(d[\"semantic_groups\"])} groups loaded')"`
+Run: `python3 -c "import yaml; d=yaml.safe_load(open('plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml')); print(f'{len(d[\"semantic_groups\"])} groups loaded')"`
 
 Expected: `41 groups loaded`
 
 **Step 3: Commit**
 
 ```bash
-git add plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml
+git add plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml
 git commit -m "feat(data): add 28 new semantic groups (original, pauline, general, gospels)"
 ```
 
@@ -130,7 +130,7 @@ git commit -m "feat(data): add 28 new semantic groups (original, pauline, genera
 ## Task 3: Add 56 New Semantic Groups (Batch 2 — 28 groups)
 
 **Files:**
-- Modify: `plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml`
+- Modify: `plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml`
 
 **Step 1: Append remaining 28 groups**
 
@@ -155,7 +155,7 @@ metadata:
 python3 -c "
 import yaml
 VALID_GENRES = {'epistle', 'gospel_narrative', 'ot_narrative', 'prophetic', 'apocalyptic', 'hebrew_poetry', 'wisdom', 'torah_law'}
-d = yaml.safe_load(open('plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml'))
+d = yaml.safe_load(open('plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml'))
 groups = d['semantic_groups']
 print(f'{len(groups)} groups loaded')
 assert len(groups) == 69, f'Expected 69, got {len(groups)}'
@@ -175,7 +175,7 @@ Expected: `69 groups loaded` + `All 69 groups validated successfully`
 **Step 4: Commit**
 
 ```bash
-git add plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml
+git add plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml
 git commit -m "feat(data): add remaining 28 semantic groups, total 69 with genre tags"
 ```
 
@@ -186,7 +186,16 @@ git commit -m "feat(data): add remaining 28 semantic groups, total 69 with genre
 **Files:**
 - Create: `server/d1-seed/thematic-keywords-expansion.sql`
 
-**Step 1: Write a Python script to generate SQL from YAML**
+**Step 1: Add UNIQUE constraint to thematic_keywords schema**
+
+In `server/d1-seed/schema.sql`, add a UNIQUE constraint so `INSERT OR IGNORE` works correctly:
+
+```sql
+-- Add after the existing thematic_keywords table (idempotent — safe to re-run)
+CREATE UNIQUE INDEX IF NOT EXISTS idx_thematic_unique ON thematic_keywords(theme, lemma, testament);
+```
+
+**Step 2: Write a Python script to generate SQL from YAML**
 
 Create `server/scripts/gen-thematic-keywords.py`:
 
@@ -196,7 +205,7 @@ Create `server/scripts/gen-thematic-keywords.py`:
 import yaml
 import sys
 
-YAML_PATH = "plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml"
+YAML_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml"
 OUTPUT_PATH = "server/d1-seed/thematic-keywords-expansion.sql"
 
 with open(YAML_PATH) as f:
@@ -225,19 +234,19 @@ with open(OUTPUT_PATH, "w") as f:
 print(f"Generated {count} INSERT statements for {len(groups)} themes → {OUTPUT_PATH}")
 ```
 
-**Step 2: Run the generator**
+**Step 3: Run the generator**
 
 Run: `python3 server/scripts/gen-thematic-keywords.py`
 
 Expected: `Generated NNN INSERT statements for 69 themes → server/d1-seed/thematic-keywords-expansion.sql`
 
-**Step 3: Verify the SQL file looks correct**
+**Step 4: Verify the SQL file looks correct**
 
 Run: `head -20 server/d1-seed/thematic-keywords-expansion.sql && echo "---" && wc -l server/d1-seed/thematic-keywords-expansion.sql`
 
-Expected: Starts with `-- Thematic keywords expansion`, contains INSERT statements, line count matches expected.
+Expected: Starts with `-- Thematic keywords expansion`, contains `INSERT OR IGNORE` statements (safe for re-runs), line count matches expected.
 
-**Step 4: Update seed script to include new file**
+**Step 5: Update seed script to include new file**
 
 Add to `server/scripts/seed-d1.sh`, after the "Small tables" block (line 17):
 
@@ -248,10 +257,10 @@ npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/thematic-keywords-expansion
 echo "  Thematic keywords expansion imported."
 ```
 
-**Step 5: Commit**
+**Step 6: Commit**
 
 ```bash
-git add server/scripts/gen-thematic-keywords.py server/d1-seed/thematic-keywords-expansion.sql server/scripts/seed-d1.sh
+git add server/d1-seed/schema.sql server/scripts/gen-thematic-keywords.py server/d1-seed/thematic-keywords-expansion.sql server/scripts/seed-d1.sh
 git commit -m "feat(data): generate thematic keywords SQL for 69 semantic groups"
 ```
 
@@ -462,23 +471,94 @@ def main():
         step_data = json.load(f)
     print(f"STEPBible: {len(step_data)} entries")
 
-    # NOTE: STEPBible format needs inspection.
-    # Adjust field access based on actual data structure.
-    # This is a template — the implementer MUST verify field names
-    # after running Step 2 above.
+    # Validate BOOK_ALIASES: every canonical value must exist in books.ts
+    # (books.ts canonical names are lowercase with underscores: "1_corinthians")
+    KNOWN_CANONICALS = {
+        "matthew", "mark", "luke", "john", "acts", "romans",
+        "1_corinthians", "2_corinthians", "galatians", "ephesians",
+        "philippians", "colossians", "1_thessalonians", "2_thessalonians",
+        "1_timothy", "2_timothy", "titus", "philemon", "hebrews",
+        "james", "1_peter", "2_peter", "1_john", "2_john", "3_john",
+        "jude", "revelation",
+        "genesis", "exodus", "leviticus", "numbers", "deuteronomy",
+        "joshua", "judges", "ruth", "1_samuel", "2_samuel",
+        "1_kings", "2_kings", "1_chronicles", "2_chronicles",
+        "ezra", "nehemiah", "esther", "job", "psalms", "proverbs",
+        "ecclesiastes", "song_of_songs", "isaiah", "jeremiah",
+        "lamentations", "ezekiel", "daniel", "hosea", "joel", "amos",
+        "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah",
+        "haggai", "zechariah", "malachi",
+    }
+    bad_aliases = {k: v for k, v in BOOK_ALIASES.items() if v not in KNOWN_CANONICALS}
+    if bad_aliases:
+        print(f"ERROR: BOOK_ALIASES has {len(bad_aliases)} entries mapping to unknown canonicals:")
+        for alias, canonical in bad_aliases.items():
+            print(f"  {alias} → {canonical}")
+        sys.exit(1)
 
-    # Index STEPBible by normalized NT ref → OT sources
+    # Index STEPBible by normalized NT ref → OT sources.
+    # STEPBible format needs inspection in Step 2.
+    # The implementer MUST verify field names after examining the actual
+    # data and adjust the parsing below accordingly.
+    # Expected structure per entry: NT ref + one or more OT source refs.
     step_by_ref: dict[tuple, list] = defaultdict(list)
-    # TODO: Parse STEPBible entries and populate step_by_ref
-    # Key: (canonical_book, chapter, verse)
-    # Value: list of OT source dicts
+    step_parse_errors = []
 
-    # Build ot_quotes rows from Levinsohn
+    for entry in step_data:
+        # Parse STEPBible entry — adjust field names based on Step 2 inspection.
+        # Common pattern: entry has "nt_ref" and "ot_ref" fields.
+        # The implementer MUST update these field accesses after examining
+        # the actual STEPBible JSON structure in Step 2.
+        try:
+            nt_ref_str = entry.get("nt_ref") or entry.get("NT") or ""
+            ot_ref_str = entry.get("ot_ref") or entry.get("OT") or ""
+            if not nt_ref_str or not ot_ref_str:
+                step_parse_errors.append({"entry": entry, "error": "missing nt_ref or ot_ref"})
+                continue
+
+            nt_parsed = parse_levinsohn_ref(nt_ref_str)
+            if not nt_parsed:
+                step_parse_errors.append({"entry": nt_ref_str, "error": "unparseable NT ref"})
+                continue
+
+            nt_book, nt_ch, nt_v = nt_parsed
+
+            # Parse OT ref (may contain range like "Isa 53:4-6")
+            ot_m = re.match(r"(\d?\s?\w+)\s+(\d+):(\d+)(?:-(\d+))?", ot_ref_str)
+            if not ot_m:
+                step_parse_errors.append({"entry": ot_ref_str, "error": "unparseable OT ref"})
+                continue
+
+            ot_book_raw = ot_m.group(1).strip()
+            ot_canonical = normalize_book(ot_book_raw)
+            if not ot_canonical:
+                step_parse_errors.append({"entry": ot_ref_str, "error": f"unknown OT book: {ot_book_raw}"})
+                continue
+
+            ot_ch = int(ot_m.group(2))
+            ot_v = int(ot_m.group(3))
+            ot_v_end = int(ot_m.group(4)) if ot_m.group(4) else None
+
+            step_by_ref[(nt_book, nt_ch, nt_v)].append({
+                "book": ot_canonical,
+                "chapter": ot_ch,
+                "verse": ot_v,
+                "verse_end": ot_v_end,
+            })
+        except Exception as e:
+            step_parse_errors.append({"entry": str(entry)[:100], "error": str(e)})
+
+    print(f"STEPBible indexed: {len(step_by_ref)} NT refs, {len(step_parse_errors)} parse errors")
+
+    # Track which STEPBible keys get matched (for detecting STEPBible-only entries)
+    matched_step_keys: set[tuple] = set()
+
+    # Build ot_quotes rows from Levinsohn (primary source: has Greek text)
     quote_id = 0
     source_id = 0
     quote_lines = ["-- OT Quotes seed data (merged Levinsohn + STEPBible)"]
     source_lines = []
-    report = {"matched": 0, "levinsohn_only": 0, "stepbible_only": 0, "parse_errors": []}
+    report = {"matched": 0, "levinsohn_only": 0, "stepbible_only": 0, "parse_errors": [], "step_parse_errors": len(step_parse_errors)}
 
     for entry in lev_refs:
         parsed = parse_levinsohn_ref(entry["verse"])
@@ -495,18 +575,40 @@ def main():
             f"VALUES ({quote_id}, '{book}', {chapter}, {verse}, '{greek}', 'direct');"
         )
 
-        # Check for STEPBible match
+        # Check for STEPBible match → get OT source references
         key = (book, chapter, verse)
         if key in step_by_ref:
             report["matched"] += 1
+            matched_step_keys.add(key)
             for ot_src in step_by_ref[key]:
                 source_id += 1
                 source_lines.append(
                     f"INSERT INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
-                    f"VALUES ({source_id}, {quote_id}, '{ot_src['book']}', {ot_src['chapter']}, {ot_src['verse']}, {ot_src.get('verse_end', 'NULL')});"
+                    f"VALUES ({source_id}, {quote_id}, '{ot_src['book']}', {ot_src['chapter']}, {ot_src['verse']}, {ot_src.get('verse_end') or 'NULL'});"
                 )
         else:
             report["levinsohn_only"] += 1
+
+    # Process STEPBible-only entries (not in Levinsohn).
+    # Per design merge rules: STEPBible-only entries → quote_type = 'allusion', no greek_text.
+    stepbible_only_keys = set(step_by_ref.keys()) - matched_step_keys
+    for key in sorted(stepbible_only_keys):
+        book, chapter, verse = key
+        quote_id += 1
+        report["stepbible_only"] += 1
+
+        # No Greek text for STEPBible-only entries
+        quote_lines.append(
+            f"INSERT INTO ot_quotes (id, nt_book, nt_chapter, nt_verse, greek_text, quote_type) "
+            f"VALUES ({quote_id}, '{book}', {chapter}, {verse}, '', 'allusion');"
+        )
+
+        for ot_src in step_by_ref[key]:
+            source_id += 1
+            source_lines.append(
+                f"INSERT INTO ot_quote_sources (id, quote_id, ot_book, ot_chapter, ot_verse, ot_verse_end) "
+                f"VALUES ({source_id}, {quote_id}, '{ot_src['book']}', {ot_src['chapter']}, {ot_src['verse']}, {ot_src.get('verse_end') or 'NULL'});"
+            )
 
     # Write SQL
     all_lines = quote_lines + ["", "-- OT Quote Sources"] + source_lines
@@ -518,18 +620,17 @@ def main():
         json.dump(report, f, indent=2)
 
     print(f"Output: {OUTPUT_SQL} ({quote_id} quotes, {source_id} sources)")
-    print(f"Report: matched={report['matched']}, levinsohn_only={report['levinsohn_only']}, parse_errors={len(report['parse_errors'])}")
+    print(f"Report: matched={report['matched']}, levinsohn_only={report['levinsohn_only']}, stepbible_only={report['stepbible_only']}, parse_errors={len(report['parse_errors'])}")
 
 
 if __name__ == "__main__":
     main()
 ```
 
-**Important:** This script is a working template. The STEPBible parsing section (marked `TODO`) must be completed after examining the actual STEPBible data format in Step 2. The implementer must:
-1. Inspect the STEPBible JSON structure
-2. Write the parser for STEPBible entries
-3. Map STEPBible OT references to our canonical book names
-4. Handle multi-source entries (one NT ref → multiple OT sources)
+**Important:** The STEPBible parsing section assumes fields named `nt_ref`/`ot_ref` (or `NT`/`OT`). The implementer MUST:
+1. Run Step 2 to inspect the actual STEPBible JSON structure
+2. Adjust field access names in the `for entry in step_data` loop if they differ
+3. Verify the OT ref regex handles the actual format (may include verse ranges like "Isa 53:4-6")
 
 **Step 4: Run merge script**
 
@@ -552,10 +653,18 @@ npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/ot-quotes.sql" --remote
 echo "  OT quotes imported."
 ```
 
-**Step 7: Commit**
+**Step 7: Add STEPBible download to .gitignore**
+
+Add to `.gitignore` (create if not exists):
+```
+# STEPBible downloaded data (re-downloadable, not committed)
+server/scripts/ot_in_nt_refs.json
+```
+
+**Step 8: Commit**
 
 ```bash
-git add server/scripts/merge-ot-quotes.py server/scripts/ot_in_nt_refs.json server/d1-seed/ot-quotes.sql server/scripts/merge-report.json server/scripts/seed-d1.sh
+git add server/scripts/merge-ot-quotes.py server/d1-seed/ot-quotes.sql server/scripts/merge-report.json server/scripts/seed-d1.sh .gitignore
 git commit -m "feat(data): merge Levinsohn + STEPBible OT quotation data"
 ```
 
@@ -576,6 +685,8 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
+
+const DEFAULT_OT_QUOTES_LIMIT = 2000;
 
 export const OtQuotesInputSchema = {
   book: z.string().describe('NT book name (any common form, e.g., "Romans", "Matt", "Hebrews")'),
@@ -602,13 +713,15 @@ export const OtQuotesOutputSchema = {
   })),
   summary: z.object({
     total: z.number(),
-    nt_books_covered: z.number(),
+    nt_verses_with_quotes: z.number(),
     ot_books_referenced: z.array(z.string()),
   }),
 };
 
-function formatOtRef(book: string, chapter: number, verse: number, verseEnd: number | null): string {
-  const base = `${book} ${chapter}:${verse}`;
+function formatOtRef(canonicalBook: string, chapter: number, verse: number, verseEnd: number | null): string {
+  const bookInfo = lookupBook(canonicalBook);
+  const displayName = bookInfo ? bookInfo.displayName : canonicalBook;
+  const base = `${displayName} ${chapter}:${verse}`;
   return verseEnd ? `${base}-${verseEnd}` : base;
 }
 
@@ -657,7 +770,12 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
     );
   }
 
-  // Optional OT book filter
+  // Optional OT book filter — filters by OT source reference.
+  // Because this uses LEFT JOIN, adding s.ot_book = ? in WHERE
+  // excludes quotes that have no matching source (Levinsohn-only entries
+  // without STEPBible source data). This is intentional: when the user
+  // asks "what does Romans quote from Isaiah?", we only want quotes
+  // with known Isaiah sources, not all quotes.
   if (args.ot_book) {
     const otBookInfo = lookupBook(args.ot_book);
     if (!otBookInfo) {
@@ -670,7 +788,8 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
     params.push(otBookInfo.canonical);
   }
 
-  sql += ' ORDER BY q.nt_chapter, q.nt_verse, q.id';
+  sql += ' ORDER BY q.nt_chapter, q.nt_verse, q.id LIMIT ?';
+  params.push(DEFAULT_OT_QUOTES_LIMIT);
 
   const rows = await query(sql, params);
 
@@ -710,21 +829,21 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
   const quotes = [...quotesMap.values()];
 
   // Build summary
-  const ntBooks = new Set(quotes.map(q => q.nt_ref.split(' ')[0]));
   const otBooks = new Set<string>();
   for (const q of quotes) {
     for (const s of q.ot_sources) {
-      otBooks.add(s.book);
+      const otInfo = lookupBook(s.book);
+      otBooks.add(otInfo ? otInfo.displayName : s.book);
     }
   }
 
   const result = {
     book: bookInfo.displayName,
-    range: args.range,
+    ...(args.range ? { range: args.range } : {}),
     quotes,
     summary: {
       total: quotes.length,
-      nt_books_covered: ntBooks.size,
+      nt_verses_with_quotes: new Set(quotes.map(q => q.nt_ref)).size,
       ot_books_referenced: [...otBooks].sort(),
     },
   };
@@ -752,9 +871,9 @@ Returns quotation data including the quoted Greek text, quote type (direct/allus
 Args:
   - book (string, required): NT book name in any common form (e.g., "Romans", "Matt", "Hebrews")
   - range (string, optional): Verse range "8:28-8:39" or single verse "1:23". Omit for entire book.
-  - ot_book (string, optional): Filter by OT source book (e.g., "Isaiah", "Isa", "Psalms")
+  - ot_book (string, optional): Filter by OT source book (e.g., "Isaiah", "Isa", "Psalms"). Only returns quotes that have a known source in this book.
 
-Returns: { book, range?, quotes: [{nt_ref, greek_text, quote_type, ot_sources: [{book, chapter, verse, verse_end?, ref}]}], summary: {total, nt_books_covered, ot_books_referenced} }
+Returns: { book, range?, quotes: [{nt_ref, greek_text, quote_type, ot_sources: [{book, chapter, verse, verse_end?, ref}]}], summary: {total, nt_verses_with_quotes, ot_books_referenced} }
 
 Examples:
   - All OT quotes in Romans: book="Romans"
@@ -895,47 +1014,52 @@ git commit -m "feat(skills): add conjunction querying pattern for epistle genre"
 
 **Prerequisite:** Tasks 4-8 must be complete. Seed data must be ready.
 
-**Step 1: Seed the expanded thematic keywords**
+**Step 1: Bump server version FIRST**
+
+Update version in `server/package.json` and `server/src/index.ts` (McpServer constructor + health check) to `1.7.0`.
+
+**Step 2: Typecheck after version bump**
+
+Run: `cd server && npm run typecheck`
+
+Expected: No errors.
+
+**Step 3: Commit version bump**
+
+```bash
+git add server/package.json server/src/index.ts
+git commit -m "chore(release): bump server version to 1.7.0"
+```
+
+**Step 4: Seed the expanded thematic keywords**
 
 Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/thematic-keywords-expansion.sql --remote`
 
 Expected: No errors.
 
-**Step 2: Seed the OT quotes schema**
+**Step 5: Seed the OT quotes schema**
 
 Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/schema.sql --remote`
 
 Expected: No errors (IF NOT EXISTS guards prevent duplicates).
 
-**Step 3: Seed the OT quotes data**
+**Step 6: Seed the OT quotes data**
 
 Run: `cd server && npx wrangler d1 execute claude-of-alexandria --file=d1-seed/ot-quotes.sql --remote`
 
 Expected: No errors.
 
-**Step 4: Deploy the Worker**
+**Step 7: Deploy the Worker**
 
 Run: `cd server && npm run deploy`
 
 Expected: Successful deployment to `coa.davebream.com`.
 
-**Step 5: Verify deployment**
+**Step 8: Verify deployment**
 
 Run: `curl -s https://coa.davebream.com/health | python3 -m json.tool`
 
-Expected: `{"status": "ok", "version": "...", "db": "connected"}`
-
-**Step 6: Bump server version**
-
-Update version in `server/package.json` and `server/src/index.ts` (McpServer constructor + health check) to `1.7.0`.
-
-**Step 7: Commit and deploy**
-
-```bash
-git add server/package.json server/src/index.ts
-git commit -m "chore(release): bump server version to 1.7.0"
-cd server && npm run deploy
-```
+Expected: `{"status": "ok", "version": "1.7.0", "db": "connected"}`
 
 ---
 
@@ -1153,7 +1277,21 @@ Produces structured proposition diagrams showing main claims, grounds, inference
 - Application or devotional content
 ```
 
-**Step 3: Commit**
+**Step 3: Verify skill discovery**
+
+The plugin auto-discovers skills from the directory structure. Verify the skill would be found:
+
+Run: `ls -la plugins/claude-of-alexandria/skills/argument-flow/SKILL.md`
+
+Expected: File exists.
+
+Run: `head -5 plugins/claude-of-alexandria/skills/argument-flow/SKILL.md`
+
+Expected: YAML frontmatter with `name: argument-flow`, `description:`, and `allowed-tools:` fields.
+
+Verify the skill name matches the directory name (both `argument-flow`). The plugin manifest at `plugins/claude-of-alexandria/.claude-plugin/plugin.json` does NOT need a skills array — skills are auto-discovered from the `skills/` directory.
+
+**Step 4: Commit**
 
 ```bash
 mkdir -p plugins/claude-of-alexandria/skills/argument-flow
@@ -1235,7 +1373,7 @@ Expected: Clean working tree.
 
 Confirm these exist:
 ```
-plugins/claude-of-alexandria/reference/vocabulary/semantic_groups.yaml  (69 groups)
+plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml  (69 groups)
 server/d1-seed/schema.sql                (includes ot_quotes + ot_quote_sources)
 server/d1-seed/ot-quotes.sql             (seed data)
 server/d1-seed/thematic-keywords-expansion.sql  (56 new themes)
