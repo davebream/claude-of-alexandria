@@ -22,6 +22,11 @@ echo "Importing thematic keywords expansion..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/thematic-keywords-expansion.sql" --remote
 echo "  Thematic keywords expansion imported."
 
+# OT Quotes
+echo "Importing OT quotes..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/ot-quotes.sql" --remote
+echo "  OT quotes imported."
+
 # Morphology in batches
 echo "Importing morphology..."
 chunk_count=0

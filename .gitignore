@@ -60,3 +60,9 @@ htmlcov/
 
 # D1 seed files (generated — do not commit)
 server/d1-seed/
+
+# STEPBible downloaded data (re-downloadable, not committed)
+server/scripts/ot_in_nt_refs.json
+
+# Merge report (build artifact, regenerable)
+server/scripts/merge-report.json
