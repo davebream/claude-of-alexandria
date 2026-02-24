@@ -204,3 +204,466 @@ semantic_groups:
       H539:
         hebrew: אָמַן
         gloss: be firm, be faithful, be true
+
+  # New — Proposed Original 8
+
+  suffering:
+    description: "Suffering, tribulation, affliction — the believer's participation in Christ's sufferings"
+    primary_genres: [epistle, hebrew_poetry]
+    nt_lemmas:
+      πάσχω: suffer, experience
+      θλῖψις: tribulation, affliction, distress
+      παθήματα: sufferings, passions
+      κακοπαθέω: suffer hardship, endure affliction
+    ot_strongs:
+      H6040:
+        hebrew: עֳנִי
+        gloss: affliction, poverty, misery
+      H6862:
+        hebrew: צָרָה
+        gloss: distress, adversity, trouble
+      H3510:
+        hebrew: כָּאַב
+        gloss: be in pain, suffer
+
+  kingdom:
+    description: "Kingdom, reign — God's sovereign rule over creation and his people"
+    primary_genres: [gospel_narrative, prophetic]
+    nt_lemmas:
+      βασιλεία: kingdom, reign, rule
+      βασιλεύω: reign, rule
+      βασιλεύς: king
+    ot_strongs:
+      H4428:
+        hebrew: מֶלֶךְ
+        gloss: king, ruler
+      H4467:
+        hebrew: מַמְלָכָה
+        gloss: kingdom, sovereignty, reign
+
+  death-life:
+    description: "Death and life — mortality, resurrection, and the gift of eternal life"
+    primary_genres: [epistle, wisdom]
+    nt_lemmas:
+      θάνατος: death
+      ζωή: life, existence
+      ἀνάστασις: resurrection
+      νεκρός: dead, corpse
+    ot_strongs:
+      H4194:
+        hebrew: מָוֶת
+        gloss: death
+      H2416:
+        hebrew: חַי
+        gloss: living, alive
+
+  sin:
+    description: "Sin, transgression, iniquity — missing the mark, rebellion, and guilt before God"
+    primary_genres: [epistle, prophetic]
+    nt_lemmas:
+      ἁμαρτία: sin, missing the mark
+      ἁμαρτάνω: sin, transgress
+      παράβασις: transgression, violation
+      παράπτωμα: trespass, falling aside
+    ot_strongs:
+      H2403:
+        hebrew: חַטָּאת
+        gloss: sin, sin offering
+      H5771:
+        hebrew: עָוֹן
+        gloss: iniquity, guilt
+      H6588:
+        hebrew: פֶּשַׁע
+        gloss: transgression, rebellion
+
+  redemption:
+    description: "Redemption, atonement — deliverance from bondage through a price paid"
+    primary_genres: [epistle, prophetic]
+    nt_lemmas:
+      λύτρον: ransom, price of redemption
+      ἀπολύτρωσις: redemption, release by ransom
+      λυτρόω: redeem, deliver
+    ot_strongs:
+      H1350:
+        hebrew: גָּאַל
+        gloss: redeem, act as kinsman-redeemer
+      H6299:
+        hebrew: פָּדָה
+        gloss: redeem, deliver by payment
+      H3722:
+        hebrew: כָּפַר
+        gloss: cover, make atonement
+
+  judgment:
+    description: "Judgment, justice — divine assessment and verdict on sin and righteousness"
+    primary_genres: [prophetic, apocalyptic]
+    nt_lemmas:
+      κρίσις: judgment, decision
+      κρίνω: judge, decide
+      ὀργή: wrath, anger
+      κατάκριμα: condemnation
+    ot_strongs:
+      H8199:
+        hebrew: שָׁפַט
+        gloss: judge, govern, vindicate
+      H4941:
+        hebrew: מִשְׁפָּט
+        gloss: judgment, justice, ordinance
+
+  worship:
+    description: "Worship, service — reverence, devotion, and prostration before God"
+    primary_genres: [hebrew_poetry, apocalyptic]
+    nt_lemmas:
+      προσκυνέω: worship, bow down
+      λατρεύω: serve, worship
+      σέβομαι: revere, worship
+    ot_strongs:
+      H7812:
+        hebrew: שָׁחָה
+        gloss: bow down, prostrate oneself
+      H5647:
+        hebrew: עָבַד
+        gloss: serve, work, worship
+
+  creation:
+    description: "Creation — God's making of the world and the ordering of all things"
+    primary_genres: [wisdom, epistle]
+    nt_lemmas:
+      κτίσις: creation, creature
+      κτίζω: create, make
+      κτίσμα: created thing, creature
+    ot_strongs:
+      H1254:
+        hebrew: בָּרָא
+        gloss: create (ex nihilo)
+      H3335:
+        hebrew: יָצַר
+        gloss: form, fashion, shape
+      H6213:
+        hebrew: עָשָׂה
+        gloss: make, do, produce
+
+  # New — Pauline Epistles 8
+
+  flesh:
+    description: "Flesh, fleshly desire — σάρξ as power-domain opposing the Spirit, not merely physical body"
+    primary_genres: [epistle]
+    nt_lemmas:
+      σάρξ: flesh, human nature, sinful tendency
+      σαρκικός: fleshly, carnal
+      σαρκίνος: made of flesh
+    ot_strongs:
+      H1320:
+        hebrew: בָּשָׂר
+        gloss: flesh, body, meat
+
+  reconciliation:
+    description: "Reconciliation, forgiveness — restoration of relationship with God through Christ"
+    primary_genres: [epistle]
+    nt_lemmas:
+      καταλλάσσω: reconcile
+      καταλλαγή: reconciliation
+      ἱλασμός: propitiation, atoning sacrifice
+      ἀποκαταλλάσσω: reconcile fully
+    ot_strongs:
+      H3722:
+        hebrew: כָּפַר
+        gloss: cover, make atonement, appease
+      H5545:
+        hebrew: סָלַח
+        gloss: forgive, pardon
+
+  body-church:
+    description: "Body and church — the corporate solidarity of believers as Christ's body"
+    primary_genres: [epistle]
+    nt_lemmas:
+      σῶμα: body (individual and corporate)
+      μέλος: member, limb
+      κεφαλή: head
+      κοινωνία: fellowship, participation
+      ἐκκλησία: church, assembly
+    ot_strongs:
+      H6951:
+        hebrew: קָהָל
+        gloss: assembly, congregation
+      H5712:
+        hebrew: עֵדָה
+        gloss: congregation, community
+
+  adoption:
+    description: "Adoption, inheritance — the believer's status as child and heir of God"
+    primary_genres: [epistle]
+    nt_lemmas:
+      υἱοθεσία: adoption as sons
+      κληρονομία: inheritance, possession
+      κληρονόμος: heir
+    ot_strongs:
+      H5159:
+        hebrew: נַחֲלָה
+        gloss: inheritance, portion, property
+      H3423:
+        hebrew: יָרַשׁ
+        gloss: inherit, possess, dispossess
+      H1060:
+        hebrew: בְּכוֹר
+        gloss: firstborn, birthright
+
+  hope:
+    description: "Hope, expectation — confident waiting for promised future realities"
+    primary_genres: [epistle]
+    nt_lemmas:
+      ἐλπίς: hope, expectation
+      ἐλπίζω: hope, expect
+      ἀπεκδέχομαι: eagerly await
+      παρουσία: coming, arrival, presence
+    ot_strongs:
+      H8615:
+        hebrew: תִּקְוָה
+        gloss: hope, expectation
+      H6960:
+        hebrew: קָוָה
+        gloss: wait for, hope
+
+  conscience:
+    description: "Conscience, mind, heart — inner moral awareness and rational deliberation"
+    primary_genres: [epistle]
+    nt_lemmas:
+      συνείδησις: conscience, moral awareness
+      καρδία: heart, inner person
+      νοῦς: mind, understanding, reason
+      φρόνημα: mindset, way of thinking
+    ot_strongs:
+      H3820:
+        hebrew: לֵב
+        gloss: heart, mind, will
+      H3824:
+        hebrew: לֵבָב
+        gloss: heart, inner being
+
+  law:
+    description: "Law, commandment — divine instruction and the Mosaic covenant stipulations"
+    primary_genres: [epistle, wisdom]
+    nt_lemmas:
+      νόμος: law, Torah
+      ἐντολή: commandment, instruction
+    ot_strongs:
+      H8451:
+        hebrew: תּוֹרָה
+        gloss: law, instruction, teaching
+      H4687:
+        hebrew: מִצְוָה
+        gloss: commandment, precept
+      H2706:
+        hebrew: חֹק
+        gloss: statute, decree, ordinance
+
+  freedom:
+    description: "Freedom, liberty — release from bondage to sin, law, and death"
+    primary_genres: [epistle]
+    nt_lemmas:
+      ἐλευθερία: freedom, liberty
+      ἐλεύθερος: free, freed
+      δοῦλος: slave, servant (by contrast)
+    ot_strongs:
+      H2670:
+        hebrew: חָפְשִׁי
+        gloss: free, free person
+      H1865:
+        hebrew: דְּרוֹר
+        gloss: freedom, release, liberty
+      H5650:
+        hebrew: עֶבֶד
+        gloss: servant, slave (by contrast)
+
+  # New — General Epistles 6
+
+  priesthood-sacrifice:
+    description: "Priesthood and sacrifice — mediatorial office and atoning offerings"
+    primary_genres: [epistle, torah_law]
+    nt_lemmas:
+      ἱερεύς: priest
+      ἀρχιερεύς: high priest
+      θυσία: sacrifice, offering
+      αἷμα: blood
+    ot_strongs:
+      H3548:
+        hebrew: כֹּהֵן
+        gloss: priest
+      H2077:
+        hebrew: זֶבַח
+        gloss: sacrifice, slaughter
+      H5930:
+        hebrew: עֹלָה
+        gloss: burnt offering, whole offering
+
+  testing:
+    description: "Testing, trial, endurance — proving faith through difficulty and temptation"
+    primary_genres: [epistle]
+    nt_lemmas:
+      πειρασμός: temptation, trial, testing
+      δοκίμιον: testing, genuineness
+      ὑπομονή: endurance, steadfastness
+      δοκιμάζω: test, approve, examine
+    ot_strongs:
+      H5254:
+        hebrew: נָסָה
+        gloss: test, try, prove
+      H974:
+        hebrew: בָּחַן
+        gloss: test, examine, try
+      H6884:
+        hebrew: צָרַף
+        gloss: refine, smelt, test by fire
+
+  confession-witness:
+    description: "Confession and witness — public declaration of faith and testimony to truth"
+    primary_genres: [epistle, gospel_narrative]
+    nt_lemmas:
+      ὁμολογέω: confess, acknowledge, profess
+      μαρτυρέω: testify, bear witness
+      μαρτυρία: testimony, witness
+    ot_strongs:
+      H3034:
+        hebrew: יָדָה
+        gloss: confess, praise, give thanks
+      H5707:
+        hebrew: עֵד
+        gloss: witness, testimony
+
+  perfection:
+    description: "Perfection, completeness — maturity, wholeness, and reaching the intended goal"
+    primary_genres: [epistle]
+    nt_lemmas:
+      τέλειος: perfect, complete, mature
+      τελειόω: perfect, complete, fulfill
+      τέλος: end, goal, completion
+    ot_strongs:
+      H8535:
+        hebrew: תָּמִים
+        gloss: complete, blameless, without defect
+      H7999:
+        hebrew: שָׁלֵם
+        gloss: be complete, be whole, be at peace
+
+  purification:
+    description: "Purification, cleansing — ritual and moral cleansing before God"
+    primary_genres: [epistle, torah_law]
+    nt_lemmas:
+      καθαρίζω: cleanse, purify
+      καθαρός: clean, pure
+      ῥαντίζω: sprinkle (for cleansing)
+    ot_strongs:
+      H2891:
+        hebrew: טָהֵר
+        gloss: be clean, purify
+      H3526:
+        hebrew: כָּבַס
+        gloss: wash, launder
+
+  deception:
+    description: "Deception, false teaching — going astray and misleading others from truth"
+    primary_genres: [epistle, prophetic]
+    nt_lemmas:
+      πλανάω: lead astray, deceive
+      πλάνη: error, deceit, wandering
+      ψευδοδιδάσκαλος: false teacher
+    ot_strongs:
+      H8582:
+        hebrew: תָּעָה
+        gloss: err, wander, go astray
+      H7683:
+        hebrew: שָׁגָה
+        gloss: go astray, err
+
+  # New — Gospels 6
+
+  discipleship:
+    description: "Discipleship — following, learning from, and being formed by Jesus"
+    primary_genres: [gospel_narrative]
+    nt_lemmas:
+      μαθητής: disciple, learner
+      ἀκολουθέω: follow
+      διδάσκαλος: teacher, rabbi
+    ot_strongs:
+      H3925:
+        hebrew: לָמַד
+        gloss: learn, teach
+
+  repentance:
+    description: "Repentance — turning away from sin toward God"
+    primary_genres: [gospel_narrative, prophetic]
+    nt_lemmas:
+      μετάνοια: repentance, change of mind
+      μετανοέω: repent, change one's mind
+      ἐπιστρέφω: turn, return, convert
+    ot_strongs:
+      H7725:
+        hebrew: שׁוּב
+        gloss: return, turn back, repent
+      H5162:
+        hebrew: נָחַם
+        gloss: repent, be sorry, comfort
+
+  authority-power:
+    description: "Authority and power — divine delegated authority and miraculous power"
+    primary_genres: [gospel_narrative, epistle]
+    nt_lemmas:
+      ἐξουσία: authority, right, power
+      δύναμις: power, miracle, ability
+      ἐνέργεια: working, effective power
+      κράτος: strength, might, dominion
+    ot_strongs:
+      H3581:
+        hebrew: כֹּחַ
+        gloss: strength, power, ability
+      H1369:
+        hebrew: גְּבוּרָה
+        gloss: might, strength, valor
+
+  parable-mystery:
+    description: "Parable and mystery — figurative speech and hidden divine realities now revealed"
+    primary_genres: [gospel_narrative]
+    nt_lemmas:
+      παραβολή: parable, comparison
+      μυστήριον: mystery, hidden secret
+      ἀποκαλύπτω: reveal, uncover
+    ot_strongs:
+      H4912:
+        hebrew: מָשָׁל
+        gloss: proverb, parable, byword
+      H2420:
+        hebrew: חִידָה
+        gloss: riddle, dark saying
+      H5475:
+        hebrew: סוֹד
+        gloss: counsel, secret, assembly
+
+  forgiveness:
+    description: "Forgiveness — release from debt, guilt, and the penalty of sin"
+    primary_genres: [gospel_narrative]
+    nt_lemmas:
+      ἀφίημι: forgive, release, let go
+      ἄφεσις: forgiveness, release, pardon
+      χαρίζομαι: forgive, give graciously
+    ot_strongs:
+      H5375:
+        hebrew: נָשָׂא
+        gloss: lift up, bear, forgive
+      H5545:
+        hebrew: סָלַח
+        gloss: forgive, pardon
+      H4229:
+        hebrew: מָחָה
+        gloss: wipe away, blot out
+
+  obedience:
+    description: "Obedience — hearing and doing, submission to divine authority"
+    primary_genres: [epistle, gospel_narrative]
+    nt_lemmas:
+      ὑπακούω: obey, listen to
+      ὑπακοή: obedience
+      ἀκούω: hear, listen (foundational to obedience)
+    ot_strongs:
+      H8085:
+        hebrew: שָׁמַע
+        gloss: hear, listen, obey
