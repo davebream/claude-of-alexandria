@@ -7,6 +7,7 @@ import { queryParagraphBreaks, ParagraphsInputSchema, ParagraphsOutputSchema } f
 import { queryVocabulary, VocabularyInputSchema, VocabularyOutputSchema } from './tools/vocabulary.js';
 import { queryMorphology, MorphologyInputSchema, MorphologyOutputSchema } from './tools/morphology.js';
 import { listBooks, ListBooksInputSchema, ListBooksOutputSchema } from './tools/list-books.js';
+import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tools/ot-quotes.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -69,6 +70,22 @@ Examples:
   - Top vocabulary in Romans: book="Romans", min_frequency=5
   - Joy-related words in Philippians: book="Philippians", theme="joy"
   - Vocabulary clusters in Genesis: book="Genesis", check_clustering=true`;
+
+const DESC_OT_QUOTES = `Query Old Testament quotations found within New Testament books.
+
+Returns quotation data including the quoted Greek text, quote type (direct/allusion/echo), and the OT source passage(s). NT books only.
+
+Args:
+  - book (string, required): NT book name in any common form (e.g., "Romans", "Matt", "Hebrews")
+  - range (string, optional): Verse range "8:28-8:39" or single verse "1:23". Omit for entire book.
+  - ot_book (string, optional): Filter by OT source book (e.g., "Isaiah", "Isa", "Psalms"). Only returns quotes that have a known source in this book.
+
+Returns: { book, range?, quotes: [{nt_ref, greek_text, quote_type, ot_sources: [{book, chapter, verse, verse_end?, ref}]}], summary: {total, nt_verses_with_quotes, ot_books_referenced} }
+
+Examples:
+  - All OT quotes in Romans: book="Romans"
+  - Isaiah quotes in Matthew: book="Matthew", ot_book="Isaiah"
+  - Quotes in Romans 8: book="Romans", range="8:1-8:39"`;
 
 const DESC_MORPHOLOGY = `Query word-level morphological parsing data for a verse range in any biblical book.
 
@@ -218,6 +235,21 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_morphology', args as unknown as Record<string, unknown>, () => queryMorphology(args))
+  );
+
+  server.registerTool('query_ot_quotes', {
+    title: 'Query OT Quotations in NT',
+    description: DESC_OT_QUOTES,
+    inputSchema: OtQuotesInputSchema,
+    outputSchema: OtQuotesOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_ot_quotes', args as unknown as Record<string, unknown>, () => queryOtQuotes(args))
   );
 
   return server;

@@ -30,6 +30,7 @@ const AVAILABLE_TOOLS = [
   'query_vocabulary — lemma frequencies + thematic keywords (OT + NT)',
   'query_discourse_features — Levinsohn discourse markers (NT only)',
   'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
+  'query_ot_quotes — OT quotations in NT passages (NT only)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
