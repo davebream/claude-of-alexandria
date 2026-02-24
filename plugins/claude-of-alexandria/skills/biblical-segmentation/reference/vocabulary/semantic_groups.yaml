@@ -1,7 +1,7 @@
 metadata:
   description: Curated theological word families for biblical study
   purpose: Connect related concepts across OT and NT for thematic analysis
-  semantic_groups_count: 13
+  semantic_groups_count: 69
   creation_date: '2026-01-21'
   sources:
     - MorphGNT/SBLGNT (NT Greek lemmas)
@@ -667,3 +667,510 @@ semantic_groups:
       H8085:
         hebrew: שָׁמַע
         gloss: hear, listen, obey
+
+  # New — Hebrew Poetry 6
+
+  refuge:
+    description: "Refuge, stronghold — God as shelter and protection from danger"
+    primary_genres: [hebrew_poetry]
+    nt_lemmas:
+      καταφυγή: refuge, place of safety
+    ot_strongs:
+      H2620:
+        hebrew: חָסָה
+        gloss: take refuge, seek shelter
+      H4268:
+        hebrew: מַחֲסֶה
+        gloss: refuge, shelter
+      H4869:
+        hebrew: מִסְגָּב
+        gloss: high fortress, stronghold
+      H6697:
+        hebrew: צוּר
+        gloss: rock, cliff (as refuge)
+      H4043:
+        hebrew: מָגֵן
+        gloss: shield, defender
+
+  enemies:
+    description: "Enemies, adversaries — those who oppose the psalmist and God's people"
+    primary_genres: [hebrew_poetry]
+    nt_lemmas:
+      ἐχθρός: enemy, adversary
+    ot_strongs:
+      H341:
+        hebrew: אוֹיֵב
+        gloss: enemy, foe
+      H6862:
+        hebrew: צַר
+        gloss: adversary, distress
+      H7563:
+        hebrew: רָשָׁע
+        gloss: wicked, guilty
+      H2555:
+        hebrew: חָמָס
+        gloss: violence, wrong
+      H7854:
+        hebrew: שָׂטָן
+        gloss: adversary, accuser
+
+  lament:
+    description: "Lament, mourning — crying out to God in distress and grief"
+    primary_genres: [hebrew_poetry]
+    nt_lemmas:
+      θρηνέω: lament, mourn
+      κλαίω: weep, cry
+      στενάζω: groan, sigh
+    ot_strongs:
+      H7015:
+        hebrew: קִינָה
+        gloss: lamentation, dirge
+      H1058:
+        hebrew: בָּכָה
+        gloss: weep, cry
+      H2199:
+        hebrew: זָעַק
+        gloss: cry out, call for help
+      H7768:
+        hebrew: שָׁוַע
+        gloss: cry for help
+
+  praise:
+    description: "Praise, song — exalting God in worship and testimony"
+    primary_genres: [hebrew_poetry]
+    nt_lemmas:
+      αἰνέω: praise
+      ψάλλω: sing, make melody
+    ot_strongs:
+      H1984:
+        hebrew: הָלַל
+        gloss: praise, boast, shine
+      H3034:
+        hebrew: יָדָה
+        gloss: give thanks, praise
+      H2167:
+        hebrew: זָמַר
+        gloss: sing praise, make music
+      H7891:
+        hebrew: שִׁיר
+        gloss: sing, song
+      H7442:
+        hebrew: רָנַן
+        gloss: shout for joy, sing aloud
+
+  desire:
+    description: "Desire, longing — deep yearning for God and covenant love"
+    primary_genres: [hebrew_poetry]
+    ot_strongs:
+      H1730:
+        hebrew: דּוֹד
+        gloss: beloved, love (noun)
+      H160:
+        hebrew: אַהֲבָה
+        gloss: love (noun)
+      H2836:
+        hebrew: חָשַׁק
+        gloss: desire, cling to, love
+      H3615:
+        hebrew: כָּלָה
+        gloss: long for, pine away, be consumed
+      H3303:
+        hebrew: יָפָה
+        gloss: be beautiful, fair
+
+  steadfastness:
+    description: "Steadfast love and faithfulness — חֶסֶד and אֱמוּנָה as covenant attributes of God"
+    primary_genres: [hebrew_poetry, ot_narrative]
+    nt_lemmas:
+      ἔλεος: mercy, steadfast love
+      πιστός: faithful, trustworthy
+    ot_strongs:
+      H2617:
+        hebrew: חֶסֶד
+        gloss: steadfast love, lovingkindness, loyalty
+      H530:
+        hebrew: אֱמוּנָה
+        gloss: faithfulness, steadfastness
+      H571:
+        hebrew: אֶמֶת
+        gloss: truth, faithfulness, reliability
+
+  # New — Wisdom Literature 5
+
+  folly:
+    description: "Folly, foolishness — the way of the fool who rejects wisdom and God"
+    primary_genres: [wisdom]
+    nt_lemmas:
+      μωρός: foolish, stupid
+      ἄφρων: senseless, without understanding
+    ot_strongs:
+      H3684:
+        hebrew: כְּסִיל
+        gloss: fool, stupid fellow
+      H191:
+        hebrew: אֱוִיל
+        gloss: fool, foolish
+      H5036:
+        hebrew: נָבָל
+        gloss: fool, senseless
+      H6612:
+        hebrew: פֶּתִי
+        gloss: simple, naive, easily deceived
+      H3887:
+        hebrew: לֵץ
+        gloss: mocker, scorner
+
+  vanity:
+    description: "Vanity, emptiness — the fleeting, insubstantial nature of earthly pursuits"
+    primary_genres: [wisdom]
+    ot_strongs:
+      H1892:
+        hebrew: הֶבֶל
+        gloss: vapor, breath, vanity, meaninglessness
+      H7307:
+        hebrew: רוּחַ
+        gloss: wind, spirit (in רְעוּת רוּחַ, chasing wind)
+      H5999:
+        hebrew: עָמָל
+        gloss: toil, trouble, labor
+      H3504:
+        hebrew: יִתְרוֹן
+        gloss: advantage, profit, gain
+
+  counsel:
+    description: "Counsel, instruction, discipline — wise guidance and correction"
+    primary_genres: [wisdom]
+    nt_lemmas:
+      νουθεσία: admonition, instruction
+      παιδεία: training, discipline, instruction
+    ot_strongs:
+      H6098:
+        hebrew: עֵצָה
+        gloss: counsel, advice, plan
+      H3289:
+        hebrew: יָעַץ
+        gloss: advise, counsel
+      H4148:
+        hebrew: מוּסָר
+        gloss: discipline, instruction, correction
+      H8433:
+        hebrew: תּוֹכֵחָה
+        gloss: reproof, rebuke
+
+  fear-of-the-lord:
+    description: "Fear of the Lord — reverent awe as the beginning and foundation of wisdom"
+    primary_genres: [wisdom, hebrew_poetry]
+    nt_lemmas:
+      φόβος: fear, reverence, awe
+      εὐλάβεια: reverence, godly fear
+    ot_strongs:
+      H3372:
+        hebrew: יָרֵא
+        gloss: fear, revere, be afraid
+      H3374:
+        hebrew: יִרְאָה
+        gloss: fear, reverence, awe
+      H4172:
+        hebrew: מוֹרָא
+        gloss: fear, awe, terror
+
+  retribution:
+    description: "Retribution, reward, consequence — the moral order of deeds and outcomes"
+    primary_genres: [wisdom]
+    nt_lemmas:
+      μισθός: wage, reward, recompense
+    ot_strongs:
+      H7999:
+        hebrew: שָׁלַם
+        gloss: repay, requite, make restitution
+      H1576:
+        hebrew: גְּמוּל
+        gloss: recompense, dealing, reward
+      H7939:
+        hebrew: שָׂכָר
+        gloss: wages, hire, reward
+      H6529:
+        hebrew: פְּרִי
+        gloss: fruit, result, consequence
+
+  # New — Prophetic 6
+
+  remnant:
+    description: "Remnant — the faithful preserved community within unfaithful Israel"
+    primary_genres: [prophetic]
+    nt_lemmas:
+      λεῖμμα: remnant
+    ot_strongs:
+      H7611:
+        hebrew: שְׁאֵרִית
+        gloss: remnant, remainder, survivors
+      H7605:
+        hebrew: שְׁאָר
+        gloss: remainder, remnant
+      H8300:
+        hebrew: שָׁרִיד
+        gloss: survivor, remnant
+      H6412:
+        hebrew: פָּלִיט
+        gloss: fugitive, survivor, escaped one
+
+  idolatry:
+    description: "Idolatry — worshipping false gods, abomination, and spiritual unfaithfulness"
+    primary_genres: [prophetic, ot_narrative]
+    nt_lemmas:
+      εἴδωλον: idol, image
+      εἰδωλολατρία: idolatry
+    ot_strongs:
+      H6459:
+        hebrew: פֶּסֶל
+        gloss: idol, carved image
+      H4541:
+        hebrew: מַסֵּכָה
+        gloss: cast image, idol
+      H1544:
+        hebrew: גִּלּוּלִים
+        gloss: idols, dung-idols
+      H8441:
+        hebrew: תּוֹעֵבָה
+        gloss: abomination, detestable thing
+
+  oracle:
+    description: "Oracle, prophetic word — divine pronouncement and authoritative declaration"
+    primary_genres: [prophetic]
+    nt_lemmas:
+      χρηματισμός: divine response, oracle
+    ot_strongs:
+      H4853:
+        hebrew: מַשָּׂא
+        gloss: burden, oracle, pronouncement
+      H5002:
+        hebrew: נְאֻם
+        gloss: declaration, utterance (of the LORD)
+
+  return-restoration:
+    description: "Return and restoration — God's promise to regather and renew his people"
+    primary_genres: [prophetic]
+    nt_lemmas:
+      ἀποκαθίστημι: restore, reestablish
+    ot_strongs:
+      H7725:
+        hebrew: שׁוּב
+        gloss: return, turn back, restore (Hiphil)
+      H7622:
+        hebrew: שְׁבוּת
+        gloss: captivity, restoration
+      H6908:
+        hebrew: קָבַץ
+        gloss: gather, collect, assemble
+
+  messenger-servant:
+    description: "Messenger and servant — prophets, angels, and the Servant of the LORD"
+    primary_genres: [prophetic, gospel_narrative]
+    nt_lemmas:
+      ἄγγελος: messenger, angel
+      ἀπόστολος: apostle, sent one
+      παῖς: servant, child
+    ot_strongs:
+      H4397:
+        hebrew: מַלְאָךְ
+        gloss: messenger, angel
+      H5650:
+        hebrew: עֶבֶד
+        gloss: servant, slave (esp. Servant of the LORD)
+      H5030:
+        hebrew: נָבִיא
+        gloss: prophet
+      H4899:
+        hebrew: מָשִׁיחַ
+        gloss: anointed one, messiah
+
+  zion:
+    description: "Zion, Jerusalem — the holy mountain, the city of God, temple and dwelling place"
+    primary_genres: [prophetic, hebrew_poetry]
+    nt_lemmas:
+      Σιών: Zion
+      ναός: temple, sanctuary
+    ot_strongs:
+      H6726:
+        hebrew: צִיּוֹן
+        gloss: Zion
+      H3389:
+        hebrew: יְרוּשָׁלַיִם
+        gloss: Jerusalem
+      H2022:
+        hebrew: הַר קֹדֶשׁ
+        gloss: holy mountain
+      H1964:
+        hebrew: הֵיכָל
+        gloss: temple, palace, great house
+
+  # New — OT Narrative 5
+
+  blessing-cursing:
+    description: "Blessing and cursing — divine pronouncements of favor and judgment on people and nations"
+    primary_genres: [ot_narrative]
+    nt_lemmas:
+      εὐλογία: blessing, praise
+      κατάρα: curse
+    ot_strongs:
+      H1293:
+        hebrew: בְּרָכָה
+        gloss: blessing
+      H1288:
+        hebrew: בָּרַךְ
+        gloss: bless
+      H7045:
+        hebrew: קְלָלָה
+        gloss: curse
+      H779:
+        hebrew: אָרַר
+        gloss: curse
+      H2764:
+        hebrew: חֵרֶם
+        gloss: devoted to destruction, ban
+
+  election:
+    description: "Election, chosenness — God's sovereign selection of persons and people for his purposes"
+    primary_genres: [ot_narrative, epistle]
+    nt_lemmas:
+      ἐκλέγομαι: choose, select
+      ἐκλεκτός: chosen, elect
+    ot_strongs:
+      H977:
+        hebrew: בָּחַר
+        gloss: choose, select
+      H972:
+        hebrew: בָּחִיר
+        gloss: chosen one, elect
+      H5459:
+        hebrew: סְגֻלָּה
+        gloss: treasured possession, prized property
+
+  oath-promise:
+    description: "Oath and promise — solemn binding commitments and divine pledges"
+    primary_genres: [ot_narrative]
+    nt_lemmas:
+      ὅρκος: oath
+      ἐπαγγελία: promise
+    ot_strongs:
+      H7621:
+        hebrew: שְׁבוּעָה
+        gloss: oath, sworn promise
+      H7650:
+        hebrew: שָׁבַע
+        gloss: swear, take an oath
+      H5087:
+        hebrew: נָדַר
+        gloss: make a vow
+
+  land:
+    description: "Land — the promised territory as inheritance and covenantal gift"
+    primary_genres: [ot_narrative]
+    ot_strongs:
+      H776:
+        hebrew: אֶרֶץ
+        gloss: land, earth, territory
+      H127:
+        hebrew: אֲדָמָה
+        gloss: ground, soil, land
+      H5159:
+        hebrew: נַחֲלָה
+        gloss: inheritance, property, portion
+      H3423:
+        hebrew: יָרַשׁ
+        gloss: inherit, possess, take possession
+      H1366:
+        hebrew: גְּבוּל
+        gloss: border, boundary, territory
+
+  name:
+    description: "Name — the divine name as identity, presence, and reputation"
+    primary_genres: [ot_narrative]
+    nt_lemmas:
+      ὄνομα: name, person, reputation
+    ot_strongs:
+      H8034:
+        hebrew: שֵׁם
+        gloss: name, reputation, renown
+      H7121:
+        hebrew: קָרָא
+        gloss: call, proclaim, read
+
+  # New — Apocalyptic 6
+
+  throne:
+    description: "Throne — divine sovereignty and heavenly rule"
+    primary_genres: [apocalyptic, hebrew_poetry]
+    nt_lemmas:
+      θρόνος: throne, seat
+      κάθημαι: sit, dwell
+    ot_strongs:
+      H3678:
+        hebrew: כִּסֵּא
+        gloss: throne, seat of authority
+
+  victory:
+    description: "Victory, overcoming — triumph over evil, death, and the powers of darkness"
+    primary_genres: [apocalyptic]
+    nt_lemmas:
+      νικάω: overcome, conquer, be victorious
+      νίκη: victory
+      νικητής: victor
+
+  seal:
+    description: "Seal — divine authentication, protection, and eschatological judgment markers"
+    primary_genres: [apocalyptic]
+    nt_lemmas:
+      σφραγίς: seal, signet
+      σφραγίζω: seal, mark with a seal
+      βιβλίον: scroll, book
+    ot_strongs:
+      H2856:
+        hebrew: חָתַם
+        gloss: seal, close up
+
+  beasts:
+    description: "Beasts, monsters — cosmic evil powers symbolized as dragons and sea monsters"
+    primary_genres: [apocalyptic, prophetic]
+    nt_lemmas:
+      θηρίον: beast, wild animal
+      δράκων: dragon
+      ὄφις: serpent, snake
+    ot_strongs:
+      H8577:
+        hebrew: תַּנִּין
+        gloss: sea monster, dragon, serpent
+      H3882:
+        hebrew: לִוְיָתָן
+        gloss: Leviathan, sea monster
+
+  time-urgency:
+    description: "Time and urgency — appointed seasons, nearness of the end, and eschatological imminence"
+    primary_genres: [apocalyptic]
+    nt_lemmas:
+      καιρός: appointed time, season, opportunity
+      ἐγγύς: near, close at hand
+      ταχύ: quickly, soon
+      ἔρχομαι: come (esp. the Lord's coming)
+    ot_strongs:
+      H6256:
+        hebrew: עֵת
+        gloss: time, season, appointed time
+      H7093:
+        hebrew: קֵץ
+        gloss: end, appointed end time
+      H4150:
+        hebrew: מוֹעֵד
+        gloss: appointed time, meeting place
+
+  new-renewal:
+    description: "New creation and renewal — cosmic regeneration and eschatological transformation"
+    primary_genres: [apocalyptic, prophetic]
+    nt_lemmas:
+      καινός: new (in quality), renewed
+      καινότης: newness
+      παλιγγενεσία: regeneration, renewal
+    ot_strongs:
+      H2319:
+        hebrew: חָדָשׁ
+        gloss: new, fresh
