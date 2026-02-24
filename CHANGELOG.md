@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `query_ot_quotes` MCP tool — OT quotations in NT passages, merging Levinsohn OT_quotes.json (691 entries) and STEPBible ot-in-nt data (471 entries) into 939 quotes with 1138 source references; supports verse range and OT book filters
+- OT source gap-fill via OpenBible cross-references (CC BY) — 298 previously-sourceless quotes now have OT references (292 matched by confidence rank, 6 hardcoded: Heb 10:8-9 → Ps 40:6-8; Rom 4:22 → Gen 15:6; Rom 10:7 → Deut 30:13); coverage is now 100% across 1436 entries
 - `argument-flow` skill — map the logical argument of an NT epistle passage using discourse markers and morphological data; produces a numbered proposition chain, connective analysis, and preachable summary
 
 ### Changed
