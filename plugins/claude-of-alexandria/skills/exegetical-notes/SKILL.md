@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output. Saves to file.
-allowed-tools: Read, Write, Glob, WebSearch, Bash, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology
+allowed-tools: Read, Write, Glob, WebSearch, Bash, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology, mcp__claude-of-alexandria-mcp__query_ot_quotes
 ---
 
 # Exegetical Notes
@@ -110,6 +110,22 @@ After saving, report the saved path to user.
    OT: query_morphology MCP tool (testament: ot) for Hebrew morphology
        query_paragraph_breaks MCP tool for Masoretic markers
        query_vocabulary MCP tool (testament: ot) for frequencies
+
+   Epistle-specific:
+       query_morphology with pos_filter: "conjunction" for full passage range
+       Map logical connectives to discourse function:
+       | Connective | Greek | Function |
+       |------------|-------|----------|
+       | γάρ        | gar   | Grounds/reason ("for") |
+       | οὖν        | oun   | Inference ("therefore") |
+       | δέ         | de    | Contrast or continuation ("but/and") |
+       | ἀλλά       | alla  | Strong contrast ("but rather") |
+       | ἵνα        | hina  | Purpose ("in order that") |
+       | ὥστε       | hōste | Result ("so that") |
+       | εἰ         | ei    | Condition ("if") |
+       | διότι      | dioti | Causal ("because") |
+       | ὅτι        | hoti  | Content/causal ("that/because") |
+       Use in Section 2 (Internal Structure) to map argument's logical flow
 
 4. Web search (for Tier 3)
    → Search for scholarly commentary on passage
@@ -220,7 +236,7 @@ Gloss: "[translation]"
 
 [Cross-references with verse citations]
 [Format: "Reference → Connection to current passage"]
-[OT quotations or allusions (from OT_quotes.json for NT passages)]
+[OT quotations or allusions (call query_ot_quotes for NT passages)]
 [Semantic group connections across testaments]
 [Parallel passages with significant differences noted]
 
@@ -321,6 +337,7 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Skipping verify_claims.py | Section 10 is required |
 | Not saving to output location | Check path, save, report path to user |
 | Proceeding past problematic pericope without warning | Pericope check is mandatory Step 1 |
+| No logical connectives in epistle analysis | For epistles: query_morphology pos_filter "conjunction", map γάρ/οὖν/δέ/ἀλλά/ἵνα flow |
 
 ---
 
