@@ -18,6 +18,7 @@ metadata:
 semantic_groups:
   joy:
     description: Joy, rejoicing, gladness, delight - emotions of celebration and exultation
+    primary_genres: [epistle, hebrew_poetry]
     nt_lemmas:
       χαρά: joy, gladness
       χαίρω: rejoice, be glad
@@ -39,6 +40,7 @@ semantic_groups:
 
   faith:
     description: Faith, trust, belief, faithfulness - reliance on God and His promises
+    primary_genres: [epistle, ot_narrative]
     nt_lemmas:
       πίστις: faith, trust, belief
       πιστεύω: believe, trust, have faith
@@ -53,6 +55,7 @@ semantic_groups:
 
   love:
     description: Love, affection, devotion - divine and human love relationships
+    primary_genres: [epistle, hebrew_poetry, gospel_narrative]
     nt_lemmas:
       ἀγάπη: love (self-sacrificial)
       ἀγαπάω: love (verb)
@@ -71,6 +74,7 @@ semantic_groups:
 
   righteousness:
     description: Righteousness, justice, uprightness - right standing and ethical conduct
+    primary_genres: [epistle, prophetic]
     nt_lemmas:
       δικαιοσύνη: righteousness, justice
       δίκαιος: righteous, just
@@ -88,6 +92,7 @@ semantic_groups:
 
   covenant:
     description: Covenant, testament - binding agreements between God and His people
+    primary_genres: [ot_narrative, prophetic]
     nt_lemmas:
       διαθήκη: covenant, testament, will
     ot_strongs:
@@ -97,6 +102,7 @@ semantic_groups:
 
   glory:
     description: Glory, honor, majesty - divine radiance and splendor
+    primary_genres: [hebrew_poetry, epistle]
     nt_lemmas:
       δόξα: glory, splendor, brightness
       δοξάζω: glorify, honor, praise
@@ -107,6 +113,7 @@ semantic_groups:
 
   salvation:
     description: Salvation, deliverance, rescue - God's saving work
+    primary_genres: [epistle, prophetic]
     nt_lemmas:
       σωτηρία: salvation, deliverance
       σῴζω: save, rescue, deliver
@@ -121,6 +128,7 @@ semantic_groups:
 
   holiness:
     description: Holiness, sanctification, consecration - set apart for God
+    primary_genres: [epistle, prophetic]
     nt_lemmas:
       ἅγιος: holy, sacred, saint
       ἁγιασμός: holiness, sanctification
@@ -135,6 +143,7 @@ semantic_groups:
 
   spirit:
     description: Spirit, breath, wind - divine and human spirit, Holy Spirit
+    primary_genres: [epistle, prophetic]
     nt_lemmas:
       πνεῦμα: spirit, breath, wind
       πνευματικός: spiritual
@@ -145,6 +154,7 @@ semantic_groups:
 
   wisdom:
     description: Wisdom, understanding, skill - practical and theological knowledge
+    primary_genres: [wisdom, epistle]
     nt_lemmas:
       σοφία: wisdom, insight
       σοφός: wise, skilled
@@ -158,6 +168,7 @@ semantic_groups:
 
   peace:
     description: Peace, wholeness, well-being - reconciliation and harmony
+    primary_genres: [epistle, prophetic]
     nt_lemmas:
       εἰρήνη: peace, harmony, rest
     ot_strongs:
@@ -167,6 +178,7 @@ semantic_groups:
 
   grace:
     description: Grace, favor, kindness - unmerited divine favor
+    primary_genres: [epistle]
     nt_lemmas:
       χάρις: grace, favor, kindness
       χαρίζομαι: give graciously, forgive
@@ -180,6 +192,7 @@ semantic_groups:
 
   truth:
     description: Truth, reality, reliability - faithfulness and veracity
+    primary_genres: [epistle, wisdom]
     nt_lemmas:
       ἀλήθεια: truth, reality
       ἀληθής: true, genuine
