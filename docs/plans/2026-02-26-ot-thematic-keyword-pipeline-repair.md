@@ -1,7 +1,7 @@
 # OT Thematic Keyword Pipeline Repair
 
 **Date:** 2026-02-26
-**Status:** Approved
+**Status:** Revised (post-review)
 **Trigger:** Finding — themed vocabulary queries for "suffering" and "death-life" returned no matches for the Psalms corpus.
 
 ---
@@ -36,10 +36,12 @@ gen-thematic-keywords.py  ← FIX: emit strong_id, not info["hebrew"]
        ↓
 thematic-keywords-expansion.sql  ← REGENERATE
        ↓
-seed-d1.sh  ← ADD cleanup step before expansion
+seed-d1.sh  ← TRUNCATE thematic_keywords, then reload from data.sql + expansion
        ↓
 D1 database (thematic_keywords table)
 ```
+
+**Idempotency note:** The seed script uses a truncate-and-reload pattern for `thematic_keywords`. `DELETE FROM thematic_keywords` runs before `data.sql`, making the seed safe to run multiple times without accumulating duplicate rows. The `thematic_keywords` table has no UNIQUE constraint, so `INSERT OR IGNORE` alone cannot prevent duplicates.
 
 Coverage verification runs as a standalone post-generate step (not blocking seed).
 
@@ -64,18 +66,7 @@ for strong_id, info in group["ot_strongs"].items():
 
 No escaping needed — Strong's codes are ASCII (`H` + digits + optional lowercase letter).
 
-### 2. New: `server/d1-seed/thematic-keywords-cleanup.sql`
-
-Deletes the erroneous Hebrew text rows from the `thematic_keywords` table. Targets OT rows where the lemma is not a Strong's code (Strong's codes always start with `H` followed by digits):
-
-```sql
--- Remove erroneous Hebrew text lemmas from OT thematic keywords
--- These were inserted by the old gen-thematic-keywords.py which emitted Hebrew text
--- instead of Strong's codes. Strong's codes always match H[0-9]+[a-z]?
-DELETE FROM thematic_keywords WHERE testament = 'ot' AND lemma NOT LIKE 'H%';
-```
-
-### 3. Regenerate `server/d1-seed/thematic-keywords-expansion.sql`
+### 2. Regenerate `server/d1-seed/thematic-keywords-expansion.sql`
 
 Run the fixed generator:
 
@@ -86,22 +77,28 @@ python3 server/scripts/gen-thematic-keywords.py
 
 Output will contain Strong's codes for all OT entries.
 
-### 4. Update `server/scripts/seed-d1.sh`
+### 3. Update `server/scripts/seed-d1.sh`
 
-Add the cleanup step before the expansion import:
+Add a truncation step before the small-tables import. This makes the seed idempotent for `thematic_keywords` by clearing all rows before reloading from `data.sql` and the expansion SQL:
 
 ```bash
-# Cleanup erroneous Hebrew text thematic keywords
-echo "Cleaning up erroneous OT thematic keywords..."
-npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/thematic-keywords-cleanup.sql" --remote
-echo "  Cleanup complete."
+# Truncate thematic_keywords before reload (no UNIQUE constraint — must truncate for idempotency)
+echo "Truncating thematic_keywords..."
+npx wrangler d1 execute "$DB_NAME" --command="DELETE FROM thematic_keywords;" --remote
+echo "  Truncated."
 
-# Thematic keywords expansion
+# Small tables (includes thematic_keywords data for original 13 themes)
+echo "Importing small tables..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/data.sql" --remote
+
+# Thematic keywords expansion (all 69 themes with Strong's codes for OT)
 echo "Importing thematic keywords expansion..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/thematic-keywords-expansion.sql" --remote
 ```
 
-### 5. New: `server/scripts/verify-thematic-coverage.py`
+**Note:** The truncation step is safe on a fresh (empty) database — `DELETE` on an empty table is a no-op.
+
+### 4. New: `server/scripts/verify-thematic-coverage.py`
 
 Standalone script that cross-checks each `ot_strongs` Strong's code in `semantic_groups.yaml` against `ot_lemmas.yaml`. Outputs:
 - Which Strong's codes appear in which books and with what frequency
@@ -121,11 +118,18 @@ This script is read-only and produces no side effects.
 
 ## Testing
 
-1. Run `verify-thematic-coverage.py --theme suffering` before the fix — confirm 0 matches in Psalms via query
-2. Apply fix, regenerate, reseed
-3. Run vocabulary query: `{ book: "Psalms", theme: "suffering", testament: "ot" }` — expect matches for H6040, H6862, H3510
-4. Run vocabulary query: `{ book: "Psalms", theme: "death-life", testament: "ot" }` — expect matches for H4194, H2416
-5. Spot-check other OT themes in expansion SQL (sin, redemption, judgment) — expect results
+1. Run `verify-thematic-coverage.py --theme suffering` — confirm which Strong's codes appear in Psalms
+2. Apply fix, regenerate expansion SQL, reseed
+3. Post-seed smoke test — confirm the JOIN produces non-zero results:
+   ```sql
+   SELECT COUNT(*) FROM vocabulary v
+   JOIN thematic_keywords tk ON v.lemma = tk.lemma
+   WHERE tk.testament = 'ot';
+   ```
+   Zero means the JOIN is still broken.
+4. Run vocabulary query: `{ book: "Psalms", theme: "suffering", testament: "ot" }` — expect matches for H6040, H6862, H3510
+5. Run vocabulary query: `{ book: "Psalms", theme: "death-life", testament: "ot" }` — expect matches for H4194, H2416
+6. Spot-check other OT themes added in expansion SQL (sin, redemption, judgment) — expect results
 
 ---
 
@@ -134,9 +138,8 @@ This script is read-only and produces no side effects.
 | File | Change |
 |---|---|
 | `server/scripts/gen-thematic-keywords.py` | Emit `strong_id` instead of `info["hebrew"]` for OT entries |
-| `server/d1-seed/thematic-keywords-cleanup.sql` | **New** — DELETE Hebrew text rows |
 | `server/d1-seed/thematic-keywords-expansion.sql` | Regenerated with Strong's codes |
-| `server/scripts/seed-d1.sh` | Add cleanup step before expansion import |
+| `server/scripts/seed-d1.sh` | Add `DELETE FROM thematic_keywords` truncation before `data.sql` |
 | `server/scripts/verify-thematic-coverage.py` | **New** — coverage audit script |
 
 ---
