@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS vocabulary (
 CREATE INDEX IF NOT EXISTS idx_vocab_book_lemma ON vocabulary(book, lemma);
 CREATE INDEX IF NOT EXISTS idx_vocab_book_chapter ON vocabulary(book, chapter);
 CREATE INDEX IF NOT EXISTS idx_vocab_frequency ON vocabulary(book, frequency);
+CREATE INDEX IF NOT EXISTS idx_vocab_lemma_testament ON vocabulary(lemma, testament);
 
 CREATE TABLE IF NOT EXISTS vocabulary_clusters (
   id INTEGER PRIMARY KEY,

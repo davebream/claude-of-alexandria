@@ -30,6 +30,7 @@ npx wrangler d1 execute "$DB_NAME" --command="CREATE TABLE vocabulary (id INTEGE
 npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_vocab_book_lemma ON vocabulary(book, lemma);" --remote
 npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_vocab_book_chapter ON vocabulary(book, chapter);" --remote
 npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_vocab_frequency ON vocabulary(book, frequency);" --remote
+npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_vocab_lemma_testament ON vocabulary(lemma, testament);" --remote
 
 npx wrangler d1 execute "$DB_NAME" --command="DROP TABLE IF EXISTS vocabulary_clusters;" --remote
 npx wrangler d1 execute "$DB_NAME" --command="CREATE TABLE vocabulary_clusters (id INTEGER PRIMARY KEY, book TEXT NOT NULL, testament TEXT NOT NULL, lemma TEXT NOT NULL, concentration REAL NOT NULL, chapter_start INTEGER NOT NULL, chapter_end INTEGER NOT NULL, total_occurrences INTEGER NOT NULL);" --remote
