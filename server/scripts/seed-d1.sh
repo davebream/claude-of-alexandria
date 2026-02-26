@@ -38,6 +38,7 @@ npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_clu
 npx wrangler d1 execute "$DB_NAME" --command="DROP TABLE IF EXISTS thematic_keywords;" --remote
 npx wrangler d1 execute "$DB_NAME" --command="CREATE TABLE thematic_keywords (theme TEXT NOT NULL, lemma TEXT NOT NULL, testament TEXT NOT NULL, UNIQUE(theme, lemma, testament));" --remote
 npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);" --remote
+npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_thematic_lemma ON thematic_keywords(lemma, testament);" --remote
 
 echo "  Small tables rebuilt."
 

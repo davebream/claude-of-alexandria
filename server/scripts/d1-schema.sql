@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS thematic_keywords (
   UNIQUE(theme, lemma, testament)
 );
 CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);
+CREATE INDEX IF NOT EXISTS idx_thematic_lemma ON thematic_keywords(lemma, testament);
 
 CREATE TABLE IF NOT EXISTS morphology (
   id INTEGER PRIMARY KEY,
