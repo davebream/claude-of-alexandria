@@ -16,11 +16,12 @@
 
 **Files:**
 - Modify: `server/d1-seed/schema.sql:52` (after existing `idx_theme` line)
+- Modify: `server/scripts/d1-schema.sql:52` (same change — second copy of schema, must stay in sync)
 - Modify: `server/scripts/seed-d1.sh:40` (after existing `idx_theme` creation line)
 
-**Step 1: Add index to schema.sql**
+**Step 1: Add index to both schema files**
 
-Add this line after line 52 (`CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);`):
+Add this line after the existing `idx_theme` line in both `server/d1-seed/schema.sql` and `server/scripts/d1-schema.sql`:
 
 ```sql
 CREATE INDEX IF NOT EXISTS idx_thematic_lemma ON thematic_keywords(lemma, testament);
@@ -42,7 +43,7 @@ Expected: No errors (schema files are not TypeScript, but verify nothing broke)
 **Step 4: Commit**
 
 ```bash
-git add server/d1-seed/schema.sql server/scripts/seed-d1.sh
+git add server/d1-seed/schema.sql server/scripts/d1-schema.sql server/scripts/seed-d1.sh
 git commit -m "feat(schema): add (lemma, testament) index to thematic_keywords
 
 Supports the reversed lookup direction needed by query_themes_for_lemmas:
@@ -420,7 +421,38 @@ curl -s -X POST http://localhost:8787/mcp \
 
 Expected: `total_lemmas: 2` (post-dedup), not 3.
 
-**Step 7: Stop dev server**
+**Step 7: Test 100-lemma boundary (D1 bind limit + cache key length)**
+
+This tests two boundaries at once: (1) the D1 100-bind-parameter limit with exactly 100 lemmas, and (2) the cache key URL length with 100 Greek strings. Generate 100 distinct lemma-like strings:
+
+```bash
+# Generate a JSON array of 100 distinct Greek-ish strings
+LEMMAS=$(python3 -c "
+import json
+# Mix of real and fake lemmas — we're testing the query boundary, not the data
+lemmas = [f'λ{i:03d}' for i in range(100)]
+print(json.dumps(lemmas))
+")
+
+curl -s -X POST http://localhost:8787/mcp \
+  -H 'Content-Type: application/json' \
+  -d "{
+    \"jsonrpc\": \"2.0\",
+    \"id\": 6,
+    \"method\": \"tools/call\",
+    \"params\": {
+      \"name\": \"query_themes_for_lemmas\",
+      \"arguments\": {
+        \"lemmas\": $LEMMAS,
+        \"testament\": \"nt\"
+      }
+    }
+  }" | python3 -m json.tool
+```
+
+Expected: Valid JSON response (not a Worker exception). `themes: []`, `matched_count: 0`, `unmatched_count: 100`. This confirms the D1 query executes cleanly at the 100-lemma cap and the cache layer doesn't throw on a long key.
+
+**Step 8: Stop dev server**
 
 Ctrl+C to stop the Wrangler dev server.
 
