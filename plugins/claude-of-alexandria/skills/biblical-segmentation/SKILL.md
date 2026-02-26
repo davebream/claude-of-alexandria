@@ -1,7 +1,7 @@
 ---
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book.
-allowed-tools: Read, Write, Glob, WebSearch, Bash, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology
+allowed-tools: Read, Write, WebSearch, mcp__claude-of-alexandria-mcp__query_discourse_features, mcp__claude-of-alexandria-mcp__query_paragraph_breaks, mcp__claude-of-alexandria-mcp__query_vocabulary, mcp__claude-of-alexandria-mcp__query_morphology
 ---
 
 # Biblical Text Segmentation
@@ -729,7 +729,6 @@ For detailed data, consult:
 - `reference/book-genres.yaml` - Genre mapping for all 66 books
 - `reference/genre-methodology.yaml` - Markers and methodology per genre
 - `reference/compositional-debates.yaml` - Partition theory notes for 2 Cor, Philippians (standardized text)
-- `reference/levinsohn/` - 34 JSON files with NT discourse features (Historical Present, POD, etc.)
 - MCP tool `query_discourse_features` - Extract discourse features for NT books
 - MCP tool `query_paragraph_breaks` - Extract Masoretic paragraph markers for OT books
 
