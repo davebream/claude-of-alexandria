@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-02-26
+
+### Added
+
+- New `query_themes_for_lemmas` MCP tool: resolves morphology lemmas into vocabulary theme names, bridging the gap between `query_morphology` and `query_vocabulary` in the automated pipeline
+- `(lemma, testament)` index on `thematic_keywords` table for optimal reverse lookup performance
+
 ## [1.7.3] - 2026-02-26
 
 ### Fixed
