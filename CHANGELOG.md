@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.3] - 2026-02-26
+
+### Fixed
+
+- Corrected MCP tool prefix in all five skills — `mcp__claude-of-alexandria-mcp__` replaced with actual runtime name `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__` so `allowed-tools` auto-authorization works
+- Added missing `allowed-tools` to `pericope-delimitation` skill (was the only skill without it)
+- Replaced stale local file path references in `pericope-delimitation` with MCP tool calls
+- Removed unused `Bash` and `Glob` from `exegetical-notes` and `consult-biblical-scholar` allowed-tools
+
 ## [1.7.2] - 2026-02-26
 
 ### Fixed
