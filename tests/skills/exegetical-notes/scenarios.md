@@ -9,7 +9,7 @@ Always in English. Data-grounded. Saved to file.
 1. **Completeness scenarios** - All 10 sections present and populated
 2. **Data-grounding scenarios** - Lexical analysis uses morphology_parser, not memory
 3. **Tier scenarios** - Interpretive guardrails correctly labeled
-4. **Verification scenarios** - verify_claims.py passes on output
+4. **Verification scenarios** - MCP cross-check passes on output
 5. **Pericope check scenarios** - Built-in boundary check triggers correctly
 
 ---
@@ -42,10 +42,10 @@ Always in English. Data-grounded. Saved to file.
 
 **Section 4: Lexical Analysis**
 - ✅ Key lemmas listed with verse reference
-- ✅ Morphological data comes from morphology_parser.py (not memory)
+- ✅ Morphological data comes from query_morphology MCP tool (not memory)
 - ✅ Includes: χαρά, χαίρω, ἐπιτελέω, ἀγάπη, δικαιοσύνη at minimum
 - ✅ φρονέω family noted (Philippians hallmark)
-- ✅ Cites actual parsing data: "ἐναρξάμενος (1:6) = aorist middle participle [morphology_parser]"
+- ✅ Cites actual parsing data: "ἐναρξάμενος (1:6) = aorist middle participle [query_morphology]"
 - ✅ Strong's numbers used for semantic group connections where applicable
 
 **Section 5: Exegetical Conclusions**
@@ -74,8 +74,8 @@ Always in English. Data-grounded. Saved to file.
 - ✅ Names specific Tier 3 sources used
 
 **Section 10: Verification**
-- ✅ Reports verify_claims.py output
-- ✅ Shows: claims checked, passed, failed, unverifiable
+- ✅ Reports MCP cross-check results
+- ✅ Shows: claims checked, confirmed, corrected, not cross-checkable
 
 **Output saved to:**
 `~/.claude/exegetical-notes/philippians/YYYY-MM-DD-1-1-11.md`
@@ -89,7 +89,7 @@ Always in English. Data-grounded. Saved to file.
 /exegetical-notes Phil 1:1-11
 ```
 
-**Specific check:** Lexical analysis must use morphology_parser.py data.
+**Specific check:** Lexical analysis must use query_morphology MCP tool data.
 
 **Must NOT say:**
 - "ἐναρξάμενος is aorist active participle" (wrong voice — memory error)
@@ -97,9 +97,9 @@ Always in English. Data-grounded. Saved to file.
 - "Philippians is known for its joy vocabulary" (training knowledge, not data)
 
 **Must say:**
-- "ἐναρξάμενος (1:6): lemma ἐνάρχομαι, aorist middle participle, nominative singular masculine [morphology_parser.py]"
-- "χαρά: 5 occurrences in Philippians (1:4, 1:25, 2:2, 2:29, 4:1) [vocabulary_parser.py]"
-- "χαίρω: 9 occurrences in Philippians [vocabulary_parser.py]"
+- "ἐναρξάμενος (1:6): lemma ἐνάρχομαι, aorist middle participle, nominative singular masculine [query_morphology]"
+- "χαρά: 5 occurrences in Philippians (1:4, 1:25, 2:2, 2:29, 4:1) [query_vocabulary]"
+- "χαίρω: 9 occurrences in Philippians [query_vocabulary]"
 
 ---
 
@@ -161,10 +161,10 @@ Christ Jesus" (ἄχρι ἡμέρας Χριστοῦ Ἰησοῦ) — this is
 **Core checks:**
 
 **Section 4 (Lexical Analysis) — OT specific:**
-- ✅ Uses morphology_parser.py with --testament ot
+- ✅ Uses query_morphology MCP tool with testament: ot
 - ✅ Hebrew morphology cited (stem/conjugation for verbs)
 - ✅ Strong's numbers provided for key lemmas
-- ✅ Example: "חָלַם (H2492, 37:5,9): Qal perfect 3ms — dreamed [morphology_parser.py]"
+- ✅ Example: "חָלַם (H2492, 37:5,9): Qal perfect 3ms — dreamed [query_morphology]"
 
 **Section 6 (Guardrails) — OT context:**
 - ✅ Tier 3 cites OT commentaries (not NT commentaries)
@@ -188,25 +188,25 @@ Christ Jesus" (ἄχρι ἡμέρας Χριστοῦ Ἰησοῦ) — this is
 
 **Specific check for Section 10 (Verification):**
 
-After generating the full notes, the skill runs verify_claims.py.
+After generating the full notes, the skill cross-checks data claims against MCP tool output.
 
 **Expected output in Section 10:**
 ```markdown
 ## 10. Verification
 
-**verify_claims.py results:**
-- Claims checked: [N]
-- Claims verified (PASS): [N]
-- Claims failed (FAIL): [0 expected]
-- Claims unverifiable: [N] (Tier 3 web citations)
+**MCP cross-check results:**
+- Data claims checked: [N]
+- Claims confirmed (PASS): [N]
+- Claims corrected: [0 expected]
+- Claims not cross-checkable: [N] (Tier 3 web citations)
 
-[If any FAIL: list the specific failing claim and correct value]
+[If any corrections: list the original claim, MCP query result, and correction]
 ```
 
 **Pass criteria:**
-- ✅ verify_claims.py runs on the generated output
-- ✅ Zero FAIL results for data claims (lemma frequencies, morphological forms)
-- ✅ Data Sources section present (verify_claims checks this)
+- ✅ MCP cross-check runs on the generated output
+- ✅ Zero corrections needed for data claims (lemma frequencies, morphological forms)
+- ✅ Data Sources section present
 
 ---
 
@@ -238,11 +238,11 @@ After generating the full notes, the skill runs verify_claims.py.
 | Scenario | Pass Criteria |
 |----------|---------------|
 | 1 (Phil 1:1-11 complete) | All 10 sections present and populated |
-| 2 (Lexical data-grounding) | morphology_parser.py data cited; correct parsings |
+| 2 (Lexical data-grounding) | query_morphology MCP tool data cited; correct parsings |
 | 3 (Tier labeling) | All 4 tiers present; Tier 3 has web citation; Tier 4 labeled |
 | 4 (Pericope check) | Warning issued for Phil 1:3-8 before generating notes |
 | 5 (OT: Gen 37:2-11) | OT morphology cited; Strong's numbers; OT commentaries |
-| 6 (Verification) | verify_claims.py runs; zero FAIL for data claims |
+| 6 (Verification) | MCP cross-check runs; zero corrections for data claims |
 | 7 (Tier 3 quality) | Tier A sources preferred; citations complete |
 
 ---
@@ -251,10 +251,10 @@ After generating the full notes, the skill runs verify_claims.py.
 
 | Excuse | Why It's Wrong |
 |--------|----------------|
-| "I know χαρά appears frequently in Philippians" | Use vocabulary_parser.py counts, not memory |
-| "The aorist here is..." (no morphology_parser cited) | Must cite source for morphological claims |
+| "I know χαρά appears frequently in Philippians" | Use query_vocabulary MCP tool counts, not memory |
+| "The aorist here is..." (no MCP tool cited) | Must cite source for morphological claims |
 | "Scholars agree that..." (no citation) | Tier 3 requires web search and real citation |
 | "This is clear from the context" | "Context" must be discourse data, not interpretation |
 | "I'll note the uncertainty" | Noting uncertainty ≠ correct tier labeling |
-| Skipping Section 10 verification | verify_claims.py run is required |
+| Skipping Section 10 verification | MCP cross-check is required |
 | Generating notes for invalid pericope without warning | Pericope check must run first |

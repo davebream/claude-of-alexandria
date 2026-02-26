@@ -26,7 +26,7 @@ for discourse feature evidence.
 
 Always check discourse data BEFORE forming a verdict:
 - **NT passages:** Check Levinsohn GNT Discourse Features JSON files
-- **OT passages:** Check Masoretic paragraph markers (sefaria_paragraphs.py)
+- **OT passages:** Check Masoretic paragraph markers (query_paragraph_breaks MCP tool)
 - **Both:** Check genre-specific conventions from book-genres.yaml
 
 Never say "this passage works well" based on training knowledge alone.
@@ -87,7 +87,7 @@ Every assessment must end with a `### Data Sources` subsection citing:
 
 6. Draft output in standard format
 
-7. [Optional] Run verify_claims.py on output if verifiable claims present
+7. [Optional] Cross-check data claims against MCP tool output if verifiable claims present
 ```
 
 ---

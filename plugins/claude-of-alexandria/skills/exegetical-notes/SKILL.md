@@ -70,12 +70,12 @@ For web searches (Tier 3 guardrails):
 If only Tier C sources found, state: "[Tier C source, use with caution]"
 If no verifiable source found, state: "No Tier A/B source located for this claim."
 
-### Rule 5: Run verify_claims.py on Output
+### Rule 5: Cross-Check Data Claims Before Saving
 
 After generating the full notes:
-1. Run verify_claims.py on the complete output
-2. Report results in Section 10
-3. If any FAIL results for data claims: correct the claim before saving
+1. For each data claim in the output (lemma frequencies, morphological parsings, discourse features), re-query the relevant MCP tool to confirm the cited value matches
+2. Report cross-check results in Section 10
+3. If any mismatches: correct the claim before saving
 
 ### Rule 6: Save to Correct Location
 
@@ -134,9 +134,9 @@ After saving, report the saved path to user.
 
 5. Generate all 10 sections
 
-6. Run verify_claims.py on output
+6. Cross-check data claims against MCP tool output
 
-7. Fix any FAIL results
+7. Fix any mismatches
 
 8. Save to output location
 
@@ -252,14 +252,14 @@ Gloss: "[translation]"
 
 ## 10. Verification
 
-**verify_claims.py results:**
-- Claims checked: [N]
-- Claims verified (PASS): [N]
-- Claims failed (FAIL): [N — should be 0 for data claims]
-- Claims unverifiable: [N — Tier 3 citations expected here]
-- Overall: [PASS | FAIL]
+**MCP cross-check results:**
+- Data claims checked: [N]
+- Claims confirmed (PASS): [N]
+- Claims corrected: [N — list each correction below if any]
+- Claims not cross-checkable: [N — e.g., Tier 3 citations, semantic notes]
+- Overall: [PASS | CORRECTED]
 
-[If FAIL results: list each failure and correction made]
+[If corrections made: list each original claim, the MCP query result, and the correction]
 ```
 
 ---
@@ -334,7 +334,7 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Wrong voice in morphology | Always verify via query_morphology MCP tool |
 | "Scholars agree..." without citation | Web search required; cite author/title/year |
 | Mixing Tier 1 and Tier 4 | Label every tier claim explicitly |
-| Skipping verify_claims.py | Section 10 is required |
+| Skipping Section 10 cross-check | Re-query MCP tools to confirm every data claim before saving |
 | Not saving to output location | Check path, save, report path to user |
 | Proceeding past problematic pericope without warning | Pericope check is mandatory Step 1 |
 | No logical connectives in epistle analysis | For epistles: query_morphology pos_filter "conjunction", map γάρ/οὖν/δέ/ἀλλά/ἵνα flow |

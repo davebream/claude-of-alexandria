@@ -42,8 +42,8 @@ Agent analyzed 9 key terms: δοῦλοι, ἁγίοις, ἐπισκόποις/
 **Confirmed failures:**
 - ❌ **ἐναρξάμενος voice not specified** — listed as "ho enarxamenos (ὁ ἐναρξάμενος) — 'the one who began'" without parsing voice (middle, not active). This is the critical data-grounding test.
 - ❌ **No lemma counts for joy vocabulary** — said "Philippians mentions joy or rejoicing 16 times across four chapters" (approximate, no lemma distinction between χαίρω and χαρά)
-- ❌ **No morphology_parser.py citation** — all parsing from training knowledge
-- ❌ **No vocabulary_parser.py citation** — all frequency claims unverified
+- ❌ **No query_morphology MCP tool citation** — all parsing from training knowledge
+- ❌ **No query_vocabulary MCP tool citation** — all frequency claims unverified
 - ❌ **No Strong's numbers** for any terms
 - ⚠️ **Some parsing provided** but inconsistently — "pepoithos: Perfect tense participle from peitho" (correct tense) but no systematic morphological data
 
@@ -76,7 +76,7 @@ This is an agent assessment (Tier 4) presented as conclusion without labeling.
 - ❌ No Open Questions (unresolved issues flagged)
 - ❌ No Intertextual Links (OT quotations/allusions with citations)
 - ❌ No Data Sources section
-- ❌ No Verification section (verify_claims.py)
+- ❌ No Verification section (data claim cross-check)
 - ❌ No output file saved
 
 ### Theological Quality
@@ -114,7 +114,7 @@ This is an agent assessment (Tier 4) presented as conclusion without labeling.
 - ❌ Joy vocabulary count wrong (claimed 16, actual χαίρω:9 + χαρά:5 = 14)
 - ❌ ἐναρξάμενος voice not specified (should be aorist MIDDLE participle)
 - ❌ φρονέω count of 10 cited without source
-- ❌ No morphology_parser.py or vocabulary_parser.py citations
+- ❌ No query_morphology MCP tool or query_vocabulary MCP tool citations
 - ❌ All data from training knowledge — unverifiable
 
 **This is the core failure the skill must fix.** Training knowledge produces plausible-but-wrong data (16 vs 14 for joy vocabulary). Only parser verification catches this.
@@ -209,7 +209,7 @@ period (a standard Pauline epistolary feature following Greco-Roman letter conve
    - Task framing overrides discourse instincts
 
 5. **No self-checking** (confirmed)
-   - No verify_claims.py
+   - No data claim cross-check
    - No Data Sources section
    - Wrong data (16 vs 14) would be caught by parser
 
@@ -223,7 +223,7 @@ period (a standard Pauline epistolary feature following Greco-Roman letter conve
 | Lexical analysis from memory (wrong count, missing voice) | High — introduces errors | ✅ Yes (16 vs 14, voice omitted) |
 | No Tier 3 web search with real citations | High — cites training knowledge as scholarship | ✅ Yes |
 | No tier labels for guardrails | High — interpretation quality opaque | ✅ Yes |
-| No verify_claims.py | Medium — no self-checking | ✅ Yes |
+| No data claim cross-check | Medium — no self-checking | ✅ Yes |
 | No pericope check | Medium — validates invalid passages | ✅ Yes (Phil 1:3-8) |
 | No file output | Low — can be requested separately | ✅ Yes |
 
