@@ -22,8 +22,7 @@ for theme, group in groups.items():
             count += 1
     if "ot_strongs" in group:
         for strong_id, info in group["ot_strongs"].items():
-            escaped_hebrew = info["hebrew"].replace("'", "''")
-            lines.append(f"INSERT OR IGNORE INTO thematic_keywords (theme, lemma, testament) VALUES ('{theme}', '{escaped_hebrew}', 'ot');")
+            lines.append(f"INSERT OR IGNORE INTO thematic_keywords (theme, lemma, testament) VALUES ('{theme}', '{strong_id}', 'ot');")
             count += 1
 
 with open(OUTPUT_PATH, "w") as f:
