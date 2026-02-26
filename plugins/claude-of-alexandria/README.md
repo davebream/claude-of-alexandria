@@ -10,7 +10,7 @@ The result: the same data, delivered from a globally distributed edge network ov
 
 ## MCP Server
 
-The reference server exposes seven tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes eight tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 | Tool | Queries | Coverage |
 | ---- | ------- | -------- |
@@ -20,6 +20,7 @@ The reference server exposes seven tools. Skills call these automatically; you d
 | `query_morphology` | Word-level morphological parsing | Both |
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both |
+| `query_lemmas` | Cross-book lemma distribution | Both |
 | `list_books` | Available books and their metadata | Both |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
