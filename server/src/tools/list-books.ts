@@ -26,12 +26,13 @@ export const ListBooksOutputSchema = {
 };
 
 const AVAILABLE_TOOLS = [
-  'query_morphology — word-level parsing for any book (OT + NT)',
-  'query_vocabulary — lemma frequencies + thematic keywords (OT + NT)',
-  'query_discourse_features — Levinsohn discourse markers (NT only)',
-  'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
-  'query_ot_quotes — OT quotations in NT passages (NT only)',
-  'query_themes_for_lemmas — resolve lemmas to vocabulary themes (OT + NT)',
+  'query_morphology - word-level parsing for any book (OT + NT)',
+  'query_vocabulary - lemma frequencies + thematic keywords (OT + NT)',
+  'query_lemmas - cross-book lemma distribution (OT + NT)',
+  'query_discourse_features - Levinsohn discourse markers (NT only)',
+  'query_paragraph_breaks - Masoretic petuchah/setumah markers (OT only)',
+  'query_ot_quotes - OT quotations in NT passages (NT only)',
+  'query_themes_for_lemmas - resolve lemmas to vocabulary themes (OT + NT)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
