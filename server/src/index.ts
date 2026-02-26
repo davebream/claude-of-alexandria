@@ -8,6 +8,7 @@ import { queryVocabulary, VocabularyInputSchema, VocabularyOutputSchema } from '
 import { queryMorphology, MorphologyInputSchema, MorphologyOutputSchema } from './tools/morphology.js';
 import { listBooks, ListBooksInputSchema, ListBooksOutputSchema } from './tools/list-books.js';
 import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tools/ot-quotes.js';
+import { queryThemesForLemmas, ThemesInputSchema, ThemesOutputSchema } from './tools/themes.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -105,6 +106,24 @@ Examples:
   - Only verbs in Romans 8:1-8:4: book="Romans", range="8:1-8:4", pos_filter="verb"
   - Find occurrences of "logos" in John 1: book="John", range="1:1-1:18", word_filter="logos"`;
 
+const DESC_THEMES = `Resolve lemmas from query_morphology into thematic keyword groups for use with query_vocabulary's theme parameter.
+
+Accepts lemmas in the format returned by query_morphology for the given testament (Greek lemmas for NT, Strong's numbers for OT). Returns themes sorted by the number of matching lemmas (most relevant first).
+
+Use this tool in the pipeline: query_morphology → query_themes_for_lemmas → query_vocabulary(theme=...).
+
+Args:
+  - lemmas (string[], required): 1–100 lemmas to resolve (e.g., ["χαίρω", "χαρά", "εἰρήνη"] for NT, ["H2617a", "H6664"] for OT)
+  - testament (string, required): "nt" or "ot" — must match the testament used in query_morphology
+  - include_unmatched (boolean, optional): Include unmatched lemmas in response (default: true). Set false to reduce payload for large passages.
+
+Returns: { testament, themes: string[], matches: {lemma: themes[]}, unmatched?: string[], total_lemmas, matched_count, unmatched_count }
+
+Examples:
+  - Resolve NT lemmas: lemmas=["χαίρω", "χαρά", "εἰρήνη"], testament="nt"
+  - Resolve OT Strong's codes: lemmas=["H2617a", "H6664", "H4941"], testament="ot"
+  - Pipeline use (suppress unmatched): lemmas=[...from morphology...], testament="nt", include_unmatched=false`;
+
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
 // CORS is not required for MCP clients (Claude Desktop, Claude Code are native
@@ -158,7 +177,7 @@ async function cachedToolCall(
 // per request is cheap (constructor only sets up handler maps, no I/O).
 function createServer(): McpServer {
   const server = new McpServer(
-    { name: 'claude-of-alexandria-mcp', version: '1.7.0' },
+    { name: 'claude-of-alexandria-mcp', version: '1.8.0' },
     { capabilities: { tools: {} } }
   );
 
@@ -252,6 +271,29 @@ function createServer(): McpServer {
     cachedToolCall('query_ot_quotes', args as unknown as Record<string, unknown>, () => queryOtQuotes(args))
   );
 
+  server.registerTool('query_themes_for_lemmas', {
+    title: 'Resolve Lemmas to Themes',
+    description: DESC_THEMES,
+    inputSchema: ThemesInputSchema,
+    outputSchema: ThemesOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) => {
+    // Normalize lemmas BEFORE cachedToolCall so identical sets produce the same cache key.
+    // stableStringify sorts object keys but preserves array order — dedup+sort here is required.
+    const normalizedLemmas = [...new Set(args.lemmas as string[])].sort();
+    const normalizedArgs = { ...args, lemmas: normalizedLemmas };
+    return cachedToolCall(
+      'query_themes_for_lemmas',
+      normalizedArgs as unknown as Record<string, unknown>,
+      () => queryThemesForLemmas({ ...args, lemmas: normalizedLemmas } as unknown as import('./tools/themes.js').ThemesInput)
+    );
+  });
+
   return server;
 }
 
@@ -279,12 +321,12 @@ export default {
       try {
         await env.DB.prepare('SELECT 1').first();
         return new Response(
-          JSON.stringify({ status: 'ok', version: '1.7.0', db: 'connected' }),
+          JSON.stringify({ status: 'ok', version: '1.8.0', db: 'connected' }),
           { headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       } catch {
         return new Response(
-          JSON.stringify({ status: 'degraded', version: '1.7.0', db: 'unreachable' }),
+          JSON.stringify({ status: 'degraded', version: '1.8.0', db: 'unreachable' }),
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }
