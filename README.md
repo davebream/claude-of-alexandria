@@ -211,6 +211,8 @@ Version 1.5.0 moved the MCP server to Cloudflare Workers + D1 (edge SQLite), eli
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both testaments |
 | `query_morphology` | Word-level morphological parsing | Both testaments |
+| `query_ot_quotes` | OT quotations and allusions in the NT | NT |
+| `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both testaments |
 
 Skills call these tools automatically. You do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
