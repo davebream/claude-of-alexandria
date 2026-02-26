@@ -9,6 +9,7 @@ import { queryMorphology, MorphologyInputSchema, MorphologyOutputSchema } from '
 import { listBooks, ListBooksInputSchema, ListBooksOutputSchema } from './tools/list-books.js';
 import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tools/ot-quotes.js';
 import { queryThemesForLemmas, ThemesInputSchema, ThemesOutputSchema } from './tools/themes.js';
+import { queryLemmas, LemmasInputSchema, LemmasOutputSchema, type LemmasInput } from './tools/lemmas.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -123,6 +124,24 @@ Examples:
   - Resolve NT lemmas: lemmas=["χαίρω", "χαρά", "εἰρήνη"], testament="nt"
   - Resolve OT Strong's codes: lemmas=["H2617a", "H6664", "H4941"], testament="ot"
   - Pipeline use (suppress unmatched): lemmas=[...from morphology...], testament="nt", include_unmatched=false`;
+
+const DESC_LEMMAS = `Query cross-book distribution of specific lemma IDs across the biblical canon.
+
+Unlike query_vocabulary (which shows vocabulary within one book), this tool shows where specific lemmas appear across ALL books in a testament. Use after query_morphology identifies lemmas of interest.
+
+OT lemmas use Strong's numbers (H-prefix, e.g., "H7462b"). NT lemmas use Greek lexical forms (e.g., "πατήρ", "κύριος"). Get these from query_morphology output (the "lemma" field).
+
+Args:
+  - lemmas (string[], required): 1–50 lemma IDs. OT: Strong's numbers like "H7462b". NT: Greek forms like "πατήρ". Mixed allowed.
+
+Returns: { lemmas: [{lemma, testament, total_occurrences, books_count, distribution: {Book: {chapter: count}}}], not_found: string[], total_requested, total_found }
+
+Note: No lexeme/gloss field is included. The calling agent already has morphology context with normalized forms from a prior query_morphology call.
+
+Examples:
+  - OT shepherd lemma across the canon: lemmas=["H7462b"]
+  - Multiple NT lemmas: lemmas=["πατήρ", "πίστις"]
+  - Mixed OT/NT for covenant study: lemmas=["H1285", "διαθήκη"]`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -291,6 +310,29 @@ function createServer(): McpServer {
       'query_themes_for_lemmas',
       normalizedArgs as unknown as Record<string, unknown>,
       () => queryThemesForLemmas({ ...args, lemmas: normalizedLemmas } as unknown as import('./tools/themes.js').ThemesInput)
+    );
+  });
+
+  server.registerTool('query_lemmas', {
+    title: 'Query Lemma Distribution',
+    description: DESC_LEMMAS,
+    inputSchema: LemmasInputSchema,
+    outputSchema: LemmasOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) => {
+    // Normalize lemmas: dedup + sort for cache key stability.
+    // stableStringify sorts object keys but preserves array order — dedup+sort here is required.
+    const normalizedLemmas = [...new Set(args.lemmas as string[])].sort();
+    const normalizedArgs = { ...args, lemmas: normalizedLemmas };
+    return cachedToolCall(
+      'query_lemmas',
+      normalizedArgs as unknown as Record<string, unknown>,
+      () => queryLemmas(normalizedArgs as unknown as LemmasInput)
     );
   });
 
