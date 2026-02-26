@@ -10,7 +10,7 @@ The result: the same data, delivered from a globally distributed edge network ov
 
 ## MCP Server
 
-The reference server exposes four tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes six tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 | Tool | Queries | Coverage |
 | ---- | ------- | -------- |
@@ -18,25 +18,50 @@ The reference server exposes four tools. Skills call these automatically; you do
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
 | `query_morphology` | Word-level morphological parsing | Both |
+| `query_ot_quotes` | OT quotations and allusions in the NT | NT |
+| `list_books` | Available books and their metadata | Both |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 
 ## Available Skills
 
-### biblical-segmentation
+### exegetical-notes
 
-Divides biblical books into coherent teaching units with integrity safeguards:
+Produces structured, context-neutral exegetical analysis of a biblical passage. Data-grounded. Always English. Saves to file as a reusable reference document.
 
-- **Refuses impossible divisions** - Won't pretend Philemon can be 12 sessions
-- **Presents multiple frameworks** - Because interpretation isn't a dictatorship
-- **Validates against ancient markers** - Masoretic markers, Levinsohn discourse features
-- **Handles contested books** - Isaiah's unity debate gets frameworks, not false consensus
-
-**Coverage:** All 66 canonical books
+- **Runs pericope check first** - Verifies boundaries before analysis
+- **Every claim sourced** - Bundled data or web-verified scholarly sources
+- **Training knowledge supplements** - Never substitutes for data
 
 **Usage:**
 ```
-Use biblical-segmentation to divide Romans into 12 sessions for a sermon series.
+/claude-of-alexandria:exegetical-notes Romans 8:1-11
+```
+
+### consult-biblical-scholar
+
+Answers questions about a biblical passage's meaning, validates analogies or ideas against the text, and provides cross-references with scholarly evidence. Works with or without an explicit passage anchor.
+
+- **Confidence tiering** - Every answer declares its evidence basis
+- **MCP data before answering** - No training-data-only verdicts
+- **Formal verdict for analogy questions** - Structured evaluation, not vibes
+
+**Usage:**
+```
+/claude-of-alexandria:consult-biblical-scholar Is "rest" in Hebrews 4 about salvation or sanctification?
+```
+
+### argument-flow
+
+Maps the logical argument of a biblical passage using discourse markers and morphological data. Produces a connective-anchored proposition chain showing how clauses relate to each other.
+
+- **Conjunction-first analysis** - MCP morphology data shapes the argument, not training memory
+- **Genre-aware** - Different structural methods for epistles, narrative, poetry
+- **Numbered proposition chain** - Every response includes one, no exceptions
+
+**Usage:**
+```
+/claude-of-alexandria:argument-flow Phil 2:1-4
 ```
 
 ### pericope-delimitation
@@ -49,20 +74,23 @@ Validates whether a biblical passage constitutes a coherent discourse unit. Reco
 
 **Usage:**
 ```
-Use pericope-delimitation to check if Romans 8:1-17 is a natural unit.
+/claude-of-alexandria:pericope-delimitation Romans 8:1-17
 ```
 
-### exegetical-notes
+### biblical-segmentation
 
-Produces structured, context-neutral exegetical analysis of a biblical passage. Data-grounded. Always English. Saves to file as a reusable reference document.
+Divides biblical books into coherent teaching units with integrity safeguards.
 
-- **Runs pericope check first** - Verifies boundaries before analysis
-- **Every claim sourced** - Bundled data or web-verified scholarly sources
-- **Training knowledge supplements** - Never substitutes for data
+- **Refuses impossible divisions** - Won't pretend Philemon can be 12 sessions
+- **Presents multiple frameworks** - Because interpretation isn't a dictatorship
+- **Validates against ancient markers** - Masoretic markers, Levinsohn discourse features
+- **Handles contested books** - Isaiah's unity debate gets frameworks, not false consensus
+
+**Coverage:** All 66 canonical books
 
 **Usage:**
 ```
-Use exegetical-notes to analyze Romans 8:1-11.
+/claude-of-alexandria:biblical-segmentation Divide Romans into 12 sessions for a sermon series.
 ```
 
 ## Development
