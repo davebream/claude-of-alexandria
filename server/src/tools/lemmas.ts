@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { getAllBooks } from '../db/books.js';
+import { jsonArray } from './json-array.js';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -36,7 +37,7 @@ function getDisplayMap(): Record<string, string> {
 // ─── Input / Output schemas ───────────────────────────────────────────────────
 
 export const LemmasInputSchema = {
-  lemmas: z.array(z.string()).min(1).max(50).describe(
+  lemmas: jsonArray(z.array(z.string()).min(1).max(50)).describe(
     'Lemma IDs to look up. OT: Strong\'s numbers (e.g. "H7462b"). NT: Greek lexical forms (e.g. "πατήρ"). 1–50 items. Mixed OK.'
   ),
 };

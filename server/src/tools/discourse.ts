@@ -3,10 +3,11 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseChapterRange } from './utils.js';
+import { jsonArray } from './json-array.js';
 
 export const DiscourseInputSchema = {
   book: z.string().describe('NT book name (any common form, e.g., "John", "1 Cor", "Romans")'),
-  features: z.array(z.string()).optional().describe(
+  features: jsonArray(z.array(z.string())).optional().describe(
     'Feature names to filter. Defaults to 6 segmentation features: historical_present, left_dislocation, referential_pod, situational_pod, reported_speech, tail_head_linkage'
   ),
   chapter_range: z.string().optional().describe('Chapter range: "3" (single), "3-7" (range), or omit for all chapters'),

@@ -1,9 +1,10 @@
 import { z } from 'zod';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
+import { jsonArray } from './json-array.js';
 
 export const ThemesInputSchema = {
-  lemmas: z.array(z.string()).min(1).max(100).describe(
+  lemmas: jsonArray(z.array(z.string()).min(1).max(100)).describe(
     'Array of lemmas to resolve (Greek for NT, Strong\'s numbers for OT). Max 100.'
   ),
   testament: z.enum(['nt', 'ot']).describe(

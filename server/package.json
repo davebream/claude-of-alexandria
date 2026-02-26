@@ -1,11 +1,12 @@
 {
   "name": "claude-of-alexandria-mcp-worker",
-  "version": "1.9.1",
+  "version": "1.9.4",
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/tools/**/*.test.ts",
     "export-d1": "tsx scripts/export-d1.ts",
     "seed-d1": "bash scripts/seed-d1.sh"
   },
