@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2026-02-26
+
+### Fixed
+
+- Stale Python script references (`verify_claims.py`, `sefaria_paragraphs.py`, `morphology_parser.py`, `vocabulary_parser.py`) left behind by the MCP migration in `exegetical-notes` and `pericope-delimitation` skills — replaced with MCP tool names
+- `exegetical-notes` Rule 5 now instructs MCP-based cross-checking instead of referencing a script that was never available to the skill
+- `exegetical-notes` README.md updated to list MCP tools instead of Python script dependencies
+- Test evidence files updated to reflect current MCP-based skill behavior
+
 ## [1.7.0] - 2026-02-24
 
 ### Added
