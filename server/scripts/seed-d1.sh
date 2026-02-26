@@ -12,6 +12,14 @@ echo "Applying schema..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/schema.sql" --remote
 echo "  Schema applied."
 
+# Rebuild thematic_keywords with UNIQUE constraint (DROP+CREATE ensures constraint applies to existing DBs)
+# Split into separate commands to avoid wrangler multi-statement parser issues on remote D1
+echo "Rebuilding thematic_keywords table..."
+npx wrangler d1 execute "$DB_NAME" --command="DROP TABLE IF EXISTS thematic_keywords;" --remote
+npx wrangler d1 execute "$DB_NAME" --command="CREATE TABLE thematic_keywords (theme TEXT NOT NULL, lemma TEXT NOT NULL, testament TEXT NOT NULL, UNIQUE(theme, lemma, testament));" --remote
+npx wrangler d1 execute "$DB_NAME" --command="CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);" --remote
+echo "  Rebuilt."
+
 # Small tables
 echo "Importing small tables..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/data.sql" --remote

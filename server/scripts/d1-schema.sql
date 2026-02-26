@@ -46,10 +46,10 @@ CREATE INDEX IF NOT EXISTS idx_clusters_book ON vocabulary_clusters(book, lemma)
 CREATE TABLE IF NOT EXISTS thematic_keywords (
   theme TEXT NOT NULL,
   lemma TEXT NOT NULL,
-  testament TEXT NOT NULL
+  testament TEXT NOT NULL,
+  UNIQUE(theme, lemma, testament)
 );
 CREATE INDEX IF NOT EXISTS idx_theme ON thematic_keywords(theme, testament);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_thematic_unique ON thematic_keywords(theme, lemma, testament);
 
 CREATE TABLE IF NOT EXISTS morphology (
   id INTEGER PRIMARY KEY,
