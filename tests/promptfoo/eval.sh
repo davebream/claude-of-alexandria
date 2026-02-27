@@ -28,4 +28,5 @@ exec env \
   CLAUDE_CODE_USE_BEDROCK=bypass-validation \
   CLAUDECODE="" \
   ANTHROPIC_API_KEY="" \
+  NODE_NO_WARNINGS=1 \
   npx promptfoo eval "$@"

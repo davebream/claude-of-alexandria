@@ -9,6 +9,10 @@ config:
     - project
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true
+  append_system_prompt: |
+    CRITICAL: When asked to generate exegetical notes, follow the exegetical-notes skill
+    instructions loaded from this project. Use --output print to print ALL 10 sections
+    inline in your response. Do NOT save to file when --output print is specified.
   append_allowed_tools:
     - Skill
     - Read

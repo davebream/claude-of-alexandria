@@ -1,27 +1,15 @@
-# RED-phase provider: agent has MCP access but NO skills loaded
-# Omit working_dir → SDK creates temp dir automatically (no skills discoverable)
-# Omit setting_sources → no CLAUDE.md, no project skills
+# RED-phase provider: bare model, no skills, no MCP, no biblical tools.
+# Uses /tmp as working_dir so Claude spawns correctly (no OPENAI fallback)
+# but finds no CLAUDE.md, no project plugins, no skill manifests.
+# No setting_sources → no project context loaded.
+# No mcp → no biblical data tools.
+# No append_allowed_tools → only default bare tools (no Skill tool).
 id: anthropic:claude-agent-sdk
 label: without-skill
 config:
   model: claude-sonnet-4-5-20250929
+  working_dir: /tmp
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true
-  append_allowed_tools:
-    - Read
-    - WebSearch
-    - list_books
-    - query_discourse_features
-    - query_paragraph_breaks
-    - query_vocabulary
-    - query_morphology
-    - query_ot_quotes
-    - query_lemmas
-    - query_themes_for_lemmas
-  max_turns: 40
-  max_budget_usd: 2.00
-  mcp:
-    enabled: true
-    servers:
-      - name: claude-of-alexandria-mcp
-        url: https://coa.davebream.com/mcp
+  max_turns: 5
+  max_budget_usd: 1.00

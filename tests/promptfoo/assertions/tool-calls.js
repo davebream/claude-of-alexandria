@@ -7,11 +7,17 @@
  * raw.num_turns > 1 means the agent made at least one tool call.
  * (1 turn = response only, 2+ turns = at least one tool call round)
  *
- * Usage in promptfoo YAML:
+ * IMPORTANT: require() is NOT available in inline `type: javascript` assertions.
+ * Promptfoo uses `new Function("output", "context", "process", body)` for inline JS.
+ * You MUST inline the logic directly:
+ *
  *   - type: javascript
  *     value: |
- *       const { hadToolCalls } = require('../../assertions/tool-calls');
- *       return hadToolCalls(context);
+ *       const raw = JSON.parse(context.providerResponse?.raw || '{}');
+ *       return (raw.num_turns || 0) > 1;
+ *
+ * This file is kept as reference documentation and for potential use with
+ * file:// assertions if promptfoo adds CommonJS support in the future.
  */
 
 function getRaw(context) {
