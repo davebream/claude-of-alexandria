@@ -205,6 +205,258 @@ semantic_groups:
         hebrew: אָמַן
         gloss: be firm, be faithful, be true
 
+  deity:
+    description: God, Lord, divine nature and being — the identity and attributes of God across both testaments
+    primary_genres: [epistle, gospel_narrative, hebrew_poetry, prophetic]
+    nt_lemmas:
+      θεός: God, deity
+      κύριος: Lord, master
+      θεότης: deity, divine nature (Col 2:9)
+      θεῖος: divine, of God (2 Pet 1:3-4)
+      θειότης: divinity (Rom 1:20)
+    ot_strongs:
+      H430:
+        hebrew: אֱלֹהִים
+        gloss: God, gods, divine beings
+      H3068:
+        hebrew: יְהוָה
+        gloss: LORD (Yahweh), the personal name of God
+      H136:
+        hebrew: אֲדֹנָי
+        gloss: Lord, my Lord
+      H7706:
+        hebrew: שַׁדַּי
+        gloss: Almighty, Shaddai
+
+  christology:
+    description: Christ, Messiah, Son of God — the identity and titles of Jesus as the anointed one
+    primary_genres: [gospel_narrative, epistle, prophetic]
+    nt_lemmas:
+      Χριστός: Christ, Messiah, Anointed One
+      υἱός: Son (as title/relationship)  # NOTE: ~260 non-titular uses (parables, genealogies); agents must use literary context to determine titular vs. kinship sense
+      μονογενής: only-begotten, one and only
+      # λόγος intentionally omitted: also in word-revelation; Johannine "Word" title is exegetically specific and better captured via literary context than lemma frequency
+    ot_strongs:
+      H4899:
+        hebrew: מָשִׁיחַ
+        gloss: anointed one, Messiah
+      H5650:
+        hebrew: עֶבֶד
+        gloss: servant (Servant Songs of Isaiah)
+      # H6629 (צֹאן, flock/sheep) intentionally omitted: too generic. Use H7716 (שֶׂה, lamb) or H3532 (כֶּבֶשׂ, ram/lamb) for sacrificial imagery instead — verify against ot_lemmas.yaml before adding
+
+  prayer:
+    description: Prayer, petition, intercession — communicating with God in supplication and praise
+    primary_genres: [epistle, hebrew_poetry, gospel_narrative]
+    nt_lemmas:
+      προσεύχομαι: pray, make prayer
+      προσευχή: prayer (noun)
+      δέομαι: ask, beg, pray
+      δέησις: request, prayer, petition
+      ἐντυγχάνω: intercede, appeal to
+      αἰτέω: ask, request
+    ot_strongs:
+      H6419:
+        hebrew: פָּלַל
+        gloss: pray, intercede, make supplication
+      H8605:
+        hebrew: תְּפִלָּה
+        gloss: prayer, intercession
+      H7592:
+        hebrew: שָׁאַל
+        gloss: ask, inquire, request
+
+  word-revelation:
+    description: Word, scripture, divine revelation — God's communication through word and written text
+    primary_genres: [epistle, gospel_narrative, prophetic]
+    nt_lemmas:
+      λόγος: word, message, account
+      ῥῆμα: word, saying, utterance
+      γραφή: scripture, writing
+      γράφω: write, record
+      ἀποκάλυψις: revelation, disclosure
+    ot_strongs:
+      H1697:
+        hebrew: דָּבָר
+        gloss: word, matter, thing
+      H3791:
+        hebrew: כָּתַב
+        gloss: write, inscribe
+      H6310:
+        hebrew: פֶּה
+        gloss: mouth, command, word
+      H2377:
+        hebrew: חָזוֹן
+        gloss: vision, revelation
+
+  light-darkness:
+    description: Light and darkness — moral, spiritual, and eschatological contrast between God's realm and opposition
+    primary_genres: [gospel_narrative, epistle, hebrew_poetry, prophetic]
+    nt_lemmas:
+      φῶς: light
+      φαίνω: shine, appear, give light
+      σκοτία: darkness
+      σκότος: darkness (noun)
+      φωτίζω: illuminate, enlighten
+    ot_strongs:
+      H216:
+        hebrew: אוֹר
+        gloss: light, daylight
+      H215:
+        hebrew: אוֹר
+        gloss: be light, shine
+      H2822:
+        hebrew: חֹשֶׁך
+        gloss: darkness, obscurity
+      H5050:
+        hebrew: נָגַהּ
+        gloss: shine, give light
+
+  humanity:
+    description: Human being, image of God — the nature, dignity, and creatureliness of humanity
+    primary_genres: [epistle, ot_narrative, hebrew_poetry]
+    nt_lemmas:
+      ἄνθρωπος: human being, man, person
+      εἰκών: image, likeness
+      ψυχή: soul, life, person
+      σῶμα: body (as human nature, distinct from body-church ecclesiology)  # Shared with body-church theme; humanity-sense = embodied human nature, not ecclesiological
+    ot_strongs:
+      H120:
+        hebrew: אָדָם
+        gloss: human, mankind, Adam
+      H6754:
+        hebrew: צֶלֶם
+        gloss: image, likeness
+      H5315:
+        hebrew: נֶפֶשׁ
+        gloss: soul, life, person, self
+      H1320:
+        hebrew: בָּשָׂר
+        gloss: flesh, body (human nature)  # Shared with flesh theme; humanity-sense = creatureliness (Gen 2), not sin-nature (Paul)
+
+  humility-pride:
+    description: Humility and pride — the contrast between lowliness before God and self-exaltation
+    primary_genres: [epistle, hebrew_poetry, wisdom]
+    nt_lemmas:
+      ταπεινόω: humble, bring low
+      ταπεινός: lowly, humble
+      ταπεινοφροσύνη: humility, lowliness of mind
+      ὑπερηφανία: arrogance, pride
+      ὑψόω: exalt, lift up
+    ot_strongs:
+      H6041:
+        hebrew: עָנִי
+        gloss: poor, afflicted, humble
+      H8217:
+        hebrew: שָׁפָל
+        gloss: low, humble
+      H1347:
+        hebrew: גָּאוֹן
+        gloss: pride, arrogance, majesty
+      H7311:
+        hebrew: רוּם
+        gloss: be high, exalt, rise up
+
+  wealth-poverty:
+    description: Wealth and poverty — material resources, their dangers, and God's concern for the poor
+    primary_genres: [epistle, gospel_narrative, hebrew_poetry, wisdom]
+    nt_lemmas:
+      πλοῦτος: wealth, riches
+      πλούσιος: rich, wealthy
+      πτωχός: poor, destitute
+      χρῆμα: money, wealth
+      μαμωνᾶς: mammon, material wealth
+    ot_strongs:
+      H6238:
+        hebrew: עָשַׁר
+        gloss: be rich, enrich
+      H1952:
+        hebrew: הוֹן
+        gloss: wealth, riches
+      H7326:
+        hebrew: רוּשׁ
+        gloss: be poor, impoverished
+      H1800:
+        hebrew: דַּל
+        gloss: poor, weak, thin
+
+  gospel-mission:
+    description: Gospel proclamation and mission — the announcement of good news and its spread
+    primary_genres: [gospel_narrative, epistle, acts_narrative]
+    nt_lemmas:
+      εὐαγγέλιον: gospel, good news
+      εὐαγγελίζω: proclaim good news, evangelize
+      κηρύσσω: preach, proclaim, herald
+      κήρυγμα: proclamation, preaching
+      ἀποστέλλω: send, commission
+    ot_strongs:
+      H1319:
+        hebrew: בָּשַׂר
+        gloss: bear good news, proclaim
+      H7121:
+        hebrew: קָרָא
+        gloss: call, proclaim, announce
+      H7971:
+        hebrew: שָׁלַח
+        gloss: send, commission
+
+  peoples-nations:
+    description: Israel, peoples, and nations — the people of God and their relationship to all nations
+    primary_genres: [ot_narrative, prophetic, epistle, gospel_narrative]
+    nt_lemmas:
+      λαός: people (especially God's people)
+      ἔθνος: nation, Gentile, people group
+      Ἰσραήλ: Israel
+      Ἰουδαῖος: Jew, Judean
+    ot_strongs:
+      H5971:
+        hebrew: עַם
+        gloss: people, nation, kinsmen
+      H1471:
+        hebrew: גּוֹי
+        gloss: nation, people (often non-Israelite)
+      H3478:
+        hebrew: יִשְׂרָאֵל
+        gloss: Israel
+      H7626:
+        hebrew: שֵׁבֶט
+        gloss: tribe, rod, scepter
+
+  prophecy:
+    description: Prophecy and fulfillment — the prophetic word, its speakers, and its realization
+    primary_genres: [prophetic, gospel_narrative, epistle]
+    nt_lemmas:
+      προφήτης: prophet
+      προφητεύω: prophesy
+      προφητεία: prophecy
+      πληρόω: fulfill (in context of scripture/prophecy)
+    ot_strongs:
+      H5030:
+        hebrew: נָבִיא
+        gloss: prophet, spokesman
+      H2372:
+        hebrew: חָזָה
+        gloss: see (prophetic vision), behold
+      H5012:
+        hebrew: נָבָא
+        gloss: prophesy, speak as prophet
+
+  healing:
+    description: Healing and restoration of body — physical healing as sign of God's restorative power
+    primary_genres: [gospel_narrative, epistle]
+    nt_lemmas:
+      θεραπεύω: heal, cure, serve
+      ἰάομαι: heal, cure
+      ἴασις: healing, cure
+      ἀσθένεια: weakness, illness, infirmity
+    ot_strongs:
+      H7495:
+        hebrew: רָפָא
+        gloss: heal, cure, restore
+      H2470:
+        hebrew: חָלָה
+        gloss: be sick, become ill, be weak
+
   # New — Proposed Original 8
 
   suffering:
