@@ -26,6 +26,6 @@ fi
 exec env \
   CLAUDE_CODE_OAUTH_TOKEN="$OAUTH_TOKEN" \
   CLAUDE_CODE_USE_BEDROCK=bypass-validation \
-  -u CLAUDECODE \
-  -u ANTHROPIC_API_KEY \
+  CLAUDECODE="" \
+  ANTHROPIC_API_KEY="" \
   npx promptfoo eval "$@"
