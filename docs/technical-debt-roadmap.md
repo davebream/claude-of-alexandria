@@ -7,6 +7,8 @@
 
 > **Note (2026-02-18):** This roadmap was written before the marketplace conversion. All paths referencing `skills/biblical-segmentation/...` now live at `plugins/claude-of-alexandria/skills/biblical-segmentation/...`. The item descriptions remain accurate; only the path prefix changed.
 
+> **Under Consideration (2026-02-27):** We are evaluating whether to deprecate the verse mapping method entirely. The current approach of mapping individual verses to discourse units has proven cumbersome and may be replaced by a simpler pericope-first approach. Items related to verse mapping (e.g., levinsohn_parser.py verse-level processing) should be assessed with this potential deprecation in mind.
+
 ---
 
 ## Quick Navigation

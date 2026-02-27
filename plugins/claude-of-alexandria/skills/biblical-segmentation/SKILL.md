@@ -1,6 +1,6 @@
 ---
 name: biblical-segmentation
-description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book.
+description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
 allowed-tools: Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
 ---
 
@@ -139,11 +139,87 @@ When thematic boundaries conflict with structural integrity:
 - Skip web search for scholarly framework
 - Override integrity safeguards for thematic boundaries
 
+### Rule 9: Reading Slice Mode
+
+**When input contains a verse range** (e.g., `Genesis 22:1-19`, `Romans 8:1-17`), switch to **slice mode** instead of segmentation mode.
+
+**Detection:** Input matching pattern `Book Chapter:Verse-Verse` or `Book Chapter` with method context (SOAP, devotional) = slice mode.
+
+| Input | Mode | Output |
+|-------|------|--------|
+| `Genesis` | Segmentation | Pericope-level sessions |
+| `Genesis 22:1-19` | Slice | Reading slices within pericope |
+| `Romans 12` (with SOAP context) | Slice | Reading slices for chapter |
+
+**If ambiguous** (e.g., `Genesis 22` without method context), ask:
+```
+"Detected verse range. Should I:
+  (A) Create reading slices within this pericope (for SOAP/devotional use)?
+  (B) Treat this as a mini-series with this pericope as one session?"
+```
+
+#### Slice Sizing by Method
+
+| Method | Verses per Slice | Session Length | Rationale |
+|--------|-----------------|----------------|-----------|
+| SOAP | 5-10 | 15-20 min | S-O-A-P steps need time per verse |
+| Swedish | 10-20 | 25-30 min | Three-column analysis at moderate pace |
+| Devotional | 5-15 | 10-25 min | Reflective reading, flexible scope |
+
+**Default calculation:** `ceil(total_verses / 8)` slices for SOAP-ish sizing.
+**Override:** User can request specific slice count.
+**Push back:** If requested count violates integrity or method scope, refuse with explanation.
+
+#### Slice Integrity Rules
+
+Same principles as Rule 5, applied within-pericope:
+
+| Do Not Slice Here | Why |
+|-------------------|-----|
+| Mid-chiasmus (at center point) | Severs the structural pivot |
+| Between rhetorical question and answer | Breaks argumentative flow |
+| Mid-dialogue exchange (question from response) | Separates conversational unit |
+| Between conditional and consequence | Divides logical unit |
+| Between protasis and apodosis | Splits "if...then" |
+
+**When slicing would violate integrity:** Adjust slice boundaries to nearest valid point. Document the adjustment in "Adjustments Made" section.
+
+#### Short Pericope Handling
+
+| Pericope Length | Behavior |
+|-----------------|----------|
+| < 10 verses | Return as single slice; do not force division |
+| 10-40 verses | Normal slicing with integrity rules |
+| > 40 verses | Cap at 5-6 slices max; warn if user requests more |
+
+**Minimum viable slice:** 3 verses. Slices under 3 verses are not meaningful for any method. If requested count would produce sub-3-verse slices, refuse and recommend fewer slices or single-unit reading.
+
+#### Slice Count Auto-Calculation
+
+When user requests too few slices for the text length at the given method's scope:
+1. Calculate target: `ceil(total_verses / method_target_verses)`
+2. Compare with user request
+3. If user request produces slices > 1.5× method target: push back
+4. Explain: "67 verses ÷ 8-10 per slice ≈ 7-8 slices. Your 3-slice request would produce ~22 verses per slice, exceeding SOAP's 5-10 verse scope."
+
 ## Workflow
 
 ```dot
 digraph workflow {
-  "User request" -> "Identify book";
+  "User request" -> "Verse range input?";
+
+  // Slice mode branch (Rule 9)
+  "Verse range input?" -> "Check method context" [label="yes"];
+  "Verse range input?" -> "Identify book" [label="no"];
+  "Check method context" -> "Check short pericope?";
+  "Check short pericope?" -> "Return single slice" [label="< 10 verses"];
+  "Check short pericope?" -> "Calculate slice count" [label=">= 10 verses"];
+  "Calculate slice count" -> "Apply slice integrity rules";
+  "Apply slice integrity rules" -> "Generate Reading Slices output";
+  "Generate Reading Slices output" -> "Save output";
+  "Return single slice" -> "Save output";
+
+  // Segmentation mode (existing)
   "Identify book" -> "Check micro-book?";
   "Check micro-book?" -> "Apply hard limits" [label="yes"];
   "Check micro-book?" -> "Check anthology?" [label="no"];
@@ -570,6 +646,42 @@ Each session row must include:
 **Note:** Masoretic/Levinsohn discourse data not available for this passage. Using genre-appropriate markers (epistolary formulas, scene changes, etc.) for boundary identification.
 ```
 
+## Reading Slices Output Template
+
+**Used ONLY in slice mode (Rule 9).** Segmentation mode uses the standard output format above.
+
+```markdown
+## Reading Slices: [Passage Reference]
+
+**Purpose:** [Method] reading ([N]-[N] verses per slice)
+**Total:** [N] slices from [total] verses
+**Calculation:** [total] verses ÷ [target] per slice ≈ [N] slices
+
+| Slice | Passage | Title | Verses | Markers | Synopsis |
+|-------|---------|-------|--------|---------|----------|
+| 1 | 8:1-4 | [Title] | 4 | [Boundary markers] | [Synopsis] |
+
+**Adjustments Made:**
+- [Describe any boundary adjustments for structural integrity]
+- e.g., "Slice 2 extended to 8:5-11 (was 8:5-10) — chiasmus center at 8:8"
+
+**Do Not Slice Here:**
+- [Verse range] — [Reason: chiasmus center / mid-dialogue / conditional-consequence]
+- e.g., "8:8-9 — Severs flesh/Spirit contrast pivot"
+
+## Data Sources
+[Standard data sources section — same as segmentation mode]
+```
+
+**Required sections in every Reading Slices output:**
+1. Header with passage, purpose, total slices, calculation
+2. Slice table with all columns (Slice, Passage, Title, Verses, Markers, Synopsis)
+3. Adjustments Made (even if "None — all boundaries fall at natural structural points")
+4. Do Not Slice Here (structural warnings for the pericope)
+5. Data Sources
+
+**Markers column in slice mode:** Same boundary-focused approach as segmentation. Lead with Masoretic/Levinsohn status at each slice's starting verse.
+
 ## Red Flags - STOP
 
 If you think any of these, STOP:
@@ -629,6 +741,14 @@ If you think any of these, STOP:
 | "60% is arbitrary, this 55% is close enough" | Threshold is documented. 60% means 60%. |
 | "Thematic boundary makes more sense here" | Structural integrity wins. Adjust thematic to nearest valid boundary. |
 | "Scholarly framework is common knowledge" | Web search required. Common knowledge ≠ verified citation. |
+| "Verse range is just a small segmentation" | Verse range = slice mode. Different output, different rules. |
+| "3 slices for 67 verses is fine" | Calculate: 67 ÷ 8 ≈ 8 slices. Push back on SOAP scope. |
+| "Psalm 23 can be split into 3 slices" | 6 verses ÷ 3 = 2 per slice. Below minimum. Refuse. |
+| "I'll slice mechanically by verse count" | Check dialogue, chiasmus, conditionals before slicing. |
+| "Chiasmus detection is too advanced" | Identify structural pivots. Warn if slice would bisect them. |
+| "Sessions and slices are the same thing" | Sessions = book-level units. Slices = pericope-internal portions. |
+| "Do Not Slice section is optional" | Required in every Reading Slices output. No exceptions. |
+| "Adjustments Made is empty, so skip it" | Write "None — all boundaries fall at natural structural points." |
 
 **All of these mean:** You're about to violate the skill. Stop. Follow the rules.
 
@@ -722,6 +842,34 @@ Agent buries compositional debate in Segmentation Challenges list.
 Agent adds compositional notes for books NOT in reference file based on general knowledge.
 - Fix: Only books explicitly listed in compositional-debates.yaml get notes. Don't invent.
 
+**Treating verse range as segmentation:**
+User provides `Genesis 22:1-19` with SOAP context. Agent produces "sessions" instead of "slices."
+- Fix: Detect verse range input → slice mode. Use "Reading Slices" format with Slice terminology.
+
+**Mechanical slicing without structural analysis:**
+Agent divides 21 verses into 3 slices of 7 each without checking dialogue, chiasmus, or argument flow.
+- Fix: Apply slice integrity rules. Check for structural features before determining boundaries.
+
+**Bisecting chiasmus:**
+Agent slices Romans 8:1-17 at v.8, splitting the flesh/Spirit pivot.
+- Fix: Identify chiasmus centers and rhetorical pivots. Warn in "Do Not Slice Here" section.
+
+**Forcing short pericope division:**
+Agent divides Psalm 23 (6 verses) into 3 slices of 2 verses each.
+- Fix: Pericopes < 10 verses → return as single slice. Minimum viable slice = 3 verses.
+
+**Wrong slice count for method:**
+Agent accepts 3 slices for 67 verses when SOAP scope is 5-10 verses.
+- Fix: Calculate `ceil(67/8) ≈ 8-9 slices`. Push back with method-scope explanation.
+
+**Missing "Do Not Slice Here" section:**
+Agent produces slices without warning about problematic boundaries.
+- Fix: Every Reading Slices output includes "Do Not Slice Here" with specific verse ranges and reasons.
+
+**Missing "Adjustments Made" section:**
+Agent adjusts a boundary silently without documenting why.
+- Fix: Every adjustment documented. If none made, state "None — all boundaries fall at natural structural points."
+
 ## Reference Files
 
 For detailed data, consult:
@@ -758,3 +906,15 @@ Every invocation must result in:
 - [ ] **Web search performed before citing** - training knowledge alone is insufficient for thematic frameworks
 - [ ] **Graceful fallback when thematic unavailable** - note in output, structural options always available
 - [ ] Output saved to ~/.claude/bible-segmentation/
+
+**Slice mode (Rule 9) — additional criteria when verse range detected:**
+- [ ] Verse range input detected → slice mode activated (not segmentation)
+- [ ] "Reading Slices" output format used with Slice terminology
+- [ ] Slice count calculated from `total_verses ÷ method_target_verses`
+- [ ] Push back if user's slice count exceeds method scope (too few/many slices)
+- [ ] Short pericopes (< 10 verses) returned as single slice
+- [ ] Minimum viable slice = 3 verses enforced
+- [ ] Slice integrity rules applied (no mid-chiasmus, mid-dialogue, mid-conditional)
+- [ ] "Adjustments Made" section present (even if "None")
+- [ ] "Do Not Slice Here" section present with structural warnings
+- [ ] Markers column uses boundary-focused approach (same as segmentation)

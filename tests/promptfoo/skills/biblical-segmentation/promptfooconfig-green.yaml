@@ -12,6 +12,14 @@
 #   S29: Thematic option — vocabulary-grounded with MCP data
 #   ADV1: Expert authority — still presents options
 #   ADV2: Extreme compression — Isaiah in 3 sessions refused
+#
+# Reading Slice feature:
+#   SL1: Verse range input — slice-mode detection with Reading Slices format
+#   SL2: Chiasmus awareness — structural integrity warning at Romans 8:8
+#   SL3: Dialogue integrity — preserves exchange boundaries in John 3
+#   SL4: Short pericope — refuses 3-slice Psalm 23, recommends single unit
+#   SL5: Slice count — auto-calculation for Genesis 24 (67 verses)
+#   SL6: Method-aware — SOAP's 5-10 verse scope for Romans 12
 
 description: "Biblical Segmentation — GREEN phase (skill + MCP)"
 
@@ -213,3 +221,151 @@ tests:
           longer series).
           FAIL if the response produces a 3-session division covering
           all of Isaiah.
+
+  # =========================================================================
+  # READING SLICE FEATURE — GREEN TESTS
+  # With skill: agent detects verse-range input, produces "Reading Slices"
+  # output with structural integrity warnings and method-aware sizing.
+  # =========================================================================
+
+  # =========================================================================
+  # SL1: Verse Range Input — Slice-Mode Detection
+  # With skill: detects verse range, produces "Reading Slices" format
+  # =========================================================================
+  - description: "SL1 GREEN: Genesis 22:1-19 — slice-mode detection"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Divide Genesis 22:1-19 into 3 reading portions for SOAP devotional use."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses a dedicated "Reading Slices" output format
+          with slice-specific terminology (Slice 1, Slice 2, etc.) rather than
+          "Session" terminology. The output should include a Reading Slices
+          header and recognize this as a pericope-level slicing task.
+          FAIL if the response uses "Session" terminology throughout or treats
+          this as a mini-series segmentation task.
+      - type: llm-rubric
+        value: |
+          PASS if the response includes structural integrity analysis specific
+          to pericope-internal boundaries (e.g., dialogue structure, narrative
+          arc within the Aqedah pericope).
+          FAIL if divisions are purely mechanical (by verse count) with no
+          structural analysis of pericope-internal features.
+
+  # =========================================================================
+  # SL2: Chiasmus Awareness — Structural Integrity Warning
+  # With skill: identifies chiasmus center at 8:8, warns or adjusts
+  # =========================================================================
+  - description: "SL2 GREEN: Romans 8:1-17 — chiasmus awareness"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Create 3 reading slices from Romans 8:1-17 for a SOAP series. Each slice should be about 6 verses."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response identifies a structural concern around Romans 8:8
+          (chiasmus center, flesh/Spirit contrast pivot, or rhetorical structure)
+          AND either warns against slicing at that point OR adjusts slice
+          boundaries to preserve the structural integrity.
+          FAIL if the response proposes slices that bisect 8:8-9 without any
+          structural warning or adjustment.
+      - type: llm-rubric
+        value: |
+          PASS if the response includes a "Do Not Slice" section or equivalent
+          warning about specific verse boundaries that should not be divided.
+          FAIL if the response lacks any explicit warning about problematic
+          slice points within the pericope.
+
+  # =========================================================================
+  # SL3: Dialogue Integrity — Preserves Exchange Boundaries
+  # With skill: analyzes dialogue structure, preserves Q&A pairs
+  # =========================================================================
+  - description: "SL3 GREEN: John 3:1-21 — dialogue integrity"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Divide John 3:1-21 (Nicodemus) into 2 reading slices for SOAP study."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response explicitly analyzes dialogue exchange structure
+          (Nicodemus question / Jesus response pairs) as a factor in determining
+          slice boundaries, AND proposes slices that preserve question-answer
+          pairs within the same slice.
+          FAIL if slices are proposed without dialogue analysis or if a slice
+          boundary falls mid-exchange (between a question and its answer).
+      - type: llm-rubric
+        value: |
+          PASS if the response identifies specific dialogue boundaries and
+          explains WHY the chosen slice point respects the conversational flow
+          (e.g., "Slice boundary after v.12 preserves the earthly/heavenly
+          things exchange before transitioning to monologue").
+          FAIL if the slice boundary rationale ignores dialogue structure.
+
+  # =========================================================================
+  # SL4: Short Pericope — Refuses Forced Division
+  # With skill: refuses 3 slices for 6-verse psalm, recommends single unit
+  # =========================================================================
+  - description: "SL4 GREEN: Psalm 23 — short-pericope handling"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Divide Psalm 23 into 3 reading slices for SOAP devotional study."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response refuses or pushes back on dividing Psalm 23
+          into 3 slices, recommending instead to treat the entire psalm as a
+          single reading unit. The refusal should cite a minimum-viable-slice
+          principle or explain that 2-verse slices are not meaningful for SOAP
+          study.
+          FAIL if the response complies and produces 3 slices of 2 verses each
+          without pushing back.
+      - type: llm-rubric
+        value: |
+          PASS if the response offers a constructive alternative (e.g., read
+          the whole psalm as one SOAP session, or pair with another short psalm).
+          FAIL if the response only refuses without suggesting how to proceed.
+
+  # =========================================================================
+  # SL5: Slice Count — Auto-Calculation from Verse Count
+  # With skill: calculates ~7-8 slices for 67 verses at SOAP scale
+  # =========================================================================
+  - description: "SL5 GREEN: Genesis 24:1-67 — auto-calculation"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Create reading slices from Genesis 24 for SOAP study. I'm thinking 3 slices should cover it."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response pushes back on 3 slices for 67 verses and
+          recommends a higher count (6-9 slices) based on SOAP's target scope
+          of 5-10 verses per slice. The calculation should be explicit
+          (e.g., "67 verses ÷ 8-10 per slice ≈ 7-8 slices").
+          FAIL if the response complies with 3 slices producing 20+ verses
+          per slice without pushback on SOAP appropriateness.
+      - type: llm-rubric
+        value: |
+          PASS if the response explains the SOAP session-length constraint
+          (15-20 minutes, 5-10 verses) as the reason for recommending more
+          slices than requested.
+          FAIL if the recommendation for more slices is not grounded in
+          method-specific scope constraints.
+
+  # =========================================================================
+  # SL6: Method-Aware Slicing — SOAP Scope Calculation
+  # With skill: explicitly calculates slices based on SOAP's 5-10 verse range
+  # =========================================================================
+  - description: "SL6 GREEN: Romans 12:1-21 — method-aware slicing"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Create SOAP-appropriate reading slices from Romans 12:1-21. Target 15-20 minute sessions."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response explicitly mentions SOAP's characteristic
+          5-10 verse target range AND calculates slice count based on this
+          scope (21 verses ÷ 5-10 per slice ≈ 2-4 slices).
+          FAIL if slices are produced without referencing the method's
+          typical verse scope or session-length constraint.
+      - type: llm-rubric
+        value: |
+          PASS if the response explains why the 5-10 verse scope is
+          appropriate for 15-20 minute SOAP sessions (e.g., SOAP requires
+          time for Scripture reading, Observation, Application, Prayer
+          within each session).
+          FAIL if the verse scope is stated without connecting it to the
+          method's time requirements.
