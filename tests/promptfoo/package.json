@@ -1,0 +1,22 @@
+{
+  "name": "claude-of-alexandria-tests",
+  "version": "1.0.0",
+  "description": "Promptfoo skill evaluation tests for Claude of Alexandria",
+  "scripts": {
+    "eval": "CLAUDE_CODE_OAUTH_TOKEN=$(fish -c 'echo $CLAUDE_CODE_OAUTH_TOKEN') CLAUDE_CODE_USE_BEDROCK=bypass-validation promptfoo eval",
+    "eval:exegetical-notes": "npm run eval -- -c skills/exegetical-notes/promptfooconfig.yaml",
+    "eval:pericope-delimitation": "npm run eval -- -c skills/pericope-delimitation/promptfooconfig.yaml",
+    "eval:argument-flow": "npm run eval -- -c skills/argument-flow/promptfooconfig.yaml",
+    "eval:consult-biblical-scholar": "npm run eval -- -c skills/consult-biblical-scholar/promptfooconfig.yaml",
+    "eval:biblical-segmentation": "npm run eval -- -c skills/biblical-segmentation/promptfooconfig.yaml",
+    "eval:all": "npm run eval -- -c skills/*/promptfooconfig.yaml",
+    "view": "promptfoo view"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "promptfoo": "^0.120.25"
+  }
+}
