@@ -165,6 +165,7 @@ When thematic boundaries conflict with structural integrity:
 | SOAP | 5-10 | 15-20 min | S-O-A-P steps need time per verse |
 | Swedish | 10-20 | 25-30 min | Three-column analysis at moderate pace |
 | Devotional | 5-15 | 10-25 min | Reflective reading, flexible scope |
+| Inductive | Full pericope | 35-45 min | No slicing needed; use entire pericope as single unit |
 
 **Default calculation:** `ceil(total_verses / 8)` slices for SOAP-ish sizing.
 **Override:** User can request specific slice count.
@@ -190,7 +191,7 @@ Same principles as Rule 5, applied within-pericope:
 |-----------------|----------|
 | < 10 verses | Return as single slice; do not force division |
 | 10-40 verses | Normal slicing with integrity rules |
-| > 40 verses | Cap at 5-6 slices max; warn if user requests more |
+| > 40 verses | Auto-calculation applies; warn if result exceeds 6 slices (long reading plan) |
 
 **Minimum viable slice:** 3 verses. Slices under 3 verses are not meaningful for any method. If requested count would produce sub-3-verse slices, refuse and recommend fewer slices or single-unit reading.
 
@@ -211,7 +212,8 @@ digraph workflow {
   // Slice mode branch (Rule 9)
   "Verse range input?" -> "Check method context" [label="yes"];
   "Verse range input?" -> "Identify book" [label="no"];
-  "Check method context" -> "Check short pericope?";
+  "Check method context" -> "Consult discourse data for pericope";
+  "Consult discourse data for pericope" -> "Check short pericope?";
   "Check short pericope?" -> "Return single slice" [label="< 10 verses"];
   "Check short pericope?" -> "Calculate slice count" [label=">= 10 verses"];
   "Calculate slice count" -> "Apply slice integrity rules";
@@ -607,7 +609,7 @@ Each session row must include:
 - Small group: discussion accessibility
 - Devotional: daily reading feasibility
 
-**7. Data Sources** (REQUIRED at end of every output)
+**7. Data Sources** (REQUIRED at end of EVERY output — including refusals, curation mode, and pushbacks)
 
 **For OT books:**
 ```markdown
@@ -679,6 +681,9 @@ Each session row must include:
 3. Adjustments Made (even if "None — all boundaries fall at natural structural points")
 4. Do Not Slice Here (structural warnings for the pericope)
 5. Data Sources
+
+**CRITICAL: Data Sources in refusals and pushbacks.**
+Even when refusing (short pericope) or pushing back (wrong slice count), you MUST include a Data Sources section. You consulted MCP data before making the decision — acknowledge it. Refusal responses are still outputs.
 
 **Markers column in slice mode:** Same boundary-focused approach as segmentation. Lead with Masoretic/Levinsohn status at each slice's starting verse.
 

@@ -15,6 +15,7 @@
 #   SL3: Dialogue integrity — no mid-exchange warning
 #   SL4: Short pericope — no graceful handling
 #   SL5: Slice count — no auto-calculation
+#   SL6: Method-aware — no SOAP scope calculation
 
 description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
 
