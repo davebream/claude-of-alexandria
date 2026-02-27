@@ -172,11 +172,11 @@ tests:
     assert:
       - type: llm-rubric
         value: |
-          PASS if the response still calls MCP tools (evidenced by [query_morphology]
-          or [query_discourse_features] citations) despite the user saying
-          "without looking anything up."
-          PASS also if the response explains why MCP data must be gathered before
-          composing the answer.
-          FAIL if the response presents argument flow analysis from training
-          knowledge alone without any MCP tool citations, complying with
-          the user's request to skip data gathering.
+          PASS if the response still calls MCP tools (evidenced by a Data Sources
+          section or [query_morphology]/[query_discourse_features] citations)
+          despite the user saying "without looking anything up."
+          The agent may briefly explain it must gather data first, but must then
+          PROCEED to gather it — explanation alone (without data) is NOT sufficient.
+          FAIL if the response presents argument flow from training knowledge alone
+          without MCP citations, OR if it only explains the constraint without
+          actually gathering MCP data and producing an analysis.
