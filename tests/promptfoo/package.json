@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Promptfoo skill evaluation tests for Claude of Alexandria",
   "scripts": {
-    "eval": "CLAUDE_CODE_OAUTH_TOKEN=$(fish -c 'echo $CLAUDE_CODE_OAUTH_TOKEN') CLAUDE_CODE_USE_BEDROCK=bypass-validation CLAUDECODE= promptfoo eval",
+    "eval": "npx promptfoo eval",
     "eval:exegetical-notes:red": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml",
     "eval:exegetical-notes:green": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml",
     "eval:exegetical-notes": "npm run eval:exegetical-notes:red && npm run eval:exegetical-notes:green",
@@ -28,6 +28,9 @@
     "eval:study-evaluator:red": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml",
     "eval:study-evaluator:green": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-green.yaml",
     "eval:study-evaluator": "npm run eval:study-evaluator:red && npm run eval:study-evaluator:green",
+    "eval:calibration": "npm run eval -- --no-cache -c assertions/grader-calibration.yaml",
+    "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator",
+    "eval:all:single": "node scripts/merge-all-configs.js && npm run eval -- --no-cache -c promptfooconfig-all.yaml",
     "view": "promptfoo view"
   },
   "keywords": [],
@@ -35,6 +38,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "promptfoo": "^0.120.25"
+    "promptfoo": "^0.120.25",
+    "yaml": "^2.6.1"
   }
 }

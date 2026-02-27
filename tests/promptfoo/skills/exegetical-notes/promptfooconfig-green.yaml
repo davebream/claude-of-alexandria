@@ -40,6 +40,22 @@ defaultTest:
         - The passage is treated as a proof-text independent of its argument
         PASS if interpretation flows from the discourse unit, respects the pericope, and references
         the book's argumentative context.
+    # Theological guardrail: christ-centeredness
+    - type: llm-rubric
+      value: |
+        Evaluate whether the output traces the passage's place in the biblical storyline.
+        FAIL if the redemptive-historical arc is completely absent and the passage is
+        treated as isolated moral instruction with no gospel connection.
+        PASS if the passage is connected to the broader biblical narrative, even briefly.
+        For OT passages, a redemptive-historical note suffices.
+    # Theological guardrail: covenantal awareness
+    - type: llm-rubric
+      value: |
+        Evaluate whether the output respects covenantal distinctions.
+        FAIL if OT law is applied directly to Christians without attention to fulfillment
+        in Christ, or if no attention is given to progressive revelation between testaments.
+        PASS if the analysis attends to covenant context, or if this is an NT passage
+        where covenantal distinctions are less directly relevant.
 
 tests:
 
@@ -122,17 +138,24 @@ tests:
         value: "Tier 3"
       - type: icontains
         value: "Tier 4"
+      # Tier 1: linguistic grounding
       - type: llm-rubric
         value: |
-          Check the Interpretive Guardrails section (Section 6).
-          PASS if:
-          - Tier 1 contains a linguistic/morphological claim grounded in Greek grammar data
-          - Tier 3 contains a citation to a named scholarly commentary (author + title)
-          - Tier 4 is explicitly labeled as "Agent assessment" or similar
-          FAIL if:
-          - Tier 3 says "scholars agree" without naming a specific source
-          - Tier 4 presents agent opinion as established fact
-          - Any tier is simply listed without content
+          Check Section 6 (Interpretive Guardrails).
+          PASS if Tier 1 contains a linguistic/morphological claim grounded in Greek grammar data.
+          FAIL if Tier 1 is empty or contains non-linguistic content.
+      # Tier 3: named scholarly citation
+      - type: llm-rubric
+        value: |
+          Check Section 6 (Interpretive Guardrails).
+          PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
+          FAIL if Tier 3 says "scholars agree" without naming a specific source.
+      # Tier 4: labeled as agent assessment
+      - type: llm-rubric
+        value: |
+          Check Section 6 (Interpretive Guardrails).
+          PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
+          FAIL if Tier 4 presents agent opinion as established fact without labeling.
 
   # =========================================================================
   # Scenario 4: Pericope Check Trigger

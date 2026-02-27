@@ -13,7 +13,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -24,6 +24,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks:
           - Explicit MODE: ANALYZE header
           - CONFIDENCE tier stated prominently at the top
@@ -37,6 +39,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response:
           - Hedges ("it could be argued", "scholars disagree") without a clear verdict, OR
           - Lacks an explicit VERDICT line (SUPPORTED/COMPATIBLE/NOT SUPPORTED/INSUFFICIENT DATA), OR
@@ -48,13 +52,22 @@ tests:
     vars:
       prompt: "Analyze John 3:16"
     assert:
+      # Devotional language present (expected without agent)
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response contains devotional or applicational language:
           - "this verse reminds us", "we should", "God so loved us", pastoral framing
           - First-person plural applications
-          FAIL ONLY if the response is purely analytical with zero devotional content
-          AND includes explicit scholarly source attribution.
+          FAIL only if the response is purely analytical with zero devotional content.
+      # Scholarly attribution absent (expected without agent)
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if scholarly claims lack explicit tiered source attribution (A/B/C tiers).
+          FAIL only if the response includes explicit scholarly source attribution with tier labels.
 
   # S6: Source attribution — expect unsourced consensus claims
   - description: "S6 RED: Source attribution — vague citations without agent"
@@ -63,6 +76,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if scholarly claims use vague attribution:
           - "scholars agree", "many commentators", "it is widely held"
           - No source tier labels (A/B/C)

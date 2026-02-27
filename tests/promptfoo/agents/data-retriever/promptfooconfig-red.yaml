@@ -14,7 +14,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -25,6 +25,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks the structured output contract:
           - Missing PASSAGE/TESTAMENT header
           - Missing TOOL_RESULTS section listing all 7 tools with status labels
@@ -40,6 +42,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response:
           - Does NOT use explicit SKIPPED_OT labels for NT-only tools, OR
           - Does NOT pass testament: "ot" to morphology queries, OR
@@ -54,6 +58,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response:
           - Attempts to provide data for Tobit (fabrication), OR
           - Does not explicitly flag Tobit as unrecognized via a lookup table, OR
@@ -68,6 +74,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks structured compression:
           - No POS-grouped morphology summaries
           - No MORPHOLOGY_SUMMARY/DISCOURSE_SUMMARY/VOCABULARY_SUMMARY sections

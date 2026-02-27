@@ -40,14 +40,36 @@ tests:
         value: "DISCOURSE_SUMMARY:"
       - type: icontains
         value: "VOCABULARY_SUMMARY:"
+      # NT routing: morphology called
       - type: llm-rubric
         value: |
-          Check TOOL_RESULTS section. PASS if:
-          - query_morphology shows CALLED
-          - query_discourse_features shows CALLED (NT passage)
-          - query_paragraph_breaks shows SKIPPED_NT
-          - All 7 tools are listed with status labels
-          FAIL if any tool is missing from TOOL_RESULTS or routing is wrong.
+          Check TOOL_RESULTS section.
+          PASS if query_morphology shows CALLED status.
+          FAIL if query_morphology is missing or shows a status other than CALLED.
+      # NT routing: discourse features called
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_discourse_features shows CALLED (this is an NT passage).
+          FAIL if query_discourse_features is missing or not CALLED.
+      # NT routing: paragraph breaks skipped
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_paragraph_breaks shows SKIPPED_NT (paragraph breaks are OT-only).
+          FAIL if query_paragraph_breaks shows CALLED for this NT passage.
+      # All 7 tools listed (deterministic check)
+      - type: javascript
+        value: |
+          const tools = [
+            'query_morphology', 'query_discourse_features', 'query_paragraph_breaks',
+            'query_vocabulary', 'query_ot_quotes', 'query_lemmas', 'query_themes_for_lemmas'
+          ];
+          const lower = output.toLowerCase();
+          const missing = tools.filter(t => !lower.includes(t));
+          return missing.length === 0
+            ? { pass: true, reason: 'All 7 tools listed in TOOL_RESULTS' }
+            : { pass: false, reason: `Missing from TOOL_RESULTS: ${missing.join(', ')}` };
 
   # S2: OT full data — testament routing
   - description: "S2 GREEN: OT full data — correct OT routing"
@@ -58,13 +80,24 @@ tests:
         value: "TESTAMENT: OT"
       - type: icontains
         value: "PARAGRAPH_MARKERS:"
+      # OT routing: discourse features skipped
       - type: llm-rubric
         value: |
-          Check TOOL_RESULTS and routing. PASS if:
-          - query_discourse_features shows SKIPPED_OT
-          - query_paragraph_breaks shows CALLED
-          - query_ot_quotes shows SKIPPED_OT
-          FAIL if NT-only tools are called for OT passage.
+          Check TOOL_RESULTS section.
+          PASS if query_discourse_features shows SKIPPED_OT (discourse features are NT-only).
+          FAIL if query_discourse_features shows CALLED for this OT passage.
+      # OT routing: paragraph breaks called
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_paragraph_breaks shows CALLED (paragraph breaks are relevant for OT).
+          FAIL if query_paragraph_breaks is missing or shows SKIPPED.
+      # OT routing: OT quotes skipped
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_ot_quotes shows SKIPPED_OT (OT quotes tool is for NT passages citing OT).
+          FAIL if query_ot_quotes shows CALLED for this OT passage.
 
   # S3: Unrecognized book — error handling
   - description: "S3 GREEN: Unrecognized book — ERROR response"
@@ -86,13 +119,32 @@ tests:
     assert:
       - type: icontains
         value: "TOOL_RESULTS:"
+      # Requested tool called
       - type: llm-rubric
         value: |
-          Check TOOL_RESULTS. PASS if:
-          - query_morphology shows CALLED
-          - Other tools show SKIPPED (not SKIPPED_OT/SKIPPED_NT, just SKIPPED)
-          - All 7 tools still listed (none omitted)
-          FAIL if non-requested tools are CALLED or any tool is omitted.
+          Check TOOL_RESULTS section.
+          PASS if query_morphology shows CALLED.
+          FAIL if query_morphology is missing or not CALLED.
+      # Non-requested tools skipped
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if non-requested tools (query_discourse_features, query_vocabulary,
+          query_paragraph_breaks, query_ot_quotes, query_lemmas, query_themes_for_lemmas)
+          show SKIPPED (not SKIPPED_OT/SKIPPED_NT — plain SKIPPED because they were not requested).
+          FAIL if any non-requested tool shows CALLED.
+      # All 7 tools still listed (deterministic check)
+      - type: javascript
+        value: |
+          const tools = [
+            'query_morphology', 'query_discourse_features', 'query_paragraph_breaks',
+            'query_vocabulary', 'query_ot_quotes', 'query_lemmas', 'query_themes_for_lemmas'
+          ];
+          const lower = output.toLowerCase();
+          const missing = tools.filter(t => !lower.includes(t));
+          return missing.length === 0
+            ? { pass: true, reason: 'All 7 tools listed in TOOL_RESULTS' }
+            : { pass: false, reason: `Missing from TOOL_RESULTS: ${missing.join(', ')}` };
 
   # S5: Empty data handling
   - description: "S5 GREEN: Empty data — EMPTY_RETURNED label used"
@@ -101,13 +153,17 @@ tests:
     assert:
       - type: icontains
         value: "TOOL_RESULTS:"
+      # Tool was called
       - type: llm-rubric
         value: |
-          PASS if:
-          - query_ot_quotes shows CALLED in TOOL_RESULTS
-          - OT_QUOTES_SUMMARY shows EMPTY_RETURNED (not omitted or fabricated)
-          - All other sections still present
-          FAIL if the OT_QUOTES_SUMMARY section is missing or shows fabricated quotes.
+          Check TOOL_RESULTS section.
+          PASS if query_ot_quotes shows CALLED (the tool was invoked even though data is empty).
+          FAIL if query_ot_quotes is missing or shows SKIPPED.
+      # Empty result handled
+      - type: llm-rubric
+        value: |
+          PASS if OT_QUOTES_SUMMARY shows EMPTY_RETURNED (not omitted or fabricated).
+          FAIL if OT_QUOTES_SUMMARY is missing or shows fabricated quotes.
 
   # S6: Compression quality
   - description: "S6 GREEN: Compression — POS-grouped, not raw JSON"
@@ -133,13 +189,24 @@ tests:
         value: "TESTAMENT: OT"
       - type: icontains
         value: "PARAGRAPH_MARKERS:"
+      # OT routing: discourse features skipped
       - type: llm-rubric
         value: |
-          PASS if OT routing is correct:
-          - query_discourse_features: SKIPPED_OT
-          - query_ot_quotes: SKIPPED_OT
-          - query_paragraph_breaks: CALLED
-          FAIL if NT-only tools are called for this OT passage.
+          Check TOOL_RESULTS section.
+          PASS if query_discourse_features shows SKIPPED_OT.
+          FAIL if query_discourse_features shows CALLED for this OT passage.
+      # OT routing: OT quotes skipped
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_ot_quotes shows SKIPPED_OT.
+          FAIL if query_ot_quotes shows CALLED for this OT passage.
+      # OT routing: paragraph breaks called
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section.
+          PASS if query_paragraph_breaks shows CALLED.
+          FAIL if query_paragraph_breaks is missing or shows SKIPPED.
 
   # S9: Large passage — truncation handling
   - description: "S9 GREEN: Large passage — truncation reported"
@@ -150,10 +217,20 @@ tests:
         value: "TRUNCATION:"
       - type: icontains
         value: "TOOL_RESULTS:"
+      # Truncation reported
       - type: llm-rubric
         value: |
-          PASS if:
-          - TRUNCATION field is present (may show truncated tools or NONE)
-          - TOOL_RESULTS section is complete (all 7 tools listed)
-          - Compression is aggressive for this large passage
-          FAIL if TOOL_RESULTS is incomplete or TRUNCATION field is missing.
+          PASS if TRUNCATION field is present and reports which tools were truncated (or NONE).
+          FAIL if TRUNCATION field is missing.
+      # All tools listed despite size (deterministic check)
+      - type: javascript
+        value: |
+          const tools = [
+            'query_morphology', 'query_discourse_features', 'query_paragraph_breaks',
+            'query_vocabulary', 'query_ot_quotes', 'query_lemmas', 'query_themes_for_lemmas'
+          ];
+          const lower = output.toLowerCase();
+          const missing = tools.filter(t => !lower.includes(t));
+          return missing.length === 0
+            ? { pass: true, reason: 'All 7 tools listed in TOOL_RESULTS' }
+            : { pass: false, reason: `Missing from TOOL_RESULTS: ${missing.join(', ')}` };

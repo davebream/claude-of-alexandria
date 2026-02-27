@@ -42,12 +42,14 @@ tests:
     vars:
       prompt: "Use the pericope-delimitation skill for Philippians 1:3-8"
     assert:
-      # Verdict present
+      # Verdict keyword present (deterministic)
+      - type: icontains
+        value: "EXTEND"
+      # Verdict reasoning quality
       - type: llm-rubric
         value: |
-          PASS if the response includes an EXTEND verdict recommending extension
-          to at least Phil 1:3-11 (or 1:3-11).
-          FAIL if the verdict is VALID for 1:3-8 or if no verdict is given.
+          PASS if the EXTEND verdict recommends extension to at least Phil 1:3-11.
+          FAIL if the verdict is VALID for 1:3-8 or if no reasoning is given for extension.
       # Boundary labels
       - type: llm-rubric
         value: |
@@ -151,12 +153,17 @@ tests:
     vars:
       prompt: "Use the pericope-delimitation skill for John 3:16"
     assert:
+      # Verdict keyword present (deterministic)
+      - type: icontains
+        value: "EXTEND"
+      # Verdict reasoning quality
       - type: llm-rubric
         value: |
-          PASS if the response issues an EXTEND verdict, explaining that a single
-          verse cannot constitute a pericope in discourse terms. Must recommend
-          a minimum viable unit (e.g., John 3:1-21, or 3:14-21, or similar).
+          PASS if the EXTEND verdict explains that a single verse cannot constitute
+          a pericope in discourse terms, and recommends a minimum viable unit
+          (e.g., John 3:1-21, or 3:14-21, or similar).
           FAIL if the response validates John 3:16 as a standalone pericope.
+      # Discourse context provided
       - type: llm-rubric
         value: |
           PASS if the response cites discourse context showing John 3:16 is

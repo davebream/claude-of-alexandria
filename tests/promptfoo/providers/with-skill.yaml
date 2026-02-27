@@ -1,9 +1,9 @@
 # GREEN-phase provider: agent has skills + MCP access
 # Spike confirmed: bare tool names, bypassPermissions required, working_dir = repo root
-id: anthropic:claude-agent-sdk
+id: anthropic:claude-agent-sdk:glm-4.6
 label: with-skill
 config:
-  model: claude-sonnet-4-5-20250929
+  model: glm-4.6
   working_dir: ../../
   setting_sources:
     - project
@@ -11,14 +11,16 @@ config:
   allow_dangerously_skip_permissions: true
   append_system_prompt: |
     CRITICAL: When asked to perform a biblical analysis task, follow the relevant skill
-    instructions loaded from this project. Print ALL output inline in your response.
-    Do NOT save output to file — always print inline.
+    instructions loaded from this project.
+    OUTPUT RULE: Complete ALL tool calls and data gathering first. Then output the
+    ENTIRE analysis in your FINAL response — all sections in one message.
+    Never print partial output between tool calls. Never save to file.
   append_allowed_tools:
+    - Task
     - Skill
     - Read
     - Write
     - WebSearch
-    - list_books
     - query_discourse_features
     - query_paragraph_breaks
     - query_vocabulary
@@ -26,10 +28,7 @@ config:
     - query_ot_quotes
     - query_lemmas
     - query_themes_for_lemmas
-  max_turns: 40
-  max_budget_usd: 2.00
   mcp:
-    enabled: true
     servers:
       - name: claude-of-alexandria-mcp
         url: https://coa.davebream.com/mcp

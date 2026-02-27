@@ -5,3 +5,4 @@ output/
 !package-lock.json
 spike.yaml
 .promptfoo/
+promptfooconfig-all.yaml

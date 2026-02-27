@@ -72,14 +72,28 @@ tests:
         value: "MORALISM"
       - type: icontains
         value: "OVERALL:"
+      # Overall drift severity
       - type: llm-rubric
         value: |
-          PASS if:
-          - OVERALL is SIGNIFICANT_DRIFT or UNSOUND
-          - At least 2 of 3 points classified as DRIFT with type MORALISM
-          - Point 3 flagged for prosperity-gospel or reward-based framing
-          - Constructive corrections provided (ground in indicative, restore Christology)
-          FAIL if drift is missed or vaguely noted without classification.
+          PASS if OVERALL verdict is SIGNIFICANT_DRIFT or UNSOUND.
+          FAIL if OVERALL is SOUND or SOUND_WITH_DRIFT (this study has pervasive moralism).
+      # Per-point moralism classification
+      - type: llm-rubric
+        value: |
+          PASS if at least 2 of the 3 study points are classified as DRIFT with type MORALISM.
+          FAIL if drift is missed or classified as a different type.
+      # Point 3 prosperity-gospel detection
+      - type: llm-rubric
+        value: |
+          PASS if Point 3 ("The Reward of Obedience") is flagged for prosperity-gospel
+          or reward-based framing ("God will reward us when we are obedient").
+          FAIL if Point 3's reward framing is not identified as a specific problem.
+      # Constructive corrections provided
+      - type: llm-rubric
+        value: |
+          PASS if constructive corrections are provided (e.g., ground in indicative,
+          restore Christology, replace "try harder" with gospel motivation).
+          FAIL if the response only identifies drift without offering corrections.
 
   # S3: Decontextualized proof-texting
   - description: "S3 GREEN: Proof-texting — DECONTEXTUALIZATION detected"
@@ -120,15 +134,34 @@ tests:
         value: "FAITHFUL"
       - type: icontains
         value: "DRIFT"
+      # Input type detection
       - type: llm-rubric
         value: |
-          PASS if:
-          - INPUT TYPE is transcript
-          - Participant A marked FAITHFUL (correct Christology)
-          - Participant B flagged for EISEGESIS (kenosis ≠ divesting divine attributes)
-          - Participant C flagged for MORALISM
-          - OVERALL is SOUND_WITH_DRIFT
-          FAIL if all participants treated uniformly (all sound or all drift).
+          PASS if INPUT TYPE is identified as transcript (not outline or methodology).
+          FAIL if input type is misclassified.
+      # Participant A: correct Christology
+      - type: llm-rubric
+        value: |
+          PASS if Participant A's statement about morphē and Christ's pre-existence
+          is marked FAITHFUL (this is correct Christology).
+          FAIL if Participant A is falsely flagged as drift.
+      # Participant B: kenosis error
+      - type: llm-rubric
+        value: |
+          PASS if Participant B is flagged for EISEGESIS — the claim that Jesus "gave up
+          divine powers" and "couldn't do miracles on his own" is not what kenosis means.
+          FAIL if Participant B is marked FAITHFUL or if the error is not identified.
+      # Participant C: moralism
+      - type: llm-rubric
+        value: |
+          PASS if Participant C is flagged for MORALISM — "just try harder to put others
+          first" reduces the passage to moral effort.
+          FAIL if Participant C is marked FAITHFUL.
+      # Overall mixed verdict
+      - type: llm-rubric
+        value: |
+          PASS if OVERALL is SOUND_WITH_DRIFT (mixed quality — some faithful, some drift).
+          FAIL if all participants are treated uniformly (all sound or all drift).
 
   # S5: Methodology audit — structural vulnerability mapping
   - description: "S5 GREEN: Methodology audit — drift vulnerabilities mapped"

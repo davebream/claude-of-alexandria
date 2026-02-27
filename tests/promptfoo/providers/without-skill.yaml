@@ -1,15 +1,11 @@
 # RED-phase provider: bare model, no skills, no MCP, no biblical tools.
-# Uses /tmp as working_dir so Claude spawns correctly (no OPENAI fallback)
-# but finds no CLAUDE.md, no project plugins, no skill manifests.
+# Same model as GREEN so the only variable is skill + MCP on/off.
 # No setting_sources → no project context loaded.
 # No mcp → no biblical data tools.
-# No append_allowed_tools → only default bare tools (no Skill tool).
-id: anthropic:claude-agent-sdk
+# No append_allowed_tools → default bare tools only (no Skill tool).
+id: anthropic:claude-agent-sdk:glm-4.6
 label: without-skill
 config:
-  model: claude-sonnet-4-5-20250929
-  working_dir: /tmp
+  model: glm-4.6
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true
-  max_turns: 5
-  max_budget_usd: 1.00

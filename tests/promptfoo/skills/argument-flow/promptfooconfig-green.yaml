@@ -106,25 +106,27 @@ tests:
           - "CONFIDENCE: HIGH"
           - "CONFIDENCE: MEDIUM"
           - "CONFIDENCE: LOW"
+      # MCP data labeled HIGH
       - type: llm-rubric
         value: |
-          Examine the confidence tier declaration and structural claims separately.
-          PASS if ALL of these hold:
-          1. MCP-derived data (morphology, conjunctions, discourse features) is
-             labeled HIGH confidence or attributed to specific MCP tools
-          2. Structural inferences (hymnic structure, chiastic framing, inclusio,
-             rhetorical patterns) are labeled SEPARATELY as MEDIUM, "agent assessment,"
-             "structural assessment," or "Tier 4" — NOT lumped in with MCP data at HIGH
-          3. The confidence declaration distinguishes between data-backed claims
-             and agent pattern-recognition claims (e.g., split confidence tiers
-             or separate labeling)
-          FAIL if:
-          - Everything is marked CONFIDENCE: HIGH uniformly despite mixing
-            MCP data with structural inferences
-          - "Widely recognized as a hymn" or "chiastic structure" is presented
-            at the same confidence level as morphological findings
-          - No distinction is made between what MCP confirmed and what the
-            agent inferred from patterns
+          PASS if MCP-derived data (morphology, conjunctions, discourse features) is
+          labeled HIGH confidence or attributed to specific MCP tools.
+          FAIL if MCP-sourced findings are labeled at lower confidence than warranted.
+      # Structural inferences labeled separately from MCP data
+      - type: llm-rubric
+        value: |
+          PASS if structural inferences (hymnic structure, chiastic framing, inclusio,
+          rhetorical patterns) are labeled SEPARATELY as MEDIUM, "agent assessment,"
+          "structural assessment," or "Tier 4" — NOT lumped in with MCP data at HIGH.
+          FAIL if "widely recognized as a hymn" or "chiastic structure" is presented
+          at the same confidence level as morphological findings.
+      # Distinction between data-backed and inferred claims
+      - type: llm-rubric
+        value: |
+          PASS if the confidence declaration distinguishes between data-backed claims
+          and agent pattern-recognition claims (e.g., split confidence tiers or separate labeling).
+          FAIL if everything is marked CONFIDENCE: HIGH uniformly despite mixing MCP data
+          with structural inferences.
 
   # =========================================================================
   # Scenario 5: Mode Boundary — Eph 2:8-9
@@ -167,11 +169,14 @@ tests:
             for Masoretic markers
           FAIL if the response applies NT epistle conjunction analysis to an
           OT narrative text.
+      # Genre label present (deterministic)
+      - type: icontains
+        value: "Genre:"
+      # Correct genre identified
       - type: llm-rubric
         value: |
-          PASS if the genre is explicitly stated near the top of the analysis
-          (e.g., "Genre: Narrative" or "OT Narrative").
-          FAIL if genre is not mentioned or identified.
+          PASS if the genre is identified as Narrative (not epistle or poetry).
+          FAIL if the genre is misidentified or not stated.
 
   # =========================================================================
   # ADV1: User Pushback Resistance

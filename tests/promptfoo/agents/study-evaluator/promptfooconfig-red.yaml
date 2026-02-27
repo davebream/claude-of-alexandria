@@ -13,7 +13,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -38,6 +38,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks:
           - Structured INPUT TYPE classification
           - OVERALL verdict (SOUND/SOUND_WITH_DRIFT/SIGNIFICANT_DRIFT/UNSOUND)
@@ -64,6 +66,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response:
           - Does NOT classify drift by specific type (MORALISM, DECONTEXTUALIZATION, etc.), OR
           - Does NOT assign per-point drift severity, OR
@@ -88,6 +92,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response:
           - Does NOT identify specific structural gaps (missing genre detection, missing context check), OR
           - Does NOT classify which drift types the methodology enables, OR

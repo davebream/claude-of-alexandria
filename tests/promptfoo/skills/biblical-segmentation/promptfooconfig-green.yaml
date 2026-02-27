@@ -146,14 +146,20 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Divide Genesis 37-50 into 8 sessions for a teaching series."
     assert:
+      # At least 3 Masoretic markers cited (deterministic count)
+      - type: javascript
+        value: |
+          const markers = (output.match(/[פס]/g) || []).length;
+          return markers >= 3
+            ? { pass: true, reason: `${markers} Masoretic markers (פ/ס) found` }
+            : { pass: false, reason: `Only ${markers} Masoretic markers found; need 3+` };
+      # Markers validate session boundaries with verse references
       - type: llm-rubric
         value: |
-          PASS if session boundaries cite Masoretic paragraph markers
-          (petuchot פ or setumah ס) with specific verse references.
-          Markers should validate session STARTING verses (not just end markers).
-          At least 3 of the 8 session boundaries should have Masoretic marker
-          citations (the others may note absence transparently).
-          FAIL if no Masoretic markers (פ/ס) are cited at any session boundary.
+          PASS if Masoretic paragraph markers (פ or ס) are cited with specific
+          verse references at session STARTING boundaries (not just mentioned generically).
+          FAIL if markers appear without verse references or are not connected to
+          session boundary decisions.
       - type: llm-rubric
         value: |
           PASS if the response is transparent about missing markers:

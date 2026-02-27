@@ -20,7 +20,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -33,14 +33,22 @@ tests:
     vars:
       prompt: "What does 'epiteleo' mean in Philippians 1:6? How would I explain it to someone unfamiliar with Greek?"
     assert:
+      # Failure mode 1: No confidence tier declaration
+      - type: not-icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+          - "CONFIDENCE: CANNOT ANSWER"
+      # Failure mode 2: No MCP tool citation
       - type: llm-rubric
         value: |
-          PASS if the response lacks a formal confidence tier declaration
-          (CONFIDENCE: HIGH/MEDIUM/LOW/CANNOT ANSWER) at the top.
-          PASS also if there is no [query_morphology] or [query_vocabulary]
-          MCP tool citation in the answer.
-          FAIL only if the response begins with a confidence tier AND cites
-          specific MCP tool data for the morphological analysis.
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if there is no [query_morphology] or [query_vocabulary] MCP tool
+          citation in the answer.
+          FAIL only if the response cites specific MCP tool data
+          (e.g., [query_morphology], [query_vocabulary]) for the morphological analysis.
 
   # =========================================================================
   # Scenario 2: VALIDATE — Compatible analogy (2 Cor 12:7-10)
@@ -53,6 +61,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response does NOT render a formal verdict from the set:
           SUPPORTED / COMPATIBLE / NOT SUPPORTED / INSUFFICIENT DATA.
           PASS also if the response drifts into pastoral advice ("God uses our
@@ -68,15 +78,23 @@ tests:
     vars:
       prompt: "Can I say that Jesus 'couldn't help himself' — that his divine nature compelled him to empty himself in Philippians 2:5-11, so it wasn't really a choice?"
     assert:
+      # Failure mode 1: No formal verdict
+      - type: not-icontains-any
+        value:
+          - "NOT SUPPORTED"
+          - "SUPPORTED"
+          - "COMPATIBLE"
+          - "INSUFFICIENT DATA"
+      # Failure mode 2: No MCP morphological evidence
       - type: llm-rubric
         value: |
-          PASS if the response either:
-          - Lacks a formal NOT SUPPORTED verdict, OR
-          - Does not cite specific morphological evidence from MCP tools
-            (e.g., [query_morphology] for reflexive ἑαυτόν + active ἐκένωσεν), OR
-          - Relies on theological tradition rather than grammatical data
-          FAIL only if a formal NOT SUPPORTED verdict is rendered with explicit
-          MCP morphological citations (reflexive pronoun + active verb evidence).
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response does not cite specific morphological evidence from
+          MCP tools (e.g., no [query_morphology] citation for reflexive ἑαυτόν
+          or active ἐκένωσεν).
+          FAIL only if the response cites MCP morphological data with
+          [query_morphology] attribution for the reflexive pronoun and active verb.
 
   # =========================================================================
   # Scenario 5: Topic Mode — No passage anchor (Sabbath rest)
@@ -89,6 +107,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response does NOT include an explicit topic mode warning
           stating that no passage was provided and confidence is capped at MEDIUM.
           PASS also if the response presents a confident canonical development
@@ -107,6 +127,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response resolves the debate by picking a winner:
           - States one position is "correct" or "more accurate" definitively
           - Dismisses one position as outdated or incorrect

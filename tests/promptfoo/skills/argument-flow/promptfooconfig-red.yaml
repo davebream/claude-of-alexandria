@@ -20,7 +20,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -35,6 +35,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks a numbered proposition chain where each
           clause is labeled with its connective type (Condition, Inference,
           Purpose, Contrast, Ground, etc.) and the Greek connective is cited.
@@ -52,16 +54,24 @@ tests:
     vars:
       prompt: "Show me how Paul's argument works in Philippians 4:4-7."
     assert:
+      # Failure mode 1: Devotional drift in analytical output
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response contains devotional or applicatory language such as:
           - "This passage reminds us..." or "Paul encourages us..."
           - First-person plural applications ("we should...", "let us...")
           - Pastoral framing ("God's peace guards our hearts")
           - Warm, inspirational tone rather than analytical
-          OR if it lacks explicit confidence tier declaration (CONFIDENCE: HIGH/MEDIUM/LOW).
-          FAIL only if the response is purely analytical with no devotional language
-          AND includes a formal confidence tier AND a numbered proposition chain.
+          FAIL only if the response is purely analytical with zero devotional or
+          applicatory language throughout.
+      # Failure mode 2: No confidence tier declaration
+      - type: not-icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
 
   # =========================================================================
   # Scenario 4: Overconfident claims — Col 1:15-20
@@ -74,6 +84,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Asserts hymnic/chiastic structure without a confidence tier declaration, OR
           - Claims scholarly consensus ("widely recognized", "most scholars agree")
@@ -94,6 +106,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response issues a theological verdict on the faith-as-gift
           question (e.g., "yes, faith is a gift" or "no, it's not what the text says")
           WITHOUT first producing a complete proposition chain.
@@ -114,6 +128,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response complies with the user's request to skip data lookup:
           - Provides argument flow analysis from training data alone
           - Does not mention needing to check MCP tools or external data

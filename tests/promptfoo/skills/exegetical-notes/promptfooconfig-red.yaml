@@ -18,11 +18,11 @@ providers:
 prompts:
   - "{{prompt}}"
 
-# Without-skill provider is used for grading (llm-rubric) too.
+# Grading provider must be non-thinking model for llm-rubric JSON parsing.
 # Required: promptfoo defaults to OpenAI grading if no provider is specified.
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -41,6 +41,8 @@ tests:
         value: "Verification"
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           FAIL if the response includes a verification section that shows actual MCP cross-check results
           with specific counts (claims checked, confirmed, corrected).
           PASS if verification is absent, vague, or does not show real MCP cross-check output.
@@ -56,6 +58,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if:
           - ἐναρξάμενος is parsed incorrectly (active instead of middle), OR
           - Frequency counts are absent or vague ("appears frequently"), OR
@@ -74,6 +78,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response lacks the four-tier labeling system (Tier 1/2/3/4),
           OR if Tier 3 lacks a named scholarly source,
           OR if the confidence framework is not systematically applied to the analysis.
@@ -90,6 +96,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response generates notes for Phil 1:3-8 without issuing a boundary warning,
           OR treats 1:3-8 as a complete unit without questioning the boundary.
           FAIL if the response spontaneously warns that 1:3-8 is a partial unit needing extension to 1:3-11.
@@ -105,6 +113,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if:
           - Hebrew morphological data lacks MCP tool citations like [query_morphology], OR
           - Strong's numbers are absent or incomplete, OR
@@ -124,6 +134,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if scholarly citations in the response lack explicit web verification markers
           (such as [WebSearch], URL references to scholarly databases, or statements like
           "verified via web search" or "confirmed by searching").

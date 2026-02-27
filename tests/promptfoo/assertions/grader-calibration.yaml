@@ -1,0 +1,194 @@
+# Grader calibration tests.
+# Verifies the LLM grader scores known-good and known-bad outputs correctly.
+# Uses an echo provider to feed synthetic outputs through rubric grading.
+#
+# Run: npm run eval:calibration
+
+description: "Grader Calibration — known-output verification"
+
+providers:
+  - file://echo-provider.js
+
+prompts:
+  - "{{synthetic_output}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/grader.yaml
+
+tests:
+
+  # =========================================================================
+  # CAL-1: Morphology correctness — aorist MIDDLE vs ACTIVE
+  # =========================================================================
+  - description: "CAL-1a: Correct morphology (MIDDLE) should PASS"
+    vars:
+      synthetic_output: |
+        ## Lexical Analysis
+        ἐναρξάμενος (Phil 1:6): aorist MIDDLE participle from ἐνάρχομαι.
+        This is a middle-only verb (deponent); the middle voice indicates
+        the subject's self-involvement in the action of beginning.
+        [query_morphology] confirms: V-AMP-NSM (Aorist Middle Participle, Nominative Singular Masculine).
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if ἐναρξάμενος is parsed as aorist MIDDLE participle (or middle-only/deponent).
+          FAIL if it is parsed as aorist ACTIVE participle.
+
+  - description: "CAL-1b: Wrong morphology (ACTIVE) should FAIL"
+    vars:
+      synthetic_output: |
+        ## Lexical Analysis
+        ἐναρξάμενος (Phil 1:6): aorist ACTIVE participle from ἐνάρχομαι.
+        The active voice here indicates God as the direct agent who began
+        the good work. [query_morphology] data: V-AAP-NSM.
+    assert:
+      - type: not-llm-rubric
+        value: |
+          PASS if ἐναρξάμενος is parsed as aorist MIDDLE participle (or middle-only/deponent).
+          FAIL if it is parsed as aorist ACTIVE participle.
+
+  # =========================================================================
+  # CAL-2: Devotional language detection
+  # =========================================================================
+  - description: "CAL-2a: Devotional output should PASS devotional rubric"
+    vars:
+      synthetic_output: |
+        Philippians 4:4-7 reminds us that we can find true peace in God.
+        Paul encourages us to bring everything to God in prayer. When we
+        do this, God's peace — beyond human understanding — will guard
+        our hearts. Let us remember that rejoicing is not about our
+        circumstances but about our relationship with the Lord.
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response contains devotional or applicatory language such as:
+          - "This passage reminds us..." or "Paul encourages us..."
+          - First-person plural applications ("we should...", "let us...")
+          - Pastoral framing ("God's peace guards our hearts")
+          FAIL only if the response is purely analytical with zero devotional language.
+
+  - description: "CAL-2b: Analytical output should FAIL devotional rubric"
+    vars:
+      synthetic_output: |
+        Philippians 4:4-7 Structure:
+        P1 [v.4]: Imperative χαίρετε (present active) — iterative command
+        P2 [v.5a]: τὸ ἐπιεικὲς — quality clause, ground for P1
+        P3 [v.5b]: ὁ κύριος ἐγγύς — eschatological ground (Levinsohn PoD)
+        P4 [v.6]: μηδὲν μεριμνᾶτε — prohibition (present active imperative)
+        P5 [v.7]: καὶ ἡ εἰρήνη — result clause, φρουρήσει (future active indicative)
+        CONFIDENCE: HIGH (MCP-grounded morphology)
+    assert:
+      - type: not-llm-rubric
+        value: |
+          PASS if the response contains devotional or applicatory language such as:
+          - "This passage reminds us..." or "Paul encourages us..."
+          - First-person plural applications ("we should...", "let us...")
+          - Pastoral framing ("God's peace guards our hearts")
+          FAIL only if the response is purely analytical with zero devotional language.
+
+  # =========================================================================
+  # CAL-3: Tier labeling detection
+  # =========================================================================
+  - description: "CAL-3a: Output with all 4 tiers should PASS"
+    vars:
+      synthetic_output: |
+        ## Interpretive Guardrails
+        **Tier 1 (Linguistic):** ἐναρξάμενος is aorist middle participle — God's
+        initiating action is grammatically certain. [query_morphology]
+        **Tier 2 (Discourse):** PoD shift at 1:3 marks the thanksgiving unit.
+        [query_discourse_features]
+        **Tier 3 (Scholarly):** Fee (NICNT Philippians, 1995) identifies 1:3-11
+        as a unified thanksgiving prayer.
+        **Tier 4 (Agent Assessment):** The chiastic structure of 1:3-11 suggests
+        intentional literary framing, though this is pattern-recognition rather
+        than data-derived.
+    assert:
+      - type: icontains
+        value: "Tier 1"
+      - type: icontains
+        value: "Tier 2"
+      - type: icontains
+        value: "Tier 3"
+      - type: icontains
+        value: "Tier 4"
+      - type: llm-rubric
+        value: |
+          Check the Interpretive Guardrails section.
+          PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
+          FAIL if Tier 4 presents agent opinion as established fact without labeling.
+
+  - description: "CAL-3b: Output with unlabeled Tier 4 should FAIL"
+    vars:
+      synthetic_output: |
+        ## Interpretive Guardrails
+        **Tier 1 (Linguistic):** ἐναρξάμενος is aorist middle participle.
+        **Tier 2 (Discourse):** PoD shift at 1:3 marks the thanksgiving unit.
+        **Tier 3 (Scholarly):** Fee (NICNT) identifies 1:3-11 as unified thanksgiving.
+        **Tier 4:** The chiastic structure of 1:3-11 confirms intentional literary
+        framing that establishes Paul's rhetorical strategy for the letter.
+    assert:
+      - type: not-llm-rubric
+        value: |
+          Check the Interpretive Guardrails section.
+          PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
+          FAIL if Tier 4 presents agent opinion as established fact without labeling.
+
+  # =========================================================================
+  # CAL-4: MCP citation detection
+  # =========================================================================
+  - description: "CAL-4a: Output with MCP citation should PASS"
+    vars:
+      synthetic_output: |
+        The morphological analysis of ἁρπαγμός (Phil 2:6) reveals:
+        [query_morphology] data: N-ASM, accusative singular masculine noun
+        from ἁρπαγμός (Strong's G725). The -μός suffix indicates result
+        rather than process, which bears on the res rapta vs res rapienda debate.
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if morphological data is cited with [query_morphology] or similar MCP citation.
+          FAIL if morphological claims are made without tool citation.
+
+  - description: "CAL-4b: Output without MCP citation should FAIL"
+    vars:
+      synthetic_output: |
+        The word ἁρπαγμός (Phil 2:6) is a fascinating term. Most scholars
+        agree it relates to the concept of grasping or seizing. The accusative
+        form here suggests it functions as a predicate complement. The -μός
+        suffix typically indicates the result of an action in Hellenistic Greek.
+    assert:
+      - type: not-llm-rubric
+        value: |
+          PASS if morphological data is cited with [query_morphology] or similar MCP citation.
+          FAIL if morphological claims are made without tool citation.
+
+  # =========================================================================
+  # CAL-5: Scholarly source quality
+  # =========================================================================
+  - description: "CAL-5a: Named scholarly source should PASS"
+    vars:
+      synthetic_output: |
+        ## Interpretive Guardrails
+        **Tier 3 (Scholarly):** Douglas Moo (NICNT Romans, 1996) argues that
+        δικαιοσύνη θεοῦ in 3:21 refers to God's saving activity rather than
+        an attribute, following the Pauline usage established in 1:17.
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
+          FAIL if Tier 3 says "scholars agree" without naming a specific source.
+
+  - description: "CAL-5b: Vague attribution should FAIL"
+    vars:
+      synthetic_output: |
+        ## Interpretive Guardrails
+        **Tier 3 (Scholarly):** Most scholars agree that δικαιοσύνη θεοῦ
+        in Romans 3:21 refers to God's saving righteousness. This is the
+        consensus view in modern scholarship and is widely accepted across
+        confessional traditions.
+    assert:
+      - type: not-llm-rubric
+        value: |
+          PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
+          FAIL if Tier 3 says "scholars agree" without naming a specific source.

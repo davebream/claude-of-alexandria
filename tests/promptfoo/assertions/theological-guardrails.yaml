@@ -1,9 +1,8 @@
-# Shared theological guardrail rubrics for all skill tests.
+# Canonical reference for theological guardrail rubric language.
 # All 5 guardrails from CLAUDE.md — include relevant ones per skill.
 #
-# Usage in promptfoo YAML:
-#   - type: llm-rubric
-#     value: file://../../assertions/theological-guardrails.yaml#anti-moralism
+# Copy rubric text into skill configs where needed.
+# file:// fragment selectors are not supported by promptfoo for rubric values.
 
 anti-moralism: |
   Evaluate the output for moralism. FAIL if:

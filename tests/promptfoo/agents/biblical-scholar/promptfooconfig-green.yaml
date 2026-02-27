@@ -47,13 +47,21 @@ tests:
         value: "Scholarly Sources"
       - type: icontains
         value: "Limitations"
+      # Source tier labeling
       - type: llm-rubric
         value: |
-          PASS if:
-          - Scholarly sources are attributed with tiers (A/B/C)
-          - At least one named commentary or scholar is cited
-          - MCP data is referenced (morphology, discourse features)
+          PASS if scholarly sources are attributed with tiers (A/B/C or equivalent labels).
+          FAIL if sources are presented without tier classification.
+      # Named scholarly citation
+      - type: llm-rubric
+        value: |
+          PASS if at least one named commentary or scholar is cited (e.g., Fee, O'Brien, Hawthorne).
           FAIL if sources say "scholars agree" without naming anyone.
+      # MCP data referenced
+      - type: llm-rubric
+        value: |
+          PASS if MCP data is referenced in the analysis (morphology, discourse features, or vocabulary tool citations).
+          FAIL if no MCP tool data is cited anywhere in the response.
 
   # S2: VALIDATE mode — clear verdict
   - description: "S2 GREEN: VALIDATE mode — explicit verdict, no hedging"
@@ -136,11 +144,23 @@ tests:
     vars:
       prompt: "What does ἐπιτελέω (epiteleō) mean in Philippians 1:6?"
     assert:
+      # Tier attribution present
       - type: llm-rubric
         value: |
-          PASS if:
-          - Every scholarly claim has explicit tier attribution (Tier A/B/C or [A]/[B]/[C])
-          - At least one named author + work is cited
-          - MCP morphology data cited for ἐπιτελέω
-          - Output scales appropriately (brief, not full-length analysis)
+          PASS if scholarly claims have explicit tier attribution (Tier A/B/C or [A]/[B]/[C]).
+          FAIL if scholarly claims are presented without tier classification.
+      # Named source cited
+      - type: llm-rubric
+        value: |
+          PASS if at least one named author + work is cited for the scholarly analysis.
           FAIL if "scholars agree" appears without a specific named source.
+      # MCP morphology for target word
+      - type: llm-rubric
+        value: |
+          PASS if MCP morphology data is cited for ἐπιτελέω (the target word in the query).
+          FAIL if morphological claims are made without MCP tool attribution.
+      # Appropriate output scale
+      - type: llm-rubric
+        value: |
+          PASS if the output scales appropriately — a brief, focused answer rather than a full-length analysis.
+          FAIL if the response produces a full exegetical study when only a word meaning was asked.

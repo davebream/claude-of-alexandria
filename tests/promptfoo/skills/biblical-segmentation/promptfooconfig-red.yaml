@@ -27,7 +27,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/without-skill.yaml
+    provider: file://../../providers/grader.yaml
 
 tests:
 
@@ -42,6 +42,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Complies with the 4-session request and produces a division, OR
           - Refuses but does not cite specific reference data (book-exceptions.yaml,
@@ -62,6 +64,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response presents a single structural framework for Revelation
           without explicitly presenting BOTH linear AND recapitulation approaches
           as distinct options with separate session breakdowns.
@@ -81,6 +85,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Divides psalms mechanically (roughly 3 per week by number), OR
           - Groups psalms but does not explicitly reference curation mode,
@@ -103,6 +109,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response does not cite specific Masoretic paragraph markers
           (petuchot פ or setumah ס) with verse references for session boundaries.
           PASS also if the response uses only narrative analysis (scene changes,
@@ -128,6 +136,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Treats this as a "mini-series" with "sessions" rather than "slices", OR
           - Does not use a dedicated "Reading Slices" output format with slice-
@@ -150,6 +160,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Proposes a slice that bisects Romans 8:8-9 without explicit warning
             about chiasmus structure, OR
@@ -171,6 +183,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Proposes slices that cut mid-dialogue without warning (e.g.,
             slicing at v.10 between Jesus' question and explanation), OR
@@ -192,6 +206,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Complies with 3-slice request and produces absurdly short slices
             (1-2 verses each), OR
@@ -213,6 +229,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Complies with 3 slices, producing 20+ verses per slice (too long
             for SOAP's 15-20 min format), OR
@@ -235,6 +253,8 @@ tests:
     assert:
       - type: llm-rubric
         value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
           PASS if the response either:
           - Does not explicitly mention SOAP's 5-10 verse target range, OR
           - Does not adjust slice size based on session length constraint, OR
