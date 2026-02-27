@@ -8,6 +8,7 @@
 #   S2: VALIDATE mode — no formal verdict (COMPATIBLE), pastoral drift
 #   S3: VALIDATE contradicted — correct instinct but no formal verdict
 #   S5: Topic mode — no confidence ceiling, no topic mode warning
+#   S6: Contested question — bare model resolves debate definitively
 
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
 
@@ -94,3 +95,23 @@ tests:
           summary without epistemic qualification about being in topic mode.
           FAIL only if the response explicitly warns about topic mode,
           caps confidence at MEDIUM, and acknowledges limitations of no-passage queries.
+
+  # =========================================================================
+  # Scenario 6: Contested Question — monogenes (John 3:16)
+  # Without skill: bare model picks a winner in the debate
+  # GREEN phase found: even WITH skill, agent resolved "one and only" as correct
+  # =========================================================================
+  - description: "S6 RED: Contested question — bare model resolves debate"
+    vars:
+      prompt: "What does 'monogenes' mean in John 3:16? I've heard it means 'only begotten' but some say 'one and only.' Which is right?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response resolves the debate by picking a winner:
+          - States one position is "correct" or "more accurate" definitively
+          - Dismisses one position as outdated or incorrect
+          - Presents the answer at uniform confidence without distinguishing
+            morphological facts from semantic debate
+          FAIL only if the response presents BOTH positions with their evidence,
+          explicitly splits confidence between facts and debate, and refuses to
+          definitively resolve what scholars dispute.

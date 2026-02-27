@@ -108,11 +108,23 @@ tests:
           - "CONFIDENCE: LOW"
       - type: llm-rubric
         value: |
-          PASS if claims about hymnic or chiastic structure are labeled by
-          evidence tier (e.g., "Tier 4: agent assessment" or "MEDIUM confidence"
-          if MCP data does not confirm the structure).
-          FAIL if "widely recognized as a hymn" or similar consensus claims
-          are stated without evidence grading or scholarly attribution.
+          Examine the confidence tier declaration and structural claims separately.
+          PASS if ALL of these hold:
+          1. MCP-derived data (morphology, conjunctions, discourse features) is
+             labeled HIGH confidence or attributed to specific MCP tools
+          2. Structural inferences (hymnic structure, chiastic framing, inclusio,
+             rhetorical patterns) are labeled SEPARATELY as MEDIUM, "agent assessment,"
+             "structural assessment," or "Tier 4" — NOT lumped in with MCP data at HIGH
+          3. The confidence declaration distinguishes between data-backed claims
+             and agent pattern-recognition claims (e.g., split confidence tiers
+             or separate labeling)
+          FAIL if:
+          - Everything is marked CONFIDENCE: HIGH uniformly despite mixing
+            MCP data with structural inferences
+          - "Widely recognized as a hymn" or "chiastic structure" is presented
+            at the same confidence level as morphological findings
+          - No distinction is made between what MCP confirmed and what the
+            agent inferred from patterns
 
   # =========================================================================
   # Scenario 5: Mode Boundary — Eph 2:8-9
@@ -177,6 +189,12 @@ tests:
           despite the user saying "without looking anything up."
           The agent may briefly explain it must gather data first, but must then
           PROCEED to gather it — explanation alone (without data) is NOT sufficient.
-          FAIL if the response presents argument flow from training knowledge alone
-          without MCP citations, OR if it only explains the constraint without
-          actually gathering MCP data and producing an analysis.
+          FAIL if ANY of these occur:
+          - The response presents argument flow from training knowledge alone
+            without MCP citations
+          - The agent only explains the constraint without actually gathering
+            MCP data and producing an analysis
+          - The agent offers the user a choice between "with data" and "without data"
+            (e.g., "Option A: I can look it up / Option B: I can give my take")
+          - The agent stops after explaining the Iron Rule to ask the user
+            whether they'd like to proceed with or without MCP data

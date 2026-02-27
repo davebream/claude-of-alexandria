@@ -184,8 +184,12 @@ tests:
           PASS if the response presents BOTH scholarly positions on μονογενής
           (only-begotten vs unique/one-of-a-kind) without definitively resolving
           the debate. Both sides should be presented with their evidence.
-          FAIL if only one position is presented or if the debate is
-          definitively resolved ("the correct answer is...").
+          FAIL if ANY of these occur:
+          - Only one position is presented
+          - The debate is definitively resolved ("the correct answer is...",
+            "the word does NOT mean X", "X is linguistically accurate")
+          - One position is endorsed as correct while the other is dismissed
+          - The response picks a winner rather than presenting the scholarly landscape
       - type: llm-rubric
         value: |
           PASS if confidence is split between morphological data (which can be HIGH)

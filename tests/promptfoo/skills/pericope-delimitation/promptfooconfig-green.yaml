@@ -174,8 +174,12 @@ tests:
     assert:
       - type: llm-rubric
         value: |
-          PASS if the response issues an EXTEND or ADJUST verdict, NOT validating
-          1:16-17 as a standalone pericope just because it's "the thesis/propositio."
+          PASS if the response issues an EXTEND or ADJUST verdict (either is
+          data-sound for this passage), NOT validating 1:16-17 as a standalone
+          pericope just because it's "the thesis/propositio."
+          - EXTEND: recommends a wider unit (e.g., 1:1-17, 1:8-17, 1:16-32)
+          - ADJUST: recommends different boundaries (e.g., 1:16-18, 1:14-17)
+          Both are acceptable as long as the verdict is data-driven.
           The response should note that 1:16-17 is embedded in a larger unit.
           FAIL if the response validates 1:16-17 as a standalone unit based
           on its theological fame as the "thesis statement."
