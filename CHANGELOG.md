@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-02-27
+
+### Added
+
+- New `query_theme` MCP tool: cross-book distribution of a thematic keyword group across the entire NT or OT — shows every book where the theme appears, per-lemma chapter breakdowns, and totals sorted by density
+
 ## [1.10.0] - 2026-02-27
 
 ### Added

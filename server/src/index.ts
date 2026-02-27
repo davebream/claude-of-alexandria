@@ -214,7 +214,7 @@ async function cachedToolCall(
 // per request is cheap (constructor only sets up handler maps, no I/O).
 function createServer(): McpServer {
   const server = new McpServer(
-    { name: 'claude-of-alexandria-mcp', version: '1.9.4' },
+    { name: 'claude-of-alexandria-mcp', version: '1.11.0' },
     { capabilities: { tools: {} } }
   );
 
