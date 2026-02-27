@@ -11,3 +11,4 @@ routes = [
 binding = "DB"
 database_name = "claude-of-alexandria"
 database_id = "b78d74b2-3d31-4cf0-ad4c-743d298e2e6e"
+migrations_dir = "migrations"
