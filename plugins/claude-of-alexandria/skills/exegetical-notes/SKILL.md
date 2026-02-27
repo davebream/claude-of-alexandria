@@ -18,23 +18,29 @@ Training knowledge supplements but never substitutes for data.
 
 ## Iron Rules
 
-### Rule 1: Run Pericope Check First
+### Rule 1: Run Pericope Check First — Warning BEFORE Notes
 
 Before generating notes, run a lightweight boundary check:
 
 1. Identify passage boundaries
 2. Check Levinsohn (NT) or Masoretic (OT) for boundary confirmation
-3. **If boundaries are problematic:** Warn the user and recommend adjustment
-4. **If user confirms problematic passage:** Proceed with note in Section 1
+3. **If boundaries are problematic:** Print the warning BEFORE the notes header. The warning is a standalone block that appears BEFORE `# Exegetical Notes:`. Do not embed it inside Section 1. Do not skip it.
+4. **If user confirms problematic passage:** Proceed with note in Pericope Status
 
-**Warning format:**
+**Warning format (print this BEFORE the notes):**
 ```
 ⚠️ Boundary check: [Book] [Range] may be a partial unit.
 [Specific issue with discourse evidence]
 Recommended passage: [better range]
 
-Continue with [original range]? (notes will flag this in Section 1)
+Proceeding with [original range] — boundary issue noted in Pericope Status.
 ```
+
+**Correct output order for problematic boundaries:**
+1. First: ⚠️ Boundary check warning (standalone)
+2. Then: `# Exegetical Notes: [Book] [Range]` header and all 10 sections
+
+**Wrong:** Embedding the boundary warning inside Section 1 without a standalone warning first.
 
 ### Rule 2: Lexical Analysis Uses query_morphology MCP Tool
 
@@ -118,52 +124,50 @@ Output the complete notes inline in your response. Do not save to file. Do not s
 ## Workflow
 
 ```
-1. Parse invocation
-   → book, range, optional --context
+Step 1: Parse invocation → book, range, --output, --context
 
-2. Run pericope check (lightweight boundary assessment)
-   → If problematic: warn user, await confirmation
-   → If valid or confirmed: proceed
+Step 2: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
+   │
+   ├─ Call query_discourse_features for the book
+   ├─ Check if range aligns with discourse boundaries
+   │
+   ├─ Boundaries OK? → Proceed to Step 3
+   │
+   └─ Boundaries PROBLEMATIC?
+      │
+      ├─ STOP. Print the ⚠️ warning BEFORE anything else.
+      │  Format: "⚠️ Boundary check: [Book] [Range] may be a partial unit..."
+      │  This warning must appear BEFORE the "# Exegetical Notes" header.
+      │  Do NOT embed it in Section 1. Print it FIRST, separately.
+      │
+      └─ Then proceed to Step 3 (with boundary issue noted in Pericope Status)
 
-3. Gather data
-   NT: query_morphology MCP tool for lexical data
-       query_discourse_features MCP tool for discourse features
-       query_vocabulary MCP tool for lemma frequencies
-       semantic_groups.yaml for thematic connections
-   OT: query_morphology MCP tool (testament: ot) for Hebrew morphology
-       query_paragraph_breaks MCP tool for Masoretic markers
-       query_vocabulary MCP tool (testament: ot) for frequencies
+Step 3: Gather data via MCP tools
+   NT: query_morphology, query_discourse_features, query_vocabulary
+   OT: query_morphology (testament: ot), query_paragraph_breaks, query_vocabulary (testament: ot)
+   Epistles: also query_morphology with pos_filter: "conjunction"
 
-   Epistle-specific:
-       query_morphology with pos_filter: "conjunction" for full passage range
-       Map logical connectives to discourse function:
-       | Connective | Greek | Function |
-       |------------|-------|----------|
-       | γάρ        | gar   | Grounds/reason ("for") |
-       | οὖν        | oun   | Inference ("therefore") |
-       | δέ         | de    | Contrast or continuation ("but/and") |
-       | ἀλλά       | alla  | Strong contrast ("but rather") |
-       | ἵνα        | hina  | Purpose ("in order that") |
-       | ὥστε       | hōste | Result ("so that") |
-       | εἰ         | ei    | Condition ("if") |
-       | διότι      | dioti | Causal ("because") |
-       | ὅτι        | hoti  | Content/causal ("that/because") |
-       Use in Section 2 (Internal Structure) to map argument's logical flow
+   Logical connectives for Section 2 (epistles):
+   γάρ=grounds, οὖν=inference, δέ=contrast/continuation, ἀλλά=strong contrast,
+   ἵνα=purpose, ὥστε=result, εἰ=condition, διότι/ὅτι=causal
 
-4. Web search (for Tier 3)
-   → Search for scholarly commentary on passage
-   → Evaluate source quality (Tier A/B/C/D)
-   → Note source, author, publication
+Step 4: Web search for Tier 3 scholarly sources
+   → Prefer Tier A/B (NICNT, NIGTC, ICC, WBC, BECNT, Hermeneia, BDAG)
+   → Note author, title, publisher
 
-5. Generate all 10 sections (use exact section titles from template — Rule 6)
+Step 5: Generate ALL 10 sections using EXACT template titles (Rule 6)
+   Every section is mandatory. Never skip, rename, or merge sections.
 
-6. Cross-check data claims against MCP tool output
+Step 6: Cross-check data claims against MCP tool output
 
-7. Fix any mismatches
+Step 7: Fix any mismatches found in cross-check
 
-8. Deliver output (Rule 7)
-   → file mode (default): save to path, report path to user
-   → print mode (`--output print`): output ALL 10 sections inline, no file save
+Step 8: DELIVER OUTPUT
+   │
+   ├─ --output print? → Print ALL 10 sections inline. Do NOT save to file.
+   │                     Do NOT summarize. The full document goes in the response.
+   │
+   └─ --output file (or default)? → Save to file path. Report path to user.
 ```
 
 ---
