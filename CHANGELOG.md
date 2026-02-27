@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-02-27
+
+### Added
+
+- `data-retriever` sub-agent (Haiku) — fetches MCP biblical data and compresses into structured summaries with testament-aware routing
+- `biblical-scholar` sub-agent (Sonnet) — scholarly analysis with three auto-detected modes (ANALYZE, VALIDATE, TRACE), confidence tiers, and source attribution
+- `study-evaluator` sub-agent (Sonnet) — evaluates bible study outlines, transcripts, and methodology files against exegetical standards with drift classification
+- Inter-agent delegation chain: study-evaluator → biblical-scholar → data-retriever
+- Agents directory (`plugins/claude-of-alexandria/agents/`) for auto-discovered sub-agents
+
 ## [1.11.0] - 2026-02-27
 
 ### Added
