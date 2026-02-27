@@ -122,7 +122,8 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 **✅ Commit to Git:**
 
 - All files in `plugins/claude-of-alexandria/skills/` directory
-- Exactly 3 test files per skill in `tests/skills/{skill-name}/`
+- All files in `plugins/claude-of-alexandria/agents/` directory
+- Promptfoo test configs in `tests/promptfoo/skills/` and `tests/promptfoo/agents/`
 - All files in `docs/` directory
 - `README.md` and `CLAUDE.md`
 
@@ -149,24 +150,48 @@ claude-of-alexandria/
 │   └── claude-of-alexandria/     # The plugin
 │       ├── .claude-plugin/
 │       │   └── manifest.json     # Plugin manifest (skills array)
+│       ├── agents/               # Sub-agent collection
+│       │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
 │       ├── skills/               # The skill collection
 │       │   └── skill-name/
 │       │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)
 │       │       └── README.md     # Development notes and context
 │       ├── CLAUDE.md             # Plugin-level copy
 │       └── README.md             # Plugin documentation
-├── tests/                        # All test evidence (root level)
-│   └── skills/
-│       └── skill-name/
-│           ├── scenarios.md      # Pressure test cases
-│           ├── baseline.md       # RED phase evidence
-│           └── verification.md   # GREEN phase proof
+├── tests/
+│   ├── promptfoo/                # Automated agent & skill testing
+│   │   ├── providers/            # Agent SDK configs (with/without skill)
+│   │   ├── assertions/           # Shared helpers and rubrics
+│   │   ├── skills/               # Per-skill RED/GREEN configs
+│   │   │   └── skill-name/
+│   │   │       ├── promptfooconfig-red.yaml
+│   │   │       └── promptfooconfig-green.yaml
+│   │   ├── agents/               # Per-agent RED/GREEN configs
+│   │   │   └── agent-name/
+│   │   │       ├── promptfooconfig-red.yaml
+│   │   │       └── promptfooconfig-green.yaml
+│   │   ├── eval.sh               # Auth wrapper for local runs
+│   │   └── package.json
+│   └── skills/                   # ARCHIVED — legacy markdown tests
 ├── docs/                         # Plans, reviews, roadmaps
 ├── CLAUDE.md                     # You are here
 └── README.md                     # Public documentation
 ```
 
 Every file has a place. Every place has a file. If you find yourself creating a file that does not fit this structure, you are likely doing something wrong.
+
+---
+
+## Where to Put Things
+
+| Artifact | Location |
+| --- | --- |
+| Implementation plans | `docs/plans/YYYY-MM-DD-descriptive-name.md` |
+| Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` |
+| Skills | `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` |
+| Agents | `plugins/claude-of-alexandria/agents/agent-name.md` |
+| Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |
+| Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |
 
 ---
 

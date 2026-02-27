@@ -1,13 +1,10 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-of-alexandria",
+  "description": "AI agent skills for rigorous biblical study built on faithful exegetical principles",
   "owner": {
     "name": "@davebream",
     "email": "dawid.leszczynski@hey.com"
-  },
-  "metadata": {
-    "description": "AI agent skills for rigorous biblical study built on faithful exegetical principles",
-    "version": "1.11.0",
-    "pluginRoot": "./plugins"
   },
   "plugins": [
     {

@@ -70,6 +70,7 @@ import { getAllBooks } from '../db/books.js';
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const MAX_LEMMAS = 50;
+const D1_PARAM_LIMIT = 100;
 const CHARACTER_LIMIT = 25_000;
 
 // ─── Testament detection ──────────────────────────────────────────────────────
@@ -99,7 +100,7 @@ function getDisplayMap(): Record<string, string> {
 // ─── Input / Output schemas ───────────────────────────────────────────────────
 
 export const LemmasInputSchema = {
-  lemmas: z.array(z.string()).describe(
+  lemmas: z.array(z.string()).min(1).max(50).describe(
     'Lemma IDs to look up. OT: Strong\'s numbers (e.g. "H7462b"). NT: Greek lexical forms (e.g. "πατήρ"). 1–50 items. Mixed OK.'
   ),
 };
@@ -164,6 +165,11 @@ async function queryForTestament(
   testament: 'ot' | 'nt'
 ): Promise<LemmaResult[]> {
   if (lemmas.length === 0) return [];
+
+  // Defensive guard: 1 (testament) + N (lemmas) must fit D1's bind param limit
+  if (1 + lemmas.length > D1_PARAM_LIMIT) {
+    throw new Error(`D1 parameter limit exceeded: ${1 + lemmas.length} > ${D1_PARAM_LIMIT}`);
+  }
 
   const displayMap = getDisplayMap();
   const placeholders = lemmas.map(() => '?').join(', ');
@@ -263,15 +269,24 @@ export async function queryLemmas(args: LemmasInput): Promise<CallToolResult> {
     total_found: allResults.length,
   };
 
-  // Truncation: remove least-distributed lemmas until under character limit
+  // Truncation: binary search for largest subset that fits under character limit.
+  // Keeps the most-distributed lemmas (highest books_count).
   let serialized = JSON.stringify(result);
   if (serialized.length > CHARACTER_LIMIT && allResults.length > 1) {
-    // Sort by books_count ascending so we trim the least-distributed first
-    const sorted = [...allResults].sort((a, b) => a.books_count - b.books_count);
-    let truncatedList = sorted;
-    while (JSON.stringify({ ...result, lemmas: truncatedList }).length > CHARACTER_LIMIT && truncatedList.length > 1) {
-      truncatedList = truncatedList.slice(1); // remove least-distributed
+    // Sort by books_count descending so index 0 = most-distributed
+    const sorted = [...allResults].sort((a, b) => b.books_count - a.books_count);
+    let lo = 1, hi = sorted.length;
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      const candidate = sorted.slice(0, mid);
+      const probe = JSON.stringify({ ...result, lemmas: candidate });
+      if (probe.length <= CHARACTER_LIMIT) {
+        lo = mid;
+      } else {
+        hi = mid - 1;
+      }
     }
+    const truncatedList = sorted.slice(0, lo);
     result = {
       lemmas: truncatedList,
       not_found: notFound,
@@ -308,13 +323,11 @@ git commit -m "feat(lemmas): implement queryLemmas handler with cross-book distr
 ## Task 4: Register `query_lemmas` in the MCP server
 
 **Files:**
-- Modify: `server/src/index.ts:10` (add import)
-- Modify: `server/src/index.ts:106` (add DESC_LEMMAS after DESC_MORPHOLOGY)
-- Modify: `server/src/index.ts:253` (add registerTool before `return server`)
+- Modify: `server/src/index.ts` (import, description constant, registerTool)
 
 **Step 1: Add import**
 
-After line 10 (`import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tools/ot-quotes.js';`), add:
+After the last import (the `themes.js` import), add:
 
 ```typescript
 import { queryLemmas, LemmasInputSchema, LemmasOutputSchema } from './tools/lemmas.js';
@@ -322,7 +335,7 @@ import { queryLemmas, LemmasInputSchema, LemmasOutputSchema } from './tools/lemm
 
 **Step 2: Add DESC_LEMMAS constant**
 
-After `DESC_MORPHOLOGY` (after line 106), add:
+After `DESC_THEMES` (the last description constant, before the CORS section), add:
 
 ```typescript
 const DESC_LEMMAS = `Query cross-book distribution of specific lemma IDs across the biblical canon.
@@ -346,7 +359,7 @@ Examples:
 
 **Step 3: Register the tool**
 
-Before `return server;` (line 255), add — note the cache key normalization (sort lemmas array):
+Before `return server;`, add — note the dedup+sort normalization matching the `query_themes_for_lemmas` pattern:
 
 ```typescript
   server.registerTool('query_lemmas', {
@@ -361,9 +374,15 @@ Before `return server;` (line 255), add — note the cache key normalization (so
       openWorldHint: false,
     },
   }, async (args, _extra) => {
-    // Normalize lemmas order for cache key stability
-    const normalizedArgs = { ...args, lemmas: [...(args.lemmas as string[])].sort() };
-    return cachedToolCall('query_lemmas', normalizedArgs as unknown as Record<string, unknown>, () => queryLemmas(args));
+    // Normalize lemmas: dedup + sort for cache key stability.
+    // stableStringify sorts object keys but preserves array order — dedup+sort here is required.
+    const normalizedLemmas = [...new Set(args.lemmas as string[])].sort();
+    const normalizedArgs = { ...args, lemmas: normalizedLemmas };
+    return cachedToolCall(
+      'query_lemmas',
+      normalizedArgs as unknown as Record<string, unknown>,
+      () => queryLemmas(normalizedArgs as unknown as LemmasInput)
+    );
   });
 ```
 
@@ -385,11 +404,11 @@ git commit -m "feat(server): register query_lemmas tool with description and cac
 ## Task 5: Update `list_books` available tools
 
 **Files:**
-- Modify: `server/src/tools/list-books.ts:28-34` (AVAILABLE_TOOLS array)
+- Modify: `server/src/tools/list-books.ts` (AVAILABLE_TOOLS array)
 
 **Step 1: Add query_lemmas to the array**
 
-Replace the `AVAILABLE_TOOLS` constant (lines 28-34) with:
+Add the `query_lemmas` entry after `query_vocabulary` in the `AVAILABLE_TOOLS` array:
 
 ```typescript
 const AVAILABLE_TOOLS = [
@@ -399,6 +418,7 @@ const AVAILABLE_TOOLS = [
   'query_discourse_features — Levinsohn discourse markers (NT only)',
   'query_paragraph_breaks — Masoretic petuchah/setumah markers (OT only)',
   'query_ot_quotes — OT quotations in NT passages (NT only)',
+  'query_themes_for_lemmas — resolve lemmas to vocabulary themes (OT + NT)',
 ] as const;
 ```
 
@@ -471,9 +491,9 @@ Expected: `lemmas` array with H430 data, `not_found: ["H99999"]`.
 
 ---
 
-## Task 7: Deploy and create production index
+## Task 7: Deploy, update docs, and release
 
-**Files:** None (deployment only)
+**Files:** `README.md`, `plugins/claude-of-alexandria/README.md`, `server/src/index.ts`, `server/package.json`, `.claude-plugin/marketplace.json`, `CHANGELOG.md`
 
 **Step 1: Deploy to Cloudflare**
 
@@ -495,15 +515,25 @@ Expected: Index created successfully.
 
 Use Claude Code or Claude Desktop to call `query_lemmas` with a known OT lemma (e.g., `H430` for Elohim). Verify the response includes cross-book distribution.
 
-**Step 4: Commit version bump**
+**Step 4: Update READMEs**
 
-Update `server/src/index.ts` version string from `'1.7.0'` to `'1.8.0'` in the `McpServer` constructor (line 161) and also in the health check responses (lines 282, 287). Also update `package.json` version.
+Add `query_lemmas` to the MCP tool tables in both READMEs:
 
-Then update `CHANGELOG.md` and `.claude-plugin/marketplace.json` with the new version.
+- `README.md` — add row `| \`query_lemmas\` | Cross-book lemma distribution | Both testaments |` to the tool table (after `query_themes_for_lemmas`)
+- `plugins/claude-of-alexandria/README.md` — add row `| \`query_lemmas\` | Cross-book lemma distribution | Both |` to the tool table (after `query_themes_for_lemmas`), and update the tool count in the paragraph above the table ("seven tools" → "eight tools")
+
+**Step 5: Commit version bump**
+
+Update all version references from `'1.8.0'` to `'1.9.0'` (1.8.0 was taken by `query_themes_for_lemmas`):
+
+- Update `server/src/index.ts` — McpServer constructor version and both health check version strings
+- Update `server/package.json` version from `'1.7.0'` to `'1.9.0'`
+- Update `.claude-plugin/marketplace.json` — both `metadata.version` and `plugins[0].version` from `'1.8.0'` to `'1.9.0'`
+- Update `CHANGELOG.md` — add a `## [1.9.0]` section above `[1.8.0]`
 
 ```bash
 git add -A
-git commit -m "chore(release): bump version to 1.8.0"
+git commit -m "chore(release): bump version to 1.9.0"
 ```
 
 ---

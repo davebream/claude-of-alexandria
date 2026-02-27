@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Promptfoo skill evaluation tests for Claude of Alexandria",
   "scripts": {
-    "eval": "CLAUDE_CODE_OAUTH_TOKEN=$(fish -c 'echo $CLAUDE_CODE_OAUTH_TOKEN') CLAUDE_CODE_USE_BEDROCK=bypass-validation promptfoo eval",
+    "eval": "CLAUDE_CODE_OAUTH_TOKEN=$(fish -c 'echo $CLAUDE_CODE_OAUTH_TOKEN') CLAUDE_CODE_USE_BEDROCK=bypass-validation CLAUDECODE= promptfoo eval",
     "eval:exegetical-notes:red": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml",
     "eval:exegetical-notes:green": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml",
     "eval:exegetical-notes": "npm run eval:exegetical-notes:red && npm run eval:exegetical-notes:green",
