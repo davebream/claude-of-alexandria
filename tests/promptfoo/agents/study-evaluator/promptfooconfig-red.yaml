@@ -1,0 +1,96 @@
+# Promptfoo RED-phase tests for study-evaluator agent.
+# Bare model: no agent, no MCP. Documents failure modes the agent must prevent.
+#
+# Run: ./eval.sh --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml
+
+description: "study-evaluator — RED phase (bare model, no agent, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # S1: Sound study — expect false drift detection or vague feedback
+  - description: "S1 RED: Sound study — no structured verdict without agent"
+    vars:
+      prompt: |
+        Evaluate this Bible study outline for exegetical faithfulness. Use structured drift classification (MORALISM, DECONTEXTUALIZATION, etc.) with severity levels.
+
+        # Philippians 2:1-11 Bible Study
+        ## 1. The Call to Unity (vv. 1-2)
+        - Paul grounds his appeal in Christ's encouragement (εἴ τις παράκλησις ἐν Χριστῷ)
+        - Four "if" clauses establish the indicative before the imperative
+        - Unity flows FROM what Christ has done, not from our effort
+        ## 2. The Mind of Christ (vv. 3-5)
+        - φρονέω (mindset) connects to 1:27 — the same verb
+        - v.5 is transitional: "Have this mind... which is yours in Christ Jesus"
+        ## 3. The Christ Hymn (vv. 6-11)
+        - Pre-existence: μορφῇ θεοῦ — essential nature, not mere appearance
+        - Kenosis: ἑαυτὸν ἐκένωσεν — self-emptying, not loss of divinity
+        - Climax: κύριος, the LXX rendering of YHWH
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks:
+          - Structured INPUT TYPE classification
+          - OVERALL verdict (SOUND/SOUND_WITH_DRIFT/SIGNIFICANT_DRIFT/UNSOUND)
+          - Per-point FAITHFUL/DRIFT classification with drift types
+          - Reference analysis grounded in MCP data
+          FAIL if the response spontaneously produces the full structured evaluation contract.
+
+  # S2: Moralistic drift — expect drift missed or vaguely noted
+  - description: "S2 RED: Moralistic drift — classification missed without agent"
+    vars:
+      prompt: |
+        Evaluate this Bible study outline for exegetical faithfulness:
+
+        # Philippians 2:1-11 — Living Like Jesus
+        ## 1. Be Humble (vv. 1-4)
+        - We need to stop being selfish and start thinking of others
+        - Challenge: This week, do one selfless act every day
+        ## 2. Follow Jesus' Example (vv. 5-8)
+        - Jesus gave up everything for us, so we should give up our comfort too
+        - If Jesus could be humble, so can you
+        ## 3. The Reward of Obedience (vv. 9-11)
+        - God will reward us when we are obedient like Jesus
+        - Humble yourself and God will lift you up
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Does NOT classify drift by specific type (MORALISM, DECONTEXTUALIZATION, etc.), OR
+          - Does NOT assign per-point drift severity, OR
+          - Provides vague feedback ("could be improved") without specific drift types, OR
+          - Misses at least one drift category (e.g., prosperity gospel framing in point 3)
+          FAIL if the response catches all three drift types with precise classification
+          AND provides constructive corrections grounded in exegetical data.
+
+  # S5: Methodology audit — expect no structural analysis
+  - description: "S5 RED: Methodology audit — no structural vulnerability analysis without agent"
+    vars:
+      prompt: |
+        Audit this Bible study methodology for exegetical vulnerabilities:
+
+        You are a Bible study preparation assistant. When given a passage:
+        1. Read the passage and identify the main theme
+        2. Create 3 discussion questions
+        3. Write a brief devotional application
+        4. Suggest a prayer based on the passage
+
+        Focus on making the content accessible and personally relevant.
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Does NOT identify specific structural gaps (missing genre detection, missing context check), OR
+          - Does NOT classify which drift types the methodology enables, OR
+          - Provides general suggestions rather than mapping methodology steps to vulnerability types
+          FAIL if the response maps each methodology step to a specific drift vulnerability
+          (e.g., "no genre detection → enables GENRE VIOLATION").

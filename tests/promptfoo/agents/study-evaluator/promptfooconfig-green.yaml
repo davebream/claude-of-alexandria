@@ -1,0 +1,168 @@
+# Promptfoo GREEN-phase tests for study-evaluator agent.
+# Agent loaded with MCP access.
+#
+# Run: ./eval.sh --no-cache -c agents/study-evaluator/promptfooconfig-green.yaml
+
+description: "study-evaluator — GREEN phase (agent + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools (via biblical-scholar delegation)
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+
+tests:
+
+  # S1: Sound study — no false drift detection
+  - description: "S1 GREEN: Sound study — FAITHFUL verdicts, no false drift"
+    vars:
+      prompt: |
+        Evaluate this Bible study outline:
+
+        # Philippians 2:1-11 Bible Study
+        ## 1. The Call to Unity (vv. 1-2)
+        - Paul grounds his appeal in Christ's encouragement (εἴ τις παράκλησις ἐν Χριστῷ)
+        - Four "if" clauses establish the indicative before the imperative
+        - Unity flows FROM what Christ has done, not from our effort
+        ## 2. The Mind of Christ (vv. 3-5)
+        - φρονέω (mindset) connects to 1:27 — the same verb
+        ## 3. The Christ Hymn (vv. 6-11)
+        - Pre-existence: μορφῇ θεοῦ — essential nature
+        - Kenosis: ἑαυτὸν ἐκένωσεν — self-emptying, not loss of divinity
+        - Climax: κύριος, the LXX rendering of YHWH
+    assert:
+      - type: icontains
+        value: "OVERALL:"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - OVERALL verdict is SOUND (not DRIFT or UNSOUND)
+          - Each study point is marked FAITHFUL (not falsely flagged as drift)
+          - INPUT TYPE is identified (outline)
+          FAIL if any sound point is falsely classified as drift.
+
+  # S2: Moralistic drift — specific classification
+  - description: "S2 GREEN: Moralistic drift — classified by type and severity"
+    vars:
+      prompt: |
+        Evaluate this Bible study outline:
+
+        # Philippians 2:1-11 — Living Like Jesus
+        ## 1. Be Humble (vv. 1-4)
+        - We need to stop being selfish and start thinking of others
+        - Challenge: This week, do one selfless act every day
+        ## 2. Follow Jesus' Example (vv. 5-8)
+        - Jesus gave up everything for us, so we should give up our comfort too
+        - If Jesus could be humble, so can you
+        ## 3. The Reward of Obedience (vv. 9-11)
+        - God will reward us when we are obedient like Jesus
+        - Humble yourself and God will lift you up
+    assert:
+      - type: icontains
+        value: "MORALISM"
+      - type: icontains
+        value: "OVERALL:"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - OVERALL is SIGNIFICANT_DRIFT or UNSOUND
+          - At least 2 of 3 points classified as DRIFT with type MORALISM
+          - Point 3 flagged for prosperity-gospel or reward-based framing
+          - Constructive corrections provided (ground in indicative, restore Christology)
+          FAIL if drift is missed or vaguely noted without classification.
+
+  # S3: Decontextualized proof-texting
+  - description: "S3 GREEN: Proof-texting — DECONTEXTUALIZATION detected"
+    vars:
+      prompt: |
+        Evaluate this Bible study outline:
+
+        # Verses on Humility
+        ## Philippians 2:3 — "Do nothing from selfish ambition"
+        - Application: Don't be competitive at work
+        ## 1 Peter 5:6 — "Humble yourselves under the mighty hand of God"
+        - Application: When life is hard, remember God is in control
+        ## James 4:10 — "Humble yourselves before the Lord"
+        - Application: Stop trying to control everything
+    assert:
+      - type: icontains
+        value: "DECONTEXTUALIZATION"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - Each verse flagged for decontextualization (treated as isolated proverb)
+          - Recommendations specify what each verse's literary context requires
+          - OVERALL is SIGNIFICANT_DRIFT
+          FAIL if verses are evaluated without noting the proof-texting pattern.
+
+  # S4: Transcript with mixed quality
+  - description: "S4 GREEN: Mixed transcript — FAITHFUL and DRIFT correctly distinguished"
+    vars:
+      prompt: |
+        Evaluate this Bible study discussion:
+
+        Leader: Let's look at Philippians 2:5-11. What's Paul saying here?
+        Participant A: Paul describes Christ's pre-existence and incarnation. "morphē" in v.6 refers to essential nature of God.
+        Participant B: Jesus emptied himself — he gave up his divine powers. He couldn't do miracles on his own.
+        Participant C: The main point is we should be more humble. Just try harder to put others first.
+    assert:
+      - type: icontains
+        value: "FAITHFUL"
+      - type: icontains
+        value: "DRIFT"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - INPUT TYPE is transcript
+          - Participant A marked FAITHFUL (correct Christology)
+          - Participant B flagged for EISEGESIS (kenosis ≠ divesting divine attributes)
+          - Participant C flagged for MORALISM
+          - OVERALL is SOUND_WITH_DRIFT
+          FAIL if all participants treated uniformly (all sound or all drift).
+
+  # S5: Methodology audit — structural vulnerability mapping
+  - description: "S5 GREEN: Methodology audit — drift vulnerabilities mapped"
+    vars:
+      prompt: |
+        Audit this Bible study methodology:
+
+        You are a Bible study preparation assistant. When given a passage:
+        1. Read the passage and identify the main theme
+        2. Create 3 discussion questions
+        3. Write a brief devotional application
+        4. Suggest a prayer based on the passage
+
+        Focus on making the content accessible and personally relevant.
+    assert:
+      - type: icontains
+        value: "OVERALL:"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - INPUT TYPE is methodology
+          - At least 2 structural gaps identified:
+            * Missing genre detection (enables GENRE VIOLATION)
+            * Missing context check (enables DECONTEXTUALIZATION)
+            * "Devotional application" without exegetical grounding (enables MORALISM)
+          - OVERALL is SIGNIFICANT_DRIFT (methodology structurally enables drift)
+          FAIL if feedback is general without mapping steps to drift vulnerabilities.
+
+  # S6: No passage identified — must ask before proceeding
+  - description: "S6 GREEN: No passage — agent asks before evaluating"
+    vars:
+      prompt: "Here are my study notes: Be kind to others. Love your neighbor. Forgive freely."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response asks which passage is being studied before proceeding.
+          FAIL if the response guesses a passage or evaluates without a passage reference.
