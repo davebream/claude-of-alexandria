@@ -1,0 +1,191 @@
+# Promptfoo GREEN-phase tests for consult-biblical-scholar skill.
+# Skill content is injected via setting_sources in the provider config.
+#
+# Run: ./eval.sh --no-cache -c skills/consult-biblical-scholar/promptfooconfig-green.yaml
+#
+# Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/verification.md):
+#   S1: MEANING mode — confidence tier, MCP morphology, modern explanation
+#   S2: VALIDATE compatible — COMPATIBLE verdict, text before analogy
+#   S3: VALIDATE contradicted — NOT SUPPORTED with morphological evidence
+#   S4: CROSS-REFERENCE — classified cross-refs with evidence basis
+#   S5: Topic mode — warning + MEDIUM ceiling
+#   S6: Contested question — confidence splitting (morphology HIGH, semantics MEDIUM)
+
+description: "Consult Biblical Scholar — GREEN phase (skill + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools (passage-anchored tests)
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    # Confidence tier must be present
+    - type: icontains-any
+      value:
+        - "CONFIDENCE: HIGH"
+        - "CONFIDENCE: MEDIUM"
+        - "CONFIDENCE: LOW"
+        - "CONFIDENCE: CANNOT ANSWER"
+        - "TOPIC MODE"
+    # No devotional drift
+    - type: llm-rubric
+      value: |
+        FAIL if the response contains devotional or pastoral application:
+        - "God uses our struggles for his purposes"
+        - "This reminds us to trust God"
+        - First-person plural moral applications
+        PASS if the output is scholarly analysis without devotional content.
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: MEANING — Word meaning (Phil 1:6, epiteleo)
+  # Confidence tier, MCP morphology, modern explanation separated
+  # Manual TDD verification: PASS — MEDIUM (MCP called but failure documented)
+  # =========================================================================
+  - description: "S1 GREEN: MEANING — epiteleo with MCP morphology"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Phil 1:6: What does 'epiteleo' mean here and how would I explain it to someone unfamiliar with Greek?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response includes morphological data for ἐπιτελέω
+          attributed to MCP tools (e.g., [query_morphology] citation).
+          FAIL if morphological analysis is presented without tool attribution.
+      - type: llm-rubric
+        value: |
+          PASS if there is a modern/plain-language explanation that is visually
+          separated from the technical morphological data (different section,
+          heading, or explicit label like "for a contemporary audience").
+          FAIL if technical and accessible explanations are mixed together
+          without clear separation.
+
+  # =========================================================================
+  # Scenario 2: VALIDATE — Compatible analogy (2 Cor 12:7-10)
+  # COMPATIBLE verdict with text evidence BEFORE verdict
+  # Manual TDD verification: PASS — VERDICT: COMPATIBLE rendered
+  # =========================================================================
+  - description: "S2 GREEN: VALIDATE — COMPATIBLE verdict for thorn/anxiety"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. 2 Cor 12:7-10: I want to compare Paul's thorn in the flesh to living with chronic anxiety. Does this analogy hold up?"
+    assert:
+      - type: icontains-any
+        value:
+          - "VERDICT: COMPATIBLE"
+          - "COMPATIBLE"
+      - type: llm-rubric
+        value: |
+          PASS if text evidence about σκόλοψ (the thorn) is presented BEFORE
+          the verdict is rendered. The text's own meaning must come first.
+          FAIL if the verdict is given before any text evidence is discussed.
+      - type: llm-rubric
+        value: |
+          PASS if the response distinguishes APPLICATION from what the text MEANS,
+          noting that the analogy may be used pastorally but doesn't represent
+          the text's original meaning.
+          FAIL if the analogy is endorsed as what the text "teaches."
+
+  # =========================================================================
+  # Scenario 3: VALIDATE — Contradicted analogy (Phil 2:5-11)
+  # NOT SUPPORTED with morphological evidence (reflexive + active verb)
+  # Manual TDD verification: PASS — NOT SUPPORTED with Fee citation
+  # =========================================================================
+  - description: "S3 GREEN: VALIDATE — NOT SUPPORTED with morphological evidence"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Phil 2:5-11: Can I say that Jesus 'couldn't help himself' — that his divine nature compelled him to empty himself, so it wasn't really a choice?"
+    assert:
+      - type: icontains-any
+        value:
+          - "VERDICT: NOT SUPPORTED"
+          - "NOT SUPPORTED"
+      - type: llm-rubric
+        value: |
+          PASS if the response cites morphological evidence showing volition:
+          reflexive pronoun ἑαυτόν combined with active verb ἐκένωσεν,
+          demonstrating that self-emptying was volitional, not compelled.
+          This evidence should come from MCP morphology data.
+          FAIL if the verdict is based only on theological tradition
+          without grammatical/morphological evidence from MCP tools.
+
+  # =========================================================================
+  # Scenario 4: CROSS-REFERENCE — hilasterion (Romans 3:25)
+  # Classified cross-refs: Primary (shared lemma), Secondary, Scholarly
+  # Manual TDD verification: PASS — table with classified references
+  # =========================================================================
+  - description: "S4 GREEN: CROSS-REFERENCE — classified cross-refs for hilasterion"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Romans 3:25: What other passages connect to 'hilasterion' and how?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if cross-references are classified by evidence type:
+          - Primary (shared lemma via vocabulary data)
+          - Secondary (shared concept, different vocabulary)
+          - Scholarly (commentary-sourced)
+          Each cross-reference should include WHY it's connected.
+          FAIL if cross-references are just listed ("see also Hebrews 9:5")
+          without classification or evidence basis.
+      - type: llm-rubric
+        value: |
+          PASS if at least one cross-reference is backed by MCP vocabulary data
+          (e.g., [query_vocabulary] showing ἱλαστήριον occurrences).
+          FAIL if no MCP vocabulary evidence is cited for any cross-reference.
+
+  # =========================================================================
+  # Scenario 5: Topic Mode — Sabbath rest (no passage)
+  # Warning + MEDIUM confidence ceiling
+  # Manual TDD verification: PASS — immediate warning, MEDIUM cap held
+  # =========================================================================
+  - description: "S5 GREEN: Topic mode — warning and MEDIUM ceiling"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. What is the biblical concept of Sabbath rest and how does it develop across Scripture?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response includes an explicit topic mode warning near the top,
+          noting that no specific passage was provided and confidence is limited.
+          FAIL if the response proceeds with full confidence without any
+          topic mode acknowledgment.
+      - type: llm-rubric
+        value: |
+          PASS if confidence is capped at MEDIUM throughout the response.
+          The response should never claim HIGH confidence for a topic-mode answer.
+          FAIL if CONFIDENCE: HIGH appears anywhere in a topic-mode response.
+
+  # =========================================================================
+  # Scenario 6: Contested Question — monogenes (John 3:16)
+  # Confidence splitting: morphology HIGH, semantic debate MEDIUM
+  # Manual TDD verification: PASS — both positions presented, BDAG cited
+  # =========================================================================
+  - description: "S6 GREEN: Contested question — confidence splitting for monogenes"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. John 3:16: What does 'monogenes' mean? I've heard it means 'only begotten' but some say 'one and only.' Which is right?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents BOTH scholarly positions on μονογενής
+          (only-begotten vs unique/one-of-a-kind) without definitively resolving
+          the debate. Both sides should be presented with their evidence.
+          FAIL if only one position is presented or if the debate is
+          definitively resolved ("the correct answer is...").
+      - type: llm-rubric
+        value: |
+          PASS if confidence is split between morphological data (which can be HIGH)
+          and the semantic debate (which should be MEDIUM at best).
+          These should be clearly distinguished in the response.
+          FAIL if the entire answer is presented at uniform HIGH confidence
+          without distinguishing the certainty levels of different claims.
+      - type: llm-rubric
+        value: |
+          PASS if at least one specific scholarly source is named for the
+          semantic debate (e.g., BDAG, Dahms, Lee, Pendrick, or similar).
+          FAIL if the response says "most scholars agree" without naming anyone.

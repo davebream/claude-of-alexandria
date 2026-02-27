@@ -1,0 +1,100 @@
+# Promptfoo RED-phase tests for pericope-delimitation skill.
+# Agent is bare: no skills, no MCP, no biblical tools.
+# These tests document failure modes the skill must prevent.
+#
+# Run: ./eval.sh --no-cache -c skills/pericope-delimitation/promptfooconfig-red.yaml
+#
+# Coverage parity with manual TDD (tests/skills/pericope-delimitation/baseline.md):
+#   S1: Truncated pericope — verdict correct but no Levinsohn data
+#   S4: OT narrative pericope — no Masoretic data check
+#   S7: Single verse — no structural boundary enforcement
+#   S10: Resistance test — memory-based validation expected
+
+description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Truncated NT Pericope — Phil 1:3-8
+  # Without skill: verdict may be correct but no Levinsohn data cited
+  # Manual TDD baseline: correct instinct but memory-based, no Data Sources
+  # =========================================================================
+  - description: "S1 RED: Phil 1:3-8 — no structured verdict without skill"
+    vars:
+      prompt: "Check whether Philippians 1:3-8 is a valid pericope. Assess the start and end boundaries using discourse evidence."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks ALL THREE of these structural elements:
+          1. A formal verdict label (VALID / EXTEND / CONTRACT / ADJUST)
+          2. Boundary status labels (Confirmed / Weak / Mid-unit) for start AND end
+          3. A Data Sources section citing specific Levinsohn feature names
+          PASS if even one of these three is missing.
+          FAIL only if ALL three are present with specific Levinsohn feature citations.
+          (A bare model may give correct advice but won't use the structured output format.)
+
+  # =========================================================================
+  # Scenario 4: OT Narrative Pericope — Gen 37:2-11
+  # Without skill: no Masoretic data check expected
+  # Manual TDD baseline: correct verdict but no פ/ס citations
+  # =========================================================================
+  - description: "S4 RED: Gen 37:2-11 — no Masoretic data without skill"
+    vars:
+      prompt: "Is Genesis 37:2-11 a valid pericope? Check if the boundaries are sound."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response does not cite specific Masoretic paragraph markers
+          (petuchot פ or setumah ס) with verse references from MCP tool data.
+          PASS also if the response mentions "Masoretic" in general terms without
+          specific marker citations at specific verses (e.g., "פ at 37:2").
+          FAIL only if specific Masoretic markers are cited with verse references
+          AND attributed to MCP tool calls like [query_paragraph_breaks].
+
+  # =========================================================================
+  # Scenario 7: Single Verse — John 3:16
+  # Without skill: may validate based on fame, not discourse data
+  # Manual TDD baseline: not tested in manual RED, but predictable failure
+  # =========================================================================
+  - description: "S7 RED: John 3:16 — famous verse gets lenient treatment without skill"
+    vars:
+      prompt: "Is John 3:16 a valid pericope for exegetical study?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response either:
+          - Validates John 3:16 as usable/preachable without strong structural objection, OR
+          - Suggests extension but without citing specific Levinsohn discourse features
+            at verse boundaries, OR
+          - Lacks a formal verdict label (VALID/EXTEND/CONTRACT/ADJUST)
+          FAIL if the response issues a formal EXTEND verdict citing specific
+          discourse discontinuity data from MCP tools with verse references.
+
+  # =========================================================================
+  # Scenario 10: Resistance Test — Rom 1:16-17
+  # Without skill: memory-based "propositio" validation expected
+  # Manual TDD baseline: agent correctly identified as mid-unit (surprise)
+  #   but still no Levinsohn data, no structured output
+  # =========================================================================
+  - description: "S10 RED: Rom 1:16-17 — no Levinsohn verification without skill"
+    vars:
+      prompt: "Check whether Romans 1:16-17 is a valid pericope. These are often called the thesis statement of Romans."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks specific Levinsohn discourse feature citations
+          (e.g., no mention of [query_discourse_features], no specific PoD markers at 1:16 or 1:18).
+          PASS also if the response is reasonable but relies on training knowledge
+          about Romans' structure rather than MCP tool data.
+          FAIL only if the response cites specific Levinsohn features with [query_discourse_features]
+          attribution at specific verse boundaries.

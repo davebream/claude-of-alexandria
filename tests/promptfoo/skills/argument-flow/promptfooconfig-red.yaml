@@ -1,0 +1,103 @@
+# Promptfoo RED-phase tests for argument-flow skill.
+# Agent is bare: no skills, no MCP, no biblical tools.
+#
+# Run: ./eval.sh --no-cache -c skills/argument-flow/promptfooconfig-red.yaml
+#
+# Coverage parity with manual TDD (tests/skills/argument-flow/baseline.md):
+#   S1: Connective-skipping — no MCP tool calls, thematic summary instead of chain
+#   S3: Devotional drift — pastoral language in analytical output
+#   S4: Overconfident claims — no confidence tier, unsourced structural claims
+#   S5: Mode confusion — argument-flow becomes VALIDATE verdict
+
+description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Connective-skipping — Phil 2:1-4
+  # Without skill: thematic summary instead of proposition chain
+  # Manual TDD: No MCP calls, no connective labeling, no chain format
+  # =========================================================================
+  - description: "S1 RED: Phil 2:1-4 — no proposition chain without skill"
+    vars:
+      prompt: "Map the logical structure of Philippians 2:1-4. Show how the clauses connect through conjunctions."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks a numbered proposition chain where each
+          clause is labeled with its connective type (Condition, Inference,
+          Purpose, Contrast, Ground, etc.) and the Greek connective is cited.
+          PASS also if it produces a prose summary of the argument instead of
+          a structured chain format.
+          FAIL only if a formal numbered proposition chain with labeled
+          connective types AND Greek terms is produced with MCP citations.
+
+  # =========================================================================
+  # Scenario 3: Devotional drift — Phil 4:4-7
+  # Without skill: pastoral application language expected
+  # Manual TDD: "divine peace standing sentinel over the inner life"
+  # =========================================================================
+  - description: "S3 RED: Phil 4:4-7 — devotional language without skill"
+    vars:
+      prompt: "Show me how Paul's argument works in Philippians 4:4-7."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response contains devotional or applicatory language such as:
+          - "This passage reminds us..." or "Paul encourages us..."
+          - First-person plural applications ("we should...", "let us...")
+          - Pastoral framing ("God's peace guards our hearts")
+          - Warm, inspirational tone rather than analytical
+          OR if it lacks explicit confidence tier declaration (CONFIDENCE: HIGH/MEDIUM/LOW).
+          FAIL only if the response is purely analytical with no devotional language
+          AND includes a formal confidence tier AND a numbered proposition chain.
+
+  # =========================================================================
+  # Scenario 4: Overconfident claims — Col 1:15-20
+  # Without skill: chiastic structure asserted without evidence or confidence tier
+  # Manual TDD: "widely recognized as a hymn" without attribution
+  # =========================================================================
+  - description: "S4 RED: Col 1:15-20 — overconfident structural claims without skill"
+    vars:
+      prompt: "Map the argument flow of Colossians 1:15-20."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response either:
+          - Asserts hymnic/chiastic structure without a confidence tier declaration, OR
+          - Claims scholarly consensus ("widely recognized", "most scholars agree")
+            without naming specific scholars, OR
+          - Makes structural claims without [query_morphology] or [query_discourse_features]
+            MCP tool citations
+          FAIL only if the response declares a confidence tier (CONFIDENCE: X),
+          labels structural claims by evidence tier (Tier 1-4), AND cites MCP data.
+
+  # =========================================================================
+  # Scenario 5: Mode confusion — Eph 2:8-9
+  # Without skill: argument-flow becomes theological verdict
+  # Manual TDD: Agent conflated modes, issued verdict on faith-as-gift
+  # =========================================================================
+  - description: "S5 RED: Eph 2:8-9 — mode conflation without skill"
+    vars:
+      prompt: "Map the argument flow of Ephesians 2:8-9. Someone told me this passage teaches that faith itself is a gift from God. Show me the logical structure and tell me if that's right."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response issues a theological verdict on the faith-as-gift
+          question (e.g., "yes, faith is a gift" or "no, it's not what the text says")
+          WITHOUT first producing a complete proposition chain.
+          PASS also if the argument-flow analysis is mixed with or replaced by
+          the theological evaluation rather than being presented separately.
+          FAIL only if the response maps the argument flow first (numbered proposition
+          chain) and then explicitly defers the theological question to a different
+          tool or notes it as an open interpretive question.

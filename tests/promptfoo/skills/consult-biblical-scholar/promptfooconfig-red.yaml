@@ -1,0 +1,96 @@
+# Promptfoo RED-phase tests for consult-biblical-scholar skill.
+# Agent is bare: no skills, no MCP, no biblical tools.
+#
+# Run: ./eval.sh --no-cache -c skills/consult-biblical-scholar/promptfooconfig-red.yaml
+#
+# Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/baseline.md):
+#   S1: MEANING mode — no confidence tier, no MCP calls
+#   S2: VALIDATE mode — no formal verdict (COMPATIBLE), pastoral drift
+#   S3: VALIDATE contradicted — correct instinct but no formal verdict
+#   S5: Topic mode — no confidence ceiling, no topic mode warning
+
+description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: MEANING — Word meaning (Phil 1:6, epiteleo)
+  # Without skill: no confidence tier, no MCP morphology call
+  # Manual TDD: unsourced "appears in contexts like completing a temple ritual"
+  # =========================================================================
+  - description: "S1 RED: MEANING mode — no confidence tier without skill"
+    vars:
+      prompt: "What does 'epiteleo' mean in Philippians 1:6? How would I explain it to someone unfamiliar with Greek?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks a formal confidence tier declaration
+          (CONFIDENCE: HIGH/MEDIUM/LOW/CANNOT ANSWER) at the top.
+          PASS also if there is no [query_morphology] or [query_vocabulary]
+          MCP tool citation in the answer.
+          FAIL only if the response begins with a confidence tier AND cites
+          specific MCP tool data for the morphological analysis.
+
+  # =========================================================================
+  # Scenario 2: VALIDATE — Compatible analogy (2 Cor 12:7-10)
+  # Without skill: no formal verdict, pastoral drift
+  # Manual TDD: "partly, but with caveats" instead of COMPATIBLE verdict
+  # =========================================================================
+  - description: "S2 RED: VALIDATE mode — no formal verdict without skill"
+    vars:
+      prompt: "I want to compare Paul's thorn in the flesh (2 Corinthians 12:7-10) to living with chronic anxiety. Does this analogy hold up?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response does NOT render a formal verdict from the set:
+          SUPPORTED / COMPATIBLE / NOT SUPPORTED / INSUFFICIENT DATA.
+          PASS also if the response drifts into pastoral advice ("God uses our
+          struggles...") or produces a nuanced discussion without a clear verdict.
+          FAIL only if a formal verdict from the four-option set is explicitly rendered.
+
+  # =========================================================================
+  # Scenario 3: VALIDATE — Contradicted analogy (Phil 2:5-11)
+  # Without skill: correct direction but no formal verdict, no MCP citation
+  # Manual TDD: "classical theology would reject" but no morphological evidence
+  # =========================================================================
+  - description: "S3 RED: VALIDATE contradicted — no morphological evidence without skill"
+    vars:
+      prompt: "Can I say that Jesus 'couldn't help himself' — that his divine nature compelled him to empty himself in Philippians 2:5-11, so it wasn't really a choice?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response either:
+          - Lacks a formal NOT SUPPORTED verdict, OR
+          - Does not cite specific morphological evidence from MCP tools
+            (e.g., [query_morphology] for reflexive ἑαυτόν + active ἐκένωσεν), OR
+          - Relies on theological tradition rather than grammatical data
+          FAIL only if a formal NOT SUPPORTED verdict is rendered with explicit
+          MCP morphological citations (reflexive pronoun + active verb evidence).
+
+  # =========================================================================
+  # Scenario 5: Topic Mode — No passage anchor (Sabbath rest)
+  # Without skill: no topic mode warning, no confidence ceiling
+  # Manual TDD: confident synthesis with no epistemic marking
+  # =========================================================================
+  - description: "S5 RED: Topic mode — no confidence ceiling without skill"
+    vars:
+      prompt: "What is the biblical concept of Sabbath rest and how does it develop across Scripture?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response does NOT include an explicit topic mode warning
+          stating that no passage was provided and confidence is capped at MEDIUM.
+          PASS also if the response presents a confident canonical development
+          summary without epistemic qualification about being in topic mode.
+          FAIL only if the response explicitly warns about topic mode,
+          caps confidence at MEDIUM, and acknowledges limitations of no-passage queries.

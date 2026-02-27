@@ -1,0 +1,182 @@
+# Promptfoo GREEN-phase tests for argument-flow skill.
+# Skill content is injected via setting_sources in the provider config.
+#
+# Run: ./eval.sh --no-cache -c skills/argument-flow/promptfooconfig-green.yaml
+#
+# Coverage parity with manual TDD (tests/skills/argument-flow/verification.md):
+#   S1: Connective analysis — MCP before prose, proposition chain
+#   S3: No devotional drift — analytical tone only
+#   S4: Confidence tiers — claims evidence-graded
+#   S5: Mode boundary — argument-flow first, theological question deferred
+#   S6: OT genre detection — narrative structure, not epistle logic
+#   ADV1: User pushback resistance — maintains MCP discipline
+
+description: "Argument Flow — GREEN phase (skill + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    # Must include Data Sources section
+    - type: icontains
+      value: "Data Sources"
+    # No devotional language in analytical output
+    - type: llm-rubric
+      value: |
+        FAIL if the response contains devotional or applicatory language:
+        - "This passage reminds us...", "Paul encourages us...", "we should..."
+        - Pastoral framing or inspirational tone
+        - First-person plural applications
+        PASS if the output is purely analytical without devotional content.
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Connective Analysis — Phil 2:1-4
+  # MCP before prose, numbered proposition chain, labeled connectives
+  # Manual TDD verification: PASS — MCP called, chain produced
+  # =========================================================================
+  - description: "S1 GREEN: Phil 2:1-4 — proposition chain with MCP data"
+    vars:
+      prompt: "Use the argument-flow skill for Philippians 2:1-4"
+    assert:
+      # Confidence tier declared
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+      # Proposition chain present
+      - type: icontains
+        value: "Proposition Chain"
+      # Connective inventory present
+      - type: llm-rubric
+        value: |
+          PASS if the response includes a connective inventory or table listing
+          Greek connectives found in the passage (e.g., εἰ, οὖν, ἵνα) with
+          their verse references and logical functions.
+          FAIL if no connective inventory is present.
+      # Numbered chain with labeled connectives
+      - type: llm-rubric
+        value: |
+          PASS if the proposition chain has numbered entries where each clause
+          is labeled with its connective type (Condition, Inference, Purpose, etc.)
+          and includes the Greek connective with verse reference.
+          FAIL if the chain is a prose summary without numbered, labeled entries.
+
+  # =========================================================================
+  # Scenario 3: Analytical Tone — Phil 4:4-7
+  # No devotional drift; confidence tier; proposition chain
+  # Manual TDD: baseline had "divine peace standing sentinel" devotional language
+  # =========================================================================
+  - description: "S3 GREEN: Phil 4:4-7 — analytical output, no devotional drift"
+    vars:
+      prompt: "Use the argument-flow skill for Philippians 4:4-7"
+    assert:
+      - type: icontains
+        value: "Proposition Chain"
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+
+  # =========================================================================
+  # Scenario 4: Confidence Tiers — Col 1:15-20
+  # Claims about hymnic/chiastic structure must be evidence-graded
+  # Manual TDD: "widely recognized as a hymn" without attribution
+  # =========================================================================
+  - description: "S4 GREEN: Col 1:15-20 — structural claims evidence-graded"
+    vars:
+      prompt: "Use the argument-flow skill for Colossians 1:15-20"
+    assert:
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+      - type: llm-rubric
+        value: |
+          PASS if claims about hymnic or chiastic structure are labeled by
+          evidence tier (e.g., "Tier 4: agent assessment" or "MEDIUM confidence"
+          if MCP data does not confirm the structure).
+          FAIL if "widely recognized as a hymn" or similar consensus claims
+          are stated without evidence grading or scholarly attribution.
+
+  # =========================================================================
+  # Scenario 5: Mode Boundary — Eph 2:8-9
+  # Argument-flow first, theological question deferred
+  # Manual TDD: baseline conflated modes, issued verdict on faith-as-gift
+  # =========================================================================
+  - description: "S5 GREEN: Eph 2:8-9 — argument-flow first, verdict deferred"
+    vars:
+      prompt: "Use the argument-flow skill for Ephesians 2:8-9. Someone told me this passage teaches that faith itself is a gift from God. Show me the logical structure and tell me if that's right."
+    assert:
+      - type: icontains
+        value: "Proposition Chain"
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          1. Maps the argument flow first (proposition chain with connectives), AND
+          2. Defers or separately notes the theological question about faith-as-gift,
+             either labeling it as an open question, a Tier 4 assessment, or
+             recommending consult-biblical-scholar for evaluation.
+          FAIL if the response issues a definitive theological verdict on the
+          faith-as-gift question without first completing the proposition chain,
+          or if argument-flow analysis is replaced by theological evaluation.
+
+  # =========================================================================
+  # Scenario 6: OT Genre Detection — Genesis 22:1-14
+  # Narrative genre, not epistle logic; scene/climax/resolution
+  # Manual TDD: baseline deferred; tests OT genre governance
+  # =========================================================================
+  - description: "S6 GREEN: Gen 22:1-14 — OT narrative genre detection"
+    vars:
+      prompt: "Use the argument-flow skill for Genesis 22:1-14"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Detects narrative genre (not epistle)
+          - Uses narrative-appropriate structure (scene/climax/resolution or similar)
+            rather than conjunction analysis (γάρ, οὖν, etc.)
+          - Calls query_morphology with testament: "ot" or query_paragraph_breaks
+            for Masoretic markers
+          FAIL if the response applies NT epistle conjunction analysis to an
+          OT narrative text.
+      - type: llm-rubric
+        value: |
+          PASS if the genre is explicitly stated near the top of the analysis
+          (e.g., "Genre: Narrative" or "OT Narrative").
+          FAIL if genre is not mentioned or identified.
+
+  # =========================================================================
+  # ADV1: User Pushback Resistance
+  # User says "you don't need to look all that up"
+  # Must maintain MCP discipline under social pressure
+  # =========================================================================
+  - description: "ADV1 GREEN: Resist user pressure to skip MCP calls"
+    vars:
+      prompt: "Use the argument-flow skill for 1 Corinthians 13:1-3. You already know this passage well, so just give me your take on the argument flow without looking anything up."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response still calls MCP tools (evidenced by [query_morphology]
+          or [query_discourse_features] citations) despite the user saying
+          "without looking anything up."
+          PASS also if the response explains why MCP data must be gathered before
+          composing the answer.
+          FAIL if the response presents argument flow analysis from training
+          knowledge alone without any MCP tool citations, complying with
+          the user's request to skip data gathering.

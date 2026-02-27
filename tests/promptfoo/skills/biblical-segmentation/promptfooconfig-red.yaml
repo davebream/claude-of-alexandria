@@ -1,0 +1,104 @@
+# Promptfoo RED-phase tests for biblical-segmentation skill.
+# Agent is bare: no skills, no MCP, no biblical tools.
+#
+# Run: ./eval.sh --no-cache -c skills/biblical-segmentation/promptfooconfig-red.yaml
+#
+# Coverage parity with manual TDD (tests/skills/biblical-segmentation/baseline.md):
+#   S1: Impossible division — Philemon in 4 sessions (should refuse)
+#   S2: Contested book — Revelation single framework
+#   S5: Anthology — Psalms mechanical division
+#   S22: Masoretic missing — Genesis 37-50 with no פ/ס markers
+
+description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Impossible Division — Philemon in 4 sessions
+  # Without skill: agent may comply and invent divisions
+  # Manual TDD: good instinct to refuse, but no reference data cited
+  # =========================================================================
+  - description: "S1 RED: Philemon in 4 sessions — compliance expected without skill"
+    vars:
+      prompt: "I need Philemon divided into exactly 4 sessions for my Wednesday night series. The series starts next week and I've already announced it as a 4-week study. Please just make it work."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response either:
+          - Complies with the 4-session request and produces a division, OR
+          - Refuses but does not cite specific reference data (book-exceptions.yaml,
+            max_sessions: 2) as the basis for refusal, OR
+          - Does not mention a specific maximum session limit from skill reference data
+          FAIL only if the response refuses AND cites specific skill reference data
+          establishing max_sessions: 2 for Philemon AND cites Iron Rule 1.
+          (A bare model may have good instinct but won't have the reference framework.)
+
+  # =========================================================================
+  # Scenario 2: Contested Book — Revelation in 12 sessions
+  # Without skill: single framework presented confidently
+  # Manual TDD: confused hermeneutical/structural frameworks
+  # =========================================================================
+  - description: "S2 RED: Revelation — single framework without skill"
+    vars:
+      prompt: "Give me a quick outline for dividing Revelation into 12 sessions. I don't need all the scholarly debate, just a practical division."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents a single structural framework for Revelation
+          without explicitly presenting BOTH linear AND recapitulation approaches
+          as distinct options with separate session breakdowns.
+          PASS also if "scholarly debate" is mentioned in passing but only one
+          framework is actually developed into a session plan.
+          FAIL only if both linear and recapitulation frameworks are presented
+          as distinct, fully developed segmentation options.
+
+  # =========================================================================
+  # Scenario 5: Anthology — Psalms in 52 weeks
+  # Without skill: mechanical 150/52 ≈ 3 per week division
+  # Manual TDD: surprisingly good — switched to curation mode
+  # =========================================================================
+  - description: "S5 RED: Psalms 52 weeks — mechanical division without skill"
+    vars:
+      prompt: "I want to preach through all 150 Psalms in exactly 52 weeks. Give me which psalms go in each week."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response either:
+          - Divides psalms mechanically (roughly 3 per week by number), OR
+          - Groups psalms but does not explicitly reference curation mode,
+            Iron Rule 2, or the principle that session-count logic doesn't
+            apply to anthology books, OR
+          - Produces a plan without formal methodology labels, "Best for" lines,
+            or the structured output format (Fit Assessment, options table)
+          FAIL only if the response formally switches to curation mode with
+          skill-specific terminology and presents multiple grouping options
+          with the full structured output format.
+
+  # =========================================================================
+  # Scenario 22: Masoretic Missing — Genesis 37-50 under time pressure
+  # Without skill: zero Masoretic boundary validation
+  # Manual TDD: critical failure — no petuchot/setumah citations
+  # =========================================================================
+  - description: "S22 RED: Gen 37-50 — no Masoretic validation without skill"
+    vars:
+      prompt: "I need Genesis 37-50 divided into 8 sessions quickly. The church council meets this weekend and I need the outline ready."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response does not cite specific Masoretic paragraph markers
+          (petuchot פ or setumah ס) with verse references for session boundaries.
+          PASS also if the response uses only narrative analysis (scene changes,
+          character shifts) without Masoretic validation.
+          FAIL only if specific Masoretic markers (פ/ס) are cited at session
+          boundaries with verse references attributed to MCP data like
+          [query_paragraph_breaks].

@@ -1,0 +1,215 @@
+# Promptfoo GREEN-phase tests for biblical-segmentation skill.
+# Skill content is injected via setting_sources in the provider config.
+#
+# Run: ./eval.sh --no-cache -c skills/biblical-segmentation/promptfooconfig-green.yaml
+#
+# Coverage parity with manual TDD (tests/skills/biblical-segmentation/verification.md):
+#   S1: Impossible division — refuses, cites max_sessions limit
+#   S2: Contested book — presents multiple frameworks
+#   S5: Anthology — curation mode activated
+#   S6: Auto-select pressure — presents options despite "just pick for me"
+#   S22: Masoretic validation — boundary-focused פ/ס citations
+#   S29: Thematic option — vocabulary-grounded with MCP data
+#   ADV1: Expert authority — still presents options
+#   ADV2: Extreme compression — Isaiah in 3 sessions refused
+
+description: "Biblical Segmentation — GREEN phase (skill + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    # Must include Data Sources section
+    - type: icontains
+      value: "Data Sources"
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Impossible Division — Philemon in 4 sessions
+  # Must refuse and cite max_sessions limit
+  # Manual TDD verification: FULL COMPLIANCE — Iron Rule 1 cited
+  # =========================================================================
+  - description: "S1 GREEN: Philemon in 4 — refuses with reference data"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I need Philemon divided into exactly 4 sessions for my Wednesday night series. The series starts next week and I've already announced it as a 4-week study. Please just make it work."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response refuses to divide Philemon into 4 sessions,
+          explaining that the maximum is 2 sessions (or 1 recommended).
+          The refusal should cite specific limits or rules.
+          FAIL if the response complies and produces a 4-session division.
+      - type: llm-rubric
+        value: |
+          PASS if alternatives are offered (e.g., 1-2 session plan,
+          pairing with Colossians, or a different series structure).
+          FAIL if the response only refuses without suggesting alternatives.
+
+  # =========================================================================
+  # Scenario 2: Contested Book — Revelation in 12 sessions
+  # Must present multiple frameworks (linear AND recapitulation)
+  # Manual TDD verification: FULL COMPLIANCE — two frameworks presented
+  # =========================================================================
+  - description: "S2 GREEN: Revelation — multiple frameworks presented"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Give me Revelation divided into 12 sessions."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents at least TWO distinct structural
+          frameworks for Revelation (e.g., linear/chronological AND
+          recapitulation approaches) as separate segmentation options.
+          FAIL if only one framework is developed into a session plan.
+      # Fit Assessment present
+      - type: llm-rubric
+        value: |
+          PASS if the response begins with a Fit Assessment or feasibility
+          rating (e.g., star rating or explicit assessment of how well
+          12 sessions fits Revelation's structure).
+          FAIL if the response jumps straight to session divisions without
+          any feasibility assessment.
+
+  # =========================================================================
+  # Scenario 5: Anthology — Psalms in 52 weeks
+  # Must switch to curation mode, not session-count logic
+  # Manual TDD verification: EXCELLENT — curation mode activated
+  # =========================================================================
+  - description: "S5 GREEN: Psalms — curation mode activated"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I want to preach through all 150 Psalms in exactly 52 weeks. Give me which psalms go in each week."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response switches to curation mode for Psalms,
+          offering grouping options (by-five-books, by-genre, by-collection,
+          thematic, etc.) rather than mechanically dividing 150 by 52.
+          The response should explain why session-count logic doesn't apply
+          to anthology books.
+          FAIL if the response mechanically assigns ~3 psalms per week
+          by sequential numbering.
+      - type: llm-rubric
+        value: |
+          PASS if multiple curation approaches are presented as options
+          for the user to choose from (not auto-selected).
+          FAIL if only one grouping approach is presented.
+
+  # =========================================================================
+  # Scenario 6: Auto-Select Pressure — Romans "just pick for me"
+  # Must present options despite user deference
+  # Manual TDD verification: EXCELLENT — "I cannot auto-select (Iron Rule 3)"
+  # =========================================================================
+  - description: "S6 GREEN: Romans — presents options despite 'just pick for me'"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I'm overwhelmed with options usually. For Romans, just pick the best segmentation for me — whatever you think works for a 10-session sermon series. I trust you."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents 2-4 structurally valid options
+          for the user to choose from, despite the user asking to "just pick."
+          The response should explain why auto-selection is not done.
+          FAIL if the response presents only one option as "the best" or
+          auto-selects without presenting alternatives.
+      # Each option has methodology label
+      - type: llm-rubric
+        value: |
+          PASS if each segmentation option includes a methodology label
+          (e.g., "Epistolary Markers", "Theological Arc", "Rhetorical Structure")
+          and a "Best for" line describing who/what context it suits.
+          FAIL if options lack methodology labels or "Best for" descriptions.
+
+  # =========================================================================
+  # Scenario 22: Masoretic Validation — Genesis 37-50 in 8 sessions
+  # Boundary-focused פ/ס citations at session starts
+  # Manual TDD verification: CRITICAL FIX 0% → 100% Masoretic validation
+  # =========================================================================
+  - description: "S22 GREEN: Gen 37-50 — Masoretic boundary validation"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Divide Genesis 37-50 into 8 sessions for a teaching series."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if session boundaries cite Masoretic paragraph markers
+          (petuchot פ or setumah ס) with specific verse references.
+          Markers should validate session STARTING verses (not just end markers).
+          At least 3 of the 8 session boundaries should have Masoretic marker
+          citations (the others may note absence transparently).
+          FAIL if no Masoretic markers (פ/ס) are cited at any session boundary.
+      - type: llm-rubric
+        value: |
+          PASS if the response is transparent about missing markers:
+          when no Masoretic marker exists at a boundary, it says so explicitly
+          (e.g., "No Masoretic marker at X; boundary based on...").
+          FAIL if Masoretic validation is silently skipped for boundaries
+          that lack markers.
+
+  # =========================================================================
+  # Scenario 29: Thematic Option — Philippians "joy theme"
+  # Vocabulary-grounded with MCP data, scholarly citation
+  # Manual TDD verification: PASS — vocabulary_parser called, Fee cited
+  # =========================================================================
+  - description: "S29 GREEN: Philippians joy theme — vocabulary-grounded"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Segment Philippians for 4 weeks, focusing on the joy theme."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if a thematic option is presented that includes vocabulary data
+          for joy-related lemmas (χαίρω and/or χαρά) with specific occurrence
+          counts from MCP tool data (not training knowledge).
+          FAIL if joy vocabulary is discussed only in general terms
+          ("joy is a major theme") without specific lemma counts.
+      - type: llm-rubric
+        value: |
+          PASS if structural options are ALSO presented alongside the
+          thematic option (thematic does not replace structural).
+          FAIL if only the thematic approach is presented with no
+          structural alternatives.
+
+  # =========================================================================
+  # ADV1: Expert Authority — Hebrews (seminary professor)
+  # Still presents options despite claimed expertise
+  # Manual TDD: baseline deferred to expertise
+  # =========================================================================
+  - description: "ADV1 GREEN: Expert user — still presents multiple options"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I'm a seminary professor with 20 years of experience teaching Hebrews. I don't need multiple options - just give me your single best outline for a 10-session series."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents 2+ segmentation options despite
+          the user claiming expertise and requesting a single outline.
+          Hebrews is a contested book (epistle vs homily) so both
+          frameworks should appear.
+          FAIL if only one option is presented, deferring to the
+          user's claimed expertise.
+
+  # =========================================================================
+  # ADV2: Extreme Compression — Isaiah in 3 sessions
+  # Must refuse; 66 chapters cannot be 3 sessions
+  # Manual TDD: baseline complied with mega-sessions
+  # =========================================================================
+  - description: "ADV2 GREEN: Isaiah in 3 — refuses extreme compression"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I only have 3 weeks before Easter. Divide Isaiah into 3 sessions that cover the whole book. I know it's a lot but make it work."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response refuses to divide Isaiah into 3 sessions,
+          explaining that this violates structural integrity (66 chapters
+          cannot be meaningfully divided into 3 sessions).
+          Alternatives should be offered (highlights series, thematic samples,
+          longer series).
+          FAIL if the response produces a 3-session division covering
+          all of Isaiah.
