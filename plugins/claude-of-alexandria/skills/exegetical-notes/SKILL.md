@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
-description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output. Saves to file.
-allowed-tools: Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas
+description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
+allowed-tools: Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
 ---
 
 # Exegetical Notes
@@ -9,7 +9,7 @@ allowed-tools: Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-o
 ## Purpose
 
 Produce structured, context-neutral exegetical analysis of a biblical passage.
-Data-grounded. Always English. Saved to file as a reusable reference document.
+Data-grounded. Always English. Output to file (default) or inline (`--output print`).
 
 **Key constraint:** Every data claim must come from bundled data or web-verified scholarly sources.
 Training knowledge supplements but never substitutes for data.
@@ -70,25 +70,48 @@ For web searches (Tier 3 guardrails):
 If only Tier C sources found, state: "[Tier C source, use with caution]"
 If no verifiable source found, state: "No Tier A/B source located for this claim."
 
-### Rule 5: Cross-Check Data Claims Before Saving
+### Rule 5: Cross-Check Data Claims Before Delivering
 
 After generating the full notes:
 1. For each data claim in the output (lemma frequencies, morphological parsings, discourse features), re-query the relevant MCP tool to confirm the cited value matches
 2. Report cross-check results in Section 10
-3. If any mismatches: correct the claim before saving
+3. If any mismatches: correct the claim before delivering
 
-### Rule 6: Save to Correct Location
+### Rule 6: Exactly 10 Sections, Exactly These Names
 
-Output always saved to:
+The output format has exactly 10 sections. Use exactly these section titles:
+1. Passage in Literary Context
+2. Internal Structure
+3. Propositional Summary
+4. Lexical Analysis
+5. Exegetical Conclusions
+6. Interpretive Guardrails
+7. Open Questions
+8. Intertextual Links
+9. Data Sources
+10. Verification
+
+**Do not rename sections.** Do not substitute "Homiletical Trajectories" for "Interpretive Guardrails." Do not substitute "Theological Themes" for "Exegetical Conclusions." Do not substitute "Discourse Structure" for "Internal Structure." Do not omit sections. Do not add sections. Do not reorder sections.
+
+**Do not abbreviate the output** even if the user asks for "brief" or "essentials." All 10 sections are required for every invocation. The Verification section (Section 10) is never optional.
+
+### Rule 7: Deliver Output
+
+**File mode** (default, or `--output file`):
+Save to:
 ```
 ~/.claude/exegetical-notes/{book_name}/{YYYY-MM-DD}-{chapter-verse-to-chapter-verse}.md
 ```
-
 Examples:
 - `~/.claude/exegetical-notes/philippians/2026-02-18-1-1-11.md`
 - `~/.claude/exegetical-notes/genesis/2026-02-18-37-2-11.md`
 
 After saving, report the saved path to user.
+
+**Print mode** (`--output print`):
+Output the complete notes inline in your response. Do not save to file. Do not summarize. Print ALL 10 sections in full, directly in the response. The user sees only what you print — if you save to file instead, the user gets nothing useful.
+
+**Never ignore `--output print`.** If the invocation says `--output print`, you MUST print inline. Do not save to a file and return a summary. Do not "display" a summary of what you generated. Print the full document.
 
 ---
 
@@ -132,20 +155,20 @@ After saving, report the saved path to user.
    → Evaluate source quality (Tier A/B/C/D)
    → Note source, author, publication
 
-5. Generate all 10 sections
+5. Generate all 10 sections (use exact section titles from template — Rule 6)
 
 6. Cross-check data claims against MCP tool output
 
 7. Fix any mismatches
 
-8. Save to output location
-
-9. Report saved path to user
+8. Deliver output (Rule 7)
+   → file mode (default): save to path, report path to user
+   → print mode (`--output print`): output ALL 10 sections inline, no file save
 ```
 
 ---
 
-## Output Format (All 10 Sections Required)
+## Output Format (All 10 Sections Required — Use Exact Titles)
 
 ```markdown
 # Exegetical Notes: [Book] [Range]
@@ -268,11 +291,13 @@ Gloss: "[translation]"
 
 ```
 /exegetical-notes Phil 1:1-11
+/exegetical-notes Phil 1:1-11 --output print
 /exegetical-notes Genesis 37:2-11
 /exegetical-notes Romans 3:21-26
 /exegetical-notes Genesis 37:2-11 --context "segmentation: Joseph narrative, 8 sessions"
 ```
 
+- `--output`: Optional. `file` (default) saves to disk. `print` outputs inline.
 - `--context`: Optional. Provides segmentation context for Section 1.
 - Book names accept abbreviations (Phil, Gen, Rom, etc.) or full names.
 - Testament auto-detected from book name.
@@ -334,8 +359,11 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Wrong voice in morphology | Always verify via query_morphology MCP tool |
 | "Scholars agree..." without citation | Web search required; cite author/title/year |
 | Mixing Tier 1 and Tier 4 | Label every tier claim explicitly |
-| Skipping Section 10 cross-check | Re-query MCP tools to confirm every data claim before saving |
-| Not saving to output location | Check path, save, report path to user |
+| Skipping Section 10 cross-check | Re-query MCP tools to confirm every data claim before delivering |
+| `--output print` but saved to file | If `--output print` is in the invocation, print ALL 10 sections inline. Never save to file and return a summary. |
+| Renaming sections | Use the exact 10 section titles from the template. "Homiletical Trajectories" is not "Interpretive Guardrails." |
+| Only 6 sections instead of 10 | Every invocation produces exactly 10 sections. No abbreviation, no "brief" mode. |
+| User says "keep it brief" → skip sections | All 10 sections are mandatory. "Brief" may shorten prose within sections but never removes sections. |
 | Proceeding past problematic pericope without warning | Pericope check is mandatory Step 1 |
 | No logical connectives in epistle analysis | For epistles: query_morphology pos_filter "conjunction", map γάρ/οὖν/δέ/ἀλλά/ἵνα flow |
 
