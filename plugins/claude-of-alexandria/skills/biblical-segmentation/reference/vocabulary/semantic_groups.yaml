@@ -1,7 +1,7 @@
 metadata:
   description: Curated theological word families for biblical study
   purpose: Connect related concepts across OT and NT for thematic analysis
-  semantic_groups_count: 69
+  semantic_groups_count: 81
   creation_date: '2026-01-21'
   sources:
     - MorphGNT/SBLGNT (NT Greek lemmas)
@@ -95,6 +95,8 @@ semantic_groups:
     primary_genres: [ot_narrative, prophetic]
     nt_lemmas:
       διαθήκη: covenant, testament, will
+      σπέρμα: seed, offspring (covenant lineage)
+      μεσίτης: mediator (of covenant)
     ot_strongs:
       H1285:
         hebrew: בְּרִית
@@ -308,9 +310,6 @@ semantic_groups:
       H2822:
         hebrew: חֹשֶׁך
         gloss: darkness, obscurity
-      H5050:
-        hebrew: נָגַהּ
-        gloss: shine, give light
 
   humanity:
     description: Human being, image of God — the nature, dignity, and creatureliness of humanity
@@ -353,7 +352,7 @@ semantic_groups:
       H1347:
         hebrew: גָּאוֹן
         gloss: pride, arrogance, majesty
-      H7311:
+      H7311a:
         hebrew: רוּם
         gloss: be high, exalt, rise up
 
@@ -409,10 +408,10 @@ semantic_groups:
       Ἰσραήλ: Israel
       Ἰουδαῖος: Jew, Judean
     ot_strongs:
-      H5971:
+      H5971a:
         hebrew: עַם
         gloss: people, nation, kinsmen
-      H1471:
+      H1471a:
         hebrew: גּוֹי
         gloss: nation, people (often non-Israelite)
       H3478:
@@ -453,7 +452,7 @@ semantic_groups:
       H7495:
         hebrew: רָפָא
         gloss: heal, cure, restore
-      H2470:
+      H2470a:
         hebrew: חָלָה
         gloss: be sick, become ill, be weak
 
@@ -1075,6 +1074,10 @@ semantic_groups:
   vanity:
     description: "Vanity, emptiness — the fleeting, insubstantial nature of earthly pursuits"
     primary_genres: [wisdom]
+    nt_lemmas:
+      μάταιος: futile, empty, vain
+      κενός: empty, vain, without result
+      ματαιότης: futility, vanity
     ot_strongs:
       H1892:
         hebrew: הֶבֶל
@@ -1152,6 +1155,7 @@ semantic_groups:
     primary_genres: [prophetic]
     nt_lemmas:
       λεῖμμα: remnant
+      κατάλοιπος: remaining, left over
     ot_strongs:
       H7611:
         hebrew: שְׁאֵרִית
@@ -1191,6 +1195,8 @@ semantic_groups:
     primary_genres: [prophetic]
     nt_lemmas:
       χρηματισμός: divine response, oracle
+      προφητεία: prophecy, prophetic word
+      λόγιον: oracle, divine saying
     ot_strongs:
       H4853:
         hebrew: מַשָּׂא

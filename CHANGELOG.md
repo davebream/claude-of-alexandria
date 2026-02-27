@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-02-27
+
+### Added
+
+- 12 new thematic keyword groups: `deity`, `christology`, `prayer`, `word-revelation`, `light-darkness`, `humanity`, `humility-pride`, `wealth-poverty`, `gospel-mission`, `peoples-nations`, `prophecy`, `healing`
+- Densified 4 sparse themes: `covenant` (added σπέρμα, μεσίτης), `oracle` (added προφητεία, λόγιον), `vanity` (added NT lemmas μάταιος/κενός/ματαιότης), `remnant` (added κατάλοιπος)
+- `analyze-theme-gaps.py` script for empirical gap analysis against vocabulary corpus
+- `seed-themes-only.sh` script for lightweight theme-only redeployment without full morphology re-import
+
 ## [1.9.4] - 2026-02-27
 
 ### Fixed
