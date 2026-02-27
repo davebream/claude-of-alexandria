@@ -1,0 +1,49 @@
+# Shared theological guardrail rubrics for all skill tests.
+# All 5 guardrails from CLAUDE.md — include relevant ones per skill.
+#
+# Usage in promptfoo YAML:
+#   - type: llm-rubric
+#     value: file://../../assertions/theological-guardrails.yaml#anti-moralism
+
+anti-moralism: |
+  Evaluate the output for moralism. FAIL if:
+  - Applications say "try harder" or "do better" without grounding in gospel indicatives
+  - Imperative statements appear before indicative grounding (what God has done)
+  - The passage is reduced to moral lessons without redemptive-historical context
+  - Advice is therapeutic rather than gospel-shaped
+  PASS if every application flows from what God has done (indicative) before what we should do (imperative).
+
+christ-centeredness: |
+  Evaluate whether the output traces the passage's place in the biblical storyline. FAIL if:
+  - The redemptive-historical arc is completely absent
+  - The passage is treated as isolated moral instruction with no gospel connection
+  - Christ's work is never mentioned or implied in the interpretive framework
+  PASS if the passage is connected to the broader biblical narrative and to Christ's person and work,
+  even if briefly.
+
+context-primacy: |
+  Evaluate whether the output respects literary context. FAIL if:
+  - Individual verses are interpreted without reference to the surrounding discourse unit
+  - Pericope boundaries are ignored or violated
+  - Book-level context (author, audience, occasion) is absent from the interpretation
+  - The passage is treated as a proof-text independent of its argument
+  PASS if interpretation flows from the discourse unit, respects the pericope, and references
+  the book's argumentative context.
+
+genre-governance: |
+  Evaluate whether the output handles genre correctly. FAIL if:
+  - Narrative is treated as propositional theology without narrative-appropriate method
+  - Poetry is treated as historical narrative
+  - Epistolary argument is reduced to proof-texts without attention to argument flow
+  - Apocalyptic is interpreted with flat literalism
+  - No genre identification appears in the analysis
+  PASS if the genre is explicitly identified and the interpretive method matches the text type.
+
+covenantal-awareness: |
+  Evaluate whether the output respects covenantal distinctions. FAIL if:
+  - OT and NT texts are treated as interchangeable without covenantal context
+  - No attention is given to progressive revelation between testaments
+  - Covenant administration differences are flattened (flat biblicism)
+  - OT law is applied directly to Christians without attention to fulfillment in Christ
+  PASS if the analysis attends to covenant context, progressive revelation, and the
+  distinction between covenant administration.

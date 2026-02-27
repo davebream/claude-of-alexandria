@@ -1,0 +1,31 @@
+# GREEN-phase provider: agent has skills + MCP access
+# Spike confirmed: bare tool names, bypassPermissions required, working_dir = repo root
+id: anthropic:claude-agent-sdk
+label: with-skill
+config:
+  model: claude-sonnet-4-5-20250929
+  working_dir: ../../
+  setting_sources:
+    - project
+  permission_mode: bypassPermissions
+  allow_dangerously_skip_permissions: true
+  append_allowed_tools:
+    - Skill
+    - Read
+    - Write
+    - WebSearch
+    - list_books
+    - query_discourse_features
+    - query_paragraph_breaks
+    - query_vocabulary
+    - query_morphology
+    - query_ot_quotes
+    - query_lemmas
+    - query_themes_for_lemmas
+  max_turns: 40
+  max_budget_usd: 2.00
+  mcp:
+    enabled: true
+    servers:
+      - name: claude-of-alexandria-mcp
+        url: https://coa.davebream.com/mcp
