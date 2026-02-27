@@ -1810,6 +1810,18 @@ git commit -m "chore(release): bump version to 2.0.0"
 | Promptfoo RED/GREEN for agents | Same promptfoo testing methodology as skills. Agents get `promptfooconfig-red.yaml` and `promptfooconfig-green.yaml` under `tests/promptfoo/agents/`. |
 | Version 2.0.0 | New architectural layer (agents alongside skills) justifies major bump. |
 | Phase 4 (skill refactor) deferred | Whether `consult-biblical-scholar` skill should wrap `biblical-scholar` agent is decided after observing agent quality in production. |
+| plugin.json requires `agents` field | Task 0.3 verified: agents NOT auto-discovered without explicit `"agents": "./agents"` in plugin.json. Added to manifest. Requires new session to confirm discovery works. |
+
+### Task 0.3 Verification Results (2026-02-27)
+
+**Test in current session:**
+- Auto-discovery: **PENDING** — Agent not found without `agents` field in plugin.json. Added field. Requires new session to verify.
+- `plugin.json` update: **REQUIRED** — Added `"agents": "./agents"` to plugin.json.
+
+**Requires new session to verify:**
+- `tools` field restriction: PENDING
+- `model` frontmatter authority: PENDING
+- Promptfoo Agent SDK discovery: PENDING
 
 ---
 
