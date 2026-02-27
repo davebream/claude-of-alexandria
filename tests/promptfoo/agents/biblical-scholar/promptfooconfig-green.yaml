@@ -1,0 +1,146 @@
+# Promptfoo GREEN-phase tests for biblical-scholar agent.
+# Agent loaded with MCP access.
+#
+# Run: ./eval.sh --no-cache -c agents/biblical-scholar/promptfooconfig-green.yaml
+
+description: "biblical-scholar — GREEN phase (agent + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    # No devotional language in analytical output
+    - type: llm-rubric
+      value: |
+        FAIL if the response contains devotional or applicatory language:
+        - "This passage reminds us...", "we should...", "let us..."
+        - Pastoral framing or inspirational tone
+        - First-person plural applications
+        PASS if the output is purely analytical without devotional content.
+
+tests:
+
+  # S1: ANALYZE mode — structured output contract
+  - description: "S1 GREEN: ANALYZE mode — full structured output"
+    vars:
+      prompt: "Analyze Philippians 2:5-11"
+    assert:
+      - type: icontains
+        value: "MODE: ANALYZE"
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+      - type: icontains
+        value: "Scholarly Sources"
+      - type: icontains
+        value: "Limitations"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - Scholarly sources are attributed with tiers (A/B/C)
+          - At least one named commentary or scholar is cited
+          - MCP data is referenced (morphology, discourse features)
+          FAIL if sources say "scholars agree" without naming anyone.
+
+  # S2: VALIDATE mode — clear verdict
+  - description: "S2 GREEN: VALIDATE mode — explicit verdict, no hedging"
+    vars:
+      prompt: "Does Philippians 2:6 teach that Jesus is God? The claim is that 'morphē theou' refers to divine nature."
+    assert:
+      - type: icontains
+        value: "MODE: VALIDATE"
+      - type: icontains-any
+        value:
+          - "VERDICT: SUPPORTED"
+          - "VERDICT: COMPATIBLE"
+          - "VERDICT: NOT SUPPORTED"
+          - "VERDICT: INSUFFICIENT DATA"
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - VERDICT is clear and unhedged (one of the four options)
+          - Evidence section cites MCP morphology data for μορφή
+          - At least one scholarly source on the morphē theou debate
+          FAIL if verdict hedges with "it could be argued" or "scholars disagree"
+          without choosing a position.
+
+  # S3: TRACE mode — lemma distribution table
+  - description: "S3 GREEN: TRACE mode — distribution table with concentration analysis"
+    vars:
+      prompt: "Trace the distribution of δικαιοσύνη (dikaiosynē) across Paul's letters"
+    assert:
+      - type: icontains
+        value: "MODE: TRACE"
+      - type: icontains
+        value: "Distribution"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - Distribution table shows book, occurrences, chapters
+          - Concentration analysis identifies where the lemma clusters
+          - Related lemmas from themes are included
+          FAIL if no distribution table or just prose without structured data.
+
+  # S4: Confidence ceiling — degraded data
+  - description: "S4 GREEN: Confidence ceiling — capped on tool failure"
+    vars:
+      prompt: "Analyze Romans 3:21-26. NOTE: data-retriever returned: TOOL_RESULTS: query_morphology: FAILED connection timeout, query_discourse_features: CALLED, query_vocabulary: CALLED. Use this pre-fetched data and determine your confidence ceiling."
+    assert:
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: LOW"
+          - "CONFIDENCE: MEDIUM"
+      - type: icontains
+        value: "Limitations"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - Confidence is capped at LOW or MEDIUM (not HIGH) due to morphology failure
+          - Limitations section explains which tool failed
+          - Recovery path mentioned (direct MCP fallback or noting the gap)
+          FAIL if confidence is HIGH despite a critical tool failure.
+
+  # S5: No devotional drift — analytical tone
+  - description: "S5 GREEN: Analytical output — no devotional language"
+    vars:
+      prompt: "Analyze John 3:16"
+    assert:
+      - type: icontains
+        value: "MODE: ANALYZE"
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+
+  # S6: Source attribution quality
+  - description: "S6 GREEN: Source attribution — tiered citations"
+    vars:
+      prompt: "What does ἐπιτελέω (epiteleō) mean in Philippians 1:6?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - Every scholarly claim has explicit tier attribution (Tier A/B/C or [A]/[B]/[C])
+          - At least one named author + work is cited
+          - MCP morphology data cited for ἐπιτελέω
+          - Output scales appropriately (brief, not full-length analysis)
+          FAIL if "scholars agree" appears without a specific named source.

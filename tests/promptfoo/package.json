@@ -22,6 +22,12 @@
     "eval:data-retriever:red": "npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml",
     "eval:data-retriever:green": "npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-green.yaml",
     "eval:data-retriever": "npm run eval:data-retriever:red && npm run eval:data-retriever:green",
+    "eval:biblical-scholar:red": "npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-red.yaml",
+    "eval:biblical-scholar:green": "npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-green.yaml",
+    "eval:biblical-scholar": "npm run eval:biblical-scholar:red && npm run eval:biblical-scholar:green",
+    "eval:study-evaluator:red": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml",
+    "eval:study-evaluator:green": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-green.yaml",
+    "eval:study-evaluator": "npm run eval:study-evaluator:red && npm run eval:study-evaluator:green",
     "view": "promptfoo view"
   },
   "keywords": [],

@@ -1,0 +1,70 @@
+# Promptfoo RED-phase tests for biblical-scholar agent.
+# Bare model: no agent, no MCP. Documents failure modes the agent must prevent.
+#
+# Run: ./eval.sh --no-cache -c agents/biblical-scholar/promptfooconfig-red.yaml
+
+description: "biblical-scholar — RED phase (bare model, no agent, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # S1: ANALYZE mode — expect no structured mode detection
+  - description: "S1 RED: ANALYZE mode — no MODE/CONFIDENCE structure without agent"
+    vars:
+      prompt: "Analyze Philippians 2:5-11 exegetically. State your confidence level and attribute all scholarly claims with source tiers."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks:
+          - Explicit MODE: ANALYZE header
+          - CONFIDENCE tier stated prominently at the top
+          - Structured output with separate Scholarly Sources and Limitations sections
+          FAIL if the response spontaneously produces the full structured output contract.
+
+  # S2: VALIDATE mode — expect hedging, no clear verdict
+  - description: "S2 RED: VALIDATE mode — hedging instead of verdict without agent"
+    vars:
+      prompt: "Does Philippians 2:6 teach that Jesus is God? The claim is that 'morphē theou' refers to divine nature. Give a clear verdict."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Hedges ("it could be argued", "scholars disagree") without a clear verdict, OR
+          - Lacks an explicit VERDICT line (SUPPORTED/COMPATIBLE/NOT SUPPORTED/INSUFFICIENT DATA), OR
+          - Does not use MCP data citations to ground the verdict
+          FAIL if the response produces a structured VERDICT with MCP-grounded evidence.
+
+  # S5: No devotional drift — expect applicational language
+  - description: "S5 RED: Devotional drift — applicational language expected without agent"
+    vars:
+      prompt: "Analyze John 3:16"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response contains devotional or applicational language:
+          - "this verse reminds us", "we should", "God so loved us", pastoral framing
+          - First-person plural applications
+          FAIL ONLY if the response is purely analytical with zero devotional content
+          AND includes explicit scholarly source attribution.
+
+  # S6: Source attribution — expect unsourced consensus claims
+  - description: "S6 RED: Source attribution — vague citations without agent"
+    vars:
+      prompt: "What does ἐπιτελέω (epiteleō) mean in Philippians 1:6? Cite scholarly sources with attribution tiers."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if scholarly claims use vague attribution:
+          - "scholars agree", "many commentators", "it is widely held"
+          - No source tier labels (A/B/C)
+          - No specific author + work citations
+          FAIL if all scholarly claims have explicit tier + author + work attribution.
