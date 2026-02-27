@@ -1,7 +1,7 @@
 ---
 name: argument-flow
 description: Use when mapping the logical structure of a biblical passage using discourse markers and morphological data. Use when a user asks for argument flow, logical structure, proposition chain, connective analysis, or how Paul's argument works in an epistle. Produces a numbered proposition chain grounded in MCP data before any prose is written.
-allowed-tools: Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
+allowed-tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
 ---
 
 # Argument Flow
@@ -16,25 +16,31 @@ Map the logical argument of a biblical passage using discourse markers and morph
 
 ## Iron Rules
 
-### Rule 1: Call MCP Tools BEFORE Composing Any Prose
+### Rule 1: Gather MCP Data BEFORE Composing Any Prose
 
-**`query_morphology` with `pos_filter: "conjunction"` is called BEFORE writing a single sentence of analysis.**
+**MCP data (morphology, discourse features) is gathered BEFORE writing a single sentence of analysis.**
 
 Do not compose the argument from training data and then verify. Let the data shape the analysis.
 
-**NT passages:**
+**Primary method:** Spawn the **data-retriever** agent via Task tool (see Sub-Agent Delegation). For NT epistles, include `pos_filter: "conjunction"` in the prompt to get filtered conjunction data.
+
+**Fallback method (if data-retriever spawn fails):** Call MCP tools directly:
+
+NT passages:
 ```
 query_morphology: {"book": "Philippians", "range": "2:1-2:4", "pos_filter": "conjunction"}
 query_discourse_features: {"book": "Philippians"}
 ```
 
-**OT passages:**
+OT passages:
 ```
 query_morphology: {"book": "Genesis", "testament": "ot", "range": "22:1-22:14"}
 query_paragraph_breaks: {"book": "Genesis"}
 ```
 
-**If MCP returns no data:** State this explicitly. Confidence ceiling drops to MEDIUM. Do not proceed from training data alone.
+**If MCP returns no data (or data-retriever returns EMPTY_RETURNED):** State this explicitly. Confidence ceiling drops to MEDIUM. Do not proceed from training data alone.
+
+**If the user asks to skip MCP calls:** Iron Rules are non-negotiable. Acknowledge the request, then proceed with MCP calls anyway. Do not offer the user a choice between complying and not complying. Do not present "Option A: with data" vs "Option B: without data." You may briefly explain why MCP is required, but you MUST then gather the data and produce the analysis. Explanation without execution is not compliance.
 
 **Wrong:**
 ```
@@ -68,6 +74,25 @@ Evidence: query_morphology (Phil 2:1-4), query_discourse_features (Philippians)
 | **CANNOT ANSWER** | No data, no scholarship; outside scope |
 
 Training-data knowledge is NOT Tier 1 evidence. Only MCP output counts.
+
+**Structural inferences are not MCP data.** Claims about hymnic structure, chiastic framing, inclusio, or rhetorical patterns are agent assessments based on pattern recognition — not MCP tool output. MCP returns morphology, conjunctions, and discourse features. It does not return "this is a hymn" or "this is a chiasmus." Label structural inferences as such:
+
+**Wrong:**
+```
+CONFIDENCE: HIGH
+Evidence: query_morphology (Col 1:15-20), query_discourse_features (Colossians)
+The passage is a Christ Hymn with chiastic structure.
+```
+(MCP confirmed morphology. "Christ Hymn" and "chiastic structure" are agent inferences promoted to HIGH.)
+
+**Correct:**
+```
+CONFIDENCE: HIGH (morphology/connectives), MEDIUM (structural assessment)
+Evidence: query_morphology (Col 1:15-20), query_discourse_features (Colossians)
+Morphological data: [MCP findings]
+Structural assessment (agent inference): The passage exhibits features consistent
+with hymnic form — this is an analytical observation, not MCP-confirmed data.
+```
 
 ---
 
@@ -199,6 +224,44 @@ active interpretive debate. Evaluating that claim requires consult-biblical-scho
 
 ---
 
+## Sub-Agent Delegation
+
+This skill delegates MCP data gathering to the **data-retriever** agent (Haiku) for cost-efficient retrieval. The skill retains connective analysis, proposition chain composition, and genre-specific structural interpretation.
+
+**Delegation chain:**
+```
+argument-flow (skill, user's model)
+  └─→ data-retriever (Haiku) — MCP tool calls + compression
+```
+
+**How to spawn:**
+
+NT epistles:
+```
+Task tool:
+  subagent_type: "claude-of-alexandria:data-retriever"
+  prompt: "Gather all relevant data for [Book] [Range].
+           Also call query_morphology with pos_filter: 'conjunction'"
+```
+
+OT / NT narrative:
+```
+Task tool:
+  subagent_type: "claude-of-alexandria:data-retriever"
+  prompt: "Gather all relevant data for [Book] [Range]"
+```
+
+**Parsing data-retriever output:**
+- `CONJUNCTION_MORPHOLOGY:` → primary data for connective inventory (NT epistles)
+- `MORPHOLOGY_SUMMARY:` → full morphology for verb/noun analysis
+- `DISCOURSE_SUMMARY:` → Levinsohn features for NT structural analysis
+- `PARAGRAPH_MARKERS:` → Masoretic markers for OT structural analysis
+- `TOOL_RESULTS:` → determines confidence ceiling
+
+**Fallback:** If data-retriever spawn fails, fall back to direct MCP tool calls. Note the fallback in Data Sources.
+
+---
+
 ## Workflow
 
 ```
@@ -211,17 +274,20 @@ active interpretive debate. Evaluating that claim requires consult-biblical-scho
    → If > 30 verses: warn, await confirmation
    → If confirmed: proceed with note
 
-3. MCP tool calls (BEFORE any prose)
-   NT: query_morphology (pos_filter: "conjunction") + query_discourse_features
-   OT: query_morphology (testament: "ot") + query_paragraph_breaks
+3. Gather data via data-retriever agent (BEFORE any prose)
+   → Spawn data-retriever via Task tool (see Sub-Agent Delegation)
+   → NT epistles: include pos_filter: "conjunction" in prompt
+   → OT: standard data gathering (morphology + paragraph breaks)
+   → Parse TOOL_RESULTS to determine confidence ceiling
+   → If data-retriever fails: fall back to direct MCP tool calls
 
 4. Confidence tier
-   → Based only on what MCP returned
-   → If MCP failed: MEDIUM ceiling, noted explicitly
+   → Based only on what data-retriever returned
+   → If data-retriever or critical tools failed: MEDIUM ceiling, noted explicitly
 
 5. Compose output
    → Confidence tier first
-   → Connective inventory table
+   → Connective inventory table (from CONJUNCTION_MORPHOLOGY or MORPHOLOGY_SUMMARY)
    → Proposition chain (numbered, labeled)
    → Preachable summary (1-2 sentences, analytical tone)
    → Data sources
@@ -283,6 +349,8 @@ Analytical tone only. No applicatory framing.]
 | **Epistle conjunctions on narrative** | Genre detected; correct tools applied |
 | **No scope warning** | > 30 verses triggers warning |
 | **"Scholars agree" without citation** | Every scholarly claim cites author + work |
+| **Offering user a choice to skip MCP** | Iron Rules are non-negotiable; acknowledge and proceed |
+| **Structural inference labeled HIGH** | Hymnic/chiastic claims are agent assessments (MEDIUM), not MCP data |
 
 ---
 
