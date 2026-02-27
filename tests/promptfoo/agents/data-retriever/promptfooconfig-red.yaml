@@ -1,0 +1,75 @@
+# Promptfoo RED-phase tests for data-retriever agent.
+# Agent is completely bare: no agent loaded, no MCP, no biblical tools.
+# These tests document failure modes that the agent must prevent.
+#
+# Run: ./eval.sh --no-cache -c agents/data-retriever/promptfooconfig-red.yaml
+
+description: "data-retriever — RED phase (bare model, no agent, no MCP)"
+
+providers:
+  - file://../../providers/without-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/without-skill.yaml
+
+tests:
+
+  # S1: NT full data — expect inconsistent format without agent
+  - description: "S1 RED: NT full data — no structured output without agent"
+    vars:
+      prompt: "Gather all relevant biblical data for Philippians 2:5-11. Include morphology, discourse features, vocabulary, OT quotes, lemma distribution, and thematic keywords. Use a structured format with TOOL_RESULTS tracking."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks the structured output contract:
+          - Missing PASSAGE/TESTAMENT header
+          - Missing TOOL_RESULTS section listing all 7 tools with status labels
+          - No explicit SKIPPED_NT/SKIPPED_OT routing labels
+          - Data presented as prose or ad-hoc format rather than the contract schema
+          FAIL if the response spontaneously produces the exact output contract format
+          with all 7 tools tracked and proper routing labels.
+
+  # S2: OT full data — expect wrong testament routing
+  - description: "S2 RED: OT full data — routing errors expected without agent"
+    vars:
+      prompt: "Gather all relevant biblical data for Genesis 1:1-5. Include morphology with testament parameter, paragraph breaks, vocabulary, lemma distribution, and themes."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Does NOT use explicit SKIPPED_OT labels for NT-only tools, OR
+          - Does NOT pass testament: "ot" to morphology queries, OR
+          - Lacks structured TOOL_RESULTS tracking, OR
+          - Presents data in ad-hoc format
+          FAIL if the response shows correct OT routing with proper skip labels.
+
+  # S3: Unrecognized book — expect no error handling
+  - description: "S3 RED: Unrecognized book — no controlled error without agent"
+    vars:
+      prompt: "Gather morphology data for Tobit 1:1-5"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Attempts to provide data for Tobit (fabrication), OR
+          - Does not explicitly flag Tobit as unrecognized via a lookup table, OR
+          - Provides general knowledge about Tobit without an ERROR response
+          FAIL if the response produces a structured ERROR with "not in lookup table" language
+          and refuses to call any tools.
+
+  # S6: Compression quality — expect raw dumps without agent
+  - description: "S6 RED: Compression — no structured compression without agent"
+    vars:
+      prompt: "Gather all relevant biblical data for Romans 8:1-11 and compress it into summaries grouped by category."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response lacks structured compression:
+          - No POS-grouped morphology summaries
+          - No MORPHOLOGY_SUMMARY/DISCOURSE_SUMMARY/VOCABULARY_SUMMARY sections
+          - Data is prose-based or unstructured
+          FAIL if the response produces compressed summaries in the exact contract format.

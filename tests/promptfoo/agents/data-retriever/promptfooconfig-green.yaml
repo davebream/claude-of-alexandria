@@ -1,0 +1,159 @@
+# Promptfoo GREEN-phase tests for data-retriever agent.
+# Agent loaded via setting_sources; MCP tools available.
+#
+# Run: ./eval.sh --no-cache -c agents/data-retriever/promptfooconfig-green.yaml
+
+description: "data-retriever — GREEN phase (agent + MCP)"
+
+providers:
+  - file://../../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../../providers/with-skill.yaml
+  assert:
+    # Every GREEN test must use MCP tools
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+
+tests:
+
+  # S1: NT full data — structured output contract
+  - description: "S1 GREEN: NT full data — complete output contract"
+    vars:
+      prompt: "Gather all relevant data for Philippians 2:5-11"
+    assert:
+      - type: icontains
+        value: "PASSAGE:"
+      - type: icontains
+        value: "TESTAMENT: NT"
+      - type: icontains
+        value: "TOOL_RESULTS:"
+      - type: icontains
+        value: "MORPHOLOGY_SUMMARY:"
+      - type: icontains
+        value: "DISCOURSE_SUMMARY:"
+      - type: icontains
+        value: "VOCABULARY_SUMMARY:"
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS section. PASS if:
+          - query_morphology shows CALLED
+          - query_discourse_features shows CALLED (NT passage)
+          - query_paragraph_breaks shows SKIPPED_NT
+          - All 7 tools are listed with status labels
+          FAIL if any tool is missing from TOOL_RESULTS or routing is wrong.
+
+  # S2: OT full data — testament routing
+  - description: "S2 GREEN: OT full data — correct OT routing"
+    vars:
+      prompt: "Gather all relevant data for Genesis 1:1-5"
+    assert:
+      - type: icontains
+        value: "TESTAMENT: OT"
+      - type: icontains
+        value: "PARAGRAPH_MARKERS:"
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS and routing. PASS if:
+          - query_discourse_features shows SKIPPED_OT
+          - query_paragraph_breaks shows CALLED
+          - query_ot_quotes shows SKIPPED_OT
+          FAIL if NT-only tools are called for OT passage.
+
+  # S3: Unrecognized book — error handling
+  - description: "S3 GREEN: Unrecognized book — ERROR response"
+    vars:
+      prompt: "Gather morphology data for Tobit 1:1-5"
+    assert:
+      - type: icontains
+        value: "ERROR"
+      - type: llm-rubric
+        value: |
+          PASS if response clearly states Tobit is not recognized and does NOT
+          fabricate any biblical data or call any MCP tools.
+          FAIL if data is provided for Tobit or MCP tools are called.
+
+  # S4: Specific data request — selective tool calling
+  - description: "S4 GREEN: Morphology only — other tools SKIPPED"
+    vars:
+      prompt: "Gather only morphology data for John 3:16"
+    assert:
+      - type: icontains
+        value: "TOOL_RESULTS:"
+      - type: llm-rubric
+        value: |
+          Check TOOL_RESULTS. PASS if:
+          - query_morphology shows CALLED
+          - Other tools show SKIPPED (not SKIPPED_OT/SKIPPED_NT, just SKIPPED)
+          - All 7 tools still listed (none omitted)
+          FAIL if non-requested tools are CALLED or any tool is omitted.
+
+  # S5: Empty data handling
+  - description: "S5 GREEN: Empty data — EMPTY_RETURNED label used"
+    vars:
+      prompt: "Gather OT quotes for 3 John 1:1-4"
+    assert:
+      - type: icontains
+        value: "TOOL_RESULTS:"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - query_ot_quotes shows CALLED in TOOL_RESULTS
+          - OT_QUOTES_SUMMARY shows EMPTY_RETURNED (not omitted or fabricated)
+          - All other sections still present
+          FAIL if the OT_QUOTES_SUMMARY section is missing or shows fabricated quotes.
+
+  # S6: Compression quality
+  - description: "S6 GREEN: Compression — POS-grouped, not raw JSON"
+    vars:
+      prompt: "Gather all relevant data for Romans 8:1-11"
+    assert:
+      - type: icontains
+        value: "MORPHOLOGY_SUMMARY:"
+      - type: llm-rubric
+        value: |
+          Check MORPHOLOGY_SUMMARY. PASS if:
+          - Data is grouped by POS (verbs, nouns, etc.) not word-by-word dump
+          - Lemmas listed with frequencies (e.g., "λέγω (3x, present active)")
+          - Output is compressed, not raw JSON
+          FAIL if raw MCP JSON is echoed back or data is a word-by-word dump.
+
+  # S7: OT poetry passage
+  - description: "S7 GREEN: OT poetry — correct routing for Psalm 23"
+    vars:
+      prompt: "Gather all relevant data for Psalm 23"
+    assert:
+      - type: icontains
+        value: "TESTAMENT: OT"
+      - type: icontains
+        value: "PARAGRAPH_MARKERS:"
+      - type: llm-rubric
+        value: |
+          PASS if OT routing is correct:
+          - query_discourse_features: SKIPPED_OT
+          - query_ot_quotes: SKIPPED_OT
+          - query_paragraph_breaks: CALLED
+          FAIL if NT-only tools are called for this OT passage.
+
+  # S9: Large passage — truncation handling
+  - description: "S9 GREEN: Large passage — truncation reported"
+    vars:
+      prompt: "Gather all relevant data for Romans 1-8"
+    assert:
+      - type: icontains
+        value: "TRUNCATION:"
+      - type: icontains
+        value: "TOOL_RESULTS:"
+      - type: llm-rubric
+        value: |
+          PASS if:
+          - TRUNCATION field is present (may show truncated tools or NONE)
+          - TOOL_RESULTS section is complete (all 7 tools listed)
+          - Compression is aggressive for this large passage
+          FAIL if TOOL_RESULTS is incomplete or TRUNCATION field is missing.
