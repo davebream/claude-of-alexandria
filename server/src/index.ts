@@ -10,6 +10,7 @@ import { listBooks, ListBooksInputSchema, ListBooksOutputSchema } from './tools/
 import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tools/ot-quotes.js';
 import { queryThemesForLemmas, ThemesInputSchema, ThemesOutputSchema } from './tools/themes.js';
 import { queryLemmas, LemmasInputSchema, LemmasOutputSchema, type LemmasInput } from './tools/lemmas.js';
+import { queryThemeDistribution, ThemeDistributionInputSchema, ThemeDistributionOutputSchema } from './tools/theme-distribution.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -124,6 +125,23 @@ Examples:
   - Resolve NT lemmas: lemmas=["χαίρω", "χαρά", "εἰρήνη"], testament="nt"
   - Resolve OT Strong's codes: lemmas=["H2617a", "H6664", "H4941"], testament="ot"
   - Pipeline use (suppress unmatched): lemmas=[...from morphology...], testament="nt", include_unmatched=false`;
+
+const DESC_THEME_DISTRIBUTION = `Query the canonical distribution of a thematic keyword group across all books in a testament.
+
+Unlike query_vocabulary (which filters within one book), this tool shows where a theme appears across the entire NT or OT — every book, every lemma, every chapter — sorted by density.
+
+Args:
+  - theme (string, required): Theme name (e.g., "joy", "faith", "covenant", "deity"). Use list_books with include_themes=true to see all 81 available themes. If the theme is not found, the error response lists all available themes for that testament.
+  - testament (string, required): "nt" or "ot" — themes are testament-specific
+
+Returns: { theme, testament, theme_lemmas: string[], books: [{book, total, by_lemma: {lemma: {chapter: count}}}], summary: {total_occurrences, books_count} }
+
+Books are sorted by total occurrences descending (densest theme use first).
+
+Examples:
+  - Where does "joy" appear across the NT? theme="joy", testament="nt"
+  - Covenant theme across the OT: theme="covenant", testament="ot"
+  - Deity language across the NT: theme="deity", testament="nt"`;
 
 const DESC_LEMMAS = `Query cross-book distribution of specific lemma IDs across the biblical canon.
 
@@ -335,6 +353,21 @@ function createServer(): McpServer {
       () => queryLemmas(normalizedArgs as unknown as LemmasInput)
     );
   });
+
+  server.registerTool('query_theme', {
+    title: 'Query Theme Distribution',
+    description: DESC_THEME_DISTRIBUTION,
+    inputSchema: ThemeDistributionInputSchema,
+    outputSchema: ThemeDistributionOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_theme', args as unknown as Record<string, unknown>, () => queryThemeDistribution(args))
+  );
 
   return server;
 }
