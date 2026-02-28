@@ -37,8 +37,8 @@ Extract the passage reference from any of these forms. Ignore skill invocation f
 ### Rule 1: Data First, Memory Last
 
 Always check discourse data BEFORE forming a verdict:
-- **NT passages:** Call `query_discourse_features` MCP tool for Levinsohn GNT data
-- **OT passages:** Call `query_paragraph_breaks` MCP tool for Masoretic markers
+- **NT passages:** Call `query_discourse_features` AND `query_morphology` MCP tools
+- **OT passages:** Call `query_paragraph_breaks` AND `query_morphology` (with `testament: "ot"`) MCP tools
 - **Both:** Check genre-specific conventions from book-genres.yaml
 
 Never say "this passage works well" based on training knowledge alone.
@@ -53,10 +53,12 @@ Always assess start and end boundaries INDEPENDENTLY:
 ### Rule 3: Structured Verdict First
 
 Lead with the verdict before explanation:
-- **VALID** — passage is a coherent discourse unit with boundary evidence
+- **VALID** — passage is a single coherent discourse unit with boundary evidence
 - **EXTEND** — passage should include additional verses (specify which + why)
 - **CONTRACT** — passage includes multiple units (specify split point + why)
 - **ADJUST** — both start and end need adjustment
+
+**CONTRACT vs VALID:** If the passage contains 3+ identifiable sub-units with confirmed internal boundaries (e.g., PoD markers, disclosure formulas, vocative shifts between sub-sections), the verdict is **CONTRACT**, not VALID — even if start and end boundaries are confirmed. A passage spanning prescriptio + thanksgiving + body + hymn is NOT a single unit; it is multiple units that happen to have valid outer boundaries. Acknowledging sub-units while calling the passage VALID is a contradiction — use CONTRACT and list the split points.
 
 ### Rule 4: Always Recommend What To Do
 
@@ -84,6 +86,7 @@ Every assessment must end with a `### Data Sources` subsection citing:
 2. Check boundary data (NT or OT)
    NT: Call query_discourse_features MCP tool for features at/near start and end verse
    OT: Call query_paragraph_breaks MCP tool for markers (פ/ס) at/near start and end verse
+   OT: Also call query_morphology with testament: "ot" for morphological context
 
 3. Check genre-specific markers
    → Epistolary formulas (NT letters), toledot (Genesis), etc.
