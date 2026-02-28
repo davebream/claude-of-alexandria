@@ -258,44 +258,31 @@ Check the genre entry for the book to apply the correct boundary methodology.
 
 ---
 
-## Example Assessment
+## Example Assessment Format
 
-### Input: Phil 1:3-8
+### Input: [Book X:Y-Z]
 
 ```markdown
-## Pericope Assessment: Philippians 1:3-8
+## Pericope Assessment: [Book X:Y-Z]
 
-**Verdict:** EXTEND to 1:3-11
+**Verdict:** [VALID / EXTEND to X:Y-W / CONTRACT / ADJUST]
 
-### Start Boundary (1:3)
-**Status:** Confirmed
-- Epistolary convention: εὐχαριστῶ formula begins standard thanksgiving period
-- Levinsohn: Referential PoD at 1:3 signals new section after prescriptio (1:1-2)
-- The prescriptio (salutation) ends at 1:2; thanksgiving period begins at 1:3
+### Start Boundary (X:Y)
+**Status:** [Confirmed / Weak / Mid-unit]
+- [Discourse evidence for start boundary]
+- [Genre-specific markers]
 
-### End Boundary (1:8)
-**Status:** Weak — mid-argument
-- Levinsohn: No PoD or boundary feature at 1:9; continuity markers present
-- No discourse discontinuity between 1:8 and 1:9
-- The grounds for the thanksgiving (1:7-8) set up the prayer request (1:9-11)
-- Levinsohn: Disclosure formula γινώσκειν at 1:12 confirms NEXT unit begins there
+### End Boundary (X:Z)
+**Status:** [Confirmed / Weak / Mid-unit]
+- [Discourse evidence for end boundary]
+- [What the data shows at Z and Z+1]
 
 ### Recommendation
-Extend to **1:3-11**. The thanksgiving-prayer period (εὐχαριστῶ...ἐπιτελέσει...
-καρπὸν δικαιοσύνης) is a single rhetorical movement. Ending at 1:8 severs
-the prayer request (1:9-11) from the thanksgiving it responds to.
+[1-2 sentences explaining the verdict with evidence]
 
-The boundary at 1:12 is positively confirmed by the disclosure formula
-γινώσκειν (1:12) — this is the standard Pauline signal for new section onset.
-
-**Minimum viable pericope:** 1:3-6 (thanksgiving proper, ending with the
-ἐπιτελέσει promise). But this loses the grounds (1:7-8) and prayer (1:9-11)
-that give the thanksgiving its epistolary completeness.
+**Minimum viable pericope:** [shortest coherent sub-unit, if applicable]
 
 ### Data Sources
-- Levinsohn GNT Discourse Features (dataset 2016; book: Levinsohn 2000): Referential_PoD checked for Phil 1:3;
-  boundary features checked for 1:8-1:9 (none found); γινώσκειν formula confirmed at 1:12
-- Genre: Epistle (epistolary markers primary) — book-genres.yaml: Philippians = epistle
-- MorphGNT/SBLGNT: γινώσκειν form confirmed at 1:12
-- MCP tools called: `query_discourse_features`, `query_morphology`
+- [MCP tools called with specific parameters]
+- [Discourse features checked with verse references]
 ```

@@ -391,18 +391,18 @@ Omit Confidence tier, Connective Inventory, and Proposition Chain in this mode.
 a thematic antithesis. Detect these by looking for:
 - Explicit μέν...δέ constructions
 - Repeated vocabulary in opposing senses (e.g., σάρξ vs πνεῦμα, θάνατος vs ζωή)
-- Parallel syntactic structures with contrasting content (τὸ φρόνημα τῆς σαρκός...τὸ φρόνημα τοῦ πνεύματος)
+- Parallel syntactic structures with contrasting content (e.g., τὸ [concept] τῆς X...τὸ [concept] τοῦ Y)
 - δέ without μέν that still marks contrast (check context)
 
 Report the FULL RANGE of the contrast, not just the verse with the syntactic marker.
-Example: if 8:5-6 contrasts flesh/Spirit mindset and 8:7-8 continues the flesh-side
-argument, the contrast zone is 8:5-8 (or 8:5-9 if 8:9 resolves it).
+Example: if A:X-Y introduces one pole and A:Z-W continues it, report the full range
+A:X-W (or A:X-W+1 if the next verse resolves the contrast).
 
 **Dialogue boundary detection:** For narrative/dialogue passages, list every question-answer
 pair with verse references:
-- `Dialogue boundaries (Q/A pairs): 3:4/3:5-8, 3:9/3:10-12`
-This means: Nicodemus asks at 3:4, Jesus answers at 3:5-8; Nicodemus asks at 3:9,
-Jesus answers at 3:10-12. Do not split any pair.
+- `Dialogue boundaries (Q/A pairs): X:A/X:B-D, X:E/X:F-H`
+This means: Speaker asks at X:A, respondent answers at X:B-D; speaker asks at X:E,
+respondent answers at X:F-H. Do not split any pair.
 
 ---
 

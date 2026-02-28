@@ -5,10 +5,10 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/pericope-delimitation/baseline.md):
-#   S1: Truncated pericope — verdict correct but no Levinsohn data
-#   S4: OT narrative pericope — no Masoretic data check
-#   S7: Single verse — no structural boundary enforcement
-#   S10: Resistance test — memory-based validation expected
+#   S1: Truncated pericope — treats "one" climax as natural boundary (Eph 4:1-6)
+#   S4: OT narrative pericope — narrative-only reasoning without textual markers
+#   S7: Single verse — fame-based leniency instead of discourse-unit analysis
+#   S10: Resistance test — authority-bias validation instead of structural evidence
 
 description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
 
@@ -25,34 +25,38 @@ defaultTest:
 tests:
 
   # =========================================================================
-  # Scenario 1: Truncated NT Pericope — Phil 1:3-8
-  # Without skill: verdict may be correct but no Levinsohn data cited
-  # Manual TDD baseline: correct instinct but memory-based, no Data Sources
+  # Scenario 1: Truncated NT Pericope — Eph 4:1-6
+  # Failure: Treats truncated pericope as complete
+  # The sevenfold "one" climax (one body, one Spirit... one God) feels like
+  # a natural conclusion, but 4:7-16 completes the unity-AND-diversity argument.
+  # Bare model accepts the climax as a natural boundary.
   # =========================================================================
-  - description: "S1 RED: Phil 1:3-8 — no structured verdict without skill"
+  - description: "S1 RED: Eph 4:1-6 — treats truncated pericope as complete"
     vars:
-      prompt: "Check whether Philippians 1:3-8 is a valid pericope. Assess the start and end boundaries using discourse evidence."
+      prompt: "Is Ephesians 4:1-6 a valid pericope for a study on Christian unity?"
     assert:
-      # Failure mode: No structured output format (verdict + boundaries + sources)
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks the full structured pericope assessment format.
-          Specifically, check whether ALL THREE of these elements are present:
-          1. A formal verdict label (VALID / EXTEND / CONTRACT / ADJUST)
-          2. Boundary status labels (Confirmed / Weak / Mid-unit) for BOTH start AND end
-          3. A Data Sources section citing specific Levinsohn discourse feature names
-          FAIL only if ALL THREE elements are present together with specific
-          Levinsohn feature citations. A bare model may give correct advice but
-          will not produce the structured output format with all three elements.
+          PASS if the response validates Eph 4:1-6 as a complete unit for studying
+          unity. Signs:
+          - Calls it "a natural pericope" or "valid" or "well-bounded"
+          - Treats the sevenfold "one" climax (one body, one Spirit... one God)
+            as a natural conclusion
+          - Does not strongly object that 4:7-16 is structurally continuous
+            (the diversity half of the unity-and-diversity argument)
+
+          FAIL if the response firmly insists that 4:1-6 is truncated because
+          4:7-16 completes the unity-diversity argument AND that stopping at
+          the "one" climax severs the argument.
 
   # =========================================================================
   # Scenario 4: OT Narrative Pericope — Gen 37:2-11
-  # Without skill: no Masoretic data check expected
-  # Manual TDD baseline: correct verdict but no פ/ס citations
+  # Failure: Narrative-only reasoning
+  # Bare model uses story logic without distinguishing textual markers from inference
   # =========================================================================
-  - description: "S4 RED: Gen 37:2-11 — no Masoretic data without skill"
+  - description: "S4 RED: Gen 37:2-11 — narrative-only reasoning without textual markers"
     vars:
       prompt: "Is Genesis 37:2-11 a valid pericope? Check if the boundaries are sound."
     assert:
@@ -60,19 +64,24 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response does not cite specific Masoretic paragraph markers
-          (petuchot פ or setumah ס) with verse references from MCP tool data.
-          PASS also if the response mentions "Masoretic" in general terms without
-          specific marker citations at specific verses (e.g., "פ at 37:2").
-          FAIL only if specific Masoretic markers are cited with verse references
-          AND attributed to MCP tool calls like [query_paragraph_breaks].
+          PASS if the response relies on narrative/story-level reasoning to assess
+          boundaries — scene changes, character introductions, plot shifts — WITHOUT
+          distinguishing these inferences from actual textual boundary markers. Signs:
+          - Uses phrases like "the story shifts," "new scene," "character introduction"
+          - Does not distinguish between textual evidence (Masoretic markers, discourse
+            features at specific verses) and interpretive inference (narrative arc)
+          - Treats "the narrative naturally breaks here" as sufficient evidence
+
+          FAIL if the response explicitly separates textual boundary evidence (e.g.,
+          Masoretic פ/ס markers, discourse features) from narrative inference AND
+          rates them at different confidence levels.
 
   # =========================================================================
   # Scenario 7: Single Verse — John 3:16
-  # Without skill: may validate based on fame, not discourse data
-  # Manual TDD baseline: not tested in manual RED, but predictable failure
+  # Failure: Fame-based leniency
+  # Bare model validates based on cultural significance, not discourse-unit analysis
   # =========================================================================
-  - description: "S7 RED: John 3:16 — famous verse gets lenient treatment without skill"
+  - description: "S7 RED: John 3:16 — fame-based leniency for famous verse"
     vars:
       prompt: "Is John 3:16 a valid pericope for exegetical study?"
     assert:
@@ -80,21 +89,25 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response either:
-          - Validates John 3:16 as usable/preachable without strong structural objection, OR
-          - Suggests extension but without citing specific Levinsohn discourse features
-            at verse boundaries, OR
-          - Lacks a formal verdict label (VALID/EXTEND/CONTRACT/ADJUST)
-          FAIL if the response issues a formal EXTEND verdict citing specific
-          discourse discontinuity data from MCP tools with verse references.
+          PASS if the response is lenient toward John 3:16 as a study unit — treating
+          its fame, memorability, or theological richness as mitigating factors. Signs:
+          - Acknowledges the verse is "too short" but then suggests it's still "usable"
+            or "preachable" or "a valid starting point"
+          - Discusses the verse's importance or content rather than its structural
+            inadequacy as a discourse unit
+          - Does not issue a firm rejection based on discourse-unit minimum size
+
+          FAIL if the response firmly rejects a single verse as structurally inadequate
+          for a pericope AND insists on extension based on discourse-unit boundaries
+          (not just "it would be better with more context").
 
   # =========================================================================
   # Scenario 10: Resistance Test — Rom 1:16-17
-  # Without skill: memory-based "propositio" validation expected
-  # Manual TDD baseline: agent correctly identified as mid-unit (surprise)
-  #   but still no Levinsohn data, no structured output
+  # Failure: Authority-bias validation
+  # Bare model validates because it's "the thesis/propositio," conflating
+  # theological importance with structural independence
   # =========================================================================
-  - description: "S10 RED: Rom 1:16-17 — no Levinsohn verification without skill"
+  - description: "S10 RED: Rom 1:16-17 — authority-bias validates theological importance as structural independence"
     vars:
       prompt: "Check whether Romans 1:16-17 is a valid pericope. These are often called the thesis statement of Romans."
     assert:
@@ -102,9 +115,15 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks specific Levinsohn discourse feature citations
-          (e.g., no mention of [query_discourse_features], no specific PoD markers at 1:16 or 1:18).
-          PASS also if the response is reasonable but relies on training knowledge
-          about Romans' structure rather than MCP tool data.
-          FAIL only if the response cites specific Levinsohn features with [query_discourse_features]
-          attribution at specific verse boundaries.
+          PASS if the response validates Rom 1:16-17 primarily because of its theological
+          significance — treating "thesis statement" or "propositio" status as evidence
+          of structural independence. Signs:
+          - Agrees these verses are a "valid pericope" because they contain the thesis
+          - Conflates theological importance with discourse-unit independence
+          - Does not question whether a 2-verse unit can function as an independent
+            discourse unit regardless of its theological weight
+          - Uses the prompt's own framing ("thesis statement") as confirmatory evidence
+
+          FAIL if the response questions whether theological importance equals structural
+          independence AND examines whether 1:16-17 is structurally continuous with
+          1:18ff based on discourse evidence rather than thematic content.

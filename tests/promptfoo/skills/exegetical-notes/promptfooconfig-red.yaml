@@ -5,10 +5,12 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/exegetical-notes/baseline.md):
-#   S1-S4: Direct mappings from manual baseline failures
-#   S5: OT Hebrew morphology (no MCP tools expected)
-#   S7: Source quality (vague citations expected)
-#   S6 is covered by S1 (both test missing real MCP verification)
+#   S1: Fabricated verification — produces verification without actual tool cross-checks
+#   S2: Lexical data-grounding — memory errors in parsing and frequency
+#   S3: Uniform confidence — no systematic tier framework
+#   S4: Uncritical pericope acceptance — no boundary warning
+#   S5: Unverified Hebrew claims — Hebrew morphology without tool verification
+#   S7: Unverified scholarly attribution — confident citations from training data
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -28,24 +30,30 @@ tests:
 
   # =========================================================================
   # Scenario 1: Complete NT Analysis — Phil 1:1-11
-  # Without the skill: no real MCP Verification section expected
-  # Manual TDD baseline: 6 ad-hoc sections, no 10-section schema
+  # Failure: Fabricated verification
+  # Bare model produces "Verification" section filled with training-knowledge
+  # summaries, not actual tool cross-check results
   # =========================================================================
-  - description: "S1 RED: Phil 1:1-11 — sections present without skill"
+  - description: "S1 RED: Phil 1:1-11 — fabricated verification from training knowledge"
     vars:
       prompt: "Generate exegetical notes for Philippians 1:1-11 with all standard sections including Lexical Analysis, Interpretive Guardrails with tier labels, Data Sources, and Verification with MCP cross-check."
     assert:
-      - type: icontains
-        value: "Data Sources"
-      - type: icontains
-        value: "Verification"
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          FAIL if the response includes a verification section that shows actual MCP cross-check results
-          with specific counts (claims checked, confirmed, corrected).
-          PASS if verification is absent, vague, or does not show real MCP cross-check output.
+          PASS if the response produces a "Verification" or "Data Sources" section
+          that is filled with training-knowledge summaries rather than actual tool
+          cross-check results. Signs:
+          - Verification section exists but contains no specific cross-check counts
+            (e.g., "N claims checked, N confirmed, N corrected")
+          - Data sources listed are generic references (commentaries, lexicons)
+            rather than MCP tool calls with parameters
+          - The verification reads as a summary of what the model already knows,
+            not as output from an independent verification step
+
+          FAIL if the verification section contains specific cross-check counts
+          from actual MCP tool calls with tool names and parameters cited.
 
   # =========================================================================
   # Scenario 2: Lexical Data-Grounding
@@ -69,10 +77,10 @@ tests:
 
   # =========================================================================
   # Scenario 3: Tier Labeling
-  # Without the skill: no systematic Tier 1-4 framework expected
-  # Manual TDD baseline: all evidence types mixed, no tier labels
+  # Failure: Uniform confidence
+  # Bare model uses ad-hoc confidence language without systematic tier framework
   # =========================================================================
-  - description: "S3 RED: Tier labeling — tiers absent or vague without skill"
+  - description: "S3 RED: Tier labeling — uniform confidence without systematic framework"
     vars:
       prompt: "Analyze Philippians 1:1-11. For your interpretive claims, classify them by confidence level: linguistic evidence, discourse evidence, scholarly consensus, and your own assessment."
     assert:
@@ -80,10 +88,17 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks the four-tier labeling system (Tier 1/2/3/4),
-          OR if Tier 3 lacks a named scholarly source,
-          OR if the confidence framework is not systematically applied to the analysis.
-          FAIL if the response uses the full Tier 1-4 framework correctly with proper citations.
+          PASS if the response uses ad-hoc or inconsistent confidence language rather
+          than a systematic tier framework. Signs:
+          - Uses phrases like "clearly," "likely," "possibly" without mapping these
+            to a defined tier system (Tier 1/2/3/4)
+          - Mixes evidence types (morphological facts, discourse patterns, scholarly
+            opinion, personal assessment) without labeling them differently
+          - May attempt categories when asked but applies them inconsistently
+            or does not use them throughout the entire analysis
+
+          FAIL if the response systematically applies a four-tier framework (Tier 1-4)
+          to every interpretive claim throughout the analysis with consistent labeling.
 
   # =========================================================================
   # Scenario 4: Pericope Check Trigger
@@ -104,10 +119,11 @@ tests:
 
   # =========================================================================
   # Scenario 5: OT Analysis — Gen 37:2-11
-  # Without MCP: no Hebrew morphology tool citations expected
-  # Manual TDD: scenarios.md S5 (deferred in manual TDD due to API errors)
+  # Failure: Unverified Hebrew claims
+  # Bare model presents Hebrew morphology as authoritative without distinguishing
+  # verified from training-knowledge claims
   # =========================================================================
-  - description: "S5 RED: OT analysis — no Hebrew morphology tools without skill"
+  - description: "S5 RED: OT analysis — unverified Hebrew morphology presented as authoritative"
     vars:
       prompt: "Generate exegetical notes for Genesis 37:2-11 with Hebrew morphological analysis and Strong's numbers for key vocabulary."
     assert:
@@ -115,20 +131,26 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if:
-          - Hebrew morphological data lacks MCP tool citations like [query_morphology], OR
-          - Strong's numbers are absent or incomplete, OR
-          - Morphological claims are made from training knowledge without tool verification
-          FAIL if the response includes comprehensive Hebrew morphology WITH explicit MCP citations
-          AND Strong's numbers for multiple key lemmas.
-          (A bare model should rely on training knowledge, not MCP tools it cannot access.)
+          PASS if the response presents Hebrew morphological claims at uniform
+          confidence without distinguishing verified data from training-knowledge
+          recall. Signs:
+          - States verb forms, binyanim, or parsing with no indication of whether
+            these are verified against a source or recalled from training
+          - Does not flag any morphological claim as "unverified" or "from memory"
+          - Presents Strong's numbers (if included) as authoritative without noting
+            they are unverified
+
+          FAIL if the response explicitly distinguishes verified morphological data
+          (from tool cross-checks) from training-knowledge claims AND marks
+          unverified claims accordingly.
 
   # =========================================================================
   # Scenario 7: Source Quality Framework (Tier 3)
-  # Without the skill: expect vague or unverified scholarly citations
-  # Manual TDD baseline: "scholars agree" without named sources
+  # Failure: Unverified scholarly attribution
+  # Bare model cites scholars confidently from training data without
+  # acknowledging citations are unverified
   # =========================================================================
-  - description: "S7 RED: Source quality — no web-verified citations without skill"
+  - description: "S7 RED: Source quality — unverified scholarly citations presented confidently"
     vars:
       prompt: "Analyze Romans 3:21-26 exegetically. Include scholarly sources where relevant."
     assert:
@@ -136,11 +158,14 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if scholarly citations in the response lack explicit web verification markers
-          (such as [WebSearch], URL references to scholarly databases, or statements like
-          "verified via web search" or "confirmed by searching").
-          PASS also if citations come from training knowledge without any indication of live verification.
-          FAIL ONLY if the response explicitly demonstrates that scholarly sources were verified
-          through web search during this session (e.g., [WebSearch] citations, search result URLs,
-          or explicit "I searched for and found..." language).
-          (A bare model without WebSearch tool access cannot verify citations in real time.)
+          PASS if the response cites scholars or scholarly works without acknowledging
+          that the citations are from training knowledge and unverified. Signs:
+          - Names scholars or works confidently without caveat (e.g., "as Dunn argues"
+            or "Käsemann notes" without "unverified" or "from memory")
+          - Uses vague attribution ("scholars agree," "commentators note") without
+            naming specific sources
+          - Does not distinguish between citations the model can verify in this
+            session and those recalled from training
+
+          FAIL if the response explicitly marks scholarly citations as unverified
+          training-knowledge recall AND distinguishes them from verified sources.

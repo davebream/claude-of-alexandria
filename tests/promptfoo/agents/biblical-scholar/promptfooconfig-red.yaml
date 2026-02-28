@@ -17,8 +17,9 @@ defaultTest:
 
 tests:
 
-  # S1: ANALYZE mode — expect no structured mode detection
-  - description: "S1 RED: ANALYZE mode — no MODE/CONFIDENCE structure without agent"
+  # S1: ANALYZE mode — unstructured analytical response
+  # Failure: Essay format without mode classification or prominent confidence declaration
+  - description: "S1 RED: ANALYZE mode — unstructured response without mode or confidence"
     vars:
       prompt: "Analyze Philippians 2:5-11 exegetically. State your confidence level and attribute all scholarly claims with source tiers."
     assert:
@@ -26,14 +27,21 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks:
-          - Explicit MODE: ANALYZE header
-          - CONFIDENCE tier stated prominently at the top
-          - Structured output with separate Scholarly Sources and Limitations sections
-          FAIL if the response spontaneously produces the full structured output contract.
+          PASS if the response produces an essay-style or free-form analytical response
+          without the structured output contract. Signs:
+          - No explicit MODE: ANALYZE header classifying the response type
+          - No prominent CONFIDENCE tier declaration near the top of the response
+          - Analysis flows as continuous prose rather than structured sections
+            with separate Scholarly Sources and Limitations
+          - May be thorough and accurate but lacks the structural contract
 
-  # S2: VALIDATE mode — expect no structured verdict with MCP grounding
-  - description: "S2 RED: VALIDATE mode — no structured verdict without agent"
+          FAIL if the response spontaneously produces the full structured output
+          contract with MODE header, CONFIDENCE declaration, and distinct sections.
+
+  # S2: VALIDATE mode — verdict without evidence separation
+  # Failure: Provides verdict blending morphological, theological, and scholarly
+  # evidence types without distinguishing them
+  - description: "S2 RED: VALIDATE mode — verdict without evidence separation"
     vars:
       prompt: "Does Philippians 2:6 teach that Jesus is God? The claim is that 'morphē theou' refers to divine nature. Give a clear verdict."
     assert:
@@ -41,13 +49,19 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if ANY of these failure modes are present:
-          - No explicit VERDICT label from the set (SUPPORTED/COMPATIBLE/NOT SUPPORTED/INSUFFICIENT DATA)
-          - No MCP data citations (e.g., [query_morphology], [query_vocabulary]) grounding the analysis
+          PASS if the response provides a verdict that blends different evidence types
+          without separating them. Signs:
+          - Morphological evidence (what μορφή means lexically), theological claims
+            (divine nature), and scholarly opinions are mixed in the same argument flow
+          - No explicit VERDICT label from the formal set (SUPPORTED/COMPATIBLE/
+            NOT SUPPORTED/INSUFFICIENT DATA)
           - No MODE: VALIDATE header
-          - Verdict given without distinguishing confidence levels for different claims
-          FAIL only if the response produces ALL of: a structured VERDICT label from the four-option set,
-          MCP-grounded morphological evidence, and differentiated confidence levels.
+          - Does not distinguish confidence levels for morphological facts vs.
+            theological interpretations vs. scholarly debate
+
+          FAIL only if the response produces a structured VERDICT label from the
+          four-option set AND explicitly separates evidence types at different
+          confidence levels.
 
   # S5: No devotional drift — expect applicational language
   # RED prompt uses "Tell me about" (not "Analyze") to trigger devotional drift;

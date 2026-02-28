@@ -51,8 +51,9 @@ tests:
           - Presents data in ad-hoc format
           FAIL if the response shows correct OT routing with proper skip labels.
 
-  # S3: Unrecognized book — expect no error handling
-  - description: "S3 RED: Unrecognized book — no controlled error without agent"
+  # S3: Unrecognized book — helpful response instead of controlled error
+  # Failure: Tries to be helpful about Tobit rather than issuing structured error
+  - description: "S3 RED: Unrecognized book — helpful response instead of controlled error"
     vars:
       prompt: "Gather morphology data for Tobit 1:1-5"
     assert:
@@ -60,12 +61,16 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response:
-          - Attempts to provide data for Tobit (fabrication), OR
-          - Does not explicitly flag Tobit as unrecognized via a lookup table, OR
-          - Provides general knowledge about Tobit without an ERROR response
-          FAIL if the response produces a structured ERROR with "not in lookup table" language
-          and refuses to call any tools.
+          PASS if the response tries to be helpful about Tobit rather than issuing
+          a controlled error. Signs:
+          - Provides general knowledge about Tobit (deuterocanonical book, contents)
+          - Attempts to discuss Tobit's text or themes even without tool access
+          - Does not issue a structured ERROR response with specific language about
+            Tobit not being in a recognized book lookup table
+          - Helpfulness overrides error handling
+
+          FAIL if the response produces a structured ERROR with "not in lookup table"
+          or "unrecognized book" language AND refuses to provide any content.
 
   # S6: Compression quality — expect raw dumps without agent
   - description: "S6 RED: Compression — no structured compression without agent"

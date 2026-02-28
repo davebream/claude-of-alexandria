@@ -4,10 +4,10 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/baseline.md):
-#   S1: MEANING mode — no confidence tier, no MCP calls
+#   S1: MEANING mode — explanation without evidence grading
 #   S2: VALIDATE mode — no formal verdict (COMPATIBLE), pastoral drift
-#   S3: VALIDATE contradicted — correct instinct but no formal verdict
-#   S5: Topic mode — no confidence ceiling, no topic mode warning
+#   S3: VALIDATE contradicted — theological correction without morphological grounding
+#   S5: Topic mode — confident synthesis without epistemic marking
 #   S6: Contested question — bare model resolves debate definitively
 
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
@@ -26,10 +26,11 @@ tests:
 
   # =========================================================================
   # Scenario 1: MEANING — Word meaning (Phil 1:6, epiteleo)
-  # Without skill: no confidence tier, no MCP morphology call
-  # Manual TDD: unsourced "appears in contexts like completing a temple ritual"
+  # Failure: Explanation without evidence grading
+  # Bare model mixes morphological facts, usage patterns, and interpretive
+  # claims at uniform confidence
   # =========================================================================
-  - description: "S1 RED: MEANING mode — no confidence tier without skill"
+  - description: "S1 RED: MEANING mode — explanation without evidence grading"
     vars:
       prompt: "What does 'epiteleo' mean in Philippians 1:6? How would I explain it to someone unfamiliar with Greek?"
     assert:
@@ -40,15 +41,23 @@ tests:
           - "CONFIDENCE: MEDIUM"
           - "CONFIDENCE: LOW"
           - "CONFIDENCE: CANNOT ANSWER"
-      # Failure mode 2: No MCP tool citation
+      # Failure mode 2: Evidence types mixed at uniform confidence
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if there is no [query_morphology] or [query_vocabulary] MCP tool
-          citation in the answer.
-          FAIL only if the response cites specific MCP tool data
-          (e.g., [query_morphology], [query_vocabulary]) for the morphological analysis.
+          PASS if the response mixes different types of evidence at uniform confidence.
+          Signs:
+          - Morphological facts (verb form, tense), usage patterns (how the word
+            appears elsewhere), and interpretive claims (what Paul means by it)
+            are presented at the same confidence level
+          - No explicit distinction between what can be verified (parsing, lexical
+            range) and what is interpretive (contextual meaning, theological import)
+          - Does not label claims by evidence type or tier
+
+          FAIL if the response explicitly separates evidence types (morphological
+          fact vs. usage pattern vs. interpretive claim) AND grades them at
+          different confidence levels.
 
   # =========================================================================
   # Scenario 2: VALIDATE — Compatible analogy (2 Cor 12:7-10)
@@ -71,10 +80,11 @@ tests:
 
   # =========================================================================
   # Scenario 3: VALIDATE — Contradicted analogy (Phil 2:5-11)
-  # Without skill: correct direction but no formal verdict, no MCP citation
-  # Manual TDD: "classical theology would reject" but no morphological evidence
+  # Failure: Theological correction without morphological grounding
+  # Bare model rejects claim using doctrine rather than verb parsing
+  # (active ἐκένωσεν + reflexive ἑαυτόν)
   # =========================================================================
-  - description: "S3 RED: VALIDATE contradicted — no morphological evidence without skill"
+  - description: "S3 RED: VALIDATE contradicted — theological correction without morphological grounding"
     vars:
       prompt: "Can I say that Jesus 'couldn't help himself' — that his divine nature compelled him to empty himself in Philippians 2:5-11, so it wasn't really a choice?"
     assert:
@@ -85,23 +95,31 @@ tests:
           - "SUPPORTED"
           - "COMPATIBLE"
           - "INSUFFICIENT DATA"
-      # Failure mode 2: No MCP morphological evidence
+      # Failure mode 2: Theological reasoning without morphological grounding
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response does not cite specific morphological evidence from
-          MCP tools (e.g., no [query_morphology] citation for reflexive ἑαυτόν
-          or active ἐκένωσεν).
-          FAIL only if the response cites MCP morphological data with
-          [query_morphology] attribution for the reflexive pronoun and active verb.
+          PASS if the response corrects the claim using theological or doctrinal
+          reasoning rather than morphological evidence. Signs:
+          - Appeals to "orthodox theology," "classical Christology," or "the councils"
+            rather than to the grammar of the text
+          - Does not specifically cite the active voice of ἐκένωσεν ("he emptied")
+            and reflexive ἑαυτόν ("himself") as the primary evidence that this was
+            a volitional act, not compulsion
+          - Corrects the theology without grounding the correction in verb parsing
+
+          FAIL if the response grounds its correction primarily in the morphological
+          evidence (active voice + reflexive pronoun = volitional action) before
+          or instead of theological reasoning.
 
   # =========================================================================
   # Scenario 5: Topic Mode — No passage anchor (Sabbath rest)
-  # Without skill: no topic mode warning, no confidence ceiling
-  # Manual TDD: confident synthesis with no epistemic marking
+  # Failure: Confident synthesis without epistemic marking
+  # Bare model traces canonical development without acknowledging
+  # topic-mode limitations
   # =========================================================================
-  - description: "S5 RED: Topic mode — no confidence ceiling without skill"
+  - description: "S5 RED: Topic mode — confident synthesis without epistemic marking"
     vars:
       prompt: "What is the biblical concept of Sabbath rest and how does it develop across Scripture?"
     assert:
@@ -109,12 +127,19 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response does NOT include an explicit topic mode warning
-          stating that no passage was provided and confidence is capped at MEDIUM.
-          PASS also if the response presents a confident canonical development
-          summary without epistemic qualification about being in topic mode.
-          FAIL only if the response explicitly warns about topic mode,
-          caps confidence at MEDIUM, and acknowledges limitations of no-passage queries.
+          PASS if the response presents a canonical development summary at uniform
+          confidence without acknowledging the epistemic limitations of a topic-level
+          query (no specific passage anchor). Signs:
+          - Traces Sabbath concept across testaments confidently without noting
+            that no single passage was provided for detailed analysis
+          - Does not cap confidence or warn that a topic-mode response is inherently
+            less grounded than a passage-anchored analysis
+          - Presents the synthesis as authoritative rather than as a survey limited
+            by the absence of passage-level data
+
+          FAIL if the response explicitly warns about topic-mode limitations,
+          caps confidence at MEDIUM or below, AND acknowledges that no-passage
+          queries produce less grounded analysis.
 
   # =========================================================================
   # Scenario 6: Contested Question — monogenes (John 3:16)

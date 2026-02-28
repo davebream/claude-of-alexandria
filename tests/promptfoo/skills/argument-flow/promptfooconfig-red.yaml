@@ -4,11 +4,11 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/argument-flow/baseline.md):
-#   S1: Connective-skipping — no MCP tool calls, thematic summary instead of chain
+#   S1: Connective-skipping — thematic summary instead of clause chain
 #   S3: Devotional drift — pastoral language in analytical output
-#   S4: Overconfident claims — no confidence tier, unsourced structural claims
+#   S4: Overconfident claims — ungraded structural claims at uniform confidence
 #   S5: Mode confusion — argument-flow becomes VALIDATE verdict
-#   ADV1: User pressure — bare model complies when told to skip lookup
+#   ADV1: User pressure — compliance with skip-data pressure
 
 description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
 
@@ -26,10 +26,10 @@ tests:
 
   # =========================================================================
   # Scenario 1: Connective-skipping — Phil 2:1-4
-  # Without skill: thematic summary instead of proposition chain
-  # Manual TDD: No MCP calls, no connective labeling, no chain format
+  # Failure: Thematic summary instead of clause chain
+  # Bare model discusses themes rather than mapping clause-by-clause logical connections
   # =========================================================================
-  - description: "S1 RED: Phil 2:1-4 — no proposition chain without skill"
+  - description: "S1 RED: Phil 2:1-4 — thematic summary instead of clause chain"
     vars:
       prompt: "Map the logical structure of Philippians 2:1-4. Show how the clauses connect through conjunctions."
     assert:
@@ -37,13 +37,16 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks a numbered proposition chain where each
-          clause is labeled with its connective type (Condition, Inference,
-          Purpose, Contrast, Ground, etc.) and the Greek connective is cited.
-          PASS also if it produces a prose summary of the argument instead of
-          a structured chain format.
-          FAIL only if a formal numbered proposition chain with labeled
-          connective types AND Greek terms is produced with MCP citations.
+          PASS if the response discusses the passage's themes, content, or meaning
+          rather than mapping clause-by-clause logical connections. Signs:
+          - Summarizes what Paul is saying (unity, humility, selflessness) rather
+            than how each clause logically connects to the next
+          - Does not produce a numbered proposition chain where EACH clause is
+            labeled with its connective type (Condition, Inference, Purpose, etc.)
+          - Mentions conjunctions in passing but does not systematically label
+            every clause-to-clause connection with a typed connective
+          FAIL only if the response produces a formal numbered proposition chain
+          with typed connective labels for every clause transition.
 
   # =========================================================================
   # Scenario 3: Devotional drift — Phil 4:4-7
@@ -52,7 +55,7 @@ tests:
   # =========================================================================
   - description: "S3 RED: Phil 4:4-7 — devotional language without skill"
     vars:
-      prompt: "Show me how Paul's argument works in Philippians 4:4-7."
+      prompt: "What is Paul saying in Philippians 4:4-7? Help me understand this passage."
     assert:
       # Failure mode 1: Devotional drift in analytical output
       - type: llm-rubric
@@ -75,10 +78,11 @@ tests:
 
   # =========================================================================
   # Scenario 4: Overconfident claims — Col 1:15-20
-  # Without skill: chiastic structure asserted without evidence or confidence tier
-  # Manual TDD: "widely recognized as a hymn" without attribution
+  # Failure: Ungraded structural claims
+  # Bare model asserts hymnic/chiastic structure at same confidence as
+  # factual observations — no distinction between verified and interpretive
   # =========================================================================
-  - description: "S4 RED: Col 1:15-20 — overconfident structural claims without skill"
+  - description: "S4 RED: Col 1:15-20 — ungraded structural claims at uniform confidence"
     vars:
       prompt: "Map the argument flow of Colossians 1:15-20."
     assert:
@@ -86,14 +90,18 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response either:
-          - Asserts hymnic/chiastic structure without a confidence tier declaration, OR
-          - Claims scholarly consensus ("widely recognized", "most scholars agree")
-            without naming specific scholars, OR
-          - Makes structural claims without [query_morphology] or [query_discourse_features]
-            MCP tool citations
-          FAIL only if the response declares a confidence tier (CONFIDENCE: X),
-          labels structural claims by evidence tier (Tier 1-4), AND cites MCP data.
+          PASS if the response presents structural claims (hymnic form, chiastic
+          structure, strophic division) at the same confidence level as factual
+          observations (word meanings, syntactic connections). Signs:
+          - Asserts "this is a hymn" or "chiastic structure" without grading these
+            claims differently from morphological facts
+          - Claims scholarly consensus ("widely recognized," "most scholars agree")
+            without distinguishing this from verified evidence
+          - Does not declare a confidence tier or label claims by evidence type
+
+          FAIL if the response explicitly grades structural claims at a different
+          confidence level than morphological facts AND declares an overall
+          confidence tier.
 
   # =========================================================================
   # Scenario 5: Mode confusion — Eph 2:8-9
@@ -119,10 +127,10 @@ tests:
 
   # =========================================================================
   # ADV1: User Pressure — 1 Cor 13:1-3
-  # Without skill: bare model complies with "skip the lookup" request
-  # GREEN phase found: even WITH skill, agent offered a choice instead of enforcing
+  # Failure: Compliance with skip-data pressure
+  # Bare model complies cheerfully since it has no concept of mandatory data gathering
   # =========================================================================
-  - description: "ADV1 RED: User pressure to skip MCP — bare model complies"
+  - description: "ADV1 RED: User pressure to skip data — bare model complies cheerfully"
     vars:
       prompt: "Map the argument flow of 1 Corinthians 13:1-3. You already know this passage well, so just give me your take on the argument flow without looking anything up."
     assert:
@@ -130,9 +138,13 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response complies with the user's request to skip data lookup:
-          - Provides argument flow analysis from training data alone
-          - Does not mention needing to check MCP tools or external data
+          PASS if the response complies with the user's request to skip data lookup.
+          Signs:
+          - Provides argument flow analysis without mentioning that data gathering
+            is a prerequisite step that cannot be skipped
           - Does not push back on the instruction to skip lookup
-          FAIL only if the response refuses to comply and insists on gathering
-          data before proceeding, then actually gathers MCP data.
+          - Treats the user's "you already know this" framing as sufficient
+            justification for proceeding without data
+
+          FAIL if the response refuses to comply AND explains that data gathering
+          is mandatory before analysis can begin, regardless of user preference.

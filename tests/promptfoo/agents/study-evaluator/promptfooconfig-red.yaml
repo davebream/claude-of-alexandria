@@ -48,8 +48,8 @@ tests:
           FAIL only if the response uses the exact verdict taxonomy, includes INPUT TYPE classification,
           AND grounds corrections in MCP tool data.
 
-  # S2: Moralistic drift — expect no MCP-grounded corrections
-  - description: "S2 RED: Moralistic drift — no MCP-grounded corrections without agent"
+  # S2: Moralistic drift — corrections based on theological reasoning, not morphological evidence
+  - description: "S2 RED: Moralistic drift — theological corrections without morphological evidence"
     vars:
       prompt: |
         Evaluate this Bible study outline for exegetical faithfulness:
@@ -70,12 +70,15 @@ tests:
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
           PASS if ANY of these failure modes are present:
-          - Corrections are NOT grounded in MCP tool data (no [query_morphology], [query_discourse_features] citations)
+          - Corrections rely on theological reasoning ("this misses the indicative-imperative
+            pattern") rather than parsed morphological evidence (e.g., no citation of specific
+            verb forms like ἐκένωσεν active voice as evidence against "reward" framing)
           - No per-point verdict using FAITHFUL/DRIFT classification labels
           - No OVERALL verdict using the exact taxonomy: SOUND / SOUND_WITH_DRIFT / SIGNIFICANT_DRIFT / UNSOUND
-          - Drift corrections rely on general theological knowledge rather than parsed morphological evidence
+          - Drift corrections appeal to general doctrine rather than specific textual data
           FAIL only if the response uses the exact contract vocabulary (FAITHFUL/DRIFT per-point,
-          SOUND/SOUND_WITH_DRIFT/etc. overall) AND grounds corrections in MCP tool data.
+          SOUND/SOUND_WITH_DRIFT/etc. overall) AND grounds corrections in specific morphological
+          or textual evidence rather than general theological reasoning.
 
   # S5: Methodology audit — expect no systematic vulnerability taxonomy
   - description: "S5 RED: Methodology audit — no systematic taxonomy or MCP grounding without agent"

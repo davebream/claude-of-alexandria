@@ -155,8 +155,9 @@ PRIMARY input for boundary decisions; verse count is SECONDARY.
 
 **"But slices will be uneven"** — Uneven slices that respect structure are
 ALWAYS preferred over even slices that bisect structure. Adjust surrounding
-boundaries to compensate. Example: if 8:5-9 is a contrast zone in a 17-verse
-passage needing 3 slices, use 8:1-4 / 8:5-11 / 8:12-17 — NOT 8:1-6 / 8:7-12 / 8:13-17.
+boundaries to compensate. Example: if X:5-9 is a contrast zone in an N-verse
+passage needing 3 slices, adjust surrounding boundaries so all of X:5-9 falls
+in one slice — do NOT split the zone across slices.
 
 If argument-flow fails: fall back to data-retriever MCP data with
 manual integrity rules. Note the fallback in output.
@@ -198,14 +199,14 @@ Present the calculated slice count as the primary recommendation.
 
 **MANDATORY backstop check (before outputting ANY slice table):**
 
-STOP. Scan every proposed boundary. For each boundary between verse X and verse X+1:
-1. Do verses X and X+1 share key vocabulary (same root, same semantic field)?
-2. Does one side develop the positive case and the other side the negative case of the same theme?
-3. Are parallel syntactic structures split across the boundary?
+STOP. Cross-check every proposed boundary against argument-flow's structural output:
+1. Does any boundary fall INSIDE a reported contrast zone, chiasmus, or dialogue pair?
+2. Does any boundary split a conditional-consequence pair?
+3. Does any boundary fall on a "do-not-slice" marker?
 
-If ANY answer is YES → the boundary bisects a contrast zone. Move it. Do not output a table with a bisecting boundary.
+If ANY answer is YES → the boundary violates structural integrity. Move it. Do not output a table with a violating boundary.
 
-**Example:** If your slices are 8:1-6 / 8:7-13 / 8:14-17, check: does 8:6 share vocabulary with 8:7? If 8:5-6 introduces φρόνημα τῆς σαρκός / φρόνημα τοῦ πνεύματος and 8:7-8 continues the σάρξ argument, the boundary at 8:6/8:7 bisects the flesh/Spirit contrast at 8:5-8. Move it to 8:4/8:5 or 8:8/8:9 instead.
+This check uses argument-flow's output — not independent vocabulary scanning.
 
 **For dialogue passages:** Before proposing boundaries, list every question-answer pair with verse references. Explain which pairs exist and show that your boundary falls between complete exchanges, not mid-exchange. This dialogue analysis must appear in the output.
 
