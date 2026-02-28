@@ -196,7 +196,18 @@ Present the calculated slice count as the primary recommendation.
 
 **Before proposing slice boundaries:** Use argument-flow structural output to identify protected zones. A contrast zone or chiasmus is a RANGE of verses, not a single point — the entire range is protected. For dialogue passages, identify which questions pair with which answers. Only then determine boundaries.
 
-**Backstop check:** After placing slice boundaries, verify that no boundary falls between verses that share the same thematic vocabulary in contrasting senses (e.g., σάρξ/πνεῦμα repeated across both sides of the boundary). If argument-flow didn't flag a zone but repeated vocabulary reveals it, treat it as a contrast zone and adjust.
+**MANDATORY backstop check (before outputting ANY slice table):**
+
+STOP. Scan every proposed boundary. For each boundary between verse X and verse X+1:
+1. Do verses X and X+1 share key vocabulary (same root, same semantic field)?
+2. Does one side develop the positive case and the other side the negative case of the same theme?
+3. Are parallel syntactic structures split across the boundary?
+
+If ANY answer is YES → the boundary bisects a contrast zone. Move it. Do not output a table with a bisecting boundary.
+
+**Example:** If your slices are 8:1-6 / 8:7-13 / 8:14-17, check: does 8:6 share vocabulary with 8:7? If 8:5-6 introduces φρόνημα τῆς σαρκός / φρόνημα τοῦ πνεύματος and 8:7-8 continues the σάρξ argument, the boundary at 8:6/8:7 bisects the flesh/Spirit contrast at 8:5-8. Move it to 8:4/8:5 or 8:8/8:9 instead.
+
+**For dialogue passages:** Before proposing boundaries, list every question-answer pair with verse references. Explain which pairs exist and show that your boundary falls between complete exchanges, not mid-exchange. This dialogue analysis must appear in the output.
 
 When slicing would violate integrity: adjust boundaries to nearest valid point. Document in "Adjustments Made." Warn about problematic points in "Do Not Slice Here."
 

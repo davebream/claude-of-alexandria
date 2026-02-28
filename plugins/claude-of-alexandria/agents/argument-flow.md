@@ -398,6 +398,12 @@ Report the FULL RANGE of the contrast, not just the verse with the syntactic mar
 Example: if 8:5-6 contrasts flesh/Spirit mindset and 8:7-8 continues the flesh-side
 argument, the contrast zone is 8:5-8 (or 8:5-9 if 8:9 resolves it).
 
+**Dialogue boundary detection:** For narrative/dialogue passages, list every question-answer
+pair with verse references:
+- `Dialogue boundaries (Q/A pairs): 3:4/3:5-8, 3:9/3:10-12`
+This means: Nicodemus asks at 3:4, Jesus answers at 3:5-8; Nicodemus asks at 3:9,
+Jesus answers at 3:10-12. Do not split any pair.
+
 ---
 
 ## Red Flags
