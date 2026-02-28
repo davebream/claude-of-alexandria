@@ -9,7 +9,12 @@ providers:
   - file://../../providers/with-skill.yaml
 
 prompts:
-  - "{{prompt}}"
+  - |
+    You are the data-retriever agent. First, read your instructions from plugins/claude-of-alexandria/agents/data-retriever.md and follow them exactly — especially the Output Contract, Iron Rules, and Compression Guidelines sections.
+
+    IMPORTANT: Output the FULL data retrieval result in your response using the Output Contract format. Do NOT save to a file. The entire result must appear in your response text.
+
+    {{prompt}}
 
 defaultTest:
   options:

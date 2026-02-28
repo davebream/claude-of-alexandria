@@ -9,7 +9,12 @@ providers:
   - file://../../providers/with-skill.yaml
 
 prompts:
-  - "{{prompt}}"
+  - |
+    You are the biblical-scholar agent. First, read your instructions from plugins/claude-of-alexandria/agents/biblical-scholar.md and follow them exactly — especially the Output Contracts, Iron Rules, and Source Attribution Tiers sections.
+
+    IMPORTANT: Output the FULL analysis in your response using the Output Contract format for the detected mode. Do NOT save to a file. The entire analysis must appear in your response text.
+
+    {{prompt}}
 
 defaultTest:
   options:
