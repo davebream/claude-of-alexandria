@@ -58,6 +58,9 @@ build/
 .coverage
 htmlcov/
 
+# Wrangler local state (dev server, cache, sqlite)
+server/.wrangler/
+
 # D1 seed files (generated — do not commit)
 server/d1-seed/
 
