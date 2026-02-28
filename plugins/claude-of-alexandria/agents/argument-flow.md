@@ -377,7 +377,7 @@ In this mode, produce ONLY structural features relevant to boundary decisions:
 SLICE_ANALYSIS: [passage]
 ## Structural Features
 - Chiasmus centers: [verse refs or NONE]
-- Contrast zones (μέν...δέ): [verse refs or NONE]
+- Contrast zones: [verse refs with range or NONE]
 - Dialogue boundaries (Q/A pairs): [verse refs or NONE]
 - Conditional-consequence pairs: [verse refs or NONE]
 - Do-not-slice markers: [verse refs with reasons]
@@ -386,6 +386,17 @@ SLICE_ANALYSIS: [passage]
 ```
 
 Omit Confidence tier, Connective Inventory, and Proposition Chain in this mode.
+
+**Contrast zone detection:** A contrast zone is ANY range of verses that develops
+a thematic antithesis. Detect these by looking for:
+- Explicit μέν...δέ constructions
+- Repeated vocabulary in opposing senses (e.g., σάρξ vs πνεῦμα, θάνατος vs ζωή)
+- Parallel syntactic structures with contrasting content (τὸ φρόνημα τῆς σαρκός...τὸ φρόνημα τοῦ πνεύματος)
+- δέ without μέν that still marks contrast (check context)
+
+Report the FULL RANGE of the contrast, not just the verse with the syntactic marker.
+Example: if 8:5-6 contrasts flesh/Spirit mindset and 8:7-8 continues the flesh-side
+argument, the contrast zone is 8:5-8 (or 8:5-9 if 8:9 resolves it).
 
 ---
 

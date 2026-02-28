@@ -188,6 +188,8 @@ Present the calculated slice count as the primary recommendation.
 
 **Before proposing slice boundaries:** Use argument-flow structural output to identify protected zones. A contrast zone or chiasmus is a RANGE of verses, not a single point — the entire range is protected. For dialogue passages, identify which questions pair with which answers. Only then determine boundaries.
 
+**Backstop check:** After placing slice boundaries, verify that no boundary falls between verses that share the same thematic vocabulary in contrasting senses (e.g., σάρξ/πνεῦμα repeated across both sides of the boundary). If argument-flow didn't flag a zone but repeated vocabulary reveals it, treat it as a contrast zone and adjust.
+
 When slicing would violate integrity: adjust boundaries to nearest valid point. Document in "Adjustments Made." Warn about problematic points in "Do Not Slice Here."
 
 ### Short Pericope Handling
