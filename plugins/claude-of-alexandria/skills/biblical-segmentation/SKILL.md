@@ -119,6 +119,13 @@ No recommended unit will bisect a sentence, split a scene, separate question fro
 | `Genesis 22:1-19` | Slice (reading portions within pericope) |
 | `Romans 12` (with SOAP context) | Slice (reading slices for chapter) |
 
+### Pre-Flight Check (BEFORE structural analysis)
+
+**Calculate immediately:** total verses ÷ requested slices = verses per slice.
+- If total < 10 verses → **Return entire passage as single slice.** Do not call argument-flow. Do not propose divisions. Recommend single-unit reading.
+- If verses per slice < 3 → **Refuse.** Cite minimum-viable-slice (3 verses). Recommend fewer slices or single-unit reading. Do not call argument-flow.
+- If both pass → proceed to structural analysis below.
+
 ### Slice Structural Analysis (MANDATORY before slicing)
 
 Before proposing any slice boundaries, spawn the **argument-flow** agent:
