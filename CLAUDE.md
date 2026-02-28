@@ -196,7 +196,6 @@ claude-of-alexandria/
 │   │   │   └── agent-name/
 │   │   │       ├── promptfooconfig-red.yaml
 │   │   │       └── promptfooconfig-green.yaml
-│   │   ├── eval.sh               # Auth wrapper for local runs
 │   │   └── package.json
 │   └── skills/                   # ARCHIVED — legacy markdown tests
 ├── docs/

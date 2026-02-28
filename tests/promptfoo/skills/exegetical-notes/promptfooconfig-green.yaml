@@ -2,7 +2,7 @@
 # Skill content is injected via append_system_prompt in the provider config.
 # Prompts directly request exegetical notes output.
 #
-# Run: ./eval.sh --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
 #
 # Coverage parity with manual TDD (tests/skills/exegetical-notes/scenarios.md):
 #   S1-S4, S6-S7: Direct mappings from manual scenarios

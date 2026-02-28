@@ -2,10 +2,12 @@
 #
 # Use instead:
 #   RED phase (bare model, no skill, no MCP):
-#     ./eval.sh --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
+#     npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
 #
 #   GREEN phase (skill + MCP):
-#     ./eval.sh --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
+#     npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
+#
+#   (Run from tests/promptfoo.)
 #
 # Why split? When both providers are listed at the top level, promptfoo runs
 # ALL tests against ALL providers. RED assertions (expecting failure) then also

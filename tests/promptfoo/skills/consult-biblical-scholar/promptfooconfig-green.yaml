@@ -1,7 +1,7 @@
 # Promptfoo GREEN-phase tests for consult-biblical-scholar skill.
 # Skill content is injected via setting_sources in the provider config.
 #
-# Run: ./eval.sh --no-cache -c skills/consult-biblical-scholar/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-green.yaml
 #
 # Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/verification.md):
 #   S1: MEANING mode — confidence tier, MCP morphology, modern explanation

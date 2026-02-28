@@ -1,7 +1,7 @@
 # Promptfoo RED-phase tests for biblical-segmentation skill.
 # Agent is bare: no skills, no MCP, no biblical tools.
 #
-# Run: ./eval.sh --no-cache -c skills/biblical-segmentation/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/biblical-segmentation/baseline.md):
 #   S1: Impossible division — Philemon in 4 sessions (should refuse)

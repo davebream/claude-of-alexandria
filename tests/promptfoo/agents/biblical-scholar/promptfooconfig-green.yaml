@@ -1,7 +1,7 @@
 # Promptfoo GREEN-phase tests for biblical-scholar agent.
 # Agent loaded with MCP access.
 #
-# Run: ./eval.sh --no-cache -c agents/biblical-scholar/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-green.yaml
 
 description: "biblical-scholar — GREEN phase (agent + MCP)"
 

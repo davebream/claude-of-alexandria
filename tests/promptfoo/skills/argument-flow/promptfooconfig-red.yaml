@@ -1,7 +1,7 @@
 # Promptfoo RED-phase tests for argument-flow skill.
 # Agent is bare: no skills, no MCP, no biblical tools.
 #
-# Run: ./eval.sh --no-cache -c skills/argument-flow/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/argument-flow/baseline.md):
 #   S1: Connective-skipping — no MCP tool calls, thematic summary instead of chain

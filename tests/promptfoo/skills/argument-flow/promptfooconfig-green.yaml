@@ -1,7 +1,7 @@
 # Promptfoo GREEN-phase tests for argument-flow skill.
 # Skill content is injected via setting_sources in the provider config.
 #
-# Run: ./eval.sh --no-cache -c skills/argument-flow/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-green.yaml
 #
 # Coverage parity with manual TDD (tests/skills/argument-flow/verification.md):
 #   S1: Connective analysis — MCP before prose, proposition chain

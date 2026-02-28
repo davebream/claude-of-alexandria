@@ -1,7 +1,7 @@
 # Promptfoo GREEN-phase tests for pericope-delimitation skill.
 # Skill content is injected via setting_sources in the provider config.
 #
-# Run: ./eval.sh --no-cache -c skills/pericope-delimitation/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-green.yaml
 #
 # Coverage parity with manual TDD (tests/skills/pericope-delimitation/verification.md):
 #   S1: Truncated pericope (EXTEND) — Levinsohn data, boundary labels

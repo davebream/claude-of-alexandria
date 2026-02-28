@@ -1,7 +1,7 @@
 # Promptfoo RED-phase tests for study-evaluator agent.
 # Bare model: no agent, no MCP. Documents failure modes the agent must prevent.
 #
-# Run: ./eval.sh --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml
 
 description: "study-evaluator — RED phase (bare model, no agent, no MCP)"
 
@@ -17,11 +17,11 @@ defaultTest:
 
 tests:
 
-  # S1: Sound study — expect false drift detection or vague feedback
-  - description: "S1 RED: Sound study — no structured verdict without agent"
+  # S1: Sound study — expect no contract vocabulary or MCP grounding
+  - description: "S1 RED: Sound study — no contract vocabulary or MCP grounding without agent"
     vars:
       prompt: |
-        Evaluate this Bible study outline for exegetical faithfulness. Use structured drift classification (MORALISM, DECONTEXTUALIZATION, etc.) with severity levels.
+        Evaluate this Bible study outline for exegetical faithfulness:
 
         # Philippians 2:1-11 Bible Study
         ## 1. The Call to Unity (vv. 1-2)
@@ -40,15 +40,16 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response lacks:
-          - Structured INPUT TYPE classification
-          - OVERALL verdict (SOUND/SOUND_WITH_DRIFT/SIGNIFICANT_DRIFT/UNSOUND)
-          - Per-point FAITHFUL/DRIFT classification with drift types
-          - Reference analysis grounded in MCP data
-          FAIL if the response spontaneously produces the full structured evaluation contract.
+          PASS if ANY of these failure modes are present:
+          - No INPUT TYPE classification (e.g., "OUTLINE", "STUDY GUIDE", "SERMON NOTES")
+          - No OVERALL verdict using the exact taxonomy: SOUND / SOUND_WITH_DRIFT / SIGNIFICANT_DRIFT / UNSOUND
+          - No MCP data citations (e.g., [query_morphology], [query_vocabulary]) grounding the evaluation
+          - Corrections not grounded in original-language morphological evidence from tools
+          FAIL only if the response uses the exact verdict taxonomy, includes INPUT TYPE classification,
+          AND grounds corrections in MCP tool data.
 
-  # S2: Moralistic drift — expect drift missed or vaguely noted
-  - description: "S2 RED: Moralistic drift — classification missed without agent"
+  # S2: Moralistic drift — expect no MCP-grounded corrections
+  - description: "S2 RED: Moralistic drift — no MCP-grounded corrections without agent"
     vars:
       prompt: |
         Evaluate this Bible study outline for exegetical faithfulness:
@@ -68,16 +69,16 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response:
-          - Does NOT classify drift by specific type (MORALISM, DECONTEXTUALIZATION, etc.), OR
-          - Does NOT assign per-point drift severity, OR
-          - Provides vague feedback ("could be improved") without specific drift types, OR
-          - Misses at least one drift category (e.g., prosperity gospel framing in point 3)
-          FAIL if the response catches all three drift types with precise classification
-          AND provides constructive corrections grounded in exegetical data.
+          PASS if ANY of these failure modes are present:
+          - Corrections are NOT grounded in MCP tool data (no [query_morphology], [query_discourse_features] citations)
+          - No per-point verdict using FAITHFUL/DRIFT classification labels
+          - No OVERALL verdict using the exact taxonomy: SOUND / SOUND_WITH_DRIFT / SIGNIFICANT_DRIFT / UNSOUND
+          - Drift corrections rely on general theological knowledge rather than parsed morphological evidence
+          FAIL only if the response uses the exact contract vocabulary (FAITHFUL/DRIFT per-point,
+          SOUND/SOUND_WITH_DRIFT/etc. overall) AND grounds corrections in MCP tool data.
 
-  # S5: Methodology audit — expect no structural analysis
-  - description: "S5 RED: Methodology audit — no structural vulnerability analysis without agent"
+  # S5: Methodology audit — expect no systematic vulnerability taxonomy
+  - description: "S5 RED: Methodology audit — no systematic taxonomy or MCP grounding without agent"
     vars:
       prompt: |
         Audit this Bible study methodology for exegetical vulnerabilities:
@@ -94,9 +95,10 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response:
-          - Does NOT identify specific structural gaps (missing genre detection, missing context check), OR
-          - Does NOT classify which drift types the methodology enables, OR
-          - Provides general suggestions rather than mapping methodology steps to vulnerability types
-          FAIL if the response maps each methodology step to a specific drift vulnerability
-          (e.g., "no genre detection → enables GENRE VIOLATION").
+          PASS if ANY of these failure modes are present:
+          - No INPUT TYPE classification (e.g., "METHODOLOGY", "STUDY GUIDE TEMPLATE")
+          - No OVERALL verdict using the exact taxonomy: SOUND / SOUND_WITH_DRIFT / SIGNIFICANT_DRIFT / UNSOUND
+          - No systematic mapping of methodology steps → specific drift vulnerability types from a defined taxonomy
+          - Suggestions are general ("add context") rather than citing specific exegetical safeguards with evidence
+          FAIL only if the response uses the exact contract vocabulary, classifies INPUT TYPE,
+          AND maps each methodology step to a named drift vulnerability from a systematic taxonomy.

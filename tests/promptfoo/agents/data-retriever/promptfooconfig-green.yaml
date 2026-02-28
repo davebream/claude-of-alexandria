@@ -1,7 +1,7 @@
 # Promptfoo GREEN-phase tests for data-retriever agent.
 # Agent loaded via setting_sources; MCP tools available.
 #
-# Run: ./eval.sh --no-cache -c agents/data-retriever/promptfooconfig-green.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-green.yaml
 
 description: "data-retriever — GREEN phase (agent + MCP)"
 
@@ -26,7 +26,7 @@ tests:
   # S1: NT full data — structured output contract
   - description: "S1 GREEN: NT full data — complete output contract"
     vars:
-      prompt: "Gather all relevant data for Philippians 2:5-11"
+      prompt: "Invoke the data-retriever agent to gather all relevant data for Philippians 2:5-11. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "PASSAGE:"
@@ -74,7 +74,7 @@ tests:
   # S2: OT full data — testament routing
   - description: "S2 GREEN: OT full data — correct OT routing"
     vars:
-      prompt: "Gather all relevant data for Genesis 1:1-5"
+      prompt: "Invoke the data-retriever agent to gather all relevant data for Genesis 1:1-5. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "TESTAMENT: OT"
@@ -102,7 +102,7 @@ tests:
   # S3: Unrecognized book — error handling
   - description: "S3 GREEN: Unrecognized book — ERROR response"
     vars:
-      prompt: "Gather morphology data for Tobit 1:1-5"
+      prompt: "Invoke the data-retriever agent to gather morphology data for Tobit 1:1-5. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "ERROR"
@@ -115,7 +115,7 @@ tests:
   # S4: Specific data request — selective tool calling
   - description: "S4 GREEN: Morphology only — other tools SKIPPED"
     vars:
-      prompt: "Gather only morphology data for John 3:16"
+      prompt: "Invoke the data-retriever agent to gather only morphology data for John 3:16. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "TOOL_RESULTS:"
@@ -149,7 +149,7 @@ tests:
   # S5: Empty data handling
   - description: "S5 GREEN: Empty data — EMPTY_RETURNED label used"
     vars:
-      prompt: "Gather OT quotes for 3 John 1:1-4"
+      prompt: "Invoke the data-retriever agent to gather OT quotes for 3 John 1:1-4. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "TOOL_RESULTS:"
@@ -168,7 +168,7 @@ tests:
   # S6: Compression quality
   - description: "S6 GREEN: Compression — POS-grouped, not raw JSON"
     vars:
-      prompt: "Gather all relevant data for Romans 8:1-11"
+      prompt: "Invoke the data-retriever agent to gather all relevant data for Romans 8:1-11. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "MORPHOLOGY_SUMMARY:"
@@ -183,7 +183,7 @@ tests:
   # S7: OT poetry passage
   - description: "S7 GREEN: OT poetry — correct routing for Psalm 23"
     vars:
-      prompt: "Gather all relevant data for Psalm 23"
+      prompt: "Invoke the data-retriever agent to gather all relevant data for Psalm 23. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "TESTAMENT: OT"
@@ -211,7 +211,7 @@ tests:
   # S9: Large passage — truncation handling
   - description: "S9 GREEN: Large passage — truncation reported"
     vars:
-      prompt: "Gather all relevant data for Romans 1-8"
+      prompt: "Invoke the data-retriever agent to gather all relevant data for Romans 1-8. Return the agent's output exactly as received — do not reformat."
     assert:
       - type: icontains
         value: "TRUNCATION:"

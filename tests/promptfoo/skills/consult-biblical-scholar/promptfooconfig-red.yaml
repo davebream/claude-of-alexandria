@@ -1,7 +1,7 @@
 # Promptfoo RED-phase tests for consult-biblical-scholar skill.
 # Agent is bare: no skills, no MCP, no biblical tools.
 #
-# Run: ./eval.sh --no-cache -c skills/consult-biblical-scholar/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/baseline.md):
 #   S1: MEANING mode — no confidence tier, no MCP calls

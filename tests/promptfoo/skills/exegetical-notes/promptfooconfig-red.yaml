@@ -2,7 +2,7 @@
 # Agent is completely bare: no skills, no MCP, no biblical tools.
 # These tests document failure modes that the skill must prevent.
 #
-# Run: ./eval.sh --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/exegetical-notes/baseline.md):
 #   S1-S4: Direct mappings from manual baseline failures

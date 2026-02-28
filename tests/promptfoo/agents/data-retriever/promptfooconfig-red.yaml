@@ -2,7 +2,7 @@
 # Agent is completely bare: no agent loaded, no MCP, no biblical tools.
 # These tests document failure modes that the agent must prevent.
 #
-# Run: ./eval.sh --no-cache -c agents/data-retriever/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml
 
 description: "data-retriever — RED phase (bare model, no agent, no MCP)"
 

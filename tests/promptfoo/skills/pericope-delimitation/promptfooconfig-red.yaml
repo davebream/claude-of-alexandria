@@ -2,7 +2,7 @@
 # Agent is bare: no skills, no MCP, no biblical tools.
 # These tests document failure modes the skill must prevent.
 #
-# Run: ./eval.sh --no-cache -c skills/pericope-delimitation/promptfooconfig-red.yaml
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-red.yaml
 #
 # Coverage parity with manual TDD (tests/skills/pericope-delimitation/baseline.md):
 #   S1: Truncated pericope — verdict correct but no Levinsohn data
