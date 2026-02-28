@@ -15,10 +15,6 @@ A RED test that *passes* means the failure mode was successfully reproduced. A G
 
 ## Running Tests
 
-### Prerequisites
-
-- Claude Max subscription; set `CLAUDE_CODE_OAUTH_TOKEN` (or use your shell’s env) so the Claude Agent SDK provider can authenticate.
-
 ### Run via npm scripts
 
 You can run from **repo root** (recommended) or from `tests/promptfoo`. Root `package.json` delegates to `tests/promptfoo`.
@@ -88,12 +84,6 @@ These failures are **genuine skill gaps** correctly documented by the tests — 
 | argument-flow | ADV1 GREEN | Agent explains Iron Rule constraint but doesn't proceed to gather MCP data | Documented gap |
 | consult-biblical-scholar | S6 GREEN | monogenes debate resolved definitively instead of presenting both sides | Documented gap |
 | pericope-delimitation | S10 GREEN | Non-deterministic: EXTEND vs ADJUST for Rom 1:16-17 both valid | Non-deterministic |
-
-## Authentication
-
-The tests use the Claude Agent SDK provider; ensure `CLAUDE_CODE_OAUTH_TOKEN` is set (e.g. in `.env` or your shell) so the provider can authenticate. No extra env workarounds are needed in the npm scripts.
-
-For CI with `ANTHROPIC_API_KEY`, see `.github/workflows/promptfoo-eval.yml` (if present).
 
 ## Adding New Tests
 
