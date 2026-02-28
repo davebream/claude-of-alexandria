@@ -1,29 +1,36 @@
 # Pericope Delimitation Skill
 
+## Architecture
+
+**Thin wrapper** — this skill delegates all work to the `pericope-delimitation` agent via the Task tool. The skill exists for auto-discovery (description triggers skill loading); the agent contains all analytical logic.
+
+See: `agents/pericope-delimitation.md`
+
 ## Purpose
 
 Validates whether a user-provided biblical passage constitutes a coherent discourse unit.
-Recommends extensions/contractions based on linguistic evidence from bundled data.
+Recommends extensions/contractions based on linguistic evidence from MCP data.
 
 ## Key Design Decisions
 
+- **Thin wrapper pattern** — skill loads, spawns agent, returns output verbatim
+- **Agent calls MCP directly** — no data-retriever intermediary; preserves tool name citations
 - **Inline output** (not saved to file) — this is a diagnostic step, not a deliverable
-- **Standalone skill** — NOT connected to biblical-segmentation; serves exegesis broadly
+- **Standalone** — NOT connected to biblical-segmentation; serves exegesis broadly
 - **Data-first** — always checks Levinsohn (NT) or Masoretic (OT) before forming verdict
-- **Always English** — scholarly analysis tool
 - **Structured format** — VALID/EXTEND/CONTRACT/ADJUST verdict, always specific
 
-## Data Sources Used
+## Data Sources Used (via agent's MCP calls)
 
-- `skills/biblical-segmentation/reference/levinsohn/` — NT discourse features
-- `skills/biblical-segmentation/reference/masoretic/` — OT paragraph markers
+- `query_discourse_features` — NT Levinsohn discourse features
+- `query_paragraph_breaks` — OT Masoretic paragraph markers
+- `query_morphology` — morphological data
 - `skills/biblical-segmentation/reference/book-genres.yaml` — genre methodology
 
 ## TDD Status
 
-- ✅ `tests/skills/pericope-delimitation/scenarios.md` — 12 test scenarios
-- ✅ `tests/skills/pericope-delimitation/baseline.md` — RED phase evidence
-- ✅ `tests/skills/pericope-delimitation/verification.md` — GREEN phase proof
+- Tests live at `tests/promptfoo/skills/pericope-delimitation/`
+- Wrapper skill tests serve as agent unit tests (wrapper is a pure relay)
 
 ## Invocation
 

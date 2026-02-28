@@ -1,15 +1,25 @@
 # argument-flow — Development Notes
 
+## Architecture
+
+**Thin wrapper** — this skill delegates all work to the `argument-flow` agent via the Task tool. The skill exists for auto-discovery (description triggers skill loading); the agent contains all analytical logic.
+
+See: `agents/argument-flow.md`
+
 ## Status
 
-GREEN phase complete (2026-02-24). Ready for REFACTOR testing.
+Converted to thin wrapper (2026-02-28). Agent extracted from GREEN phase skill.
 
-## What This Skill Does
+## What This Agent Does
 
 Maps the logical argument of a biblical passage by:
-1. Calling `query_morphology` with `pos_filter: "conjunction"` to extract logical connectives
-2. Calling `query_discourse_features` (NT) or `query_paragraph_breaks` (OT) for structural context
-3. Producing a numbered proposition chain where each node is labeled with its connective type
+1. Spawning data-retriever (Haiku) for MCP data gathering
+2. Extracting logical connectives from morphological data
+3. Producing a numbered proposition chain with labeled connective types
+
+Supports two output modes:
+- **Standard Mode** — full Confidence + Connective Inventory + Proposition Chain + Data Sources
+- **Slice-Analysis Mode** — triggered by "for reading-slice boundary planning"; structural features only
 
 ## Why It Was Needed
 
@@ -24,26 +34,19 @@ Baseline testing (see `tests/skills/argument-flow/baseline.md`) documented six c
 
 ## Design Decisions
 
-### MCP-before-prose (Rule 1)
-The most critical rule. Without it, agents produce fluent analysis that cannot be distinguished from verified data. The rule is identical in spirit to `consult-biblical-scholar` Rule 2.
+### Sub-Agent Architecture
+- **Skill** = thin wrapper (auto-discovery + Task delegation)
+- **Agent** = all analytical logic (sonnet model, MCP tools)
+- **data-retriever** = MCP data gathering (haiku model)
 
-### Confidence Tier (Rule 2)
-Same four-tier system as `consult-biblical-scholar`. Consistency matters — users should encounter the same epistemic standards across all analysis skills.
+### MCP-before-prose (Rule 1)
+The most critical rule. Without it, agents produce fluent analysis that cannot be distinguished from verified data.
 
 ### Proposition Chain (Rule 3)
-The core output format. Each proposition: label, Greek connective, verse reference, English clause, logical relationship. Asyndeton (no connective) is also noted — its absence carries meaning in Greek.
+The core output format. Each proposition: label, Greek connective, verse reference, English clause, logical relationship.
 
-### Genre Detection (Rule 4)
-Epistolary conjunctions (γάρ, οὖν, ἵνα) do not appear in OT Hebrew narrative. The genre table prevents applying NT epistle logic to Psalms or Genesis. OT analysis uses Masoretic paragraph markers and Hebrew clause-level morphology.
-
-### Scope Warning (Rule 5, 30-verse limit)
-Tested in Scenario 7 (Romans 1:1–8:39). Without this rule, agents produce high-level summaries masquerading as argument-flow maps. 30 verses is a practical ceiling for proposition-chain granularity.
-
-### No Devotional Language (Rule 6)
-Tested in Scenario 3. Drift is subtle — it often appears in phrasing choices rather than explicit application. The red flag table includes specific examples.
-
-### Mode Boundary (Rule 7)
-Tested in Scenario 5. The skill deliberately does not issue theological verdicts. That work belongs to `consult-biblical-scholar` with its VALIDATE mode and formal verdict system.
+### Slice-Analysis Mode
+Triggered by biblical-segmentation when composing argument-flow for reading-slice boundary planning. Returns structural features (chiasmus, contrast zones, dialogue boundaries) rather than full proposition chain.
 
 ## Data Sources
 
