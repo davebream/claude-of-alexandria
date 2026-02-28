@@ -124,7 +124,8 @@ No recommended unit will bisect a sentence, split a scene, separate question fro
 **Calculate immediately:** total verses ÷ requested slices = verses per slice.
 - If total < 10 verses → **Return entire passage as single slice.** Do not call argument-flow. Do not propose divisions. Recommend single-unit reading.
 - If verses per slice < 3 → **Refuse.** Cite minimum-viable-slice (3 verses). Recommend fewer slices or single-unit reading. Do not call argument-flow.
-- If both pass → proceed to structural analysis below.
+- If verses per slice > method ceiling (SOAP=10, Swedish=20, Devotional=15) by >2x → **Refuse and recalculate.** Do NOT proceed with the user's count. Show the math: "67 verses ÷ 3 slices = ~22 per slice, exceeding SOAP's 5-10 verse scope. Recommended: 7-8 slices." Use the Slice Sizing table, not training knowledge about "narrative pacing."
+- If all pass → proceed to structural analysis below.
 
 ### Slice Structural Analysis (MANDATORY before slicing)
 
