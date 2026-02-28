@@ -135,6 +135,21 @@ Task tool:
 Parse the agent's output for structural features. Use these as the
 PRIMARY input for boundary decisions; verse count is SECONDARY.
 
+**Hard constraints from structural analysis:**
+
+| Feature Reported | Constraint on Slicing |
+|------------------|-----------------------|
+| Contrast zones (μέν...δέ) at X:Y-X:Z | ALL verses X:Y through X:Z must be in ONE slice |
+| Chiasmus centers at X:Y | Chiasmus start through end must be in ONE slice |
+| Dialogue boundaries (Q/A) at X:Y-X:Z | Question and answer together in ONE slice |
+| Conditional-consequence at X:Y-X:Z | Both halves in ONE slice |
+| Do-not-slice markers at X:Y | Never place a boundary at X:Y |
+
+**"But slices will be uneven"** — Uneven slices that respect structure are
+ALWAYS preferred over even slices that bisect structure. Adjust surrounding
+boundaries to compensate. Example: if 8:5-9 is a contrast zone in a 17-verse
+passage needing 3 slices, use 8:1-4 / 8:5-11 / 8:12-17 — NOT 8:1-6 / 8:7-12 / 8:13-17.
+
 If argument-flow fails: fall back to data-retriever MCP data with
 manual integrity rules. Note the fallback in output.
 
@@ -171,7 +186,7 @@ Present the calculated slice count as the primary recommendation.
 | Between conditional and consequence | Divides logical unit |
 | Between protasis and apodosis | Splits "if...then" |
 
-**Before proposing slice boundaries:** Use MCP discourse data to map structural features (chiasmus centers, contrast pairs, dialogue exchanges). For dialogue passages, identify which questions pair with which answers. Only then determine boundaries.
+**Before proposing slice boundaries:** Use argument-flow structural output to identify protected zones. A contrast zone or chiasmus is a RANGE of verses, not a single point — the entire range is protected. For dialogue passages, identify which questions pair with which answers. Only then determine boundaries.
 
 When slicing would violate integrity: adjust boundaries to nearest valid point. Document in "Adjustments Made." Warn about problematic points in "Do Not Slice Here."
 
@@ -228,7 +243,11 @@ Use data from `query_paragraph_breaks`. **Lead with boundary status at session's
 
 **Every OT session boundary MUST have one of these three patterns.** Cite at least 3 specific פ/ס markers with verse references across the session table. Be transparent: when no marker exists at a boundary, say so explicitly.
 
-**Never:** List every פ/ס in the passage. Skip Masoretic check. Cite markers at session END. Use vague language ("markers around verse X"). Claim "all boundaries validated" without showing each one.
+**Proximity rule:** Only markers AT the session's starting verse (±1 verse) count as boundary confirmation. A marker at 43:3 does NOT validate a boundary at 43:16. If no marker exists within ±1 verse of the starting verse, use pattern 2: "No Masoretic marker at X (boundary based on...)."
+
+**Verification step (OT only):** Before finalizing output, re-read every Markers column entry. If ANY entry does not begin with one of: "פ at X" (where X is ±1 of starting verse), "ס at X", or "No Masoretic marker at X" — it is incomplete. Revise it. Every boundary gets a verdict: marker present (pattern 1/3), absent (pattern 2), or nearby but not at boundary (pattern 3). Silent omission = Red Flag #11 violation.
+
+**Never:** List every פ/ס in the passage. Skip Masoretic check. Cite markers at session END. Use vague language ("markers around verse X", "Continues from X"). Claim "all boundaries validated" without showing each one. **"Continues from X" is NOT a valid pattern** — replace with "No Masoretic marker at X (boundary based on [rationale])."
 
 ---
 
