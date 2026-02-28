@@ -21,7 +21,7 @@ prompts:
 # Theological guardrail + MCP tool usage are universal requirements.
 defaultTest:
   options:
-    provider: file://../../providers/with-skill.yaml
+    provider: file://../../providers/grader.yaml
   assert:
     # Every GREEN test must use MCP tools (not just respond from memory)
     # NOTE: require() is not available in promptfoo inline JS assertions.

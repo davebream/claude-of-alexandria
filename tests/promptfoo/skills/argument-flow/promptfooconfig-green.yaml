@@ -21,7 +21,7 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/with-skill.yaml
+    provider: file://../../providers/grader.yaml
   assert:
     # Every GREEN test must use MCP tools
     - type: javascript
