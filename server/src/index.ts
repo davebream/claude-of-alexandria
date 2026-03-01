@@ -16,6 +16,8 @@ import { checkVersification, VersificationInputSchema, VersificationOutputSchema
 import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema } from './tools/cross-references.js';
 import { queryPeople, PeopleInputSchema, PeopleOutputSchema } from './tools/people.js';
 import { queryPlaces, PlacesInputSchema, PlacesOutputSchema } from './tools/places.js';
+import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/events.js';
+import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema } from './tools/person-network.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -267,6 +269,43 @@ High-frequency entities (appearance_count > 500) omit appearances_by_book for pe
 Examples:
   - Places in Acts 18: book="Acts", range="18:1-18:18"
   - Places in Genesis 12: book="Genesis", range="12:1-12:9"`;
+
+const DESC_EVENTS = `Query timeline events mentioned in a book/chapter range, with participants, locations, and chronological data from Theographic/TIPNR data.
+
+Returns events linked to the passage with start dates (Ussher/Masoretic-derived chronology), participants, and locations. Event coverage is not exhaustive — Theographic includes ~450 events focused on major narrative milestones.
+
+IMPORTANT: Dates follow Ussher/Masoretic-derived chronology. Alternative traditions (LXX, Samaritan Pentateuch, critical scholarship) yield different dates. Use as relative sequencing, not absolute dating.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Genesis", "Acts", "Romans")
+  - chapter_range (string, optional): Chapter range (e.g., "22" or "1-3"). Omit for entire book.
+  - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
+
+Returns: { book, chapter_range?, text_basis: "KJV", events: [{title, start_date, duration, sort_key, participants, locations, chapters}], chronology_caveat, summary: {total_events}, attribution }
+
+Examples:
+  - Events in Genesis 22: book="Genesis", chapter_range="22"
+  - Events in Exodus 1-15: book="Exodus", chapter_range="1-15"
+  - All events in Acts: book="Acts"`;
+
+const DESC_PERSON_NETWORK = `Query family relationships and co-appearances for a named individual from Theographic/TIPNR data.
+
+Returns the person's family tree (relationships) and top co-appearing individuals (by shared verse count). Supports iterative depth expansion (1-3 levels).
+
+Person lookup: provide a slug (e.g., "abraham_2") for exact match, or a name (e.g., "Abraham"). Ambiguous names return an error with matching slugs for disambiguation.
+
+Args:
+  - person (string, required): Person slug (e.g., "abraham_2") or name (e.g., "Abraham"). Slug preferred for disambiguation.
+  - depth (number, optional): Network depth 1-3 (default 1). Depth 1 = immediate family + co-appearances. Higher depths expand related persons' networks iteratively.
+
+Returns: { person: {name, slug, display_title, gender, appearance_count}, relationships: [{name, slug, relationship_type}], co_appearances: [{name, slug, shared_verses}], depth, attribution }
+
+High-frequency entities (appearance_count > 500) omit co-appearances for performance.
+
+Examples:
+  - Abraham's family tree: person="abraham_2"
+  - Mary disambiguation: person="Mary" → AMBIGUOUS_PERSON with slugs
+  - Extended family (depth 2): person="abraham_2", depth=2`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -567,6 +606,36 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_people', args as unknown as Record<string, unknown>, () => queryPeople(args))
+  );
+
+  server.registerTool('query_events', {
+    title: 'Query Events',
+    description: DESC_EVENTS,
+    inputSchema: EventsInputSchema,
+    outputSchema: EventsOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_events', args as unknown as Record<string, unknown>, () => queryEvents(args))
+  );
+
+  server.registerTool('query_person_network', {
+    title: 'Query Person Network',
+    description: DESC_PERSON_NETWORK,
+    inputSchema: PersonNetworkInputSchema,
+    outputSchema: PersonNetworkOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_person_network', args as unknown as Record<string, unknown>, () => queryPersonNetwork(args))
   );
 
   return server;
