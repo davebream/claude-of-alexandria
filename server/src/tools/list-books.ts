@@ -33,6 +33,9 @@ const AVAILABLE_TOOLS = [
   'query_paragraph_breaks - Masoretic petuchah/setumah markers (OT only)',
   'query_ot_quotes - OT quotations in NT passages (NT only)',
   'query_themes_for_lemmas - resolve lemmas to vocabulary themes (OT + NT)',
+  'query_lexicon - Strong\'s definitions and word meanings (OT + NT)',
+  'check_versification - Hebrew-English verse numbering differences (OT only)',
+  'query_cross_references - editorial tradition cross-references with vote counts (OT + NT)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {

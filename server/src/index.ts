@@ -11,6 +11,9 @@ import { queryOtQuotes, OtQuotesInputSchema, OtQuotesOutputSchema } from './tool
 import { queryThemesForLemmas, ThemesInputSchema, ThemesOutputSchema } from './tools/themes.js';
 import { queryLemmas, LemmasInputSchema, LemmasOutputSchema, type LemmasInput } from './tools/lemmas.js';
 import { queryThemeDistribution, ThemeDistributionInputSchema, ThemeDistributionOutputSchema } from './tools/theme-distribution.js';
+import { queryLexicon, LexiconInputSchema, LexiconOutputSchema } from './tools/lexicon.js';
+import { checkVersification, VersificationInputSchema, VersificationOutputSchema } from './tools/versification.js';
+import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema } from './tools/cross-references.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -169,6 +172,63 @@ Examples:
   - OT shepherd lemma across the canon: lemmas=["H7462b"]
   - Multiple NT lemmas: lemmas=["πατήρ", "πίστις"]
   - Mixed OT/NT for covenant study: lemmas=["H1285", "διαθήκη"]`;
+
+const DESC_LEXICON = `Query Strong's-based word definitions from the TBESH/TBESG lexicon.
+
+Returns lexical entries including original word, transliteration, gloss, and meaning. Supports lookup by Strong's number or by original language lemma.
+
+Strong's numbers are concordance-level identifiers, not full lexical entries. Multiple Hebrew/Greek words may share a number. Full definitions require published lexica (BDB, HALOT, BDAG).
+
+Args:
+  - strongs_ids (string[], optional): Array of Strong's numbers (e.g., ["H1961", "G3056"]). Max 20.
+  - lemmas (string[], optional): Array of Greek/Hebrew lemmas to look up. Max 20.
+  - compact (boolean, optional): If true, return only strongs_id, gloss, transliteration (default: false)
+
+Exactly one of strongs_ids or lemmas is required.
+
+Returns: { entries: [{strongs_id, disambiguated, testament, original_word, transliteration, morphology, gloss, meaning}], not_found: string[], errors: string[], lexical_precision: "concordance-level" }
+
+Examples:
+  - Hebrew word: strongs_ids=["H1961"] → "to be"
+  - Greek word: strongs_ids=["G3056"] → "logos"
+  - Multiple lookups: strongs_ids=["H430", "H1961", "H7225"]`;
+
+const DESC_VERSIFICATION = `Check Hebrew-English verse numbering differences for Old Testament books.
+
+Returns versification mappings showing where English (Protestant) and Hebrew (Masoretic) verse numbering diverge. Common in Psalms (superscription verses), and books where chapter boundaries differ. OT books only.
+
+This tool maps MT (Masoretic Text) ↔ English versification. NT authors frequently quote the LXX (Septuagint), which has its own versification differences not covered by this tool. When studying NT quotations of the OT, be aware that LXX verse numbering may differ from both MT and English.
+
+Args:
+  - book (string, required): OT book name in any common form (e.g., "Genesis", "Gen", "Psalms")
+  - chapter (number, optional): Filter to a specific chapter
+  - verse (number, optional): Filter to a specific verse
+  - verse_end (number, optional): End verse for range queries
+
+Returns: { book, differences: [{english, hebrew, mapping_type}], summary: {total_differences, mapping_types} }
+
+Examples:
+  - Genesis chapter boundary: book="Genesis", chapter=32, verse=1
+  - All Psalm differences: book="Psalms"
+  - Specific verse: book="Exodus", chapter=8, verse=1`;
+
+const DESC_CROSS_REFERENCES = `Query editorial tradition cross-references between Bible verses.
+
+Returns verse-pair cross-references with community vote counts indicating strength of association. Data from OpenBible.info (CC BY 4.0), covering ~340K cross-reference pairs across the entire Bible.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "Psalms")
+  - range (string, optional): Verse range "8:28" or "8:28-8:39". Omit for entire book.
+  - min_votes (number, optional): Minimum vote count to include (default: 2)
+  - limit (number, optional): Maximum results returned (default: 100, max: 500)
+  - direction (string, optional): "from" = references FROM this passage, "to" = references TO this passage, "both" = bidirectional (default)
+
+Returns: { book, range?, cross_references: [{from_ref, to_ref, votes, direction}], summary: {total, avg_votes} }
+
+Examples:
+  - Cross-references for Romans 8:28: book="Romans", range="8:28"
+  - References from Genesis 1:1: book="Genesis", range="1:1", direction="from"
+  - High-confidence only: book="John", range="3:16", min_votes=100`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -394,6 +454,51 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_theme', args as unknown as Record<string, unknown>, () => queryThemeDistribution(args))
+  );
+
+  server.registerTool('query_lexicon', {
+    title: 'Query Lexicon',
+    description: DESC_LEXICON,
+    inputSchema: LexiconInputSchema,
+    outputSchema: LexiconOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_lexicon', args as unknown as Record<string, unknown>, () => queryLexicon(args))
+  );
+
+  server.registerTool('check_versification', {
+    title: 'Check Versification',
+    description: DESC_VERSIFICATION,
+    inputSchema: VersificationInputSchema,
+    outputSchema: VersificationOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('check_versification', args as unknown as Record<string, unknown>, () => checkVersification(args))
+  );
+
+  server.registerTool('query_cross_references', {
+    title: 'Query Cross-References',
+    description: DESC_CROSS_REFERENCES,
+    inputSchema: CrossReferencesInputSchema,
+    outputSchema: CrossReferencesOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_cross_references', args as unknown as Record<string, unknown>, () => queryCrossReferences(args))
   );
 
   return server;
