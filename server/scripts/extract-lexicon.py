@@ -1,0 +1,229 @@
+#!/usr/bin/env python3
+"""
+Lexicon ETL — extract Strong's definitions from STEPBible TBESH/TBESG data.
+
+Downloads TBESH (Hebrew) and TBESG (Greek) lexicon files from STEPBible-Data
+GitHub repo. Parses tab-separated format and outputs a single SQL seed file.
+
+Usage:
+    cd server && python3 scripts/extract-lexicon.py
+
+Output:
+    d1-seed/lexicon.sql
+
+Source:
+    STEPBible TBESH/TBESG (CC BY 4.0)
+    https://github.com/STEPBible/STEPBible-Data
+"""
+
+import os
+import re
+import sys
+import unicodedata
+import urllib.request
+from pathlib import Path
+
+# ─── Source URLs ──────────────────────────────────────────────────────────────
+TBESH_URL = (
+    "https://raw.githubusercontent.com/STEPBible/STEPBible-Data/master/"
+    "Lexicons/TBESH%20-%20Translators%20Brief%20lexicon%20of%20Extended%20"
+    "Strongs%20for%20Hebrew%20-%20STEPBible.org%20CC%20BY.txt"
+)
+TBESG_URL = (
+    "https://raw.githubusercontent.com/STEPBible/STEPBible-Data/master/"
+    "Lexicons/TBESG%20-%20Translators%20Brief%20lexicon%20of%20Extended%20"
+    "Strongs%20for%20Greek%20-%20STEPBible.org%20CC%20BY.txt"
+)
+
+SEED_DIR = Path(__file__).resolve().parent.parent / "d1-seed"
+OUTPUT_FILE = SEED_DIR / "lexicon.sql"
+BATCH_SIZE = 100
+
+
+def sql_escape(value):
+    """Escape single quotes for SQL string literals."""
+    if value is None:
+        return "NULL"
+    return "'" + value.replace("'", "''") + "'"
+
+
+def strip_accents(text):
+    """Remove diacritical marks from Unicode text."""
+    nfkd = unicodedata.normalize("NFKD", text)
+    return "".join(c for c in nfkd if not unicodedata.category(c).startswith("M"))
+
+
+def normalize_strongs(raw_id):
+    """Normalize Strong's ID: strip leading zeros after H/G prefix.
+
+    Examples:
+        H0001 → H1
+        G0001a → G1a
+        H01961 → H1961
+    """
+    match = re.match(r"^([HG])0*(\d+.*)$", raw_id)
+    if match:
+        return match.group(1) + match.group(2)
+    return raw_id
+
+
+def detect_testament(strongs_id):
+    """Detect testament from Strong's ID prefix."""
+    if strongs_id.startswith("H"):
+        return "ot"
+    elif strongs_id.startswith("G"):
+        return "nt"
+    return "unknown"
+
+
+def download_file(url, label):
+    """Download a file and return its text content."""
+    print(f"Downloading {label}...")
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "claude-of-alexandria-etl/1.0"})
+        with urllib.request.urlopen(req) as resp:
+            data = resp.read().decode("utf-8")
+        print(f"  Downloaded {len(data):,} bytes")
+        return data
+    except Exception as e:
+        print(f"  ERROR: Failed to download {label}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+def parse_lexicon_file(text, label):
+    """Parse a TBESH/TBESG tab-separated file into lexicon entries.
+
+    Format: Extended Strong's \\t Disambiguated \\t Unified \\t Original Word \\t
+            Transliteration \\t Morphology \\t Gloss \\t Meaning
+
+    Lines starting with $ are headers/preamble and are skipped.
+    Blank lines are skipped.
+    """
+    entries = []
+    skipped = 0
+
+    for line_num, line in enumerate(text.splitlines(), 1):
+        line = line.strip()
+        if not line or line.startswith("$"):
+            continue
+
+        parts = line.split("\t")
+        if len(parts) < 7:
+            skipped += 1
+            continue
+
+        raw_strongs = parts[0].strip()
+        disambiguated = parts[1].strip()
+        # parts[2] is "Unified" — we don't need it
+        original_word = parts[3].strip()
+        transliteration = parts[4].strip() if len(parts) > 4 else ""
+        morphology = parts[5].strip() if len(parts) > 5 else ""
+        gloss = parts[6].strip() if len(parts) > 6 else ""
+        meaning = parts[7].strip() if len(parts) > 7 else ""
+
+        if not raw_strongs or not gloss:
+            skipped += 1
+            continue
+
+        strongs_id = normalize_strongs(raw_strongs)
+        testament = detect_testament(strongs_id)
+
+        # NFC normalization and accent-stripping
+        original_word_nfc = unicodedata.normalize("NFC", original_word)
+        original_word_stripped = strip_accents(original_word)
+
+        entries.append({
+            "strongs_id": strongs_id,
+            "disambiguated": disambiguated or strongs_id,
+            "testament": testament,
+            "original_word": original_word,
+            "original_word_nfc": original_word_nfc,
+            "original_word_stripped": original_word_stripped,
+            "transliteration": transliteration or None,
+            "morphology": morphology or None,
+            "gloss": gloss,
+            "meaning": meaning or None,
+        })
+
+    print(f"  {label}: {len(entries)} entries parsed, {skipped} lines skipped")
+    return entries
+
+
+def write_sql(entries, output_path):
+    """Write lexicon entries as batched INSERT statements."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("-- Auto-generated by extract-lexicon.py\n")
+        f.write("-- Source: STEPBible TBESH/TBESG (CC BY 4.0)\n\n")
+
+        for i in range(0, len(entries), BATCH_SIZE):
+            batch = entries[i : i + BATCH_SIZE]
+            f.write(
+                "INSERT OR REPLACE INTO lexicon "
+                "(strongs_id, disambiguated, testament, original_word, "
+                "original_word_nfc, original_word_stripped, transliteration, "
+                "morphology, gloss, meaning) VALUES\n"
+            )
+            rows = []
+            for e in batch:
+                row = (
+                    f"({sql_escape(e['strongs_id'])}, "
+                    f"{sql_escape(e['disambiguated'])}, "
+                    f"{sql_escape(e['testament'])}, "
+                    f"{sql_escape(e['original_word'])}, "
+                    f"{sql_escape(e['original_word_nfc'])}, "
+                    f"{sql_escape(e['original_word_stripped'])}, "
+                    f"{sql_escape(e['transliteration'])}, "
+                    f"{sql_escape(e['morphology'])}, "
+                    f"{sql_escape(e['gloss'])}, "
+                    f"{sql_escape(e['meaning'])})"
+                )
+                rows.append(row)
+            f.write(",\n".join(rows))
+            f.write(";\n\n")
+
+    print(f"Wrote {len(entries)} entries to {output_path}")
+
+
+def main():
+    # Download both lexicon files
+    tbesh_text = download_file(TBESH_URL, "TBESH (Hebrew)")
+    tbesg_text = download_file(TBESG_URL, "TBESG (Greek)")
+
+    # Parse
+    hebrew_entries = parse_lexicon_file(tbesh_text, "Hebrew")
+    greek_entries = parse_lexicon_file(tbesg_text, "Greek")
+
+    # Combine — deduplicate by strongs_id (later entry wins)
+    all_entries = {}
+    for e in hebrew_entries + greek_entries:
+        all_entries[e["strongs_id"]] = e
+
+    combined = list(all_entries.values())
+    print(f"\nTotal unique entries: {len(combined)}")
+
+    # Sanity checks
+    h_count = sum(1 for e in combined if e["testament"] == "ot")
+    g_count = sum(1 for e in combined if e["testament"] == "nt")
+    print(f"  Hebrew (OT): {h_count}")
+    print(f"  Greek (NT): {g_count}")
+
+    if len(combined) < 5000:
+        print("ERROR: Expected at least 5000 entries, got only", len(combined), file=sys.stderr)
+        sys.exit(1)
+
+    # Spot-check H1961
+    h1961 = all_entries.get("H1961")
+    if h1961:
+        print(f"\nSpot-check H1961: gloss = {h1961['gloss']!r}")
+    else:
+        print("WARNING: H1961 not found in lexicon data", file=sys.stderr)
+
+    # Write SQL
+    write_sql(combined, OUTPUT_FILE)
+    print("\nDone.")
+
+
+if __name__ == "__main__":
+    main()
