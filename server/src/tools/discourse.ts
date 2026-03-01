@@ -26,6 +26,19 @@ export const DiscourseOutputSchema = {
   }))),
   summary: z.record(z.string(), z.number()),
   available_features: z.array(z.string()),
+  word_level_boundaries: z.array(z.object({
+    chapter: z.number(),
+    verse: z.number(),
+    word_position: z.number(),
+    boundary_type: z.string(),
+    clause_id: z.string().nullable(),
+    clause_marker: z.string().nullable(),
+    note_text: z.string().nullable(),
+  })).optional(),
+  word_level_summary: z.object({
+    total: z.number(),
+    by_boundary_type: z.record(z.string(), z.number()),
+  }).optional(),
 };
 
 const DEFAULT_FEATURES = [
@@ -99,13 +112,46 @@ export async function queryDiscourseFeatures(args: DiscourseInput): Promise<Call
     summary[feature] = (summary[feature] ?? 0) + 1;
   }
 
-  const result = {
+  // Word-level discourse boundaries (from OpenGNT Levinsohn data)
+  let boundSql = 'SELECT chapter, verse, word_position, boundary_type, clause_id, clause_marker, note_text FROM discourse_boundaries WHERE book = ?';
+  const boundParams: unknown[] = [bookInfo.canonical];
+
+  if ('min' in rangeResult && rangeResult.min !== undefined) {
+    boundSql += ' AND chapter >= ? AND chapter <= ?';
+    boundParams.push(rangeResult.min, rangeResult.max);
+  }
+
+  boundSql += ' ORDER BY chapter, verse, word_position LIMIT 5000';
+
+  const boundRows = await query(boundSql, boundParams);
+
+  const result: Record<string, unknown> = {
     book: bookInfo.displayName,
     chapter_range: chapterRange ?? 'all',
     features,
     summary,
     available_features: availableFeatures,
   };
+
+  if (boundRows.length > 0) {
+    const boundaries = boundRows.map(r => ({
+      chapter: r.chapter as number,
+      verse: r.verse as number,
+      word_position: r.word_position as number,
+      boundary_type: r.boundary_type as string,
+      clause_id: r.clause_id as string | null,
+      clause_marker: r.clause_marker as string | null,
+      note_text: r.note_text as string | null,
+    }));
+
+    const byBoundaryType: Record<string, number> = {};
+    for (const b of boundaries) {
+      byBoundaryType[b.boundary_type] = (byBoundaryType[b.boundary_type] ?? 0) + 1;
+    }
+
+    result.word_level_boundaries = boundaries;
+    result.word_level_summary = { total: boundaries.length, by_boundary_type: byBoundaryType };
+  }
 
   return {
     content: [{ type: 'text', text: JSON.stringify(result) }],
