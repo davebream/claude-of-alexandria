@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-03-01
+
+### Added
+
+- `query_speakers` tool — speaker attribution and quotation data from Clear Bible FCBH consensus dataset (1,285 speakers, 7,306 quotations), with divine speech filtering (`divinity_only`), range-based quotation overlap queries, and dual theological caveats for Christophany attribution and prophetic mediated speech
+- Speaker and quotation schema: 2 tables with book/chapter/verse range indexes for efficient passage lookups
+- Speaker routing in `data-retriever` agent — automatically queries speaker data for passages with verse ranges
+- Clear Bible FCBH attribution in NOTICE.md
+
+### Fixed
+
+- D1 partial index subquery error — removed `idx_quot_divine` partial index unsupported by D1 SQLite, replaced with JOIN-based divine speech filtering
+- Quotations book name format mismatch — `query_speakers` now uses `displayName` (title case) matching the quotations table format instead of `canonical` (lowercase)
+- Stale Cloudflare Cache API responses surviving Worker redeployment — added `v2/` prefix to cache key path for cache busting
+
 ## [2.3.0] - 2026-03-01
 
 ### Added

@@ -6,8 +6,8 @@
 ## Current State
 
 - **Phase:** 3a
-- **Task:** 3a.1
-- **Status:** PENDING
+- **Task:** 3a.7
+- **Status:** COMPLETE
 
 ---
 
@@ -51,14 +51,14 @@
 
 ## Phase 3a: Speaker Quotations → v2.4.0
 
-- [ ] Task 3a.1: Migration — speakers and quotations tables
-- [ ] Task 3a.2: Speaker Quotations ETL Script
-- [ ] Task 3a.3: query_speakers MCP Tool
-- [ ] Task 3a.4: Update data-retriever — speaker routing
-- [ ] Task 3a.5: Seed and deploy
-- [ ] **GATE: Phase 3a verification**
-- [ ] Task 3a.6: Documentation and attribution
-- [ ] Task 3a.7: CHANGELOG + release
+- [x] Task 3a.1: Migration — speakers and quotations tables (daee22d)
+- [x] Task 3a.2: Speaker Quotations ETL Script (f145c14)
+- [x] Task 3a.3: query_speakers MCP Tool (11e06ef)
+- [x] Task 3a.4: Update data-retriever — speaker routing (31e426f)
+- [x] Task 3a.5: Seed and deploy (6770dcc)
+- [x] **GATE: Phase 3a verification** — tool checks 5/5 PASS (after displayName fix 6b69b1a), code review PASS (3 Important, 5 Suggestions)
+- [x] Task 3a.6: Documentation and attribution
+- [x] Task 3a.7: CHANGELOG + release (v2.4.0)
 
 ## Phase 4: Skill TDD Integration for 2.x Tools → v2.5.0
 
@@ -111,6 +111,8 @@
 | 2 | code-review | agent | PASS (2 WARNs) | 2026-03-01 | I-3 sequential queries, I-4 multi-chapter imprecision |
 | 3 | tool-checks | manual MCP | PASS (4/4) | 2026-03-01 | people 28, places 9/Corinth, events Gen6-8=9, network abraham 14 rels |
 | 3 | code-review | agent | PASS (3 Important, 5 Suggestions) | 2026-03-01 | Truncation loop, depth-3 mutation, predecessor_id |
+| 3a | tool-checks | manual MCP | PASS (5/5) | 2026-03-01 | Gen 22 speakers, Gen 3 divinity, Isa 6 divine speech, Gen 16 Christophany, Heb 1 nested quotes |
+| 3a | code-review | agent | PASS (3 Important, 5 Suggestions) | 2026-03-01 | Truncation cost, name=character_id, cross-chapter validation, alt_speaker_id FK |
 
 ---
 
@@ -144,6 +146,12 @@
 | 3.4 | ef2fed6 | 2026-03-01 |
 | 3.5 | a5068c1 | 2026-03-01 |
 | 3.6 | 11ada5c | 2026-03-01 |
+| 3a.1 | daee22d | 2026-03-01 |
+| 3a.2 | f145c14 | 2026-03-01 |
+| 3a.3 | 11e06ef | 2026-03-01 |
+| 3a.4 | 31e426f | 2026-03-01 |
+| 3a.5 | 6770dcc | 2026-03-01 |
+| 3a.fix | 6b69b1a | 2026-03-01 |
 
 ---
 
@@ -163,6 +171,12 @@
 | 2026-03-01 | 3 | GATE | NOTE: Truncation loop uses quadratic JSON.stringify (max ~15 iterations with 80% factor) | Acceptable for typical entity counts; optimize if CHARACTER_LIMIT truncation becomes a bottleneck | 0 |
 | 2026-03-01 | 3 | GATE | NOTE: Depth-3 expansion pushes to expansionResults during iteration (safe via slice copy) | Refactor to separate array if person-network gets further modifications | 0 |
 | 2026-03-01 | 3 | GATE | NOTE: events.predecessor_id and date confidence tagging not exposed in tool response | Plan said "consider" — track as future enhancement | 0 |
+| 2026-03-01 | 3a | GATE | FIX: quotations table uses displayName format but tool used canonical (lowercase) | Changed bookInfo.canonical → bookInfo.displayName in speakers.ts (6b69b1a) | 1 |
+| 2026-03-01 | 3a | GATE | FIX: Cloudflare Cache API persisted stale empty responses across Worker redeployment | Added v2/ prefix to cache key path for cache busting (6b69b1a) | 1 |
+| 2026-03-01 | 3a | GATE | FIX: D1 does not support subqueries in partial index WHERE clauses | Removed idx_quot_divine partial index, use JOIN-based filtering instead (6770dcc) | 1 |
+| 2026-03-01 | 3a | GATE | NOTE: ETL cross-chapter quotation span validation not implemented | Edge case; ETL trusts upstream FCBH data integrity | 0 |
+| 2026-03-01 | 3a | GATE | NOTE: alt_speaker_id FK not validated in ETL | Upstream FCBH alt_speaker_ids may reference characters outside speaker table; stored as-is | 0 |
+| 2026-03-01 | 3a | GATE | NOTE: CHRISTOPHANY_CAVEAT missing from data-retriever compression guidelines | Caveat is present in tool output; data-retriever should preserve it during compression | 0 |
 
 ---
 

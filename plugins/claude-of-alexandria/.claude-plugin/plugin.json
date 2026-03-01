@@ -1,6 +1,6 @@
 {
   "name": "claude-of-alexandria",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
   "author": {
     "name": "@davebream",

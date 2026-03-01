@@ -30,3 +30,13 @@ https://www.openbible.info/labs/cross-references/
 
 - ~340K editorial tradition cross-reference verse pairs
 - Community-voted association strength
+
+## Clear Bible FCBH Speaker Quotations (CC BY 4.0)
+
+https://github.com/Clear-Bible/speaker-quotations
+
+- Speaker metadata: 1,272 named characters with gender, age, divinity status
+- Quotation spans: 7,306 attributed speech acts across OT and NT
+- FCBH (Faith Comes By Hearing) consensus data from trained annotators
+- Christophany interpretation note: Angel-of-the-LORD passages attributed to Jesus reflect FCBH theological interpretation, not universal scholarly consensus
+- Prophetic mediated speech note: prophetic oracles attributed to the prophet as speaker, not to God directly
