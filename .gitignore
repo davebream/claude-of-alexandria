@@ -1,6 +1,9 @@
 # Private development notes and specifications
 .ai/
 
+# Ephemeral development artifacts (plans, reports, reviews, ADRs, research)
+docs/
+
 # Git worktrees
 .worktrees/
 
