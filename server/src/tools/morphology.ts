@@ -46,6 +46,10 @@ export const MorphologyOutputSchema = {
     semantic_frame: z.string().nullable().optional(),
     subject_ref: z.string().nullable().optional(),
     participant_ref: z.string().nullable().optional(),
+    // NT-specific (OpenGNT) — present when fields='full' for NT passages
+    gloss_tbesg: z.string().nullable().optional(),
+    louw_nida: z.string().nullable().optional(),
+    louw_nida_domain: z.string().nullable().optional(),
   })),
   summary: z.object({
     total_words: z.number(),
@@ -56,8 +60,8 @@ export const MorphologyOutputSchema = {
 // ─── Column selection by fields level ─────────────────────────────────────────
 const BASIC_COLS = 'chapter, verse, word_position, text, normalized, lemma, pos, parsing';
 const SYNTAX_COLS = `${BASIC_COLS}, clause_id, clause_type, strongs`;
-const FULL_COLS = `${SYNTAX_COLS}, gloss, semantic_frame, subject_ref, participant_ref`;
-const LEXICAL_COLS = 'chapter, verse, word_position, text, lemma, strongs, gloss';
+const FULL_COLS = `${SYNTAX_COLS}, gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain`;
+const LEXICAL_COLS = 'chapter, verse, word_position, text, lemma, strongs, gloss, louw_nida';
 
 function selectColumns(fields: string | undefined): string {
   switch (fields) {
@@ -69,6 +73,7 @@ function selectColumns(fields: string | undefined): string {
 }
 
 const DEFAULT_MORPHOLOGY_LIMIT = 5000;
+const CHARACTER_LIMIT = 25_000;
 
 export async function queryMorphology(args: MorphologyInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -159,10 +164,11 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     };
 
     if (isLexical) {
-      // Lexical: text, lemma, strongs, gloss only
+      // Lexical: text, lemma, strongs, gloss, louw_nida
       word.lemma = r.lemma as string;
       word.strongs = r.strongs as string | null;
       word.gloss = r.gloss as string | null;
+      if (r.louw_nida != null) word.louw_nida = r.louw_nida as string;
     } else {
       // Basic fields always present
       word.normalized = r.normalized as string | null;
@@ -183,6 +189,10 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
         if (r.semantic_frame != null) word.semantic_frame = r.semantic_frame as string;
         if (r.subject_ref != null) word.subject_ref = r.subject_ref as string;
         if (r.participant_ref != null) word.participant_ref = r.participant_ref as string;
+        // NT-specific enrichment (OpenGNT)
+        if (r.gloss_tbesg != null) word.gloss_tbesg = r.gloss_tbesg as string;
+        if (r.louw_nida != null) word.louw_nida = r.louw_nida as string;
+        if (r.louw_nida_domain != null) word.louw_nida_domain = r.louw_nida_domain as string;
       }
     }
 
@@ -195,7 +205,7 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     byPos[pos] = (byPos[pos] ?? 0) + 1;
   }
 
-  const result = {
+  const result: Record<string, unknown> = {
     book: bookInfo.displayName,
     range: rangeInput,
     testament,
@@ -203,8 +213,32 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     summary: { total_words: words.length, by_pos: byPos },
   };
 
+  // Scholarly provenance for NT enrichment fields
+  if (testament === 'nt' && (includesFull || isLexical)) {
+    result.note = 'NT morphology uses OGNT v3 (compiled eclectic text, not an independent critical edition). '
+      + 'Louw-Nida domain labels are classification tags, not full semantic analyses (see published UBS lexicon). '
+      + 'OGNT glosses are single-scholar translations (Eliran Wong) — treat as Tier 3, not Tier 1-2 evidence.';
+  }
+
+  // CHARACTER_LIMIT guard — truncate words if response too large
+  let json = JSON.stringify(result);
+  if (json.length > CHARACTER_LIMIT && words.length > 1) {
+    const truncatedWords = [];
+    let approxSize = json.length - JSON.stringify(words).length + 100; // overhead
+    for (const w of words) {
+      const wordJson = JSON.stringify(w);
+      if (approxSize + wordJson.length + 1 > CHARACTER_LIMIT) break;
+      approxSize += wordJson.length + 1;
+      truncatedWords.push(w);
+    }
+    result.words = truncatedWords;
+    (result.summary as Record<string, unknown>).truncated = true;
+    (result.summary as Record<string, unknown>).returned_words = truncatedWords.length;
+    json = JSON.stringify(result);
+  }
+
   return {
-    content: [{ type: 'text', text: JSON.stringify(result) }],
+    content: [{ type: 'text', text: json }],
     structuredContent: result,
   };
 }

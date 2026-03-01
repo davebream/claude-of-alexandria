@@ -111,7 +111,7 @@ Args:
   - fields (string, optional): Level of detail — each level includes all fields from previous levels:
     - "basic" (default): text, normalized, lemma, pos, parsing
     - "syntax": + clause_id, clause_type, strongs
-    - "full": + gloss, semantic_frame, subject_ref, participant_ref
+    - "full": + gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain
     - "lexical": compact word-study set (text, lemma, strongs, gloss only)
   - strongs_filter (string, optional): Filter words by Strong's number (e.g., "H7225a" for OT, "G2316" for NT). Requires range.
 
