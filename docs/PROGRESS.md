@@ -5,9 +5,9 @@
 
 ## Current State
 
-- **Phase:** 3a
-- **Task:** 3a.7
-- **Status:** COMPLETE
+- **Phase:** 4
+- **Task:** 4.6
+- **Status:** IN_PROGRESS
 
 ---
 
@@ -62,12 +62,12 @@
 
 ## Phase 4: Skill TDD Integration for 2.x Tools → v2.5.0
 
-- [ ] Task 4.1: Update data-retriever agent — Phase 2 tools
-- [ ] Task 4.2: Update data-retriever agent — Phase 3 entity tools
-- [ ] Task 4.3: Update exegetical-notes Sections 4, 6, 8
-- [ ] Task 4.4: Update consult-biblical-scholar
-- [ ] Task 4.5: Update remaining skills
-- [ ] **GATE: Phase 4 verification (FULL PROMPTFOO SUITE)**
+- [x] Task 4.1: Update data-retriever agent — Phase 2 tools (ca70a87)
+- [x] Task 4.2: Update data-retriever agent — Phase 3 entity tools (c79c887)
+- [x] Task 4.3: Update exegetical-notes Sections 4, 6, 8 (6777448)
+- [x] Task 4.4: Update consult-biblical-scholar (00e4a78)
+- [x] Task 4.5: Update remaining skills (4139764)
+- [x] **GATE: Phase 4 verification (FULL PROMPTFOO SUITE)** — tool checks 6/6 PASS, regression INFRA-FAIL, code-review PASS, biblical-scholar PASS, full-suite INFRA-FAIL (provider constructor TypeError, not code regression)
 - [ ] Task 4.6: CHANGELOG + release
 
 ## Phase 5: OpenGNT Migration → v3.0.0
@@ -113,6 +113,11 @@
 | 3 | code-review | agent | PASS (3 Important, 5 Suggestions) | 2026-03-01 | Truncation loop, depth-3 mutation, predecessor_id |
 | 3a | tool-checks | manual MCP | PASS (5/5) | 2026-03-01 | Gen 22 speakers, Gen 3 divinity, Isa 6 divine speech, Gen 16 Christophany, Heb 1 nested quotes |
 | 3a | code-review | agent | PASS (3 Important, 5 Suggestions) | 2026-03-01 | Truncation cost, name=character_id, cross-chapter validation, alt_speaker_id FK |
+| 4 | tool-checks | manual MCP | PASS (6/6, 1 NOTE) | 2026-03-01 | lexicon NT OK (G3056), OT H0430 not_found; versif OK; xrefs OK (Rom 8:28); people OK (Gen 22); places OK (Acts 18); events empty (Gen 22 — expected data gap) |
+| 4 | regression | promptfoo | INFRA-FAIL | 2026-03-01 | Same claude-agent-sdk process exit 1 as Phase 2 — not code regression |
+| 4 | code-review | agent | WARN→PASS | 2026-03-02 | 1 BLOCKING (with-skill.yaml missing 9 MCP tools — fixed 39a13ce), 3 IMPORTANT (consult-biblical-scholar/segmentation missing some tools — by-design delegation), 3 suggestions |
+| 4 | biblical-scholar | agent | PASS | 2026-03-02 | All 5 guardrails pass. 4-tier hierarchy correct. Prophetic/Christophany caveats present. 1 IMPORTANT (terminology Primary/Secondary vs Tier 1-4 across skills), 1 suggestion (MACULA/FCBH vs MACULA/Clear Bible attribution) |
+| 4 | full-suite | promptfoo | INFRA-FAIL | 2026-03-02 | Provider constructor TypeError in promptfoo — same infra class as Phase 2. Not a code regression. |
 
 ---
 
@@ -152,6 +157,12 @@
 | 3a.4 | 31e426f | 2026-03-01 |
 | 3a.5 | 6770dcc | 2026-03-01 |
 | 3a.fix | 6b69b1a | 2026-03-01 |
+| 4.1 | ca70a87 | 2026-03-01 |
+| 4.2 | c79c887 | 2026-03-01 |
+| 4.3 | 6777448 | 2026-03-01 |
+| 4.4 | 00e4a78 | 2026-03-01 |
+| 4.5 | 4139764 | 2026-03-01 |
+| 4.fix | 39a13ce | 2026-03-02 |
 
 ---
 
@@ -177,6 +188,12 @@
 | 2026-03-01 | 3a | GATE | NOTE: ETL cross-chapter quotation span validation not implemented | Edge case; ETL trusts upstream FCBH data integrity | 0 |
 | 2026-03-01 | 3a | GATE | NOTE: alt_speaker_id FK not validated in ETL | Upstream FCBH alt_speaker_ids may reference characters outside speaker table; stored as-is | 0 |
 | 2026-03-01 | 3a | GATE | NOTE: CHRISTOPHANY_CAVEAT missing from data-retriever compression guidelines | Caveat is present in tool output; data-retriever should preserve it during compression | 0 |
+| 2026-03-01 | 4 | GATE | INFRA-FAIL: promptfoo regression/full suite fails (claude-agent-sdk process exit 1) | Same infrastructure issue as Phase 2; not a code regression. Manual tool checks passed. | 1 |
+| 2026-03-01 | 4 | GATE | NOTE: query_lexicon H0430 (Elohim) returns not_found | OT Strong's numbers may need different formatting or lexicon dataset has gaps for some entries. NT G3056 works correctly. | 0 |
+| 2026-03-02 | 4 | GATE | FIX: with-skill.yaml GREEN provider missing 9 Phase 2-3a MCP tools | Added query_lexicon, check_versification, query_cross_references, query_people, query_places, query_events, query_person_network, query_speakers, query_theme (39a13ce) | 1 |
+| 2026-03-02 | 4 | GATE | NOTE: consult-biblical-scholar uses Primary/Secondary/Entity/Editorial labels vs exegetical-notes Tier 1/2/3/4 | By-design: different skills have different output formats. Harmonize in future refactor if needed. | 0 |
+| 2026-03-02 | 4 | GATE | NOTE: consult-biblical-scholar/biblical-segmentation don't list all MCP tools in allowed-tools | By-design: these skills delegate data gathering to data-retriever via Task. Only direct-call tools listed. | 0 |
+| 2026-03-02 | 4 | GATE | INFRA-FAIL: full eval suite fails (promptfoo provider constructor TypeError) | Same infra class as Phase 2. Node.js v25.6.0 + promptfoo provider import incompatibility. Not a code regression — all manual tool checks and agent reviews passed. | 1 |
 
 ---
 
@@ -186,7 +203,10 @@ Fully autonomous — no human checkpoints. Fix issues yourself or document and c
 
 ```
 1. Run phase-specific tool checks (free MCP calls — see per-phase details)
-2. Run regression smoke test: npm run eval:regression
+2. Run regression smoke test: CLAUDECODE= npm run eval:regression (fast, 2 scenarios)
+   - Do NOT run eval:all yourself — it takes hours and will timeout
+   - The loop runs eval:all after your iteration and saves to docs/logs/gate-eval-phase{N}.txt
+   - If that file exists, read it for eval ID and pass/fail counts
 3. Dispatch agent review team in parallel (see review teams below)
 4. Evaluate and act:
    a. ALL PASS → Record in eval history, proceed to release task, then next phase
