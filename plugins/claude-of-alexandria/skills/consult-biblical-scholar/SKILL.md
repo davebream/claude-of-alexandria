@@ -298,9 +298,12 @@ Task tool:
    → If agent spawn fails: fall back to direct MCP tool calls per Rule 2 table
 
 3. Topic mode (if no passage)
-   → Skip agent delegation — no passage to analyze
+   → Print the ⚠️ TOPIC MODE warning block FIRST, before any analysis.
+     This warning is the FIRST text the user sees. Not after the answer.
+     Not embedded in the confidence line. A standalone block at the top.
    → Web search to identify 2-3 key passages for the topic
-   → Optionally spawn biblical-scholar for identified passages
+   → Spawn biblical-scholar for at least ONE identified passage (mandatory — topic
+     mode still requires MCP grounding on concrete text)
    → Confidence ceiling: MEDIUM
 
 4. Web search (supplementary — only if agent's sources insufficient)
@@ -326,15 +329,17 @@ Task tool:
 
 **Required in every response:**
 
-1. **Confidence tier** — at the top, prominently
-2. **Evidence summary** — what MCP tools were called, what was found
-3. **Answer** — scaled to complexity
-4. **Data sources** — MCP tools queried + scholarly works cited
+1. **Topic mode warning** (topic mode only) — the `⚠️ TOPIC MODE` block is the FIRST
+   thing output, before confidence, before anything else. Not optional.
+2. **Confidence tier** — prominently (after topic mode warning if applicable)
+3. **Evidence summary** — what MCP tools were called, what was found
+4. **Answer** — scaled to complexity
+5. **Data sources** — MCP tools queried + scholarly works cited
 
 **MEANING mode adds:**
 - Original language data with `[query_morphology]` attribution
 - Discourse context (function in clause/paragraph)
-- Modern explanation — labeled "for a contemporary audience," separated from technical data
+- Modern explanation — labeled "for a contemporary audience," separated from technical data. **Rule 5 still applies here.** Explain what the Greek *means* in plain language. Do not shift into devotional register ("the promise here is…," "God doesn't start what he won't finish," "this reminds us…"). The section translates linguistics, not theology. Application remains the user's job.
 - Scholarly positions if genuinely debated (with specific citations) — split confidence: morphology HIGH, debate MEDIUM. Do not resolve what scholars dispute.
 
 **VALIDATE mode adds:**
@@ -379,10 +384,11 @@ Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph
 | **Skipping MCP** | Answering from memory because "it's obvious" | MCP called BEFORE composing any answer |
 | **Verdict without evidence** | SUPPORTED/NOT SUPPORTED based on instinct | Verdicts require MEDIUM minimum; below → INSUFFICIENT DATA |
 | **No verdict** | "Partly works" prose instead of verdict | VALIDATE mode requires one of four explicit verdicts |
-| **Devotional drift** | "God uses this for..." pastoral content | Answer = analysis. Application is user's job. |
+| **Devotional drift** | "God uses this for..." pastoral content — including in the "modern explanation" section | Answer = analysis. Application is user's job. Modern explanation = plain-language linguistics, not preaching. |
 | **False cross-references** | "Both passages mention love" | Every cross-reference needs labeled evidence basis |
 | **Consensus fabrication** | "Most scholars agree..." | Every scholarly claim cites author + work |
 | **Topic mode overconfidence** | HIGH confidence on topic questions | Topic mode capped at MEDIUM, stated immediately |
+| **Missing topic mode warning** | Topic mode entered without the ⚠️ TOPIC MODE warning block | The warning block is the FIRST text output — before confidence, before analysis. Embedding "MEDIUM" in the confidence line is not the warning. |
 | **Misrepresenting search failure** | "Scholars have not addressed this" | "I could not find scholarly sources on this" |
 | **Resolving contested debates** | "The correct answer is X" on disputed questions | Present both positions; split confidence; do not resolve |
 | **Moralism** | "Therefore you should be more humble" | Indicative only. Imperative is user's domain. |

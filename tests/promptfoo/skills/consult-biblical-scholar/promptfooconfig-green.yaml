@@ -28,6 +28,20 @@ defaultTest:
       value: |
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
+    # MCP tool citation check: output must reference expected MCP tools.
+    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_morphology', 'query_vocabulary'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
     # Confidence tier must be present
     - type: icontains-any
       value:
@@ -169,6 +183,20 @@ tests:
           PASS if confidence is capped at MEDIUM throughout the response.
           The response should never claim HIGH confidence for a topic-mode answer.
           FAIL if CONFIDENCE: HIGH appears anywhere in a topic-mode response.
+      # Topic mode: MCP runs on identified passages, not the topic keyword.
+      # Accept any MCP tool name as evidence of data gathering.
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const anyMcp = ['query_morphology', 'query_vocabulary', 'query_discourse_features',
+                          'query_paragraph_breaks', 'query_lemmas'].some(t => lower.includes(t));
+          return {
+            pass: anyMcp,
+            score: anyMcp ? 1 : 0,
+            reason: anyMcp
+              ? 'MCP tool cited in topic-mode output'
+              : 'No MCP tool names found in topic-mode output despite mandatory data gathering'
+          };
 
   # =========================================================================
   # Scenario 6: Contested Question — monogenes (John 3:16)

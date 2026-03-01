@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
-allowed-tools: Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
+allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
 ---
 
 # Exegetical Notes
@@ -45,8 +45,8 @@ Proceeding with [original range] — boundary issue noted in Pericope Status.
 ### Rule 2: Lexical Analysis Uses query_morphology MCP Tool
 
 Section 4 (Lexical Analysis) must:
-- Call `query_morphology` MCP tool for parsing data
-- Cite actual counts from `query_vocabulary` MCP tool
+- Use morphology data from data-retriever's `MORPHOLOGY_SUMMARY` (or direct `query_morphology` fallback)
+- Cite actual counts from data-retriever's `VOCABULARY_SUMMARY` (or direct `query_vocabulary` fallback)
 - Never say "appears frequently" — give exact count and verse references
 - Format: `lemma (reference): morph description [query_morphology]`
 
@@ -72,6 +72,15 @@ For web searches (Tier 3 guardrails):
 **Accept (Tier B):** Study Bibles with scholarly notes, TDNT, ABD, NAC
 **Use with caution (Tier C — always cite tier):** Popular commentaries (BST, TNTC), credentialed scholar blogs
 **Reject (Tier D):** Devotional websites, AI content, uncredited blogs, forums
+
+**Citation format (mandatory for all Tier 3 claims):**
+
+Wrong: "Author argues that [claim]."
+Correct: "Author (Title, Series, Year, p. N) argues that [claim]. [Tier A/B/C]"
+
+Every Tier 3 citation MUST include: Author + (Title, Series, Year).
+Page numbers when available. An author name alone is not a citation — it is
+a name-drop. The tier label (A/B/C) must follow every citation.
 
 If only Tier C sources found, state: "[Tier C source, use with caution]"
 If no verifiable source found, state: "No Tier A/B source located for this claim."
@@ -121,17 +130,65 @@ Output the complete notes inline in your response. Do not save to file. Do not s
 
 ---
 
+## Sub-Agent Delegation
+
+This skill delegates MCP data gathering to the **data-retriever** agent (Haiku) for cost-efficient bulk data retrieval. The skill retains scholarly interpretation, section composition, and cross-checking.
+
+**Delegation chain:**
+```
+exegetical-notes (skill, user's model)
+  └─→ data-retriever (Haiku) — MCP tool calls + compression
+```
+
+**How to spawn:**
+```
+Task tool:
+  subagent_type: "claude-of-alexandria:data-retriever"
+  prompt: "Gather all relevant data for [Book] [Range].
+           Also call query_morphology with pos_filter: 'conjunction'"
+```
+Include the pos_filter request for NT epistles. Omit it for OT and non-epistolary books.
+
+**Parsing data-retriever output:**
+- `MORPHOLOGY_SUMMARY:` → data for Section 4 (Lexical Analysis)
+- `CONJUNCTION_MORPHOLOGY:` → data for Section 2 (Internal Structure, epistle connectives)
+- `DISCOURSE_SUMMARY:` → data for Sections 1-2 (context, structure) and pericope check
+- `PARAGRAPH_MARKERS:` → OT boundary data for pericope check and Section 2
+- `VOCABULARY_SUMMARY:` → data for Section 4 (frequencies, semantic groups)
+- `OT_QUOTES_SUMMARY:` → data for Section 8 (Intertextual Links)
+- `LEMMA_DISTRIBUTION:` → data for Section 8 (cross-book connections)
+- `THEME_MATCHES:` → data for Sections 5, 7 (theological themes)
+- `TOOL_RESULTS:` → data for Section 9 (Data Sources)
+
+**Fallback:** If data-retriever spawn fails, fall back to direct MCP tool calls. Note the fallback in Section 9 (Data Sources).
+
+**Direct MCP calls retained for:**
+- Cross-check verification (Step 6) — must verify claims against fresh MCP data
+- Supplementary queries discovered during section composition
+
+---
+
 ## Workflow
 
 ```
 Step 1: Parse invocation → book, range, --output, --context
 
-Step 2: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
+Step 2: GATHER DATA via data-retriever agent
+   → Spawn data-retriever via Task tool (see Sub-Agent Delegation)
+   → For NT epistles: include pos_filter: "conjunction" in the prompt
+   → Parse compressed output into working data for all sections
+   → If data-retriever fails: fall back to direct MCP tool calls
+
+   Logical connectives for Section 2 (epistles):
+   γάρ=grounds, οὖν=inference, δέ=contrast/continuation, ἀλλά=strong contrast,
+   ἵνα=purpose, ὥστε=result, εἰ=condition, διότι/ὅτι=causal
+
+Step 3: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
    │
-   ├─ Call query_discourse_features for the book
+   ├─ Use DISCOURSE_SUMMARY (NT) or PARAGRAPH_MARKERS (OT) from data-retriever
    ├─ Check if range aligns with discourse boundaries
    │
-   ├─ Boundaries OK? → Proceed to Step 3
+   ├─ Boundaries OK? → Proceed to Step 4
    │
    └─ Boundaries PROBLEMATIC?
       │
@@ -140,16 +197,7 @@ Step 2: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
       │  This warning must appear BEFORE the "# Exegetical Notes" header.
       │  Do NOT embed it in Section 1. Print it FIRST, separately.
       │
-      └─ Then proceed to Step 3 (with boundary issue noted in Pericope Status)
-
-Step 3: Gather data via MCP tools
-   NT: query_morphology, query_discourse_features, query_vocabulary
-   OT: query_morphology (testament: ot), query_paragraph_breaks, query_vocabulary (testament: ot)
-   Epistles: also query_morphology with pos_filter: "conjunction"
-
-   Logical connectives for Section 2 (epistles):
-   γάρ=grounds, οὖν=inference, δέ=contrast/continuation, ἀλλά=strong contrast,
-   ἵνα=purpose, ὥστε=result, εἰ=condition, διότι/ὅτι=causal
+      └─ Then proceed to Step 4 (with boundary issue noted in Pericope Status)
 
 Step 4: Web search for Tier 3 scholarly sources
    → Prefer Tier A/B (NICNT, NIGTC, ICC, WBC, BECNT, Hermeneia, BDAG)
@@ -157,8 +205,11 @@ Step 4: Web search for Tier 3 scholarly sources
 
 Step 5: Generate ALL 10 sections using EXACT template titles (Rule 6)
    Every section is mandatory. Never skip, rename, or merge sections.
+   Use data-retriever compressed summaries as the data foundation.
 
 Step 6: Cross-check data claims against MCP tool output
+   → Call MCP tools DIRECTLY to verify specific claims from the notes
+   → This is a verification step — do not use data-retriever for cross-check
 
 Step 7: Fix any mismatches found in cross-check
 
@@ -230,6 +281,10 @@ Gloss: "[translation]"
 1. [Claim grounded in morphology — cite the parsing]
 2. [Claim grounded in discourse structure — cite the feature]
 3. [Claim grounded in intertextual connection — cite the link]
+
+[For passages dominated by imperative verbs: at least one conclusion must trace
+the indicative theological ground within the discourse unit that warrants the
+commands. Imperatives without their indicative base are moralism, not exegesis.]
 
 ## 6. Interpretive Guardrails
 
@@ -363,6 +418,8 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Wrong voice in morphology | Always verify via query_morphology MCP tool |
 | "Scholars agree..." without citation | Web search required; cite author/title/year |
 | Mixing Tier 1 and Tier 4 | Label every tier claim explicitly |
+| Tier 3 name-drop without title/series | Every Tier 3 claim: Author (Title, Series, Year). Name alone is not a citation. |
+| Imperatives presented as freestanding moral instruction | When Section 2 shows imperative-dominated structure, Section 5 must identify the indicative ground (theological basis for the commands) within the discourse unit. Commands require their warrant. |
 | Skipping Section 10 cross-check | Re-query MCP tools to confirm every data claim before delivering |
 | `--output print` but saved to file | If `--output print` is in the invocation, print ALL 10 sections inline. Never save to file and return a summary. |
 | Renaming sections | Use the exact 10 section titles from the template. "Homiletical Trajectories" is not "Interpretive Guardrails." |

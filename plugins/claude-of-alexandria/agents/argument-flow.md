@@ -328,7 +328,7 @@ Task tool:
 **Required in every response:**
 
 ```markdown
-CONFIDENCE: [HIGH / MEDIUM / LOW]
+CONFIDENCE: [HIGH / MEDIUM / LOW] — or split: [HIGH (data), MEDIUM (structural assessment)]
 Evidence: [MCP tools called + key data returned]
 Genre: [Epistle / Narrative / Poetry / Apocalyptic]
 
@@ -358,6 +358,14 @@ Analytical tone only. No applicatory framing.]
 - query_discourse_features: [book] (if NT)
 - query_paragraph_breaks: [book] (if OT)
 ```
+
+**When to use split format:** Any time the analysis includes structural claims
+beyond what MCP tools returned (hymnic form, chiastic structure, inclusio,
+strophic patterns, rhetorical structure). MCP returns morphology, conjunctions,
+and discourse features — not structural categorizations. If you infer a
+structural pattern from MCP data, that inference is MEDIUM, not HIGH.
+Single-tier `CONFIDENCE: HIGH` is only valid when the output contains
+zero structural inferences.
 
 ---
 

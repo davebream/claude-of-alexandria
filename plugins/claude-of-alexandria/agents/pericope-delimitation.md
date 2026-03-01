@@ -66,6 +66,8 @@ Never just say "no." Every non-VALID verdict must specify:
 - What the correct boundaries are
 - Why those boundaries are supported by data
 - If constraints apply (e.g., session length), the minimum viable pericope
+  For EXTEND verdicts, this means the shortest coherent sub-unit within the user's
+  original range. For CONTRACT verdicts, this means each identified sub-unit.
 
 ### Rule 5: Include Data Sources
 
@@ -129,7 +131,7 @@ Every assessment must end with a `### Data Sources` subsection citing:
 ### Recommendation
 [What to do: exact verse range, why it's better, what it accomplishes]
 
-[If applicable:] **Minimum viable pericope:** [range] — [what this covers]
+**Minimum viable pericope:** [range] — [what this covers]
 
 ### Data Sources
 - [Primary data used: Levinsohn feature names checked OR Masoretic markers found/absent]

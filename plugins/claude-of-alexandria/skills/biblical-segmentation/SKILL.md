@@ -210,6 +210,25 @@ This check uses argument-flow's output — not independent vocabulary scanning.
 
 **For dialogue passages:** Before proposing boundaries, list every question-answer pair with verse references. Explain which pairs exist and show that your boundary falls between complete exchanges, not mid-exchange. This dialogue analysis must appear in the output.
 
+**Dialogue analysis format (mandatory when argument-flow reports dialogue boundaries):**
+
+Include before the slice table:
+
+```markdown
+### Dialogue Exchange Structure
+| Exchange | Speaker | Verse(s) | Content Summary |
+|----------|---------|----------|-----------------|
+| Q1 | [Speaker] | [ref] | [brief] |
+| A1 | [Respondent] | [ref range] | [brief] |
+| — | [Speaker] (monologue) | [ref range] | [brief] |
+```
+
+Then state: "**Slice boundary rationale:** Boundary after v.[N] preserves
+[exchange ID] pair. [Reason the boundary respects conversational flow.]"
+
+Omitting this table when argument-flow reports dialogue boundaries is a
+Red Flag violation.
+
 When slicing would violate integrity: adjust boundaries to nearest valid point. Document in "Adjustments Made." Warn about problematic points in "Do Not Slice Here."
 
 ### Short Pericope Handling
@@ -326,6 +345,9 @@ Rating: ★★★★★ Excellent → ★☆☆☆☆ Not Recommended (alternati
 
 **Do Not Slice Here:**
 - [Verse range] — [Reason: chiasmus center / mid-dialogue / conditional-consequence]
+
+## Data Sources
+[Same format as main output — see Data Sources section below]
 ```
 
 **Required in every Reading Slices output:** Header with calculation, Slice table, Adjustments Made, Do Not Slice Here, Data Sources.
