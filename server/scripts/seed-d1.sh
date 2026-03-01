@@ -111,5 +111,14 @@ npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/event-locations.sql" --remo
 
 echo "  Entity tables imported."
 
+# Phase 3a: Speaker Quotations
+echo "Importing speakers..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/speakers.sql" --remote
+echo "  Speakers imported."
+
+echo "Importing quotations..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/quotations.sql" --remote
+echo "  Quotations imported."
+
 echo ""
 echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books. ==="

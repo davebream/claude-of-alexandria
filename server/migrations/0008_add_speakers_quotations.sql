@@ -33,7 +33,5 @@ CREATE INDEX IF NOT EXISTS idx_quot_book_range
 CREATE INDEX IF NOT EXISTS idx_quot_speaker
   ON quotations(speaker_id);
 
--- Divine speech queries: partial index for efficiency
-CREATE INDEX IF NOT EXISTS idx_quot_divine
-  ON quotations(book, chapter, verse_start)
-  WHERE speaker_id IN (SELECT character_id FROM speakers WHERE divinity = 'Y');
+-- Divine speech queries use the book_range index + JOIN to speakers table.
+-- D1 does not support subqueries in partial index WHERE clauses.
