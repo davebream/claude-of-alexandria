@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-03-01
+
+### Added
+
+- `query_lexicon` tool — Strong's-based word definitions from STEPBible TBESH/TBESG data (20,196 entries: 9,348 Hebrew + 10,846 Greek), with lookup by Strong's ID or lemma and compact mode
+- `check_versification` tool — Hebrew-English verse numbering differences from UBS versification data (144 canonical mappings), with book-level, verse-level, and range queries
+- `query_cross_references` tool — 344,799 editorial-tradition cross-reference pairs from OpenBible.info with vote counts, bidirectional queries (from/to/both), and configurable limits
+
 ## [2.1.1] - 2026-03-01
 
 ### Added
