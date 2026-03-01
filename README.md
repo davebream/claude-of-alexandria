@@ -7,7 +7,8 @@
 <p align="center">
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-5-orange" alt="Skills"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-5%20%2B%206%20agents-orange" alt="Skills"></a>
+  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-89%20automated-yellow" alt="Tests"></a>
 </p>
 
 ---
@@ -16,17 +17,30 @@ Structured frameworks that prevent AI agents from committing exegetical malpract
 
 ## The Problem
 
-Frontier models make predictable errors when handling Scripture:
+Frontier models make predictable errors when handling Scripture. These are documented by 40 RED-phase tests that run the same prompts *without* skills and record what goes wrong:
 
-- **Inventing arbitrary divisions** to satisfy session counts ("8 weeks on Philemon")
-- **Presenting single frameworks** for contested books as if consensus exists
-- **Auto-selecting options** instead of presenting scholarly alternatives
-- **Ignoring ancient manuscript markers** like Masoretic paragraph divisions
-- **Psychologizing passages** and defaulting to therapeutic frameworks
+- **Fabricating linguistic data from training memory** — inventing morphological parsings, frequency counts, and hapax claims without querying actual data
+- **Inventing arbitrary divisions** to satisfy session counts ("8 weeks on Philemon") without checking manuscript markers
+- **Presenting single frameworks** for contested books as if scholarly consensus exists
+- **No confidence tiering** — treating training-data guesses and parser-verified data with equal certainty
+- **Moralistic drift** — "try harder" applications and therapeutic framing without gospel grounding
+- **Yielding to user pressure** — skipping data verification when asked to "just be brief" or "skip the Greek"
+- **Accepting truncated pericopes** — validating famous verses (John 3:16) as standalone units based on familiarity, not discourse evidence
+- **Genre-blind analysis** — applying epistolary methods to wisdom literature, forcing narrative arcs on proverbial collections
+- **Ignoring ancient manuscript markers** like Masoretic paragraph divisions and Levinsohn discourse features
+- **Auto-selecting options** instead of presenting scholarly alternatives with evidence
 
 ## The Evidence
 
-Every skill includes three test files:
+**89 automated tests** verify that skills prevent documented failures. Tests run against `claude-agent-sdk` with live MCP data — not mocked responses.
+
+| Phase | Tests | What it does |
+|-------|-------|-------------|
+| RED | 41 | Runs prompts against a bare model (no skills, no MCP, `/tmp` isolation). Documents what goes wrong. |
+| GREEN | 47 | Runs the same prompts with skills and MCP enabled. Proves the skill corrects each failure. |
+| Smoke | 1 | Verifies the skill-to-agent pipeline works end-to-end. |
+
+GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). Every skill also has three markdown test files for human-readable TDD documentation:
 
 | File | Purpose |
 |------|---------|
@@ -38,9 +52,11 @@ If a skill cannot demonstrate that it prevents a documented failure, it does not
 
 ## Current Collection
 
-**5 skills, all production.**
+**5 skills + 6 sub-agents, all production.** Coverage: all 66 canonical books.
 
-### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/)
+### Skills
+
+#### [biblical-segmentation](plugins/claude-of-alexandria/skills/biblical-segmentation/)
 
 Divides biblical books into coherent teaching units with integrity safeguards:
 
@@ -49,9 +65,9 @@ Divides biblical books into coherent teaching units with integrity safeguards:
 - Validates against Masoretic paragraph markers and Levinsohn discourse features
 - Handles contested books with multiple frameworks
 
-Coverage: all 66 canonical books. 33 test scenarios.
+24 automated tests (10 RED + 14 GREEN).
 
-### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/)
+#### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/)
 
 Validates whether a proposed passage holds together as a discourse unit:
 
@@ -59,19 +75,20 @@ Validates whether a proposed passage holds together as a discourse unit:
 - Returns verdict: VALID, EXTEND, CONTRACT, or ADJUST
 - Recommends the smallest coherent unit if passage is too short
 
-5 test scenarios. Resists memory-based validation of famous passages.
+11 automated tests (4 RED + 7 GREEN). Resists memory-based validation of famous passages.
 
-### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/)
+#### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/)
 
 Produces exegetical notes for sermon or teaching preparation:
 
 - 10-section schema from literary context through verification
 - Parser-verified lexical data (not training memory guesses)
 - 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment
+- Genre-graduated redemptive-historical connections (epistles vs. wisdom literature vs. short letters)
 
-Runs pericope check before generating notes.
+20 automated tests (6 RED + 14 GREEN), including stress tests for Philemon, Proverbs, and 3 John.
 
-### [consult-biblical-scholar](plugins/claude-of-alexandria/skills/consult-biblical-scholar/)
+#### [consult-biblical-scholar](plugins/claude-of-alexandria/skills/consult-biblical-scholar/)
 
 Scholarly Q&A for biblical texts. Three auto-detected modes:
 
@@ -79,9 +96,9 @@ Scholarly Q&A for biblical texts. Three auto-detected modes:
 - **VALIDATE** — checks analogies, illustrations, or claims against text; returns formal verdict
 - **CROSS-REFERENCE** — finds related passages with scholarly evidence
 
-Graduated confidence declared before every answer. Pushes back when data is insufficient.
+11 automated tests (5 RED + 6 GREEN). Graduated confidence declared before every answer.
 
-### [argument-flow](plugins/claude-of-alexandria/skills/argument-flow/)
+#### [argument-flow](plugins/claude-of-alexandria/skills/argument-flow/)
 
 Maps the logical argument of a biblical passage using discourse markers:
 
@@ -89,7 +106,28 @@ Maps the logical argument of a biblical passage using discourse markers:
 - Calls MCP tools for conjunction and discourse data before composing analysis
 - Grounds every interpretive claim in retrieved data
 
-For epistles and discourse-heavy passages.
+11 automated tests (5 RED + 6 GREEN). For epistles and discourse-heavy passages.
+
+### Sub-Agents
+
+Skills delegate specialized work to sub-agents. You do not invoke these directly — skills spawn them automatically.
+
+```
+study-evaluator (Sonnet)
+    └── biblical-scholar (Sonnet)
+            └── data-retriever (Haiku)
+```
+
+| Agent | Model | Role |
+|-------|-------|------|
+| `data-retriever` | Haiku | Fetches MCP data and compresses into structured summaries with testament-aware routing |
+| `biblical-scholar` | Sonnet | Scholarly analysis with three modes (ANALYZE, VALIDATE, TRACE), confidence tiers, source attribution |
+| `study-evaluator` | Sonnet | Evaluates bible study outlines and transcripts against exegetical standards with drift classification |
+| `pericope-delimitation` | Sonnet | Boundary validation with structured verdicts grounded in discourse markers |
+| `argument-flow` | Sonnet | Logical structure mapping with connective-anchored proposition chains |
+| `smoke-test` | Haiku | Pipeline verification (returns a known marker string) |
+
+Agent correctness is tested indirectly through skill GREEN suites, plus 11 dedicated RED-phase tests that document bare-model failure modes.
 
 ## Installation
 
@@ -136,7 +174,7 @@ Requires Node.js. Restart Claude Desktop after saving.
 
 ### Verify Installation
 
-- **Claude Code:** Run `/skills` and look for all five skills
+- **Claude Code:** Run `/skills` and look for all five skills and `/agents` for sub-agents
 - **Claude Desktop:** Ask Claude to use `query_vocabulary` for any biblical book
 
 ## Reference Server
@@ -153,6 +191,7 @@ The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both testaments |
 | `query_lemmas` | Cross-book lemma distribution | Both testaments |
+| `query_theme` | Cross-book distribution of a thematic keyword group | Both testaments |
 
 Skills call these automatically. You can invoke them directly if needed.
 
@@ -187,5 +226,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>5 skills (all production) supporting all 66 biblical books.</sub>
+  <sub>5 skills, 6 sub-agents, 89 automated tests. All 66 biblical books.</sub>
 </p>

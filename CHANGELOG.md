@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-03-01
+
+### Added
+
+- Genre-graduated redemptive-historical requirement for `exegetical-notes` Section 8 — epistles/narrative/prophecy require cross-testament links; wisdom literature and short personal letters have graduated expectations
+- 3 stress tests for genre edge cases: Philemon 8-16 (short letter), Proverbs 10:1-7 (wisdom), 3 John 1-8 (minimal density)
+- `query_theme` MCP tool to root README and plugin README tool tables
+- Sub-agents section in root README with delegation chain diagram
+- Automated test badge and counts in root README (89 tests)
+- Available Agents section in plugin README
+
+### Changed
+
+- `exegetical-notes` Rule 5 verification capped to 5 risk-prioritized claims (morphological parsings, frequency counts, hapax claims) to prevent turn exhaustion
+- Root README "The Problem" section expanded from 5 to 10 failure modes, grounded in RED-phase test evidence
+- Root README "The Evidence" section now documents promptfoo infrastructure (41 RED + 47 GREEN + 1 smoke)
+- Plugin README architecture section updated from v1.5.0 reference to current agent-based architecture
+- Plugin README MCP tool count updated from eight to nine (added `query_theme`)
+
+### Fixed
+
+- Plugin manifest version mismatch: `plugin.json` was 1.11.0 while `marketplace.json` was 2.0.0 — both now 2.1.0
+- 7 GREEN test failures from template/rule contradictions in exegetical-notes skill
+- 3 GREEN test failures (S2 verse references, S3 tier labeling, S4 pericope check) in exegetical-notes skill
+
 ## [2.0.0] - 2026-02-27
 
 ### Added

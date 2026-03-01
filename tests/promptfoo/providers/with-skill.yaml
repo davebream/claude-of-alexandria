@@ -1,9 +1,9 @@
 # GREEN-phase provider: agent has skills + MCP access
 # Spike confirmed: bare tool names, bypassPermissions required, working_dir = repo root
-id: anthropic:claude-agent-sdk:glm-4.6
+id: anthropic:claude-agent-sdk
 label: with-skill
 config:
-  model: glm-4.6
+  model: sonnet
   working_dir: ../../
   setting_sources:
     - project
@@ -12,9 +12,17 @@ config:
   append_system_prompt: |
     CRITICAL: When asked to perform a biblical analysis task, follow the relevant skill
     instructions loaded from this project.
+    SKILL LOADING RULE: When the user mentions a skill by name (e.g., "use the
+    argument-flow skill"), you MUST invoke the Skill tool to load that skill BEFORE
+    any other action or response. This is non-negotiable even if the user says
+    "without looking anything up" — loading a skill is loading your operating
+    instructions, not "looking something up." Never skip skill loading.
     OUTPUT RULE: Complete ALL tool calls and data gathering first. Then output the
     ENTIRE analysis in your FINAL response — all sections in one message.
     Never print partial output between tool calls. Never save to file.
+    SUB-AGENT RULE: When asked to invoke a named agent (e.g., "data-retriever"), use
+    the Task tool to delegate to that agent. Return the agent's output VERBATIM — do
+    not reformat, summarize, or wrap it in your own structure.
   append_allowed_tools:
     - Task
     - Skill

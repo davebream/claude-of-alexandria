@@ -29,6 +29,20 @@ defaultTest:
       value: |
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
+    # MCP tool citation check: output must reference expected MCP tools.
+    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_discourse_features', 'query_morphology'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
     # Must include Data Sources section
     - type: icontains
       value: "Data Sources"

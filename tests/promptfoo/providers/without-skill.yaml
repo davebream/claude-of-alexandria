@@ -1,11 +1,13 @@
 # RED-phase provider: bare model, no skills, no MCP, no biblical tools.
 # Same model as GREEN so the only variable is skill + MCP on/off.
-# No setting_sources → no project context loaded.
+# working_dir: /tmp → prevents filesystem access to repo files.
+# No setting_sources → no project context loaded (SDK default: []).
 # No mcp → no biblical data tools.
 # No append_allowed_tools → default bare tools only (no Skill tool).
-id: anthropic:claude-agent-sdk:glm-4.6
+id: anthropic:claude-agent-sdk
 label: without-skill
 config:
-  model: glm-4.6
+  model: sonnet
+  working_dir: /tmp
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true

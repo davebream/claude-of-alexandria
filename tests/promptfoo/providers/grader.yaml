@@ -1,8 +1,8 @@
 # Grading provider for llm-rubric assertions.
 # Uses a non-thinking model so promptfoo can parse JSON from responses.
 # Separate from test providers: no skills, no MCP, no working_dir.
-id: anthropic:claude-agent-sdk:glm-4.6
+id: anthropic:claude-agent-sdk
 label: grader
 config:
-  model: glm-4.6
+  model: opus
   temperature: 0

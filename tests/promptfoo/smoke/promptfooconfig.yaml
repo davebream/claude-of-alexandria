@@ -1,0 +1,21 @@
+description: "Smoke test — verify prompt → skill → sub-agent pipeline"
+
+providers:
+  - file://../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+tests:
+  - description: "SMOKE: prompt triggers skill which invokes Haiku sub-agent"
+    vars:
+      prompt: "Run the /smoke-test skill."
+    assert:
+      # Sub-agent marker reached the output
+      - type: icontains
+        value: "SMOKE_TEST_AGENT_OK"
+      # Tool calls happened (skill + agent dispatch)
+      - type: javascript
+        value: |
+          const raw = JSON.parse(context.providerResponse?.raw || '{}');
+          return (raw.num_turns || 0) > 1;

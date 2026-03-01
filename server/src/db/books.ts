@@ -155,7 +155,17 @@ function normalizeKey(input: string): string {
 
 export function lookupBook(input: string): BookInfo | null {
   const key = normalizeKey(input);
-  return BOOK_MAP[key] ?? null;
+  const direct = BOOK_MAP[key];
+  if (direct) return direct;
+
+  // Strip trailing chapter/verse references agents may include
+  // e.g. "psalm23" → "psalm", "1samuel3:15" → "1samuel"
+  const stripped = key.replace(/[0-9:.,]+$/, '');
+  if (stripped && stripped !== key) {
+    return BOOK_MAP[stripped] ?? null;
+  }
+
+  return null;
 }
 
 export function getAllBooks(): BookInfo[] {

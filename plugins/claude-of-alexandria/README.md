@@ -4,13 +4,21 @@
 
 ## Architecture
 
-Version 1.5.0 moved the MCP server to Cloudflare Workers + D1 (edge SQLite). Skills call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — with no local installation required.
+The MCP server runs on Cloudflare Workers + D1 (edge SQLite). Skills call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — with no local installation required.
 
-The result: the same data, delivered from a globally distributed edge network over HTTP.
+Skills delegate specialized work to sub-agents:
+
+```
+study-evaluator (Sonnet)
+    └── biblical-scholar (Sonnet)
+            └── data-retriever (Haiku)
+```
+
+The `data-retriever` agent (Haiku) handles all MCP data gathering and compression. Higher-level agents and skills spawn it automatically, keeping token usage low and data handling centralized.
 
 ## MCP Server
 
-The reference server exposes eight tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes nine tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 | Tool | Queries | Coverage |
 | ---- | ------- | -------- |
@@ -21,6 +29,7 @@ The reference server exposes eight tools. Skills call these automatically; you d
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both |
 | `query_lemmas` | Cross-book lemma distribution | Both |
+| `query_theme` | Cross-book distribution of a thematic keyword group | Both |
 | `list_books` | Available books and their metadata | Both |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
@@ -95,9 +104,22 @@ Divides biblical books into coherent teaching units with integrity safeguards.
 /claude-of-alexandria:biblical-segmentation Divide Romans into 12 sessions for a sermon series.
 ```
 
+## Available Agents
+
+Sub-agents are spawned by skills automatically. They are not invoked directly.
+
+| Agent | Model | Role |
+|-------|-------|------|
+| `data-retriever` | Haiku | Fetches MCP data, compresses into structured summaries with testament-aware routing |
+| `biblical-scholar` | Sonnet | Scholarly analysis (ANALYZE, VALIDATE, TRACE modes) with confidence tiers |
+| `study-evaluator` | Sonnet | Evaluates study materials against exegetical standards with drift classification |
+| `pericope-delimitation` | Sonnet | Boundary validation with structured verdicts |
+| `argument-flow` | Sonnet | Logical structure mapping with proposition chains |
+| `smoke-test` | Haiku | Pipeline verification |
+
 ## Development
 
-This plugin is built using Test-Driven Development. Every skill has documented failure cases and verification evidence in the `tests/` directory at the repository root.
+This plugin is built using Test-Driven Development. 89 automated promptfoo tests (41 RED + 47 GREEN + 1 smoke) verify skill correctness against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
 
 See [CLAUDE.md](CLAUDE.md) for development guidelines and the Librarian's instructions.
 

@@ -33,11 +33,34 @@ defaultTest:
   options:
     provider: file://../../providers/grader.yaml
   assert:
-    # Every GREEN test must use MCP tools
+    # Every GREEN test must use MCP tools — sub-agent adds turns
     - type: javascript
       value: |
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
-        return (raw.num_turns || 0) > 1;
+        return (raw.num_turns || 0) > 2;
+    # MCP data evidence check: output must show evidence of MCP data usage.
+    # Checks for raw tool names, data-retriever contract terms, AND natural-language
+    # citations that only appear when MCP data was actually consulted.
+    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const mcpTools = ['query_vocabulary', 'query_discourse_features', 'query_paragraph_breaks'];
+        const contractTerms = ['tool_results', 'discourse_summary', 'paragraph_markers', 'data-retriever'];
+        // Natural-language evidence that MCP data was used (these terms come from
+        // Data Sources sections and Markers columns, not training knowledge alone)
+        const naturalEvidence = ['levinsohn', 'sefaria', 'masoretic', 'petuch', 'setum'];
+        const foundMcp = mcpTools.filter(n => lower.includes(n));
+        const foundContract = contractTerms.filter(n => lower.includes(n));
+        const foundNatural = naturalEvidence.filter(n => lower.includes(n));
+        const totalFound = foundMcp.length + foundContract.length + foundNatural.length;
+        return {
+          pass: totalFound >= 1,
+          score: Math.min(totalFound / 4, 1),
+          reason: totalFound >= 1
+            ? `MCP evidence found: tools=[${foundMcp}], contract=[${foundContract}], natural=[${foundNatural}]`
+            : `No MCP evidence found. Expected tools: [${mcpTools}], contract: [${contractTerms}], or natural: [${naturalEvidence}]`
+        };
     # Must include Data Sources section
     - type: icontains
       value: "Data Sources"
@@ -64,6 +87,16 @@ tests:
           PASS if alternatives are offered (e.g., 1-2 session plan,
           pairing with Colossians, or a different series structure).
           FAIL if the response only refuses without suggesting alternatives.
+      - type: llm-rubric
+        value: |
+          PASS if the refusal cites evidence from MCP data gathering
+          (e.g., discourse features, paragraph markers, vocabulary data,
+          or explicit mention of data-retriever, TOOL_RESULTS, or
+          Levinsohn discourse features for Philemon).
+          The refusal must demonstrate that the book was analyzed with
+          MCP tools, not just dismissed from training knowledge.
+          FAIL if the refusal contains no MCP data evidence — even if
+          the refusal is otherwise correct about the session limit.
 
   # =========================================================================
   # Scenario 2: Contested Book — Revelation in 12 sessions
@@ -88,6 +121,14 @@ tests:
           12 sessions fits Revelation's structure).
           FAIL if the response jumps straight to session divisions without
           any feasibility assessment.
+      - type: llm-rubric
+        value: |
+          PASS if at least one of the structural frameworks cites MCP
+          discourse feature evidence (e.g., Levinsohn discourse features,
+          Historical Present, Point of Departure, vision sequence markers,
+          or data from query_discourse_features) as boundary evidence.
+          FAIL if both frameworks rely entirely on training knowledge
+          with no MCP data citations for boundary decisions.
 
   # =========================================================================
   # Scenario 5: Anthology — Psalms in 52 weeks
@@ -112,6 +153,14 @@ tests:
           PASS if multiple curation approaches are presented as options
           for the user to choose from (not auto-selected).
           FAIL if only one grouping approach is presented.
+      - type: llm-rubric
+        value: |
+          PASS if the curation output references MCP data evidence
+          (e.g., vocabulary data from query_vocabulary, paragraph markers
+          from query_paragraph_breaks, Masoretic markers פ/ס, or
+          explicit mention of data-retriever or TOOL_RESULTS).
+          FAIL if the curation mode is presented without any MCP data
+          grounding — even if the curation approach is otherwise correct.
 
   # =========================================================================
   # Scenario 6: Auto-Select Pressure — Romans "just pick for me"
@@ -151,8 +200,8 @@ tests:
         value: |
           const markers = (output.match(/[פס]/g) || []).length;
           return markers >= 3
-            ? { pass: true, reason: `${markers} Masoretic markers (פ/ס) found` }
-            : { pass: false, reason: `Only ${markers} Masoretic markers found; need 3+` };
+            ? { pass: true, score: 1, reason: `${markers} Masoretic markers (פ/ס) found` }
+            : { pass: false, score: 0, reason: `Only ${markers} Masoretic markers found; need 3+` };
       # Markers validate session boundaries with verse references
       - type: llm-rubric
         value: |
@@ -208,6 +257,15 @@ tests:
           frameworks should appear.
           FAIL if only one option is presented, deferring to the
           user's claimed expertise.
+      - type: llm-rubric
+        value: |
+          PASS if the segmentation options cite Levinsohn discourse
+          features (e.g., Historical Present, Point of Departure,
+          Left-Dislocation, or specific discourse data from
+          query_discourse_features) as boundary evidence in the Markers
+          column or rationale sections.
+          FAIL if the options rely entirely on training knowledge for
+          boundary evidence without MCP discourse data citations.
 
   # =========================================================================
   # ADV2: Extreme Compression — Isaiah in 3 sessions
@@ -268,12 +326,14 @@ tests:
     assert:
       - type: llm-rubric
         value: |
-          PASS if the response identifies a structural concern around Romans 8:8
-          (chiasmus center, flesh/Spirit contrast pivot, or rhetorical structure)
-          AND either warns against slicing at that point OR adjusts slice
-          boundaries to preserve the structural integrity.
-          FAIL if the response proposes slices that bisect 8:8-9 without any
-          structural warning or adjustment.
+          PASS if the response identifies a structural concern in the Romans 8:5-9
+          zone (flesh/Spirit contrast pivot, chiasmus center, μέν...δέ construction,
+          or rhetorical structure) AND either warns against slicing through that
+          zone OR adjusts slice boundaries to preserve the structural integrity.
+          The concern may be identified at 8:5-6 (the φρόνημα contrast), 8:8
+          (chiasmus center), or 8:8-9 (transition point) — any of these is valid.
+          FAIL if the response proposes slices that bisect the 8:5-9 flesh/Spirit
+          contrast without any structural warning or adjustment.
       - type: llm-rubric
         value: |
           PASS if the response includes a "Do Not Slice" section or equivalent
@@ -369,9 +429,12 @@ tests:
           typical verse scope or session-length constraint.
       - type: llm-rubric
         value: |
-          PASS if the response explains why the 5-10 verse scope is
-          appropriate for 15-20 minute SOAP sessions (e.g., SOAP requires
-          time for Scripture reading, Observation, Application, Prayer
-          within each session).
-          FAIL if the verse scope is stated without connecting it to the
-          method's time requirements.
+          PASS if the response connects the 5-10 verse scope to SOAP's
+          time requirements — either by explaining that SOAP's four steps
+          (Scripture, Observation, Application, Prayer) need time per verse,
+          OR by explicitly linking the verse scope to the 15-20 minute
+          session target (e.g., "targeting 15-20 minute sessions at 5-10
+          verses per slice"). Any explicit connection between method scope
+          and time constraint counts.
+          FAIL if slices are produced with no connection between verse scope
+          and SOAP's time or methodology requirements.
