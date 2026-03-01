@@ -13,6 +13,9 @@
 #   SL1: Session framing — treats pericope slice as mini-series
 #   SL2: Mechanical division — divides by verse count without structural analysis
 #   SL3: Dialogue-unaware division — divides without mapping exchange structure
+#
+# Phase 4 entity integration:
+#   S23: Entity-unaware segmentation — narrative division without protagonist data
 #   SL4: Short pericope — compliance without principled minimum-size reasoning
 #   SL5: User-count deference — accepts user's suggestion without principled calculation
 #   SL6: Method-unaware slicing — produces divisions without SOAP scope constraints
@@ -271,3 +274,26 @@ tests:
           FAIL only if the response explicitly calculates slices based on
           SOAP's characteristic 5-10 verse scope AND explains why this
           scope is appropriate for 15-20 minute sessions.
+
+  # =========================================================================
+  # Scenario 23: Entity-Unaware Narrative Segmentation (Phase 4)
+  # Failure: Narrative divided without entity/protagonist data
+  # Bare model segments by chapter or scene without entity database evidence
+  # =========================================================================
+  - description: "S23 RED: Entity-unaware segmentation — narrative without protagonist data"
+    vars:
+      prompt: "Segment Genesis 12-25 (Abraham narrative) into 6 sessions for a Bible study series. Use protagonist shifts as boundary evidence."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response segments the Abraham narrative without citing
+          structured entity data. Signs:
+          - Divides by chapter groupings or narrative episodes from training knowledge
+          - Does not cite query_people, PEOPLE_SUMMARY, or entity database information
+          - Protagonist shifts based on narrative memory, not entity data
+          - No entity cross-reference counts or verse-range appearances cited
+
+          FAIL if the response cites structured entity data (people, places,
+          events with cross-book references) as boundary evidence.

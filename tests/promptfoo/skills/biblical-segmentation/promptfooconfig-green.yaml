@@ -438,3 +438,24 @@ tests:
           and time constraint counts.
           FAIL if slices are produced with no connection between verse scope
           and SOAP's time or methodology requirements.
+
+  # =========================================================================
+  # Scenario 23: Entity-Aware Narrative Segmentation (Phase 4)
+  # Protagonist data used as boundary evidence for narrative books
+  # =========================================================================
+  - description: "S23 GREEN: Entity-aware segmentation — protagonist shifts as boundary evidence"
+    vars:
+      prompt: "Segment Genesis 12-25 (Abraham narrative) into 6 sessions for a Bible study series. Use protagonist shifts as boundary evidence."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses entity or character data as part of boundary
+          evidence for the Abraham narrative. Signs of success:
+          - References protagonist shifts (Abraham, Lot, Sarah, Hagar, Isaac) with
+            structured data backing (entity appearances, PEOPLE_SUMMARY, or query_people)
+          - Uses character presence/absence as supporting boundary evidence
+          - Entity data supplements (does not replace) Masoretic paragraph markers
+          FAIL if the response segments purely by chapter groupings or narrative
+          episodes without any reference to entity data.
+      - type: icontains
+        value: "Data Sources"

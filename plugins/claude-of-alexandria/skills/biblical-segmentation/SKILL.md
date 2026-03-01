@@ -1,7 +1,7 @@
 ---
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
-allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
+allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers
 ---
 
 # Biblical Text Segmentation
@@ -247,7 +247,7 @@ When slicing would violate integrity: adjust boundaries to nearest valid point. 
 
 | Genre | Books | Primary Markers |
 |-------|-------|-----------------|
-| OT Narrative | Genesis-Esther, Jonah, Acts | Scene changes, toledot, participant shifts |
+| OT Narrative | Genesis-Esther, Jonah, Acts | Scene changes, toledot, participant shifts, entity data (PEOPLE_SUMMARY, PLACES_SUMMARY) |
 | Gospel | Matthew-John | Geographical markers, temporal phrases |
 | Epistle | Romans-Jude | Disclosure formulas, "Now concerning...", vocative shifts |
 | Prophetic | Isaiah-Malachi (except Jonah) | Messenger formulas, oracle boundaries |
@@ -257,6 +257,17 @@ When slicing would violate integrity: adjust boundaries to nearest valid point. 
 | Torah/Law | Leviticus, Deuteronomy | Legal collections, speech formulas |
 
 **Notes:** Jonah is narrative. Daniel is dual-genre (chs. 1-6 narrative, 7-12 apocalyptic).
+
+### Protagonist-Based Segmentation (Narrative books)
+
+When data-retriever returns `PEOPLE_SUMMARY` and `EVENTS_SUMMARY`, use entity data to enhance segmentation:
+
+- **Protagonist shifts:** Changes in the primary character across sections are strong session boundary candidates. Use `PEOPLE_SUMMARY` to identify which people appear in which verse ranges.
+- **Place transitions:** Geographic shifts from `PLACES_SUMMARY` provide additional boundary evidence, especially in Acts (missionary journeys) and Genesis (patriarchal narratives).
+- **Event clustering:** `EVENTS_SUMMARY` chronological data helps identify episode boundaries for narrative books.
+- **Speaker changes:** `SPEAKER_SUMMARY` data provides discourse boundary evidence — a new speaker often signals a new scene or unit.
+
+Entity data supplements (does not replace) discourse markers and Masoretic paragraph markers. When entity boundaries conflict with discourse markers, the discourse markers take priority.
 
 ---
 

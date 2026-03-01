@@ -217,3 +217,22 @@ tests:
             (e.g., "Option A: I can look it up / Option B: I can give my take")
           - The agent stops after explaining the Iron Rule to ask the user
             whether they'd like to proceed with or without MCP data
+
+  # =========================================================================
+  # Scenario 6: Speaker-Aware Dialogue Flow (Phase 4)
+  # Speaker transition data used as discourse markers in proposition chain
+  # =========================================================================
+  - description: "S6 GREEN: Speaker-aware dialogue — speaker transitions as discourse markers"
+    vars:
+      prompt: "Map the argument flow of Genesis 18:22-33 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses speaker data or speaker transitions as part of
+          the argument flow analysis. Signs of success:
+          - Speaker transitions noted with verse references
+          - Dialogue exchanges mapped with speaker attribution
+          - Speaker changes treated as discourse markers in the proposition chain
+          - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
+          FAIL if speakers are identified only from narrative context without
+          any reference to structured speaker data.

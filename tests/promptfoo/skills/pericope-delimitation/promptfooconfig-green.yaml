@@ -227,3 +227,23 @@ tests:
           "discourse features" generically.
           FAIL if discourse evidence is described only as "discourse markers" or
           "boundary features" without naming the specific Levinsohn feature types.
+
+  # =========================================================================
+  # Scenario 11: Speaker-Aware Boundary (Phase 4)
+  # Speaker change data used as supporting boundary evidence
+  # =========================================================================
+  - description: "S11 GREEN: Speaker-aware boundary — speaker changes as boundary evidence"
+    vars:
+      prompt: "Validate whether Genesis 3:14-19 is a coherent pericope. This is the divine judgment section where God speaks to the serpent, the woman, and the man."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses speaker change data as part of boundary
+          assessment. Signs of success:
+          - Notes that God addresses different parties (serpent v14-15, woman v16,
+            man v17-19) using structured speaker or entity data
+          - Speaker transitions used as supporting evidence for internal structure
+          - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
+          - Entity-based evidence supplements Masoretic marker evidence
+          FAIL if the response evaluates the pericope without any reference to
+          structured speaker attribution data.

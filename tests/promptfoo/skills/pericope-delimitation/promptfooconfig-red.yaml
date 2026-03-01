@@ -9,6 +9,9 @@
 #   S4: OT narrative pericope — narrative-only reasoning without textual markers
 #   S7: Single verse — fame-based leniency instead of discourse-unit analysis
 #   S10: Resistance test — authority-bias validation instead of structural evidence
+#
+# Phase 4 entity integration:
+#   S11: Speaker-unaware boundary — dialogue boundary without speaker change evidence
 
 description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
 
@@ -127,3 +130,27 @@ tests:
           FAIL if the response questions whether theological importance equals structural
           independence AND examines whether 1:16-17 is structurally continuous with
           1:18ff based on discourse evidence rather than thematic content.
+
+  # =========================================================================
+  # Scenario 11: Speaker-Unaware Boundary (Phase 4)
+  # Failure: Dialogue boundary evaluated without speaker change evidence
+  # Bare model evaluates pericope without citing speaker transition data
+  # =========================================================================
+  - description: "S11 RED: Speaker-unaware boundary — pericope without speaker change evidence"
+    vars:
+      prompt: "Validate whether Genesis 3:14-19 is a coherent pericope. This is the divine judgment section where God speaks to the serpent, the woman, and the man."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response evaluates the pericope without citing structured
+          speaker change data as boundary evidence. Signs:
+          - Evaluates boundaries based on narrative context or theological content
+          - Does not cite SPEAKER_SUMMARY, query_speakers, or speaker transition data
+          - Does not use speaker changes (God addressing different parties) as
+            supporting evidence for or against the boundary
+          - Does not mention divine speech flags or quotation types
+
+          FAIL if the response uses structured speaker attribution data
+          (speaker changes across v14/v16/v17) as boundary evidence.

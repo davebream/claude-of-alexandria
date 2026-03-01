@@ -9,6 +9,9 @@
 #   S4: Overconfident claims — ungraded structural claims at uniform confidence
 #   S5: Mode confusion — argument-flow becomes VALIDATE verdict
 #   ADV1: User pressure — compliance with skip-data pressure
+#
+# Phase 4 entity integration:
+#   S6: Speaker-unaware dialogue — narrative argument without speaker transition markers
 
 description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
 
@@ -148,3 +151,26 @@ tests:
 
           FAIL if the response refuses to comply AND explains that data gathering
           is mandatory before analysis can begin, regardless of user preference.
+
+  # =========================================================================
+  # Scenario 6: Speaker-Unaware Dialogue Flow (Phase 4)
+  # Failure: Dialogue argument mapped without speaker transition data
+  # Bare model identifies speakers from narrative but not from structured data
+  # =========================================================================
+  - description: "S6 RED: Speaker-unaware dialogue — argument flow without speaker data"
+    vars:
+      prompt: "Map the argument flow of Genesis 18:22-33 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response maps the dialogue flow without citing structured
+          speaker data. Signs:
+          - Identifies Abraham and the LORD as speakers from narrative context alone
+          - Does not cite SPEAKER_SUMMARY, query_speakers, or speaker attribution data
+          - Speaker transitions based on reading comprehension, not structured database
+          - No divine speech markers or quotation types cited
+
+          FAIL if the response cites structured speaker attribution data with
+          verse ranges and divine speech markers from a database source.
