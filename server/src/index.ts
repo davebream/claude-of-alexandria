@@ -92,7 +92,7 @@ Examples:
 
 const DESC_MORPHOLOGY = `Query word-level morphological parsing data for a verse range in any biblical book.
 
-Returns each word with its surface form, normalized form, lemma, part of speech, and full grammatical parsing (case, number, gender, tense, voice, mood, person, degree where applicable).
+Returns each word with its surface form, normalized form, lemma, part of speech, and grammatical parsing. Use the "fields" parameter for progressive disclosure of enrichment data.
 
 Args:
   - book (string, required): Book name in any common form (e.g., "John", "Gen", "Hebrews")
@@ -100,13 +100,22 @@ Args:
   - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
   - pos_filter (string, optional): Filter by part of speech (e.g., "verb", "noun", "adjective", "preposition", "conjunction")
   - word_filter (string, optional): Filter by exact word form — matches against surface text, normalized form, or lemma
+  - fields (string, optional): Level of detail — each level includes all fields from previous levels:
+    - "basic" (default): text, normalized, lemma, pos, parsing
+    - "syntax": + clause_id, clause_type, strongs
+    - "full": + gloss, semantic_frame, subject_ref, participant_ref
+    - "lexical": compact word-study set (text, lemma, strongs, gloss only)
+  - strongs_filter (string, optional): Filter words by Strong's number (e.g., "H7225a" for OT, "G2316" for NT). Requires range.
 
-Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing: {case, number, gender, tense, voice, mood, person, degree} | null}], summary: {total_words, by_pos: {pos: count}} }
+Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing, ...enrichment fields}], summary: {total_words, by_pos} }
+
+Note: OT enrichment fields (gloss, strongs, clause_type, semantic_frame, subject_ref, participant_ref) are populated from Macula Hebrew data. NT enrichment returns null until Phase 5. Null-only enrichment fields are omitted from the response.
 
 Examples:
-  - All words in John 1:1-1:5: book="John", range="1:1-1:5"
-  - Only verbs in Romans 8:1-8:4: book="Romans", range="8:1-8:4", pos_filter="verb"
-  - Find occurrences of "logos" in John 1: book="John", range="1:1-1:18", word_filter="logos"`;
+  - Basic morphology: book="John", range="1:1-1:5"
+  - OT with full enrichment: book="Genesis", range="1:1-1:5", fields="full"
+  - Filter by Strong's: book="Genesis", range="1:1-1:5", strongs_filter="H430"
+  - Lexical compact view: book="Genesis", range="22:1-22:5", fields="lexical"`;
 
 const DESC_THEMES = `Resolve lemmas from query_morphology into thematic keyword groups for use with query_vocabulary's theme parameter.
 
@@ -289,9 +298,15 @@ function createServer(): McpServer {
       idempotentHint: true,
       openWorldHint: false,
     },
-  }, async (args, _extra) =>
-    cachedToolCall('query_morphology', args as unknown as Record<string, unknown>, () => queryMorphology(args))
-  );
+  }, async (args, _extra) => {
+    // Normalize fields: omitting and passing "basic" must produce the same cache key
+    const normalizedArgs = { ...args, fields: args.fields ?? 'basic' };
+    return cachedToolCall(
+      'query_morphology',
+      normalizedArgs as unknown as Record<string, unknown>,
+      () => queryMorphology(normalizedArgs)
+    );
+  });
 
   server.registerTool('query_ot_quotes', {
     title: 'Query OT Quotations in NT',
