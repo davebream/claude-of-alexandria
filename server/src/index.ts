@@ -15,6 +15,7 @@ import { queryLexicon, LexiconInputSchema, LexiconOutputSchema } from './tools/l
 import { checkVersification, VersificationInputSchema, VersificationOutputSchema } from './tools/versification.js';
 import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema } from './tools/cross-references.js';
 import { queryPeople, PeopleInputSchema, PeopleOutputSchema } from './tools/people.js';
+import { queryPlaces, PlacesInputSchema, PlacesOutputSchema } from './tools/places.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -249,6 +250,23 @@ Examples:
   - People in Romans 16: book="Romans", range="16:1-16:16"
   - People in Genesis 22: book="Genesis", range="22:1-22:19"
   - Single verse: book="Acts", range="18:2"`;
+
+const DESC_PLACES = `Query geographic locations mentioned in a verse range, with coordinates and cross-canonical appearances from Theographic/TIPNR data.
+
+Returns places identified in the passage with latitude/longitude, feature type classification, appearance counts across all biblical books. Entity data is KJV-based — verse assignments follow KJV versification.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Acts", "Gen", "Romans")
+  - range (string, required): Verse range as "chapter:verse-chapter:verse" (e.g., "18:1-18:18") or single verse "1:1"
+  - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
+
+Returns: { book, range, text_basis: "KJV", places: [{name, slug, display_title, latitude, longitude, feature_type, feature_subtype, aliases, appearance_count, appearances_by_book, verses_in_range}], summary: {total_places}, attribution }
+
+High-frequency entities (appearance_count > 500) omit appearances_by_book for performance.
+
+Examples:
+  - Places in Acts 18: book="Acts", range="18:1-18:18"
+  - Places in Genesis 12: book="Genesis", range="12:1-12:9"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -519,6 +537,21 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_cross_references', args as unknown as Record<string, unknown>, () => queryCrossReferences(args))
+  );
+
+  server.registerTool('query_places', {
+    title: 'Query Places',
+    description: DESC_PLACES,
+    inputSchema: PlacesInputSchema,
+    outputSchema: PlacesOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_places', args as unknown as Record<string, unknown>, () => queryPlaces(args))
   );
 
   server.registerTool('query_people', {
