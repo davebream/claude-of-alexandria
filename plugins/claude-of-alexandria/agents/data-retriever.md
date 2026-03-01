@@ -16,8 +16,8 @@ Consult this lookup table. Do NOT reason about testament assignment — look it 
 **NT books (27):** Matthew, Mark, Luke, John, Acts, Romans, 1 Corinthians, 2 Corinthians, Galatians, Ephesians, Philippians, Colossians, 1 Thessalonians, 2 Thessalonians, 1 Timothy, 2 Timothy, Titus, Philemon, Hebrews, James, 1 Peter, 2 Peter, 1 John, 2 John, 3 John, Jude, Revelation
 
 **Routing rules:**
-- **OT** → pass `testament: "ot"` to query_morphology; call query_paragraph_breaks; SKIP query_discourse_features; SKIP query_ot_quotes
-- **NT** → omit testament param from query_morphology; call query_discourse_features; SKIP query_paragraph_breaks; query_ot_quotes allowed
+- **OT** → pass `testament: "ot"` and `fields: "full"` to query_morphology; call query_paragraph_breaks; SKIP query_discourse_features; SKIP query_ot_quotes
+- **NT** → omit testament param from query_morphology (do NOT pass fields — use default "basic"); call query_discourse_features; SKIP query_paragraph_breaks; query_ot_quotes allowed
 - **Book not in either list** → respond with ERROR, do not call any tools
 
 ## What to Call
@@ -70,6 +70,10 @@ VOCABULARY_SUMMARY:
 VERSE_REFERENCES:
   [compressed data | SKIPPED | EMPTY_RETURNED | FAILED: error message]
 
+OT_ENRICHMENT_SUMMARY:
+  State: [CALLED | SKIPPED_NT | FAILED]
+  [compressed enrichment data | SKIPPED_NT | FAILED: error message]
+
 OT_QUOTES_SUMMARY:
   [compressed data | SKIPPED_OT | SKIPPED | EMPTY_RETURNED | FAILED: error message]
 
@@ -120,6 +124,12 @@ After fetching VOCABULARY_SUMMARY, enrich the top lemmas with book-wide verse re
 ## Compression Guidelines
 
 - **Morphology:** Group by POS, list lemmas with frequencies. Example: "Verbs: λέγω (3x, present active indicative), πιστεύω (2x, aorist active subjunctive)"
+- **OT Enrichment** (extracted from fields="full" morphology response — OT passages only):
+  - key_glosses: "word: gloss" for content words only (skip particles, conjunctions, articles). Tier 3 data — single-scholar translation (Cherith/Andi Wu), do not cite as lexical authority.
+  - semantic_frames: "Agent: [X], Verb: [Y], Patient: [Z]" per clause with verb. Tier 1 data — Clear Bible annotation. Verify agent/patient for causative stems (Hiphil, Piel) and stative constructions (Niphal, Qal statives may have disputed labels).
+  - participant_refs: "pronoun → referent" only for non-obvious references. Tier 1 data — verify when referent is exegetically contested or touches theological identity questions (e.g., angel of the LORD, the Servant in Isaiah 40-55, seed referents in Gen 3:15/12:7/22:17-18).
+  - clause_structure: "clause_id → clause_type" mapping. Tier 1 data — null means not annotated, NOT "main clause".
+  - Attribution: "MACULA Hebrew Linguistic Datasets (CC BY 4.0), Clear Bible, Inc."
 - **Discourse:** List features found with verse locations. Example: "Historical Present at 1:29, 1:36; Left-Dislocation at 1:12"
 - **Paragraph breaks:** List markers with locations. Example: "פ at 1:1, ס at 1:5, פ at 2:1"
 - **Vocabulary:** Top lemmas by frequency with chapter distribution
