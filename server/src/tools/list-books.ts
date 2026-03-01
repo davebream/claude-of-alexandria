@@ -41,6 +41,8 @@ const AVAILABLE_TOOLS = [
   'query_events - timeline events with participants, locations, and Ussher chronology (OT + NT)',
   'query_person_network - family relationships and co-appearances for a named individual (OT + NT)',
   'query_speakers - who speaks in a passage, with divine speech filtering (OT + NT)',
+  'query_syntax - OpenText clause-level semantic role annotations (NT only)',
+  'query_variants - textual variant edition comparison across 9 editions (NT only)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {

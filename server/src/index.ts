@@ -19,6 +19,8 @@ import { queryPlaces, PlacesInputSchema, PlacesOutputSchema } from './tools/plac
 import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/events.js';
 import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema } from './tools/person-network.js';
 import { speakersQuery, SpeakersInputSchema, SpeakersOutputSchema } from './tools/speakers.js';
+import { querySyntax, SyntaxInputSchema, SyntaxOutputSchema } from './tools/syntax.js';
+import { queryVariants, VariantsInputSchema, VariantsOutputSchema } from './tools/variants.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -328,6 +330,39 @@ Examples:
   - Who speaks in Genesis 22: book="Genesis", range="22:1-22:19"
   - Divine speech only in Genesis 3: book="Genesis", range="3:1-3:19", divinity_only=true
   - All of Jesus' speech in Matthew: book="Matthew", speaker_id="Jesus"`;
+
+const DESC_SYNTAX = `Query OpenText clause-level semantic role annotations for a New Testament book.
+
+Returns clause-level annotations including clause type, relation, and text from the OpenText.org project (Porter's Systemic Functional Linguistics framework). NT books only.
+
+Args:
+  - book (string, required): NT book name in any common form (e.g., "Romans", "John", "1 Cor")
+  - chapter_range (string, optional): "8" for single chapter, "1-3" for range, omit for entire book
+  - clause_type (string, optional): Filter by clause type (e.g., "primary", "secondary")
+
+Returns: { book, chapter_range, annotations: [{chapter, verse, clause_id, clause_type, clause_relation, clause_text, parent_clause_id}], summary: {total, by_clause_type}, framework_note }
+
+Examples:
+  - Clause annotations in Romans 8: book="Romans", chapter_range="8"
+  - All annotations in Philippians: book="Philippians"`;
+
+const DESC_VARIANTS = `Query textual variant edition comparison data for a New Testament book.
+
+Returns word-level variant markers showing which critical editions agree or disagree on readings. Covers 9 editions: Byzantine (B), NIV Greek (I), NA27 (N), NA28 (M), Textus Receptus (R), SBLGNT (S), Tregelles (T), Westcott-Hort (W), Tyndale House GNT (H). NT books only.
+
+This is edition comparison data, not a full text-critical apparatus. It shows where editions diverge, not manuscript evidence for each reading.
+
+Args:
+  - book (string, required): NT book name in any common form (e.g., "John", "Romans", "1 Cor")
+  - range (string, optional): Verse range "7:53-8:11" or "1:1". Omit for entire book.
+  - edition (string, optional): Filter by edition code: B, I, M, N, R, S, T, W, H
+
+Returns: { book, range, variants: [{chapter, verse, word_position, ognt_text, editions, variant_type, variant_text}], summary: {total, by_variant_type}, edition_key }
+
+Examples:
+  - Variants in Pericope Adulterae: book="John", range="7:53-8:11"
+  - SBLGNT-specific variants in Romans: book="Romans", edition="S"
+  - All variants in Mark: book="Mark"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -673,6 +708,36 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_speakers', args as unknown as Record<string, unknown>, () => speakersQuery(args))
+  );
+
+  server.registerTool('query_syntax', {
+    title: 'Query Syntax Annotations',
+    description: DESC_SYNTAX,
+    inputSchema: SyntaxInputSchema,
+    outputSchema: SyntaxOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_syntax', args as unknown as Record<string, unknown>, () => querySyntax(args))
+  );
+
+  server.registerTool('query_variants', {
+    title: 'Query Textual Variants',
+    description: DESC_VARIANTS,
+    inputSchema: VariantsInputSchema,
+    outputSchema: VariantsOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_variants', args as unknown as Record<string, unknown>, () => queryVariants(args))
   );
 
   return server;
