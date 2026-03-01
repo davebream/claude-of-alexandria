@@ -55,5 +55,18 @@ for chunk in "$SEED_DIR"/morphology-ot-*.sql; do
 done
 echo "  OT morphology: $ot_count books imported."
 
+# Phase 2: Lexicon, Versification, Cross-References
+echo "Importing lexicon..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/lexicon.sql" --remote
+echo "  Lexicon imported."
+
+echo "Importing versification..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/versification.sql" --remote
+echo "  Versification imported."
+
+echo "Importing cross-references..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/cross-references.sql" --remote
+echo "  Cross-references imported."
+
 echo ""
 echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books. ==="

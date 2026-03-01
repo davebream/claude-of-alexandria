@@ -37,7 +37,7 @@ TBESG_URL = (
 
 SEED_DIR = Path(__file__).resolve().parent.parent / "d1-seed"
 OUTPUT_FILE = SEED_DIR / "lexicon.sql"
-BATCH_SIZE = 100
+BATCH_SIZE = 20
 
 
 def sql_escape(value):
