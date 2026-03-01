@@ -124,7 +124,6 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 - All files in `plugins/claude-of-alexandria/skills/` directory
 - All files in `plugins/claude-of-alexandria/agents/` directory
 - Promptfoo test configs in `tests/promptfoo/skills/` and `tests/promptfoo/agents/`
-- All files in `docs/` directory
 - `README.md` and `CLAUDE.md`
 
 **❌ Do not commit:**
@@ -172,7 +171,7 @@ claude-of-alexandria/
 │   │   │       └── promptfooconfig-green.yaml
 │   │   └── package.json
 │   └── skills/                   # ARCHIVED — legacy markdown tests
-├── docs/                         # Plans, reviews, roadmaps
+├── docs/                         # Local-only (gitignored) — plans, reports, reviews
 ├── CLAUDE.md                     # You are here
 └── README.md                     # Public documentation
 ```
@@ -185,8 +184,8 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 
 | Artifact | Location |
 | --- | --- |
-| Implementation plans | `docs/plans/YYYY-MM-DD-descriptive-name.md` |
-| Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` |
+| Implementation plans | `docs/plans/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
+| Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
 | Skills | `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` |
 | Agents | `plugins/claude-of-alexandria/agents/agent-name.md` |
 | Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |

@@ -150,7 +150,6 @@ Follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Entries go unde
 - All files in `plugins/claude-of-alexandria/skills/` directory
 - All files in `plugins/claude-of-alexandria/agents/` directory
 - Promptfoo test configs in `tests/promptfoo/skills/` and `tests/promptfoo/agents/`
-- All files in `docs/` directory
 - `README.md`, `CLAUDE.md`, and `CHANGELOG.md`
 
 **❌ Do not commit:**
@@ -198,9 +197,7 @@ claude-of-alexandria/
 │   │   │       └── promptfooconfig-green.yaml
 │   │   └── package.json
 │   └── skills/                   # ARCHIVED — legacy markdown tests
-├── docs/
-│   ├── plans/                    # Implementation plans (YYYY-MM-DD-name.md)
-│   └── reviews/                  # Code and architecture reviews
+├── docs/                         # Local-only (gitignored) — plans, reports, reviews
 ├── CLAUDE.md                     # You are here
 ├── CHANGELOG.md                  # Version history (Keep a Changelog format)
 └── README.md                     # Public documentation
@@ -214,8 +211,8 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 
 | Artifact | Location |
 | --- | --- |
-| Implementation plans | `docs/plans/YYYY-MM-DD-descriptive-name.md` |
-| Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` |
+| Implementation plans | `docs/plans/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
+| Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
 | Skills | `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` |
 | Agents | `plugins/claude-of-alexandria/agents/agent-name.md` |
 | Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |
