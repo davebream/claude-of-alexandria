@@ -10,6 +10,8 @@
 #   S4: CROSS-REFERENCE — classified cross-refs with evidence basis
 #   S5: Topic mode — warning + MEDIUM ceiling
 #   S6: Contested question — confidence splitting (morphology HIGH, semantics MEDIUM)
+#   S7: CROSS-REFERENCE — editorial tradition labeled distinctly from primary evidence
+#   S8: Entity identification — disputed identifications flagged with data evidence
 
 description: "Consult Biblical Scholar — GREEN phase (skill + MCP)"
 
@@ -230,3 +232,56 @@ tests:
           PASS if at least one specific scholarly source is named for the
           semantic debate (e.g., BDAG, Dahms, Lee, Pendrick, or similar).
           FAIL if the response says "most scholars agree" without naming anyone.
+
+  # =========================================================================
+  # Scenario 7: CROSS-REFERENCE — editorial tradition labeling (Phase 4)
+  # TSK-derived cross-refs labeled as editorial tradition, not Primary
+  # =========================================================================
+  - description: "S7 GREEN: CROSS-REFERENCE — editorial tradition distinctly labeled"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Romans 8:28: What passages connect to this verse? Classify the cross-references by evidence type."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if cross-references are classified with at least 3 distinct evidence types,
+          and editorial tradition (TSK/OpenBible-derived) cross-references are labeled
+          distinctly from primary evidence. Signs of success:
+          - At least some cross-references labeled as "editorial tradition" or "candidate"
+          - Primary/lexical connections distinguished from tradition-based associations
+          - Vote counts or confidence qualifiers on editorial tradition entries
+          FAIL if all cross-references are presented at uniform confidence without
+          distinguishing evidence types.
+          FAIL if TSK-derived cross-references are labeled as "Primary" evidence.
+      - type: llm-rubric
+        value: |
+          PASS if the response includes at least one cross-reference grounded in MCP data
+          (shared lemma from query_vocabulary, entity from query_people, or similar).
+          FAIL if all cross-references come only from training knowledge with no
+          MCP tool evidence cited.
+
+  # =========================================================================
+  # Scenario 8: Entity Identification with Confidence (Phase 4)
+  # Disputed identifications flagged with data-backed evidence
+  # =========================================================================
+  - description: "S8 GREEN: Entity confidence — identification grounded in entity data"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Acts 15:13: Who is 'James' here? Is this James the brother of Jesus or James the son of Zebedee? How confident can we be?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response:
+          - Identifies James with reference to entity data or structured evidence
+            (not just narrative reasoning)
+          - Addresses the identification question with explicit confidence grading
+          - Notes that James son of Zebedee was martyred in Acts 12, making this
+            identification straightforward — but grounds it in data, not assumption
+          FAIL if the identification is made without any reference to entity data
+          or structured cross-reference evidence.
+      - type: llm-rubric
+        value: |
+          PASS if the confidence level appropriately distinguishes between
+          well-established identifications and disputed ones.
+          The response should demonstrate awareness that some biblical
+          identifications are more certain than others.
+          FAIL if all person identifications are presented at uniform HIGH
+          confidence without considering whether any are disputed.

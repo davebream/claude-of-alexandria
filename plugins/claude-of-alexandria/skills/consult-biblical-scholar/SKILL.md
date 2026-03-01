@@ -1,7 +1,7 @@
 ---
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
-allowed-tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
+allowed-tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon
 ---
 
 # Consult Biblical Scholar
@@ -95,6 +95,12 @@ Do not compose the answer from training data and then verify. Gather data first.
 | `query_paragraph_breaks` | Always | Rarely | Rarely | — | ✅ |
 | `query_vocabulary` | If word-focused | Rarely | Always | ✅ | ✅ |
 | `query_ot_quotes` | If OT refs | Rarely | Always (NT) | ✅ | — |
+| `query_cross_references` | Rarely | Rarely | Always | ✅ | ✅ |
+| `query_people` | If people | If people | Always | ✅ | ✅ |
+| `query_places` | If places | Rarely | If relevant | ✅ | ✅ |
+| `query_person_network` | If relationships | Rarely | Always | ✅ | ✅ |
+| `query_speakers` | If dialogue | If dialogue | If dialogue | ✅ | ✅ |
+| `query_lexicon` | If word-focused | Rarely | Rarely | ✅ | ✅ |
 
 **Direct MCP call format (fallback only):**
 
@@ -350,10 +356,18 @@ Task tool:
 
 **CROSS-REFERENCE mode adds:**
 - Ranked list of cross-references, each labeled:
-  - **Primary** — shared lemma (`query_vocabulary` evidence)
+  - **Primary** — shared lemma (`query_vocabulary` evidence) or explicit citation (`query_ot_quotes`)
   - **Secondary** — shared concept, different vocabulary (discourse/thematic evidence)
+  - **Entity** — entity continuity (`query_people`, `query_places`, or `query_person_network`)
+  - **Editorial tradition** — TSK/OpenBible-derived (`query_cross_references`). Always label as "editorial tradition candidate (N votes)" — NOT as Primary or Secondary evidence. These are tradition-based associations, not linguistically verified connections.
   - **Scholarly** — commentary-sourced (web search + citation)
 - Each cross-reference includes WHY it's connected
+
+**Speaker attribution in MEANING/CROSS-REF modes:**
+- When analyzing dialogue passages, `query_speakers` data provides structured speaker attribution
+- Divine speech markers are theologically significant for revelation claims
+- Speaker transitions mark discourse boundaries
+- Caveat: Angel-of-the-LORD attributions are dataset interpretations, not settled exegesis
 
 ---
 
@@ -392,6 +406,9 @@ Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph
 | **Misrepresenting search failure** | "Scholars have not addressed this" | "I could not find scholarly sources on this" |
 | **Resolving contested debates** | "The correct answer is X" on disputed questions | Present both positions; split confidence; do not resolve |
 | **Moralism** | "Therefore you should be more humble" | Indicative only. Imperative is user's domain. |
+| **TSK false confidence** | Cross-references from CROSS_REFERENCES_SUMMARY cited as Primary evidence | TSK/OpenBible cross-references are editorial tradition candidates, NOT linguistically verified. Always label: "Editorial tradition (N votes) — candidate." Never cite as Primary or Secondary. |
+| **Entity overconfidence** | Disputed person identification presented as HIGH | When entity data marks a person as disputed=true, flag it. Split confidence: entity existence HIGH, identification MEDIUM. |
+| **Speaker data as settled exegesis** | Angel-of-the-LORD attribution presented as theological fact | Speaker attributions from MACULA/FCBH are dataset interpretations. Flag Angel-of-the-LORD as "dataset attribution, not settled exegesis." |
 
 ---
 

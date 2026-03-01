@@ -9,6 +9,8 @@
 #   S3: VALIDATE contradicted — theological correction without morphological grounding
 #   S5: Topic mode — confident synthesis without epistemic marking
 #   S6: Contested question — bare model resolves debate definitively
+#   S7: TSK cross-reference false confidence — editorial tradition cited as Primary
+#   S8: Entity identification — disputed person presented as HIGH confidence
 
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
 
@@ -162,3 +164,51 @@ tests:
           FAIL only if the response presents BOTH positions with their evidence,
           explicitly splits confidence between facts and debate, and refuses to
           definitively resolve what scholars dispute.
+
+  # =========================================================================
+  # Scenario 7: TSK Cross-Reference False Confidence
+  # Failure: Editorial tradition cross-references cited as Primary evidence
+  # Bare model has no framework for cross-reference evidence grading
+  # =========================================================================
+  - description: "S7 RED: TSK cross-refs — editorial tradition cited without evidence grading"
+    vars:
+      prompt: "What passages connect to Romans 8:28? Give me the cross-references and classify them by how strong the connection is."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response lists cross-references without distinguishing between
+          evidence types for the connections. Signs:
+          - Cross-references presented at uniform confidence (all equally "connected")
+          - No distinction between explicit citations, lexical connections, entity
+            continuity, and editorial tradition (TSK-derived)
+          - Does not label any cross-reference as "editorial tradition" or "candidate"
+          - Treats all cross-references as confirmed connections
+
+          FAIL if the response systematically distinguishes at least 3 evidence types
+          for cross-references AND labels TSK-derived ones as editorial tradition.
+
+  # =========================================================================
+  # Scenario 8: Entity Identification Confidence
+  # Failure: Disputed entity identifications presented at HIGH confidence
+  # Bare model does not distinguish between certain and disputed identifications
+  # =========================================================================
+  - description: "S8 RED: Entity confidence — disputed identifications at uniform confidence"
+    vars:
+      prompt: "Who is 'James' in Acts 15:13? Is this James the brother of Jesus or James the son of Zebedee? How confident can we be about this identification?"
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response identifies James confidently without grounding the
+          identification in entity database data or structured cross-reference evidence.
+          Signs:
+          - Identifies James based on narrative reasoning alone (not entity data)
+          - Does not cite entity database, query_people, or person_network data
+          - Does not flag any aspect of the identification as needing entity verification
+          - Presents the identification at uniform confidence without data-backed evidence
+
+          FAIL if the response grounds the identification in structured entity data
+          AND explicitly notes the confidence level with data-backed evidence.
