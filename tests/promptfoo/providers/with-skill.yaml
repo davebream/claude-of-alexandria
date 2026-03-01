@@ -36,6 +36,15 @@ config:
     - query_ot_quotes
     - query_lemmas
     - query_themes_for_lemmas
+    - query_theme
+    - query_lexicon
+    - check_versification
+    - query_cross_references
+    - query_people
+    - query_places
+    - query_events
+    - query_person_network
+    - query_speakers
   mcp:
     servers:
       - name: claude-of-alexandria-mcp
