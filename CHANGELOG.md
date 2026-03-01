@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-03-01
+
+### Added
+
+- `query_people` tool — named individuals with cross-canonical appearances from Theographic/TIPNR (CC BY-SA 4.0 / CC BY 4.0), disputed identification flags (e.g., Junia), and high-frequency entity guards
+- `query_places` tool — geographic locations with latitude/longitude coordinates, feature type classification, and cross-canonical appearances from Theographic/TIPNR
+- `query_events` tool — timeline events with participants, locations, and Ussher/Masoretic-derived chronology caveat (~450 milestone events)
+- `query_person_network` tool — family relationships and co-appearances for named individuals with depth 1-3 expansion, person disambiguation (slug/name/fuzzy), and high-frequency co-appearance guard
+- Theographic entity schema: 12 tables for people (3,067), places (1,274), events (450), relationships (~10K), groups (23), and verse-entity junctions (~190K rows)
+
 ## [2.2.0] - 2026-03-01
 
 ### Added

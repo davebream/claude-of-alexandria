@@ -68,5 +68,48 @@ echo "Importing cross-references..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/cross-references.sql" --remote
 echo "  Cross-references imported."
 
+# Phase 3: Theographic entities
+echo "Importing entity tables..."
+
+echo "  Importing people..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-people.sql" --remote
+echo "  Importing places..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-places.sql" --remote
+echo "  Importing events..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-events.sql" --remote
+echo "  Importing relationships..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-relationships.sql" --remote
+echo "  Importing groups..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-groups.sql" --remote
+echo "  Importing group membership..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/entities-group-membership.sql" --remote
+
+echo "  Importing verse-people junctions..."
+for chunk in "$SEED_DIR"/verse-people-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "    Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+done
+
+echo "  Importing verse-places junctions..."
+for chunk in "$SEED_DIR"/verse-places-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "    Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+done
+
+echo "  Importing verse-events junctions..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/verse-events.sql" --remote
+
+echo "  Importing event participants..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/event-participants.sql" --remote
+
+echo "  Importing event locations..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/event-locations.sql" --remote
+
+echo "  Entity tables imported."
+
 echo ""
 echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books. ==="

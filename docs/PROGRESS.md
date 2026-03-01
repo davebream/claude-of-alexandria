@@ -5,9 +5,9 @@
 
 ## Current State
 
-- **Phase:** 2 (COMPLETE)
-- **Task:** 2.11
-- **Status:** DONE
+- **Phase:** 3a
+- **Task:** 3a.1
+- **Status:** PENDING
 
 ---
 
@@ -40,14 +40,14 @@
 
 ## Phase 3: Theographic Entity Layer → v2.3.0
 
-- [ ] Task 3.1: Entity migration
-- [ ] Task 3.2: Theographic ETL script
-- [ ] Task 3.3: query_people tool
-- [ ] Task 3.4: query_places tool
-- [ ] Task 3.5: query_events tool
-- [ ] Task 3.6: query_person_network tool
-- [ ] **GATE: Phase 3 verification**
-- [ ] Task 3.7: Seed, deploy, verify, release
+- [x] Task 3.1: Entity migration (a829b16)
+- [x] Task 3.2: Theographic ETL script (6048f7c)
+- [x] Task 3.3: query_people tool (c984c9c)
+- [x] Task 3.4: query_places tool (ef2fed6)
+- [x] Task 3.5: query_events tool (a5068c1)
+- [x] Task 3.6: query_person_network tool (11ada5c)
+- [x] **GATE: Phase 3 verification** — tool checks 4/4 PASS (Gen 22 events: 0 due to data gap), code review PASS (3 Important, 5 Suggestions)
+- [x] Task 3.7: Seed, deploy, verify, release (v2.3.0)
 
 ## Phase 3a: Speaker Quotations → v2.4.0
 
@@ -109,6 +109,8 @@
 | 2 | tool-checks | manual MCP | PASS (3/3) | 2026-03-01 | H5254 gloss, Gen 32:1 versif, Rom 8:28 xrefs |
 | 2 | regression | promptfoo | INFRA-FAIL | 2026-03-01 | Claude Code SDK process exit 1 — not code regression |
 | 2 | code-review | agent | PASS (2 WARNs) | 2026-03-01 | I-3 sequential queries, I-4 multi-chapter imprecision |
+| 3 | tool-checks | manual MCP | PASS (4/4) | 2026-03-01 | people 28, places 9/Corinth, events Gen6-8=9, network abraham 14 rels |
+| 3 | code-review | agent | PASS (3 Important, 5 Suggestions) | 2026-03-01 | Truncation loop, depth-3 mutation, predecessor_id |
 
 ---
 
@@ -136,6 +138,12 @@
 | 2.8 | c8a6b69 | 2026-03-01 |
 | 2.9 | 0c3d055 | 2026-03-01 |
 | 2.10 | 0622739 | 2026-03-01 |
+| 3.1 | a829b16 | 2026-03-01 |
+| 3.2 | 6048f7c | 2026-03-01 |
+| 3.3 | c984c9c | 2026-03-01 |
+| 3.4 | ef2fed6 | 2026-03-01 |
+| 3.5 | a5068c1 | 2026-03-01 |
+| 3.6 | 11ada5c | 2026-03-01 |
 
 ---
 
@@ -151,6 +159,10 @@
 | 2026-03-01 | 2 | GATE | WARN: cross-references uses sequential queries instead of Promise.all() | Minimal latency impact in D1; optimize if perf becomes an issue | 0 |
 | 2026-03-01 | 2 | GATE | WARN: cross-references multi-chapter range filtering over-includes results | Edge case; common single-verse/same-chapter use case works correctly | 0 |
 | 2026-03-01 | 2 | GATE | NOTE: Phase 2 tables use displayName format; Phase 1 uses canonical format | Track as tech debt; join queries would need normalization | 0 |
+| 2026-03-01 | 3 | GATE | DATA-GAP: Genesis 22 has no verse_events links (Binding of Isaac not in Theographic dataset) | Theographic covers ~450 milestone events; Gen 22 not among them. Tool works correctly — returns empty. | 0 |
+| 2026-03-01 | 3 | GATE | NOTE: Truncation loop uses quadratic JSON.stringify (max ~15 iterations with 80% factor) | Acceptable for typical entity counts; optimize if CHARACTER_LIMIT truncation becomes a bottleneck | 0 |
+| 2026-03-01 | 3 | GATE | NOTE: Depth-3 expansion pushes to expansionResults during iteration (safe via slice copy) | Refactor to separate array if person-network gets further modifications | 0 |
+| 2026-03-01 | 3 | GATE | NOTE: events.predecessor_id and date confidence tagging not exposed in tool response | Plan said "consider" — track as future enhancement | 0 |
 
 ---
 
