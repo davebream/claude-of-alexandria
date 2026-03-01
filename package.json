@@ -1,0 +1,42 @@
+{
+  "name": "claude-of-alexandria",
+  "private": true,
+  "description": "Root workspace; promptfoo evals live in tests/promptfoo.",
+  "scripts": {
+    "eval": "npm run eval --prefix tests/promptfoo",
+    "eval:exegetical-notes:red": "npm run eval:exegetical-notes:red --prefix tests/promptfoo",
+    "eval:exegetical-notes:green": "npm run eval:exegetical-notes:green --prefix tests/promptfoo",
+    "eval:exegetical-notes": "npm run eval:exegetical-notes --prefix tests/promptfoo",
+    "eval:pericope-delimitation:red": "npm run eval:pericope-delimitation:red --prefix tests/promptfoo",
+    "eval:pericope-delimitation:green": "npm run eval:pericope-delimitation:green --prefix tests/promptfoo",
+    "eval:pericope-delimitation": "npm run eval:pericope-delimitation --prefix tests/promptfoo",
+    "eval:argument-flow:red": "npm run eval:argument-flow:red --prefix tests/promptfoo",
+    "eval:argument-flow:green": "npm run eval:argument-flow:green --prefix tests/promptfoo",
+    "eval:argument-flow": "npm run eval:argument-flow --prefix tests/promptfoo",
+    "eval:consult-biblical-scholar:red": "npm run eval:consult-biblical-scholar:red --prefix tests/promptfoo",
+    "eval:consult-biblical-scholar:green": "npm run eval:consult-biblical-scholar:green --prefix tests/promptfoo",
+    "eval:consult-biblical-scholar": "npm run eval:consult-biblical-scholar --prefix tests/promptfoo",
+    "eval:biblical-segmentation:red": "npm run eval:biblical-segmentation:red --prefix tests/promptfoo",
+    "eval:biblical-segmentation:green": "npm run eval:biblical-segmentation:green --prefix tests/promptfoo",
+    "eval:biblical-segmentation": "npm run eval:biblical-segmentation --prefix tests/promptfoo",
+    "eval:data-retriever:red": "npm run eval:data-retriever:red --prefix tests/promptfoo",
+    "eval:data-retriever:green": "npm run eval:data-retriever:green --prefix tests/promptfoo",
+    "eval:data-retriever": "npm run eval:data-retriever --prefix tests/promptfoo",
+    "eval:biblical-scholar:red": "npm run eval:biblical-scholar:red --prefix tests/promptfoo",
+    "eval:biblical-scholar:green": "npm run eval:biblical-scholar:green --prefix tests/promptfoo",
+    "eval:biblical-scholar": "npm run eval:biblical-scholar --prefix tests/promptfoo",
+    "eval:study-evaluator:red": "npm run eval:study-evaluator:red --prefix tests/promptfoo",
+    "eval:study-evaluator:green": "npm run eval:study-evaluator:green --prefix tests/promptfoo",
+    "eval:study-evaluator": "npm run eval:study-evaluator --prefix tests/promptfoo",
+    "eval:all": "npm run eval:all --prefix tests/promptfoo",
+    "eval:all:single": "npm run eval:all:single --prefix tests/promptfoo",
+    "eval:smoke": "npm run eval:smoke --prefix tests/promptfoo",
+    "eval:regression": "npm run eval:regression --prefix tests/promptfoo",
+    "eval:calibration": "npm run eval:calibration --prefix tests/promptfoo",
+    "eval:gate": "npm run eval:gate --prefix tests/promptfoo",
+    "view": "npm run view --prefix tests/promptfoo"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.63"
+  }
+}

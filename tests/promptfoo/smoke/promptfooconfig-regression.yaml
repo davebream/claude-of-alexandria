@@ -1,0 +1,109 @@
+description: "Regression smoke — cheap checks across all deployed tools (no llm-rubric)"
+
+# Uses GREEN provider (skills + MCP) but assertions are deterministic only.
+# Cost: ~$0.50-1.00 per run (Sonnet calls only, zero Opus grading).
+# Run between every phase gate to catch regressions without burning $33-40 on full suite.
+
+providers:
+  - file://../providers/with-skill.yaml
+
+prompts:
+  - "{{prompt}}"
+
+# No defaultTest — each scenario has its own cheap assertions.
+# NO llm-rubric assertions anywhere in this file. Deterministic only.
+
+tests:
+  # ── Phase 1+ (morphology) ──────────────────────────────────────────────
+  - description: "R1: query_morphology basic fields (Phase 1+)"
+    vars:
+      prompt: >
+        Use the query_morphology tool to look up Genesis 1:1 with fields="basic".
+        Return the raw tool output only, no analysis.
+    assert:
+      - type: icontains
+        value: "lemma"
+      - type: icontains
+        value: "pos"
+      - type: javascript
+        value: |
+          const raw = JSON.parse(context.providerResponse?.raw || '{}');
+          return (raw.num_turns || 0) > 1;
+
+  - description: "R2: query_morphology full fields returns OT enrichment (Phase 1+)"
+    vars:
+      prompt: >
+        Use the query_morphology tool to look up Genesis 1:1 with fields="full".
+        Return the raw tool output only, no analysis.
+    assert:
+      - type: icontains
+        value: "gloss"
+      - type: javascript
+        value: |
+          const out = context.vars?.output || output || '';
+          return out.toLowerCase().includes('strongs') || out.toLowerCase().includes('strong');
+
+  # ── Phase 2+ (lexicon, versification, cross-refs) ──────────────────────
+  # Uncomment after Phase 2 deployment:
+  #
+  # - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
+  #   vars:
+  #     prompt: >
+  #       Use the query_lexicon tool with strongs_ids=["H430"].
+  #       Return the raw tool output only.
+  #   assert:
+  #     - type: icontains
+  #       value: "God"
+  #
+  # - description: "R4: query_cross_references returns results (Phase 2+)"
+  #   vars:
+  #     prompt: >
+  #       Use the query_cross_references tool for Romans 8:28.
+  #       Return the raw tool output only.
+  #   assert:
+  #     - type: icontains
+  #       value: "Genesis"
+
+  # ── Phase 3+ (entities) ────────────────────────────────────────────────
+  # Uncomment after Phase 3 deployment:
+  #
+  # - description: "R5: query_people returns results (Phase 3+)"
+  #   vars:
+  #     prompt: >
+  #       Use the query_people tool for Romans 16:1-16:16.
+  #       Return the raw tool output only.
+  #   assert:
+  #     - type: javascript
+  #       value: |
+  #         const out = context.vars?.output || output || '';
+  #         // Should contain multiple people names
+  #         const names = ['Phoebe', 'Prisca', 'Aquila'].filter(n => out.includes(n));
+  #         return names.length >= 2;
+
+  # ── Phase 3a+ (speakers) ───────────────────────────────────────────────
+  # Uncomment after Phase 3a deployment:
+  #
+  # - description: "R6: query_speakers returns divine speech (Phase 3a+)"
+  #   vars:
+  #     prompt: >
+  #       Use the query_speakers tool for Genesis 22:1-22:19.
+  #       Return the raw tool output only.
+  #   assert:
+  #     - type: icontains
+  #       value: "God"
+  #     - type: icontains
+  #       value: "Abraham"
+
+  # ── Phase 5+ (OpenGNT) ─────────────────────────────────────────────────
+  # Uncomment after Phase 5 deployment:
+  #
+  # - description: "R7: query_morphology full returns NT Louw-Nida (Phase 5+)"
+  #   vars:
+  #     prompt: >
+  #       Use the query_morphology tool to look up John 1:1 with fields="full".
+  #       Return the raw tool output only.
+  #   assert:
+  #     - type: javascript
+  #       value: |
+  #         const out = context.vars?.output || output || '';
+  #         return out.toLowerCase().includes('louw') || out.toLowerCase().includes('nida');
