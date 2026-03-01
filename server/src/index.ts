@@ -300,7 +300,19 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) => {
     // Normalize fields: omitting and passing "basic" must produce the same cache key
-    const normalizedArgs = { ...args, fields: args.fields ?? 'basic' };
+    // Normalize strongs_filter: H430 → H0430 (4-digit zero-padded) for consistent cache keys
+    let normalizedStrongs = args.strongs_filter;
+    if (normalizedStrongs) {
+      const match = normalizedStrongs.match(/^([HG])0*(\d+)([a-z]?)$/);
+      if (match) {
+        normalizedStrongs = `${match[1]}${match[2].padStart(4, '0')}${match[3]}`;
+      }
+    }
+    const normalizedArgs = {
+      ...args,
+      fields: args.fields ?? 'basic',
+      ...(normalizedStrongs !== undefined && { strongs_filter: normalizedStrongs }),
+    };
     return cachedToolCall(
       'query_morphology',
       normalizedArgs as unknown as Record<string, unknown>,

@@ -130,8 +130,16 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   }
 
   if (args.strongs_filter) {
-    sql += ' AND strongs = ?';
-    params.push(args.strongs_filter);
+    // Normalize Strong's number: H430 → H0430, G316 → G0316 (4-digit zero-padded)
+    const match = args.strongs_filter.match(/^([HG])0*(\d+)([a-z]?)$/);
+    if (match) {
+      const normalized = `${match[1]}${match[2].padStart(4, '0')}${match[3]}`;
+      sql += ' AND strongs = ?';
+      params.push(normalized);
+    } else {
+      sql += ' AND strongs = ?';
+      params.push(args.strongs_filter);
+    }
   }
 
   sql += ' ORDER BY chapter, verse, word_position LIMIT ?';
