@@ -2,6 +2,15 @@
 # Agent is completely bare: no agent loaded, no MCP, no biblical tools.
 # These tests document failure modes that the agent must prevent.
 #
+# NOTE: No GREEN config exists for this agent. The reason is a promptfoo limitation:
+# there is no supported way to invoke a subagent (data-retriever) directly as the
+# subject under test. The with-skill.yaml provider wraps the invocation in an
+# orchestrating agent that reformats the output, breaking all contract-level assertions
+# (TOOL_RESULTS:, TESTAMENT:, SKIPPED_NT, etc.). The same limitation applies to
+# biblical-scholar and study-evaluator. Data-retriever's contract correctness is covered
+# indirectly by the skill GREEN suites (exegetical-notes, pericope-delimitation,
+# argument-flow, consult-biblical-scholar) which all depend on it.
+#
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml
 
 description: "data-retriever — RED phase (bare model, no agent, no MCP)"

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Promptfoo skill evaluation tests for Claude of Alexandria",
   "scripts": {
-    "eval": "npx promptfoo eval",
+    "eval": "CLAUDECODE= npx promptfoo eval",
     "eval:exegetical-notes:red": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml",
     "eval:exegetical-notes:green": "npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml",
     "eval:exegetical-notes": "npm run eval:exegetical-notes:red && npm run eval:exegetical-notes:green",
@@ -20,14 +20,12 @@
     "eval:biblical-segmentation:green": "npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-green.yaml",
     "eval:biblical-segmentation": "npm run eval:biblical-segmentation:red && npm run eval:biblical-segmentation:green",
     "eval:data-retriever:red": "npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml",
-    "eval:data-retriever:green": "npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-green.yaml",
-    "eval:data-retriever": "npm run eval:data-retriever:red && npm run eval:data-retriever:green",
+    "eval:data-retriever": "npm run eval:data-retriever:red",
     "eval:biblical-scholar:red": "npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-red.yaml",
-    "eval:biblical-scholar:green": "npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-green.yaml",
-    "eval:biblical-scholar": "npm run eval:biblical-scholar:red && npm run eval:biblical-scholar:green",
+    "eval:biblical-scholar": "npm run eval:biblical-scholar:red",
     "eval:study-evaluator:red": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml",
-    "eval:study-evaluator:green": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-green.yaml",
-    "eval:study-evaluator": "npm run eval:study-evaluator:red && npm run eval:study-evaluator:green",
+    "eval:study-evaluator": "npm run eval:study-evaluator:red",
+    "eval:smoke": "npm run eval -- --no-cache -c smoke/promptfooconfig.yaml",
     "eval:calibration": "npm run eval -- --no-cache -c assertions/grader-calibration.yaml",
     "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator",
     "eval:all:single": "node scripts/merge-all-configs.js && npm run eval -- --no-cache -c promptfooconfig-all.yaml",
@@ -38,6 +36,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.62",
     "promptfoo": "^0.120.25",
     "yaml": "^2.6.1"
   }
