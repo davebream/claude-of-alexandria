@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2026-03-01
+
+### Added
+
+- OT morphology enrichment via Macula Hebrew — glosses, Strong's numbers, clause types, semantic frames, subject/participant references for all 39 OT books
+- `fields` parameter on `query_morphology` with 4-level progressive disclosure: `basic` (default, backward-compatible), `syntax` (adds clause data + Strong's), `full` (adds glosses + semantic frames), `lexical` (compact word-study set)
+- `strongs_filter` parameter on `query_morphology` to filter words by Strong's number within a verse range
+- Strong's number normalization — `H430` and `H0430` both resolve correctly (zero-padded to 4 digits)
+- OT enrichment routing in `data-retriever` agent — automatically requests `fields: "full"` for OT passages
+
+### Fixed
+
+- Output schema fields made optional for `lexical` mode compatibility (fields like `normalized`, `pos`, `parsing` are absent in lexical mode)
+
 ## [2.1.0] - 2026-03-01
 
 ### Added
