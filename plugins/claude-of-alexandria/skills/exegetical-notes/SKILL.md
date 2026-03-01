@@ -47,7 +47,8 @@ Proceeding with [original range] — boundary issue noted in Pericope Status.
 Section 4 (Lexical Analysis) must:
 - Use morphology data from data-retriever's `MORPHOLOGY_SUMMARY` (or direct `query_morphology` fallback)
 - Cite actual counts from data-retriever's `VOCABULARY_SUMMARY` (or direct `query_vocabulary` fallback)
-- Never say "appears frequently" — give exact count and verse references
+- Cite per-occurrence verse references from data-retriever's `VERSE_REFERENCES` (or direct `query_morphology` with `word_filter` fallback)
+- Never say "appears frequently" — give exact count AND verse references
 - Format: `lemma (reference): morph description [query_morphology]`
 
 **Valid:** `ἐναρξάμενος (1:6): lemma ἐνάρχομαι, aorist middle participle, nom. sg. masc. [query_morphology]`
@@ -60,7 +61,7 @@ Section 6 must use exactly four tiers, each labeled:
 - **Tier 1: Linguistic Evidence** — morphology/grammar directly contradicts the misreading
 - **Tier 2: Discourse Evidence** — Levinsohn features or structure contradicts
 - **Tier 3: Scholarly Consensus** — web-search-verified with real citations
-- **Tier 4: Interpretive Notes** — agent assessment, labeled as such
+- **Tier 4: Agent Assessment** — the heading MUST read "Tier 4: Agent Assessment" (not "Interpretive Notes" or any other label). This distinguishes agent-derived opinion from established scholarly consensus.
 
 Never mix tiers. If no Tier 3 source found after web search, state this explicitly.
 
@@ -83,7 +84,16 @@ Page numbers when available. An author name alone is not a citation — it is
 a name-drop. The tier label (A/B/C) must follow every citation.
 
 If only Tier C sources found, state: "[Tier C source, use with caution]"
-If no verifiable source found, state: "No Tier A/B source located for this claim."
+
+**Training-knowledge fallback:** If web search yields no usable source, cite a well-known
+commentary from training knowledge using the standard citation format and mark it
+"[training knowledge — verify before publication]". For major NT/OT passages, the agent
+knows standard commentaries (e.g., O'Brien on Philippians, NIGTC; Fee, NICNT; Moo on
+Romans, NICNT). A training-knowledge citation with a verification caveat is always
+preferable to "No Tier A/B source located" with no named source at all.
+
+If genuinely no source is known (rare for canonical passages), state:
+"No Tier A/B source located for this claim."
 
 ### Rule 5: Cross-Check Data Claims Before Delivering
 
@@ -155,6 +165,7 @@ Include the pos_filter request for NT epistles. Omit it for OT and non-epistolar
 - `DISCOURSE_SUMMARY:` → data for Sections 1-2 (context, structure) and pericope check
 - `PARAGRAPH_MARKERS:` → OT boundary data for pericope check and Section 2
 - `VOCABULARY_SUMMARY:` → data for Section 4 (frequencies, semantic groups)
+- `VERSE_REFERENCES:` → data for Section 4 (per-occurrence verse locations for top lemmas)
 - `OT_QUOTES_SUMMARY:` → data for Section 8 (Intertextual Links)
 - `LEMMA_DISTRIBUTION:` → data for Section 8 (cross-book connections)
 - `THEME_MATCHES:` → data for Sections 5, 7 (theological themes)
@@ -186,11 +197,27 @@ Step 2: GATHER DATA via data-retriever agent
 Step 3: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
    │
    ├─ Use DISCOURSE_SUMMARY (NT) or PARAGRAPH_MARKERS (OT) from data-retriever
-   ├─ Check if range aligns with discourse boundaries
+   ├─ Check A: Do discourse markers indicate a break WITHIN the range?
+   ├─ Check B: Does the passage TRUNCATE a larger discourse unit?
+   │  │
+   │  │  Truncation indicators (any ONE triggers a warning):
+   │  │  - Passage ends mid-sentence or mid-clause chain
+   │  │  - Subordinating connectives (ἵνα, ὅτι, γάρ) in subsequent verses
+   │  │    link back to the passage's argument
+   │  │  - Passage covers part of a recognizable form (thanksgiving,
+   │  │    prayer, chiasm, inclusio) that extends beyond the endpoint
+   │  │  - Standard pericope divisions (NA28/UBS paragraph markers,
+   │  │    scholarly consensus) place the boundary differently
+   │  │
+   │  │  Example: Phil 1:3-8 truncates the thanksgiving prayer that
+   │  │  runs through 1:11 (vv. 9-11 contain the prayer content
+   │  │  introduced by the ἵνα clause). Recommend EXTEND to 1:3-11.
+   │  │
+   │  └─ If truncated → Boundaries PROBLEMATIC
    │
-   ├─ Boundaries OK? → Proceed to Step 4
+   ├─ Boundaries OK (both checks pass)? → Proceed to Step 4
    │
-   └─ Boundaries PROBLEMATIC?
+   └─ Boundaries PROBLEMATIC (either check fails)?
       │
       ├─ STOP. Print the ⚠️ warning BEFORE anything else.
       │  Format: "⚠️ Boundary check: [Book] [Range] may be a partial unit..."
@@ -267,7 +294,7 @@ Step 8: DELIVER OUTPUT
 **[Greek/Hebrew] ([reference])**: lemma [lemma form], [full parsing] [query_morphology]
 Gloss: "[translation]"
 [Semantic group from semantic_groups.yaml if applicable]
-[Frequency in book from query_vocabulary]
+Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology word_filter]
 [Significance for passage interpretation]
 
 [Flag hapax legomena or unusual forms]
@@ -304,7 +331,7 @@ commands. Imperatives without their indicative base are moralism, not exegesis.]
 [Citation: Author, Title, Publisher, Year, pp.]
 [Tier level: A | B | C — state if C]
 
-**Tier 4: Interpretive Notes** (Agent assessment)
+**Tier 4: Agent Assessment**
 [Clearly labeled as agent assessment, not established fact]
 
 ## 7. Open Questions
