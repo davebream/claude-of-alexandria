@@ -53,7 +53,8 @@ export async function speakersQuery(args: SpeakersInput): Promise<CallToolResult
     };
   }
 
-  const bookCanonical = bookInfo.canonical;
+  // Quotations table stores displayName format (e.g., "Genesis", "1 Chronicles")
+  const bookDisplay = bookInfo.displayName;
 
   // Build base query with JOIN to speakers table
   let sql = `
@@ -65,7 +66,7 @@ export async function speakersQuery(args: SpeakersInput): Promise<CallToolResult
     JOIN speakers s ON q.speaker_id = s.character_id
     WHERE q.book = ?
   `;
-  const params: unknown[] = [bookCanonical];
+  const params: unknown[] = [bookDisplay];
 
   // Range filter using overlap logic
   if (args.range) {

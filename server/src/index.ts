@@ -359,7 +359,7 @@ async function cachedToolCall(
   handler: () => Promise<CallToolResult>
 ): Promise<CallToolResult> {
   const sortedArgs = stableStringify(args);
-  const cacheKey = new Request(`https://cache/${name}/${encodeURIComponent(sortedArgs)}`);
+  const cacheKey = new Request(`https://cache/v2/${name}/${encodeURIComponent(sortedArgs)}`);
   const cache = caches.default;
 
   const cached = await cache.match(cacheKey);
