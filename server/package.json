@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test src/tools/**/*.test.ts",
     "export-d1": "tsx scripts/export-d1.ts",
-    "seed-d1": "bash scripts/seed-d1.sh"
+    "seed-d1": "bash scripts/seed-d1.sh",
+    "generate-cross-references": "tsx scripts/generate-cross-references.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.10.0",
