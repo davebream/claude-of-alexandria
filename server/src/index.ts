@@ -18,6 +18,7 @@ import { queryPeople, PeopleInputSchema, PeopleOutputSchema } from './tools/peop
 import { queryPlaces, PlacesInputSchema, PlacesOutputSchema } from './tools/places.js';
 import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/events.js';
 import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema } from './tools/person-network.js';
+import { speakersQuery, SpeakersInputSchema, SpeakersOutputSchema } from './tools/speakers.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -306,6 +307,27 @@ Examples:
   - Abraham's family tree: person="abraham_2"
   - Mary disambiguation: person="Mary" → AMBIGUOUS_PERSON with slugs
   - Extended family (depth 2): person="abraham_2", depth=2`;
+
+const DESC_SPEAKERS = `Query who speaks in a biblical passage, with speaker metadata, quotation type, and divine speech filtering.
+
+Returns quotation spans with speaker attribution, including divinity flag, speaker labels, and quote type classification (Normal/Dialogue/Implicit/Quotation/Hypothetical). Covers both OT and NT.
+
+For prophetic books, divinity_only captures direct divine speech only. Prophetic oracles (prophet speaking God's words) are attributed to the prophet, not God. Check speaker_label for divine titles (e.g., "Yahweh", "Lord") in prophetic literature.
+
+The dataset attributes Angel-of-the-LORD speech to "Jesus" with speaker_label "angel of". This reflects FCBH/Clear Bible's Christophany interpretation. Present as dataset attribution, not settled exegesis.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Genesis", "Matthew", "Rom")
+  - range (string, optional): Verse range (e.g., "22:1-22:19" or "3:16"). Omit for entire book.
+  - speaker_id (string, optional): Filter to a specific speaker (e.g., "God", "Moses")
+  - divinity_only (boolean, optional): Only return divine speech (default: false)
+
+Returns: { book, range?, total_quotations, speakers: [{character_id, name, gender?, divinity, quotation_count}], quotations: [{verse_range, speaker_id, speaker_label?, alt_speaker_id?, quote_type, quote_delivery?}], prophetic_speech_caveat, christophany_caveat, attribution }
+
+Examples:
+  - Who speaks in Genesis 22: book="Genesis", range="22:1-22:19"
+  - Divine speech only in Genesis 3: book="Genesis", range="3:1-3:19", divinity_only=true
+  - All of Jesus' speech in Matthew: book="Matthew", speaker_id="Jesus"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -636,6 +658,21 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_person_network', args as unknown as Record<string, unknown>, () => queryPersonNetwork(args))
+  );
+
+  server.registerTool('query_speakers', {
+    title: 'Query Speaker Quotations',
+    description: DESC_SPEAKERS,
+    inputSchema: SpeakersInputSchema,
+    outputSchema: SpeakersOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_speakers', args as unknown as Record<string, unknown>, () => speakersQuery(args))
   );
 
   return server;

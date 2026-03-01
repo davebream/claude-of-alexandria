@@ -40,6 +40,7 @@ const AVAILABLE_TOOLS = [
   'query_places - geographic locations with coordinates from Theographic/TIPNR (OT + NT)',
   'query_events - timeline events with participants, locations, and Ussher chronology (OT + NT)',
   'query_person_network - family relationships and co-appearances for a named individual (OT + NT)',
+  'query_speakers - who speaks in a passage, with divine speech filtering (OT + NT)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
