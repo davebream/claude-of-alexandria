@@ -31,15 +31,29 @@ echo "Importing OT quotes..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/ot-quotes.sql" --remote
 echo "  OT quotes imported."
 
-# Morphology in batches (~89 chunks, takes ~20 minutes)
-echo "Importing morphology..."
-chunk_count=0
-for chunk in "$SEED_DIR"/morphology-*.sql; do
+# NT Morphology in batches (numbered chunks from original extraction)
+echo "Importing NT morphology..."
+nt_count=0
+for chunk in "$SEED_DIR"/morphology-[0-9]*.sql; do
+  [ -f "$chunk" ] || continue
   chunk_name=$(basename "$chunk")
   echo "  Importing $chunk_name..."
   npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
-  chunk_count=$((chunk_count + 1))
+  nt_count=$((nt_count + 1))
 done
+echo "  NT morphology: $nt_count batches imported."
+
+# OT Morphology from Macula Hebrew (Phase 1: per-book files with DELETE + INSERT)
+echo "Importing OT morphology (Macula Hebrew)..."
+ot_count=0
+for chunk in "$SEED_DIR"/morphology-ot-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "  Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+  ot_count=$((ot_count + 1))
+done
+echo "  OT morphology: $ot_count books imported."
 
 echo ""
-echo "=== Seeding complete. $chunk_count morphology batches imported. ==="
+echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books. ==="
