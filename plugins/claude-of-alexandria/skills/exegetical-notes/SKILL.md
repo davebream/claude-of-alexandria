@@ -97,10 +97,18 @@ If genuinely no source is known (rare for canonical passages), state:
 
 ### Rule 5: Cross-Check Data Claims Before Delivering
 
-After generating the full notes:
-1. For each data claim in the output (lemma frequencies, morphological parsings, discourse features), re-query the relevant MCP tool to confirm the cited value matches
-2. Report cross-check results in Section 10
-3. If any mismatches: correct the claim before delivering
+After generating the full notes, pick **up to 5** data claims to cross-check, prioritized by risk:
+
+1. **At least 1 morphological parsing** (voice or mood — highest error risk)
+2. **At least 1 frequency count** (verify exact number and verse references)
+3. **Any hapax legomena claim** (if the notes assert a word appears only once)
+4. **Remaining slots:** highest-consequence claims for the interpretation
+
+For each selected claim, re-query the relevant MCP tool to confirm the cited value matches.
+Report cross-check results in Section 10. If any mismatches: correct the claim before delivering.
+
+Do NOT cross-check every data claim — this consumes tool-call budget needed for the full output.
+5 risk-prioritized checks catch the most consequential errors.
 
 ### Rule 6: Exactly 10 Sections, Exactly These Names
 
@@ -313,6 +321,10 @@ Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology 
 the indicative theological ground within the discourse unit that warrants the
 commands. Imperatives without their indicative base are moralism, not exegesis.]
 
+[At least one conclusion must note the passage's theological connection to the
+broader biblical arc — the full cross-testament link is developed in Section 8.
+See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
+
 ## 6. Interpretive Guardrails
 
 [For each common misreading:]
@@ -348,6 +360,19 @@ commands. Imperatives without their indicative base are moralism, not exegesis.]
 [OT quotations or allusions (call query_ot_quotes for NT passages)]
 [Semantic group connections across testaments]
 [Parallel passages with significant differences noted]
+
+**Redemptive-historical connection (genre-graduated, mandatory):**
+- **Epistles, narrative, prophecy, apocalyptic:** At least one cross-testament link
+  placing the passage in the redemptive-historical arc (Creation → Promise →
+  Fulfillment → Consummation). For NT: trace to OT promise/fulfillment.
+  For OT narrative/prophecy: note forward trajectory or typological significance.
+- **Wisdom literature (Proverbs, Ecclesiastes, Song of Songs):** Connection encouraged
+  but not mandatory. If present, ground in wisdom theology (e.g., Prov 8 → Col 1:15-17).
+  If not naturally present, state: "This passage operates within wisdom genre where
+  redemptive-historical connections are indirect."
+- **Short personal letters (Philemon, 2-3 John, Jude):** A note connecting to broader
+  Pauline/Johannine/apostolic theology suffices. Do not force OT connections where the
+  text itself makes none.
 
 ## 9. Data Sources
 
@@ -447,7 +472,8 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Mixing Tier 1 and Tier 4 | Label every tier claim explicitly |
 | Tier 3 name-drop without title/series | Every Tier 3 claim: Author (Title, Series, Year). Name alone is not a citation. |
 | Imperatives presented as freestanding moral instruction | When Section 2 shows imperative-dominated structure, Section 5 must identify the indicative ground (theological basis for the commands) within the discourse unit. Commands require their warrant. |
-| Skipping Section 10 cross-check | Re-query MCP tools to confirm every data claim before delivering |
+| Skipping Section 10 cross-check | Pick up to 5 risk-prioritized claims (Rule 5) and re-query MCP tools before delivering |
+| No redemptive-historical note in Section 8 | Section 8 requires genre-graduated connection: epistles/narrative/prophecy → mandatory cross-testament link; wisdom → note if indirect; short letters → theological connection suffices |
 | `--output print` but saved to file | If `--output print` is in the invocation, print ALL 10 sections inline. Never save to file and return a summary. |
 | Renaming sections | Use the exact 10 section titles from the template. "Homiletical Trajectories" is not "Interpretive Guardrails." |
 | Only 6 sections instead of 10 | Every invocation produces exactly 10 sections. No abbreviation, no "brief" mode. |

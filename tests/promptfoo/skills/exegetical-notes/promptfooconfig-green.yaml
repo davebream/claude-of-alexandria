@@ -30,6 +30,21 @@ defaultTest:
       value: |
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
+    # MCP tool citation check: output must reference expected MCP tools.
+    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    # Fall back to checking tool name strings in the output text.
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_morphology', 'query_vocabulary'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
     # Theological guardrail: literary context must be respected
     - type: llm-rubric
       value: |
@@ -321,3 +336,113 @@ tests:
         value: "Tier 1"
       - type: icontains
         value: "Tier 4"
+
+  # =========================================================================
+  # STRESS TESTS: Genre-graduated redemptive-historical requirement
+  # Tests edge cases from biblical scholar consultation (2026-03-01)
+  # =========================================================================
+
+  # STRESS1: Short personal letter — zero OT quotes, personal appeal
+  - description: "STRESS1 GREEN: Philemon 8-16 — short letter, no forced OT connections"
+    vars:
+      prompt: "Generate exegetical notes for Philemon 8-16 --output print"
+    assert:
+      # Key sections present
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Intertextual Links"
+      - type: icontains
+        value: "Verification"
+      # Genre-graduated: short letter should NOT force OT connections
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section connects Philemon to broader Pauline theology
+          (e.g., "in Christ" language, new creation, reconciliation) WITHOUT
+          forcing artificial OT quotation connections where the text makes none.
+          PASS ALSO if it honestly notes that Philemon contains zero direct
+          OT quotations while still connecting to broader theological themes.
+          FAIL if the section fabricates OT connections not present in the text
+          (e.g., claiming Paul "echoes the Year of Jubilee" without textual evidence).
+          FAIL if Section 8 is empty or says "no connections found."
+      # Christ-centeredness should work through Pauline theology, not forced OT
+      - type: llm-rubric
+        value: |
+          Evaluate christ-centeredness for a short personal letter.
+          PASS if the passage is connected to Christ through Paul's "in Christ"
+          theology, the new-creation ethic, or the gospel's social implications —
+          i.e., through the letter's own theological framework.
+          FAIL if the redemptive-historical connection is completely absent.
+          FAIL if OT connections are forced where the text makes none.
+
+  # STRESS2: Wisdom literature — individual sayings, dense Masoretic markers
+  - description: "STRESS2 GREEN: Proverbs 10:1-7 — wisdom genre, no forced narrative arc"
+    vars:
+      prompt: "Generate exegetical notes for Proverbs 10:1-7 --output print"
+    assert:
+      # Key sections present
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Intertextual Links"
+      - type: icontains
+        value: "Genre:"
+      # Genre correctly identified as wisdom
+      - type: llm-rubric
+        value: |
+          Check the Genre field in the header.
+          PASS if genre is identified as "wisdom" (or "poetry" for proverbial material).
+          FAIL if genre is "narrative", "epistle", or "prophecy."
+      # Genre-graduated: wisdom should NOT require narrative redemptive arc
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section either:
+          (a) connects to wisdom theology (e.g., Prov 8, fear of the LORD,
+              Christ as wisdom in Col 1:15-17 or 1 Cor 1:30), OR
+          (b) honestly states that redemptive-historical connections are indirect
+              in wisdom genre while still providing relevant cross-references.
+          FAIL if it forces a Creation-Fall-Redemption narrative arc onto
+          individual wisdom sayings.
+          FAIL if Section 8 is empty.
+      # Pericope handling: wisdom sayings have dense paragraph markers
+      - type: llm-rubric
+        value: |
+          Check the pericope handling for individual wisdom sayings.
+          PASS if the analysis acknowledges that Proverbs 10:1-7 contains
+          discrete sayings (not a continuous argument) and handles unit
+          boundaries accordingly.
+          FAIL if the analysis treats 10:1-7 as a continuous argument
+          with a single thesis like an epistle paragraph.
+
+  # STRESS3: Minimal theological density — zero OT quotes, brief letter
+  - description: "STRESS3 GREEN: 3 John 1-8 — minimal density, honest about limits"
+    vars:
+      prompt: "Generate exegetical notes for 3 John 1-8 --output print"
+    assert:
+      # Key sections present
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Intertextual Links"
+      - type: icontains
+        value: "Verification"
+      # Genre-graduated: short letter, honest about theological limits
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section connects 3 John to Johannine theology
+          (e.g., truth language, love, hospitality in the early church)
+          without forcing artificial OT connections.
+          PASS ALSO if it honestly states that 3 John contains zero OT
+          quotations and redemptive-historical connections are indirect.
+          FAIL if OT connections are fabricated.
+          FAIL if Section 8 is empty or absent.
+      # Should still have all 10 sections even for a short passage
+      - type: icontains
+        value: "Passage in Literary Context"
+      - type: icontains
+        value: "Exegetical Conclusions"
+      - type: icontains
+        value: "Open Questions"
