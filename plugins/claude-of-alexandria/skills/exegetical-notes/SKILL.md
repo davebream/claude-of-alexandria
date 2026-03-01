@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
-allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme
+allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers
 ---
 
 # Exegetical Notes
@@ -174,9 +174,17 @@ Include the pos_filter request for NT epistles. Omit it for OT and non-epistolar
 - `PARAGRAPH_MARKERS:` → OT boundary data for pericope check and Section 2
 - `VOCABULARY_SUMMARY:` → data for Section 4 (frequencies, semantic groups)
 - `VERSE_REFERENCES:` → data for Section 4 (per-occurrence verse locations for top lemmas)
-- `OT_QUOTES_SUMMARY:` → data for Section 8 (Intertextual Links)
-- `LEMMA_DISTRIBUTION:` → data for Section 8 (cross-book connections)
+- `OT_ENRICHMENT_SUMMARY:` → data for Section 4 (OT glosses, semantic frames — Cherith glosses are Tier 3)
+- `OT_QUOTES_SUMMARY:` → data for Section 8 (Intertextual Links, Tier 1: Explicit citations)
+- `CROSS_REFERENCES_SUMMARY:` → data for Section 8 (Tier 4: Editorial tradition candidates)
+- `PEOPLE_SUMMARY:` → data for Section 8 (Tier 3: Entity continuity)
+- `PLACES_SUMMARY:` → data for Section 8 (Tier 3: Entity continuity)
+- `EVENTS_SUMMARY:` → data for Sections 1, 5 (narrative context, chronological framework)
+- `LEXICON_SUMMARY:` → data for Section 4 (standard lexical definitions)
+- `VERSIFICATION_NOTES:` → data for Section 9 (reference system notes)
+- `LEMMA_DISTRIBUTION:` → data for Section 8 (Tier 2: Lexical connections)
 - `THEME_MATCHES:` → data for Sections 5, 7 (theological themes)
+- `SPEAKER_SUMMARY:` → data for Section 6a (speaker attribution)
 - `TOOL_RESULTS:` → data for Section 9 (Data Sources)
 
 **Fallback:** If data-retriever spawn fails, fall back to direct MCP tool calls. Note the fallback in Section 9 (Data Sources).
@@ -308,6 +316,16 @@ Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology 
 [Flag hapax legomena or unusual forms]
 [Note semantic range if relevant to interpretive decision]
 
+**OT gloss tier awareness** (OT passages only):
+- Glosses from `OT_ENRICHMENT_SUMMARY` (Cherith/Andi Wu) are **Tier 3 — single-scholar translation**. Do NOT cite as lexical authority for semantic range arguments.
+- For exegetical decisions about word meaning, consult `LEXICON_SUMMARY` (from `query_lexicon`) which provides standard lexical definitions.
+- Format: "gloss: [Cherith gloss, Tier 3] — cf. lexicon: [standard definition]"
+
+**Lexicon integration** (when `LEXICON_SUMMARY` is available):
+- Use `LEXICON_SUMMARY` data for standard lexical definitions of key lemmas
+- Cross-reference Cherith glosses against standard lexicon entries
+- Note significant differences between Cherith contextual glosses and standard lexical range
+
 ## 5. Exegetical Conclusions
 
 [Numbered list of defensible interpretive claims]
@@ -326,6 +344,21 @@ broader biblical arc — the full cross-testament link is developed in Section 8
 See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
 
 ## 6. Interpretive Guardrails
+
+### 6a. Speaker Attribution (from SPEAKER_SUMMARY)
+
+[When SPEAKER_SUMMARY data is available:]
+- **Who speaks:** List speakers with verse ranges and divine speech markers
+- **Speaker transitions:** Note transitions as discourse markers (speaker change often signals unit boundaries)
+- **Quotation types:** Note quotation types when varied (Normal/Dialogue/Implicit/Quotation/Hypothetical)
+- **Divine speech:** Flag divine speech markers (is_divine=true) — theologically significant for revelation claims
+- **Caveats:**
+  - In prophetic literature: divinity_only captures direct divine speech only. Prophetic oracles mediated through the prophet are attributed to the prophet.
+  - Angel-of-the-LORD attributions are dataset interpretations (MACULA/FCBH), not settled exegesis. Note as "dataset attribution" when theologically significant.
+
+[When SPEAKER_SUMMARY is SKIPPED or EMPTY_RETURNED: state "No speaker attribution data available for this passage."]
+
+### 6b. Common Misreadings
 
 [For each common misreading:]
 
@@ -355,10 +388,24 @@ See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
 
 ## 8. Intertextual Links
 
-[Cross-references with verse citations]
-[Format: "Reference → Connection to current passage"]
-[OT quotations or allusions (call query_ot_quotes for NT passages)]
-[Semantic group connections across testaments]
+[Cross-references organized by the 4-tier intertextual hierarchy:]
+
+**Tier 1: Explicit citations** (from `OT_QUOTES_SUMMARY`)
+"Reference → [Explicit citation: formal quotation]"
+[Only for NT passages quoting OT. List each OT quotation with its NT citation location.]
+
+**Tier 2: Lexical connections** (from `LEMMA_DISTRIBUTION`)
+"Reference → [Lexical connection: shared lemma X]"
+[Cross-book lemma connections. Significant shared vocabulary between the passage and other biblical books.]
+
+**Tier 3: Entity continuity** (from `PEOPLE_SUMMARY` + `PLACES_SUMMARY`)
+"Reference → [Entity continuity: Person/Place appears in both source and target]"
+[People and places that appear in the passage AND in other biblical books. Ground in entity data, not training knowledge.]
+
+**Tier 4: Editorial tradition** (from `CROSS_REFERENCES_SUMMARY`)
+"Reference → [Editorial tradition: TSK/OpenBible, N votes — candidate]"
+[TSK-derived cross-references are editorial tradition candidates, NOT confirmed intertextual connections. Always label as "editorial tradition" with vote count. Never present as Tier 1-3 evidence.]
+
 [Parallel passages with significant differences noted]
 
 **Redemptive-historical connection (genre-graduated, mandatory):**
@@ -480,6 +527,10 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | User says "keep it brief" → skip sections | All 10 sections are mandatory. "Brief" may shorten prose within sections but never removes sections. |
 | Proceeding past problematic pericope without warning | Pericope check is mandatory Step 1 |
 | No logical connectives in epistle analysis | For epistles: query_morphology pos_filter "conjunction", map γάρ/οὖν/δέ/ἀλλά/ἵνα flow |
+| TSK cross-reference cited as confirmed connection | Cross-references from CROSS_REFERENCES_SUMMARY are editorial tradition candidates (Tier 4). Always label: "Editorial tradition: TSK/OpenBible, N votes — candidate". Never present as Tier 1-3. |
+| Entity data ignored for narrative characters | When PEOPLE_SUMMARY has data, use it for entity continuity in Section 8. Characters should be grounded in entity database, not training knowledge alone. |
+| Speaker attribution data ignored in dialogue | When SPEAKER_SUMMARY has data, report speakers with divine flags and quotation types in Section 6a. Speaker transitions are discourse markers. |
+| Cherith glosses cited as lexical authority | OT_ENRICHMENT_SUMMARY glosses (Cherith/Andi Wu) are Tier 3 single-scholar translations. For semantic range arguments, use LEXICON_SUMMARY (query_lexicon). |
 
 ---
 

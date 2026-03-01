@@ -6,6 +6,7 @@
 #
 # GREEN phase — skill correction verification:
 #   S1-S7: Core scenarios (structure, data-grounding, tiers, pericope, OT, verification, scholarly)
+#   S8-S11: Phase 4 scenarios (cross-ref labeling, entity data, speaker data, gloss tiers)
 #   ADV1-ADV4: Adversarial tests covering rationalization patterns
 #   STRESS1-STRESS3: Genre stress tests (short letter, wisdom, minimal density)
 
@@ -446,3 +447,104 @@ tests:
         value: "Exegetical Conclusions"
       - type: icontains
         value: "Open Questions"
+
+  # =========================================================================
+  # Scenario 8: Cross-Reference Epistemic Labeling (Phase 4)
+  # 4-tier intertextual hierarchy with editorial tradition labeled
+  # =========================================================================
+  - description: "S8 GREEN: Cross-references — 4-tier intertextual hierarchy with TSK labeling"
+    vars:
+      prompt: "Generate exegetical notes for Romans 8:28-30 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if cross-references are organized using a multi-tier hierarchy that
+          distinguishes between different types of evidence:
+          - Explicit citations (OT quotations) labeled distinctly from editorial candidates
+          - Cross-references from TSK/OpenBible labeled as "editorial tradition" or "candidates"
+            with vote counts, NOT as confirmed connections
+          - At least 2 different tiers of intertextual evidence are distinguished
+          FAIL if all cross-references are presented at uniform confidence without
+          distinguishing explicit citations from editorial tradition.
+          FAIL if TSK-derived cross-references are presented as confirmed connections.
+      # Must contain the passage sections
+      - type: icontains
+        value: "Intertextual"
+      - type: icontains
+        value: "Verification"
+
+  # =========================================================================
+  # Scenario 9: Entity Data in Narrative (Phase 4)
+  # People/places grounded in entity database for Gen 22
+  # =========================================================================
+  - description: "S9 GREEN: Entity data — narrative characters grounded in entity data"
+    vars:
+      prompt: "Generate exegetical notes for Genesis 22:1-19 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links) and the overall character analysis.
+          PASS if:
+          - Characters (Abraham, Isaac) are discussed with reference to entity data,
+            cross-book appearances, or entity continuity across passages
+          - The analysis references structured entity data (from PEOPLE_SUMMARY,
+            query_people, or similar) rather than relying solely on training knowledge
+          - Entity continuity is used as a category of intertextual evidence
+          FAIL if characters are discussed purely from training knowledge with no
+          reference to entity database information or structured cross-book data.
+      # OT sections
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Verification"
+
+  # =========================================================================
+  # Scenario 10: Speaker Attribution in Dialogue (Phase 4)
+  # Divine speech markers from SPEAKER_SUMMARY in Gen 3
+  # =========================================================================
+  - description: "S10 GREEN: Speaker data — dialogue with divine speech markers"
+    vars:
+      prompt: "Generate exegetical notes for Genesis 3:1-19 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 6 (Interpretive Guardrails) for speaker attribution data.
+          PASS if:
+          - Speaker attribution is present with structured data (speaker names, verse ranges)
+          - Divine speech is flagged or marked distinctly from non-divine speech
+          - Speaker transitions are noted as discourse-significant
+          - Data references SPEAKER_SUMMARY, query_speakers, or similar structured source
+          FAIL if speakers are identified only from narrative context without reference
+          to structured speaker attribution data.
+          FAIL if divine and non-divine speech are not distinguished.
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Verification"
+
+  # =========================================================================
+  # Scenario 11: Cherith Gloss Tier Awareness (Phase 4)
+  # OT glosses distinguished by authority tier
+  # =========================================================================
+  - description: "S11 GREEN: Cherith glosses — OT glosses with tier distinction"
+    vars:
+      prompt: "Generate exegetical notes for Genesis 1:1-5 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 4 (Lexical Analysis) for OT gloss handling.
+          PASS if:
+          - OT glosses are present with tier or authority information
+          - Cherith/Andi Wu glosses are labeled as single-scholar translations or Tier 3
+            (not treated as equivalent to standard lexica like BDB/HALOT)
+          - Standard lexical definitions (from query_lexicon/LEXICON_SUMMARY) are
+            distinguished from contextual glosses where available
+          FAIL if all glosses are presented at uniform authority without distinguishing
+          between standard lexica and single-scholar translations.
+          FAIL if Cherith glosses are cited as lexical authority for semantic range arguments
+          without noting their single-scholar status.
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Verification"

@@ -11,6 +11,10 @@
 #   S4: Uncritical pericope acceptance — no boundary warning
 #   S5: Unverified Hebrew claims — Hebrew morphology without tool verification
 #   S7: Unverified scholarly attribution — confident citations from training data
+#   S8: Unlabeled cross-references — TSK refs cited as confirmed connections
+#   S9: Entity data ignored — people in narrative not grounded in entity data
+#   S10: Speaker data ignored — dialogue analysis lacks speaker attribution data
+#   S11: Cherith gloss authority — OT glosses treated as lexical authority
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -169,3 +173,99 @@ tests:
 
           FAIL if the response explicitly marks scholarly citations as unverified
           training-knowledge recall AND distinguishes them from verified sources.
+
+  # =========================================================================
+  # Scenario 8: Cross-Reference Epistemic Labeling
+  # Failure: TSK cross-references treated as confirmed intertextual connections
+  # Bare model has no framework to distinguish editorial tradition from
+  # explicit citations or lexical connections
+  # =========================================================================
+  - description: "S8 RED: Cross-references — TSK refs presented without epistemic labeling"
+    vars:
+      prompt: "Analyze the intertextual connections for Romans 8:28-30. Include cross-references to other passages and classify them by type and confidence."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response presents cross-references without distinguishing between
+          different types of intertextual evidence. Signs:
+          - Lists cross-references at uniform confidence (all presented as equally valid connections)
+          - Does not distinguish explicit citations from editorial tradition candidates
+          - Does not label cross-references as "editorial tradition" or "TSK-derived"
+          - Treats all cross-references as confirmed connections rather than candidates
+
+          FAIL if the response systematically distinguishes at least 3 tiers of
+          intertextual evidence (e.g., explicit citations, lexical connections,
+          editorial tradition) with different confidence labels for each.
+
+  # =========================================================================
+  # Scenario 9: Entity Data in Narrative
+  # Failure: People in narrative passage not grounded in entity database
+  # Bare model describes characters from training knowledge alone
+  # =========================================================================
+  - description: "S9 RED: Entity data — narrative people described without entity data"
+    vars:
+      prompt: "Analyze Genesis 22:1-19, the Binding of Isaac. Identify all people mentioned and their roles. Include any entity data or cross-references for these characters."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response describes Abraham, Isaac, and other characters using
+          training knowledge alone without citing entity database information. Signs:
+          - Discusses characters without mention of entity IDs, slugs, or structured data
+          - Does not cite query_people, PEOPLE_SUMMARY, or entity cross-reference data
+          - Character descriptions come from narrative knowledge, not structured entity records
+          - No mention of entity continuity across passages (e.g., Abraham's appearances in other books)
+
+          FAIL if the response cites structured entity data with cross-book appearance
+          counts, entity slugs, or MCP entity tool references.
+
+  # =========================================================================
+  # Scenario 10: Speaker Attribution in Dialogue
+  # Failure: Dialogue analysis lacks structured speaker data
+  # Bare model identifies speakers from context but not from speaker database
+  # =========================================================================
+  - description: "S10 RED: Speaker data — dialogue analysis without speaker attribution data"
+    vars:
+      prompt: "Analyze Genesis 3:1-19 exegetically. Pay special attention to who speaks in each section and the significance of divine speech."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response identifies speakers from narrative context alone without
+          citing structured speaker attribution data. Signs:
+          - Identifies speakers (serpent, Eve, Adam, God) from the text but does not
+            cite SPEAKER_SUMMARY, query_speakers, or divine speech markers from a database
+          - Does not distinguish divine vs. non-divine speech using a structured flag
+          - Does not mention quotation types (Normal, Dialogue, Implicit, etc.)
+          - Speaker attribution comes from reading comprehension, not structured data
+
+          FAIL if the response cites structured speaker attribution data with
+          divine speech flags, quotation types, or MCP speaker tool references.
+
+  # =========================================================================
+  # Scenario 11: Cherith Gloss Authority
+  # Failure: OT glosses treated as lexical authority without tier distinction
+  # Bare model has no framework for distinguishing gloss tiers
+  # =========================================================================
+  - description: "S11 RED: Cherith glosses — OT glosses treated as lexical authority"
+    vars:
+      prompt: "Analyze the Hebrew vocabulary in Genesis 1:1-5. Include glosses for key words and discuss their lexical significance. Note the authority level of each gloss source."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response provides glosses without distinguishing between
+          different authority tiers for gloss sources. Signs:
+          - Presents glosses at uniform confidence without noting source authority
+          - Does not distinguish between standard lexica (BDB, HALOT) and
+            single-scholar translations (Cherith/Andi Wu)
+          - Does not label any gloss as "Tier 3" or "single-scholar translation"
+          - All glosses treated as equally authoritative
+
+          FAIL if the response explicitly distinguishes gloss authority tiers,
+          labeling some as single-scholar translations vs. standard lexica.
