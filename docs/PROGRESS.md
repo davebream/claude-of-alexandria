@@ -5,8 +5,8 @@
 
 ## Current State
 
-- **Phase:** 4
-- **Task:** 4.6
+- **Phase:** 5
+- **Task:** 5.4
 - **Status:** IN_PROGRESS
 
 ---
@@ -68,13 +68,13 @@
 - [x] Task 4.4: Update consult-biblical-scholar (00e4a78)
 - [x] Task 4.5: Update remaining skills (4139764)
 - [x] **GATE: Phase 4 verification (FULL PROMPTFOO SUITE)** — tool checks 6/6 PASS, regression INFRA-FAIL, code-review PASS, biblical-scholar PASS, full-suite INFRA-FAIL (provider constructor TypeError, not code regression)
-- [ ] Task 4.6: CHANGELOG + release
+- [x] Task 4.6: CHANGELOG + release (4733951, v2.5.0)
 
 ## Phase 5: OpenGNT Migration → v3.0.0
 
-- [ ] Task 5.1: OpenGNT migration
-- [ ] Task 5.2: expandParsing() rewrite for RMAC
-- [ ] Task 5.3: OpenGNT extraction script
+- [x] Task 5.1: OpenGNT migration (d99c719)
+- [x] Task 5.2: expandParsing() rewrite for RMAC (9b7ee9f)
+- [x] Task 5.3: OpenGNT extraction script
 - [ ] Task 5.4: Update query_morphology — NT-specific columns
 - [ ] Task 5.5: Add cache versioning
 - [ ] Task 5.6: query_syntax tool
@@ -163,6 +163,7 @@
 | 4.4 | 00e4a78 | 2026-03-01 |
 | 4.5 | 4139764 | 2026-03-01 |
 | 4.fix | 39a13ce | 2026-03-02 |
+| 4.6 | 4733951 | 2026-03-02 |
 
 ---
 
@@ -194,6 +195,7 @@
 | 2026-03-02 | 4 | GATE | NOTE: consult-biblical-scholar uses Primary/Secondary/Entity/Editorial labels vs exegetical-notes Tier 1/2/3/4 | By-design: different skills have different output formats. Harmonize in future refactor if needed. | 0 |
 | 2026-03-02 | 4 | GATE | NOTE: consult-biblical-scholar/biblical-segmentation don't list all MCP tools in allowed-tools | By-design: these skills delegate data gathering to data-retriever via Task. Only direct-call tools listed. | 0 |
 | 2026-03-02 | 4 | GATE | INFRA-FAIL: full eval suite fails (promptfoo provider constructor TypeError) | Same infra class as Phase 2. Node.js v25.6.0 + promptfoo provider import incompatibility. Not a code regression — all manual tool checks and agent reviews passed. | 1 |
+| 2026-03-02 | 5 | 5.3 | NOTE: OpenText annotations URL returns 404 | mapping_OpenTextAnnotations CSV not found at expected OpenGNT repo path. syntax_annotations table will remain empty. query_syntax tool (Task 5.6) may need alternative data source or be deferred. | 0 |
 
 ---
 
