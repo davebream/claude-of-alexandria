@@ -1,3 +1,5 @@
+export const ENTITY_ATTRIBUTION = 'Entity data: Theographic (CC BY-SA 4.0) / TIPNR by Tyndale House (CC BY 4.0). Entity identifications per TIPNR — verify contested identifications against critical commentaries.';
+
 export function parseChapterRange(range?: string): { min?: number; max?: number } | { error: string } {
   if (!range) return {};
   const parts = range.split('-');

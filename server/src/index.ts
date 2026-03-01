@@ -14,6 +14,7 @@ import { queryThemeDistribution, ThemeDistributionInputSchema, ThemeDistribution
 import { queryLexicon, LexiconInputSchema, LexiconOutputSchema } from './tools/lexicon.js';
 import { checkVersification, VersificationInputSchema, VersificationOutputSchema } from './tools/versification.js';
 import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema } from './tools/cross-references.js';
+import { queryPeople, PeopleInputSchema, PeopleOutputSchema } from './tools/people.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -229,6 +230,25 @@ Examples:
   - Cross-references for Romans 8:28: book="Romans", range="8:28"
   - References from Genesis 1:1: book="Genesis", range="1:1", direction="from"
   - High-confidence only: book="John", range="3:16", min_votes=100`;
+
+const DESC_PEOPLE = `Query named individuals mentioned in a verse range, with cross-canonical appearances from Theographic/TIPNR data.
+
+Returns people identified in the passage with their appearance counts across all biblical books, disputed identification flags, and gender. Entity data is KJV-based — verse assignments follow KJV versification.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "Acts")
+  - range (string, required): Verse range as "chapter:verse-chapter:verse" (e.g., "16:1-16:16") or single verse "1:1"
+  - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
+
+Returns: { book, range, text_basis: "KJV", people: [{name, slug, display_title, gender, aliases, appearance_count, appearances_by_book, verses_in_range, disputed, dispute_note?}], disputed_identifications: [{name, slug, dispute_note}], mention_type_caveat, summary: {total_people, disputed_count}, attribution }
+
+High-frequency entities (appearance_count > 500) omit appearances_by_book for performance.
+Entity mentions do not distinguish narrative vs typological vs genealogical mention types. The exegete must classify from context.
+
+Examples:
+  - People in Romans 16: book="Romans", range="16:1-16:16"
+  - People in Genesis 22: book="Genesis", range="22:1-22:19"
+  - Single verse: book="Acts", range="18:2"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -499,6 +519,21 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_cross_references', args as unknown as Record<string, unknown>, () => queryCrossReferences(args))
+  );
+
+  server.registerTool('query_people', {
+    title: 'Query People',
+    description: DESC_PEOPLE,
+    inputSchema: PeopleInputSchema,
+    outputSchema: PeopleOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_people', args as unknown as Record<string, unknown>, () => queryPeople(args))
   );
 
   return server;

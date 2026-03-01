@@ -36,6 +36,7 @@ const AVAILABLE_TOOLS = [
   'query_lexicon - Strong\'s definitions and word meanings (OT + NT)',
   'check_versification - Hebrew-English verse numbering differences (OT only)',
   'query_cross_references - editorial tradition cross-references with vote counts (OT + NT)',
+  'query_people - named individuals with cross-canonical appearances from Theographic/TIPNR (OT + NT)',
 ] as const;
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
