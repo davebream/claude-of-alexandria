@@ -37,9 +37,8 @@ Five documented failure patterns from baseline testing (all 6 scenarios, unstruc
 
 ## TDD Status
 
-- ✅ `tests/skills/consult-biblical-scholar/scenarios.md` — 6 test scenarios
-- ✅ `tests/skills/consult-biblical-scholar/baseline.md` — RED phase evidence (5 failure patterns documented)
-- ✅ `tests/skills/consult-biblical-scholar/verification.md` — GREEN phase proof
+- ✅ `tests/promptfoo/skills/consult-biblical-scholar/promptfooconfig-red.yaml` — 5 RED phase tests
+- ✅ `tests/promptfoo/skills/consult-biblical-scholar/promptfooconfig-green.yaml` — 6 GREEN phase tests
 
 ## Invocation
 

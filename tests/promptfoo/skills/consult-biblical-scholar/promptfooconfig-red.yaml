@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-red.yaml
 #
-# Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/baseline.md):
+# RED phase — bare model failure documentation:
 #   S1: MEANING mode — explanation without evidence grading
 #   S2: VALIDATE mode — no formal verdict (COMPATIBLE), pastoral drift
 #   S3: VALIDATE contradicted — theological correction without morphological grounding

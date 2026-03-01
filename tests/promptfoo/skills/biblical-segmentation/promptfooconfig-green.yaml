@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-green.yaml
 #
-# Coverage parity with manual TDD (tests/skills/biblical-segmentation/verification.md):
+# GREEN phase — skill correction verification:
 #   S1: Impossible division — refuses, cites max_sessions limit
 #   S2: Contested book — presents multiple frameworks
 #   S5: Anthology — curation mode activated

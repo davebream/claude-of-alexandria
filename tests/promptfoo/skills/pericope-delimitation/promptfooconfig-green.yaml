@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-green.yaml
 #
-# Coverage parity with manual TDD (tests/skills/pericope-delimitation/verification.md):
+# GREEN phase — skill correction verification:
 #   S1: Truncated pericope (EXTEND) — Levinsohn data, boundary labels
 #   S2: Valid/composite pericope (VALID or CONTRACT) — confirmed boundaries
 #   S3: Over-extended passage (CONTRACT) — split point identification

@@ -4,7 +4,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-red.yaml
 #
-# Coverage parity with manual TDD (tests/skills/pericope-delimitation/baseline.md):
+# RED phase — bare model failure documentation:
 #   S1: Truncated pericope — treats "one" climax as natural boundary (Eph 4:1-6)
 #   S4: OT narrative pericope — narrative-only reasoning without textual markers
 #   S7: Single verse — fame-based leniency instead of discourse-unit analysis

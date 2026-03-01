@@ -4,7 +4,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-red.yaml
 #
-# Coverage parity with manual TDD (tests/skills/exegetical-notes/baseline.md):
+# RED phase — bare model failure documentation:
 #   S1: Fabricated verification — produces verification without actual tool cross-checks
 #   S2: Lexical data-grounding — memory errors in parsing and frequency
 #   S3: Uniform confidence — no systematic tier framework

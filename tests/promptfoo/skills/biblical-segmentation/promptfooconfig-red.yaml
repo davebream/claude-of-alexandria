@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-red.yaml
 #
-# Coverage parity with manual TDD (tests/skills/biblical-segmentation/baseline.md):
+# RED phase — bare model failure documentation:
 #   S1: Impossible division — Philemon in 4 sessions (should refuse)
 #   S2: Contested book — Revelation single framework
 #   S5: Anthology — Psalms mechanical division

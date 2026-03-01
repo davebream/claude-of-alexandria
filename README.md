@@ -40,15 +40,7 @@ Frontier models make predictable errors when handling Scripture. These are docum
 | GREEN | 47 | Runs the same prompts with skills and MCP enabled. Proves the skill corrects each failure. |
 | Smoke | 1 | Verifies the skill-to-agent pipeline works end-to-end. |
 
-GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). Every skill also has three markdown test files for human-readable TDD documentation:
-
-| File | Purpose |
-|------|---------|
-| `tests/skills/*/scenarios.md` | Pressure test cases designed to trigger failures |
-| `tests/skills/*/baseline.md` | Documented failures without the skill (RED phase) |
-| `tests/skills/*/verification.md` | Proof that the skill corrects failures (GREEN phase) |
-
-If a skill cannot demonstrate that it prevents a documented failure, it does not ship.
+GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). If a skill cannot demonstrate that it prevents a documented failure, it does not ship.
 
 ## Current Collection
 

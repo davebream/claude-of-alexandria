@@ -121,10 +121,9 @@ The skill enforces seven non-negotiable rules:
 
 ## Development
 
-This skill is built using Test-Driven Development. See `tests/skills/biblical-segmentation/` for:
-- `scenarios.md` - Pressure test scenarios
-- `baseline.md` - Documented failures without the skill
-- `verification.md` - Proof the skill corrects failures
+This skill is built using Test-Driven Development. See `tests/promptfoo/skills/biblical-segmentation/` for:
+- `promptfooconfig-red.yaml` — 10 RED phase tests (bare model failures)
+- `promptfooconfig-green.yaml` — 14 GREEN phase tests (skill corrections)
 
 ## Acknowledgments
 

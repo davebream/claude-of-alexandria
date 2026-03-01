@@ -23,7 +23,7 @@ Supports two output modes:
 
 ## Why It Was Needed
 
-Baseline testing (see `tests/skills/argument-flow/baseline.md`) documented six critical failure modes:
+Baseline testing (see `tests/promptfoo/skills/argument-flow/promptfooconfig-red.yaml`) documented six critical failure modes:
 
 1. No MCP calls — agents answered entirely from training data
 2. No confidence tier declared

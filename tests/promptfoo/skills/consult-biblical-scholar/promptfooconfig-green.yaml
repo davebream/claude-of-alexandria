@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-green.yaml
 #
-# Coverage parity with manual TDD (tests/skills/consult-biblical-scholar/verification.md):
+# GREEN phase — skill correction verification:
 #   S1: MEANING mode — confidence tier, MCP morphology, modern explanation
 #   S2: VALIDATE compatible — COMPATIBLE verdict, text before analogy
 #   S3: VALIDATE contradicted — NOT SUPPORTED with morphological evidence

@@ -3,7 +3,7 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-green.yaml
 #
-# Coverage parity with manual TDD (tests/skills/argument-flow/verification.md):
+# GREEN phase — skill correction verification:
 #   S1: Connective analysis — MCP before prose, proposition chain
 #   S3: No devotional drift — analytical tone only
 #   S4: Confidence tiers — claims evidence-graded

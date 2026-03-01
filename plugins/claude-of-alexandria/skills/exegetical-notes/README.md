@@ -26,9 +26,8 @@ This skill uses the claude-of-alexandria MCP server for all data access:
 
 ## TDD Status
 
-- ✅ `tests/skills/exegetical-notes/scenarios.md` — 7 test scenarios
-- ✅ `tests/skills/exegetical-notes/baseline.md` — RED phase evidence
-- ✅ `tests/skills/exegetical-notes/verification.md` — GREEN phase criteria
+- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-red.yaml` — 6 RED phase tests
+- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml` — 14 GREEN phase tests
 
 ### Promptfoo Automated Tests
 

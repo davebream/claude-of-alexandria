@@ -4,10 +4,10 @@
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
 #
-# Coverage parity with manual TDD (tests/skills/exegetical-notes/scenarios.md):
-#   S1-S4, S6-S7: Direct mappings from manual scenarios
-#   S5: OT Hebrew morphology (was deferred in manual TDD due to API errors)
-#   ADV1-ADV4: Adversarial tests covering rationalization patterns table
+# GREEN phase — skill correction verification:
+#   S1-S7: Core scenarios (structure, data-grounding, tiers, pericope, OT, verification, scholarly)
+#   ADV1-ADV4: Adversarial tests covering rationalization patterns
+#   STRESS1-STRESS3: Genre stress tests (short letter, wisdom, minimal density)
 
 description: "Exegetical Notes — GREEN phase (skill + MCP)"
 
@@ -77,7 +77,7 @@ tests:
   # =========================================================================
   # Scenario 1: Complete NT Analysis — Phil 1:1-11
   # All 10 sections present and populated, format compliance verified
-  # Manual TDD: scenarios.md S1 (~32 checkpoints)
+  # S1: (~32 checkpoints)
   # =========================================================================
   - description: "S1 GREEN: Phil 1:1-11 — all 10 sections present"
     vars:
@@ -104,7 +104,7 @@ tests:
         value: "Data Sources"
       - type: icontains
         value: "Verification"
-      # Format compliance: header fields (manual TDD verification.md checks these)
+      # Format compliance: header fields
       - type: icontains
         value: "Genre:"
       - type: icontains
@@ -113,7 +113,7 @@ tests:
   # =========================================================================
   # Scenario 2: Lexical Data-Grounding
   # query_morphology MCP data, not memory
-  # Manual TDD: scenarios.md S2 (must-say / must-not-say examples)
+  # S2: (must-say / must-not-say examples)
   # =========================================================================
   - description: "S2 GREEN: Lexical data-grounding — MCP morphology, not memory"
     vars:
@@ -139,7 +139,7 @@ tests:
   # =========================================================================
   # Scenario 3: Tier Labeling
   # All 4 tiers present; Tier 3 web citation; Tier 4 labeled
-  # Manual TDD: scenarios.md S3
+  # S3:
   # =========================================================================
   - description: "S3 GREEN: Tier labeling — all 4 tiers present and correct"
     vars:
@@ -175,7 +175,7 @@ tests:
   # =========================================================================
   # Scenario 4: Pericope Check Trigger
   # Warning issued for Phil 1:3-8 before generating notes
-  # Manual TDD: scenarios.md S4
+  # S4:
   # =========================================================================
   - description: "S4 GREEN: Pericope check — warning issued for Phil 1:3-8"
     vars:
@@ -194,7 +194,7 @@ tests:
   # =========================================================================
   # Scenario 5: OT Analysis — Gen 37:2-11
   # Hebrew morphology, Strong's numbers, OT scholarly sources
-  # Manual TDD: scenarios.md S5 (was deferred due to API errors)
+  # S5: (was deferred due to API errors)
   # =========================================================================
   - description: "S5 GREEN: OT analysis — Hebrew morphology and Strong's numbers"
     vars:
@@ -234,7 +234,7 @@ tests:
   # =========================================================================
   # Scenario 6: Verification Integration
   # MCP cross-check runs; zero corrections for data claims
-  # Manual TDD: scenarios.md S6
+  # S6:
   # =========================================================================
   - description: "S6 GREEN: Verification section — MCP cross-check runs"
     vars:
@@ -255,7 +255,7 @@ tests:
   # =========================================================================
   # Scenario 7: Source Quality Framework (Tier 3)
   # Tier A sources preferred; complete citations
-  # Manual TDD: scenarios.md S7
+  # S7:
   # =========================================================================
   - description: "S7 GREEN: Tier 3 source quality — named scholarly commentaries"
     vars:
@@ -275,7 +275,7 @@ tests:
 
   # =========================================================================
   # REFACTOR: Adversarial scenarios
-  # Tests rationalization patterns from scenarios.md
+  # Tests rationalization patterns
   # =========================================================================
 
   # ADV1: Rationalization pattern #2 — "The aorist here is..." (no MCP cited)

@@ -58,18 +58,20 @@ Do TDD. The cost of unnecessary rigor is minutes. The cost of insufficient rigor
 
 ---
 
-## The Three Test Files
+## The Two Test Configs
 
-Every skill requires **exactly three** test files. Not two. Not four. Not "a few supporting documents that seemed helpful." Three.
+Every skill requires **exactly two** promptfoo config files. Not one. Not three. Two.
 
 ```
-tests/skills/{skill-name}/
-├── scenarios.md       # The pressure test cases
-├── baseline.md        # The RED phase — documented failures
-└── verification.md    # The GREEN phase — proof of correction
+tests/promptfoo/skills/{skill-name}/
+├── promptfooconfig-red.yaml    # RED phase — bare model failures
+└── promptfooconfig-green.yaml  # GREEN phase — skill corrections
 ```
 
-**Do not create additional test files.** No `verification-responses.md`. No `detailed-output.md`. No `edge-cases-i-found-interesting.md`. Everything goes in the three canonical files.
+**RED** runs prompts against the bare model (no skills, no MCP). It documents what goes wrong.
+**GREEN** runs the same prompts with skills and MCP enabled. It proves the skill corrects each failure.
+
+**Do not create additional test files.** No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. Everything goes in the two canonical configs.
 
 **Rationale**: Consistency across all skills. A known structure. Anyone who opens the test directory knows exactly what they will find. This is a library, not a filing cabinet.
 
@@ -130,7 +132,7 @@ Any agent that claims to be "following the spirit" of a constraint while circumv
 
 - Temporary agent output files
 - Personal exploration notes
-- Additional test files beyond the three-file structure
+- Additional test files beyond the two-config structure
 - Anything you would not want a future scholar to find in the archive
 
 ### Commit Messages
@@ -170,8 +172,7 @@ claude-of-alexandria/
 │   │   │       ├── promptfooconfig-red.yaml
 │   │   │       └── promptfooconfig-green.yaml
 │   │   └── package.json
-│   └── skills/                   # ARCHIVED — legacy markdown tests
-├── docs/                         # Local-only (gitignored) — plans, reports, reviews
+├── docs/                         # Implementation plans, reviews
 ├── CLAUDE.md                     # You are here
 └── README.md                     # Public documentation
 ```
@@ -230,9 +231,10 @@ You have been warned. Do not test the librarian's patience.
 Verify every item. No exceptions.
 
 - [ ] `superpowers:writing-skills` was invoked before any skill work began
-- [ ] `tests/skills/skill-name/scenarios.md` exists with concrete test cases
-- [ ] `tests/skills/skill-name/baseline.md` exists with documented failures
-- [ ] `tests/skills/skill-name/verification.md` exists with correction proof
+- [ ] `tests/promptfoo/skills/skill-name/promptfooconfig-red.yaml` exists with bare-model failure scenarios
+- [ ] `tests/promptfoo/skills/skill-name/promptfooconfig-green.yaml` exists with skill-corrected assertions
+- [ ] RED tests pass (bare model fails as expected)
+- [ ] GREEN tests pass (skill corrects documented failures)
 - [ ] `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` exists with YAML frontmatter
 - [ ] `plugins/claude-of-alexandria/skills/skill-name/README.md` exists with development notes
 - [ ] Theological guardrails satisfied — no moralism, no context violations
