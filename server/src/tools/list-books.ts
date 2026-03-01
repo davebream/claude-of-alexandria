@@ -26,7 +26,7 @@ export const ListBooksOutputSchema = {
 };
 
 const AVAILABLE_TOOLS = [
-  'query_morphology - word-level parsing for any book (OT + NT)',
+  'query_morphology - word-level parsing for any book (OT + NT). Use fields parameter for progressive disclosure: "basic" (default) = text, normalized, lemma, pos, parsing; "syntax" adds clause_id, clause_type, strongs; "full" adds gloss, semantic_frame, subject_ref, participant_ref; "lexical" = compact text, lemma, strongs, gloss. Use strongs_filter to filter by Strong\'s number.',
   'query_vocabulary - lemma frequencies + thematic keywords (OT + NT)',
   'query_lemmas - cross-book lemma distribution (OT + NT)',
   'query_discourse_features - Levinsohn discourse markers (NT only)',
