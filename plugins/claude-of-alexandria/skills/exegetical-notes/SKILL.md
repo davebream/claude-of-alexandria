@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
-allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers
+allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants
 ---
 
 # Exegetical Notes
@@ -185,6 +185,8 @@ Include the pos_filter request for NT epistles. Omit it for OT and non-epistolar
 - `LEMMA_DISTRIBUTION:` → data for Section 8 (Tier 2: Lexical connections)
 - `THEME_MATCHES:` → data for Sections 5, 7 (theological themes)
 - `SPEAKER_SUMMARY:` → data for Section 6a (speaker attribution)
+- `SYNTAX_SUMMARY:` → data for Section 2 (clause-level structure, NT only — OpenText.org framework)
+- `VARIANTS_SUMMARY:` → data for Section 8 (textual variants, NT only — edition comparison)
 - `TOOL_RESULTS:` → data for Section 9 (Data Sources)
 
 **Fallback:** If data-retriever spawn fails, fall back to direct MCP tool calls. Note the fallback in Section 9 (Data Sources).
@@ -297,6 +299,7 @@ Step 8: DELIVER OUTPUT
 
 [Levinsohn feature names cited for internal divisions]
 [Masoretic markers cited for OT internal structure]
+[NT clause annotations from SYNTAX_SUMMARY (OpenText.org) when available — clause type and relation data for structural analysis]
 
 ## 3. Propositional Summary
 
@@ -325,6 +328,14 @@ Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology 
 - Use `LEXICON_SUMMARY` data for standard lexical definitions of key lemmas
 - Cross-reference Cherith glosses against standard lexicon entries
 - Note significant differences between Cherith contextual glosses and standard lexical range
+
+**NT gloss tier awareness** (NT passages only):
+- OpenGNT provides two gloss sources: inline glosses (single-scholar contextual translations) and TBESG glosses (concordance-level definitions from `gloss_tbesg` field)
+- When both glosses are available and **diverge**, report both as a "semantic range indicator": "OpenGNT gloss: [X] — TBESG gloss: [Y]"
+- OpenGNT glosses are **single-scholar contextual translations** — do not cite as lexical authority
+- TBESG glosses are concordance-level — more stable but less context-sensitive
+- Louw-Nida domain codes (`louw_nida`, `louw_nida_domain`) group words by semantic domain — use for Section 4 semantic grouping alongside `semantic_groups.yaml`
+- Strong's numbers from OpenGNT enable cross-referencing with `query_lexicon` for standard definitions
 
 ## 5. Exegetical Conclusions
 
@@ -408,6 +419,14 @@ See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
 
 [Parallel passages with significant differences noted]
 
+**Textual Variants** (from `VARIANTS_SUMMARY`, NT only)
+[When VARIANTS_SUMMARY has data, note significant edition disagreements that affect interpretation:]
+- List readings where critical editions diverge on text that impacts exegetical conclusions
+- Format: "[verse]: [variant type] — editions [X,Y] read [A]; editions [Z,W] read [B]"
+- Flag passages with major text-critical issues (e.g., Pericope Adulterae, Comma Johanneum, Mark 16:9-20)
+- Attribution: "OpenGNT Edition Comparison Data (9 editions: Byzantine, NIV Greek, NA27, NA28, Textus Receptus, SBLGNT, Tregelles, Westcott-Hort, Tyndale House GNT)"
+- Note: This is edition comparison data, not a full text-critical apparatus. It shows where editions diverge, not the underlying manuscript evidence.
+
 **Redemptive-historical connection (genre-graduated, mandatory):**
 - **Epistles, narrative, prophecy, apocalyptic:** At least one cross-testament link
   placing the passage in the redemptive-historical arc (Creation → Promise →
@@ -424,9 +443,12 @@ See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
 ## 9. Data Sources
 
 - MorphGNT/SBLGNT (CC BY-SA 3.0) — morphological parsing via query_morphology MCP tool
-- [OR] Open Scriptures Hebrew Bible morphhb (CC BY 4.0) — Hebrew morphology
+- [OR for NT] OpenGNT (CC BY-NC-SA 4.0) — NT morphology with glosses, Strong's, Louw-Nida domains
+- [OR for OT] MACULA Hebrew Linguistic Datasets (CC BY 4.0), Clear Bible, Inc. — OT morphology
 - Levinsohn GNT Discourse Features (dataset 2016; book: Levinsohn 2000) — discourse analysis via query_discourse_features MCP tool
 - [OR] Sefaria / OpenScriptures paragraph markers — Masoretic structure
+- [NT clause annotations: OpenText.org (Porter's SFL framework) via query_syntax MCP tool]
+- [NT edition comparison: OpenGNT 9-edition variant data via query_variants MCP tool]
 - [Vocabulary source: query_vocabulary MCP tool with per-book data]
 - [Semantic groups: semantic_groups.yaml]
 - [Tier 3 sources: full citations as used in Section 6]
@@ -531,6 +553,9 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Entity data ignored for narrative characters | When PEOPLE_SUMMARY has data, use it for entity continuity in Section 8. Characters should be grounded in entity database, not training knowledge alone. |
 | Speaker attribution data ignored in dialogue | When SPEAKER_SUMMARY has data, report speakers with divine flags and quotation types in Section 6a. Speaker transitions are discourse markers. |
 | Cherith glosses cited as lexical authority | OT_ENRICHMENT_SUMMARY glosses (Cherith/Andi Wu) are Tier 3 single-scholar translations. For semantic range arguments, use LEXICON_SUMMARY (query_lexicon). |
+| OpenGNT glosses cited as lexical authority | OpenGNT inline glosses are single-scholar contextual translations. For semantic range arguments, cross-reference with TBESG gloss and query_lexicon. Report divergences as semantic range indicators. |
+| Textual variants ignored for disputed passages | When VARIANTS_SUMMARY shows edition disagreements in the passage, note them in Section 8. Major text-critical issues (Pericope Adulterae, longer ending of Mark, Comma Johanneum) must be flagged. |
+| Clause annotations treated as definitive | SYNTAX_SUMMARY data from OpenText.org is one analytical framework (Porter's SFL). Present as structural evidence, not absolute fact. Data coverage varies by NT book. |
 
 ---
 
