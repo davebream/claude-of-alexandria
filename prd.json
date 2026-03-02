@@ -89,7 +89,7 @@
         "Assertion expects bare model to use ad-hoc confidence language",
         "File committed"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "S-003",
