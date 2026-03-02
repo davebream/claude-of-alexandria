@@ -12,6 +12,9 @@
 #
 # Phase 4 entity integration:
 #   S6: Speaker-unaware dialogue — narrative argument without speaker transition markers
+#
+# Phase 6 — OpenText.org clause annotations:
+#   S8: Clause annotations absent — NT proposition chain without clause-level data
 
 description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
 
@@ -174,3 +177,29 @@ tests:
 
           FAIL if the response cites structured speaker attribution data with
           verse ranges and divine speech markers from a database source.
+
+  # =========================================================================
+  # Scenario 8: Clause Annotations Absent (Phase 6)
+  # Failure: NT proposition chain built without clause-level annotations
+  # Bare model has no access to OpenText.org clause type/relation data
+  # =========================================================================
+  - description: "S8 RED: Clause annotations absent — NT argument flow without clause data"
+    vars:
+      prompt: "Map the argument flow of Romans 8:28-30. Show how the clauses relate to each other and identify the logical chain connecting foreknowledge, predestination, calling, justification, and glorification."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response maps the argument flow without citing clause-level
+          annotation data. Signs:
+          - Identifies the logical chain from training knowledge alone
+          - Does not cite clause types (primary, secondary) or clause relations
+            from a structured annotation source
+          - Does not reference query_syntax, SYNTAX_SUMMARY, OpenText.org, or
+            clause-level semantic role annotations
+          - Clause relationships inferred from reading comprehension rather than
+            structured linguistic data
+
+          FAIL if the response cites structured clause-level annotation data with
+          clause types, clause relations, and attribution to OpenText.org or similar.

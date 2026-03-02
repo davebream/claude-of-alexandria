@@ -15,6 +15,10 @@
 #   S9: Entity data ignored — people in narrative not grounded in entity data
 #   S10: Speaker data ignored — dialogue analysis lacks speaker attribution data
 #   S11: Cherith gloss authority — OT glosses treated as lexical authority
+#
+# Phase 6 — OpenGNT / OpenText.org / Variants integration:
+#   S12: Textual variants ignored — variant-rich passage analyzed without edition comparison
+#   S13: NT gloss tiering absent — OpenGNT glosses treated uniformly without tier distinction
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -269,3 +273,53 @@ tests:
 
           FAIL if the response explicitly distinguishes gloss authority tiers,
           labeling some as single-scholar translations vs. standard lexica.
+
+  # =========================================================================
+  # Scenario 12: Textual Variants Ignored (Phase 6)
+  # Failure: Variant-rich NT passage analyzed without edition comparison data
+  # Bare model has no access to variant apparatus and ignores textual issues
+  # =========================================================================
+  - description: "S12 RED: Variants ignored — NT passage without edition comparison"
+    vars:
+      prompt: "Analyze John 7:53-8:11 (the Pericope Adulterae). Discuss any textual issues with this passage and note which critical editions include or exclude it."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response discusses textual issues from training knowledge alone
+          without citing edition-level comparison data. Signs:
+          - May mention the passage is disputed but does not cite specific edition
+            agreements/disagreements (e.g., NA28, SBLGNT, Byzantine, Tyndale House)
+          - Does not reference variant_type classifications or word-level variant data
+          - Does not cite query_variants or VARIANTS_SUMMARY as a data source
+          - Textual discussion is general ("most scholars agree...") rather than
+            grounded in specific edition comparison evidence
+
+          FAIL if the response cites specific edition comparison data with variant
+          types, word positions, and edition codes from a structured source.
+
+  # =========================================================================
+  # Scenario 13: NT Gloss Tiering Absent (Phase 6)
+  # Failure: NT glosses presented without OpenGNT vs. TBESG tier distinction
+  # Bare model has no framework for distinguishing NT gloss tiers
+  # =========================================================================
+  - description: "S13 RED: NT gloss tiering — glosses without OpenGNT/TBESG distinction"
+    vars:
+      prompt: "Analyze the Greek vocabulary in Romans 3:21-26. Include glosses for key theological terms and discuss how different glossing traditions handle words like δικαιοσύνη and ἱλαστήριον."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response provides glosses without distinguishing between
+          OpenGNT inline glosses and TBESG concordance glosses. Signs:
+          - Presents glosses from training knowledge at uniform confidence
+          - Does not distinguish between "inline contextual gloss" and
+            "concordance-level gloss" as separate tiers
+          - Does not mention OpenGNT, TBESG, or gloss divergence as a
+            semantic range indicator
+          - All NT glosses treated as equally authoritative
+
+          FAIL if the response explicitly distinguishes between inline and
+          concordance glosses, or notes gloss divergence as semantically significant.

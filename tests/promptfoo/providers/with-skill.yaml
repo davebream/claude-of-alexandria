@@ -45,6 +45,8 @@ config:
     - query_events
     - query_person_network
     - query_speakers
+    - query_syntax
+    - query_variants
   mcp:
     servers:
       - name: claude-of-alexandria-mcp

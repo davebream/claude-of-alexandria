@@ -7,6 +7,7 @@
 # GREEN phase — skill correction verification:
 #   S1-S7: Core scenarios (structure, data-grounding, tiers, pericope, OT, verification, scholarly)
 #   S8-S11: Phase 4 scenarios (cross-ref labeling, entity data, speaker data, gloss tiers)
+#   S12-S13: Phase 6 scenarios (textual variants, NT gloss tiering)
 #   ADV1-ADV4: Adversarial tests covering rationalization patterns
 #   STRESS1-STRESS3: Genre stress tests (short letter, wisdom, minimal density)
 
@@ -548,3 +549,62 @@ tests:
         value: "Lexical Analysis"
       - type: icontains
         value: "Verification"
+
+  # =========================================================================
+  # Scenario 12: Textual Variants with Edition Comparison (Phase 6)
+  # Variant-rich passage analyzed with query_variants data
+  # =========================================================================
+  - description: "S12 GREEN: Variants — edition comparison for Pericope Adulterae"
+    vars:
+      prompt: "Generate exegetical notes for John 7:53-8:11 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Textual Variants or similar) for edition comparison data.
+          PASS if:
+          - The response discusses textual variants with specific edition references
+            (e.g., NA28, SBLGNT, Byzantine, Tyndale House, Textus Receptus)
+          - Edition agreements/disagreements are cited with evidence rather than
+            general "most scholars" language
+          - References query_variants, VARIANTS_SUMMARY, or structured variant data
+          - Variant data is attributed to edition comparison, not presented as
+            the agent's own text-critical judgment
+          FAIL if textual issues are discussed only from general training knowledge
+          without citing edition-level comparison data.
+      - type: llm-rubric
+        value: |
+          PASS if variant data is used with appropriate caveats — i.e., presented
+          as "edition comparison data" rather than a full text-critical apparatus.
+          The response should acknowledge that edition comparison shows WHERE editions
+          diverge, not the manuscript evidence for each reading.
+          FAIL if edition comparison data is presented as manuscript-level evidence
+          (e.g., claiming to show papyrus/uncial support for readings).
+      - type: icontains
+        value: "Data Sources"
+
+  # =========================================================================
+  # Scenario 13: NT Gloss Tiering with OpenGNT (Phase 6)
+  # NT glosses distinguished between OpenGNT inline and TBESG concordance
+  # =========================================================================
+  - description: "S13 GREEN: NT gloss tiering — OpenGNT vs TBESG distinction"
+    vars:
+      prompt: "Generate exegetical notes for Romans 3:21-26 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 4 (Lexical Analysis) for NT gloss handling.
+          PASS if:
+          - NT glosses are present with some awareness of different gloss sources
+          - OpenGNT inline glosses and TBESG concordance glosses are distinguished
+            or at least noted as different tiers/sources
+          - Where glosses diverge for the same word, the divergence is flagged as
+            a semantic range indicator rather than silently picking one
+          - Standard lexica (BDAG, LSJ) are recommended for definitive semantic
+            range over any single gloss source
+          FAIL if all NT glosses are presented at uniform authority without
+          distinguishing between inline and concordance glosses.
+          FAIL if gloss divergence is silently resolved without noting it.
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Data Sources"

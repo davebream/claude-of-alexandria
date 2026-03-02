@@ -10,6 +10,9 @@
 #   S5: Mode boundary — argument-flow first, theological question deferred
 #   S6: OT genre detection — narrative structure, not epistle logic
 #   ADV1: User pushback resistance — maintains MCP discipline
+#
+# Phase 6 — OpenText.org clause annotations:
+#   S8: Clause-aware argument flow — NT proposition chain with clause-level data
 
 description: "Argument Flow — GREEN phase (skill + MCP)"
 
@@ -33,7 +36,7 @@ defaultTest:
     - type: javascript
       value: |
         const lower = output.toLowerCase();
-        const expected = ['query_morphology', 'query_discourse_features'];
+        const expected = ['query_morphology', 'query_discourse_features', 'query_syntax'];
         const found = expected.filter(n => lower.includes(n));
         return {
           pass: found.length >= 1,
@@ -219,10 +222,10 @@ tests:
             whether they'd like to proceed with or without MCP data
 
   # =========================================================================
-  # Scenario 6: Speaker-Aware Dialogue Flow (Phase 4)
+  # Scenario 7: Speaker-Aware Dialogue Flow (Phase 4)
   # Speaker transition data used as discourse markers in proposition chain
   # =========================================================================
-  - description: "S6 GREEN: Speaker-aware dialogue — speaker transitions as discourse markers"
+  - description: "S7 GREEN: Speaker-aware dialogue — speaker transitions as discourse markers"
     vars:
       prompt: "Map the argument flow of Genesis 18:22-33 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
     assert:
@@ -236,3 +239,33 @@ tests:
           - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
           FAIL if speakers are identified only from narrative context without
           any reference to structured speaker data.
+
+  # =========================================================================
+  # Scenario 8: Clause-Aware Argument Flow (Phase 6)
+  # Clause-level annotations used as structural evidence in proposition chain
+  # =========================================================================
+  - description: "S8 GREEN: Clause-aware argument flow — clause annotations in proposition chain"
+    vars:
+      prompt: "Use the argument-flow skill for Romans 8:28-30. Show how the clauses relate to each other and identify the logical chain connecting foreknowledge, predestination, calling, justification, and glorification."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses clause-level annotation data as part of the
+          argument flow analysis. Signs of success:
+          - Clause types (primary, secondary) or clause relations cited
+          - References query_syntax, SYNTAX_SUMMARY, OpenText.org, or clause annotations
+          - Clause-level data used as structural evidence in the proposition chain
+          - Clause annotations treated as supplementary evidence alongside
+            discourse features, not as the sole structural authority
+          FAIL if the proposition chain is built entirely from conjunctions and
+          discourse features without any clause-level annotation data.
+      - type: llm-rubric
+        value: |
+          PASS if clause annotations are properly framed as one analytical framework
+          (OpenText.org / Porter's SFL) rather than presented as definitive clause
+          structure. The response should use clause data as evidence, not as the
+          final word on clause relationships.
+          FAIL if OpenText.org annotations are presented as the definitive clause
+          analysis without acknowledging they represent one linguistic framework.
+      - type: icontains
+        value: "Data Sources"
