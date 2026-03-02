@@ -145,6 +145,52 @@ Follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Entries go unde
 
 ---
 
+## Running Promptfoo Evaluations
+
+There are three ways to run evaluations, depending on context:
+
+### 1. MCP tools (preferred in agent sessions)
+
+A promptfoo MCP server is configured in `.mcp.json`. Use MCP tools (`run_evaluation`, `list_evaluations`, `get_evaluation_details`) within Claude Code agent sessions. No `CLAUDECODE=` workaround needed — MCP runs as a separate process.
+
+Config paths are **relative to the project root**:
+
+```
+run_evaluation({ configPath: "tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml" })
+run_evaluation({ configPath: "tests/promptfoo/smoke/promptfooconfig-regression.yaml" })
+```
+
+### 2. npm scripts (terminal or Claude Code fallback)
+
+Run from **repo root**. Root `package.json` delegates to `tests/promptfoo` via `--prefix`.
+
+```bash
+# Terminal — works directly
+npm run eval:exegetical-notes:green
+npm run eval:regression
+
+# Claude Code session (if MCP unavailable) — prefix with CLAUDECODE=
+CLAUDECODE= npm run eval:regression
+CLAUDECODE= npm run eval:all
+```
+
+The `CLAUDECODE=` prefix unsets the environment variable to prevent nested session crashes.
+
+### 3. Direct npx (terminal only)
+
+Run from `tests/promptfoo`. Config paths are relative to that directory.
+
+```bash
+cd tests/promptfoo
+npx promptfoo eval --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
+```
+
+### After running
+
+Capture the eval ID from the output line `Eval complete (ID: eval-XXX-...)` and record it in the Eval History table of `docs/PROGRESS.md`.
+
+---
+
 ## What Gets Committed
 
 **✅ Commit to Git:**

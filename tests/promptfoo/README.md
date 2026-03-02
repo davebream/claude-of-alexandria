@@ -15,12 +15,24 @@ A RED test that *passes* means the failure mode was successfully reproduced. A G
 
 ## Running Tests
 
-### Run via npm scripts
+There are three ways to run evals depending on context. See root `CLAUDE.md` for the full reference.
 
-You can run from **repo root** (recommended) or from `tests/promptfoo`. Root `package.json` delegates to `tests/promptfoo`.
+### MCP tools (preferred in agent sessions)
+
+The project configures a promptfoo MCP server in `.mcp.json`. Within Claude Code agent sessions, use MCP tools directly — no `CLAUDECODE=` workaround needed. Config paths are relative to the **project root**:
+
+```
+run_evaluation({ configPath: "tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml" })
+list_evaluations()
+get_evaluation_details({ id: "eval-XXX-..." })
+```
+
+### npm scripts (terminal)
+
+Run from **repo root**. Root `package.json` delegates to `tests/promptfoo` via `--prefix`.
 
 ```bash
-# From repo root (no cd needed)
+# Individual skill phases
 npm run eval:exegetical-notes
 npm run eval:exegetical-notes:red
 npm run eval:exegetical-notes:green
@@ -33,20 +45,22 @@ npm run eval:exegetical-notes:green
 npm run eval:all:single
 ```
 
-From `tests/promptfoo`, the same single-run command:
+### Direct npx (terminal only)
 
-```bash
-cd tests/promptfoo
-npm run eval:all:single
-```
-
-This merges all RED and GREEN configs into `promptfooconfig-all.yaml` (generated), then runs one `promptfoo eval`. Each test still uses its correct provider (without-skill for RED, with-skill for GREEN); results are collected in one report.
-
-All eval scripts use `npx promptfoo eval` with `--no-cache`. To run promptfoo directly from `tests/promptfoo`:
+Run from `tests/promptfoo`. Config paths are relative to this directory.
 
 ```bash
 cd tests/promptfoo
 npx promptfoo eval --no-cache -c skills/exegetical-notes/promptfooconfig-green.yaml
+```
+
+### Running from Claude Code sessions
+
+When running via Bash (not MCP), prefix with `CLAUDECODE=` to prevent nested session crashes:
+
+```bash
+CLAUDECODE= npm run eval:regression
+CLAUDECODE= npm run eval:all
 ```
 
 ## Directory Structure

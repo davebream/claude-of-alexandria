@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "promptfoo": {
+      "command": "node",
+      "args": ["tests/promptfoo/node_modules/.bin/promptfoo", "mcp", "--transport", "stdio"]
+    }
+  }
+}
