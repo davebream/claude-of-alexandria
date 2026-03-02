@@ -40,3 +40,29 @@ https://github.com/Clear-Bible/speaker-quotations
 - FCBH (Faith Comes By Hearing) consensus data from trained annotators
 - Christophany interpretation note: Angel-of-the-LORD passages attributed to Jesus reflect FCBH theological interpretation, not universal scholarly consensus
 - Prophetic mediated speech note: prophetic oracles attributed to the prophet as speaker, not to God directly
+
+## OpenGNT / OGNT v3 (CC BY-SA 4.0)
+
+https://github.com/eliranwong/OpenGNT
+
+- Eliran Wong, compiled eclectic Greek NT text with morphology
+- RMAC parsing codes (Robinson's Morphological Analysis Codes)
+- Louw-Nida semantic domain classifications
+- OGNT glosses (single-scholar context-sensitive translations)
+- Levinsohn discourse boundary markers (clause IDs, speech markers)
+- TANTT edition comparison data (9 critical editions)
+
+## STEP Bible / Tyndale House (CC BY 4.0)
+
+https://github.com/STEPBible/STEPBible-Data
+
+- TBESG glosses (context-insensitive English translations)
+- Used as supplementary gloss layer alongside OGNT glosses
+
+## Robinson RMAC Morphological Codes (CC BY-SA 3.0)
+
+https://github.com/morphgnt/crosswire-morphgnt
+
+- CrossWire Bible Society
+- Robinson's Morphological Analysis Code system for Greek morphology
+- Covers tense, voice, mood, person, number, case, gender

@@ -31,10 +31,22 @@ echo "Importing OT quotes..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/ot-quotes.sql" --remote
 echo "  OT quotes imported."
 
-# NT Morphology in batches (numbered chunks from original extraction)
-echo "Importing NT morphology..."
+# Phase 5: Delete old NT morphology (MorphGNT), then seed OGNT v3
+echo "Deleting old NT morphology data..."
+# Batched delete to stay within D1 row-write limits
+for i in $(seq 1 30); do
+  result=$(npx wrangler d1 execute "$DB_NAME" --command="DELETE FROM morphology WHERE testament = 'nt' LIMIT 5000" --remote 2>&1)
+  echo "  Delete batch $i..."
+  # Stop when no more rows to delete (changes = 0)
+  if echo "$result" | grep -q '"changes": 0'; then
+    echo "  No more NT morphology rows to delete."
+    break
+  fi
+done
+
+echo "Importing NT morphology (OGNT v3)..."
 nt_count=0
-for chunk in "$SEED_DIR"/morphology-[0-9]*.sql; do
+for chunk in "$SEED_DIR"/morphology-nt-*.sql; do
   [ -f "$chunk" ] || continue
   chunk_name=$(basename "$chunk")
   echo "  Importing $chunk_name..."
@@ -120,5 +132,28 @@ echo "Importing quotations..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/quotations.sql" --remote
 echo "  Quotations imported."
 
+# Phase 5: Textual variants and discourse boundaries
+echo "Importing textual variants..."
+var_count=0
+for chunk in "$SEED_DIR"/variants-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "  Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+  var_count=$((var_count + 1))
+done
+echo "  Textual variants: $var_count batches imported."
+
+echo "Importing discourse boundaries..."
+disc_count=0
+for chunk in "$SEED_DIR"/discourse-boundaries-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "  Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+  disc_count=$((disc_count + 1))
+done
+echo "  Discourse boundaries: $disc_count batches imported."
+
 echo ""
-echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books. ==="
+echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books, Variants: $var_count, Discourse: $disc_count ==="
