@@ -1,0 +1,33 @@
+# Smoke test for the SDK bare provider.
+# Tests isolation: no CLAUDE.md, no plugins, no MCP, no tools.
+#
+# Run: npm run eval -- --no-cache -c smoke/promptfooconfig-cli-provider.yaml
+
+description: "Smoke test — sdk-bare provider isolation"
+
+providers:
+  - file://../providers/sdk-bare.mjs
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider: file://../providers/sdk-grader.mjs
+
+tests:
+  # Test 1: Basic response — does the SDK work at all?
+  - description: "Basic response — SDK produces output"
+    vars:
+      prompt: "What is 2 + 2? Answer with just the number."
+    assert:
+      - type: contains
+        value: "4"
+
+  # Test 2: Isolation — no CLAUDE.md leaking
+  - description: "Isolation — no project context leaking"
+    vars:
+      prompt: "Do you have any special instructions from a CLAUDE.md file? Answer yes or no."
+    assert:
+      - type: icontains
+        value: "no"

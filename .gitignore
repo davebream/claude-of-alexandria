@@ -50,6 +50,11 @@ ENV/
 # Environment variables
 .env
 .env.local
+.env.backup*
+.env.oauth
+
+# Ephemeral text dumps (root-level only)
+/*.txt
 
 # Build outputs (if we add build steps)
 dist/
