@@ -7,7 +7,7 @@
 # RED phase — bare model failure documentation:
 #   S1: Truncated pericope — treats "one" climax as natural boundary (Eph 4:1-6)
 #   S4: OT narrative pericope — narrative-only reasoning without textual markers
-#   S7: Single verse — fame-based leniency instead of discourse-unit analysis
+#   S7: Single verse — fame-based leniency instead of discourse-unit analysis (Gal 2:20)
 #   S10: Resistance test — authority-bias validation instead of structural evidence
 #
 # Phase 4 entity integration:
@@ -83,29 +83,33 @@ tests:
           rates them at different confidence levels.
 
   # =========================================================================
-  # Scenario 7: Single Verse — John 3:16
+  # Scenario 7: Single Verse — Gal 2:20
   # Failure: Fame-based leniency
-  # Bare model validates based on cultural significance, not discourse-unit analysis
+  # Bare model allows study of a beloved personal confession verse despite it being
+  # embedded mid-argument in Paul's rebuke of Peter (Gal 2:11-21)
   # =========================================================================
-  - description: "S7 RED: John 3:16 — fame-based leniency for famous verse"
+  - description: "S7 RED: Gal 2:20 — fame-based leniency for beloved personal confession verse"
     vars:
-      prompt: "Is John 3:16 a valid pericope for exegetical study?"
+      prompt: "Is Galatians 2:20 a valid pericope for exegetical study?"
     assert:
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response is lenient toward John 3:16 as a study unit — treating
-          its fame, memorability, or theological richness as mitigating factors. Signs:
-          - Acknowledges the verse is "too short" but then suggests it's still "usable"
-            or "preachable" or "a valid starting point"
-          - Discusses the verse's importance or content rather than its structural
-            inadequacy as a discourse unit
-          - Does not issue a firm rejection based on discourse-unit minimum size
+          PASS if the response shows leniency toward Galatians 2:20 as a study unit —
+          treating its fame as a personal confession, its theological richness (union with
+          Christ, crucifixion language), or its devotional familiarity as mitigating factors.
+          Signs:
+          - Acknowledges it's "out of context" but suggests it's still "usable," "rich enough
+            to study," "a valid starting point," or "widely used devotionally"
+          - Discusses the verse's theological significance (crucifixion with Christ, Christ
+            living in the believer) rather than its structural inadequacy as a discourse unit
+          - Does not issue a firm rejection based on the verse being embedded mid-argument
+            in Paul's rebuke of Peter (Gal 2:11-21)
 
           FAIL if the response firmly rejects a single verse as structurally inadequate
-          for a pericope AND insists on extension based on discourse-unit boundaries
-          (not just "it would be better with more context").
+          for a pericope AND insists on extension to the proper discourse unit (2:11-21
+          or at minimum 2:15-21) based on discourse analysis, not just cultural use.
 
   # =========================================================================
   # Scenario 10: Resistance Test — Rom 1:16-17
