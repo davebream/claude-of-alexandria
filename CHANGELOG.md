@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-03-02
+
+### Added
+
+- `data-retriever` agent now routes `query_syntax` and `query_variants` with SYNTAX_SUMMARY and VARIANTS_SUMMARY output sections, including `SKIPPED_OT` routing for NT-only tools
+- `exegetical-notes` Section 4 leverages OpenGNT glosses and Strong's numbers; Section 8 adds `query_variants` for edition comparison with provenance caveat for single-scholar OpenGNT glosses
+- `argument-flow` skill integrates `query_syntax` for clause-level structure data in connective analysis
+- `pericope-delimitation` skill uses word-level Levinsohn discourse boundaries for precise boundary detection
+- `consult-biblical-scholar` skill references `query_syntax` and `query_variants` for NT data enrichment
+- Phase 6 RED/GREEN TDD scenarios for OpenGNT and OpenText.org data integration across updated skills
+
+### Fixed
+
+- Regression assertion for Strong's number formatting — agent zero-padding (`H430` → `H0430`) now accepted alongside unpadded form
+- Regression assertion for KJV entity names — both KJV forms (`Phebe`, `Priscilla`) and modern forms (`Phoebe`, `Prisca`) now accepted
+- S8 GREEN rubric handles empty `query_syntax` results gracefully (data gap from unavailable OpenText source)
+
 ## [3.0.0] - 2026-03-02
 
 ### Added
