@@ -87,7 +87,7 @@ export async function queryDiscourseFeatures(args: DiscourseInput): Promise<Call
     params.push(...requestedFeatures);
   }
 
-  sql += ' ORDER BY chapter, verse';
+  sql += ' ORDER BY chapter, verse LIMIT 5000';
 
   const rows = await query(sql, params);
 
@@ -153,8 +153,40 @@ export async function queryDiscourseFeatures(args: DiscourseInput): Promise<Call
     result.word_level_summary = { total: boundaries.length, by_boundary_type: byBoundaryType };
   }
 
+  // CHARACTER_LIMIT guard
+  const CHARACTER_LIMIT = 25_000;
+  let json = JSON.stringify(result);
+  if (json.length > CHARACTER_LIMIT) {
+    // Truncate word_level_boundaries first (larger payload)
+    if (result.word_level_boundaries && Array.isArray(result.word_level_boundaries)) {
+      const bounds = result.word_level_boundaries as unknown[];
+      const truncated: unknown[] = [];
+      let approxSize = json.length - JSON.stringify(bounds).length + 100;
+      for (const b of bounds) {
+        const bJson = JSON.stringify(b);
+        if (approxSize + bJson.length + 1 > CHARACTER_LIMIT) break;
+        approxSize += bJson.length + 1;
+        truncated.push(b);
+      }
+      result.word_level_boundaries = truncated;
+      (result.word_level_summary as Record<string, unknown>).truncated = true;
+      (result.word_level_summary as Record<string, unknown>).returned = truncated.length;
+      json = JSON.stringify(result);
+    }
+    // If still over limit, truncate features
+    if (json.length > CHARACTER_LIMIT && features) {
+      (result.summary as Record<string, unknown>).truncated = true;
+      result.features = {};
+      for (const [feat, items] of Object.entries(features)) {
+        const arr = items as unknown[];
+        (result.features as Record<string, unknown>)[feat] = arr.slice(0, 50);
+      }
+      json = JSON.stringify(result);
+    }
+  }
+
   return {
-    content: [{ type: 'text', text: JSON.stringify(result) }],
+    content: [{ type: 'text', text: json }],
     structuredContent: result,
   };
 }

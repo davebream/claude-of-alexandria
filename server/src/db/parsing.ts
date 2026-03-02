@@ -34,7 +34,7 @@ const OT_VAL_EXPAND: Record<string, string> = {
 // ─── RMAC expansion maps (Robinson Morphological Analysis Codes) ────────────
 const RMAC_TENSE: Record<string, string> = {
   P: 'present', I: 'imperfect', F: 'future', A: 'aorist',
-  X: 'perfect', Y: 'pluperfect',
+  X: 'perfect', Y: 'pluperfect', R: 'perfect',
 };
 const RMAC_VOICE: Record<string, string> = {
   A: 'active', M: 'middle', P: 'passive', E: 'middle/passive',
@@ -85,15 +85,20 @@ function expandRMACParsing(rmac: string): Record<string, string> {
       out['voice'] = RMAC_VOICE[morphPart[1]] ?? morphPart[1];
       out['mood'] = RMAC_MOOD[morphPart[2]] ?? morphPart[2];
     }
-    // Person-number segment (may be absent for infinitives/participles)
-    if (parts.length >= 3 && parts[2].length >= 2) {
-      out['person'] = RMAC_PERSON[parts[2][0]] ?? parts[2][0];
-      out['number'] = RMAC_NUMBER[parts[2][1]] ?? parts[2][1];
-    }
-    // Participle case/gender: V-PAP-NSM → parts[2] = NSM
-    if (parts.length >= 3 && parts[2].length >= 3) {
-      out['case'] = RMAC_CASE[parts[2][1]] ?? parts[2][1];
-      out['gender'] = RMAC_GENDER[parts[2][2]] ?? parts[2][2];
+    // Third segment depends on mood
+    if (parts.length >= 3) {
+      const seg = parts[2];
+      const mood = RMAC_MOOD[morphPart[2]];
+      if (mood === 'participle') {
+        // Participle: case-number-gender (e.g., V-PAP-NSM → N=nominative, S=singular, M=masculine)
+        if (seg.length >= 1) out['case'] = RMAC_CASE[seg[0]] ?? seg[0];
+        if (seg.length >= 2) out['number'] = RMAC_NUMBER[seg[1]] ?? seg[1];
+        if (seg.length >= 3) out['gender'] = RMAC_GENDER[seg[2]] ?? seg[2];
+      } else if (mood !== 'infinitive') {
+        // Finite verb: person-number (e.g., V-PAI-3S → 3=3rd, S=singular)
+        if (seg.length >= 1) out['person'] = RMAC_PERSON[seg[0]] ?? seg[0];
+        if (seg.length >= 2) out['number'] = RMAC_NUMBER[seg[1]] ?? seg[1];
+      }
     }
   } else if (posCode === 'N' || posCode === 'A' || posCode === 'R' ||
              posCode === 'C' || posCode === 'D' || posCode === 'T' ||

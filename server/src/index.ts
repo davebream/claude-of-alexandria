@@ -119,7 +119,7 @@ Args:
 
 Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing, ...enrichment fields}], summary: {total_words, by_pos} }
 
-Note: OT enrichment fields (gloss, strongs, clause_type, semantic_frame, subject_ref, participant_ref) are populated from Macula Hebrew data. NT enrichment returns null until Phase 5. Null-only enrichment fields are omitted from the response.
+Note: OT enrichment fields (gloss, strongs, clause_type, semantic_frame, subject_ref, participant_ref) are populated from Macula Hebrew data. NT enrichment fields (gloss, strongs, gloss_tbesg, louw_nida, louw_nida_domain) are populated from OpenGNT data. Null-only enrichment fields are omitted from the response.
 
 Examples:
   - Basic morphology: book="John", range="1:1-1:5"

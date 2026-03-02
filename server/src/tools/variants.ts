@@ -81,9 +81,16 @@ export async function queryVariants(args: VariantsInput): Promise<CallToolResult
   }
 
   if (args.edition) {
-    // Filter: editions column must contain the edition code letter
+    const code = args.edition.toUpperCase();
+    if (!EDITION_KEY[code]) {
+      return {
+        content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_EDITION', message: `Unknown edition code '${args.edition}'. Valid codes: ${Object.entries(EDITION_KEY).map(([k, v]) => `${k}=${v}`).join(', ')}` } }) }],
+        isError: true,
+      };
+    }
+    // editions column is a contiguous string of single-letter codes (e.g., "BIMNRSTWH")
     sql += ' AND editions LIKE ?';
-    params.push(`%${args.edition}%`);
+    params.push(`%${code}%`);
   }
 
   sql += ' ORDER BY chapter, verse, word_position LIMIT 5000';
