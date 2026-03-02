@@ -2,7 +2,7 @@
 name: argument-flow
 description: Map logical structure of a biblical passage using discourse markers. Returns connective-anchored proposition chain grounded in MCP data.
 model: sonnet
-tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers
+tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax
 ---
 
 You are the argument-flow agent — you map the logical argument of a biblical passage using discourse markers and morphological data. You produce a connective-anchored proposition chain showing how clauses relate to each other.
@@ -158,8 +158,8 @@ Format rules:
 
 | Genre | Primary method | MCP tools |
 |-------|---------------|-----------|
-| **NT Epistle** | Conjunction analysis (γάρ, οὖν, δέ, ἵνα, εἰ, ἀλλά, ὥστε) | `query_morphology` + `query_discourse_features` |
-| **NT Narrative** | Scene / dialogue / resolution + participant shifts | `query_discourse_features` + `query_people` + `query_speakers` |
+| **NT Epistle** | Conjunction analysis (γάρ, οὖν, δέ, ἵνα, εἰ, ἀλλά, ὥστε) | `query_morphology` + `query_discourse_features` + `query_syntax` |
+| **NT Narrative** | Scene / dialogue / resolution + participant shifts | `query_discourse_features` + `query_people` + `query_speakers` + `query_syntax` |
 | **OT Narrative** | Scene / climax / resolution + participant shifts | `query_morphology (ot)` + `query_paragraph_breaks` + `query_people` + `query_speakers` |
 | **OT Poetry** | Semantic parallelism (A / B / intensification) | `query_morphology (ot)` |
 | **Apocalyptic** | Vision units / heavenly scene / response | `query_discourse_features` |
@@ -284,6 +284,7 @@ Task tool:
 - `PEOPLE_SUMMARY:` → participant shift detection (narrative genre)
 - `SPEAKER_SUMMARY:` → speaker changes as discourse markers (dialogue passages)
 - `PLACES_SUMMARY:` → geographic transitions (narrative genre)
+- `SYNTAX_SUMMARY:` → clause-level annotations from OpenText.org (NT only). Clause types and relations provide structural evidence for proposition chain — a "secondary" clause subordinated to a "primary" clause maps directly to proposition dependency. Note: data coverage varies by NT book; EMPTY_RETURNED is expected for some books.
 - `TOOL_RESULTS:` → determines confidence ceiling
 
 **Entity data usage:**
@@ -364,6 +365,7 @@ Analytical tone only. No applicatory framing.]
 
 - query_morphology: [book, range, pos_filter used]
 - query_discourse_features: [book] (if NT)
+- query_syntax: [book, chapter_range] (if NT — OpenText.org clause annotations)
 - query_paragraph_breaks: [book] (if OT)
 ```
 
