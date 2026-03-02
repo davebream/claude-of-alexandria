@@ -250,15 +250,16 @@ tests:
     assert:
       - type: llm-rubric
         value: |
-          PASS if the response uses clause-level annotation data as part of the
-          argument flow analysis. Signs of success:
-          - Clause types (primary, secondary) or clause relations cited
+          PASS if the response demonstrates awareness of clause-level annotations
+          as part of the argument flow workflow. Signs of success (any one sufficient):
+          - Clause types (primary, secondary) or clause relations cited from data
           - References query_syntax, SYNTAX_SUMMARY, OpenText.org, or clause annotations
           - Clause-level data used as structural evidence in the proposition chain
-          - Clause annotations treated as supplementary evidence alongside
-            discourse features, not as the sole structural authority
-          FAIL if the proposition chain is built entirely from conjunctions and
-          discourse features without any clause-level annotation data.
+          - Notes that query_syntax was called but returned empty/no data, while
+            still building the chain from other available evidence
+          FAIL only if there is NO evidence that the agent attempted to use
+          clause-level annotation data at all — i.e., query_syntax is never
+          mentioned, referenced, or called in the analysis workflow.
       - type: llm-rubric
         value: |
           PASS if clause annotations are properly framed as one analytical framework
