@@ -37,7 +37,7 @@ tests:
   # =========================================================================
   - description: "S1 RED: Phil 2:1-4 — thematic summary instead of clause chain"
     vars:
-      prompt: "Map the logical structure of Philippians 2:1-4. Show how the clauses connect through conjunctions."
+      prompt: "Map the argument of Philippians 2:1-4. What is Paul driving at in this passage?"
     assert:
       - type: llm-rubric
         value: |
