@@ -93,7 +93,7 @@ tests:
   # =========================================================================
   - description: "S3 RED: Tier labeling — uniform confidence without systematic framework"
     vars:
-      prompt: "Analyze Philippians 1:1-11. For your interpretive claims, classify them by confidence level: linguistic evidence, discourse evidence, scholarly consensus, and your own assessment."
+      prompt: "Analyze Philippians 1:1-11 for a Bible study group. Walk through the key interpretive claims."
     assert:
       - type: llm-rubric
         value: |
