@@ -1,0 +1,478 @@
+{
+  "version": 1,
+  "projectName": "Fix 19 Failing Tests",
+  "branchName": "feat/fix-19-failing-tests",
+  "sourcePlan": "docs/plans/2026-03-03-fix-19-failing-tests.md",
+  "testCommand": "./run-phase-tests.sh",
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Batch 1 — Fix RED Prompts",
+      "sourceDesign": "docs/reviews/2026-03-03-fix-19-failing-tests-plan-review.md",
+      "dependsOn": []
+    },
+    {
+      "id": "P2",
+      "name": "Batch 2 — Fix MCP for Sub-Agents",
+      "sourceDesign": "docs/reviews/2026-03-03-fix-19-failing-tests-plan-review.md",
+      "dependsOn": [
+        "P1"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Batch 3 — Budget and Truncation",
+      "sourceDesign": "docs/reviews/2026-03-03-fix-19-failing-tests-plan-review.md",
+      "dependsOn": [
+        "P2"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Batch 4 — Assertion Precision",
+      "sourceDesign": "docs/reviews/2026-03-03-fix-19-failing-tests-plan-review.md",
+      "dependsOn": [
+        "P3"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Final Verification",
+      "sourceDesign": "docs/reviews/2026-03-03-fix-19-failing-tests-plan-review.md",
+      "dependsOn": [
+        "P4"
+      ]
+    }
+  ],
+  "stories": [
+    {
+      "id": "S-001",
+      "phase": "P1",
+      "feature": null,
+      "title": "Fix S1 RED argument-flow prompt",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Find S1 RED test case in tests/promptfoo/skills/argument-flow/promptfooconfig-red.yaml",
+        "Replace prompt with naive user question: 'Map the argument of Philippians 2:1-4. What is Paul driving at in this passage?'",
+        "Verify the existing assertion still makes sense with the new prompt",
+        "Commit with message: test(red): fix S1 argument-flow prompt — remove prescriptive conjunction instruction"
+      ],
+      "files": [
+        "tests/promptfoo/skills/argument-flow/promptfooconfig-red.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S1 RED prompt no longer prescribes conjunctions or clause-chain method",
+        "Assertion expects thematic summary (PASS) not formal clause chain (FAIL)",
+        "File committed"
+      ],
+      "passes": true
+    },
+    {
+      "id": "S-002",
+      "phase": "P1",
+      "feature": null,
+      "title": "Fix S3 RED exegetical-notes prompt",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Find S3 RED test case in tests/promptfoo/skills/exegetical-notes/promptfooconfig-red.yaml",
+        "Replace prompt with generic: 'Analyze Philippians 1:1-11 for a Bible study group. Walk through the key interpretive claims.'",
+        "Verify assertion still expects ad-hoc inconsistent confidence language",
+        "Commit with message: test(red): fix S3 exegetical-notes prompt — remove explicit tier category names"
+      ],
+      "files": [
+        "tests/promptfoo/skills/exegetical-notes/promptfooconfig-red.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S3 RED prompt no longer names the four tiers verbatim",
+        "Assertion expects bare model to use ad-hoc confidence language",
+        "File committed"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-003",
+      "phase": "P1",
+      "feature": null,
+      "title": "Fix S7 RED pericope-delimitation prompt",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run pilot check for Romans 3:23 against bare model (without-skill provider) to confirm fame-based leniency",
+        "If Romans 3:23 shows leniency: replace S7 RED test with Romans 3:23 question and updated assertion",
+        "If Romans 3:23 doesn't show leniency: try Galatians 2:20 as second candidate",
+        "If Galatians 2:20 also fails to demonstrate leniency: stop and escalate; do not continue autonomously",
+        "Only modify promptfooconfig-red.yaml (do NOT touch promptfooconfig-green.yaml)",
+        "Commit with message: test(red): fix S7 pericope-delimitation — replace John 3:16 with Romans 3:23"
+      ],
+      "files": [
+        "tests/promptfoo/skills/pericope-delimitation/promptfooconfig-red.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S7 RED uses a verse where bare model shows fame-based leniency",
+        "Assertion reflects the new verse's structural context",
+        "promptfooconfig-green.yaml is unchanged",
+        "File committed"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-004",
+      "phase": "P1",
+      "feature": null,
+      "title": "Fix S10 RED pericope-delimitation grader error",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Re-run S10 in isolation to check if the JSON parse error is transient",
+        "If still failing: add JSON format instruction at end of llm-rubric value: 'Respond with ONLY valid JSON on a single line: {\"pass\": true, \"reason\": \"one sentence\"} or {\"pass\": false, \"reason\": \"one sentence\"}. No other text.'",
+        "Commit only if changed: test(red): fix S10 grader JSON format for pericope-delimitation rubric"
+      ],
+      "files": [
+        "tests/promptfoo/skills/pericope-delimitation/promptfooconfig-red.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S10 RED no longer produces 'Could not extract JSON from llm-rubric response' error",
+        "If error was transient no code change needed; record observation"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-005",
+      "phase": "P1",
+      "feature": null,
+      "title": "Fix S6 RED consult-biblical-scholar — authentein lexical debate",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Find S6 RED in tests/promptfoo/skills/consult-biblical-scholar/promptfooconfig-red.yaml",
+        "Replace with authentein question: 'What does authentein mean in 1 Timothy 2:12? I need to understand this word for a sermon.'",
+        "Add assertion that PASSES when bare model picks a lexical winner without tier-labeling confidence levels",
+        "Include JSON format instruction at end of rubric value",
+        "Commit with message: test(red): replace S6 monogenes with authentein lexical debate — clearer failure mode"
+      ],
+      "files": [
+        "tests/promptfoo/skills/consult-biblical-scholar/promptfooconfig-red.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S6 RED uses authentein question with updated assertion",
+        "Assertion PASSES when bare model picks a lexical winner without proper tier labeling",
+        "JSON format instruction included in rubric",
+        "File committed"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-006",
+      "phase": "P1",
+      "feature": null,
+      "title": "Regenerate merged config after Batch 1",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run: cd tests/promptfoo && node scripts/merge-all-configs.js",
+        "Verify test count is approximately 112 (within range 109-115)"
+      ],
+      "files": [
+        "tests/promptfoo/promptfooconfig-all.yaml"
+      ],
+      "acceptanceCriteria": [
+        "Merged config regenerated successfully",
+        "Test count is approximately 112",
+        "No eval run needed at this stage"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-007",
+      "phase": "P2",
+      "feature": null,
+      "title": "Backup .mcp.json before modifying",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run: cp .mcp.json .mcp.json.bak",
+        "Verify .mcp.json.bak exists at repo root"
+      ],
+      "files": [
+        ".mcp.json"
+      ],
+      "acceptanceCriteria": [
+        ".mcp.json.bak exists at repo root",
+        "No changes committed yet"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-008",
+      "phase": "P2",
+      "feature": null,
+      "title": "Pre-flight verification — confirm sub-agent MCP error pattern",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run pericope-delimitation S1 GREEN test in isolation",
+        "Query DB for full response to identify error pattern",
+        "Check for Pattern A (tool not found/not connected), Pattern B (connection refused/timeout), or Pattern C (Task tool unavailable)",
+        "Verify MCP server reachability via curl to https://coa.davebream.com/mcp with tools/list method",
+        "If Pattern A and server reachable: record confirmation and proceed to S-009",
+        "If Pattern B or C or no pattern matches: stop and escalate with full DB output"
+      ],
+      "files": [],
+      "acceptanceCriteria": [
+        "Sub-agent error confirmed as Pattern A (tool naming mismatch)",
+        "MCP server at https://coa.davebream.com/mcp is reachable and returns tool list",
+        "Ready to proceed with .mcp.json edit"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-009",
+      "phase": "P2",
+      "feature": null,
+      "title": "Edit .mcp.json to add claude-of-alexandria MCP server for sub-agents",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Edit .mcp.json to add entry with key 'plugin_claude-of-alexandria_claude-of-alexandria-mcp' of type http pointing to https://coa.davebream.com/mcp",
+        "Keep existing promptfoo server entry intact",
+        "Commit with message: fix(mcp): add claude-of-alexandria MCP server to .mcp.json for sub-agent access"
+      ],
+      "files": [
+        ".mcp.json"
+      ],
+      "acceptanceCriteria": [
+        ".mcp.json contains plugin_claude-of-alexandria_claude-of-alexandria-mcp entry with type http",
+        "URL is https://coa.davebream.com/mcp",
+        "Existing promptfoo server entry preserved",
+        "File committed"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-010",
+      "phase": "P2",
+      "feature": null,
+      "title": "Verify sub-agent MCP access with targeted re-run of 9 failing GREEN tests",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run argument-flow S4 GREEN test",
+        "Run consult-biblical-scholar S3, S4, S5, S7, S8 GREEN tests",
+        "Run pericope-delimitation S1, S2, S4 GREEN tests",
+        "Check agent output for mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__* tool calls",
+        "If any still fail: check agent output for tool name mismatch and report"
+      ],
+      "files": [],
+      "acceptanceCriteria": [
+        "All 9 previously-failing MCP tests now pass",
+        "Agent output shows correct MCP tool calls with plugin prefix"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-011",
+      "phase": "P3",
+      "feature": null,
+      "title": "Increase budget cap for exegetical-notes S4",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run: grep -n 'max_budget_usd|maxBudgetUsd' tests/promptfoo/providers/sdk-with-skill.mjs to find both locations",
+        "Update constructor default max_budget_usd from 2.00 to 3.00",
+        "Update buildOptions() fallback maxBudgetUsd from 0.50 to 3.00",
+        "Add comment '// Keep constructor default and this fallback in sync' near the fallback",
+        "Commit with message: fix(provider): increase maxBudgetUsd to 3.00 for exegetical-notes cost headroom",
+        "Re-run S4 exegetical-notes GREEN test to verify no error_max_budget_usd"
+      ],
+      "files": [
+        "tests/promptfoo/providers/sdk-with-skill.mjs"
+      ],
+      "acceptanceCriteria": [
+        "Both max_budget_usd locations updated to 3.00",
+        "S4 GREEN passes without error_max_budget_usd",
+        "File committed"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-012",
+      "phase": "P3",
+      "feature": null,
+      "title": "Re-run ADV3 after budget increase and assess truncation",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run exegetical-notes ADV3 GREEN test",
+        "Query DB for success status and first 500 chars of response",
+        "If success=1: record as fixed, story passes",
+        "If success=0 AND response contains 'Continuing from cut-off point': proceed to S-013",
+        "If success=0 AND different error: stop and escalate (do not proceed to S-013)"
+      ],
+      "files": [],
+      "acceptanceCriteria": [
+        "ADV3 GREEN result checked after budget increase",
+        "Outcome clearly determined: fixed OR needs turn-limit investigation OR different failure"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-013",
+      "phase": "P3",
+      "feature": null,
+      "title": "Investigate ADV3 truncation — increase max_turns if needed",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Only execute if S-012 failed with 'Continuing from cut-off point' in response",
+        "Increase max_turns from 30 to 50 in sdk-with-skill.mjs constructor",
+        "Re-run ADV3 GREEN test",
+        "If passes: commit with message: fix(provider): increase max_turns to 50 for exegetical-notes long outputs",
+        "If still failing: stop and escalate — do not add more workarounds"
+      ],
+      "files": [
+        "tests/promptfoo/providers/sdk-with-skill.mjs"
+      ],
+      "acceptanceCriteria": [
+        "ADV3 GREEN passes with full document including Section 2, OR escalated with clear explanation",
+        "No further workarounds added if max_turns increase doesn't resolve it"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-014",
+      "phase": "P4",
+      "feature": null,
+      "title": "Investigate exegetical-notes S2 verse refs vs chapter counts",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Re-run S2 exegetical-notes GREEN test after Batch 2 MCP fix",
+        "Check DB for tool call evidence (was query_vocabulary called with new MCP?)",
+        "If passing after MCP fix: story done",
+        "If still failing: update assertion to accept chapter-level counts as valid alternative to verse refs",
+        "Commit if changed: test(green): relax S2 exegetical-notes frequency count assertion"
+      ],
+      "files": [
+        "tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml"
+      ],
+      "acceptanceCriteria": [
+        "S2 GREEN passes after MCP fix or assertion relaxation",
+        "If assertion changed: accepts both verse-level refs and chapter-level counts with numerical data"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-015",
+      "phase": "P4",
+      "feature": null,
+      "title": "Fix biblical-segmentation S22 Masoretic fabrication",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Read biblical-segmentation SKILL.md and check for explicit 'absent marker' transparency rule",
+        "If rule already exists: re-run S22 after Batch 2 MCP fix (may resolve without skill edit)",
+        "If rule is absent or only implied: add Masoretic Transparency Rule to SKILL.md requiring explicit 'No Masoretic marker at X:Y' statements when absent",
+        "Re-run S22 GREEN test",
+        "Commit skill change if made: fix(skill): strengthen Masoretic transparency rule in biblical-segmentation"
+      ],
+      "files": [
+        "plugins/claude-of-alexandria/skills/biblical-segmentation/SKILL.md"
+      ],
+      "acceptanceCriteria": [
+        "Skill explicitly requires stating 'No Masoretic marker at X:Y' when no marker exists",
+        "S22 GREEN passes without fabricated universal Masoretic coverage",
+        "Agent cites specific markers with verse refs AND notes absent markers explicitly"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-016",
+      "phase": "P4",
+      "feature": null,
+      "title": "Fix pericope-delimitation S4 and S7 after Batch 2",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Re-run pericope-delimitation S4 and S7 GREEN tests after Batch 2 MCP fix",
+        "If S4 passes: done for S4",
+        "If S7 still fails (EXTEND keyword missing): check agent verdict format in pericope-delimitation.md",
+        "If agent doesn't use exact EXTEND keyword: add Output Format Enforcement section to agent file",
+        "Commit if changed: fix(agent): enforce EXTEND/VALID/CONTRACT keyword in pericope-delimitation verdict"
+      ],
+      "files": [
+        "plugins/claude-of-alexandria/agents/pericope-delimitation.md"
+      ],
+      "acceptanceCriteria": [
+        "S4 GREEN passes with query_paragraph_breaks attribution visible in output",
+        "S7 GREEN passes with exact EXTEND keyword on the verdict line",
+        "Agent Verdict line is the first line of assessment output"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-017",
+      "phase": "P5",
+      "feature": null,
+      "title": "Full suite re-run and pass rate verification",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Run: cd tests/promptfoo && node scripts/merge-all-configs.js",
+        "Run: CLAUDECODE= npx promptfoo eval --no-cache -c promptfooconfig-all.yaml",
+        "Capture eval ID from output line 'Eval complete (ID: eval-XXX-...)'",
+        "Check pass count: target is at least 106 out of 112 (95% pass rate)",
+        "Investigate any new failures before claiming done"
+      ],
+      "files": [
+        "tests/promptfoo/promptfooconfig-all.yaml"
+      ],
+      "acceptanceCriteria": [
+        "At least 106 out of 112 tests pass (95% pass rate)",
+        "No new failures introduced by the batch changes",
+        "Eval ID captured for progress tracking"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-018",
+      "phase": "P5",
+      "feature": null,
+      "title": "Record full suite results in PROGRESS.md",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "Query DB for pass/fail counts: sqlite3 ~/.promptfoo/promptfoo.db 'SELECT COUNT(*), SUM(success), SUM(1-success) FROM eval_results WHERE eval_id=...'",
+        "Update docs/PROGRESS.md Eval History table with eval ID, pass count/total, date, notes on remaining failures"
+      ],
+      "files": [
+        "docs/PROGRESS.md"
+      ],
+      "acceptanceCriteria": [
+        "PROGRESS.md Eval History table updated with new eval entry",
+        "Entry includes eval ID, pass count, total, date, and notes"
+      ],
+      "passes": false
+    },
+    {
+      "id": "S-019",
+      "phase": "P5",
+      "feature": null,
+      "title": "Commit PROGRESS.md tracker update",
+      "prdStory": null,
+      "designComponent": null,
+      "implementationSteps": [
+        "git add docs/PROGRESS.md",
+        "git commit -m 'chore: record full suite eval results in PROGRESS.md'"
+      ],
+      "files": [
+        "docs/PROGRESS.md"
+      ],
+      "acceptanceCriteria": [
+        "PROGRESS.md committed with eval results"
+      ],
+      "passes": false
+    }
+  ]
+}
