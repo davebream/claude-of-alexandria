@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-03-02
+
+### Added
+
+- NT morphology data replaced with OpenGNT (OGNT v3, CC BY-SA 4.0) — 138,013 words with RMAC parsing, Louw-Nida semantic domains, dual gloss layers (OGNT context-sensitive + TBESG context-insensitive), and Strong's numbers
+- `query_variants` tool — textual variant comparison across 9 critical editions (Byzantine, NA27, NA28, NIV Greek, SBLGNT, Textus Receptus, Tregelles, Westcott-Hort, Tyndale House GNT) with edition filtering and variant type classification
+- `query_syntax` tool — OpenText clause-level semantic role annotations (NT only, schema ready, awaiting data source availability)
+- Word-level discourse boundaries in `query_discourse_features` — Levinsohn clause IDs, speech markers, and boundary types from OpenGNT data (47,379 entries)
+- NT enrichment fields on `query_morphology`: `gloss_tbesg` (TBESG context-insensitive gloss), `louw_nida` (semantic domain code), `louw_nida_domain` (domain label) in `full` and `lexical` modes
+- RMAC (Robinson's Morphological Analysis Codes) parsing support — tense, voice, mood, person, number, case, gender expansion for all NT verb, noun, and adjective forms
+- OpenGNT extraction script (`extract-opengnt.py`) for reproducible ETL from OGNT source data
+
+### Fixed
+
+- RMAC participle parsing — `V-PAP-NSM` now correctly produces case/number/gender instead of person/number (mood-aware segment dispatch)
+- RMAC second perfect tense code `R` now maps to "perfect" (was unmapped, produced raw code)
+- Discourse features query missing SQL LIMIT — unbounded query could return entire book's data; now capped at 5000 rows
+- Discourse features response missing CHARACTER_LIMIT guard — large books could exceed 25K character limit; now truncates with metadata
+- Variants edition filter now validates against known edition codes before querying
+- Health endpoint and MCP server version updated from stale 1.9.4/1.11.0 to 3.0.0
+- `DESC_MORPHOLOGY` tool description updated to reflect NT enrichment is now live (was stale "returns null until Phase 5" note)
+
+### Changed
+
+- **BREAKING**: NT morphology data source changed from MorphGNT/SBLGNT to OpenGNT (OGNT v3). Parsing format changed from compact JSON to RMAC codes. NT word counts and positions may differ slightly.
+- Cache version bumped from `v2/` to `v3/` to invalidate stale MorphGNT-era cached responses
+
 ## [2.5.0] - 2026-03-02
 
 ### Added
