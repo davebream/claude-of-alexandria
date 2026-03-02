@@ -60,6 +60,7 @@ build/
 .pytest_cache/
 .coverage
 htmlcov/
+tests/promptfoo/results/
 
 # Wrangler local state (dev server, cache, sqlite)
 server/.wrangler/

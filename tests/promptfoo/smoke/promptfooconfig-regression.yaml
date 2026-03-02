@@ -5,7 +5,7 @@ description: "Regression smoke — cheap checks across all deployed tools (no ll
 # Run between every phase gate to catch regressions without burning $33-40 on full suite.
 
 providers:
-  - file://../providers/with-skill.yaml
+  - file://../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
@@ -47,16 +47,15 @@ tests:
   - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["H430"].
-        Do NOT zero-pad the number — use exactly "H430", not "H0430".
+        Use the query_lexicon tool with strongs_ids=["H7225"].
         Return the raw tool output only.
     assert:
       - type: javascript
         value: |
           const out = context.vars?.output || output || '';
           const lower = out.toLowerCase();
-          // Should contain God/gods/Elohim regardless of exact formatting
-          return lower.includes('god') || lower.includes('elohim');
+          // H7225 = reshit (beginning) — first word of Genesis 1:1
+          return lower.includes('begin') || lower.includes('reshit') || lower.includes('first');
 
   - description: "R4: query_cross_references returns results (Phase 2+)"
     vars:

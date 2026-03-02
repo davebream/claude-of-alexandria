@@ -1,13 +1,5 @@
-# RED-phase provider: bare model, no skills, no MCP, no biblical tools.
-# Same model as GREEN so the only variable is skill + MCP on/off.
-# working_dir: /tmp → prevents filesystem access to repo files.
-# No setting_sources → no project context loaded (SDK default: []).
-# No mcp → no biblical data tools.
-# No append_allowed_tools → default bare tools only (no Skill tool).
-id: anthropic:claude-agent-sdk
-label: without-skill
-config:
-  model: sonnet
-  working_dir: /tmp
-  permission_mode: bypassPermissions
-  allow_dangerously_skip_permissions: true
+# RED-phase provider: bare model, no skills, no MCP, no tools.
+# Uses Agent SDK with OAuth token auth (CLAUDE_CODE_OAUTH_TOKEN).
+# Isolation: no tools, no plugins, no settings files loaded.
+id: file://../../providers/sdk-bare.mjs
+label: sdk-bare

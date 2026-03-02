@@ -13,9 +13,9 @@ const path = require('path');
 const yaml = require('yaml');
 
 const ROOT = path.resolve(__dirname, '..');
-const PROVIDER_WITHOUT = 'file://providers/without-skill.yaml';
-const PROVIDER_WITH = 'file://providers/with-skill.yaml';
-const PROVIDER_GRADER = 'file://providers/grader.yaml';
+const PROVIDER_WITHOUT = 'file://providers/sdk-bare.mjs';
+const PROVIDER_WITH = 'file://providers/sdk-with-skill.mjs';
+const PROVIDER_GRADER = 'file://providers/sdk-grader.mjs';
 
 function findConfigs(dir, basename) {
   const out = [];
@@ -83,9 +83,15 @@ function collectTests() {
   return tests;
 }
 
+// NOTE: No top-level providers array. Each test has its own `provider` field
+// (sdk-bare for RED, sdk-with-skill for GREEN). If we listed both providers
+// at the top level, promptfoo would run every test against every provider
+// (matrix mode), doubling the run and mixing RED/GREEN providers incorrectly.
+// Instead we use a single dummy entry so promptfoo doesn't complain, but it
+// is overridden by the per-test provider field on every test.
 const merged = {
   description: 'Claude of Alexandria — all skills RED + GREEN (single run, one report)',
-  providers: [PROVIDER_WITHOUT, PROVIDER_WITH],
+  providers: [PROVIDER_WITHOUT],  // overridden per-test; just needs one entry
   prompts: ['{{prompt}}'],
   defaultTest: {
     options: {

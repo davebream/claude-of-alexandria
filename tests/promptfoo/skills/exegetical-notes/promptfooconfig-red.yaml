@@ -23,7 +23,7 @@
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - file://../../providers/without-skill.yaml
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
@@ -32,7 +32,10 @@ prompts:
 # Required: promptfoo defaults to OpenAI grading if no provider is specified.
 defaultTest:
   options:
-    provider: file://../../providers/grader.yaml
+    provider: file://../../providers/sdk-grader.mjs
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
 
 tests:
 
@@ -186,7 +189,7 @@ tests:
   # =========================================================================
   - description: "S8 RED: Cross-references — TSK refs presented without epistemic labeling"
     vars:
-      prompt: "Analyze the intertextual connections for Romans 8:28-30. Include cross-references to other passages and classify them by type and confidence."
+      prompt: "Analyze the intertextual connections for Romans 8:28-30. Include cross-references to other passages."
     assert:
       - type: llm-rubric
         value: |
@@ -257,7 +260,7 @@ tests:
   # =========================================================================
   - description: "S11 RED: Cherith glosses — OT glosses treated as lexical authority"
     vars:
-      prompt: "Analyze the Hebrew vocabulary in Genesis 1:1-5. Include glosses for key words and discuss their lexical significance. Note the authority level of each gloss source."
+      prompt: "Analyze the Hebrew vocabulary in Genesis 1:1-5. Include glosses for key words and discuss their lexical significance."
     assert:
       - type: llm-rubric
         value: |

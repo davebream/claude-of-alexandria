@@ -23,6 +23,5 @@
     "scripture",
     "preaching"
   ],
-  "skills": "./skills",
-  "agents": "./agents"
+  "skills": "./skills"
 }

@@ -15,14 +15,14 @@
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - file://../../providers/without-skill.yaml
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider: file://../../providers/grader.yaml
+    provider: file://../../providers/sdk-grader.mjs
 
 tests:
 
