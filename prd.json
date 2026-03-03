@@ -250,7 +250,8 @@
         "Existing promptfoo server entry preserved",
         "File committed"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "tests failed post-verification"
     },
     {
       "id": "S-010",
