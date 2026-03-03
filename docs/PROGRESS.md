@@ -126,6 +126,7 @@
 | 6 | regression | eval-TMM-2026-03-02T00:47:22 | 6/8→8/8 | 2026-03-02 | R3 (zero-pad Strong's) + R5 (KJV names) fixed in 68f1457. Newly enabled: R3-R8 |
 | 6 | code-review | agent | PASS (2 Important) | 2026-03-02 | S8 rubric fixed for empty syntax data. Missing pericope/scholar TDD is pre-existing debt. |
 | 6 | full-suite | eval-aZl-2026-03-02T07:46:17 | INFRA-PARTIAL (5/10 calibration) | 2026-03-02 | eval:all chain stopped at calibration (exit code 100 from expected FAIL cases). Calibration grader: 5/5 correct PASS + 5/5 correct FAIL = grader working correctly. Remaining suites did not run due to && chain. Same infra pattern as Phase 2/4. |
+| fix | full-suite | eval-25L-2026-03-02T16:30:48 | 93/112 (83%) | 2026-03-02 | 19 failures: 5 RED calibration (argument-flow S1, consult-biblical-scholar S6, exegetical-notes S3, pericope-delimitation S7+S10); 14 GREEN skill failures: argument-flow S4, biblical-segmentation S22, consult-biblical-scholar S3/S4/S5/S7/S8, exegetical-notes S2/S4/ADV3, pericope-delimitation S1/S2/S4/S7 |
 
 ---
 
