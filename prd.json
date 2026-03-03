@@ -162,7 +162,8 @@
         "JSON format instruction included in rubric",
         "File committed"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "tests failed post-verification"
     },
     {
       "id": "S-006",
