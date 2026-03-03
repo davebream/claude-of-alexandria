@@ -35,8 +35,20 @@ export function parseVerseRange(range: string): VerseRange | { error: string } {
   }
   if (parts.length === 2) {
     const [sCh, sV] = parts[0].split(':').map(Number);
+    if (isNaN(sCh) || isNaN(sV)) return { error: `Invalid verse range: "${range}"` };
+
+    // Abbreviated form: "8:28-30" (no colon in end part → same chapter)
+    if (!parts[1].includes(':')) {
+      const eV = Number(parts[1]);
+      if (isNaN(eV) || eV <= 0) return { error: `Invalid verse range: "${range}"` };
+      if (eV < sV) return { error: `Invalid verse range: "${range}" — end verse (${eV}) is before start verse (${sV})` };
+      return { startChapter: sCh, startVerse: sV, endChapter: sCh, endVerse: eV };
+    }
+
+    // Full form: "8:28-8:30"
     const [eCh, eV] = parts[1].split(':').map(Number);
-    if ([sCh, sV, eCh, eV].some(isNaN)) return { error: `Invalid verse range: "${range}"` };
+    if (isNaN(eCh) || isNaN(eV)) return { error: `Invalid verse range: "${range}"` };
+    if (eCh < sCh || (eCh === sCh && eV < sV)) return { error: `Invalid verse range: "${range}" — end is before start` };
     return { startChapter: sCh, startVerse: sV, endChapter: eCh, endVerse: eV };
   }
   return { error: `Invalid verse range: "${range}"` };
