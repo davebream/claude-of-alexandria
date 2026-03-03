@@ -129,7 +129,11 @@ def flatten_helloao_content(content: list) -> dict[int, str]:
 
     def walk(node):
         nonlocal current_verse
-        if isinstance(node, list):
+        if isinstance(node, str):
+            text = node.strip()
+            if text and current_verse > 0:
+                verses.setdefault(current_verse, []).append(text)
+        elif isinstance(node, list):
             for item in node:
                 walk(item)
         elif isinstance(node, dict):
