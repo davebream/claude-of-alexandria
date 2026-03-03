@@ -364,7 +364,8 @@
         "S2 GREEN passes after MCP fix or assertion relaxation",
         "If assertion changed: accepts both verse-level refs and chapter-level counts with numerical data"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-015",
