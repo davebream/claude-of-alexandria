@@ -70,7 +70,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
         model: "sonnet",
         working_dir: REPO_ROOT,
         max_budget_usd: 3.00,
-        max_turns: 30,
+        max_turns: 50,
         ...options.config,
       },
     });
@@ -100,7 +100,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,
       maxBudgetUsd: this.config.max_budget_usd ?? 3.00, // Keep constructor default and this fallback in sync
-      maxTurns: this.config.max_turns ?? 30,
+      maxTurns: this.config.max_turns ?? 50,
       persistSession: false,
     };
   }
