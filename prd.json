@@ -389,7 +389,8 @@
         "S22 GREEN passes without fabricated universal Masoretic coverage",
         "Agent cites specific markers with verse refs AND notes absent markers explicitly"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "OAuth quota exhausted until March 6, 3pm Europe/Madrid. S22 GREEN test cannot execute — provider returns \"You're out of extra usage\" without running. Acceptance criterion 1 is confirmed (transparency rule exists in SKILL.md at lines 294, 298-300, 302, and Red Flag #11). Criteria 2 and 3 require live test execution."
     },
     {
       "id": "S-016",
