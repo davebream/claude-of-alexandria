@@ -204,7 +204,7 @@
         ".mcp.json.bak exists at repo root",
         "No changes committed yet"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "S-008",
