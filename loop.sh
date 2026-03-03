@@ -19,14 +19,14 @@ MAX_ITERATIONS="${1:-10}"
 DRY_RUN=false
 STORY_TIMEOUT="${STORY_TIMEOUT:-600}"  # 10 minutes per story
 MAX_STORY_ATTEMPTS=3
-MAX_CONSECUTIVE_MALFORMED=3  # Circuit breaker: stop after N consecutive MALFORMED
+MAX_CONSECUTIVE_FAILURES=3  # Circuit breaker: stop after N consecutive non-PASS results
 PROGRESS_FILE="progress.txt"
 PRD_FILE="prd.json"
 PROMPT_FILE="LOOP-PROMPT.md"
 STOP_FILE=".stop"
 OUTPUT_FILE=".loop-output-$$.tmp"
 CLAUDE_PID=""
-CONSECUTIVE_MALFORMED=0  # Circuit breaker counter
+CONSECUTIVE_FAILURES=0  # Circuit breaker counter (MALFORMED + BLOCKED)
 
 # Parse flags
 for arg in "$@"; do
@@ -506,7 +506,7 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
     RESULT=$(parse_story_result "$OUTPUT")
 
     if [ "$RESULT" = "PASS" ]; then
-        CONSECUTIVE_MALFORMED=0  # Reset circuit breaker
+        CONSECUTIVE_FAILURES=0  # Reset circuit breaker
         # Independently verify: run test suite
         echo "Claude reports PASS. Running independent verification..."
         if run_test_command; then
@@ -516,30 +516,31 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
             echo "Tests FAILED post-verification. Marking story blocked."
             update_prd_json "$STORY" "blocked" "tests failed post-verification"
             RESULT="BLOCKED: tests failed post-verification"
+            CONSECUTIVE_FAILURES=$((CONSECUTIVE_FAILURES + 1))
         fi
     elif [ "$RESULT" = "MALFORMED" ]; then
-        CONSECUTIVE_MALFORMED=$((CONSECUTIVE_MALFORMED + 1))
-        echo "Malformed output from Claude (consecutive: $CONSECUTIVE_MALFORMED/$MAX_CONSECUTIVE_MALFORMED). Marking story blocked."
+        CONSECUTIVE_FAILURES=$((CONSECUTIVE_FAILURES + 1))
+        echo "Malformed output from Claude (consecutive failures: $CONSECUTIVE_FAILURES/$MAX_CONSECUTIVE_FAILURES). Marking story blocked."
         update_prd_json "$STORY" "blocked" "malformed output from Claude"
         # Write diagnostic output to progress.txt for debugging
         write_diagnostic_output "$STORY" "$OUTPUT"
-
-        # Circuit breaker: stop loop after N consecutive MALFORMED
-        if [ "$CONSECUTIVE_MALFORMED" -ge "$MAX_CONSECUTIVE_MALFORMED" ]; then
-            echo ""
-            echo "CIRCUIT BREAKER: $MAX_CONSECUTIVE_MALFORMED consecutive MALFORMED results."
-            echo "This indicates a systematic issue (not a story-specific failure)."
-            echo "Check progress.txt diagnostics for Claude's actual output."
-            write_progress_entry "$i" "$STORY" "$RESULT" "$PRE_HEAD"
-            git add -A && git commit -m "loop: iteration $i — $STORY (circuit breaker)" --allow-empty
-            report_progress
-            exit 1
-        fi
     else
-        CONSECUTIVE_MALFORMED=0  # Reset circuit breaker
+        CONSECUTIVE_FAILURES=$((CONSECUTIVE_FAILURES + 1))
         # BLOCKED with reason
-        echo "Story blocked: $RESULT"
+        echo "Story blocked (consecutive failures: $CONSECUTIVE_FAILURES/$MAX_CONSECUTIVE_FAILURES): $RESULT"
         update_prd_json "$STORY" "blocked" "$RESULT"
+    fi
+
+    # Circuit breaker: stop loop after N consecutive non-PASS results
+    if [ "$CONSECUTIVE_FAILURES" -ge "$MAX_CONSECUTIVE_FAILURES" ]; then
+        echo ""
+        echo "CIRCUIT BREAKER: $MAX_CONSECUTIVE_FAILURES consecutive failures (no PASS)."
+        echo "This indicates a systematic issue (not a story-specific failure)."
+        echo "Check progress.txt for blocked reasons."
+        write_progress_entry "$i" "$STORY" "$RESULT" "$PRE_HEAD"
+        git add -A && git commit -m "loop: iteration $i — $STORY (circuit breaker)" --allow-empty
+        report_progress
+        exit 1
     fi
 
     # Append to progress.txt
