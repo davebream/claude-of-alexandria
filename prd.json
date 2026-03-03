@@ -364,7 +364,8 @@
         "S2 GREEN passes after MCP fix or assertion relaxation",
         "If assertion changed: accepts both verse-level refs and chapter-level counts with numerical data"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "Claude Code OAuth token exhausted until March 6, 3pm Europe/Madrid. S2 GREEN test cannot execute — the SDK provider returns \"You're out of extra usage\" instead of running. Cannot verify MCP fix effect or determine if assertion relaxation is needed."
     },
     {
       "id": "S-015",
