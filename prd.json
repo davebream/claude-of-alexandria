@@ -443,7 +443,8 @@
         "No new failures introduced by the batch changes",
         "Eval ID captured for progress tracking"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-018",
