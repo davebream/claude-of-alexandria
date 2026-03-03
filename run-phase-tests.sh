@@ -4,13 +4,11 @@
 # Called by loop.sh after each STORY_RESULT: PASS.
 # Env: LOOP_PRE_HEAD — git SHA before the story ran (exported by loop.sh)
 #
-# Skill → suite mapping:
-#   tests/promptfoo/skills/<skill>/**        → eval:<skill>
-#   plugins/.../skills/<skill>/**            → eval:<skill>
-#   plugins/.../agents/<agent>.md            → eval:<agent>  (if suite exists)
+# Only runs red when only red config changed, green when only green changed,
+# full skill suite when both or when skill/agent source changed.
 #
 # .mcp.json, sdk-with-skill.mjs, and other provider/config changes
-# are skipped here — those stories run their own targeted evals inline.
+# are skipped — those stories run their own targeted evals inline.
 
 set -euo pipefail
 
@@ -36,12 +34,28 @@ SUITES=""
 
 for skill in argument-flow exegetical-notes pericope-delimitation consult-biblical-scholar biblical-segmentation; do
     if echo "$CHANGED" | grep -q "$skill"; then
-        SUITES="$SUITES eval:$skill"
+        # Determine if red-only, green-only, or full suite needed
+        has_red=$(echo "$CHANGED" | grep -c "promptfooconfig-red" || true)
+        has_green=$(echo "$CHANGED" | grep -c "promptfooconfig-green" || true)
+        has_source=$(echo "$CHANGED" | grep -cE "plugins/.*$skill" || true)
+
+        if [ "$has_source" -gt 0 ] || { [ "$has_red" -gt 0 ] && [ "$has_green" -gt 0 ]; }; then
+            SUITES="$SUITES eval:$skill"
+        elif [ "$has_red" -gt 0 ]; then
+            SUITES="$SUITES eval:${skill}:red"
+        elif [ "$has_green" -gt 0 ]; then
+            SUITES="$SUITES eval:${skill}:green"
+        else
+            # Agent or other file changed — run full suite
+            SUITES="$SUITES eval:$skill"
+        fi
     fi
 done
 
-# Strip whitespace and check if anything to run
-SUITES=$(echo "$SUITES" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ' | xargs)
+# Deduplicate (safe for empty — no grep in pipeline)
+if [ -n "$SUITES" ]; then
+    SUITES=$(echo "$SUITES" | xargs -n1 | sort -u | xargs)
+fi
 
 if [ -z "$SUITES" ]; then
     echo "[run-phase-tests] No skill files changed. Skipping (story handled its own verification)."

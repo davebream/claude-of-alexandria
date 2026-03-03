@@ -137,9 +137,9 @@ update_prd_json() {
 parse_story_result() {
     local output="$1"
     # Look for STORY_RESULT: PASS or STORY_RESULT: BLOCKED: <reason>
-    # Only scan last 5 lines — the signal must be near the end per contract
+    # Scan last 30 lines — Claude often adds trailing text after the signal
     local result_line
-    result_line=$(echo "$output" | tail -5 | grep -o 'STORY_RESULT: .*' | tail -1)
+    result_line=$(echo "$output" | tail -30 | grep -o 'STORY_RESULT: .*' | tail -1)
 
     if [ -z "$result_line" ]; then
         echo "MALFORMED"

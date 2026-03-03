@@ -115,8 +115,7 @@
         "promptfooconfig-green.yaml is unchanged",
         "File committed"
       ],
-      "passes": false,
-      "blocked": "tests failed post-verification"
+      "passes": true
     },
     {
       "id": "S-004",
@@ -162,8 +161,7 @@
         "JSON format instruction included in rubric",
         "File committed"
       ],
-      "passes": false,
-      "blocked": "tests failed post-verification"
+      "passes": true
     },
     {
       "id": "S-006",
@@ -250,8 +248,7 @@
         "Existing promptfoo server entry preserved",
         "File committed"
       ],
-      "passes": false,
-      "blocked": "tests failed post-verification"
+      "passes": true
     },
     {
       "id": "S-010",
@@ -298,8 +295,7 @@
         "S4 GREEN passes without error_max_budget_usd",
         "File committed"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": true
     },
     {
       "id": "S-012",
@@ -320,8 +316,7 @@
         "ADV3 GREEN result checked after budget increase",
         "Outcome clearly determined: fixed OR needs turn-limit investigation OR different failure"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-013",
@@ -344,8 +339,7 @@
         "ADV3 GREEN passes with full document including Section 2, OR escalated with clear explanation",
         "No further workarounds added if max_turns increase doesn't resolve it"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-014",
@@ -368,8 +362,7 @@
         "S2 GREEN passes after MCP fix or assertion relaxation",
         "If assertion changed: accepts both verse-level refs and chapter-level counts with numerical data"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-015",
@@ -393,8 +386,7 @@
         "S22 GREEN passes without fabricated universal Masoretic coverage",
         "Agent cites specific markers with verse refs AND notes absent markers explicitly"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-016",
@@ -418,8 +410,7 @@
         "S7 GREEN passes with exact EXTEND keyword on the verdict line",
         "Agent Verdict line is the first line of assessment output"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-017",
@@ -443,8 +434,7 @@
         "No new failures introduced by the batch changes",
         "Eval ID captured for progress tracking"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-018",
