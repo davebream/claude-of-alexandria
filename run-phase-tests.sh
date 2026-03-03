@@ -34,10 +34,11 @@ SUITES=""
 
 for skill in argument-flow exegetical-notes pericope-delimitation consult-biblical-scholar biblical-segmentation; do
     if echo "$CHANGED" | grep -q "$skill"; then
-        # Determine if red-only, green-only, or full suite needed
-        has_red=$(echo "$CHANGED" | grep -c "promptfooconfig-red" || true)
-        has_green=$(echo "$CHANGED" | grep -c "promptfooconfig-green" || true)
-        has_source=$(echo "$CHANGED" | grep -cE "plugins/.*$skill" || true)
+        # Determine if red-only, green-only, or full suite needed (scoped to THIS skill)
+        skill_files=$(echo "$CHANGED" | grep "$skill")
+        has_red=$(echo "$skill_files" | grep -c "promptfooconfig-red" || true)
+        has_green=$(echo "$skill_files" | grep -c "promptfooconfig-green" || true)
+        has_source=$(echo "$skill_files" | grep -cE "plugins/.*$skill" || true)
 
         if [ "$has_source" -gt 0 ] || { [ "$has_red" -gt 0 ] && [ "$has_green" -gt 0 ]; }; then
             SUITES="$SUITES eval:$skill"

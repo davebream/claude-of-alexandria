@@ -11,6 +11,10 @@
 #
 set -euo pipefail
 
+# Unset CLAUDECODE to allow nested claude invocations
+# (loop.sh may be launched from within a Claude Code terminal)
+unset CLAUDECODE 2>/dev/null || true
+
 # --- Configuration ---
 MAX_ITERATIONS="${1:-10}"
 DRY_RUN=false
@@ -137,9 +141,10 @@ update_prd_json() {
 parse_story_result() {
     local output="$1"
     # Look for STORY_RESULT: PASS or STORY_RESULT: BLOCKED: <reason>
-    # Scan last 30 lines — Claude often adds trailing text after the signal
+    # Scan entire output for the LAST occurrence of STORY_RESULT
+    # (Claude adds trailing text — fixed windows like tail -5 or tail -30 are fragile)
     local result_line
-    result_line=$(echo "$output" | tail -30 | grep -o 'STORY_RESULT: .*' | tail -1)
+    result_line=$(echo "$output" | grep -o 'STORY_RESULT: .*' | tail -1)
 
     if [ -z "$result_line" ]; then
         echo "MALFORMED"
