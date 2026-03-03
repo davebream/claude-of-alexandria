@@ -66,7 +66,7 @@ def fetch_with_retry(url: str, max_retries: int = 3) -> dict | None:
             req = urllib.request.Request(url, headers={"User-Agent": "claude-of-alexandria-etl/1.0"})
             with urllib.request.urlopen(req, timeout=30) as resp:
                 return json.loads(resp.read().decode())
-        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as e:
             if attempt < max_retries - 1:
                 wait = 2 ** attempt
                 print(f"    Retry {attempt + 1}/{max_retries} after {wait}s: {e}")
