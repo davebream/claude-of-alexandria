@@ -340,7 +340,8 @@
         "ADV3 GREEN passes with full document including Section 2, OR escalated with clear explanation",
         "No further workarounds added if max_turns increase doesn't resolve it"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "S-013 precondition not met — S-012 failed with a persistent SDK hang (no output), NOT \"Continuing from cut-off point\". Provider already has max_turns=50 and max_budget_usd=3.00. Human investigation required to determine why ADV3 SDK session hangs indefinitely."
     },
     {
       "id": "S-014",
