@@ -115,7 +115,8 @@
         "promptfooconfig-green.yaml is unchanged",
         "File committed"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "tests failed post-verification"
     },
     {
       "id": "S-004",
