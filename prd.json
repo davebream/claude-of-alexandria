@@ -344,7 +344,8 @@
         "ADV3 GREEN passes with full document including Section 2, OR escalated with clear explanation",
         "No further workarounds added if max_turns increase doesn't resolve it"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-014",
