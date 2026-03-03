@@ -21,6 +21,9 @@ import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema
 import { speakersQuery, SpeakersInputSchema, SpeakersOutputSchema } from './tools/speakers.js';
 import { querySyntax, SyntaxInputSchema, SyntaxOutputSchema } from './tools/syntax.js';
 import { queryVariants, VariantsInputSchema, VariantsOutputSchema } from './tools/variants.js';
+import { bibleLookup, BibleLookupInputSchema, BibleLookupOutputSchema } from './tools/bible-lookup.js';
+import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSchema } from './tools/commentary-lookup.js';
+import { parallelText, ParallelTextInputSchema, ParallelTextOutputSchema, type ParallelTextInput } from './tools/parallel-text.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -363,6 +366,56 @@ Examples:
   - Variants in Pericope Adulterae: book="John", range="7:53-8:11"
   - SBLGNT-specific variants in Romans: book="Romans", edition="S"
   - All variants in Mark: book="Mark"`;
+
+const DESC_BIBLE_LOOKUP = `Look up biblical text in a specific translation.
+
+Returns verse text for a given book and range. Uses English Protestant versification.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "1 Cor")
+  - range (string, required): Verse range "8:28-8:30", abbreviated "8:28-30", or single verse "8:28"
+  - translation (string, optional): Bible translation (default: BSB). Options: BSB, WEB, KJV, ASV, YLT, DBY
+
+Returns: { translation, book, range, verses: [{chapter, verse, text}], versification_note? }
+
+Examples:
+  - Romans 8:28-30 in BSB: book="Romans", range="8:28-30"
+  - Genesis 1:1-3 in KJV: book="Genesis", range="1:1-3", translation="KJV"
+  - John 3:16 in all translations: use parallel_text instead`;
+
+const DESC_COMMENTARY_LOOKUP = `Look up commentary entries for a biblical passage.
+
+Returns commentary text from up to 6 public-domain/CC-BY-SA commentaries. When no specific commentary is requested, returns all available entries for the range.
+
+Available commentaries: adam-clarke, jamieson-fausset-brown, john-gill, keil-delitzsch, matthew-henry, tyndale
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "1 Cor")
+  - range (string, required): Verse range "8:28-8:30", abbreviated "8:28-30", or single verse "8:28"
+  - commentary (string, optional): Filter to a specific commentary. Omit for all available.
+
+Returns: { book, range, commentaries: [{commentary, attribution, entries: [{verse_start, verse_end, text}]}], range_warning? }
+
+Examples:
+  - All commentaries on Romans 8:28: book="Romans", range="8:28"
+  - Matthew Henry on Genesis 1:1-3: book="Genesis", range="1:1-3", commentary="matthew-henry"
+  - Tyndale notes on John 3:16: book="John", range="3:16", commentary="tyndale"`;
+
+const DESC_PARALLEL_TEXT = `Compare biblical text across multiple translations side by side.
+
+Returns verse-aligned multi-translation output for easy comparison. Hard cap: 30 verses. For larger ranges, make multiple calls.
+
+Args:
+  - book (string, required): Book name in any common form (e.g., "Romans", "Gen", "1 Cor")
+  - range (string, required): Verse range "8:28-8:30", abbreviated "8:28-30", or single verse "8:28". Max 30 verses.
+  - translations (string[], optional): Translations to compare (default: all 6). Options: BSB, WEB, KJV, ASV, YLT, DBY
+
+Returns: { book, range, verses: [{chapter, verse, translations: {BSB: "...", KJV: "...", ...}}], missing_verses?, truncated, versification_note? }
+
+Examples:
+  - All translations of John 3:16: book="John", range="3:16"
+  - KJV vs BSB for Romans 8:28-30: book="Romans", range="8:28-30", translations=["KJV", "BSB"]
+  - Psalm 23 across all: book="Psalms", range="23:1-23:6"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -739,6 +792,60 @@ function createServer(): McpServer {
   }, async (args, _extra) =>
     cachedToolCall('query_variants', args as unknown as Record<string, unknown>, () => queryVariants(args))
   );
+
+  server.registerTool('bible_lookup', {
+    title: 'Look Up Bible Text',
+    description: DESC_BIBLE_LOOKUP,
+    inputSchema: BibleLookupInputSchema,
+    outputSchema: BibleLookupOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('bible_lookup', args as unknown as Record<string, unknown>, () => bibleLookup(args))
+  );
+
+  server.registerTool('commentary_lookup', {
+    title: 'Look Up Commentary',
+    description: DESC_COMMENTARY_LOOKUP,
+    inputSchema: CommentaryLookupInputSchema,
+    outputSchema: CommentaryLookupOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('commentary_lookup', args as unknown as Record<string, unknown>, () => commentaryLookup(args))
+  );
+
+  server.registerTool('parallel_text', {
+    title: 'Parallel Text Comparison',
+    description: DESC_PARALLEL_TEXT,
+    inputSchema: ParallelTextInputSchema,
+    outputSchema: ParallelTextOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) => {
+    // Normalize translations array for cache key stability (sort before caching)
+    const translations = args.translations
+      ? [...new Set(args.translations as string[])].sort()
+      : undefined;
+    const normalizedArgs = translations ? { ...args, translations } : args;
+    return cachedToolCall(
+      'parallel_text',
+      normalizedArgs as unknown as Record<string, unknown>,
+      () => parallelText(normalizedArgs as unknown as ParallelTextInput)
+    );
+  });
 
   return server;
 }
