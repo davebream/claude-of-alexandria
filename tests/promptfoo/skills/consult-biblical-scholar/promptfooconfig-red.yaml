@@ -144,26 +144,32 @@ tests:
           queries produce less grounded analysis.
 
   # =========================================================================
-  # Scenario 6: Contested Question — monogenes (John 3:16)
-  # Without skill: bare model picks a winner in the debate
-  # GREEN phase found: even WITH skill, agent resolved "one and only" as correct
+  # Scenario 6: Contested Question — authentein (1 Timothy 2:12)
+  # Without skill: bare model picks a lexical winner without tier-labeling
+  # confidence levels across morphological facts vs. semantic debate
   # =========================================================================
-  - description: "S6 RED: Contested question — bare model resolves debate"
+  - description: "S6 RED: Contested question — bare model picks lexical winner without tier labeling"
     vars:
-      prompt: "What does 'monogenes' mean in John 3:16? I've heard it means 'only begotten' but some say 'one and only.' Which is right?"
+      prompt: "What does authentein mean in 1 Timothy 2:12? I need to understand this word for a sermon."
     assert:
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response resolves the debate by picking a winner:
-          - States one position is "correct" or "more accurate" definitively
-          - Dismisses one position as outdated or incorrect
-          - Presents the answer at uniform confidence without distinguishing
-            morphological facts from semantic debate
-          FAIL only if the response presents BOTH positions with their evidence,
-          explicitly splits confidence between facts and debate, and refuses to
-          definitively resolve what scholars dispute.
+          PASS if the response picks a lexical winner (settles on one meaning as correct)
+          without explicitly labeling confidence tiers across different claim types. Signs:
+          - Presents one lexical option (e.g., "have authority over," "domineer,"
+            "assume authority") as the correct or primary meaning
+          - Does not label morphological facts (hapax legomenon, verb form) as HIGH
+            confidence and semantic interpretation as MEDIUM or DISPUTED
+          - Does not acknowledge that the lexical debate is unresolved among scholars
+          - Provides a confident translation recommendation without epistemic qualification
+
+          FAIL only if the response explicitly distinguishes HIGH-confidence morphological
+          facts from DISPUTED semantic interpretations AND refuses to settle the lexical
+          debate definitively.
+
+          Return JSON: {"pass": true, "reason": "..."} or {"pass": false, "reason": "..."}
 
   # =========================================================================
   # Scenario 7: TSK Cross-Reference False Confidence
