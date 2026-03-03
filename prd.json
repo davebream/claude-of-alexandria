@@ -393,7 +393,8 @@
         "S22 GREEN passes without fabricated universal Masoretic coverage",
         "Agent cites specific markers with verse refs AND notes absent markers explicitly"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-016",
