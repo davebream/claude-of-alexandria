@@ -50,6 +50,8 @@ HELLOAO_BOOK_TO_CANONICAL = {
     "HEB": "hebrews", "JAS": "james", "1PE": "1_peter", "2PE": "2_peter",
     "1JN": "1_john", "2JN": "2_john", "3JN": "3_john", "JUD": "jude",
     "REV": "revelation",
+    # Alternate IDs used by some commentaries (e.g., Tyndale)
+    "Ezek": "ezekiel", "Nah": "nahum", "Phil": "philippians", "Phlm": "philemon",
 }
 
 
@@ -132,57 +134,41 @@ def process_commentary(commentary_id: str):
         book_lines = [f"-- {commentary_id} — {canonical}"]
         book_entries = 0
 
-        chapters = book_info.get("chapters", [])
-        for ch_info in chapters:
-            ch_num = ch_info if isinstance(ch_info, int) else ch_info.get("number", 0)
-            if not ch_num:
-                continue
+        num_chapters = book_info.get("numberOfChapters", 0)
+        if not num_chapters:
+            continue
 
+        for ch_num in range(1, num_chapters + 1):
             url = f"https://bible.helloao.org/api/c/{commentary_id}/{book_id}/{ch_num}.json"
             data = fetch_with_retry(url)
             if not data:
                 continue
 
-            # Extract verse-level commentary entries
-            entries = data.get("entries", data.get("verses", []))
-            if isinstance(entries, dict):
-                # Some commentaries use {verse_num: content} format
-                for verse_key, content in entries.items():
-                    text = flatten_commentary_content(content)
-                    if not text:
+            # Extract verse-level commentary entries from chapter.content
+            chapter_data = data.get("chapter", {})
+            content_list = chapter_data.get("content", [])
+
+            if isinstance(content_list, list):
+                for item in content_list:
+                    if not isinstance(item, dict):
                         continue
-                    # Parse verse range (some keys are "28-30")
-                    parts = str(verse_key).split("-")
-                    try:
-                        v_start = int(parts[0])
-                        v_end = int(parts[-1]) if len(parts) > 1 else v_start
-                    except ValueError:
+                    if item.get("type") != "verse":
+                        continue
+                    verse_num = item.get("number", 0)
+                    if not verse_num:
+                        continue
+                    verse_content = item.get("content", [])
+                    text = flatten_commentary_content(verse_content)
+                    if not text:
                         continue
                     escaped = escape_sql(text)
                     book_lines.append(
                         f"INSERT INTO commentary_entries "
                         f"(commentary, book, chapter, verse_start, verse_end, text) "
                         f"VALUES ('{commentary_id}', '{canonical}', {ch_num}, "
-                        f"{v_start}, {v_end}, '{escaped}');"
+                        f"{verse_num}, {verse_num}, '{escaped}');"
                     )
                     book_entries += 1
-            elif isinstance(entries, list):
-                for entry in entries:
-                    if isinstance(entry, dict):
-                        v_start = entry.get("verse_start", entry.get("verse", 1))
-                        v_end = entry.get("verse_end", v_start)
-                        content = entry.get("content", entry.get("text", ""))
-                        text = flatten_commentary_content(content)
-                        if not text:
-                            continue
-                        escaped = escape_sql(text)
-                        book_lines.append(
-                            f"INSERT INTO commentary_entries "
-                            f"(commentary, book, chapter, verse_start, verse_end, text) "
-                            f"VALUES ('{commentary_id}', '{canonical}', {ch_num}, "
-                            f"{v_start}, {v_end}, '{escaped}');"
-                        )
-                        book_entries += 1
 
         # Write per-book file
         if book_entries > 0:
