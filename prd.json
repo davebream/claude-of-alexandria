@@ -137,7 +137,7 @@
         "S10 RED no longer produces 'Could not extract JSON from llm-rubric response' error",
         "If error was transient no code change needed; record observation"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "S-005",
