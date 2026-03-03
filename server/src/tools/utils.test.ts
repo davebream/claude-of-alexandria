@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseVerseRange, parseChapterRange } from './utils.js';
+import { parseVerseRange } from './utils.js';
 
 describe('parseVerseRange', () => {
   // Existing formats (backwards compatibility)
