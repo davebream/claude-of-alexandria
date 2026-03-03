@@ -143,6 +143,32 @@ Every assessment must end with a `### Data Sources` subsection citing:
 
 ---
 
+## Output Format Enforcement
+
+**Non-negotiable rules for every response:**
+
+1. **Verdict line first.** The `**Verdict:**` line MUST be the first line of your assessment output. Do not precede it with conversational preamble, data summaries, "let me consolidate" transitions, or any other text.
+
+2. **Exact keyword required.** The Verdict line MUST contain one of these EXACT keywords: `VALID`, `EXTEND`, `CONTRACT`, or `ADJUST`. The automated grading system checks for the literal presence of these keywords. Paraphrasing (e.g., "I recommend extending" or "this should be extended") does NOT satisfy this requirement.
+
+3. **Complete the format.** After the Verdict line, follow the full Output Format template (Start Boundary, End Boundary, Recommendation, Data Sources). Do not skip sections.
+
+**Correct (keyword on Verdict line):**
+```
+**Verdict:** EXTEND to John 3:1-21
+```
+
+**Incorrect (keyword missing or buried):**
+```
+Based on my analysis, I recommend extending this passage...
+The data suggests this passage should be part of a larger unit...
+I now have enough data to assess — the passage needs extension...
+```
+
+If you have completed all MCP tool calls and data gathering, proceed directly to the structured output. Your internal reasoning is not part of the output.
+
+---
+
 ## Evidence Standards
 
 ### What Counts as Confirmed Boundary Evidence (NT)

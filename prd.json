@@ -414,7 +414,8 @@
         "S7 GREEN passes with exact EXTEND keyword on the verdict line",
         "Agent Verdict line is the first line of assessment output"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-017",
