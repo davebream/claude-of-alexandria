@@ -270,7 +270,7 @@
         "Agent output shows correct MCP tool calls with plugin prefix"
       ],
       "passes": false,
-      "blocked": "Claude Code OAuth token exhausted. All 9 GREEN tests return \"You're out of extra usage · resets Mar 6, 3pm (Europe/Madrid)\" without executing. The SDK provider uses OAuth token auth which has hit its usage limit. Quota resets March 6, 3pm Europe/Madrid. Cannot verify whether the S-009 MCP fix resolved the tool naming mismatch until the quota resets."
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-011",
@@ -364,8 +364,7 @@
         "S2 GREEN passes after MCP fix or assertion relaxation",
         "If assertion changed: accepts both verse-level refs and chapter-level counts with numerical data"
       ],
-      "passes": false,
-      "blocked": "Claude Code OAuth token exhausted until March 6, 3pm Europe/Madrid. S2 GREEN test cannot execute — the SDK provider returns \"You're out of extra usage\" instead of running. Cannot verify MCP fix effect or determine if assertion relaxation is needed."
+      "passes": false
     },
     {
       "id": "S-015",
@@ -389,8 +388,7 @@
         "S22 GREEN passes without fabricated universal Masoretic coverage",
         "Agent cites specific markers with verse refs AND notes absent markers explicitly"
       ],
-      "passes": false,
-      "blocked": "OAuth quota exhausted until March 6, 3pm Europe/Madrid. S22 GREEN test cannot execute — provider returns \"You're out of extra usage\" without running. Acceptance criterion 1 is confirmed (transparency rule exists in SKILL.md at lines 294, 298-300, 302, and Red Flag #11). Criteria 2 and 3 require live test execution."
+      "passes": false
     },
     {
       "id": "S-016",
@@ -414,8 +412,7 @@
         "S7 GREEN passes with exact EXTEND keyword on the verdict line",
         "Agent Verdict line is the first line of assessment output"
       ],
-      "passes": false,
-      "blocked": "OAuth quota exhausted until March 6, 3pm Europe/Madrid. Tests return \"You're out of extra usage\" without executing. The agent fix (Output Format Enforcement section with EXTEND/VALID/CONTRACT/ADJUST keyword enforcement) was already applied in iteration 5 (commit ab6111d). No further code changes are possible until the quota resets and tests can be verified."
+      "passes": false
     },
     {
       "id": "S-017",
@@ -439,8 +436,7 @@
         "No new failures introduced by the batch changes",
         "Eval ID captured for progress tracking"
       ],
-      "passes": false,
-      "blocked": "malformed output from Claude"
+      "passes": false
     },
     {
       "id": "S-018",
