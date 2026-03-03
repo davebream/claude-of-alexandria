@@ -3,6 +3,10 @@
     "promptfoo": {
       "command": "node",
       "args": ["tests/promptfoo/node_modules/.bin/promptfoo", "mcp", "--transport", "stdio"]
+    },
+    "plugin_claude-of-alexandria_claude-of-alexandria-mcp": {
+      "type": "http",
+      "url": "https://coa.davebream.com/mcp"
     }
   }
 }
