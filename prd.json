@@ -272,7 +272,8 @@
         "All 9 previously-failing MCP tests now pass",
         "Agent output shows correct MCP tool calls with plugin prefix"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-011",
