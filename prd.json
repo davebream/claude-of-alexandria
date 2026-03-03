@@ -227,7 +227,7 @@
         "MCP server at https://coa.davebream.com/mcp is reachable and returns tool list",
         "Ready to proceed with .mcp.json edit"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "S-009",
