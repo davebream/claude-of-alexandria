@@ -316,7 +316,8 @@
         "ADV3 GREEN result checked after budget increase",
         "Outcome clearly determined: fixed OR needs turn-limit investigation OR different failure"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-013",
