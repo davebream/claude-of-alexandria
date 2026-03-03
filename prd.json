@@ -270,7 +270,7 @@
         "Agent output shows correct MCP tool calls with plugin prefix"
       ],
       "passes": false,
-      "blocked": "malformed output from Claude"
+      "blocked": "Claude Code OAuth token exhausted. All 9 GREEN tests return \"You're out of extra usage · resets Mar 6, 3pm (Europe/Madrid)\" without executing. The SDK provider uses OAuth token auth which has hit its usage limit. Quota resets March 6, 3pm Europe/Madrid. Cannot verify whether the S-009 MCP fix resolved the tool naming mismatch until the quota resets."
     },
     {
       "id": "S-011",

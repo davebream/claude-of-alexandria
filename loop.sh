@@ -11,8 +11,7 @@
 #
 set -euo pipefail
 
-# Unset CLAUDECODE to allow nested claude invocations
-# (loop.sh may be launched from within a Claude Code terminal)
+# Allow nested invocation — loop.sh may be launched from a Claude Code terminal
 unset CLAUDECODE 2>/dev/null || true
 
 # --- Configuration ---
@@ -20,12 +19,14 @@ MAX_ITERATIONS="${1:-10}"
 DRY_RUN=false
 STORY_TIMEOUT="${STORY_TIMEOUT:-600}"  # 10 minutes per story
 MAX_STORY_ATTEMPTS=3
+MAX_CONSECUTIVE_MALFORMED=3  # Circuit breaker: stop after N consecutive MALFORMED
 PROGRESS_FILE="progress.txt"
 PRD_FILE="prd.json"
 PROMPT_FILE="LOOP-PROMPT.md"
 STOP_FILE=".stop"
 OUTPUT_FILE=".loop-output-$$.tmp"
 CLAUDE_PID=""
+CONSECUTIVE_MALFORMED=0  # Circuit breaker counter
 
 # Parse flags
 for arg in "$@"; do
@@ -40,6 +41,20 @@ done
 if ! command -v claude &>/dev/null; then
     echo "ERROR: 'claude' CLI not found in PATH."
     echo "Install: https://docs.anthropic.com/en/docs/claude-code"
+    exit 1
+fi
+
+# 0b. Verify claude can actually start (catches auth failures, version issues, etc.)
+CLAUDE_SMOKE=$(echo "Reply with exactly: PING_OK" | timeout 30 claude --print 2>&1 || true)
+if ! echo "$CLAUDE_SMOKE" | grep -q "PING_OK"; then
+    echo "ERROR: Claude CLI failed smoke test."
+    echo "  Expected output containing 'PING_OK', got:"
+    echo "$CLAUDE_SMOKE" | head -5 | sed 's/^/  /'
+    echo ""
+    echo "  Common causes:"
+    echo "  - CLAUDECODE env var set (nested session) — fixed in this script"
+    echo "  - Authentication expired — run 'claude' interactively to re-auth"
+    echo "  - API key missing or invalid"
     exit 1
 fi
 
@@ -140,9 +155,8 @@ update_prd_json() {
 
 parse_story_result() {
     local output="$1"
-    # Look for STORY_RESULT: PASS or STORY_RESULT: BLOCKED: <reason>
     # Scan entire output for the LAST occurrence of STORY_RESULT
-    # (Claude adds trailing text — fixed windows like tail -5 or tail -30 are fragile)
+    # (Claude adds trailing text — fixed windows like tail -5 are fragile)
     local result_line
     result_line=$(echo "$output" | grep -o 'STORY_RESULT: .*' | tail -1)
 
@@ -222,6 +236,24 @@ write_progress_entry() {
 EOF
 }
 
+write_diagnostic_output() {
+    # Append diagnostic info to progress.txt when output is MALFORMED
+    local story_id="$1"
+    local output="$2"
+
+    local line_count
+    line_count=$(echo "$output" | wc -l | tr -d ' ')
+
+    cat >> "$PROGRESS_FILE" << EOF
+**Diagnostic (MALFORMED):** output=$line_count lines
+**First 5 lines:**
+$(echo "$output" | head -5 | sed 's/^/  /')
+**Last 5 lines:**
+$(echo "$output" | tail -5 | sed 's/^/  /')
+
+EOF
+}
+
 check_phase_progress() {
     # Check if all stories in current phase are done or blocked
     local phase
@@ -289,7 +321,7 @@ report_progress() {
 
 run_test_command() {
     # Run the test command in a subshell to isolate from the loop shell
-    # Export PRE_HEAD so test scripts can detect what changed this story
+    # Pass LOOP_PRE_HEAD so test scripts can detect what changed this story
     LOOP_PRE_HEAD="${PRE_HEAD:-}" bash -c "$TEST_COMMAND"
 }
 
@@ -474,6 +506,7 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
     RESULT=$(parse_story_result "$OUTPUT")
 
     if [ "$RESULT" = "PASS" ]; then
+        CONSECUTIVE_MALFORMED=0  # Reset circuit breaker
         # Independently verify: run test suite
         echo "Claude reports PASS. Running independent verification..."
         if run_test_command; then
@@ -485,9 +518,25 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
             RESULT="BLOCKED: tests failed post-verification"
         fi
     elif [ "$RESULT" = "MALFORMED" ]; then
-        echo "Malformed output from Claude. Marking story blocked."
+        CONSECUTIVE_MALFORMED=$((CONSECUTIVE_MALFORMED + 1))
+        echo "Malformed output from Claude (consecutive: $CONSECUTIVE_MALFORMED/$MAX_CONSECUTIVE_MALFORMED). Marking story blocked."
         update_prd_json "$STORY" "blocked" "malformed output from Claude"
+        # Write diagnostic output to progress.txt for debugging
+        write_diagnostic_output "$STORY" "$OUTPUT"
+
+        # Circuit breaker: stop loop after N consecutive MALFORMED
+        if [ "$CONSECUTIVE_MALFORMED" -ge "$MAX_CONSECUTIVE_MALFORMED" ]; then
+            echo ""
+            echo "CIRCUIT BREAKER: $MAX_CONSECUTIVE_MALFORMED consecutive MALFORMED results."
+            echo "This indicates a systematic issue (not a story-specific failure)."
+            echo "Check progress.txt diagnostics for Claude's actual output."
+            write_progress_entry "$i" "$STORY" "$RESULT" "$PRE_HEAD"
+            git add -A && git commit -m "loop: iteration $i — $STORY (circuit breaker)" --allow-empty
+            report_progress
+            exit 1
+        fi
     else
+        CONSECUTIVE_MALFORMED=0  # Reset circuit breaker
         # BLOCKED with reason
         echo "Story blocked: $RESULT"
         update_prd_json "$STORY" "blocked" "$RESULT"
