@@ -131,11 +131,17 @@ tests:
           FAIL if it is parsed as aorist ACTIVE participle.
           FAIL if it is absent from the lexical analysis.
       # Frequency counts present (not vague)
+      # NOTE: query_vocabulary returns chapter-level counts (by_chapter), not verse refs.
+      # Accept either verse refs (if agent enriches from morphology) or chapter-level counts.
       - type: llm-rubric
         value: |
           Check the analysis of χαρά or χαίρω in Philippians.
-          PASS if specific occurrence counts are given with verse references (e.g., "5 occurrences: 1:4, 1:25, 2:2, 2:29, 4:1").
-          FAIL if the analysis only says "frequently occurs" or "characteristic of Philippians" without counts.
+          PASS if specific numerical occurrence counts are given in any of these forms:
+          - Verse references (e.g., "5 occurrences: 1:4, 1:25, 2:2, 2:29, 4:1")
+          - Chapter-level breakdown (e.g., "9 total: 2 in ch.1, 3 in ch.2, 1 in ch.3, 3 in ch.4")
+          - Chapter distribution data from query_vocabulary (e.g., "by chapter: {1:2, 2:2, 4:1}")
+          - Total count with chapter distribution in any format
+          FAIL if the analysis only says "frequently occurs" or "characteristic of Philippians" without any numerical count data.
       # Key verb ἐπιτελέσει (1:6) must appear (manual TDD S1 §4 depth)
       - type: icontains
         value: "ἐπιτελ"
