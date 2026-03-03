@@ -17,12 +17,14 @@ import urllib.error
 
 OUTPUT_DIR = "server/d1-seed"
 
-# scrollmapper table names → our translation IDs
+# scrollmapper per-translation .db files → (table_name, our translation ID)
+# Each .db file has a table named {TranslationName}_verses with columns:
+#   id, book_id, chapter, verse, text
 TRANSLATIONS = {
-    "t_kjv": "KJV",
-    "t_asv": "ASV",
-    "t_ylt": "YLT",
-    "t_dby": "DBY",
+    "KJV.db": ("KJV_verses", "KJV"),
+    "ASV.db": ("ASV_verses", "ASV"),
+    "YLT.db": ("YLT_verses", "YLT"),
+    "Darby.db": ("Darby_verses", "DBY"),
 }
 
 # scrollmapper book numbers (1-66) → canonical book names
@@ -214,7 +216,7 @@ def process_translation(db_path: str, table_name: str, translation_id: str):
         conn.close()
         return 0
 
-    cursor.execute(f"SELECT b, c, v, t FROM {table_name} ORDER BY b, c, v")
+    cursor.execute(f"SELECT book_id, chapter, verse, text FROM {table_name} ORDER BY book_id, chapter, verse")
     rows = cursor.fetchall()
     conn.close()
 
@@ -252,21 +254,25 @@ def process_translation(db_path: str, table_name: str, translation_id: str):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 etl-bible-text.py <path-to-scrollmapper-bible.db>")
-        print("  Download from: https://github.com/scrollmapper/bible_databases")
-        print("  File needed: bible-sqlite.db (contains t_kjv, t_asv, t_ylt, t_dby tables)")
+        print("Usage: python3 etl-bible-text.py <path-to-scrollmapper-sqlite-dir>")
+        print("  Clone from: https://github.com/scrollmapper/bible_databases")
+        print("  Directory needed: formats/sqlite/ (contains KJV.db, ASV.db, YLT.db, Darby.db)")
         sys.exit(1)
 
-    db_path = sys.argv[1]
-    if not os.path.exists(db_path):
-        print(f"ERROR: Database file not found: {db_path}")
+    db_dir = sys.argv[1]
+    if not os.path.isdir(db_dir):
+        print(f"ERROR: Directory not found: {db_dir}")
         sys.exit(1)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     grand_total = 0
-    for table_name, translation_id in TRANSLATIONS.items():
-        print(f"Processing {translation_id} ({table_name})...")
+    for db_file, (table_name, translation_id) in TRANSLATIONS.items():
+        db_path = os.path.join(db_dir, db_file)
+        if not os.path.exists(db_path):
+            print(f"  WARNING: {db_file} not found in {db_dir}, skipping {translation_id}")
+            continue
+        print(f"Processing {translation_id} ({db_file} → {table_name})...")
         count = process_translation(db_path, table_name, translation_id)
         print(f"  {count} verses written")
         grand_total += count
