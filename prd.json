@@ -316,7 +316,8 @@
         "ADV3 GREEN result checked after budget increase",
         "Outcome clearly determined: fixed OR needs turn-limit investigation OR different failure"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "ADV3 SDK session hangs indefinitely (no output at 120s or 300s timeout). Budget is $3.00 and max_turns is 50 — both already increased. Error is a persistent hang, NOT \"Continuing from cut-off point\". Story instructions say stop and escalate; do not proceed to S-013. Human investigation needed to determine why the SDK session never completes for this specific test."
     },
     {
       "id": "S-013",
