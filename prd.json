@@ -298,7 +298,8 @@
         "S4 GREEN passes without error_max_budget_usd",
         "File committed"
       ],
-      "passes": false
+      "passes": false,
+      "blocked": "malformed output from Claude"
     },
     {
       "id": "S-012",
