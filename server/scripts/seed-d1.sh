@@ -155,5 +155,35 @@ for chunk in "$SEED_DIR"/discourse-boundaries-*.sql; do
 done
 echo "  Discourse boundaries: $disc_count batches imported."
 
+# Phase 6: Bible verses (6 translations × 66 books)
+echo "Importing bible verses..."
+verse_count=0
+for chunk in "$SEED_DIR"/bible-verses-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "  Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+  verse_count=$((verse_count + 1))
+done
+echo "  $verse_count bible verse batches imported."
+
+# Phase 7: Commentaries (6 commentary files)
+echo "Importing commentaries..."
+commentary_count=0
+for chunk in "$SEED_DIR"/commentary-*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "  Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+  commentary_count=$((commentary_count + 1))
+done
+echo "  $commentary_count commentary files imported."
+
+# Post-seed verification
 echo ""
-echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books, Variants: $var_count, Discourse: $disc_count ==="
+echo "=== Verification ==="
+npx wrangler d1 execute "$DB_NAME" --command="SELECT translation, COUNT(*) as count FROM bible_verses GROUP BY translation;" --remote
+npx wrangler d1 execute "$DB_NAME" --command="SELECT commentary, COUNT(*) as count FROM commentary_entries GROUP BY commentary;" --remote
+
+echo ""
+echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books, Variants: $var_count, Discourse: $disc_count, Verses: $verse_count, Commentaries: $commentary_count ==="
