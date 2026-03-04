@@ -43,59 +43,58 @@ tests:
           const out = context.vars?.output || output || '';
           return out.toLowerCase().includes('strongs') || out.toLowerCase().includes('strong');
 
-  # NOTE: R3, R4, R5, R6, R8 commented out — these tools require verification
-  # against the deployed server. Uncomment when confirmed available.
-  # R9 (query_syntax) deferred — OpenText data ETL incomplete.
+  # NOTE: R9 (query_syntax) deferred — OpenText data ETL incomplete.
+  # R3-R6, R8 verified deployed on server (2026-03-04) and active.
 
   # ── Phase 2+ (lexicon, versification, cross-refs) ──────────────────────
-  # - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
-  #   vars:
-  #     prompt: >
-  #       Use the query_lexicon tool with strongs_ids=["H7225"].
-  #       Return the raw tool output only.
-  #   assert:
-  #     - type: javascript
-  #       value: |
-  #         const out = context.vars?.output || output || '';
-  #         const lower = out.toLowerCase();
-  #         // H7225 = reshit (beginning) — first word of Genesis 1:1
-  #         return lower.includes('begin') || lower.includes('reshit') || lower.includes('first');
+  - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
+    vars:
+      prompt: >
+        Use the query_lexicon tool with strongs_ids=["H7225"].
+        Return the raw tool output only.
+    assert:
+      - type: javascript
+        value: |
+          const out = context.vars?.output || output || '';
+          const lower = out.toLowerCase();
+          // H7225 = reshit (beginning) — first word of Genesis 1:1
+          return lower.includes('begin') || lower.includes('reshit') || lower.includes('first');
 
-  # - description: "R4: query_cross_references returns results (Phase 2+)"
-  #   vars:
-  #     prompt: >
-  #       Use the query_cross_references tool for Romans 8:28.
-  #       Return the raw tool output only.
-  #   assert:
-  #     - type: icontains
-  #       value: "Genesis"
+  - description: "R4: query_cross_references returns results (Phase 2+)"
+    vars:
+      prompt: >
+        Use the query_cross_references tool for Romans 8:28.
+        Return the raw tool output only.
+    assert:
+      - type: icontains
+        value: "Genesis"
 
   # ── Phase 3+ (entities) ────────────────────────────────────────────────
-  # - description: "R5: query_people returns results (Phase 3+)"
-  #   vars:
-  #     prompt: >
-  #       Use the query_people tool for Romans 16:1-16:16.
-  #       Return the raw tool output only.
-  #   assert:
-  #     - type: javascript
-  #       value: |
-  #         const out = context.vars?.output || output || '';
-  #         // Should contain multiple people names
-  #         // KJV naming: Phebe (not Phoebe), Priscilla (not Prisca), Aquila
-  #         const names = ['Phebe', 'Priscilla', 'Aquila', 'Phoebe', 'Prisca'].filter(n => out.includes(n));
-  #         return names.length >= 2;
+  - description: "R5: query_people returns results (Phase 3+)"
+    vars:
+      prompt: >
+        Use the query_people tool for Romans 16:1-16:16.
+        Return the raw tool output only.
+    assert:
+      - type: javascript
+        value: |
+          const out = context.vars?.output || output || '';
+          // Should contain multiple people names
+          // KJV naming: Phebe (not Phoebe), Priscilla (not Prisca), Aquila
+          const names = ['Phebe', 'Priscilla', 'Aquila', 'Phoebe', 'Prisca'].filter(n => out.includes(n));
+          return names.length >= 2;
 
   # ── Phase 3a+ (speakers) ───────────────────────────────────────────────
-  # - description: "R6: query_speakers returns divine speech (Phase 3a+)"
-  #   vars:
-  #     prompt: >
-  #       Use the query_speakers tool for Genesis 22:1-22:19.
-  #       Return the raw tool output only.
-  #   assert:
-  #     - type: icontains
-  #       value: "God"
-  #     - type: icontains
-  #       value: "Abraham"
+  - description: "R6: query_speakers returns divine speech (Phase 3a+)"
+    vars:
+      prompt: >
+        Use the query_speakers tool for Genesis 22:1-22:19.
+        Return the raw tool output only.
+    assert:
+      - type: icontains
+        value: "God"
+      - type: icontains
+        value: "Abraham"
 
   # ── Phase 5+ (OpenGNT) ─────────────────────────────────────────────────
   - description: "R7: query_morphology full returns NT Louw-Nida (Phase 5+)"
@@ -109,21 +108,21 @@ tests:
           const out = context.vars?.output || output || '';
           return out.toLowerCase().includes('louw') || out.toLowerCase().includes('nida');
 
-  # - description: "R8: query_variants returns edition comparison (Phase 5+)"
-  #   vars:
-  #     prompt: >
-  #       Use the query_variants tool for John 7:53-8:11.
-  #       Return the raw tool output only.
-  #   assert:
-  #     - type: icontains
-  #       value: "variant"
-  #     - type: javascript
-  #       value: |
-  #         const out = context.vars?.output || output || '';
-  #         // Should reference at least some edition codes
-  #         const editions = ['NA28', 'SBLGNT', 'Byzantine', 'Tyndale', 'Textus Receptus', 'Westcott'];
-  #         const found = editions.filter(e => out.includes(e));
-  #         return found.length >= 1;
+  - description: "R8: query_variants returns edition comparison (Phase 5+)"
+    vars:
+      prompt: >
+        Use the query_variants tool for John 7:53-8:11.
+        Return the raw tool output only.
+    assert:
+      - type: icontains
+        value: "variant"
+      - type: javascript
+        value: |
+          const out = context.vars?.output || output || '';
+          // Should reference at least some edition codes
+          const editions = ['NA28', 'SBLGNT', 'Byzantine', 'Tyndale', 'Textus Receptus', 'Westcott'];
+          const found = editions.filter(e => out.includes(e));
+          return found.length >= 1;
 
   # NOTE: R9 for query_syntax is DEFERRED — OpenText syntax data was not
   # seeded in Phase 5 (ETL parsing incomplete). Table exists but is empty.
