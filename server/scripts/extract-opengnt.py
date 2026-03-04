@@ -502,47 +502,36 @@ def parse_keyed_features(content: str) -> dict:
 def parse_opentext_annotations(content: str) -> list[dict]:
     """Parse OpenText clause-level annotations CSV.
 
-    Returns list of clause dicts for syntax_annotations table.
+    Format: 4 tab-separated columns with no header row.
+      Col 0: book number (e.g., 40 = Matthew)
+      Col 1: chapter number
+      Col 2: verse number
+      Col 3: HTML-encoded clause structure for the verse
+
+    Returns list of raw rows (each row = list of cols) for processing.
     """
     annotations = []
     lines = content.split("\n")
     print(f"  OPENTEXT: {len(lines)} lines")
 
-    if len(lines) < 2:
+    if len(lines) < 1:
         print("  WARNING: OpenText file appears empty")
         return annotations
 
-    # Detect header to understand column structure
-    header = lines[0].strip()
-    header_cols = header.split("\t")
-    print(f"    Header columns ({len(header_cols)}): {header_cols[:10]}...")
+    # Detect format from first row (no header — first row is data)
+    first_cols = lines[0].strip().split("\t")
+    print(f"    Header columns ({len(first_cols)}): {first_cols[:4]}...")
 
-    # Parse based on detected format
-    # Expected structure: word-level annotations with clause assignments
-    # We aggregate to clause-level entries
-    clause_map = {}  # clause_id → annotation data
-
-    for i, line in enumerate(lines[1:], start=2):
+    for i, line in enumerate(lines):
         line = line.strip()
         if not line:
             continue
 
         cols = line.split("\t")
-        if len(cols) < 5:
+        if len(cols) < 4:
             continue
 
-        try:
-            # Try to extract reference and clause information
-            # The actual format needs to be determined from the data
-            # Typical OpenText format: word_id, book, chapter, verse, clause_id,
-            #                          clause_type, clause_relation, word_group_role, text
-            # We'll detect the format from the header and data
-
-            # For now, collect raw rows and we'll process them after
-            # seeing the actual data format
-            annotations.append(cols)
-        except Exception:
-            continue
+        annotations.append(cols)
 
     print(f"  Collected {len(annotations)} raw OpenText rows")
     return annotations
@@ -1058,89 +1047,85 @@ def write_syntax_sql(raw_rows: list, output_dir: Path) -> None:
 
 
 def _process_opentext_rows(raw_rows: list) -> list[dict]:
-    """Attempt to process OpenText annotation rows into structured data.
+    """Process OpenText annotation rows into structured clause data.
 
-    The OpenText CSV uses HTML formatting for clause annotations.
-    We need to extract clause structure from the HTML content.
+    CSV format (no header): book_num TAB chapter TAB verse TAB html_text
+    The html_text contains one or more <cl>...</cl> elements per verse.
+    Each <cl> block is one clause; we extract clause_id and clause_type
+    from the embedded <e> and <n> tags.
+
+    Clause type mapping:
+      °  → "independent"   (main/independent clause)
+      @  → "relative"      (clause with back-reference)
+      Other → raw label
     """
     if not raw_rows:
         return []
 
-    # Detect format from first few rows
-    sample = raw_rows[0]
-
-    # OpenText annotations typically have columns:
-    # OGNTsort, TANTTsort, BookChapterVerse, ClauseType, Role, Text, ...
-    # The exact format needs to be determined empirically
-
     annotations = []
-    clause_map = {}
 
     for row in raw_rows:
+        if len(row) < 4:
+            continue
+
         try:
-            if len(row) < 6:
-                continue
+            book_code = int(row[0])
+            chapter = int(row[1])
+            verse = int(row[2])
+        except (ValueError, IndexError):
+            continue
 
-            # Try to extract reference and clause data
-            # Column positions depend on the actual CSV format
-            # We'll look for book|chapter|verse patterns
-            ref_col = None
-            for idx, col in enumerate(row):
-                if re.match(r"\d+\|\d+\|\d+", col):
-                    ref_col = idx
-                    break
+        if book_code not in NT_BOOK_MAP:
+            continue
 
-            if ref_col is None:
-                continue
+        book = NT_BOOK_MAP[book_code]
+        html = row[3]
 
-            ref_parts = row[ref_col].split("|")
-            book_code = int(ref_parts[0])
-            chapter = int(ref_parts[1])
-            verse = int(ref_parts[2])
+        # Extract all <cl>...</cl> blocks from the verse HTML
+        cl_blocks = re.findall(r"<cl>(.*?)</cl>", html, re.DOTALL)
 
-            if book_code not in NT_BOOK_MAP:
-                continue
+        for cl_idx, cl_html in enumerate(cl_blocks):
+            # Clause ID: first <e>...</e> in the block (word range reference)
+            e_matches = re.findall(r"<e>([^<]+)</e>", cl_html)
+            clause_id = e_matches[0].strip() if e_matches else f"{book}.{chapter}.{verse}.{cl_idx}"
 
-            book = NT_BOOK_MAP[book_code]
+            # Parent clause ID: second <e> element (back-reference, if present)
+            parent_clause_id = e_matches[1].strip() if len(e_matches) > 1 else None
 
-            # Extract clause information from surrounding columns
-            # This is format-dependent and needs empirical verification
-            clause_type = row[ref_col + 1].strip() if ref_col + 1 < len(row) else ""
-            clause_text = row[ref_col + 2].strip() if ref_col + 2 < len(row) else ""
-
-            # Strip HTML tags from clause text
-            clause_text = re.sub(r"<[^>]+>", "", clause_text)
-
-            if not clause_type:
-                continue
-
-            # Normalize clause type
-            ct_lower = clause_type.lower()
-            if "primary" in ct_lower:
-                norm_type = "primary"
-            elif "secondary" in ct_lower:
-                norm_type = "secondary"
-            elif "embed" in ct_lower:
-                norm_type = "embedded"
+            # Clause type: first <n>...</n> in the block
+            n_labels = re.findall(r"<n>([^<]+)</n>", cl_html)
+            raw_type = n_labels[0].strip() if n_labels else ""
+            if raw_type == "°":
+                clause_type = "independent"
+            elif raw_type == "@":
+                clause_type = "relative"
+            elif raw_type:
+                clause_type = raw_type
             else:
-                norm_type = clause_type
+                clause_type = "unknown"
 
-            clause_key = f"{book}.{chapter}.{verse}.{len(annotations)}"
+            # Clause relation: second <n> label (if it differs from the first)
+            clause_relation = None
+            if len(n_labels) > 1 and n_labels[1].strip() not in ("°", "@", ""):
+                clause_relation = n_labels[1].strip()
+
+            # Clause text: strip all HTML tags, collapse whitespace
+            raw_text = re.sub(r"<[^>]+>", "", cl_html)
+            raw_text = re.sub(r"[『』]", "", raw_text)
+            raw_text = re.sub(r"\s+", " ", raw_text).strip()
+            clause_text = raw_text if raw_text else None
 
             annotations.append({
                 "book": book,
                 "chapter": chapter,
                 "verse": verse,
-                "clause_id": clause_key,
-                "clause_type": norm_type,
-                "clause_relation": None,
-                "clause_text": clause_text if clause_text else None,
+                "clause_id": clause_id,
+                "clause_type": clause_type,
+                "clause_relation": clause_relation,
+                "clause_text": clause_text,
                 "word_groups": None,
-                "parent_clause_id": None,
+                "parent_clause_id": parent_clause_id,
             })
-
-        except (ValueError, IndexError):
-            continue
 
     return annotations
 
