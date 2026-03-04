@@ -41,7 +41,7 @@ tests:
           PASS if ἐναρξάμενος is parsed as aorist MIDDLE participle (or middle-only/deponent).
           FAIL if it is parsed as aorist ACTIVE participle.
 
-  - description: "CAL-1b: Wrong morphology (ACTIVE) should FAIL"
+  - description: "CAL-1b: Wrong morphology (ACTIVE) should be detected"
     vars:
       synthetic_output: |
         ## Lexical Analysis
@@ -49,10 +49,10 @@ tests:
         The active voice here indicates God as the direct agent who began
         the good work. [query_morphology] data: V-AAP-NSM.
     assert:
-      - type: not-llm-rubric
+      - type: llm-rubric
         value: |
-          PASS if ἐναρξάμενος is parsed as aorist MIDDLE participle (or middle-only/deponent).
-          FAIL if it is parsed as aorist ACTIVE participle.
+          PASS if ἐναρξάμενος is parsed as aorist ACTIVE participle (not middle/deponent).
+          FAIL if it is parsed as aorist MIDDLE participle or deponent.
 
   # =========================================================================
   # CAL-2: Devotional language detection
@@ -74,7 +74,7 @@ tests:
           - Pastoral framing ("God's peace guards our hearts")
           FAIL only if the response is purely analytical with zero devotional language.
 
-  - description: "CAL-2b: Analytical output should FAIL devotional rubric"
+  - description: "CAL-2b: Analytical output should be detected as non-devotional"
     vars:
       synthetic_output: |
         Philippians 4:4-7 Structure:
@@ -85,13 +85,11 @@ tests:
         P5 [v.7]: καὶ ἡ εἰρήνη — result clause, φρουρήσει (future active indicative)
         CONFIDENCE: HIGH (MCP-grounded morphology)
     assert:
-      - type: not-llm-rubric
+      - type: llm-rubric
         value: |
-          PASS if the response contains devotional or applicatory language such as:
-          - "This passage reminds us..." or "Paul encourages us..."
-          - First-person plural applications ("we should...", "let us...")
-          - Pastoral framing ("God's peace guards our hearts")
-          FAIL only if the response is purely analytical with zero devotional language.
+          PASS if the response is purely analytical with zero devotional language —
+          no "reminds us", no first-person plural applications, no pastoral framing.
+          FAIL if the response contains devotional or applicatory language.
 
   # =========================================================================
   # CAL-3: Tier labeling detection
@@ -124,7 +122,7 @@ tests:
           PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
           FAIL if Tier 4 presents agent opinion as established fact without labeling.
 
-  - description: "CAL-3b: Output with unlabeled Tier 4 should FAIL"
+  - description: "CAL-3b: Unlabeled Tier 4 should be detected as unlabeled"
     vars:
       synthetic_output: |
         ## Interpretive Guardrails
@@ -134,11 +132,11 @@ tests:
         **Tier 4:** The chiastic structure of 1:3-11 confirms intentional literary
         framing that establishes Paul's rhetorical strategy for the letter.
     assert:
-      - type: not-llm-rubric
+      - type: llm-rubric
         value: |
           Check the Interpretive Guardrails section.
-          PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
-          FAIL if Tier 4 presents agent opinion as established fact without labeling.
+          PASS if Tier 4 presents its claim as established fact WITHOUT an "Agent assessment" label or similar epistemic marker.
+          FAIL if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
 
   # =========================================================================
   # CAL-4: MCP citation detection
@@ -156,7 +154,7 @@ tests:
           PASS if morphological data is cited with [query_morphology] or similar MCP citation.
           FAIL if morphological claims are made without tool citation.
 
-  - description: "CAL-4b: Output without MCP citation should FAIL"
+  - description: "CAL-4b: Missing MCP citation should be detected"
     vars:
       synthetic_output: |
         The word ἁρπαγμός (Phil 2:6) is a fascinating term. Most scholars
@@ -164,10 +162,10 @@ tests:
         form here suggests it functions as a predicate complement. The -μός
         suffix typically indicates the result of an action in Hellenistic Greek.
     assert:
-      - type: not-llm-rubric
+      - type: llm-rubric
         value: |
-          PASS if morphological data is cited with [query_morphology] or similar MCP citation.
-          FAIL if morphological claims are made without tool citation.
+          PASS if morphological claims are made WITHOUT any [query_morphology] or MCP tool citation.
+          FAIL if morphological data is cited with [query_morphology] or similar MCP citation.
 
   # =========================================================================
   # CAL-5: Scholarly source quality
@@ -185,7 +183,7 @@ tests:
           PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
           FAIL if Tier 3 says "scholars agree" without naming a specific source.
 
-  - description: "CAL-5b: Vague attribution should FAIL"
+  - description: "CAL-5b: Vague attribution should be detected as uncited"
     vars:
       synthetic_output: |
         ## Interpretive Guardrails
@@ -194,7 +192,7 @@ tests:
         consensus view in modern scholarship and is widely accepted across
         confessional traditions.
     assert:
-      - type: not-llm-rubric
+      - type: llm-rubric
         value: |
-          PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
-          FAIL if Tier 3 says "scholars agree" without naming a specific source.
+          PASS if Tier 3 uses vague attribution ("scholars agree", "consensus view") without naming a specific author or commentary.
+          FAIL if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
