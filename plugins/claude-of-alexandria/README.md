@@ -18,19 +18,44 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes nine tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes 22 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+
+**Core linguistic tools:**
 
 | Tool | Queries | Coverage |
 | ---- | ------- | -------- |
+| `query_morphology` | Word-level morphological parsing | Both |
 | `query_discourse_features` | Levinsohn NT discourse features | NT |
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
-| `query_morphology` | Word-level morphological parsing | Both |
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both |
 | `query_lemmas` | Cross-book lemma distribution | Both |
 | `query_theme` | Cross-book distribution of a thematic keyword group | Both |
-| `list_books` | Available books and their metadata | Both |
+| `query_syntax` | OpenText clause-level semantic role annotations | NT |
+| `query_variants` | Textual variant edition comparison across 9 editions | NT |
+| `query_lexicon` | Strong's-based word definitions (TBESH/TBESG) | Both |
+| `list_books` | Available books, metadata, and thematic keyword groups | Both |
+
+**Entity and context tools:**
+
+| Tool | Queries | Coverage |
+| ---- | ------- | -------- |
+| `query_cross_references` | Editorial tradition cross-references between verses | Both |
+| `query_places` | Geographic locations with coordinates | Both |
+| `query_people` | Named individuals with cross-canonical appearances | Both |
+| `query_events` | Timeline events with participants and locations | Both |
+| `query_person_network` | Family relationships and co-appearances | Both |
+| `query_speakers` | Speaker attribution with quotation type | Both |
+| `check_versification` | Hebrew-English verse numbering differences | OT |
+
+**Bible text and commentary tools:**
+
+| Tool | Queries | Coverage |
+| ---- | ------- | -------- |
+| `bible_lookup` | Verse text in 6 translations | Both |
+| `commentary_lookup` | Commentary entries from 6 commentaries | Both |
+| `parallel_text` | Compare verse text across multiple translations | Both |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 
