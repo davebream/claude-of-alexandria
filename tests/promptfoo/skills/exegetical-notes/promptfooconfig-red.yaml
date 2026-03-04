@@ -23,7 +23,8 @@
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - file://../../providers/sdk-bare.mjs
+  - id: anthropic:messages:claude-sonnet-4-6
+    label: bare-model
 
 prompts:
   - "{{prompt}}"

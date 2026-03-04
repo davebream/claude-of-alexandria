@@ -14,7 +14,7 @@
 description: "Exegetical Notes — GREEN phase (skill + MCP)"
 
 providers:
-  - file://../../providers/sdk-with-skill.mjs
+  - file://../../providers/with-skill.agent-sdk.yaml
 
 prompts:
   - "{{prompt}}"
