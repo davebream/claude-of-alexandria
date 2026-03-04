@@ -59,6 +59,14 @@ https://github.com/STEPBible/STEPBible-Data
 - TBESG glosses (context-insensitive English translations)
 - Used as supplementary gloss layer alongside OGNT glosses
 
+## Tyndale Open Study Notes (CC BY-SA 4.0)
+
+https://github.com/TyndaleHousePublishers/tyndale-open-study-notes
+
+- Tyndale House Publishers
+- Study notes for the full Bible, designed for general readers
+- Used via commentary lookup tool alongside public domain commentaries
+
 ## Robinson RMAC Morphological Codes (CC BY-SA 3.0)
 
 https://github.com/morphgnt/crosswire-morphgnt
