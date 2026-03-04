@@ -1,5 +1,4 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert';
+import { describe, it, expect } from 'vitest';
 import { z } from 'zod';
 
 // Import the schemas we're testing
@@ -20,23 +19,20 @@ describe('ThemesInputSchema.lemmas', () => {
       lemmas: ['H2617a', 'H5315'],
       testament: 'ot',
     });
-    assert.strictEqual(result.success, true, 'Should accept native array');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.lemmas, ['H2617a', 'H5315']);
+      expect(result.data.lemmas).toEqual(['H2617a', 'H5315']);
     }
   });
 
   it('accepts a JSON-encoded string (XML tool call format)', () => {
-    // This is what XML-based tool callers send:
-    // <parameter name="lemmas">["H2617a", "H5315"]</parameter>
-    // The XML parser sends the content as a string literal.
     const result = schema.safeParse({
-      lemmas: '["H2617a", "H5315"]',  // string, not array
+      lemmas: '["H2617a", "H5315"]',
       testament: 'ot',
     });
-    assert.strictEqual(result.success, true, 'Should accept JSON-encoded string');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.lemmas, ['H2617a', 'H5315']);
+      expect(result.data.lemmas).toEqual(['H2617a', 'H5315']);
     }
   });
 
@@ -45,7 +41,7 @@ describe('ThemesInputSchema.lemmas', () => {
       lemmas: '[not valid json]',
       testament: 'ot',
     });
-    assert.strictEqual(result.success, false, 'Should reject invalid JSON');
+    expect(result.success).toBe(false);
   });
 
   it('rejects JSON strings that are not arrays', () => {
@@ -53,7 +49,7 @@ describe('ThemesInputSchema.lemmas', () => {
       lemmas: '"this is just a string"',
       testament: 'ot',
     });
-    assert.strictEqual(result.success, false, 'Should reject non-array JSON');
+    expect(result.success).toBe(false);
   });
 
   it('rejects empty arrays', () => {
@@ -61,7 +57,7 @@ describe('ThemesInputSchema.lemmas', () => {
       lemmas: [],
       testament: 'ot',
     });
-    assert.strictEqual(result.success, false, 'Should reject empty array');
+    expect(result.success).toBe(false);
   });
 
   it('rejects arrays exceeding max length (100)', () => {
@@ -70,7 +66,7 @@ describe('ThemesInputSchema.lemmas', () => {
       lemmas: tooMany,
       testament: 'ot',
     });
-    assert.strictEqual(result.success, false, 'Should reject >100 items');
+    expect(result.success).toBe(false);
   });
 });
 
@@ -81,19 +77,19 @@ describe('LemmasInputSchema.lemmas', () => {
     const result = schema.safeParse({
       lemmas: ['H7462b', 'πατήρ'],
     });
-    assert.strictEqual(result.success, true, 'Should accept native array');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.lemmas, ['H7462b', 'πατήρ']);
+      expect(result.data.lemmas).toEqual(['H7462b', 'πατήρ']);
     }
   });
 
   it('accepts a JSON-encoded string (XML tool call format)', () => {
     const result = schema.safeParse({
-      lemmas: '["H7462b", "πατήρ"]',  // string, not array
+      lemmas: '["H7462b", "πατήρ"]',
     });
-    assert.strictEqual(result.success, true, 'Should accept JSON-encoded string');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.lemmas, ['H7462b', 'πατήρ']);
+      expect(result.data.lemmas).toEqual(['H7462b', 'πατήρ']);
     }
   });
 
@@ -101,21 +97,21 @@ describe('LemmasInputSchema.lemmas', () => {
     const result = schema.safeParse({
       lemmas: '[broken',
     });
-    assert.strictEqual(result.success, false, 'Should reject invalid JSON');
+    expect(result.success).toBe(false);
   });
 
   it('rejects JSON strings that are not arrays', () => {
     const result = schema.safeParse({
-      lemmas: '123',  // valid JSON, but not an array
+      lemmas: '123',
     });
-    assert.strictEqual(result.success, false, 'Should reject non-array JSON');
+    expect(result.success).toBe(false);
   });
 
   it('rejects empty arrays', () => {
     const result = schema.safeParse({
       lemmas: [],
     });
-    assert.strictEqual(result.success, false, 'Should reject empty array');
+    expect(result.success).toBe(false);
   });
 
   it('rejects arrays exceeding max length (50)', () => {
@@ -123,7 +119,7 @@ describe('LemmasInputSchema.lemmas', () => {
     const result = schema.safeParse({
       lemmas: tooMany,
     });
-    assert.strictEqual(result.success, false, 'Should reject >50 items');
+    expect(result.success).toBe(false);
   });
 });
 
@@ -135,20 +131,20 @@ describe('DiscourseInputSchema.features', () => {
       book: 'Mark',
       features: ['historical_present', 'left_dislocation'],
     });
-    assert.strictEqual(result.success, true, 'Should accept native array');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.features, ['historical_present', 'left_dislocation']);
+      expect(result.data.features).toEqual(['historical_present', 'left_dislocation']);
     }
   });
 
   it('accepts a JSON-encoded string (XML tool call format)', () => {
     const result = schema.safeParse({
       book: 'Mark',
-      features: '["historical_present", "left_dislocation"]',  // string, not array
+      features: '["historical_present", "left_dislocation"]',
     });
-    assert.strictEqual(result.success, true, 'Should accept JSON-encoded string');
+    expect(result.success).toBe(true);
     if (result.success) {
-      assert.deepStrictEqual(result.data.features, ['historical_present', 'left_dislocation']);
+      expect(result.data.features).toEqual(['historical_present', 'left_dislocation']);
     }
   });
 
@@ -156,7 +152,7 @@ describe('DiscourseInputSchema.features', () => {
     const result = schema.safeParse({
       book: 'Mark',
     });
-    assert.strictEqual(result.success, true, 'Should accept missing optional features');
+    expect(result.success).toBe(true);
   });
 
   it('rejects invalid JSON strings', () => {
@@ -164,14 +160,14 @@ describe('DiscourseInputSchema.features', () => {
       book: 'Mark',
       features: '[broken',
     });
-    assert.strictEqual(result.success, false, 'Should reject invalid JSON');
+    expect(result.success).toBe(false);
   });
 
   it('rejects JSON strings that are not arrays', () => {
     const result = schema.safeParse({
       book: 'Mark',
-      features: '"just a string"',  // valid JSON, but not an array
+      features: '"just a string"',
     });
-    assert.strictEqual(result.success, false, 'Should reject non-array JSON');
+    expect(result.success).toBe(false);
   });
 });
