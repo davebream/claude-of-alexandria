@@ -28,7 +28,7 @@ prompts:
 defaultTest:
   options:
     provider:
-      id: anthropic:messages:claude-sonnet-4-6
+      id: openai:gpt-4o
       config:
         temperature: 0
   assert:
