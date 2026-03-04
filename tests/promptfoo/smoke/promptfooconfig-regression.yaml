@@ -43,9 +43,9 @@ tests:
           const out = context.vars?.output || output || '';
           return out.toLowerCase().includes('strongs') || out.toLowerCase().includes('strong');
 
-  # NOTE: R3, R4, R5, R6, R8 commented out — these tools are not on the
-  # deployed server (12-tool inventory as of 2026-03-04). Uncomment when
-  # tools are deployed or server is updated.
+  # NOTE: R3, R4, R5, R6, R8 commented out — these tools require verification
+  # against the deployed server. Uncomment when confirmed available.
+  # R9 (query_syntax) deferred — OpenText data ETL incomplete.
 
   # ── Phase 2+ (lexicon, versification, cross-refs) ──────────────────────
   # - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
@@ -137,3 +137,63 @@ tests:
   #   assert:
   #     - type: icontains
   #       value: "clause"
+
+  # ── Phase 7+ (bible text tools) ────────────────────────────────────────
+  # NOTE: R10-R12 commented out — tools registered in sdk-with-skill.mjs but
+  # not yet deployed on the server (verified 2026-03-04). Uncomment when server
+  # exposes bible_lookup, commentary_lookup, parallel_text.
+  #
+  # - description: "R10: bible_lookup returns verse text (Phase 7+)"
+  #   vars:
+  #     prompt: >
+  #       Use the bible_lookup tool to look up John 3:16.
+  #       Return the raw tool output only, no analysis.
+  #   assert:
+  #     - type: icontains
+  #       value: "God"
+  #     - type: icontains
+  #       value: "world"
+  #     - type: javascript
+  #       value: |
+  #         const raw = JSON.parse(context.providerResponse?.raw || '{}');
+  #         return (raw.num_turns || 0) > 1;
+  #     - type: javascript
+  #       value: |
+  #         const out = context.vars?.output || output || '';
+  #         return out.length > 50;
+  #
+  # - description: "R11: commentary_lookup returns commentary content (Phase 7+)"
+  #   vars:
+  #     prompt: >
+  #       Use the commentary_lookup tool to look up commentary on Romans 8:28.
+  #       Return the raw tool output only, no analysis.
+  #   assert:
+  #     - type: javascript
+  #       value: |
+  #         const raw = JSON.parse(context.providerResponse?.raw || '{}');
+  #         return (raw.num_turns || 0) > 1;
+  #     - type: javascript
+  #       value: |
+  #         const out = context.vars?.output || output || '';
+  #         // Commentary should return substantive content (not just an error or empty)
+  #         return out.length > 200;
+  #
+  # - description: "R12: parallel_text returns multi-version comparison (Phase 7+)"
+  #   vars:
+  #     prompt: >
+  #       Use the parallel_text tool to compare translations of Genesis 1:1.
+  #       Return the raw tool output only, no analysis.
+  #   assert:
+  #     - type: javascript
+  #       value: |
+  #         const raw = JSON.parse(context.providerResponse?.raw || '{}');
+  #         return (raw.num_turns || 0) > 1;
+  #     - type: javascript
+  #       value: |
+  #         const out = context.vars?.output || output || '';
+  #         // parallel_text returns translations keyed by BSB, WEB, KJV, ASV, YLT, DBY.
+  #         // Check for at least 2 translation abbreviations to prove multi-version output.
+  #         const lower = out.toLowerCase();
+  #         const translations = ['bsb', 'web', 'kjv', 'asv', 'ylt', 'dby'];
+  #         const found = translations.filter(t => lower.includes(t));
+  #         return found.length >= 2;
