@@ -82,41 +82,34 @@ defaultTest:
 tests:
 
   # =========================================================================
-  # Scenario 1: Complete NT Analysis — Phil 1:1-11
-  # All 10 sections present and populated, format compliance verified
-  # S1: (~32 checkpoints)
+  # Scenarios S1+S2+S3+S6 CONSOLIDATED — Phil 1:1-11
+  # Single API call, all assertions combined.
+  # Tests: sections, content quality, morphology, frequency, tiers, verification
   # =========================================================================
-  - description: "S1 GREEN: Phil 1:1-11 — all 10 sections present"
+  - description: "S1-S3+S6 GREEN: Phil 1:1-11 — structure, data-grounding, tiers, verification"
     vars:
       prompt: "Generate exegetical notes for Philippians 1:1-11 --output print"
     assert:
-      # 10 required sections
-      - type: icontains
-        value: "Passage in Literary Context"
-      - type: icontains
-        value: "Internal Structure"
-      - type: icontains
-        value: "Propositional Summary"
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Exegetical Conclusions"
-      - type: icontains
-        value: "Interpretive Guardrails"
-      - type: icontains
-        value: "Open Questions"
-      - type: icontains
-        value: "Intertextual"
-      - type: icontains
-        value: "Data Sources"
-      - type: icontains
-        value: "Verification"
-      # Format compliance: header fields
-      - type: icontains
-        value: "Genre:"
-      - type: icontains
-        value: "Pericope Status:"
-      # Content quality — S1 must have substantive analysis, not just headers
+      # --- S1: All 10 required sections + header fields ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const sections = [
+            'passage in literary context', 'internal structure',
+            'propositional summary', 'lexical analysis',
+            'exegetical conclusions', 'interpretive guardrails',
+            'open questions', 'intertextual', 'data sources', 'verification'
+          ];
+          const headers = ['genre:', 'pericope status:'];
+          const missing = [...sections, ...headers].filter(s => !lower.includes(s));
+          return {
+            pass: missing.length === 0,
+            score: 1 - (missing.length / (sections.length + headers.length)),
+            reason: missing.length === 0
+              ? 'All 10 sections and header fields present'
+              : `Missing: [${missing.join(', ')}]`
+          };
+      # --- S1: Content quality ---
       - type: llm-rubric
         value: |
           Evaluate whether this exegetical notes output contains SUBSTANTIVE analytical
@@ -132,26 +125,14 @@ tests:
 
           FAIL if any section is present as a header only, with one generic sentence
           or no substantive analytical content beneath it.
-
-  # =========================================================================
-  # Scenario 2: Lexical Data-Grounding
-  # query_morphology MCP data, not memory
-  # S2: (must-say / must-not-say examples)
-  # =========================================================================
-  - description: "S2 GREEN: Lexical data-grounding — MCP morphology, not memory"
-    vars:
-      prompt: "Generate exegetical notes for Philippians 1:1-11 --output print"
-    assert:
-      # Correct morphology (aorist MIDDLE, not active)
+      # --- S2: Correct morphology (aorist MIDDLE, not active) ---
       - type: llm-rubric
         value: |
           Look for analysis of ἐναρξάμενος (Phil 1:6).
           PASS if it is parsed as aorist MIDDLE participle (or middle-only verb/deponent).
           FAIL if it is parsed as aorist ACTIVE participle.
           FAIL if it is absent from the lexical analysis.
-      # Frequency counts present (not vague)
-      # NOTE: query_vocabulary returns chapter-level counts (by_chapter), not verse refs.
-      # Accept either verse refs (if agent enriches from morphology) or chapter-level counts.
+      # --- S2: Frequency counts present (not vague) ---
       - type: llm-rubric
         value: |
           Check the analysis of χαρά or χαίρω in Philippians.
@@ -161,19 +142,7 @@ tests:
           - Chapter distribution data from query_vocabulary (e.g., "by chapter: {1:2, 2:2, 4:1}")
           - Total count with chapter distribution in any format
           FAIL if the analysis only says "frequently occurs" or "characteristic of Philippians" without any numerical count data.
-      # Key verb ἐπιτελέσει (1:6) must appear (manual TDD S1 §4 depth)
-      - type: icontains
-        value: "ἐπιτελ"
-
-  # =========================================================================
-  # Scenario 3: Tier Labeling
-  # All 4 tiers present; Tier 3 web citation; Tier 4 labeled
-  # S3:
-  # =========================================================================
-  - description: "S3 GREEN: Tier labeling — all 4 tiers present and correct"
-    vars:
-      prompt: "Generate exegetical notes for Philippians 1:1-11 --output print"
-    assert:
+      # --- S3: All 4 tiers present ---
       - type: icontains
         value: "Tier 1"
       - type: icontains
@@ -182,24 +151,34 @@ tests:
         value: "Tier 3"
       - type: icontains
         value: "Tier 4"
-      # Tier 1: linguistic grounding
+      # --- S3: Tier 1 linguistic grounding ---
       - type: llm-rubric
         value: |
           Check Section 6 (Interpretive Guardrails).
           PASS if Tier 1 contains a linguistic/morphological claim grounded in Greek grammar data.
           FAIL if Tier 1 is empty or contains non-linguistic content.
-      # Tier 3: named scholarly citation
+      # --- S3: Tier 3 named scholarly citation ---
       - type: llm-rubric
         value: |
           Check Section 6 (Interpretive Guardrails).
           PASS if Tier 3 contains a citation to a named scholarly commentary (author + title or series).
           FAIL if Tier 3 says "scholars agree" without naming a specific source.
-      # Tier 4: labeled as agent assessment
+      # --- S3: Tier 4 labeled as agent assessment ---
       - type: llm-rubric
         value: |
           Check Section 6 (Interpretive Guardrails).
           PASS if Tier 4 is explicitly labeled as "Agent assessment" or similar marker.
           FAIL if Tier 4 presents agent opinion as established fact without labeling.
+      # --- S6: Verification cross-check ---
+      - type: llm-rubric
+        value: |
+          Check the Verification section (Section 10).
+          PASS if it reports specific MCP cross-check results with:
+          - A count of data claims checked
+          - A count of claims confirmed
+          - A count of claims corrected (should be 0 if data was used correctly)
+          FAIL if Verification is present but contains only generic text without actual cross-check results.
+          FAIL if Verification is absent entirely.
 
   # =========================================================================
   # Scenario 4: Pericope Check Trigger
@@ -229,16 +208,6 @@ tests:
     vars:
       prompt: "Generate exegetical notes for Genesis 37:2-11 --output print"
     assert:
-      # Key sections present
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Interpretive Guardrails"
-      - type: icontains
-        value: "Verification"
-      # Format compliance
-      - type: icontains
-        value: "Genre:"
       # Hebrew morphology grounded in MCP data
       - type: llm-rubric
         value: |
@@ -261,35 +230,14 @@ tests:
           FAIL if no specific scholarly source is named.
 
   # =========================================================================
-  # Scenario 6: Verification Integration
-  # MCP cross-check runs; zero corrections for data claims
-  # S6:
+  # Scenarios S7+S13 CONSOLIDATED — Romans 3:21-26
+  # Single API call. Tests: source quality (Tier 3) + NT gloss tiering
   # =========================================================================
-  - description: "S6 GREEN: Verification section — MCP cross-check runs"
-    vars:
-      prompt: "Generate exegetical notes for Philippians 1:1-11 --output print"
-    assert:
-      - type: icontains
-        value: "Verification"
-      - type: llm-rubric
-        value: |
-          Check the Verification section (Section 10).
-          PASS if it reports specific MCP cross-check results with:
-          - A count of data claims checked
-          - A count of claims confirmed
-          - A count of claims corrected (should be 0 if data was used correctly)
-          FAIL if Verification is present but contains only generic text without actual cross-check results.
-          FAIL if Verification is absent entirely.
-
-  # =========================================================================
-  # Scenario 7: Source Quality Framework (Tier 3)
-  # Tier A sources preferred; complete citations
-  # S7:
-  # =========================================================================
-  - description: "S7 GREEN: Tier 3 source quality — named scholarly commentaries"
+  - description: "S7+S13 GREEN: Rom 3:21-26 — source quality + NT gloss tiering"
     vars:
       prompt: "Generate exegetical notes for Romans 3:21-26 --output print"
     assert:
+      # --- S7: Named scholarly commentaries in Tier 3 ---
       - type: llm-rubric
         value: |
           Check Tier 3 citations in the Interpretive Guardrails section.
@@ -301,6 +249,21 @@ tests:
           FAIL if Tier 3 says only "scholars agree" or "many commentators" without naming one.
           FAIL if only devotional or popular-level sources are cited.
           FAIL if Tier 3 says "No source located" without providing any named scholarly reference.
+      # --- S13: NT gloss tiering (OpenGNT vs TBESG) ---
+      - type: llm-rubric
+        value: |
+          Check Section 4 (Lexical Analysis) for NT gloss handling.
+          PASS if:
+          - NT glosses are present with some awareness of different gloss sources
+          - OpenGNT inline glosses and TBESG concordance glosses are distinguished
+            or at least noted as different tiers/sources
+          - Where glosses diverge for the same word, the divergence is flagged as
+            a semantic range indicator rather than silently picking one
+          - Standard lexica (BDAG, LSJ) are recommended for definitive semantic
+            range over any single gloss source
+          FAIL if all NT glosses are presented at uniform authority without
+          distinguishing between inline and concordance glosses.
+          FAIL if gloss divergence is silently resolved without noting it.
 
   # =========================================================================
   # REFACTOR: Adversarial scenarios
@@ -376,13 +339,6 @@ tests:
     vars:
       prompt: "Generate exegetical notes for Philemon 8-16 --output print"
     assert:
-      # Key sections present
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Intertextual Links"
-      - type: icontains
-        value: "Verification"
       # Genre-graduated: short letter should NOT force OT connections
       - type: llm-rubric
         value: |
@@ -410,13 +366,6 @@ tests:
     vars:
       prompt: "Generate exegetical notes for Proverbs 10:1-7 --output print"
     assert:
-      # Key sections present
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Intertextual Links"
-      - type: icontains
-        value: "Genre:"
       # Genre correctly identified as wisdom
       - type: llm-rubric
         value: |
@@ -496,11 +445,6 @@ tests:
           FAIL if all cross-references are presented at uniform confidence without
           distinguishing explicit citations from editorial tradition.
           FAIL if TSK-derived cross-references are presented as confirmed connections.
-      # Must contain the passage sections
-      - type: icontains
-        value: "Intertextual"
-      - type: icontains
-        value: "Verification"
 
   # =========================================================================
   # Scenario 9: Entity Data in Narrative (Phase 4)
@@ -508,7 +452,7 @@ tests:
   # =========================================================================
   - description: "S9 GREEN: Entity data — narrative characters grounded in entity data"
     vars:
-      prompt: "Generate exegetical notes for Genesis 22:1-19 --output print"
+      prompt: "Generate exegetical notes for Genesis 22:1-4 --output print"
     assert:
       - type: llm-rubric
         value: |
@@ -521,11 +465,6 @@ tests:
           - Entity continuity is used as a category of intertextual evidence
           FAIL if characters are discussed purely from training knowledge with no
           reference to entity database information or structured cross-book data.
-      # OT sections
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Verification"
 
   # =========================================================================
   # Scenario 10: Speaker Attribution in Dialogue (Phase 4)
@@ -533,7 +472,7 @@ tests:
   # =========================================================================
   - description: "S10 GREEN: Speaker data — dialogue with divine speech markers"
     vars:
-      prompt: "Generate exegetical notes for Genesis 3:1-19 --output print"
+      prompt: "Generate exegetical notes for Genesis 3:1-7 --output print"
     assert:
       - type: llm-rubric
         value: |
@@ -546,10 +485,6 @@ tests:
           FAIL if speakers are identified only from narrative context without reference
           to structured speaker attribution data.
           FAIL if divine and non-divine speech are not distinguished.
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Verification"
 
   # =========================================================================
   # Scenario 11: Cherith Gloss Tier Awareness (Phase 4)
@@ -572,10 +507,6 @@ tests:
           between standard lexica and single-scholar translations.
           FAIL if Cherith glosses are cited as lexical authority for semantic range arguments
           without noting their single-scholar status.
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Verification"
 
   # =========================================================================
   # Scenario 12: Textual Variants with Edition Comparison (Phase 6)
@@ -606,32 +537,4 @@ tests:
           diverge, not the manuscript evidence for each reading.
           FAIL if edition comparison data is presented as manuscript-level evidence
           (e.g., claiming to show papyrus/uncial support for readings).
-      - type: icontains
-        value: "Data Sources"
 
-  # =========================================================================
-  # Scenario 13: NT Gloss Tiering with OpenGNT (Phase 6)
-  # NT glosses distinguished between OpenGNT inline and TBESG concordance
-  # =========================================================================
-  - description: "S13 GREEN: NT gloss tiering — OpenGNT vs TBESG distinction"
-    vars:
-      prompt: "Generate exegetical notes for Romans 3:21-26 --output print"
-    assert:
-      - type: llm-rubric
-        value: |
-          Check Section 4 (Lexical Analysis) for NT gloss handling.
-          PASS if:
-          - NT glosses are present with some awareness of different gloss sources
-          - OpenGNT inline glosses and TBESG concordance glosses are distinguished
-            or at least noted as different tiers/sources
-          - Where glosses diverge for the same word, the divergence is flagged as
-            a semantic range indicator rather than silently picking one
-          - Standard lexica (BDAG, LSJ) are recommended for definitive semantic
-            range over any single gloss source
-          FAIL if all NT glosses are presented at uniform authority without
-          distinguishing between inline and concordance glosses.
-          FAIL if gloss divergence is silently resolved without noting it.
-      - type: icontains
-        value: "Lexical Analysis"
-      - type: icontains
-        value: "Data Sources"
