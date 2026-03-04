@@ -14,6 +14,7 @@ import sys
 import time
 import urllib.request
 import urllib.error
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 OUTPUT_DIR = "server/d1-seed"
 
@@ -138,13 +139,21 @@ def process_commentary(commentary_id: str):
         if not num_chapters:
             continue
 
-        for ch_num in range(1, num_chapters + 1):
+        def fetch_chapter(ch_num):
             url = f"https://bible.helloao.org/api/c/{commentary_id}/{book_id}/{ch_num}.json"
-            data = fetch_with_retry(url)
-            if not data:
-                continue
+            return ch_num, fetch_with_retry(url)
 
-            # Extract verse-level commentary entries from chapter.content
+        # Fetch all chapters for this book in parallel
+        chapter_results = {}
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            futures = {executor.submit(fetch_chapter, ch): ch for ch in range(1, num_chapters + 1)}
+            for future in as_completed(futures):
+                ch_num, data = future.result()
+                if data:
+                    chapter_results[ch_num] = data
+
+        for ch_num in sorted(chapter_results):
+            data = chapter_results[ch_num]
             chapter_data = data.get("chapter", {})
             content_list = chapter_data.get("content", [])
 
@@ -178,9 +187,7 @@ def process_commentary(commentary_id: str):
                 f.write("\n".join(book_lines) + "\n")
 
         total_entries += book_entries
-
-        # Rate limit politeness
-        time.sleep(0.1)
+        print(f"  {book_id}: {book_entries} entries", flush=True)
 
     return total_entries
 
