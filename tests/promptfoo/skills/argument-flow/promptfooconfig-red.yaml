@@ -169,7 +169,7 @@ tests:
   # =========================================================================
   - description: "S6 RED: Speaker-unaware dialogue — argument flow without speaker data"
     vars:
-      prompt: "Map the argument flow of Genesis 18:22-33 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
+      prompt: "Map the argument flow of Genesis 18:23-29 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
     assert:
       - type: llm-rubric
         value: |

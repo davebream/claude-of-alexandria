@@ -144,9 +144,9 @@ tests:
   # SL1: Session Framing — Treats Pericope Slice as Mini-Series
   # Failure: Uses "Session" terminology with no structural integrity constraints
   # =========================================================================
-  - description: "SL1 RED: Genesis 22:1-19 — session framing instead of slice mode"
+  - description: "SL1 RED: Genesis 22:1-13 — session framing instead of slice mode"
     vars:
-      prompt: "Divide Genesis 22:1-19 into 3 reading portions for SOAP devotional use."
+      prompt: "Divide Genesis 22:1-13 into 3 reading portions for SOAP devotional use."
     assert:
       - type: llm-rubric
         value: |

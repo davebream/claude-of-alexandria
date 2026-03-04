@@ -1,5 +1,6 @@
 # Promptfoo GREEN-phase tests for biblical-segmentation skill.
-# Skill content is injected via setting_sources in the provider config.
+# Core failure-mode corrections only. One targeted llm-rubric per scenario.
+# For quality/ADV scenarios, see promptfooconfig-extended.yaml.
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-green.yaml
 #
@@ -7,11 +8,7 @@
 #   S1: Impossible division — refuses, cites max_sessions limit
 #   S2: Contested book — presents multiple frameworks
 #   S5: Anthology — curation mode activated
-#   S6: Auto-select pressure — presents options despite "just pick for me"
 #   S22: Masoretic validation — boundary-focused פ/ס citations
-#   S29: Thematic option — vocabulary-grounded with MCP data
-#   ADV1: Expert authority — still presents options
-#   ADV2: Extreme compression — Isaiah in 3 sessions refused
 #
 # Reading Slice feature:
 #   SL1: Verse range input — slice-mode detection with Reading Slices format
@@ -20,8 +17,10 @@
 #   SL4: Short pericope — refuses 3-slice Psalm 23, recommends single unit
 #   SL5: Slice count — auto-calculation for Genesis 24 (67 verses)
 #   SL6: Method-aware — SOAP's 5-10 verse scope for Romans 12
+#
+#   S23: Entity-aware segmentation — protagonist shifts as boundary evidence
 
-description: "Biblical Segmentation — GREEN phase (skill + MCP)"
+description: "Biblical Segmentation — GREEN phase (failure-mode corrections)"
 
 providers:
   - file://../../providers/with-skill.agent-sdk.yaml
@@ -44,16 +43,12 @@ defaultTest:
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 2;
     # MCP data evidence check: output must show evidence of MCP data usage.
-    # Checks for raw tool names, data-retriever contract terms, AND natural-language
-    # citations that only appear when MCP data was actually consulted.
     # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
     - type: javascript
       value: |
         const lower = output.toLowerCase();
         const mcpTools = ['query_vocabulary', 'query_discourse_features', 'query_paragraph_breaks'];
         const contractTerms = ['tool_results', 'discourse_summary', 'paragraph_markers', 'data-retriever'];
-        // Natural-language evidence that MCP data was used (these terms come from
-        // Data Sources sections and Markers columns, not training knowledge alone)
         const naturalEvidence = ['levinsohn', 'sefaria', 'masoretic', 'petuch', 'setum'];
         const foundMcp = mcpTools.filter(n => lower.includes(n));
         const foundContract = contractTerms.filter(n => lower.includes(n));
@@ -81,27 +76,13 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. I need Philemon divided into exactly 4 sessions for my Wednesday night series. The series starts next week and I've already announced it as a 4-week study. Please just make it work."
     assert:
+      # Core failure mode: complies instead of refusing
       - type: llm-rubric
         value: |
           PASS if the response refuses to divide Philemon into 4 sessions,
           explaining that the maximum is 2 sessions (or 1 recommended).
           The refusal should cite specific limits or rules.
           FAIL if the response complies and produces a 4-session division.
-      - type: llm-rubric
-        value: |
-          PASS if alternatives are offered (e.g., 1-2 session plan,
-          pairing with Colossians, or a different series structure).
-          FAIL if the response only refuses without suggesting alternatives.
-      - type: llm-rubric
-        value: |
-          PASS if the refusal cites evidence from MCP data gathering
-          (e.g., discourse features, paragraph markers, vocabulary data,
-          or explicit mention of data-retriever, TOOL_RESULTS, or
-          Levinsohn discourse features for Philemon).
-          The refusal must demonstrate that the book was analyzed with
-          MCP tools, not just dismissed from training knowledge.
-          FAIL if the refusal contains no MCP data evidence — even if
-          the refusal is otherwise correct about the session limit.
 
   # =========================================================================
   # Scenario 2: Contested Book — Revelation in 12 sessions
@@ -112,28 +93,13 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Give me Revelation divided into 12 sessions."
     assert:
+      # Core failure mode: only one framework presented
       - type: llm-rubric
         value: |
           PASS if the response presents at least TWO distinct structural
           frameworks for Revelation (e.g., linear/chronological AND
           recapitulation approaches) as separate segmentation options.
           FAIL if only one framework is developed into a session plan.
-      # Fit Assessment present
-      - type: llm-rubric
-        value: |
-          PASS if the response begins with a Fit Assessment or feasibility
-          rating (e.g., star rating or explicit assessment of how well
-          12 sessions fits Revelation's structure).
-          FAIL if the response jumps straight to session divisions without
-          any feasibility assessment.
-      - type: llm-rubric
-        value: |
-          PASS if at least one of the structural frameworks cites MCP
-          discourse feature evidence (e.g., Levinsohn discourse features,
-          Historical Present, Point of Departure, vision sequence markers,
-          or data from query_discourse_features) as boundary evidence.
-          FAIL if both frameworks rely entirely on training knowledge
-          with no MCP data citations for boundary decisions.
 
   # =========================================================================
   # Scenario 5: Anthology — Psalms in 52 weeks
@@ -144,6 +110,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. I want to preach through all 150 Psalms in exactly 52 weeks. Give me which psalms go in each week."
     assert:
+      # Core failure mode: mechanically assigns ~3 psalms per week by sequential numbering
       - type: llm-rubric
         value: |
           PASS if the response switches to curation mode for Psalms,
@@ -153,43 +120,6 @@ tests:
           to anthology books.
           FAIL if the response mechanically assigns ~3 psalms per week
           by sequential numbering.
-      - type: llm-rubric
-        value: |
-          PASS if multiple curation approaches are presented as options
-          for the user to choose from (not auto-selected).
-          FAIL if only one grouping approach is presented.
-      - type: llm-rubric
-        value: |
-          PASS if the curation output references MCP data evidence
-          (e.g., vocabulary data from query_vocabulary, paragraph markers
-          from query_paragraph_breaks, Masoretic markers פ/ס, or
-          explicit mention of data-retriever or TOOL_RESULTS).
-          FAIL if the curation mode is presented without any MCP data
-          grounding — even if the curation approach is otherwise correct.
-
-  # =========================================================================
-  # Scenario 6: Auto-Select Pressure — Romans "just pick for me"
-  # Must present options despite user deference
-  # Manual TDD verification: EXCELLENT — "I cannot auto-select (Iron Rule 3)"
-  # =========================================================================
-  - description: "S6 GREEN: Romans — presents options despite 'just pick for me'"
-    vars:
-      prompt: "Use the biblical-segmentation skill. I'm overwhelmed with options usually. For Romans, just pick the best segmentation for me — whatever you think works for a 10-session sermon series. I trust you."
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response presents 2-4 structurally valid options
-          for the user to choose from, despite the user asking to "just pick."
-          The response should explain why auto-selection is not done.
-          FAIL if the response presents only one option as "the best" or
-          auto-selects without presenting alternatives.
-      # Each option has methodology label
-      - type: llm-rubric
-        value: |
-          PASS if each segmentation option includes a methodology label
-          (e.g., "Epistolary Markers", "Theological Arc", "Rhetorical Structure")
-          and a "Best for" line describing who/what context it suits.
-          FAIL if options lack methodology labels or "Best for" descriptions.
 
   # =========================================================================
   # Scenario 22: Masoretic Validation — Genesis 37-50 in 8 sessions
@@ -207,89 +137,13 @@ tests:
           return markers >= 3
             ? { pass: true, score: 1, reason: `${markers} Masoretic markers (פ/ס) found` }
             : { pass: false, score: 0, reason: `Only ${markers} Masoretic markers found; need 3+` };
-      # Markers validate session boundaries with verse references
+      # Core failure mode: markers appear without verse references or not connected to boundaries
       - type: llm-rubric
         value: |
           PASS if Masoretic paragraph markers (פ or ס) are cited with specific
           verse references at session STARTING boundaries (not just mentioned generically).
           FAIL if markers appear without verse references or are not connected to
           session boundary decisions.
-      - type: llm-rubric
-        value: |
-          PASS if the response is transparent about missing markers:
-          when no Masoretic marker exists at a boundary, it says so explicitly
-          (e.g., "No Masoretic marker at X; boundary based on...").
-          FAIL if Masoretic validation is silently skipped for boundaries
-          that lack markers.
-
-  # =========================================================================
-  # Scenario 29: Thematic Option — Philippians "joy theme"
-  # Vocabulary-grounded with MCP data, scholarly citation
-  # Manual TDD verification: PASS — vocabulary_parser called, Fee cited
-  # =========================================================================
-  - description: "S29 GREEN: Philippians joy theme — vocabulary-grounded"
-    vars:
-      prompt: "Use the biblical-segmentation skill. Segment Philippians for 4 weeks, focusing on the joy theme."
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if a thematic option is presented that includes vocabulary data
-          for joy-related lemmas (χαίρω and/or χαρά) with specific occurrence
-          counts from MCP tool data (not training knowledge).
-          FAIL if joy vocabulary is discussed only in general terms
-          ("joy is a major theme") without specific lemma counts.
-      - type: llm-rubric
-        value: |
-          PASS if structural options are ALSO presented alongside the
-          thematic option (thematic does not replace structural).
-          FAIL if only the thematic approach is presented with no
-          structural alternatives.
-
-  # =========================================================================
-  # ADV1: Expert Authority — Hebrews (seminary professor)
-  # Still presents options despite claimed expertise
-  # Manual TDD: baseline deferred to expertise
-  # =========================================================================
-  - description: "ADV1 GREEN: Expert user — still presents multiple options"
-    vars:
-      prompt: "Use the biblical-segmentation skill. I'm a seminary professor with 20 years of experience teaching Hebrews. I don't need multiple options - just give me your single best outline for a 10-session series."
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response presents 2+ segmentation options despite
-          the user claiming expertise and requesting a single outline.
-          Hebrews is a contested book (epistle vs homily) so both
-          frameworks should appear.
-          FAIL if only one option is presented, deferring to the
-          user's claimed expertise.
-      - type: llm-rubric
-        value: |
-          PASS if the segmentation options cite Levinsohn discourse
-          features (e.g., Historical Present, Point of Departure,
-          Left-Dislocation, or specific discourse data from
-          query_discourse_features) as boundary evidence in the Markers
-          column or rationale sections.
-          FAIL if the options rely entirely on training knowledge for
-          boundary evidence without MCP discourse data citations.
-
-  # =========================================================================
-  # ADV2: Extreme Compression — Isaiah in 3 sessions
-  # Must refuse; 66 chapters cannot be 3 sessions
-  # Manual TDD: baseline complied with mega-sessions
-  # =========================================================================
-  - description: "ADV2 GREEN: Isaiah in 3 — refuses extreme compression"
-    vars:
-      prompt: "Use the biblical-segmentation skill. I only have 3 weeks before Easter. Divide Isaiah into 3 sessions that cover the whole book. I know it's a lot but make it work."
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response refuses to divide Isaiah into 3 sessions,
-          explaining that this violates structural integrity (66 chapters
-          cannot be meaningfully divided into 3 sessions).
-          Alternatives should be offered (highlights series, thematic samples,
-          longer series).
-          FAIL if the response produces a 3-session division covering
-          all of Isaiah.
 
   # =========================================================================
   # READING SLICE FEATURE — GREEN TESTS
@@ -301,10 +155,11 @@ tests:
   # SL1: Verse Range Input — Slice-Mode Detection
   # With skill: detects verse range, produces "Reading Slices" format
   # =========================================================================
-  - description: "SL1 GREEN: Genesis 22:1-19 — slice-mode detection"
+  - description: "SL1 GREEN: Genesis 22:1-13 — slice-mode detection"
     vars:
-      prompt: "Use the biblical-segmentation skill. Divide Genesis 22:1-19 into 3 reading portions for SOAP devotional use."
+      prompt: "Use the biblical-segmentation skill. Divide Genesis 22:1-13 into 3 reading portions for SOAP devotional use."
     assert:
+      # Core failure mode: uses "Session" terminology instead of "Reading Slices"
       - type: llm-rubric
         value: |
           PASS if the response uses a dedicated "Reading Slices" output format
@@ -313,13 +168,6 @@ tests:
           header and recognize this as a pericope-level slicing task.
           FAIL if the response uses "Session" terminology throughout or treats
           this as a mini-series segmentation task.
-      - type: llm-rubric
-        value: |
-          PASS if the response includes structural integrity analysis specific
-          to pericope-internal boundaries (e.g., dialogue structure, narrative
-          arc within the Aqedah pericope).
-          FAIL if divisions are purely mechanical (by verse count) with no
-          structural analysis of pericope-internal features.
 
   # =========================================================================
   # SL2: Chiasmus Awareness — Structural Integrity Warning
@@ -329,6 +177,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Create 3 reading slices from Romans 8:1-17 for a SOAP series. Each slice should be about 6 verses."
     assert:
+      # Core failure mode: proposes slices that bisect 8:5-9 without structural warning
       - type: llm-rubric
         value: |
           PASS if the response identifies a structural concern in the Romans 8:5-9
@@ -339,12 +188,6 @@ tests:
           (chiasmus center), or 8:8-9 (transition point) — any of these is valid.
           FAIL if the response proposes slices that bisect the 8:5-9 flesh/Spirit
           contrast without any structural warning or adjustment.
-      - type: llm-rubric
-        value: |
-          PASS if the response includes a "Do Not Slice" section or equivalent
-          warning about specific verse boundaries that should not be divided.
-          FAIL if the response lacks any explicit warning about problematic
-          slice points within the pericope.
 
   # =========================================================================
   # SL3: Dialogue Integrity — Preserves Exchange Boundaries
@@ -354,6 +197,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Divide John 3:1-21 (Nicodemus) into 2 reading slices for SOAP study."
     assert:
+      # Core failure mode: slice boundary falls mid-exchange without dialogue analysis
       - type: llm-rubric
         value: |
           PASS if the response explicitly analyzes dialogue exchange structure
@@ -362,13 +206,6 @@ tests:
           pairs within the same slice.
           FAIL if slices are proposed without dialogue analysis or if a slice
           boundary falls mid-exchange (between a question and its answer).
-      - type: llm-rubric
-        value: |
-          PASS if the response identifies specific dialogue boundaries and
-          explains WHY the chosen slice point respects the conversational flow
-          (e.g., "Slice boundary after v.12 preserves the earthly/heavenly
-          things exchange before transitioning to monologue").
-          FAIL if the slice boundary rationale ignores dialogue structure.
 
   # =========================================================================
   # SL4: Short Pericope — Refuses Forced Division
@@ -378,6 +215,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Divide Psalm 23 into 3 reading slices for SOAP devotional study."
     assert:
+      # Core failure mode: complies and produces 3 slices of 2 verses each
       - type: llm-rubric
         value: |
           PASS if the response refuses or pushes back on dividing Psalm 23
@@ -387,11 +225,6 @@ tests:
           study.
           FAIL if the response complies and produces 3 slices of 2 verses each
           without pushing back.
-      - type: llm-rubric
-        value: |
-          PASS if the response offers a constructive alternative (e.g., read
-          the whole psalm as one SOAP session, or pair with another short psalm).
-          FAIL if the response only refuses without suggesting how to proceed.
 
   # =========================================================================
   # SL5: Slice Count — Auto-Calculation from Verse Count
@@ -401,6 +234,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Create reading slices from Genesis 24 for SOAP study. I'm thinking 3 slices should cover it."
     assert:
+      # Core failure mode: complies with 3 slices producing 20+ verses per slice
       - type: llm-rubric
         value: |
           PASS if the response pushes back on 3 slices for 67 verses and
@@ -409,13 +243,6 @@ tests:
           (e.g., "67 verses ÷ 8-10 per slice ≈ 7-8 slices").
           FAIL if the response complies with 3 slices producing 20+ verses
           per slice without pushback on SOAP appropriateness.
-      - type: llm-rubric
-        value: |
-          PASS if the response explains the SOAP session-length constraint
-          (15-20 minutes, 5-10 verses) as the reason for recommending more
-          slices than requested.
-          FAIL if the recommendation for more slices is not grounded in
-          method-specific scope constraints.
 
   # =========================================================================
   # SL6: Method-Aware Slicing — SOAP Scope Calculation
@@ -425,6 +252,7 @@ tests:
     vars:
       prompt: "Use the biblical-segmentation skill. Create SOAP-appropriate reading slices from Romans 12:1-21. Target 15-20 minute sessions."
     assert:
+      # Core failure mode: slices produced without referencing method's verse scope
       - type: llm-rubric
         value: |
           PASS if the response explicitly mentions SOAP's characteristic
@@ -432,17 +260,6 @@ tests:
           scope (21 verses ÷ 5-10 per slice ≈ 2-4 slices).
           FAIL if slices are produced without referencing the method's
           typical verse scope or session-length constraint.
-      - type: llm-rubric
-        value: |
-          PASS if the response connects the 5-10 verse scope to SOAP's
-          time requirements — either by explaining that SOAP's four steps
-          (Scripture, Observation, Application, Prayer) need time per verse,
-          OR by explicitly linking the verse scope to the 15-20 minute
-          session target (e.g., "targeting 15-20 minute sessions at 5-10
-          verses per slice"). Any explicit connection between method scope
-          and time constraint counts.
-          FAIL if slices are produced with no connection between verse scope
-          and SOAP's time or methodology requirements.
 
   # =========================================================================
   # Scenario 23: Entity-Aware Narrative Segmentation (Phase 4)

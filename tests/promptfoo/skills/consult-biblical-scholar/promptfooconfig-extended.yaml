@@ -1,0 +1,91 @@
+# Promptfoo EXTENDED-phase tests for consult-biblical-scholar skill.
+# Quality, adversarial, and advanced scenarios — run on-demand, not in CI.
+# Core failure-mode tests are in promptfooconfig-green.yaml.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-extended.yaml
+#
+# EXTENDED phase — advanced scenario verification:
+#   S4: CROSS-REFERENCE — classified cross-refs with evidence basis (hilasterion)
+
+description: "Consult Biblical Scholar — EXTENDED phase (quality/advanced scenarios)"
+
+providers:
+  - file://../../providers/with-skill.agent-sdk.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
+    - type: icontains-any
+      value:
+        - "CONFIDENCE: HIGH"
+        - "CONFIDENCE: MEDIUM"
+        - "CONFIDENCE: LOW"
+        - "CONFIDENCE: CANNOT ANSWER"
+        - "TOPIC MODE"
+    - type: llm-rubric
+      value: |
+        FAIL if devotional or pastoral language is MIXED INTO the scholarly analysis:
+        - First-person plural moral exhortations blended with text evidence
+        - "God uses our struggles for his purposes" stated as an analytical finding
+        - "This reminds us to trust God" as part of the evidence section
+        PASS if:
+        (a) The output is purely scholarly analysis, OR
+        (b) Devotional/application content is explicitly separated in its own
+            clearly labeled section (e.g., "Usage Guidance", "Pastoral Application",
+            "Application Note").
+
+tests:
+
+  # =========================================================================
+  # Scenario 4: CROSS-REFERENCE — hilasterion (Romans 3:25)
+  # Classified cross-refs: Primary (shared lemma), Secondary, Scholarly
+  # Manual TDD verification: PASS — table with classified references
+  # No RED counterpart — quality/advanced scenario
+  # =========================================================================
+  - description: "S4 EXTENDED: CROSS-REFERENCE — classified cross-refs for hilasterion"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. Romans 3:25: What other passages connect to 'hilasterion' and how?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if cross-references are classified by evidence type:
+          - Primary (shared lemma via vocabulary data)
+          - Secondary (shared concept, different vocabulary)
+          - Scholarly (commentary-sourced)
+          Each cross-reference should include WHY it's connected.
+          FAIL if cross-references are just listed ("see also Hebrews 9:5")
+          without classification or evidence basis.
+      - type: llm-rubric
+        value: |
+          PASS if at least one cross-reference is backed by MCP data:
+          (a) [query_vocabulary] showing ἱλαστήριον occurrences, OR
+          (b) [query_morphology] or [query_lemmas] confirming a shared lemma
+              in the cross-reference passage (acceptable if query_vocabulary
+              returns no occurrences because the word is too rare).
+          FAIL if cross-references are listed with no MCP evidence at all
+          (only "scholarly commentary says X" with no tool-backed confirmation).

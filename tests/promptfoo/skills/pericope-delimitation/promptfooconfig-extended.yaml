@@ -1,0 +1,110 @@
+# Promptfoo EXTENDED-phase tests for pericope-delimitation skill.
+# Quality, adversarial, and advanced scenarios — run on-demand, not in CI.
+# Core failure-mode tests are in promptfooconfig-green.yaml.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-extended.yaml
+#
+# EXTENDED phase — advanced scenario verification:
+#   S2: Valid/composite pericope (VALID or CONTRACT) — confirmed boundaries
+#   S3: Over-extended passage (CONTRACT) — split point identification
+#   ADV1: Evidence quality — discourse features named specifically
+
+description: "Pericope Delimitation — EXTENDED phase (quality/advanced scenarios)"
+
+providers:
+  - file://../../providers/with-skill.agent-sdk.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_discourse_features', 'query_morphology'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
+    - type: icontains
+      value: "Data Sources"
+
+tests:
+  # =========================================================================
+  # Scenario 2: Valid NT Pericope — Phil 1:1-11 (VALID)
+  # Manual TDD verification: PASS (6/6) — both boundaries confirmed
+  # No RED counterpart — quality/boundary-assessment scenario
+  # =========================================================================
+  - description: "S2 EXTENDED: Phil 1:1-11 — VALID verdict with confirmed boundaries"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Philippians 1:1-11"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response includes either:
+          (a) A VALID verdict for Phil 1:1-11 as a coherent unit, OR
+          (b) A CONTRACT verdict that identifies sub-units (e.g., prescriptio 1:1-2
+              and thanksgiving 1:3-11) — this is data-sound since 1:1-2 and 1:3-11
+              are structurally distinct sections.
+          FAIL only if the verdict is EXTEND (no reason to extend) or if no verdict
+          is given at all.
+      - type: llm-rubric
+        value: |
+          PASS if both start boundary (1:1) and end boundary (1:11) are labeled as Confirmed
+          with specific evidence (e.g., epistolary opening for start, γινώσκειν at 1:12 for end).
+          FAIL if boundaries are not individually assessed.
+
+  # =========================================================================
+  # Scenario 3: Over-Extended Passage — Phil 1:1-2:11 (CONTRACT)
+  # Manual TDD verification: PASS (5/5) — five sub-units identified
+  # No RED counterpart — quality/boundary-assessment scenario
+  # =========================================================================
+  - description: "S3 EXTENDED: Phil 1:1-2:11 — CONTRACT with split points"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Philippians 1:1-2:11"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response issues a CONTRACT verdict identifying multiple
+          discourse units within Phil 1:1-2:11, with at least one split point
+          specified (e.g., at 1:12, 1:27, or 2:1).
+          FAIL if the verdict is VALID for the entire range.
+      - type: llm-rubric
+        value: |
+          PASS if Levinsohn discourse features are cited at the identified
+          split points (e.g., PoD markers, disclosure formulas at specific verses).
+          FAIL if split points are based only on thematic analysis without
+          discourse feature evidence.
+
+  # =========================================================================
+  # ADV1: Evidence Quality — discourse features must be named specifically
+  # Same test as S1 "detail" variant; ADV1 tests evidence quality under pressure
+  # =========================================================================
+  - description: "ADV1 EXTENDED: Evidence quality — named features, not vague"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Philippians 1:3-8. I need detailed boundary analysis."
+    assert:
+      - type: llm-rubric
+        value: |
+          Check the Data Sources section and boundary evidence throughout.
+          PASS if specific Levinsohn feature names are used (e.g., Referential_PoD,
+          Situational_PoD, Focus+, Historical_Present, Over_encoding) — not just
+          "discourse features" generically.
+          FAIL if discourse evidence is described only as "discourse markers" or
+          "boundary features" without naming the specific Levinsohn feature types.

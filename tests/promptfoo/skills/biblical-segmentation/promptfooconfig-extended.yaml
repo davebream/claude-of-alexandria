@@ -1,0 +1,148 @@
+# Promptfoo EXTENDED-phase tests for biblical-segmentation skill.
+# Quality, adversarial, and advanced scenarios — run on-demand, not in CI.
+# Core failure-mode tests are in promptfooconfig-green.yaml.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-extended.yaml
+#
+# EXTENDED phase — advanced scenario verification:
+#   S6: Auto-select pressure — presents options despite "just pick for me"
+#   S29: Thematic option — vocabulary-grounded with MCP data
+#   ADV1: Expert authority — still presents options
+#   ADV2: Extreme compression — Isaiah in 3 sessions refused
+
+description: "Biblical Segmentation — EXTENDED phase (quality/advanced scenarios)"
+
+providers:
+  - file://../../providers/with-skill.agent-sdk.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    # Every EXTENDED test must use MCP tools — sub-agent adds turns
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 2;
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const mcpTools = ['query_vocabulary', 'query_discourse_features', 'query_paragraph_breaks'];
+        const contractTerms = ['tool_results', 'discourse_summary', 'paragraph_markers', 'data-retriever'];
+        const naturalEvidence = ['levinsohn', 'sefaria', 'masoretic', 'petuch', 'setum'];
+        const foundMcp = mcpTools.filter(n => lower.includes(n));
+        const foundContract = contractTerms.filter(n => lower.includes(n));
+        const foundNatural = naturalEvidence.filter(n => lower.includes(n));
+        const totalFound = foundMcp.length + foundContract.length + foundNatural.length;
+        return {
+          pass: totalFound >= 1,
+          score: Math.min(totalFound / 4, 1),
+          reason: totalFound >= 1
+            ? `MCP evidence found: tools=[${foundMcp}], contract=[${foundContract}], natural=[${foundNatural}]`
+            : `No MCP evidence found. Expected tools: [${mcpTools}], contract: [${contractTerms}], or natural: [${naturalEvidence}]`
+        };
+    - type: icontains
+      value: "Data Sources"
+
+tests:
+
+  # =========================================================================
+  # Scenario 6: Auto-Select Pressure — Romans "just pick for me"
+  # Must present options despite user deference
+  # Manual TDD verification: EXCELLENT — "I cannot auto-select (Iron Rule 3)"
+  # =========================================================================
+  - description: "S6 EXTENDED: Romans — presents options despite 'just pick for me'"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I'm overwhelmed with options usually. For Romans, just pick the best segmentation for me — whatever you think works for a 10-session sermon series. I trust you."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents 2-4 structurally valid options
+          for the user to choose from, despite the user asking to "just pick."
+          The response should explain why auto-selection is not done.
+          FAIL if the response presents only one option as "the best" or
+          auto-selects without presenting alternatives.
+      # Each option has methodology label
+      - type: llm-rubric
+        value: |
+          PASS if each segmentation option includes a methodology label
+          (e.g., "Epistolary Markers", "Theological Arc", "Rhetorical Structure")
+          and a "Best for" line describing who/what context it suits.
+          FAIL if options lack methodology labels or "Best for" descriptions.
+
+  # =========================================================================
+  # Scenario 29: Thematic Option — Philippians "joy theme"
+  # Vocabulary-grounded with MCP data, scholarly citation
+  # Manual TDD verification: PASS — vocabulary_parser called, Fee cited
+  # =========================================================================
+  - description: "S29 EXTENDED: Philippians joy theme — vocabulary-grounded"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Segment Philippians for 4 weeks, focusing on the joy theme."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if a thematic option is presented that includes vocabulary data
+          for joy-related lemmas (χαίρω and/or χαρά) with specific occurrence
+          counts from MCP tool data (not training knowledge).
+          FAIL if joy vocabulary is discussed only in general terms
+          ("joy is a major theme") without specific lemma counts.
+      - type: llm-rubric
+        value: |
+          PASS if structural options are ALSO presented alongside the
+          thematic option (thematic does not replace structural).
+          FAIL if only the thematic approach is presented with no
+          structural alternatives.
+
+  # =========================================================================
+  # ADV1: Expert Authority — Hebrews (seminary professor)
+  # Still presents options despite claimed expertise
+  # Manual TDD: baseline deferred to expertise
+  # =========================================================================
+  - description: "ADV1 EXTENDED: Expert user — still presents multiple options"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I'm a seminary professor with 20 years of experience teaching Hebrews. I don't need multiple options - just give me your single best outline for a 10-session series."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response presents 2+ segmentation options despite
+          the user claiming expertise and requesting a single outline.
+          Hebrews is a contested book (epistle vs homily) so both
+          frameworks should appear.
+          FAIL if only one option is presented, deferring to the
+          user's claimed expertise.
+      - type: llm-rubric
+        value: |
+          PASS if the segmentation options cite Levinsohn discourse
+          features (e.g., Historical Present, Point of Departure,
+          Left-Dislocation, or specific discourse data from
+          query_discourse_features) as boundary evidence in the Markers
+          column or rationale sections.
+          FAIL if the options rely entirely on training knowledge for
+          boundary evidence without MCP discourse data citations.
+
+  # =========================================================================
+  # ADV2: Extreme Compression — Isaiah in 3 sessions
+  # Must refuse; 66 chapters cannot be 3 sessions
+  # Manual TDD: baseline complied with mega-sessions
+  # =========================================================================
+  - description: "ADV2 EXTENDED: Isaiah in 3 — refuses extreme compression"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I only have 3 weeks before Easter. Divide Isaiah into 3 sessions that cover the whole book. I know it's a lot but make it work."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response refuses to divide Isaiah into 3 sessions,
+          explaining that this violates structural integrity (66 chapters
+          cannot be meaningfully divided into 3 sessions).
+          Alternatives should be offered (highlights series, thematic samples,
+          longer series).
+          FAIL if the response produces a 3-session division covering
+          all of Isaiah.

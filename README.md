@@ -8,7 +8,7 @@
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
   <a href="#current-collection"><img src="https://img.shields.io/badge/skills-5%20%2B%206%20agents-orange" alt="Skills"></a>
-  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-89%20automated-yellow" alt="Tests"></a>
+  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-96%20automated-yellow" alt="Tests"></a>
 </p>
 
 ---
@@ -17,7 +17,7 @@ Structured frameworks that prevent AI agents from committing exegetical malpract
 
 ## The Problem
 
-Frontier models make predictable errors when handling Scripture. These are documented by 40 RED-phase tests that run the same prompts *without* skills and record what goes wrong:
+Frontier models make predictable errors when handling Scripture. These are documented by 41 RED-phase tests that run the same prompts *without* skills and record what goes wrong:
 
 - **Fabricating linguistic data from training memory** — inventing morphological parsings, frequency counts, and hapax claims without querying actual data
 - **Inventing arbitrary divisions** to satisfy session counts ("8 weeks on Philemon") without checking manuscript markers
@@ -32,15 +32,16 @@ Frontier models make predictable errors when handling Scripture. These are docum
 
 ## The Evidence
 
-**89 automated tests** verify that skills prevent documented failures. Tests run against `claude-agent-sdk` with live MCP data — not mocked responses.
+**96 automated tests** verify that skills prevent documented failures. Tests run against `claude-agent-sdk` with live MCP data — not mocked responses.
 
 | Phase | Tests | What it does |
 |-------|-------|-------------|
-| RED | 41 | Runs prompts against a bare model (no skills, no MCP, `/tmp` isolation). Documents what goes wrong. |
-| GREEN | 47 | Runs the same prompts with skills and MCP enabled. Proves the skill corrects each failure. |
+| RED | 41 | Runs prompts against a bare model (no skills, no MCP). Documents what goes wrong. |
+| GREEN | 39 | Core failure-mode corrections. One targeted assertion per documented failure. CI-friendly. |
+| EXTENDED | 16 | Quality, adversarial, and stress scenarios — run on-demand during skill development. |
 | Smoke | 1 | Verifies the skill-to-agent pipeline works end-to-end. |
 
-GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). If a skill cannot demonstrate that it prevents a documented failure, it does not ship.
+GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). Each GREEN scenario targets one documented RED failure mode. If a skill cannot demonstrate that it prevents a documented failure, it does not ship.
 
 ## Current Collection
 
@@ -57,7 +58,7 @@ Divides biblical books into coherent teaching units with integrity safeguards:
 - Validates against Masoretic paragraph markers and Levinsohn discourse features
 - Handles contested books with multiple frameworks
 
-24 automated tests (10 RED + 14 GREEN).
+21 core CI tests (10 RED + 11 GREEN) + 4 extended scenarios.
 
 #### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/)
 
@@ -67,7 +68,7 @@ Validates whether a proposed passage holds together as a discourse unit:
 - Returns verdict: VALID, EXTEND, CONTRACT, or ADJUST
 - Recommends the smallest coherent unit if passage is too short
 
-11 automated tests (4 RED + 7 GREEN). Resists memory-based validation of famous passages.
+9 core CI tests (4 RED + 5 GREEN) + 3 extended scenarios. Resists memory-based validation of famous passages.
 
 #### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/)
 
@@ -78,7 +79,7 @@ Produces exegetical notes for sermon or teaching preparation:
 - 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment
 - Genre-graduated redemptive-historical connections (epistles vs. wisdom literature vs. short letters)
 
-20 automated tests (6 RED + 14 GREEN), including stress tests for Philemon, Proverbs, and 3 John.
+15 core CI tests (6 RED + 9 GREEN) + 7 extended scenarios (adversarial + stress tests for Philemon, Proverbs, 3 John).
 
 #### [consult-biblical-scholar](plugins/claude-of-alexandria/skills/consult-biblical-scholar/)
 
@@ -88,7 +89,7 @@ Scholarly Q&A for biblical texts. Three auto-detected modes:
 - **VALIDATE** — checks analogies, illustrations, or claims against text; returns formal verdict
 - **CROSS-REFERENCE** — finds related passages with scholarly evidence
 
-11 automated tests (5 RED + 6 GREEN). Graduated confidence declared before every answer.
+12 core CI tests (5 RED + 7 GREEN) + 1 extended scenario. Graduated confidence declared before every answer.
 
 #### [argument-flow](plugins/claude-of-alexandria/skills/argument-flow/)
 
@@ -98,7 +99,7 @@ Maps the logical argument of a biblical passage using discourse markers:
 - Calls MCP tools for conjunction and discourse data before composing analysis
 - Grounds every interpretive claim in retrieved data
 
-11 automated tests (5 RED + 6 GREEN). For epistles and discourse-heavy passages.
+12 core CI tests (5 RED + 7 GREEN) + 1 extended scenario. For epistles and discourse-heavy passages.
 
 ### Sub-Agents
 
@@ -218,5 +219,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>5 skills, 6 sub-agents, 89 automated tests. All 66 biblical books.</sub>
+  <sub>5 skills, 6 sub-agents, 96 automated tests (80 core CI + 16 extended). All 66 biblical books.</sub>
 </p>

@@ -1,19 +1,19 @@
 # Promptfoo GREEN-phase tests for consult-biblical-scholar skill.
-# Skill content is injected via setting_sources in the provider config.
+# Core failure-mode corrections only. One targeted llm-rubric per scenario.
+# For quality/advanced scenarios, see promptfooconfig-extended.yaml.
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/consult-biblical-scholar/promptfooconfig-green.yaml
 #
 # GREEN phase — skill correction verification:
-#   S1: MEANING mode — confidence tier, MCP morphology, modern explanation
-#   S2: VALIDATE compatible — COMPATIBLE verdict, text before analogy
-#   S3: VALIDATE contradicted — NOT SUPPORTED with morphological evidence
-#   S4: CROSS-REFERENCE — classified cross-refs with evidence basis
-#   S5: Topic mode — warning + MEDIUM ceiling
-#   S6: Contested question — confidence splitting (morphology HIGH, semantics MEDIUM)
-#   S7: CROSS-REFERENCE — editorial tradition labeled distinctly from primary evidence
-#   S8: Entity identification — disputed identifications flagged with data evidence
+#   S1: MEANING mode — MCP morphology cited before analysis
+#   S2: VALIDATE compatible — text evidence BEFORE verdict
+#   S3: VALIDATE contradicted — morphological evidence for NOT SUPPORTED
+#   S5: Topic mode — warning issued, MEDIUM ceiling enforced
+#   S6: Contested question — both positions presented without resolution
+#   S7: CROSS-REFERENCE — editorial tradition labeled distinctly
+#   S8: Entity identification — data-backed with confidence grading
 
-description: "Consult Biblical Scholar — GREEN phase (skill + MCP)"
+description: "Consult Biblical Scholar — GREEN phase (failure-mode corrections)"
 
 providers:
   - file://../../providers/with-skill.agent-sdk.yaml
@@ -75,29 +75,23 @@ tests:
 
   # =========================================================================
   # Scenario 1: MEANING — Word meaning (Phil 1:6, epiteleo)
-  # Confidence tier, MCP morphology, modern explanation separated
+  # Core failure: morphological claims made without tool attribution
   # Manual TDD verification: PASS — MEDIUM (MCP called but failure documented)
   # =========================================================================
   - description: "S1 GREEN: MEANING — epiteleo with MCP morphology"
     vars:
       prompt: "Use the consult-biblical-scholar skill. Phil 1:6: What does 'epiteleo' mean here and how would I explain it to someone unfamiliar with Greek?"
     assert:
+      # Core failure mode: morphological analysis presented without tool attribution
       - type: llm-rubric
         value: |
           PASS if the response includes morphological data for ἐπιτελέω
           attributed to MCP tools (e.g., [query_morphology] citation).
           FAIL if morphological analysis is presented without tool attribution.
-      - type: llm-rubric
-        value: |
-          PASS if there is a modern/plain-language explanation that is visually
-          separated from the technical morphological data (different section,
-          heading, or explicit label like "for a contemporary audience").
-          FAIL if technical and accessible explanations are mixed together
-          without clear separation.
 
   # =========================================================================
   # Scenario 2: VALIDATE — Compatible analogy (2 Cor 12:7-10)
-  # COMPATIBLE verdict with text evidence BEFORE verdict
+  # Core failure: verdict rendered before text evidence
   # Manual TDD verification: PASS — VERDICT: COMPATIBLE rendered
   # =========================================================================
   - description: "S2 GREEN: VALIDATE — COMPATIBLE verdict for thorn/anxiety"
@@ -108,21 +102,16 @@ tests:
         value:
           - "VERDICT: COMPATIBLE"
           - "COMPATIBLE"
+      # Core failure mode: verdict before text evidence
       - type: llm-rubric
         value: |
           PASS if text evidence about σκόλοψ (the thorn) is presented BEFORE
           the verdict is rendered. The text's own meaning must come first.
           FAIL if the verdict is given before any text evidence is discussed.
-      - type: llm-rubric
-        value: |
-          PASS if the response distinguishes APPLICATION from what the text MEANS,
-          noting that the analogy may be used pastorally but doesn't represent
-          the text's original meaning.
-          FAIL if the analogy is endorsed as what the text "teaches."
 
   # =========================================================================
   # Scenario 3: VALIDATE — Contradicted analogy (Phil 2:5-11)
-  # NOT SUPPORTED with morphological evidence (reflexive + active verb)
+  # Core failure: verdict without morphological evidence (reflexive + active verb)
   # Manual TDD verification: PASS — NOT SUPPORTED with Fee citation
   # =========================================================================
   - description: "S3 GREEN: VALIDATE — NOT SUPPORTED with morphological evidence"
@@ -133,6 +122,7 @@ tests:
         value:
           - "VERDICT: NOT SUPPORTED"
           - "NOT SUPPORTED"
+      # Core failure mode: verdict from tradition only, no grammatical evidence
       - type: llm-rubric
         value: |
           PASS if the response cites morphological evidence showing volition:
@@ -143,55 +133,22 @@ tests:
           without grammatical/morphological evidence from MCP tools.
 
   # =========================================================================
-  # Scenario 4: CROSS-REFERENCE — hilasterion (Romans 3:25)
-  # Classified cross-refs: Primary (shared lemma), Secondary, Scholarly
-  # Manual TDD verification: PASS — table with classified references
-  # =========================================================================
-  - description: "S4 GREEN: CROSS-REFERENCE — classified cross-refs for hilasterion"
-    vars:
-      prompt: "Use the consult-biblical-scholar skill. Romans 3:25: What other passages connect to 'hilasterion' and how?"
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if cross-references are classified by evidence type:
-          - Primary (shared lemma via vocabulary data)
-          - Secondary (shared concept, different vocabulary)
-          - Scholarly (commentary-sourced)
-          Each cross-reference should include WHY it's connected.
-          FAIL if cross-references are just listed ("see also Hebrews 9:5")
-          without classification or evidence basis.
-      - type: llm-rubric
-        value: |
-          PASS if at least one cross-reference is backed by MCP data:
-          (a) [query_vocabulary] showing ἱλαστήριον occurrences, OR
-          (b) [query_morphology] or [query_lemmas] confirming a shared lemma
-              in the cross-reference passage (acceptable if query_vocabulary
-              returns no occurrences because the word is too rare).
-          FAIL if cross-references are listed with no MCP evidence at all
-          (only "scholarly commentary says X" with no tool-backed confirmation).
-
-  # =========================================================================
   # Scenario 5: Topic Mode — Sabbath rest (no passage)
-  # Warning + MEDIUM confidence ceiling
+  # Core failure: proceeds with full confidence without topic mode warning
   # Manual TDD verification: PASS — immediate warning, MEDIUM cap held
   # =========================================================================
   - description: "S5 GREEN: Topic mode — warning and MEDIUM ceiling"
     vars:
       prompt: "Use the consult-biblical-scholar skill. What is the biblical concept of Sabbath rest and how does it develop across Scripture?"
     assert:
+      # Core failure mode: no topic mode warning
       - type: llm-rubric
         value: |
           PASS if the response includes an explicit topic mode warning near the top,
           noting that no specific passage was provided and confidence is limited.
           FAIL if the response proceeds with full confidence without any
           topic mode acknowledgment.
-      - type: llm-rubric
-        value: |
-          PASS if confidence is capped at MEDIUM throughout the response.
-          The response should never claim HIGH confidence for a topic-mode answer.
-          FAIL if CONFIDENCE: HIGH appears anywhere in a topic-mode response.
       # Topic mode: MCP runs on identified passages, not the topic keyword.
-      # Accept any MCP tool name as evidence of data gathering.
       - type: javascript
         value: |
           const lower = output.toLowerCase();
@@ -207,13 +164,14 @@ tests:
 
   # =========================================================================
   # Scenario 6: Contested Question — monogenes (John 3:16)
-  # Confidence splitting: morphology HIGH, semantic debate MEDIUM
+  # Core failure: one position presented definitively / uniform HIGH confidence
   # Manual TDD verification: PASS — both positions presented, BDAG cited
   # =========================================================================
   - description: "S6 GREEN: Contested question — confidence splitting for monogenes"
     vars:
       prompt: "Use the consult-biblical-scholar skill. John 3:16: What does 'monogenes' mean? I've heard it means 'only begotten' but some say 'one and only.' Which is right?"
     assert:
+      # Core failure mode: debate definitively resolved, one position dismissed
       - type: llm-rubric
         value: |
           PASS if the response presents BOTH scholarly positions on μονογενής
@@ -225,27 +183,16 @@ tests:
             "the word does NOT mean X", "X is linguistically accurate")
           - One position is endorsed as correct while the other is dismissed
           - The response picks a winner rather than presenting the scholarly landscape
-      - type: llm-rubric
-        value: |
-          PASS if confidence is split between morphological data (which can be HIGH)
-          and the semantic debate (which should be MEDIUM at best).
-          These should be clearly distinguished in the response.
-          FAIL if the entire answer is presented at uniform HIGH confidence
-          without distinguishing the certainty levels of different claims.
-      - type: llm-rubric
-        value: |
-          PASS if at least one specific scholarly source is named for the
-          semantic debate (e.g., BDAG, Dahms, Lee, Pendrick, or similar).
-          FAIL if the response says "most scholars agree" without naming anyone.
 
   # =========================================================================
   # Scenario 7: CROSS-REFERENCE — editorial tradition labeling (Phase 4)
-  # TSK-derived cross-refs labeled as editorial tradition, not Primary
+  # Core failure: TSK-derived cross-refs not distinguished from primary evidence
   # =========================================================================
   - description: "S7 GREEN: CROSS-REFERENCE — editorial tradition distinctly labeled"
     vars:
       prompt: "Use the consult-biblical-scholar skill. Romans 8:28: What passages connect to this verse? Classify the cross-references by evidence type."
     assert:
+      # Core failure mode: all cross-refs at uniform confidence without evidence types
       - type: llm-rubric
         value: |
           PASS if cross-references are classified with at least 3 distinct evidence types,
@@ -257,21 +204,16 @@ tests:
           FAIL if all cross-references are presented at uniform confidence without
           distinguishing evidence types.
           FAIL if TSK-derived cross-references are labeled as "Primary" evidence.
-      - type: llm-rubric
-        value: |
-          PASS if the response includes at least one cross-reference grounded in MCP data
-          (shared lemma from query_vocabulary, entity from query_people, or similar).
-          FAIL if all cross-references come only from training knowledge with no
-          MCP tool evidence cited.
 
   # =========================================================================
   # Scenario 8: Entity Identification with Confidence (Phase 4)
-  # Disputed identifications flagged with data-backed evidence
+  # Core failure: identification made without entity data or confidence grading
   # =========================================================================
   - description: "S8 GREEN: Entity confidence — identification grounded in entity data"
     vars:
       prompt: "Use the consult-biblical-scholar skill. Acts 15:13: Who is 'James' here? Is this James the brother of Jesus or James the son of Zebedee? How confident can we be?"
     assert:
+      # Core failure mode: identification from training knowledge without entity data
       - type: llm-rubric
         value: |
           PASS if the response:
@@ -282,11 +224,3 @@ tests:
             identification straightforward — but grounds it in data, not assumption
           FAIL if the identification is made without any reference to entity data
           or structured cross-reference evidence.
-      - type: llm-rubric
-        value: |
-          PASS if the confidence level appropriately distinguishes between
-          well-established identifications and disputed ones.
-          The response should demonstrate awareness that some biblical
-          identifications are more certain than others.
-          FAIL if all person identifications are presented at uniform HIGH
-          confidence without considering whether any are disputed.

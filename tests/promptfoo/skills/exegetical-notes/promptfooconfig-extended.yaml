@@ -1,0 +1,233 @@
+# Promptfoo EXTENDED-phase tests for exegetical-notes skill.
+# Adversarial and stress scenarios — run on-demand, not in CI.
+# Core failure-mode tests are in promptfooconfig-green.yaml.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/exegetical-notes/promptfooconfig-extended.yaml
+#
+# EXTENDED phase — adversarial and stress scenario verification:
+#   ADV1: Memory-based morphology for famous crux — must cite MCP
+#   ADV2: Verification not skipped under "quick notes" framing
+#   ADV3: Discourse data required even for "obvious" passages
+#   ADV4: Debates must be tier-labeled, not just noted
+#   STRESS1: Short personal letter — no forced OT connections
+#   STRESS2: Wisdom literature — no forced narrative arc
+#   STRESS3: Minimal theological density — honest about limits
+
+description: "Exegetical Notes — EXTENDED phase (adversarial/stress scenarios)"
+
+providers:
+  - file://../../providers/with-skill.agent-sdk.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
+    - type: llm-rubric
+      value: |
+        Evaluate whether the output respects literary context. FAIL if:
+        - Individual verses are interpreted without reference to the surrounding discourse unit
+        - Pericope boundaries are ignored or violated
+        - Book-level context (author, audience, occasion) is absent from the interpretation
+        - The passage is treated as a proof-text independent of its argument
+        PASS if interpretation flows from the discourse unit, respects the pericope, and references
+        the book's argumentative context.
+    - type: llm-rubric
+      value: |
+        Evaluate whether the output traces the passage's place in the biblical storyline.
+        FAIL if the redemptive-historical arc is completely absent and the passage is
+        treated as isolated moral instruction with no gospel connection.
+        PASS if the passage is connected to the broader biblical narrative, even briefly.
+        For OT passages, a redemptive-historical note suffices.
+    - type: llm-rubric
+      value: |
+        Evaluate whether the output respects covenantal distinctions.
+        FAIL if OT law is applied directly to Christians without attention to fulfillment
+        in Christ, or if no attention is given to progressive revelation between testaments.
+        PASS if the analysis attends to covenant context, or if this is an NT passage
+        where covenantal distinctions are less directly relevant.
+
+tests:
+
+  # =========================================================================
+  # ADVERSARIAL SCENARIOS
+  # Tests rationalization patterns under user pressure
+  # =========================================================================
+
+  # ADV1: Rationalization pattern #2 — "The aorist here is..." (no MCP cited)
+  - description: "ADV1 EXTENDED: Resist memory-based morphology for famous crux"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 2:5-11 --output print. Pay special attention to ἁρπαγμός in 2:6, which is a well-known interpretive crux."
+    assert:
+      - type: llm-rubric
+        value: |
+          Check morphological analysis of ἁρπαγμός (Phil 2:6).
+          PASS if morphological data is cited with [query_morphology] or similar MCP citation.
+          FAIL if morphological claims about ἁρπαγμός are made without tool citation.
+          FAIL if the analysis says "scholars disagree" without also presenting the morphological data from MCP.
+
+  # ADV2: Rationalization pattern #6 — Skipping Section 10 verification
+  - description: "ADV2 EXTENDED: Verification not skipped under 'quick notes' framing"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 4:4-7 --output print. I just need the essentials, so keep it brief."
+    assert:
+      - type: icontains
+        value: "Verification"
+      - type: llm-rubric
+        value: |
+          PASS if Section 10 (Verification) is present with MCP cross-check results,
+          even though the user asked for "essentials" or "brief" output.
+          FAIL if Verification is absent or skipped because the user asked for brevity.
+
+  # ADV3: Rationalization pattern #4 — "This is clear from the context"
+  - description: "ADV3 EXTENDED: Discourse data required even for 'obvious' passages"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 1:1-11 --output print. The thanksgiving structure is well-known and the context is self-evident, so focus mainly on the lexical analysis."
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 2 (Internal Structure).
+          PASS if it cites specific discourse features data (e.g., PoD markers, Focus+ markers,
+          or [query_discourse_features] citations), even though the user said "context is self-evident."
+          FAIL if Internal Structure says "the structure is well-known" or "clear from context"
+          without citing specific discourse marker data from MCP tools.
+          FAIL if Section 2 is abbreviated or skipped because the user said to "focus on lexical analysis."
+
+  # ADV4: Rationalization pattern #5 — "I'll note the uncertainty"
+  - description: "ADV4 EXTENDED: Debates must be tier-labeled, not just noted"
+    vars:
+      prompt: "Generate exegetical notes for Romans 3:21-26 --output print. There are many debated issues in this passage, so just note where scholars disagree."
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Section 6 (Interpretive Guardrails).
+          PASS if interpretive debates are classified using the Tier 1-4 framework
+          (Tier 1: linguistic, Tier 2: discourse, Tier 3: scholarly, Tier 4: agent assessment),
+          even though the user asked to just "note where scholars disagree."
+          FAIL if the response merely notes "scholars disagree" or "this is debated"
+          without classifying the disagreement by evidence tier.
+          FAIL if Tier 4 agent assessments are not explicitly labeled.
+      # Must still have all 4 tiers despite "just note debates" framing
+      - type: icontains
+        value: "Tier 1"
+      - type: icontains
+        value: "Tier 4"
+
+  # =========================================================================
+  # STRESS TESTS: Genre-graduated redemptive-historical requirement
+  # Tests edge cases from biblical scholar consultation (2026-03-01)
+  # =========================================================================
+
+  # STRESS1: Short personal letter — zero OT quotes, personal appeal
+  - description: "STRESS1 EXTENDED: Philemon 8-16 — short letter, no forced OT connections"
+    vars:
+      prompt: "Generate exegetical notes for Philemon 8-16 --output print"
+    assert:
+      # Genre-graduated: short letter should NOT force OT connections
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section connects Philemon to broader Pauline theology
+          (e.g., "in Christ" language, new creation, reconciliation) WITHOUT
+          forcing artificial OT quotation connections where the text makes none.
+          PASS ALSO if it honestly notes that Philemon contains zero direct
+          OT quotations while still connecting to broader theological themes.
+          FAIL if the section fabricates OT connections not present in the text
+          (e.g., claiming Paul "echoes the Year of Jubilee" without textual evidence).
+          FAIL if Section 8 is empty or says "no connections found."
+      # Christ-centeredness should work through Pauline theology, not forced OT
+      - type: llm-rubric
+        value: |
+          Evaluate christ-centeredness for a short personal letter.
+          PASS if the passage is connected to Christ through Paul's "in Christ"
+          theology, the new-creation ethic, or the gospel's social implications —
+          i.e., through the letter's own theological framework.
+          FAIL if the redemptive-historical connection is completely absent.
+          FAIL if OT connections are forced where the text makes none.
+
+  # STRESS2: Wisdom literature — individual sayings, dense Masoretic markers
+  - description: "STRESS2 EXTENDED: Proverbs 10:1-7 — wisdom genre, no forced narrative arc"
+    vars:
+      prompt: "Generate exegetical notes for Proverbs 10:1-7 --output print"
+    assert:
+      # Genre correctly identified as wisdom
+      - type: llm-rubric
+        value: |
+          Check the Genre field in the header.
+          PASS if genre is identified as "wisdom" (or "poetry" for proverbial material).
+          FAIL if genre is "narrative", "epistle", or "prophecy."
+      # Genre-graduated: wisdom should NOT require narrative redemptive arc
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section either:
+          (a) connects to wisdom theology (e.g., Prov 8, fear of the LORD,
+              Christ as wisdom in Col 1:15-17 or 1 Cor 1:30), OR
+          (b) honestly states that redemptive-historical connections are indirect
+              in wisdom genre while still providing relevant cross-references.
+          FAIL if it forces a Creation-Fall-Redemption narrative arc onto
+          individual wisdom sayings.
+          FAIL if Section 8 is empty.
+      # Pericope handling: wisdom sayings have dense paragraph markers
+      - type: llm-rubric
+        value: |
+          Check the pericope handling for individual wisdom sayings.
+          PASS if the analysis acknowledges that Proverbs 10:1-7 contains
+          discrete sayings (not a continuous argument) and handles unit
+          boundaries accordingly.
+          FAIL if the analysis treats 10:1-7 as a continuous argument
+          with a single thesis like an epistle paragraph.
+
+  # STRESS3: Minimal theological density — zero OT quotes, brief letter
+  - description: "STRESS3 EXTENDED: 3 John 1-8 — minimal density, honest about limits"
+    vars:
+      prompt: "Generate exegetical notes for 3 John 1-8 --output print"
+    assert:
+      # Key sections present
+      - type: icontains
+        value: "Lexical Analysis"
+      - type: icontains
+        value: "Intertextual Links"
+      - type: icontains
+        value: "Verification"
+      # Genre-graduated: short letter, honest about theological limits
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links).
+          PASS if the section connects 3 John to Johannine theology
+          (e.g., truth language, love, hospitality in the early church)
+          without forcing artificial OT connections.
+          PASS ALSO if it honestly states that 3 John contains zero OT
+          quotations and redemptive-historical connections are indirect.
+          FAIL if OT connections are fabricated.
+          FAIL if Section 8 is empty or absent.
+      # Should still have all 10 sections even for a short passage
+      - type: icontains
+        value: "Passage in Literary Context"
+      - type: icontains
+        value: "Exegetical Conclusions"
+      - type: icontains
+        value: "Open Questions"

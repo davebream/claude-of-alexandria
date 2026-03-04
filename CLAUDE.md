@@ -58,22 +58,24 @@ Do TDD. The cost of unnecessary rigor is minutes. The cost of insufficient rigor
 
 ---
 
-## The Two Test Configs
+## The Three Test Configs
 
-Every skill requires **exactly two** promptfoo config files. Not one. Not three. Two.
+Every skill has **exactly two required** promptfoo config files, and one optional extended config.
 
 ```
 tests/promptfoo/skills/{skill-name}/
-├── promptfooconfig-red.yaml    # RED phase — bare model failures
-└── promptfooconfig-green.yaml  # GREEN phase — skill corrections
+├── promptfooconfig-red.yaml       # RED phase — bare model failures (required)
+├── promptfooconfig-green.yaml     # GREEN phase — failure-mode corrections (required)
+└── promptfooconfig-extended.yaml  # EXTENDED phase — quality/ADV/STRESS scenarios (optional)
 ```
 
 **RED** runs prompts against the bare model (no skills, no MCP). It documents what goes wrong.
-**GREEN** runs the same prompts with skills and MCP enabled. It proves the skill corrects each failure.
+**GREEN** runs the same prompts with skills and MCP enabled. It proves the skill corrects each failure. Each scenario has one targeted assertion per failure mode — deterministic checks (icontains, javascript) plus one llm-rubric targeting that specific failure.
+**EXTENDED** runs quality, adversarial (ADV), and stress (STRESS) scenarios that have no corresponding RED failure. These run on-demand during skill development, not in CI.
 
-**Do not create additional test files.** No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. Everything goes in the two canonical configs.
+**Do not create additional test files** beyond these three canonical configs. No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. If it does not fit RED, GREEN, or EXTENDED, reconsider whether it belongs.
 
-**Rationale**: Consistency across all skills. A known structure. Anyone who opens the test directory knows exactly what they will find. This is a library, not a filing cabinet.
+**Rationale**: Consistency across all skills. A known structure. GREEN stays cheap enough for CI (one llm-rubric per failure mode). EXTENDED runs on-demand for advanced validation.
 
 ---
 
@@ -204,7 +206,7 @@ Capture the eval ID from the output line `Eval complete (ID: eval-XXX-...)` and 
 
 - Temporary agent output files
 - Personal exploration notes
-- Additional test files beyond the two-config structure
+- Additional test files beyond the three-config structure (red/green/extended)
 - Anything you would not want a future scholar to find in the archive
 
 ### Commit Messages
@@ -235,14 +237,16 @@ claude-of-alexandria/
 │   ├── promptfoo/                # Automated agent & skill testing
 │   │   ├── providers/            # Agent SDK configs (with/without skill)
 │   │   ├── assertions/           # Shared helpers and rubrics
-│   │   ├── skills/               # Per-skill RED/GREEN configs
+│   │   ├── skills/               # Per-skill RED/GREEN/EXTENDED configs
 │   │   │   └── skill-name/
 │   │   │       ├── promptfooconfig-red.yaml
-│   │   │       └── promptfooconfig-green.yaml
-│   │   ├── agents/               # Per-agent RED/GREEN configs
+│   │   │       ├── promptfooconfig-green.yaml
+│   │   │       └── promptfooconfig-extended.yaml  # optional
+│   │   ├── agents/               # Per-agent RED/GREEN/EXTENDED configs
 │   │   │   └── agent-name/
 │   │   │       ├── promptfooconfig-red.yaml
-│   │   │       └── promptfooconfig-green.yaml
+│   │   │       ├── promptfooconfig-green.yaml
+│   │   │       └── promptfooconfig-extended.yaml  # optional
 │   │   └── package.json
 ├── docs/                         # Implementation plans, reviews
 ├── CLAUDE.md                     # You are here
@@ -262,8 +266,8 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 | Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
 | Skills | `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` |
 | Agents | `plugins/claude-of-alexandria/agents/agent-name.md` |
-| Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |
-| Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green}.yaml` |
+| Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
+| Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
 
 ---
 

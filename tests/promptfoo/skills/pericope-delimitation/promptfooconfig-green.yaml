@@ -1,18 +1,17 @@
 # Promptfoo GREEN-phase tests for pericope-delimitation skill.
-# Skill content is injected via setting_sources in the provider config.
+# Core failure-mode corrections only. One targeted llm-rubric per scenario.
+# For quality/advanced scenarios, see promptfooconfig-extended.yaml.
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-green.yaml
 #
 # GREEN phase — skill correction verification:
-#   S1: Truncated pericope (EXTEND) — Levinsohn data, boundary labels
-#   S2: Valid/composite pericope (VALID or CONTRACT) — confirmed boundaries
-#   S3: Over-extended passage (CONTRACT) — split point identification
-#   S4: OT narrative (data-driven verdict) — Masoretic markers, toledot
+#   S1: Truncated pericope (EXTEND) — Levinsohn features named, not vague
+#   S4: OT narrative (data-driven verdict) — Masoretic markers + toledot
 #   S7: Single verse (EXTEND) — structural boundary enforcement
-#   S10: Resistance test — data over memory
-#   ADV1: Evidence quality — discourse features named, not vague
+#   S10: Resistance test — data over memory (discourse features, not tradition)
+#   S11: Speaker-aware boundary — speaker changes as boundary evidence
 
-description: "Pericope Delimitation — GREEN phase (skill + MCP)"
+description: "Pericope Delimitation — GREEN phase (failure-mode corrections)"
 
 providers:
   - file://../../providers/with-skill.agent-sdk.yaml
@@ -55,6 +54,7 @@ defaultTest:
 tests:
   # =========================================================================
   # Scenario 1: Truncated NT Pericope — Phil 1:3-8 (EXTEND)
+  # Core failure: vague discourse evidence ("passage continues") without named features
   # Manual TDD verification: PASS (8/8) — EXTEND verdict, Levinsohn features
   # =========================================================================
   - description: "S1 GREEN: Phil 1:3-8 — EXTEND verdict with Levinsohn evidence"
@@ -64,100 +64,32 @@ tests:
       # Verdict keyword present (deterministic)
       - type: icontains
         value: "EXTEND"
-      # Verdict reasoning quality
+      # Core failure mode: vague discourse evidence without named Levinsohn features
       - type: llm-rubric
         value: |
-          PASS if the EXTEND verdict recommends extension to at least Phil 1:3-11.
-          FAIL if the verdict is VALID for 1:3-8 or if no reasoning is given for extension.
-      # Boundary labels
-      - type: llm-rubric
-        value: |
-          PASS if both start and end boundaries are assessed with status labels
-          (Confirmed, Weak, or Mid-unit).
-          The end boundary at 1:8 should be Weak or Mid-unit.
-          FAIL if boundary status labels are absent.
-      # Levinsohn data cited
-      - type: llm-rubric
-        value: |
-          PASS if the response cites specific Levinsohn discourse features
-          (e.g., PoD, Referential_PoD, Focus+, or γινώσκειν disclosure formula at 1:12).
-          FAIL if discourse evidence is vague ("the passage continues") without
-          named features from query_discourse_features.
-      # Minimum viable pericope offered
-      - type: llm-rubric
-        value: |
-          PASS if the response offers a minimum viable pericope (e.g., 1:3-6)
-          as an alternative shorter unit.
-          FAIL if no alternative is mentioned.
-
-  # =========================================================================
-  # Scenario 2: Valid NT Pericope — Phil 1:1-11 (VALID)
-  # Manual TDD verification: PASS (6/6) — both boundaries confirmed
-  # =========================================================================
-  - description: "S2 GREEN: Phil 1:1-11 — VALID verdict with confirmed boundaries"
-    vars:
-      prompt: "Use the pericope-delimitation skill for Philippians 1:1-11"
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response includes either:
-          (a) A VALID verdict for Phil 1:1-11 as a coherent unit, OR
-          (b) A CONTRACT verdict that identifies sub-units (e.g., prescriptio 1:1-2
-              and thanksgiving 1:3-11) — this is data-sound since 1:1-2 and 1:3-11
-              are structurally distinct sections.
-          FAIL only if the verdict is EXTEND (no reason to extend) or if no verdict
-          is given at all.
-      - type: llm-rubric
-        value: |
-          PASS if both start boundary (1:1) and end boundary (1:11) are labeled as Confirmed
-          with specific evidence (e.g., epistolary opening for start, γινώσκειν at 1:12 for end).
-          FAIL if boundaries are not individually assessed.
-
-  # =========================================================================
-  # Scenario 3: Over-Extended Passage — Phil 1:1-2:11 (CONTRACT)
-  # Manual TDD verification: PASS (5/5) — five sub-units identified
-  # =========================================================================
-  - description: "S3 GREEN: Phil 1:1-2:11 — CONTRACT with split points"
-    vars:
-      prompt: "Use the pericope-delimitation skill for Philippians 1:1-2:11"
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response issues a CONTRACT verdict identifying multiple
-          discourse units within Phil 1:1-2:11, with at least one split point
-          specified (e.g., at 1:12, 1:27, or 2:1).
-          FAIL if the verdict is VALID for the entire range.
-      - type: llm-rubric
-        value: |
-          PASS if Levinsohn discourse features are cited at the identified
-          split points (e.g., PoD markers, disclosure formulas at specific verses).
-          FAIL if split points are based only on thematic analysis without
-          discourse feature evidence.
+          Check the Data Sources section and boundary evidence throughout.
+          PASS if specific Levinsohn feature names are used (e.g., Referential_PoD,
+          Situational_PoD, Focus+, Historical_Present, Over_encoding) — not just
+          "discourse features" generically.
+          FAIL if discourse evidence is described only as "discourse markers" or
+          "boundary features" without naming the specific Levinsohn feature types.
 
   # =========================================================================
   # Scenario 4: OT Narrative Pericope — Gen 37:2-11 (VALID)
+  # Core failure: no Masoretic data or toledot identification
   # Manual TDD verification: data-correct (Masoretic markers confirmed)
   # =========================================================================
   - description: "S4 GREEN: Gen 37:2-11 — VALID with Masoretic markers"
     vars:
       prompt: "Use the pericope-delimitation skill for Genesis 37:2-11"
     assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response issues a data-driven verdict for Gen 37:2-11:
-          (a) VALID — accepting it as a coherent unit, OR
-          (b) EXTEND (e.g., to 37:2-13 or 37:2-14) with Masoretic evidence
-              showing 37:11 is not a strong boundary, OR
-          (c) Minor ADJUST based on paragraph marker data.
-          All three are acceptable if backed by Masoretic or discourse evidence.
-          FAIL only if no verdict is given or if verdict has no evidence.
-      # Toledot formula identified
+      # Core failure mode: toledot formula missed
       - type: llm-rubric
         value: |
           PASS if the response identifies the toledot formula (אֵלֶּה תּוֹלְדוֹת)
           at Gen 37:2 as a structural boundary marker.
           FAIL if the toledot formula is not mentioned.
-      # Masoretic data cited
+      # Core failure mode: no Masoretic data cited
       - type: llm-rubric
         value: |
           PASS if Masoretic paragraph markers (פ or ס) are cited with specific
@@ -166,7 +98,7 @@ tests:
 
   # =========================================================================
   # Scenario 7: Single Verse — John 3:16 (EXTEND)
-  # Must recognize single verse cannot be a pericope
+  # Core failure: validates single verse as standalone pericope
   # =========================================================================
   - description: "S7 GREEN: John 3:16 — EXTEND for single verse"
     vars:
@@ -175,29 +107,24 @@ tests:
       # Verdict keyword present (deterministic)
       - type: icontains
         value: "EXTEND"
-      # Verdict reasoning quality
+      # Core failure mode: validates John 3:16 as standalone pericope
       - type: llm-rubric
         value: |
           PASS if the EXTEND verdict explains that a single verse cannot constitute
           a pericope in discourse terms, and recommends a minimum viable unit
           (e.g., John 3:1-21, or 3:14-21, or similar).
           FAIL if the response validates John 3:16 as a standalone pericope.
-      # Discourse context provided
-      - type: llm-rubric
-        value: |
-          PASS if the response cites discourse context showing John 3:16 is
-          embedded in a larger discourse unit (the Nicodemus dialogue).
-          FAIL if no discourse context is given for why extension is needed.
 
   # =========================================================================
   # Scenario 10: Resistance Test — Rom 1:16-17
-  # Must check data, not rely on "propositio" tradition
+  # Core failure: validates as standalone unit based on theological fame
   # Manual TDD verification: PASS (5/5) — resisted memory, cited data
   # =========================================================================
   - description: "S10 GREEN: Rom 1:16-17 — data over memory (resistance test)"
     vars:
       prompt: "Use the pericope-delimitation skill for Romans 1:16-17. These are often called the thesis statement of Romans."
     assert:
+      # Core failure mode: validates 1:16-17 based on "propositio" tradition
       - type: llm-rubric
         value: |
           PASS if the response issues an EXTEND or ADJUST verdict (either is
@@ -209,6 +136,7 @@ tests:
           The response should note that 1:16-17 is embedded in a larger unit.
           FAIL if the response validates 1:16-17 as a standalone unit based
           on its theological fame as the "thesis statement."
+      # Core failure mode: relies on commentary tradition without discourse data
       - type: llm-rubric
         value: |
           PASS if the response explicitly checks Levinsohn data for boundary
@@ -218,24 +146,8 @@ tests:
           without consulting discourse feature data.
 
   # =========================================================================
-  # ADV1: Evidence Quality — discourse features must be named specifically
-  # =========================================================================
-  - description: "ADV1 GREEN: Evidence quality — named features, not vague"
-    vars:
-      prompt: "Use the pericope-delimitation skill for Philippians 1:3-8. I need detailed boundary analysis."
-    assert:
-      - type: llm-rubric
-        value: |
-          Check the Data Sources section and boundary evidence throughout.
-          PASS if specific Levinsohn feature names are used (e.g., Referential_PoD,
-          Situational_PoD, Focus+, Historical_Present, Over_encoding) — not just
-          "discourse features" generically.
-          FAIL if discourse evidence is described only as "discourse markers" or
-          "boundary features" without naming the specific Levinsohn feature types.
-
-  # =========================================================================
   # Scenario 11: Speaker-Aware Boundary (Phase 4)
-  # Speaker change data used as supporting boundary evidence
+  # Core failure: evaluates pericope without structured speaker attribution
   # =========================================================================
   - description: "S11 GREEN: Speaker-aware boundary — speaker changes as boundary evidence"
     vars:

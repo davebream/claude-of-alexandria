@@ -217,7 +217,7 @@ tests:
   # =========================================================================
   - description: "S9 RED: Entity data — narrative people described without entity data"
     vars:
-      prompt: "Analyze Genesis 22:1-19, the Binding of Isaac. Identify all people mentioned and their roles. Include any entity data or cross-references for these characters."
+      prompt: "Analyze Genesis 22:1-4 (the beginning of the Binding of Isaac). Identify all people mentioned and their roles. Include any entity data or cross-references for these characters."
     assert:
       - type: llm-rubric
         value: |
@@ -240,7 +240,7 @@ tests:
   # =========================================================================
   - description: "S10 RED: Speaker data — dialogue analysis without speaker attribution data"
     vars:
-      prompt: "Analyze Genesis 3:1-19 exegetically. Pay special attention to who speaks in each section and the significance of divine speech."
+      prompt: "Analyze Genesis 3:1-7 exegetically. Pay special attention to who speaks in each section and the significance of divine speech."
     assert:
       - type: llm-rubric
         value: |

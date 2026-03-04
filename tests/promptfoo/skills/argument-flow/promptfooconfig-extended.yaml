@@ -1,0 +1,73 @@
+# Promptfoo EXTENDED-phase tests for argument-flow skill.
+# Quality, adversarial, and advanced scenarios — run on-demand, not in CI.
+# Core failure-mode tests are in promptfooconfig-green.yaml.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-extended.yaml
+#
+# EXTENDED phase — advanced scenario verification:
+#   S7: Speaker-aware dialogue flow — speaker transitions as discourse markers
+
+description: "Argument Flow — EXTENDED phase (quality/advanced scenarios)"
+
+providers:
+  - file://../../providers/with-skill.agent-sdk.yaml
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return (raw.num_turns || 0) > 1;
+    - type: javascript
+      value: |
+        const lower = output.toLowerCase();
+        const expected = ['query_morphology', 'query_discourse_features'];
+        const found = expected.filter(n => lower.includes(n));
+        return {
+          pass: found.length >= 1,
+          score: found.length / expected.length,
+          reason: found.length >= 1
+            ? `MCP tools cited in output: [${found}]`
+            : `No expected MCP tools found in output. Expected: [${expected}]`
+        };
+    - type: icontains
+      value: "Data Sources"
+    - type: llm-rubric
+      value: |
+        FAIL if the response contains devotional or applicatory language:
+        - "This passage reminds us...", "Paul encourages us...", "we should..."
+        - Pastoral framing or inspirational tone
+        - First-person plural applications
+        PASS if the output is purely analytical without devotional content.
+
+tests:
+
+  # =========================================================================
+  # Scenario 7: Speaker-Aware Dialogue Flow (Phase 4)
+  # Speaker transition data used as discourse markers in proposition chain
+  # No RED counterpart — advanced quality scenario
+  # =========================================================================
+  - description: "S7 EXTENDED: Speaker-aware dialogue — speaker transitions as discourse markers"
+    vars:
+      prompt: "Map the argument flow of Genesis 18:23-29 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response uses speaker data or speaker transitions as part of
+          the argument flow analysis. Signs of success:
+          - Speaker transitions noted with verse references
+          - Dialogue exchanges mapped with speaker attribution
+          - Speaker changes treated as discourse markers in the proposition chain
+          - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
+          FAIL if speakers are identified only from narrative context without
+          any reference to structured speaker data.

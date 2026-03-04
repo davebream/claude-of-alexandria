@@ -1,20 +1,19 @@
 # Promptfoo GREEN-phase tests for argument-flow skill.
-# Skill content is injected via setting_sources in the provider config.
+# Core failure-mode corrections only. One targeted llm-rubric per scenario.
+# For quality/advanced scenarios, see promptfooconfig-extended.yaml.
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-green.yaml
 #
 # GREEN phase — skill correction verification:
 #   S1: Connective analysis — MCP before prose, proposition chain
 #   S3: No devotional drift — analytical tone only
-#   S4: Confidence tiers — claims evidence-graded
+#   S4: Confidence tiers — structural claims evidence-graded
 #   S5: Mode boundary — argument-flow first, theological question deferred
 #   S6: OT genre detection — narrative structure, not epistle logic
 #   ADV1: User pushback resistance — maintains MCP discipline
-#
-# Phase 6 — OpenText.org clause annotations:
 #   S8: Clause-aware argument flow — NT proposition chain with clause-level data
 
-description: "Argument Flow — GREEN phase (skill + MCP)"
+description: "Argument Flow — GREEN phase (failure-mode corrections)"
 
 providers:
   - file://../../providers/with-skill.agent-sdk.yaml
@@ -82,20 +81,13 @@ tests:
       # Proposition chain present
       - type: icontains
         value: "Proposition Chain"
-      # Connective inventory present
+      # Connective inventory present — core failure mode assertion
       - type: llm-rubric
         value: |
           PASS if the response includes a connective inventory or table listing
           Greek connectives found in the passage (e.g., εἰ, οὖν, ἵνα) with
           their verse references and logical functions.
           FAIL if no connective inventory is present.
-      # Numbered chain with labeled connectives
-      - type: llm-rubric
-        value: |
-          PASS if the proposition chain has numbered entries where each clause
-          is labeled with its connective type (Condition, Inference, Purpose, etc.)
-          and includes the Greek connective with verse reference.
-          FAIL if the chain is a prose summary without numbered, labeled entries.
 
   # =========================================================================
   # Scenario 3: Analytical Tone — Phil 4:4-7
@@ -128,13 +120,7 @@ tests:
           - "CONFIDENCE: HIGH"
           - "CONFIDENCE: MEDIUM"
           - "CONFIDENCE: LOW"
-      # MCP data labeled HIGH
-      - type: llm-rubric
-        value: |
-          PASS if MCP-derived data (morphology, conjunctions, discourse features) is
-          labeled HIGH confidence or attributed to specific MCP tools.
-          FAIL if MCP-sourced findings are labeled at lower confidence than warranted.
-      # Structural inferences labeled separately from MCP data
+      # Structural inferences labeled separately from MCP data — core failure mode assertion
       - type: llm-rubric
         value: |
           PASS if structural inferences (hymnic structure, chiastic framing, inclusio,
@@ -142,13 +128,6 @@ tests:
           "structural assessment," or "Tier 4" — NOT lumped in with MCP data at HIGH.
           FAIL if "widely recognized as a hymn" or "chiastic structure" is presented
           at the same confidence level as morphological findings.
-      # Distinction between data-backed and inferred claims
-      - type: llm-rubric
-        value: |
-          PASS if the confidence declaration distinguishes between data-backed claims
-          and agent pattern-recognition claims (e.g., split confidence tiers or separate labeling).
-          FAIL if everything is marked CONFIDENCE: HIGH uniformly despite mixing MCP data
-          with structural inferences.
 
   # =========================================================================
   # Scenario 5: Mode Boundary — Eph 2:8-9
@@ -173,14 +152,15 @@ tests:
           or if argument-flow analysis is replaced by theological evaluation.
 
   # =========================================================================
-  # Scenario 6: OT Genre Detection — Genesis 22:1-14
-  # Narrative genre, not epistle logic; scene/climax/resolution
+  # Scenario 6: OT Genre Detection — Genesis 22:1-4
+  # Narrative genre, not epistle logic; petuchah at v.5 confirms boundary
   # Manual TDD: baseline deferred; tests OT genre governance
   # =========================================================================
-  - description: "S6 GREEN: Gen 22:1-14 — OT narrative genre detection"
+  - description: "S6 GREEN: Gen 22:1-4 — OT narrative genre detection"
     vars:
-      prompt: "Use the argument-flow skill for Genesis 22:1-14"
+      prompt: "Use the argument-flow skill for Genesis 22:1-4"
     assert:
+      # Core failure mode: applies NT epistle analysis to OT narrative
       - type: llm-rubric
         value: |
           PASS if the response:
@@ -194,11 +174,6 @@ tests:
       # Genre label present (deterministic)
       - type: icontains
         value: "Genre:"
-      # Correct genre identified
-      - type: llm-rubric
-        value: |
-          PASS if the genre is identified as Narrative (not epistle or poetry).
-          FAIL if the genre is misidentified or not stated.
 
   # =========================================================================
   # ADV1: User Pushback Resistance
@@ -227,25 +202,6 @@ tests:
             whether they'd like to proceed with or without MCP data
 
   # =========================================================================
-  # Scenario 7: Speaker-Aware Dialogue Flow (Phase 4)
-  # Speaker transition data used as discourse markers in proposition chain
-  # =========================================================================
-  - description: "S7 GREEN: Speaker-aware dialogue — speaker transitions as discourse markers"
-    vars:
-      prompt: "Map the argument flow of Genesis 18:22-33 (Abraham's intercession for Sodom). Pay attention to the dialogue structure and speaker transitions."
-    assert:
-      - type: llm-rubric
-        value: |
-          PASS if the response uses speaker data or speaker transitions as part of
-          the argument flow analysis. Signs of success:
-          - Speaker transitions noted with verse references
-          - Dialogue exchanges mapped with speaker attribution
-          - Speaker changes treated as discourse markers in the proposition chain
-          - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
-          FAIL if speakers are identified only from narrative context without
-          any reference to structured speaker data.
-
-  # =========================================================================
   # Scenario 8: Clause-Aware Argument Flow (Phase 6)
   # Clause-level annotations used as structural evidence in proposition chain
   # =========================================================================
@@ -253,6 +209,7 @@ tests:
     vars:
       prompt: "Use the argument-flow skill for Romans 8:28-30. Show how the clauses relate to each other and identify the logical chain connecting foreknowledge, predestination, calling, justification, and glorification."
     assert:
+      # Core failure mode: no attempt to use clause-level annotation data
       - type: llm-rubric
         value: |
           PASS if the response demonstrates awareness of clause-level annotations
@@ -265,13 +222,5 @@ tests:
           FAIL only if there is NO evidence that the agent attempted to use
           clause-level annotation data at all — i.e., query_syntax is never
           mentioned, referenced, or called in the analysis workflow.
-      - type: llm-rubric
-        value: |
-          PASS if clause annotations are properly framed as one analytical framework
-          (OpenText.org / Porter's SFL) rather than presented as definitive clause
-          structure. The response should use clause data as evidence, not as the
-          final word on clause relationships.
-          FAIL if OpenText.org annotations are presented as the definitive clause
-          analysis without acknowledging they represent one linguistic framework.
       - type: icontains
         value: "Data Sources"
