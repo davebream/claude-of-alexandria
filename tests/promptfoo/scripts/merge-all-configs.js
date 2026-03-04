@@ -13,9 +13,12 @@ const path = require('path');
 const yaml = require('yaml');
 
 const ROOT = path.resolve(__dirname, '..');
-const PROVIDER_WITHOUT = 'file://providers/sdk-bare.mjs';
-const PROVIDER_WITH = 'file://providers/sdk-with-skill.mjs';
-const PROVIDER_GRADER = 'file://providers/sdk-grader.mjs';
+const PROVIDER_WITHOUT = 'anthropic:messages:claude-sonnet-4-6';
+const PROVIDER_WITH = 'file://providers/with-skill.agent-sdk.yaml';
+const PROVIDER_GRADER = {
+  id: 'anthropic:messages:claude-sonnet-4-6',
+  config: { temperature: 0 },
+};
 
 function findConfigs(dir, basename) {
   const out = [];

@@ -1,7 +1,7 @@
 description: "Smoke test — verify prompt → skill → sub-agent pipeline"
 
 providers:
-  - file://../providers/sdk-with-skill.mjs
+  - file://../providers/with-skill.agent-sdk.yaml
 
 prompts:
   - "{{prompt}}"

@@ -6,14 +6,18 @@
 description: "biblical-scholar — RED phase (bare model, no agent, no MCP)"
 
 providers:
-  - file://../../providers/sdk-bare.mjs
+  - id: anthropic:messages:claude-sonnet-4-6
+    label: bare-model
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider: file://../../providers/sdk-grader.mjs
+    provider:
+      id: anthropic:messages:claude-sonnet-4-6
+      config:
+        temperature: 0
   assert:
     - type: not-icontains
       value: "API Error: 429"

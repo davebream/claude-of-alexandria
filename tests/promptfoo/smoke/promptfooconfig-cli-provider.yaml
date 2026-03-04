@@ -6,14 +6,18 @@
 description: "Smoke test — sdk-bare provider isolation"
 
 providers:
-  - file://../providers/sdk-bare.mjs
+  - id: anthropic:messages:claude-sonnet-4-6
+    label: bare-model
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider: file://../providers/sdk-grader.mjs
+    provider:
+      id: anthropic:messages:claude-sonnet-4-6
+      config:
+        temperature: 0
 
 tests:
   # Test 1: Basic response — does the SDK work at all?

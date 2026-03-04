@@ -1,4 +1,3 @@
-# GREEN-phase provider: Agent SDK with skills, MCP, and plugin access.
-# Uses CLAUDE_CODE_OAUTH_TOKEN auth — no ANTHROPIC_API_KEY needed.
-id: file://../../providers/sdk-with-skill.mjs
-label: sdk-with-skill
+# DEPRECATED: Use with-skill.agent-sdk.yaml directly in configs.
+# This file is retained for rollback reference only.
+# See with-skill.agent-sdk.yaml for the active GREEN provider config.

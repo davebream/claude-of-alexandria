@@ -1,5 +1,4 @@
-# RED-phase provider: bare model, no skills, no MCP, no tools.
-# Uses Agent SDK with OAuth token auth (CLAUDE_CODE_OAUTH_TOKEN).
-# Isolation: no tools, no plugins, no settings files loaded.
-id: file://../../providers/sdk-bare.mjs
-label: sdk-bare
+# DEPRECATED: Use anthropic:messages:claude-sonnet-4-6 inline in configs.
+# This file is retained for rollback reference only.
+id: anthropic:messages:claude-sonnet-4-6
+label: without-skill

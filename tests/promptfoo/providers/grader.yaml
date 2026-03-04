@@ -1,4 +1,6 @@
-# Grading provider for llm-rubric assertions.
-# Uses Agent SDK with OAuth token auth. No tools needed for grading.
-id: file://../../providers/sdk-grader.mjs
-label: sdk-grader
+# DEPRECATED: Use anthropic:messages:claude-sonnet-4-6 inline in configs.
+# This file is retained for rollback reference only.
+id: anthropic:messages:claude-sonnet-4-6
+label: grader
+config:
+  temperature: 0
