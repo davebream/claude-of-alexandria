@@ -43,7 +43,7 @@ defaultTest:
     - type: javascript
       value: |
         const lower = output.toLowerCase();
-        const expected = ['query_morphology', 'query_vocabulary'];
+        const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
         const found = expected.filter(n => lower.includes(n));
         return {
           pass: found.length >= 1,
@@ -116,6 +116,22 @@ tests:
         value: "Genre:"
       - type: icontains
         value: "Pericope Status:"
+      # Content quality — S1 must have substantive analysis, not just headers
+      - type: llm-rubric
+        value: |
+          Evaluate whether this exegetical notes output contains SUBSTANTIVE analytical
+          content, not just section headers with minimal text.
+
+          PASS if ALL of these are true:
+          - The "Lexical Analysis" section contains at least one Greek/Hebrew word with
+            morphological data (parsing, lemma form, or semantic range discussion)
+          - The "Propositional Summary" section contains numbered propositions that map
+            the argument's logical flow
+          - The "Verification" section contains specific cross-check results citing
+            MCP tool outputs (e.g., "[query_morphology]", "[query_vocabulary]")
+
+          FAIL if any section is present as a header only, with one generic sentence
+          or no substantive analytical content beneath it.
 
   # =========================================================================
   # Scenario 2: Lexical Data-Grounding
