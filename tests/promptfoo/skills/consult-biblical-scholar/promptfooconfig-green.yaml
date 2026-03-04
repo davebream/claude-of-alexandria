@@ -40,7 +40,7 @@ defaultTest:
     - type: javascript
       value: |
         const lower = output.toLowerCase();
-        const expected = ['query_morphology', 'query_vocabulary'];
+        const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
         const found = expected.filter(n => lower.includes(n));
         return {
           pass: found.length >= 1,
