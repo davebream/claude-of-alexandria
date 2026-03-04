@@ -34,7 +34,7 @@ config:
     - Skill
     - Read
     - Write
-    # 12 tools matching deployed server at coa.davebream.com/mcp
+    # 19 tools matching deployed server at coa.davebream.com/mcp
     - list_books
     - query_discourse_features
     - query_paragraph_breaks
@@ -44,9 +44,16 @@ config:
     - query_lemmas
     - query_themes_for_lemmas
     - query_theme
-    - bible_lookup
-    - commentary_lookup
-    - parallel_text
+    - query_lexicon
+    - check_versification
+    - query_cross_references
+    - query_people
+    - query_places
+    - query_events
+    - query_person_network
+    - query_speakers
+    - query_syntax
+    - query_variants
   mcp:
     servers:
       - name: plugin_claude-of-alexandria_claude-of-alexandria-mcp
