@@ -30,7 +30,10 @@ prompts:
 
 defaultTest:
   options:
-    provider: file://../../providers/sdk-grader.mjs
+    provider:
+      id: anthropic:messages:claude-sonnet-4-6
+      config:
+        temperature: 0
   assert:
     - type: not-icontains
       value: "API Error: 429"
