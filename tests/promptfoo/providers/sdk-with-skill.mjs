@@ -41,6 +41,7 @@ the Task tool to delegate to that agent. Return the agent's output VERBATIM — 
 not reformat, summarize, or wrap it in your own structure.`;
 
 const MCP_TOOLS = [
+  "mcp__claude-of-alexandria-mcp__list_books",
   "mcp__claude-of-alexandria-mcp__query_discourse_features",
   "mcp__claude-of-alexandria-mcp__query_paragraph_breaks",
   "mcp__claude-of-alexandria-mcp__query_vocabulary",
@@ -59,6 +60,9 @@ const MCP_TOOLS = [
   "mcp__claude-of-alexandria-mcp__query_speakers",
   "mcp__claude-of-alexandria-mcp__query_syntax",
   "mcp__claude-of-alexandria-mcp__query_variants",
+  "mcp__claude-of-alexandria-mcp__bible_lookup",
+  "mcp__claude-of-alexandria-mcp__commentary_lookup",
+  "mcp__claude-of-alexandria-mcp__parallel_text",
 ];
 
 export default class SdkWithSkillProvider extends SdkProvider {

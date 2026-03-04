@@ -27,6 +27,9 @@ defaultTest:
       id: anthropic:messages:claude-sonnet-4-6
       config:
         temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
 
 tests:
 
@@ -172,8 +175,6 @@ tests:
           FAIL only if the response explicitly distinguishes HIGH-confidence morphological
           facts from DISPUTED semantic interpretations AND refuses to settle the lexical
           debate definitively.
-
-          Return JSON: {"pass": true, "reason": "..."} or {"pass": false, "reason": "..."}
 
   # =========================================================================
   # Scenario 7: TSK Cross-Reference False Confidence

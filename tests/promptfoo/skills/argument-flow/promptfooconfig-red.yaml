@@ -31,6 +31,9 @@ defaultTest:
       id: anthropic:messages:claude-sonnet-4-6
       config:
         temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
 
 tests:
 
