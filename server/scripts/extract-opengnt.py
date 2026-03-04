@@ -37,7 +37,7 @@ BASE_TEXT_URL = f"{GITHUB_RAW}/OpenGNT_BASE_TEXT.zip"
 KEYED_FEATURES_URL = f"{GITHUB_RAW}/OpenGNT_keyedFeatures.csv.zip"
 OPENTEXT_URL = (
     f"{GITHUB_RAW}/mapping_OpenTextAnnotations/"
-    "OpenGNT_OpenTextAnnotations_English_html.csv.zip"
+    "OpenText_v1_formatted_in_HTML.csv.zip"
 )
 
 BATCH_SIZE = 100        # rows per INSERT statement
