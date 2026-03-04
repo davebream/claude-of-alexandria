@@ -1,15 +1,20 @@
 # GREEN-phase provider: agent has skills + MCP access
-# Spike confirmed: bare tool names, bypassPermissions required, working_dir = repo root
+# Uses built-in anthropic:claude-agent-sdk with corrected MCP server name
+# matching the plugin prefix (plugin_claude-of-alexandria_claude-of-alexandria-mcp)
 id: anthropic:claude-agent-sdk
 label: with-skill
 config:
   model: sonnet
   working_dir: ../../
-  # setting_sources: project removed — was inheriting z.ai WebSearch from
-  # .claude/settings.local.json, causing 429s when quota exhausted.
-  # MCP servers are configured explicitly below instead.
+  # setting_sources: project intentionally omitted — was previously removed
+  # because it inherits z.ai WebSearch from .claude/settings.local.json,
+  # causing 429s when quota exhausted. MCP servers and tools are configured
+  # explicitly below. Add back only if skill/plugin discovery fails without it.
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true
+  persist_session: false
+  max_budget_usd: 3.00
+  max_turns: 50
   append_system_prompt: |
     CRITICAL: When asked to perform a biblical analysis task, follow the relevant skill
     instructions loaded from this project.
@@ -29,7 +34,8 @@ config:
     - Skill
     - Read
     - Write
-    # WebSearch removed: z.ai quota exhausted, not needed for biblical tool testing
+    # 12 tools matching deployed server at coa.davebream.com/mcp
+    - list_books
     - query_discourse_features
     - query_paragraph_breaks
     - query_vocabulary
@@ -38,17 +44,10 @@ config:
     - query_lemmas
     - query_themes_for_lemmas
     - query_theme
-    - query_lexicon
-    - check_versification
-    - query_cross_references
-    - query_people
-    - query_places
-    - query_events
-    - query_person_network
-    - query_speakers
-    - query_syntax
-    - query_variants
+    - bible_lookup
+    - commentary_lookup
+    - parallel_text
   mcp:
     servers:
-      - name: claude-of-alexandria-mcp
+      - name: plugin_claude-of-alexandria_claude-of-alexandria-mcp
         url: https://coa.davebream.com/mcp
