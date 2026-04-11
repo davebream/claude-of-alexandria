@@ -23,6 +23,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from mcp_client import MCPClient
 
+# Pipeline limits for directed mode
+_PAIR_LIMIT = 30          # max candidates fed into cross-testament pairing
+_COOCCURRENCE_LIMIT = 10  # max lemmas sent for MCP co-occurrence check
+_OUTPUT_OT_LIMIT = 8      # max OT entries in output proposal
+_OUTPUT_NT_LIMIT = 6      # max NT entries in output proposal
+
 SEMANTIC_GROUPS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml"
 NT_LEMMAS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/nt_lemmas.yaml"
 OT_LEMMAS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/ot_lemmas.yaml"
@@ -396,38 +402,42 @@ def run_directed(args):
     nt_filtered = check_overlap(nt_filtered, semantic, testament="nt")
 
     # Step 4: Cross-testament pairing
-    pairs = pair_cross_testament(ot_filtered[:30], nt_filtered[:30])
+    pairs = pair_cross_testament(ot_filtered[:_PAIR_LIMIT], nt_filtered[:_PAIR_LIMIT])
     if pairs:
         print(f"  Cross-testament pairs found: {len(pairs)}")
 
     # Step 5: Corpus validation
     print("\nValidating co-occurrence via MCP...")
+    cooccurrence = {"ot": [], "nt": []}  # default
     mcp = MCPClient()
     try:
         mcp.list_books(include_themes=False)  # connectivity check
     except Exception as e:
         print(f"WARNING: MCP server unreachable ({e}). Skipping corpus validation.",
               file=sys.stderr)
-        cooccurrence = {"ot": [], "nt": []}
         mcp = None
 
     if mcp:
-        ot_ids = [e["strongs_id"] for e in ot_filtered[:10]]
-        nt_words = [e["original_word"] for e in nt_filtered[:10]]
-        cooccurrence = validate_cooccurrence(mcp, ot_ids, nt_words)
+        ot_ids = [e["strongs_id"] for e in ot_filtered[:_COOCCURRENCE_LIMIT]]
+        nt_words = [e["original_word"] for e in nt_filtered[:_COOCCURRENCE_LIMIT]]
+        try:
+            cooccurrence = validate_cooccurrence(mcp, ot_ids, nt_words)
+        except Exception as e:
+            logging.warning("Corpus validation failed: %s", e)
 
     # Step 6: Output
     proposal = format_proposal(
         theme_name, description,
-        ot_filtered[:8], nt_filtered[:6],
+        ot_filtered[:_OUTPUT_OT_LIMIT], nt_filtered[:_OUTPUT_NT_LIMIT],
         cooccurrence,
     )
     print("\n" + proposal)
 
     # Write to file
-    output_path = f"server/scripts/output/proposal-{theme_name}.txt"
-    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(output_path).write_text(proposal)
+    safe_name = re.sub(r'[^a-zA-Z0-9_-]', '_', theme_name)
+    output_path = Path("server/scripts/output") / f"proposal-{safe_name}.txt"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(proposal)
     print(f"\nSaved to: {output_path}")
 
 
