@@ -13,7 +13,6 @@ Usage (run from repo root):
 import argparse
 import csv
 import io
-import json
 import re
 import sys
 import yaml
@@ -61,8 +60,7 @@ def parse_lexicon_sql(path):
     """Parse lexicon.sql INSERT statements into a list of dicts.
 
     Each dict has: strongs_id, disambiguated, testament, original_word,
-    original_word_nfc, original_word_stripped, transliteration, morphology,
-    gloss, meaning.
+    transliteration, morphology, gloss, meaning.
     """
     text = Path(path).read_text()
     entries = []
@@ -82,6 +80,8 @@ def parse_lexicon_sql(path):
             continue
         if len(fields) < 10:
             continue
+        if fields[0] == "eStrong#":
+            continue  # Skip header row
         entries.append({
             "strongs_id": fields[0],
             "disambiguated": fields[1],
@@ -95,19 +95,38 @@ def parse_lexicon_sql(path):
     return entries
 
 
-def search_lexicon(entries, keywords, testament=None):
+def is_proper_noun(entry):
+    """Return True if the entry is a proper noun based on STEPBible morphology.
+
+    In the STEPBible lexicon, proper nouns (personal names, place names, and
+    proper noun titles) have morphology codes beginning with 'N:' — distinct
+    from common Hebrew nouns ('H:N-...') and Aramaic nouns ('A:N-...').
+    """
+    morph = entry.get("morphology") or ""
+    return morph.startswith("N:")
+
+
+def search_lexicon(entries, keywords, testament=None, include_proper_nouns=False):
     """Search lexicon entries by keyword matching on gloss and meaning.
+
+    Matches on the gloss field (primary) and meaning field (secondary).
+    Proper nouns are excluded by default because their meaning fields contain
+    biographical metadata that produces false positives (e.g. searching for
+    "exile" returns hundreds of personal names whose biographies mention the
+    exile period rather than semantic vocabulary words for exile).
 
     Returns entries sorted by match quality (number of keywords matched).
     """
+    keywords_lower = [kw.lower().strip() for kw in keywords if kw.strip()]
+    if not keywords_lower:
+        return []
+
     results = []
-    keywords_lower = [kw.lower().strip() for kw in keywords]
 
     for entry in entries:
         if testament and entry["testament"] != testament:
             continue
-        # Skip the header row
-        if entry["strongs_id"] == "eStrong#":
+        if not include_proper_nouns and is_proper_noun(entry):
             continue
 
         gloss = (entry["gloss"] or "").lower()
@@ -145,6 +164,12 @@ def main():
     directed.add_argument(
         "--top", type=int, default=20, help="Number of top results to show"
     )
+    directed.add_argument(
+        "--include-proper-nouns",
+        action="store_true",
+        default=False,
+        help="Include proper noun entries (personal names, place names) in results",
+    )
 
     # Discovery mode: find uncovered lemmas
     discover = subparsers.add_parser(
@@ -159,7 +184,12 @@ def main():
     if args.mode == "directed":
         keywords = [kw.strip() for kw in args.desc.split(",")]
         entries = parse_lexicon_sql(LEXICON_SQL_PATH)
-        results = search_lexicon(entries, keywords, testament=args.testament)
+        results = search_lexicon(
+            entries,
+            keywords,
+            testament=args.testament,
+            include_proper_nouns=args.include_proper_nouns,
+        )
 
         print(f"\nTheme: {args.theme}")
         print(f"Keywords: {', '.join(keywords)}")
