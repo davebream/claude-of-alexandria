@@ -56,6 +56,52 @@ def get_existing_themes_for_lemma(semantic_groups, lemma):
     return themes
 
 
+def get_canon_frequencies(testament):
+    """Return {lemma: total_frequency} for the given testament."""
+    if testament == "nt":
+        data = load_yaml(NT_LEMMAS_PATH)
+        totals = {}
+        for book, book_data in data.get("books", {}).items():
+            for lemma, lemma_data in book_data.get("lemmas", {}).items():
+                totals[lemma] = totals.get(lemma, 0) + lemma_data.get("total", 0)
+        return totals
+    else:
+        data = load_yaml(OT_LEMMAS_PATH)
+        totals = {}
+        for book, book_data in data.get("books", {}).items():
+            for strong_id, lemma_data in book_data.get("lemmas", {}).items():
+                totals[strong_id] = totals.get(strong_id, 0) + lemma_data.get("total", 0)
+        return totals
+
+
+def filter_by_frequency(candidates, frequencies, min_freq=5, testament="ot"):
+    """Keep only candidates that appear at least min_freq times in the corpus.
+
+    OT entries are keyed by Strong's ID (e.g., H1540).
+    NT entries are keyed by Greek lemma form (e.g., χαρά).
+    """
+    kept = []
+    for entry in candidates:
+        key = entry["strongs_id"] if testament == "ot" else entry["original_word"]
+        freq = frequencies.get(key, 0)
+        if freq >= min_freq:
+            entry["corpus_frequency"] = freq
+            kept.append(entry)
+    return kept
+
+
+def check_overlap(candidates, semantic_groups, testament="ot"):
+    """Flag candidates that already belong to an existing theme.
+
+    OT: checks by Strong's ID. NT: checks by Greek lemma (original_word).
+    """
+    for entry in candidates:
+        key = entry["strongs_id"] if testament == "ot" else entry["original_word"]
+        existing = get_existing_themes_for_lemma(semantic_groups, key)
+        entry["existing_themes"] = existing
+    return candidates
+
+
 def parse_lexicon_sql(path):
     """Parse lexicon.sql INSERT statements into a list of dicts.
 
