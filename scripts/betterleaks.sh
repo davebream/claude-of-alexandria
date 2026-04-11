@@ -54,7 +54,13 @@ expected_checksum() {
 
 verify_checksum() {
   local file="$1" expected="$2" actual
-  actual="$(shasum -a 256 "${file}" | awk '{print $1}')"
+  if command -v sha256sum >/dev/null 2>&1; then
+    actual="$(sha256sum "${file}" | awk '{print $1}')"
+  elif command -v shasum >/dev/null 2>&1; then
+    actual="$(shasum -a 256 "${file}" | awk '{print $1}')"
+  else
+    die "Neither sha256sum nor shasum found. Cannot verify checksum."
+  fi
   if [ "${actual}" != "${expected}" ]; then
     rm -f "${file}"
     printf "ERROR: Checksum mismatch!\n  Expected: %s\n  Actual:   %s\nThe downloaded binary has been removed.\nThis could indicate a corrupted download or supply chain compromise.\n" "${expected}" "${actual}" >&2
@@ -79,10 +85,12 @@ ensure_binary() {
 
   # 2. Check if already cached and valid
   if [ -x "${BINARY}" ]; then
-    if "${BINARY}" version >/dev/null 2>&1; then
+    local cached_version
+    cached_version="$("${BINARY}" version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')" || true
+    if [ "${cached_version}" = "${BETTERLEAKS_VERSION}" ]; then
       return 0
     fi
-    echo "Cached binary is invalid, re-downloading..."
+    echo "Cached binary v${cached_version:-unknown} != pinned v${BETTERLEAKS_VERSION}, re-downloading..."
     rm -f "${BINARY}"
   fi
 
