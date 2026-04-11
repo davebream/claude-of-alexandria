@@ -269,6 +269,17 @@ def pair_cross_testament(ot_candidates, nt_candidates):
     return pairs
 
 
+def _yaml_safe_str(val: str) -> str:
+    """Return val as a YAML-safe string, quoted if it contains special chars."""
+    if not val:
+        return '""'
+    needs_quoting = any(c in val for c in (':', '#', '{', '}', '[', ']', '&', '*', '!', '|', '>', '"', '%', '@', '`'))
+    if needs_quoting:
+        escaped = val.replace('\\', '\\\\').replace('"', '\\"')
+        return f'"{escaped}"'
+    return val
+
+
 def format_proposal(theme_name: str, description: str,
                     ot_entries: list, nt_entries: list,
                     cooccurrence: dict, primary_genres: list[str] | None = None) -> str:
@@ -279,20 +290,20 @@ def format_proposal(theme_name: str, description: str,
     lines.append("# ─── CANDIDATE YAML (copy to semantic_groups.yaml) ───")
     lines.append("")
     lines.append(f"  {theme_name}:")
-    lines.append(f'    description: "{description}"')
+    lines.append(f'    description: {_yaml_safe_str(description)}')
     if primary_genres:
         lines.append(f"    primary_genres: [{', '.join(primary_genres)}]")
     if nt_entries:
         lines.append("    nt_lemmas:")
         for e in nt_entries:
-            lines.append(f"      {e['original_word']}: {e['gloss']}")
+            lines.append(f"      {e['original_word']}: {_yaml_safe_str(e['gloss'])}")
     if ot_entries:
         lines.append("    ot_strongs:")
         for e in ot_entries:
             sid = e["strongs_id"]
             lines.append(f"      {sid}:")
             lines.append(f"        hebrew: {e['original_word']}")
-            lines.append(f"        gloss: {e['gloss']}")
+            lines.append(f"        gloss: {_yaml_safe_str(e['gloss'])}")
 
     # --- Evidence report ---
     lines.append("")
@@ -317,7 +328,9 @@ def format_proposal(theme_name: str, description: str,
     for testament in ["ot", "nt"]:
         books = cooccurrence.get(testament, [])
         if books:
-            lines.append(f"  {testament.upper()}: {len(books)} books with 2+ lemma overlap")
+            count = len(books)
+            noun = "book" if count == 1 else "books"
+            lines.append(f"  {testament.upper()}: {count} {noun} with 2+ lemma overlap")
             for b in books:
                 lines.append(f"    {b['book']}: {', '.join(b['overlap'])}")
         else:
