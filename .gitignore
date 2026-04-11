@@ -81,5 +81,8 @@ server/scripts/openbible-crossrefs.zip
 # Merge report (build artifact, regenerable)
 server/scripts/merge-report.json
 
+# Betterleaks binary cache
+.bin/
+
 # Script output (generated proposals — do not commit)
 server/scripts/output/
