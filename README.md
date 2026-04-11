@@ -122,6 +122,16 @@ study-evaluator (Sonnet)
 
 Agent correctness is tested indirectly through skill GREEN suites, plus 11 dedicated RED-phase tests that document bare-model failure modes.
 
+## Development Setup
+
+### Pre-commit hook
+
+```bash
+ln -sf ../../scripts/pre-commit.sh .git/hooks/pre-commit
+```
+
+This runs secret scanning, TypeScript typecheck, and server tests before every commit.
+
 ## Installation
 
 ### Claude Code (Marketplace)
