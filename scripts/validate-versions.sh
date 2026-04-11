@@ -10,8 +10,21 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-MARKETPLACE_VERSION=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)
-SERVER_VERSION=$(jq -r '.version' server/package.json)
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+MARKETPLACE_VERSION=$(jq -r '.plugins[0].version' "$REPO_ROOT/.claude-plugin/marketplace.json")
+
+if [ -z "$MARKETPLACE_VERSION" ] || [ "$MARKETPLACE_VERSION" = "null" ]; then
+  echo -e "${RED}ERROR: Could not read .plugins[0].version from .claude-plugin/marketplace.json${NC}"
+  exit 1
+fi
+
+SERVER_VERSION=$(jq -r '.version' "$REPO_ROOT/server/package.json")
+
+if [ -z "$SERVER_VERSION" ] || [ "$SERVER_VERSION" = "null" ]; then
+  echo -e "${RED}ERROR: Could not read .version from server/package.json${NC}"
+  exit 1
+fi
 
 echo "=== Version Consistency Check ==="
 echo "  marketplace.json: ${MARKETPLACE_VERSION}"
