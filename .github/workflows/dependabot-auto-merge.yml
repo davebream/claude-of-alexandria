@@ -1,6 +1,6 @@
 name: Dependabot Auto-merge
 
-# Automatically merges Dependabot patch and minor PRs after all CI checks pass.
+# Enables GitHub auto-merge for Dependabot patch and minor PRs.
 # Major version bumps are excluded — they always require manual review.
 
 on:
@@ -24,19 +24,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Wait for CI checks and merge
+      - name: Enable auto-merge
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
           steps.metadata.outputs.update-type == 'version-update:semver-minor'
         run: |
-          echo "Patch/minor update detected — waiting for CI checks to pass..."
-          gh pr checks "$PR_NUMBER" \
-            --repo "$REPO" \
-            --watch \
-            --interval 30 \
-            --fail-fast
-          echo "All checks passed — merging..."
-          gh pr merge "$PR_NUMBER" --repo "$REPO" --squash
+          echo "Patch/minor update — enabling auto-merge..."
+          gh pr merge "$PR_NUMBER" --repo "$REPO" --squash --auto --delete-branch
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
