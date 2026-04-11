@@ -29,6 +29,15 @@ _COOCCURRENCE_LIMIT = 10  # max lemmas sent for MCP co-occurrence check
 _OUTPUT_OT_LIMIT = 8      # max OT entries in output proposal
 _OUTPUT_NT_LIMIT = 6      # max NT entries in output proposal
 
+# Stop words for gloss keyword clustering (shared by pair_cross_testament and run_discover)
+_GLOSS_STOP_WORDS = {
+    "", "to", "be", "a", "the", "of", "in", "and", "or", "for",
+    "make", "come", "give", "take", "turn", "bring", "call", "send",
+    "will", "from", "with", "that", "this", "have", "been", "were",
+    "upon", "over", "into", "down", "away", "back", "like", "also",
+    "very", "much", "many", "each", "some", "self", "used", "more",
+}
+
 SEMANTIC_GROUPS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/semantic_groups.yaml"
 NT_LEMMAS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/nt_lemmas.yaml"
 OT_LEMMAS_PATH = "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/vocabulary/ot_lemmas.yaml"
@@ -240,18 +249,11 @@ def pair_cross_testament(ot_candidates, nt_candidates):
     """
     pairs = []
 
-    GLOSS_STOP_WORDS = {
-        "make", "come", "give", "take", "turn", "bring", "call", "send",
-        "will", "from", "with", "that", "this", "have", "been", "were",
-        "upon", "over", "into", "down", "away", "back", "like", "also",
-        "very", "much", "many", "each", "some", "self", "used", "more",
-    }
-
     def gloss_words(entry):
         gloss = (entry.get("gloss") or "").lower()
         # Split on comma, space, semicolon; drop short and stop words
         words = re.split(r'[,;\s]+', gloss)
-        return {w for w in words if len(w) > 3 and w not in GLOSS_STOP_WORDS}
+        return {w for w in words if len(w) > 3 and w not in _GLOSS_STOP_WORDS}
 
     nt_by_keywords = {}
     for nt in nt_candidates:
@@ -464,7 +466,6 @@ def run_discover(args):
     print(f"Covered: {len(covered_nt)} NT lemmas, {len(covered_ot)} OT strongs")
 
     # Find uncovered high-frequency lemmas
-    proposals = []
 
     # OT
     ot_freqs = get_canon_frequencies("ot")
@@ -501,21 +502,23 @@ def run_discover(args):
     for sid, freq in ranked_ot:
         lex = lex_by_strongs.get(sid)
         if lex:
-            lex["corpus_frequency"] = freq
-            lex["_testament"] = "ot"
-            all_uncovered.append(lex)
+            entry = dict(lex)  # shallow copy to avoid mutating shared dict
+            entry["corpus_frequency"] = freq
+            entry["_testament"] = "ot"
+            all_uncovered.append(entry)
     for lemma, freq in ranked_nt:
         lex_entries = lex_by_word.get(lemma, [])
         if lex_entries:
-            lex_entries[0]["corpus_frequency"] = freq
-            lex_entries[0]["_testament"] = "nt"
-            all_uncovered.append(lex_entries[0])
+            entry = dict(lex_entries[0])  # shallow copy to avoid mutating shared dict
+            entry["corpus_frequency"] = freq
+            entry["_testament"] = "nt"
+            all_uncovered.append(entry)
 
     # Simple keyword clustering
     keyword_groups = {}
     for entry in all_uncovered:
         gloss = (entry.get("gloss") or "").lower()
-        words = set(re.split(r'[,;\s]+', gloss)) - {"", "to", "be", "a", "the", "of", "in", "and", "or", "for"}
+        words = set(re.split(r'[,;\s]+', gloss)) - _GLOSS_STOP_WORDS
         for word in words:
             if len(word) > 3:
                 keyword_groups.setdefault(word, []).append(entry)
