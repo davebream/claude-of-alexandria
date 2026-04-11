@@ -187,6 +187,45 @@ def search_lexicon(entries, keywords, testament=None, include_proper_nouns=False
     return [entry for _, entry in results]
 
 
+def pair_cross_testament(ot_candidates, nt_candidates):
+    """Find OT↔NT pairs that share gloss keywords.
+
+    Returns list of (ot_entry, nt_entry, shared_keywords) tuples.
+    """
+    pairs = []
+
+    GLOSS_STOP_WORDS = {
+        "make", "come", "give", "take", "turn", "bring", "call", "send",
+        "will", "from", "with", "that", "this", "have", "been", "were",
+        "upon", "over", "into", "down", "away", "back", "like", "also",
+        "very", "much", "many", "each", "some", "self", "used", "more",
+    }
+
+    def gloss_words(entry):
+        gloss = (entry.get("gloss") or "").lower()
+        # Split on comma, space, semicolon; drop short and stop words
+        words = re.split(r'[,;\s]+', gloss)
+        return {w for w in words if len(w) > 3 and w not in GLOSS_STOP_WORDS}
+
+    nt_by_keywords = {}
+    for nt in nt_candidates:
+        for word in gloss_words(nt):
+            nt_by_keywords.setdefault(word, []).append(nt)
+
+    for ot in ot_candidates:
+        ot_words = gloss_words(ot)
+        matched_nt = set()
+        shared = set()
+        for word in ot_words:
+            if word in nt_by_keywords:
+                shared.add(word)
+                for nt in nt_by_keywords[word]:
+                    matched_nt.add(nt["strongs_id"])
+                    pairs.append((ot, nt, shared.copy()))
+
+    return pairs
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Propose new themes for semantic_groups.yaml"
