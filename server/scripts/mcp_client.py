@@ -2,6 +2,8 @@
 """Thin MCP HTTP client for calling claude-of-alexandria tools."""
 import json
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 DEFAULT_MCP_URL = "https://coa.davebream.com/mcp"
 
@@ -16,15 +18,22 @@ def _parse_sse_body(text: str) -> dict:
         event: message
         data: <json>
 
-    We extract the last ``data:`` line and parse it as JSON.
+    We collect all ``data:`` lines and concatenate them per the SSE spec,
+    then parse the result as JSON.
     """
-    data_payload = None
+    data_lines = []
     for line in text.splitlines():
         if line.startswith("data:"):
-            data_payload = line[len("data:"):].strip()
-    if data_payload is None:
+            data_lines.append(line[len("data:"):].strip())
+    if not data_lines:
         raise RuntimeError(f"No SSE data line found in response: {text[:200]!r}")
-    return json.loads(data_payload)
+    data_payload = "\n".join(data_lines)
+    try:
+        return json.loads(data_payload)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(
+            f"Invalid JSON in SSE data: {e}; payload: {data_payload[:200]!r}"
+        ) from e
 
 
 class MCPClient:
@@ -33,6 +42,10 @@ class MCPClient:
     def __init__(self, url: str = DEFAULT_MCP_URL):
         self.url = url
         self._id = 0
+        session = requests.Session()
+        retry = Retry(total=3, backoff_factor=1.0, status_forcelist=[502, 503, 504])
+        session.mount("https://", HTTPAdapter(max_retries=retry))
+        self._session = session
 
     def call_tool(self, tool_name: str, arguments: dict) -> dict:
         """Call an MCP tool and return the parsed result.
@@ -50,7 +63,7 @@ class MCPClient:
                 "arguments": arguments,
             },
         }
-        resp = requests.post(
+        resp = self._session.post(
             self.url,
             json=payload,
             headers={
@@ -82,16 +95,20 @@ class MCPClient:
 
         content = result.get("content", [])
         if content and content[0].get("type") == "text":
-            return json.loads(content[0]["text"])
+            try:
+                return json.loads(content[0]["text"])
+            except json.JSONDecodeError:
+                # Tool returned non-JSON text content; return raw
+                return {"raw_text": content[0]["text"]}
         return result
 
     def query_lexicon(self, *, strongs_ids: list[str] | None = None,
                       lemmas: list[str] | None = None,
                       compact: bool = False) -> dict:
         args: dict = {"compact": compact}
-        if strongs_ids:
+        if strongs_ids is not None:
             args["strongs_ids"] = json.dumps(strongs_ids)
-        if lemmas:
+        if lemmas is not None:
             args["lemmas"] = json.dumps(lemmas)
         return self.call_tool("query_lexicon", args)
 
