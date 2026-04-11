@@ -269,6 +269,63 @@ def pair_cross_testament(ot_candidates, nt_candidates):
     return pairs
 
 
+def format_proposal(theme_name: str, description: str,
+                    ot_entries: list, nt_entries: list,
+                    cooccurrence: dict, primary_genres: list[str] | None = None) -> str:
+    """Format a theme proposal as YAML + evidence report."""
+    lines = []
+
+    # --- YAML candidate ---
+    lines.append("# ─── CANDIDATE YAML (copy to semantic_groups.yaml) ───")
+    lines.append("")
+    lines.append(f"  {theme_name}:")
+    lines.append(f'    description: "{description}"')
+    if primary_genres:
+        lines.append(f"    primary_genres: [{', '.join(primary_genres)}]")
+    if nt_entries:
+        lines.append("    nt_lemmas:")
+        for e in nt_entries:
+            lines.append(f"      {e['original_word']}: {e['gloss']}")
+    if ot_entries:
+        lines.append("    ot_strongs:")
+        for e in ot_entries:
+            sid = e["strongs_id"]
+            lines.append(f"      {sid}:")
+            lines.append(f"        hebrew: {e['original_word']}")
+            lines.append(f"        gloss: {e['gloss']}")
+
+    # --- Evidence report ---
+    lines.append("")
+    lines.append("# ─── EVIDENCE REPORT ───")
+    lines.append("")
+    for testament, entries in [("OT", ot_entries), ("NT", nt_entries)]:
+        if not entries:
+            continue
+        lines.append(f"## {testament} Lemmas")
+        for e in entries:
+            sid = e.get("strongs_id", e.get("original_word", "?"))
+            lines.append(f"  {sid} ({e['original_word']}) — {e['gloss']}")
+            lines.append(f"    Lexicon source: STEPBible TBESH/TBESG")
+            freq = e.get("corpus_frequency", "?")
+            lines.append(f"    Corpus frequency: {freq}")
+            existing = e.get("existing_themes", [])
+            if existing:
+                lines.append(f"    ⚠ Already in themes: {', '.join(existing)}")
+            lines.append("")
+
+    lines.append("## Corpus Co-occurrence")
+    for testament in ["ot", "nt"]:
+        books = cooccurrence.get(testament, [])
+        if books:
+            lines.append(f"  {testament.upper()}: {len(books)} books with 2+ lemma overlap")
+            for b in books:
+                lines.append(f"    {b['book']}: {', '.join(b['overlap'])}")
+        else:
+            lines.append(f"  {testament.upper()}: no books with 2+ lemma overlap")
+
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Propose new themes for semantic_groups.yaml"
