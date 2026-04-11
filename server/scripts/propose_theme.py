@@ -269,11 +269,33 @@ def pair_cross_testament(ot_candidates, nt_candidates):
     return pairs
 
 
+_YAML_RESERVED_SCALARS = frozenset({
+    "true", "false", "yes", "no", "on", "off",
+    "y", "n", "null", "~",
+})
+
+
+def _looks_numeric(val: str) -> bool:
+    """Return True if YAML would parse val as a number."""
+    try:
+        float(val)
+        return True
+    except ValueError:
+        return val.lower() in (".inf", "-.inf", ".nan")
+
+
 def _yaml_safe_str(val: str) -> str:
-    """Return val as a YAML-safe string, quoted if it contains special chars."""
+    """Return val as a YAML-safe string, quoted if it contains special chars.
+
+    Handles punctuation specials, YAML boolean/null scalars, and numeric values.
+    """
     if not val:
         return '""'
-    needs_quoting = any(c in val for c in (':', '#', '{', '}', '[', ']', '&', '*', '!', '|', '>', '"', '%', '@', '`'))
+    needs_quoting = (
+        any(c in val for c in (':', '#', '{', '}', '[', ']', '&', '*', '!', '|', '>', '"', '%', '@', '`'))
+        or val.lower() in _YAML_RESERVED_SCALARS
+        or _looks_numeric(val)
+    )
     if needs_quoting:
         escaped = val.replace('\\', '\\\\').replace('"', '\\"')
         return f'"{escaped}"'
