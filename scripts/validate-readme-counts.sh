@@ -37,6 +37,15 @@ if [ -z "$BADGE_SKILLS" ] || [ -z "$BADGE_AGENTS" ]; then
   echo -e "${YELLOW}WARNING: Could not parse badge counts from README.md — skipping badge check${NC}"
 fi
 
+if [ -z "$README_SKILLS" ] && [ -z "$BADGE_SKILLS" ]; then
+  echo -e "${RED}ERROR: Could not parse any skill count from README.md — check README format${NC}"
+  ERRORS=$((ERRORS + 1))
+fi
+if [ -z "$README_AGENTS" ] && [ -z "$BADGE_AGENTS" ]; then
+  echo -e "${RED}ERROR: Could not parse any agent count from README.md — check README format${NC}"
+  ERRORS=$((ERRORS + 1))
+fi
+
 echo "  Skills:    README=${README_SKILLS:-?}, badge=${BADGE_SKILLS:-?}, actual=${ACTUAL_SKILLS}"
 echo "  Agents:    README=${README_AGENTS:-?}, badge=${BADGE_AGENTS:-?}, actual=${ACTUAL_AGENTS}"
 

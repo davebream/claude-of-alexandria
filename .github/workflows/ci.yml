@@ -10,6 +10,9 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 # Supply-chain security: --ignore-scripts prevents arbitrary postinstall
 # scripts from running during npm ci. Do not remove without security review.
 
