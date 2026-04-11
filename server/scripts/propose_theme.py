@@ -187,6 +187,44 @@ def search_lexicon(entries, keywords, testament=None, include_proper_nouns=False
     return [entry for _, entry in results]
 
 
+def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
+                          nt_lemmas: list[str],
+                          sample_books: int = 5) -> dict:
+    """Check how many books contain 2+ lemmas from the candidate set.
+
+    Returns {books_with_overlap: int, total_checked: int, details: [...]}.
+    """
+    results = {"ot": [], "nt": []}
+
+    # OT: check a sample of books
+    ot_books = ["Genesis", "Exodus", "Isaiah", "Jeremiah", "Psalms",
+                "Deuteronomy", "Ezekiel", "Daniel"]
+    for book in ot_books[:sample_books]:
+        try:
+            vocab = mcp.query_vocabulary(book, "ot", limit=500)
+            book_lemmas = {l["lemma"] for l in vocab.get("lemmas", [])}
+            overlap = set(ot_lemmas) & book_lemmas
+            if len(overlap) >= 2:
+                results["ot"].append({"book": book, "overlap": list(overlap)})
+        except Exception:
+            pass
+
+    # NT: check a sample of books
+    nt_books = ["Romans", "Matthew", "Hebrews", "1 Peter",
+                "Revelation", "Luke", "Acts"]
+    for book in nt_books[:sample_books]:
+        try:
+            vocab = mcp.query_vocabulary(book, "nt", limit=500)
+            book_lemmas = {l["lemma"] for l in vocab.get("lemmas", [])}
+            overlap = set(nt_lemmas) & book_lemmas
+            if len(overlap) >= 2:
+                results["nt"].append({"book": book, "overlap": list(overlap)})
+        except Exception:
+            pass
+
+    return results
+
+
 def pair_cross_testament(ot_candidates, nt_candidates):
     """Find OT↔NT pairs that share gloss keywords.
 
