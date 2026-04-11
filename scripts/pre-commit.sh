@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # Pre-commit hook: secret scanning, typecheck, and tests
 echo "Running pre-commit checks..."
 
@@ -11,14 +13,14 @@ echo "→ Scanning for secrets..."
 
 # Typecheck server
 echo "→ Typechecking server..."
-(cd server && npm run typecheck) || {
+(cd "${REPO_ROOT}/server" && npm run typecheck) || {
   echo "❌ TypeScript type errors. Fix before committing."
   exit 1
 }
 
 # Run server tests
 echo "→ Running server tests..."
-(cd server && npm test) || {
+(cd "${REPO_ROOT}/server" && npm test) || {
   echo "❌ Tests failed. Fix before committing."
   exit 1
 }
