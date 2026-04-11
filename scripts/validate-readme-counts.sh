@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -15,30 +17,26 @@ echo "=== README Count Validation ==="
 
 ERRORS=0
 
-# Count registered MCP tools
-ACTUAL_TOOLS=$(grep -c "server\.registerTool(" server/src/index.ts || echo 0)
+# Count agent files (exclude README.md and underscore-prefixed internal files)
+ACTUAL_AGENTS=$(find "$REPO_ROOT/plugins/claude-of-alexandria/agents" -name '*.md' ! -name 'README.md' ! -name '_*' -print 2>/dev/null | wc -l | tr -d ' ')
 
-# Count agent files (exclude README.md)
-ACTUAL_AGENTS=$(find plugins/claude-of-alexandria/agents -name '*.md' ! -name 'README.md' -print 2>/dev/null | wc -l | tr -d ' ')
-
-# Count skill directories with SKILL.md
-ACTUAL_SKILLS=$(find plugins/claude-of-alexandria/skills -name 'SKILL.md' -print 2>/dev/null | wc -l | tr -d ' ')
+# Count skill directories with SKILL.md (exclude smoke-test)
+ACTUAL_SKILLS=$(find "$REPO_ROOT/plugins/claude-of-alexandria/skills" -name 'SKILL.md' ! -path '*/smoke-test/*' -print 2>/dev/null | wc -l | tr -d ' ')
 
 # Extract counts from README
 # Badge format: skills-N %2B M agents (URL-encoded +)
 # Text format: "N skills + M sub-agents" or "**N skills + M sub-agents**"
-README_SKILLS=$(grep -oE '[0-9]+ skills' README.md | head -1 | grep -oE '[0-9]+')
-README_AGENTS=$(grep -oE '[0-9]+ (sub-)?agents' README.md | head -1 | grep -oE '[0-9]+')
+README_SKILLS=$(grep -oE '[0-9]+ skills' "$REPO_ROOT/README.md" | head -1 | grep -oE '[0-9]+') || true
+README_AGENTS=$(grep -oE '[0-9]+ (sub-)?agents' "$REPO_ROOT/README.md" | head -1 | grep -oE '[0-9]+') || true
 
 # Also check badge (shields.io format: skills-N%20%2B%20M%20agents)
-BADGE_SKILLS=$(grep -oE 'skills-[0-9]+' README.md | head -1 | grep -oE '[0-9]+') || true
-BADGE_AGENTS=$(grep -oE '%2B%20[0-9]+%20agents' README.md | head -1 | sed 's/%2B%20\([0-9]*\)%20agents/\1/') || true
+BADGE_SKILLS=$(grep -oE 'skills-[0-9]+' "$REPO_ROOT/README.md" | head -1 | grep -oE '[0-9]+') || true
+BADGE_AGENTS=$(grep -oE '%2B%20[0-9]+%20agents' "$REPO_ROOT/README.md" | head -1 | sed 's/%2B%20\([0-9]*\)%20agents/\1/') || true
 
 if [ -z "$BADGE_SKILLS" ] || [ -z "$BADGE_AGENTS" ]; then
   echo -e "${YELLOW}WARNING: Could not parse badge counts from README.md — skipping badge check${NC}"
 fi
 
-echo "  MCP tools: actual=${ACTUAL_TOOLS}"
 echo "  Skills:    README=${README_SKILLS:-?}, badge=${BADGE_SKILLS:-?}, actual=${ACTUAL_SKILLS}"
 echo "  Agents:    README=${README_AGENTS:-?}, badge=${BADGE_AGENTS:-?}, actual=${ACTUAL_AGENTS}"
 
