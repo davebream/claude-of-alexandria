@@ -214,14 +214,17 @@ def pair_cross_testament(ot_candidates, nt_candidates):
 
     for ot in ot_candidates:
         ot_words = gloss_words(ot)
-        matched_nt = set()
-        shared = set()
+        # Map NT strongs_id -> (nt_entry, shared_keywords set)
+        nt_matches = {}
         for word in ot_words:
             if word in nt_by_keywords:
-                shared.add(word)
                 for nt in nt_by_keywords[word]:
-                    matched_nt.add(nt["strongs_id"])
-                    pairs.append((ot, nt, shared.copy()))
+                    nt_id = nt["strongs_id"]
+                    if nt_id not in nt_matches:
+                        nt_matches[nt_id] = (nt, set())
+                    nt_matches[nt_id][1].add(word)
+        for nt_entry, shared_kw in nt_matches.values():
+            pairs.append((ot, nt_entry, shared_kw))
 
     return pairs
 
