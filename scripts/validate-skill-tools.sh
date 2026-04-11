@@ -6,9 +6,10 @@
 
 set -euo pipefail
 
-SKILLS_DIR="plugins/claude-of-alexandria/skills"
-AGENTS_DIR="plugins/claude-of-alexandria/agents"
-SERVER_SRC="server/src"
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SKILLS_DIR="$REPO_ROOT/plugins/claude-of-alexandria/skills"
+AGENTS_DIR="$REPO_ROOT/plugins/claude-of-alexandria/agents"
+SERVER_SRC="$REPO_ROOT/server/src"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -80,6 +81,8 @@ for skill_dir in "$SKILLS_DIR"/*/; do
 done
 
 # Check agents
+# Note: agents don't use allowed-tools: frontmatter (unlike skills),
+# so only prose backtick references are extracted here.
 for agent_file in "$AGENTS_DIR"/*.md; do
   [ -f "$agent_file" ] || continue
   agent_name=$(basename "$agent_file" .md)
