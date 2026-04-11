@@ -13,6 +13,7 @@ Usage (run from repo root):
 import argparse
 import csv
 import io
+import logging
 import re
 import sys
 import yaml
@@ -192,7 +193,8 @@ def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
                           sample_books: int = 5) -> dict:
     """Check how many books contain 2+ lemmas from the candidate set.
 
-    Returns {books_with_overlap: int, total_checked: int, details: [...]}.
+    Returns {"ot": [{"book": str, "overlap": [str, ...]}, ...],
+             "nt": [{"book": str, "overlap": [str, ...]}, ...]}.
     """
     results = {"ot": [], "nt": []}
 
@@ -206,8 +208,8 @@ def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
             overlap = set(ot_lemmas) & book_lemmas
             if len(overlap) >= 2:
                 results["ot"].append({"book": book, "overlap": list(overlap)})
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning("Cooccurrence check failed for %s (%s): %s", book, "ot", e)
 
     # NT: check a sample of books
     nt_books = ["Romans", "Matthew", "Hebrews", "1 Peter",
@@ -219,8 +221,8 @@ def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
             overlap = set(nt_lemmas) & book_lemmas
             if len(overlap) >= 2:
                 results["nt"].append({"book": book, "overlap": list(overlap)})
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning("Cooccurrence check failed for %s (%s): %s", book, "nt", e)
 
     return results
 
