@@ -361,71 +361,112 @@ def format_proposal(theme_name: str, description: str,
     return "\n".join(lines)
 
 
+def run_directed(args):
+    """Directed mode: user names a theme, script finds the lemmas."""
+    theme_name = args.theme
+    description = args.desc
+    keywords = [kw.strip() for kw in description.split(",")]
+    min_freq = args.min_freq
+
+    print(f"\n=== DIRECTED MODE: proposing theme '{theme_name}' ===")
+    print(f"Keywords: {keywords}")
+    print(f"Min corpus frequency: {min_freq}")
+
+    # Load local data
+    lexicon = parse_lexicon_sql(LEXICON_SQL_PATH)
+    semantic = load_yaml(SEMANTIC_GROUPS_PATH)
+
+    # Step 1: Search lexicon
+    testament = args.testament
+    print(f"\nSearching {len(lexicon)} lexicon entries (testament={testament})...")
+    ot_hits = search_lexicon(lexicon, keywords, testament="ot") if testament in ("ot", "both") else []
+    nt_hits = search_lexicon(lexicon, keywords, testament="nt") if testament in ("nt", "both") else []
+    print(f"  OT lexicon matches: {len(ot_hits)}")
+    print(f"  NT lexicon matches: {len(nt_hits)}")
+
+    # Step 2: Frequency filter
+    ot_freqs = get_canon_frequencies("ot")
+    nt_freqs = get_canon_frequencies("nt")
+    ot_filtered = filter_by_frequency(ot_hits, ot_freqs, min_freq, testament="ot")
+    nt_filtered = filter_by_frequency(nt_hits, nt_freqs, min_freq, testament="nt")
+    print(f"  After frequency filter (>={min_freq}): OT={len(ot_filtered)}, NT={len(nt_filtered)}")
+
+    # Step 3: Deduplication
+    ot_filtered = check_overlap(ot_filtered, semantic, testament="ot")
+    nt_filtered = check_overlap(nt_filtered, semantic, testament="nt")
+
+    # Step 4: Cross-testament pairing
+    pairs = pair_cross_testament(ot_filtered[:30], nt_filtered[:30])
+    if pairs:
+        print(f"  Cross-testament pairs found: {len(pairs)}")
+
+    # Step 5: Corpus validation
+    print("\nValidating co-occurrence via MCP...")
+    mcp = MCPClient()
+    try:
+        mcp.list_books(include_themes=False)  # connectivity check
+    except Exception as e:
+        print(f"WARNING: MCP server unreachable ({e}). Skipping corpus validation.",
+              file=sys.stderr)
+        cooccurrence = {"ot": [], "nt": []}
+        mcp = None
+
+    if mcp:
+        ot_ids = [e["strongs_id"] for e in ot_filtered[:10]]
+        nt_words = [e["original_word"] for e in nt_filtered[:10]]
+        cooccurrence = validate_cooccurrence(mcp, ot_ids, nt_words)
+
+    # Step 6: Output
+    proposal = format_proposal(
+        theme_name, description,
+        ot_filtered[:8], nt_filtered[:6],
+        cooccurrence,
+    )
+    print("\n" + proposal)
+
+    # Write to file
+    output_path = f"server/scripts/output/proposal-{theme_name}.txt"
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(output_path).write_text(proposal)
+    print(f"\nSaved to: {output_path}")
+
+
+def run_discover(args):
+    """Discovery mode — implemented in Task 8."""
+    print("Discovery mode not yet implemented.", file=sys.stderr)
+    sys.exit(1)
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Propose new themes for semantic_groups.yaml"
+        description="Propose new themes for semantic_groups.yaml with lexicon evidence"
     )
-    subparsers = parser.add_subparsers(dest="mode", required=True)
+    sub = parser.add_subparsers(dest="mode")
 
-    # Directed mode: find lemmas for a named theme
-    directed = subparsers.add_parser(
-        "directed", help="Find lemmas for a named theme from lexicon data"
-    )
-    directed.add_argument("--theme", required=True, help="Theme name")
-    directed.add_argument(
-        "--desc", required=True, help="Comma-separated keywords describing the theme"
-    )
-    directed.add_argument(
-        "--testament",
-        choices=["ot", "nt"],
-        default=None,
-        help="Restrict to OT or NT entries",
-    )
-    directed.add_argument(
-        "--top", type=int, default=20, help="Number of top results to show"
-    )
-    directed.add_argument(
-        "--include-proper-nouns",
-        action="store_true",
-        default=False,
-        help="Include proper noun entries (personal names, place names) in results",
-    )
+    # Directed mode
+    directed = sub.add_parser("directed", help="Propose a named theme")
+    directed.add_argument("--theme", required=True, help="Theme key name (e.g., exile)")
+    directed.add_argument("--desc", required=True,
+                          help="Comma-separated description keywords (e.g., 'forced displacement, captivity, return')")
+    directed.add_argument("--testament", choices=["ot", "nt", "both"], default="both",
+                          help="Search OT only, NT only, or both (default: both)")
+    directed.add_argument("--min-freq", type=int, default=5,
+                          help="Min corpus frequency to include a lemma (default: 5)")
 
-    # Discovery mode: find uncovered lemmas
-    discover = subparsers.add_parser(
-        "discover", help="Find uncovered lemmas and cluster by lexicon domain"
-    )
-    discover.add_argument(
-        "--min-freq", type=int, default=20, help="Minimum frequency threshold"
-    )
+    # Discovery mode (Task 8)
+    discover = sub.add_parser("discover", help="Discover missing themes from gaps")
+    discover.add_argument("--min-freq", type=int, default=10,
+                          help="Min corpus frequency for gap analysis (default: 10)")
+    discover.add_argument("--top", type=int, default=30,
+                          help="Top N uncovered lemmas to analyze (default: 30)")
 
     args = parser.parse_args()
-
     if args.mode == "directed":
-        keywords = [kw.strip() for kw in args.desc.split(",")]
-        entries = parse_lexicon_sql(LEXICON_SQL_PATH)
-        results = search_lexicon(
-            entries,
-            keywords,
-            testament=args.testament,
-            include_proper_nouns=args.include_proper_nouns,
-        )
-
-        print(f"\nTheme: {args.theme}")
-        print(f"Keywords: {', '.join(keywords)}")
-        print(f"Found {len(results)} matching entries (showing top {args.top}):\n")
-
-        for entry in results[: args.top]:
-            testament_label = entry["testament"].upper()
-            print(
-                f"  [{testament_label}] {entry['strongs_id']:8s} "
-                f"{entry['original_word']:20s} "
-                f"({entry['transliteration']}) — {entry['gloss']}"
-            )
-
+        run_directed(args)
     elif args.mode == "discover":
-        print("Discovery mode not yet implemented.")
-        sys.exit(1)
+        run_discover(args)
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":
