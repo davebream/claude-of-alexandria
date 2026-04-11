@@ -442,9 +442,94 @@ def run_directed(args):
 
 
 def run_discover(args):
-    """Discovery mode — implemented in Task 8."""
-    print("Discovery mode not yet implemented.", file=sys.stderr)
-    sys.exit(1)
+    """Discovery mode: find uncovered lemmas and cluster by lexicon domain."""
+    min_freq = args.min_freq
+    top_n = args.top
+
+    print(f"\n=== DISCOVERY MODE ===")
+    print(f"Min frequency: {min_freq}, Top N: {top_n}")
+
+    # Load data
+    semantic = load_yaml(SEMANTIC_GROUPS_PATH)
+    covered_nt, covered_ot = get_covered_lemmas(semantic)
+    lexicon = parse_lexicon_sql(LEXICON_SQL_PATH)
+
+    # Build lexicon lookup by strongs_id and by original_word
+    lex_by_strongs = {e["strongs_id"]: e for e in lexicon}
+    lex_by_word = {}
+    for e in lexicon:
+        lex_by_word.setdefault(e["original_word"], []).append(e)
+
+    print(f"Existing themes: {len(semantic['semantic_groups'])}")
+    print(f"Covered: {len(covered_nt)} NT lemmas, {len(covered_ot)} OT strongs")
+
+    # Find uncovered high-frequency lemmas
+    proposals = []
+
+    # OT
+    ot_freqs = get_canon_frequencies("ot")
+    uncovered_ot = {
+        sid: freq for sid, freq in ot_freqs.items()
+        if sid not in covered_ot and freq >= min_freq
+    }
+    ranked_ot = sorted(uncovered_ot.items(), key=lambda x: -x[1])[:top_n]
+
+    print(f"\nTop {len(ranked_ot)} uncovered OT lemmas (freq >= {min_freq}):")
+    for sid, freq in ranked_ot:
+        lex = lex_by_strongs.get(sid)
+        gloss = lex["gloss"] if lex else "?"
+        word = lex["original_word"] if lex else "?"
+        print(f"  {sid} ({word}) freq={freq} — {gloss}")
+
+    # NT
+    nt_freqs = get_canon_frequencies("nt")
+    uncovered_nt = {
+        lemma: freq for lemma, freq in nt_freqs.items()
+        if lemma not in covered_nt and freq >= min_freq
+    }
+    ranked_nt = sorted(uncovered_nt.items(), key=lambda x: -x[1])[:top_n]
+
+    print(f"\nTop {len(ranked_nt)} uncovered NT lemmas (freq >= {min_freq}):")
+    for lemma, freq in ranked_nt:
+        lex_entries = lex_by_word.get(lemma, [])
+        gloss = lex_entries[0]["gloss"] if lex_entries else "?"
+        print(f"  {lemma} freq={freq} — {gloss}")
+
+    # Cluster by shared gloss keywords
+    print("\n=== SUGGESTED CLUSTERS (by shared gloss words) ===")
+    all_uncovered = []
+    for sid, freq in ranked_ot:
+        lex = lex_by_strongs.get(sid)
+        if lex:
+            lex["corpus_frequency"] = freq
+            lex["_testament"] = "ot"
+            all_uncovered.append(lex)
+    for lemma, freq in ranked_nt:
+        lex_entries = lex_by_word.get(lemma, [])
+        if lex_entries:
+            lex_entries[0]["corpus_frequency"] = freq
+            lex_entries[0]["_testament"] = "nt"
+            all_uncovered.append(lex_entries[0])
+
+    # Simple keyword clustering
+    keyword_groups = {}
+    for entry in all_uncovered:
+        gloss = (entry.get("gloss") or "").lower()
+        words = set(re.split(r'[,;\s]+', gloss)) - {"", "to", "be", "a", "the", "of", "in", "and", "or", "for"}
+        for word in words:
+            if len(word) > 3:
+                keyword_groups.setdefault(word, []).append(entry)
+
+    # Show clusters with 2+ entries from different testaments
+    shown = set()
+    for keyword, entries in sorted(keyword_groups.items(), key=lambda x: -len(x[1])):
+        testaments = {e["_testament"] for e in entries}
+        if len(entries) >= 2 and len(testaments) >= 2 and keyword not in shown:
+            shown.add(keyword)
+            print(f"\n  Cluster '{keyword}' ({len(entries)} lemmas):")
+            for e in entries[:6]:
+                t = e["_testament"].upper()
+                print(f"    [{t}] {e.get('strongs_id', e['original_word'])} — {e['gloss']} (freq={e['corpus_frequency']})")
 
 
 def main():
