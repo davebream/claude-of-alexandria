@@ -537,8 +537,15 @@ def run_discover(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Propose new themes for semantic_groups.yaml with lexicon evidence"
+        description="Propose new themes for semantic_groups.yaml with lexicon evidence",
+        epilog=(
+            "Examples:\n"
+            "  %(prog)s directed --theme exile --desc 'exile, captivity, deportation'\n"
+            "  %(prog)s discover --min-freq 15 --top 15\n"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    parser.add_argument("--version", action="version", version="propose-theme 1.0.0")
     sub = parser.add_subparsers(dest="mode")
 
     # Directed mode
