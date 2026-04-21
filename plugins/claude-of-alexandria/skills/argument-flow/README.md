@@ -2,7 +2,7 @@
 
 ## Architecture
 
-**Thin wrapper** — this skill delegates all work to the `argument-flow` agent via the Task tool. The skill exists for auto-discovery (description triggers skill loading); the agent contains all analytical logic.
+**Thin wrapper** — this skill delegates all work to the `argument-flow` agent via the Agent tool. The skill exists for auto-discovery (description triggers skill loading); the agent contains all analytical logic.
 
 See: `agents/argument-flow.md`
 

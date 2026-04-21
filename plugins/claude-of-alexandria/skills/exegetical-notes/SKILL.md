@@ -1,7 +1,7 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
-allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
+allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
 ---
 
 # Exegetical Notes
@@ -160,7 +160,7 @@ exegetical-notes (skill, user's model)
 
 **How to spawn:**
 ```
-Task tool:
+Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
   prompt: "Gather all relevant data for [Book] [Range].
            Also call query_morphology with pos_filter: 'conjunction'"
@@ -203,7 +203,7 @@ Include the pos_filter request for NT epistles. Omit it for OT and non-epistolar
 Step 1: Parse invocation → book, range, --output, --context
 
 Step 2: GATHER DATA via data-retriever agent
-   → Spawn data-retriever via Task tool (see Sub-Agent Delegation)
+   → Spawn data-retriever via Agent tool (see Sub-Agent Delegation)
    → For NT epistles: include pos_filter: "conjunction" in the prompt
    → Parse compressed output into working data for all sections
    → If data-retriever fails: fall back to direct MCP tool calls

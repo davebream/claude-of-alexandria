@@ -1,7 +1,7 @@
 ---
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
-allowed-tools: Task, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
+allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
 ---
 
 # Consult Biblical Scholar
@@ -84,7 +84,7 @@ The text clearly shows Jesus voluntarily emptied himself.
 
 Do not compose the answer from training data and then verify. Gather data first. Let the data shape the answer.
 
-**Primary method:** Spawn the **biblical-scholar** agent via Task tool (see Sub-Agent Delegation). The agent handles MCP tool selection, testament routing, and data compression internally.
+**Primary method:** Spawn the **biblical-scholar** agent via Agent tool (see Sub-Agent Delegation). The agent handles MCP tool selection, testament routing, and data compression internally.
 
 **Fallback method (if agent spawn fails):** Call MCP tools directly using the selection table below:
 
@@ -276,7 +276,7 @@ consult-biblical-scholar (skill, user's model)
 
 **How to spawn:**
 ```
-Task tool:
+Agent tool:
   subagent_type: "claude-of-alexandria:biblical-scholar"
   prompt: "[MODE] [passage]. [question/claim]"
 ```
@@ -287,7 +287,7 @@ Task tool:
 - `## Scholarly Sources` → integrate into Data Sources
 - `## Limitations` → surface in evidence summary
 
-**Fallback:** If Task tool fails or agent returns CANNOT ANSWER, fall back to direct MCP tool calls per Rule 2 table. Note the fallback in the response.
+**Fallback:** If Agent tool fails or agent returns CANNOT ANSWER, fall back to direct MCP tool calls per Rule 2 table. Note the fallback in the response.
 
 ---
 
@@ -300,7 +300,7 @@ Task tool:
    → If no passage: enter topic mode, warn, cap confidence at MEDIUM
 
 2. Delegate to biblical-scholar agent (if passage provided)
-   → Spawn via Task tool with mode-mapped prompt (see Sub-Agent Delegation)
+   → Spawn via Agent tool with mode-mapped prompt (see Sub-Agent Delegation)
    → The agent handles: pericope checking, MCP data gathering, scholarly interpretation
    → Parse agent response for: CONFIDENCE, analysis, verdict (if VALIDATE), sources
    → If agent spawn fails: fall back to direct MCP tool calls per Rule 2 table

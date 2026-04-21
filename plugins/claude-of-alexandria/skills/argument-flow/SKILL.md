@@ -1,12 +1,12 @@
 ---
 name: argument-flow
 description: Use when mapping the logical structure of a biblical passage using discourse markers and morphological data. Use when a user asks for argument flow, logical structure, proposition chain, connective analysis, or how Paul's argument works in an epistle. Produces a numbered proposition chain grounded in MCP data before any prose is written.
-allowed-tools: Task
+allowed-tools: Agent
 ---
 
 # Argument Flow
 
-Invoke the **argument-flow** agent via the Task tool and return its output verbatim.
+Invoke the **argument-flow** agent via the Agent tool and return its output verbatim.
 
 ```yaml
 subagent_type: "claude-of-alexandria:argument-flow"

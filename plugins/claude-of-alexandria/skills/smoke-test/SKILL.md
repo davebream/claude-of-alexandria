@@ -1,7 +1,7 @@
 ---
 name: smoke-test
 description: Pipeline smoke test. Use when asked to run a smoke test or pipeline verification.
-allowed-tools: Task
+allowed-tools: Agent
 ---
 
 # Smoke Test

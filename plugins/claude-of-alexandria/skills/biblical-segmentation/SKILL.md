@@ -1,7 +1,7 @@
 ---
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
-allowed-tools: Task, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
+allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
 ---
 
 # Biblical Text Segmentation
@@ -17,7 +17,7 @@ Help users divide biblical books into coherent textual units for teaching, study
 **Before checking any rule, before determining mode, before generating ANY output: spawn data-retriever.**
 
 ```
-Task tool:
+Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
   prompt: "Gather all relevant data for [book] [range if applicable]."
 ```
@@ -132,7 +132,7 @@ No recommended unit will bisect a sentence, split a scene, separate question fro
 Before proposing any slice boundaries, spawn the **argument-flow** agent:
 
 ```
-Task tool:
+Agent tool:
   subagent_type: "claude-of-alexandria:argument-flow"
   prompt: "Analyze structural features of [passage] for reading-slice
            boundary planning. Identify chiasmus centers, contrast zones,
