@@ -43,8 +43,8 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@anthropic-ai/claude-agent-sdk": "^0.2.116",
-    "promptfoo": "^0.121.5",
+    "@anthropic-ai/claude-agent-sdk": "^0.2.122",
+    "promptfoo": "^0.121.9",
     "yaml": "^2.8.3"
   }
 }
