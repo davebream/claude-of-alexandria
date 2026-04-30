@@ -2,6 +2,8 @@
 name: argument-flow
 description: Use when mapping the logical structure of a biblical passage using discourse markers and morphological data. Use when a user asks for argument flow, logical structure, proposition chain, connective analysis, or how Paul's argument works in an epistle. Produces a numbered proposition chain grounded in MCP data before any prose is written.
 allowed-tools: Agent
+version: 1.0.0
+changed: "2026-04-30"
 ---
 
 # Argument Flow
