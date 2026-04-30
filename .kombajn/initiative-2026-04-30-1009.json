@@ -37,18 +37,18 @@
       "complexity": "S",
       "pipelineDepth": "lightweight",
       "dependsOn": [],
-      "status": "active",
+      "status": "done",
       "requirements": "skipped",
       "design": ".kombajn/initiative-2026-04-30-1009/stubs/F2-design.md",
       "reviewStatus": "skipped",
       "plan": null,
       "planReviewStatus": "skipped",
       "revisionCount": 0,
-      "implementation": null,
-      "worktreeBranch": null,
+      "implementation": "94d4bbc",
+      "worktreeBranch": "feat/F2-skill-version-metadata",
       "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "prNumber": 25,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/25",
       "failureReport": null,
       "failureType": null,
       "diagnosticAttempted": [],
@@ -61,7 +61,9 @@
       "githubIssue": 17,
       "complexity": "M",
       "pipelineDepth": "medium",
-      "dependsOn": ["F1"],
+      "dependsOn": [
+        "F1"
+      ],
       "status": "active",
       "requirements": "skipped",
       "design": null,
@@ -86,7 +88,9 @@
       "githubIssue": 18,
       "complexity": "M",
       "pipelineDepth": "medium",
-      "dependsOn": ["F3"],
+      "dependsOn": [
+        "F3"
+      ],
       "status": "active",
       "requirements": "skipped",
       "design": null,
@@ -111,7 +115,9 @@
       "githubIssue": 14,
       "complexity": "M",
       "pipelineDepth": "medium",
-      "dependsOn": ["F1"],
+      "dependsOn": [
+        "F1"
+      ],
       "status": "active",
       "requirements": "skipped",
       "design": null,
@@ -136,7 +142,9 @@
       "githubIssue": 23,
       "complexity": "M",
       "pipelineDepth": "medium",
-      "dependsOn": ["F3"],
+      "dependsOn": [
+        "F3"
+      ],
       "status": "active",
       "requirements": "skipped",
       "design": null,
@@ -161,7 +169,9 @@
       "githubIssue": 19,
       "complexity": "L",
       "pipelineDepth": "full",
-      "dependsOn": ["F5"],
+      "dependsOn": [
+        "F5"
+      ],
       "status": "active",
       "requirements": "skipped",
       "design": null,
