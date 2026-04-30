@@ -2,6 +2,8 @@
 name: pericope-delimitation
 description: Use when validating whether a biblical passage constitutes a coherent discourse unit. Use when user asks to check passage boundaries, evaluate if a text range is a natural pericope, or needs to know if their selected passage should be extended or contracted.
 allowed-tools: Agent
+version: 1.0.0
+changed: "2026-04-30"
 ---
 
 # Pericope Delimitation

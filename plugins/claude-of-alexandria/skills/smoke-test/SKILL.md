@@ -2,6 +2,8 @@
 name: smoke-test
 description: Pipeline smoke test. Use when asked to run a smoke test or pipeline verification.
 allowed-tools: Agent
+version: 1.0.0
+changed: "2026-04-30"
 ---
 
 # Smoke Test

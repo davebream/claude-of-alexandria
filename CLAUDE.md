@@ -269,6 +269,22 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 | Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
 | Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
 
+### Skill Versioning
+
+Every SKILL.md tracks `version` and `changed` in its YAML frontmatter:
+
+```yaml
+version: 1.0.0      # semver
+changed: "2026-04-30"  # ISO date of last modification
+```
+
+**When to bump:**
+- **Patch** (`1.0.0` -> `1.0.1`): content edits, typo fixes, clarification within existing structure
+- **Minor** (`1.0.0` -> `1.1.0`): structural changes, new sections, changes to how the skill directs agent behavior
+- **Major** (`1.0.0` -> `2.0.0`): fundamental rework of skill purpose or methodology
+
+Always update `changed` to the current date on any modification.
+
 ---
 
 ## Theological Guardrails
