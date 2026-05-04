@@ -118,7 +118,7 @@
       "dependsOn": [
         "F1"
       ],
-      "status": "active",
+      "status": "done",
       "requirements": "skipped",
       "design": null,
       "reviewStatus": null,
@@ -128,8 +128,8 @@
       "implementation": null,
       "worktreeBranch": null,
       "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "prNumber": 28,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/28",
       "failureReport": null,
       "failureType": null,
       "diagnosticAttempted": [],
