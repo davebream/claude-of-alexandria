@@ -19,6 +19,7 @@
 # Phase 6 — OpenGNT / OpenText.org / Variants integration:
 #   S12: Textual variants ignored — variant-rich passage analyzed without edition comparison
 #   S13: NT gloss tiering absent — OpenGNT glosses treated uniformly without tier distinction
+#   S14: Apocalyptic genre mishandled — Rev 1:9-20 treated without genre governance
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -330,3 +331,39 @@ tests:
 
           FAIL if the response explicitly distinguishes between inline and
           concordance glosses, or notes gloss divergence as semantically significant.
+
+  # =========================================================================
+  # Scenario 14: Apocalyptic Genre Governance — Rev 1:9-20
+  # Failure: Apocalyptic imagery allegorized without genre-specific method
+  # Bare model treats apocalyptic like narrative or epistle, misses genre
+  # governance, and allegorizes symbolic imagery without literary-genre context
+  # =========================================================================
+  - description: "S14 RED: Apocalyptic genre — Rev 1:9-20 without genre governance"
+    vars:
+      prompt: "Analyze Revelation 1:9-20 exegetically. Explain the significance of the seven lampstands, the sharp two-edged sword, and the 'one like a son of man' figure. Include the redemptive-historical significance."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these apocalyptic genre failures:
+          - Allegorizes the lampstands, sword, or son-of-man figure without first
+            establishing that Revelation is apocalyptic literature requiring a
+            genre-specific interpretive method (e.g., symbol-referent mapping,
+            OT prophetic background, visionary report conventions)
+          - Treats the passage as straightforward narrative (what happened next)
+            or as epistolary instruction (what to do) rather than as an apocalyptic
+            vision report with its own literary conventions
+          - Does not identify "apocalyptic" as the governing genre or does not
+            explain how apocalyptic genre constrains interpretation
+          - Interprets symbols (lampstands = churches, sword = word of God) as
+            simple allegory without grounding in OT prophetic imagery
+            (e.g., Zechariah 4, Daniel 7, Isaiah 49:2)
+          - Misses the redemptive-historical arc specific to apocalyptic: the
+            exalted Christ revealed in glory as the culmination of Daniel's
+            "son of man" prophecy and the prophetic tradition
+
+          FAIL if the response explicitly identifies apocalyptic as the governing
+          genre, explains how genre constrains interpretation of symbols, grounds
+          imagery in OT prophetic backgrounds (Daniel 7, Zechariah 4), AND traces
+          the redemptive-historical significance through the prophetic tradition.

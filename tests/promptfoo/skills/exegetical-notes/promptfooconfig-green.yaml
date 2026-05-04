@@ -6,6 +6,7 @@
 # GREEN phase — skill correction verification:
 #   S1-S7: Core scenarios (structure, data-grounding, tiers, pericope, OT, verification, scholarly)
 #   S8-S12: Phase 4 scenarios (cross-ref labeling, entity data, speaker data, gloss tiers, variants)
+#   S14: Apocalyptic genre governance (Rev 1:9-20)
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -365,3 +366,56 @@ tests:
           diverge, not the manuscript evidence for each reading.
           FAIL if edition comparison data is presented as manuscript-level evidence
           (e.g., claiming to show papyrus/uncial support for readings).
+
+  # =========================================================================
+  # Scenario 14: Apocalyptic Genre Governance — Rev 1:9-20
+  # Core failure: apocalyptic imagery allegorized without genre-specific method,
+  # OT prophetic backgrounds missing, redemptive-historical arc untraced
+  # =========================================================================
+  - description: "S14 GREEN: Apocalyptic genre — Rev 1:9-20 with genre governance"
+    vars:
+      prompt: "Generate exegetical notes for Revelation 1:9-20 --output print"
+    assert:
+      # --- Genre identification in header ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('genre:') && lower.includes('apocalyptic'),
+            score: lower.includes('apocalyptic') ? 1 : 0,
+            reason: lower.includes('apocalyptic')
+              ? 'Genre identified as apocalyptic'
+              : 'Genre not identified as apocalyptic'
+          };
+      # --- OT prophetic background for imagery ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const otRefs = ['daniel 7', 'dan 7', 'zechariah 4', 'zech 4', 'daniel 10', 'dan 10', 'isaiah 49', 'isa 49'];
+          const found = otRefs.filter(r => lower.includes(r));
+          return {
+            pass: found.length >= 2,
+            score: found.length / 3,
+            reason: found.length >= 2
+              ? `OT prophetic backgrounds cited: [${found}]`
+              : `Insufficient OT prophetic backgrounds. Found: [${found}]. Expected at least 2 from: [${otRefs}]`
+          };
+      # --- Genre governance: apocalyptic method constrains interpretation ---
+      - type: llm-rubric
+        value: |
+          Evaluate whether the output applies genre governance to Revelation 1:9-20.
+          PASS if ALL of these are true:
+          - Apocalyptic is explicitly identified as the governing genre
+          - The analysis explains how apocalyptic genre constrains interpretation
+            of the symbolic imagery (lampstands, sword, son-of-man figure)
+          - Symbols are grounded in OT prophetic imagery (e.g., lampstands in
+            Zechariah 4, son of man in Daniel 7, sword in Isaiah 49:2) rather
+            than treated as simple allegory or decoded without literary precedent
+          - The redemptive-historical arc traces the exalted Christ as fulfillment
+            of the Daniel 7 "son of man" prophecy or the broader prophetic tradition
+          - The passage is treated as a visionary report with its own literary
+            conventions, not as narrative or epistolary instruction
+
+          FAIL if symbols are allegorized without OT prophetic grounding, or if
+          apocalyptic genre is not identified as governing the interpretive method,
+          or if the redemptive-historical connection to the prophetic tradition is absent.
