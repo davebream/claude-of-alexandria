@@ -1,0 +1,255 @@
+# Integration tests: multi-skill pipeline composition.
+# Verifies that skill outputs are compatible inputs for downstream skills.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c integration/promptfooconfig.yaml
+#
+# Scenarios:
+#   INT-1: segmentation → pericope-delimitation (boundary validation)
+#   INT-2: segmentation → exegetical-notes via --context (context propagation)
+#   INT-3: exegetical-notes → consult-biblical-scholar VALIDATE (claim verification)
+#   INT-4: segmentation outline → study-evaluator (material evaluation)
+
+description: "Integration — multi-skill pipeline composition"
+
+providers:
+  - id: file://../providers/with-skill.agent-sdk.yaml
+    config:
+      max_budget_usd: 5.00
+
+prompts:
+  - "{{prompt}}"
+
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+    # Integration tests must use MCP tools (multi-skill = multiple tool rounds)
+    - type: javascript
+      value: |
+        const raw = JSON.parse(context.providerResponse?.raw || '{}');
+        return {
+          pass: (raw.num_turns || 0) > 3,
+          score: Math.min((raw.num_turns || 0) / 6, 1),
+          reason: `Integration pipeline used ${raw.num_turns || 0} turns (expected >3 for multi-skill)`
+        };
+
+tests:
+
+  # =========================================================================
+  # INT-1: segmentation → pericope-delimitation
+  # Pipeline: Segment Romans, pick a boundary, validate it with pericope skill
+  # =========================================================================
+  - description: "INT-1: segmentation boundary → pericope-delimitation validation"
+    vars:
+      prompt: |
+        I need you to do two things in sequence:
+
+        STEP 1: Use the biblical-segmentation skill to segment Romans into 4 teaching sessions.
+        Note the boundary between session 1 and session 2 (the ending verse of session 1).
+
+        STEP 2: Take that boundary passage (the last few verses of session 1 and first few
+        verses of session 2) and use the pericope-delimitation skill to evaluate whether
+        that boundary falls at a natural discourse unit break.
+
+        Present both outputs clearly labeled as STEP 1 RESULT and STEP 2 RESULT.
+    assert:
+      # Segmentation produced session table
+      - type: icontains
+        value: "Session"
+      # Pericope assessment was produced
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const pericopeSignals = ['discourse unit', 'boundary', 'pericope', 'coherent', 'break'];
+          const found = pericopeSignals.filter(s => lower.includes(s));
+          return {
+            pass: found.length >= 2,
+            score: found.length / pericopeSignals.length,
+            reason: found.length >= 2
+              ? `Pericope assessment signals found: [${found}]`
+              : `Missing pericope assessment. Found only: [${found}]`
+          };
+      # Pipeline coherence: pericope references the segmentation boundary
+      - type: llm-rubric
+        value: |
+          Evaluate whether this output shows a coherent two-step pipeline:
+          1. A biblical segmentation of Romans into sessions (with verse ranges)
+          2. A pericope boundary assessment that evaluates the SAME boundary proposed in step 1
+
+          FAIL if:
+          - Step 2 evaluates a completely different passage than what step 1 proposed
+          - Either step is missing entirely
+          - The pericope assessment doesn't reference the specific verse boundary from segmentation
+
+          PASS if step 2 clearly evaluates the boundary that step 1 proposed, even if the
+          pericope assessment suggests adjusting the boundary.
+
+  # =========================================================================
+  # INT-2: segmentation → exegetical-notes via --context
+  # Pipeline: Segmentation context propagates to Section 1 (Literary Context)
+  # =========================================================================
+  - description: "INT-2: segmentation context → exegetical-notes --context propagation"
+    vars:
+      prompt: |
+        I need you to do two things in sequence:
+
+        STEP 1: Use the biblical-segmentation skill to segment Genesis (Joseph narrative,
+        chapters 37-50) into 8 teaching sessions. Note the first session's passage range.
+
+        STEP 2: Use the exegetical-notes skill on Genesis 37:2-11 with the context flag:
+        /exegetical-notes Genesis 37:2-11 --context "segmentation: Joseph narrative, 8 sessions" --output print
+
+        Present both outputs clearly labeled as STEP 1 RESULT and STEP 2 RESULT.
+    assert:
+      # Segmentation produced options
+      - type: icontains
+        value: "Option"
+      # Exegetical notes produced Section 1
+      - type: icontains
+        value: "Literary Context"
+      # Context propagation: "joseph" appears anywhere in the output
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const hasJoseph = lower.includes('joseph');
+          const hasLiteraryContext = lower.includes('literary context');
+          return {
+            pass: hasJoseph && hasLiteraryContext,
+            score: (hasJoseph ? 0.5 : 0) + (hasLiteraryContext ? 0.5 : 0),
+            reason: hasJoseph && hasLiteraryContext
+              ? 'Output contains both "joseph" and "literary context" — context propagation confirmed'
+              : `Missing: ${!hasJoseph ? '"joseph"' : ''} ${!hasLiteraryContext ? '"literary context"' : ''}`
+          };
+      # End-to-end coherence
+      - type: llm-rubric
+        value: |
+          Evaluate whether this output shows segmentation context propagating to exegetical analysis:
+          1. Step 1 segments Genesis 37-50 into sessions
+          2. Step 2 produces exegetical notes for Gen 37:2-11
+          3. The exegetical notes' "Literary Context" section (Section 1) acknowledges that this
+             passage is part of a larger Joseph narrative segmented into 8 sessions
+
+          FAIL if Section 1 of the exegetical notes makes no reference to the Joseph narrative
+          segmentation context or treats the passage as if no segmentation context was provided.
+          PASS if Section 1 explicitly frames the passage within the broader teaching series context.
+
+  # =========================================================================
+  # INT-3: exegetical-notes claim → consult-biblical-scholar VALIDATE
+  # Pipeline: Extract a claim from exegetical output, verify with scholar
+  # =========================================================================
+  - description: "INT-3: exegetical claim → consult-biblical-scholar VALIDATE"
+    vars:
+      prompt: |
+        I need you to do two things in sequence:
+
+        STEP 1: Use the exegetical-notes skill on Philippians 2:5-11 --output print.
+        From the Exegetical Conclusions section, identify one key theological claim
+        about the passage (e.g., about Christ's kenosis or pre-existence).
+
+        STEP 2: Take that specific claim and submit it to the consult-biblical-scholar
+        skill in VALIDATE mode. Format: "VALIDATE Philippians 2:5-11. Claim: [the claim
+        you extracted from step 1]"
+
+        Present both outputs clearly labeled as STEP 1 RESULT and STEP 2 RESULT.
+    assert:
+      # Exegetical notes produced conclusions
+      - type: icontains
+        value: "Exegetical Conclusions"
+      # Scholar returned a formal verdict
+      - type: javascript
+        value: |
+          const hasVerdict = /VERDICT:\s*(SUPPORTED|COMPATIBLE|NOT SUPPORTED|INSUFFICIENT DATA)/i.test(output);
+          return {
+            pass: hasVerdict,
+            score: hasVerdict ? 1 : 0,
+            reason: hasVerdict
+              ? 'Scholar produced formal VERDICT line'
+              : 'No formal VERDICT: line found in scholar output'
+          };
+      # Scholar has confidence tier
+      - type: javascript
+        value: |
+          const hasConfidence = /CONFIDENCE:\s*(HIGH|MEDIUM|LOW)/i.test(output);
+          return {
+            pass: hasConfidence,
+            score: hasConfidence ? 1 : 0,
+            reason: hasConfidence
+              ? 'Scholar produced CONFIDENCE tier'
+              : 'No CONFIDENCE: tier found in scholar output'
+          };
+      # Pipeline coherence: scholar validates the same claim from exegetical notes
+      - type: llm-rubric
+        value: |
+          Evaluate whether this output shows a coherent claim-verification pipeline:
+          1. Exegetical notes produced analysis of Philippians 2:5-11 with conclusions
+          2. A specific theological claim was extracted from those conclusions
+          3. The biblical scholar evaluated THAT SAME claim (not a different one)
+          4. The scholar's verdict references the passage and the claim
+
+          FAIL if the scholar validates a generic claim unrelated to the exegetical output,
+          or if either step is missing.
+          PASS if the scholar's VALIDATE response clearly addresses the specific claim
+          extracted from the exegetical notes' conclusions.
+
+  # =========================================================================
+  # INT-4: segmentation outline → study-evaluator
+  # Pipeline: Segmentation as study material, evaluated for drift
+  # =========================================================================
+  - description: "INT-4: segmentation outline → study-evaluator evaluation"
+    vars:
+      prompt: |
+        I need you to do two things in sequence:
+
+        STEP 1: Use the biblical-segmentation skill to segment Philippians into
+        teaching sessions. Take the session titles and passage ranges from the output.
+
+        STEP 2: Format that segmentation as a study outline (session titles with passage
+        references) and ask the study-evaluator agent to evaluate it against exegetical
+        standards. Use the Agent tool to invoke study-evaluator with:
+        "Evaluate this study outline for Philippians: [paste the session table from step 1]"
+
+        Present both outputs clearly labeled as STEP 1 RESULT and STEP 2 RESULT.
+    assert:
+      # Segmentation produced session table
+      - type: icontains
+        value: "Philippians"
+      # Study evaluator produced overall verdict
+      - type: javascript
+        value: |
+          const hasOverall = /OVERALL:\s*(SOUND|SOUND_WITH_DRIFT|SIGNIFICANT_DRIFT|UNSOUND)/i.test(output);
+          return {
+            pass: hasOverall,
+            score: hasOverall ? 1 : 0,
+            reason: hasOverall
+              ? 'Study evaluator produced OVERALL verdict'
+              : 'No OVERALL: verdict found in study-evaluator output'
+          };
+      # Study evaluator classified input type
+      - type: javascript
+        value: |
+          const hasType = /INPUT TYPE:\s*(outline|transcript|methodology|combined)/i.test(output);
+          return {
+            pass: hasType,
+            score: hasType ? 1 : 0,
+            reason: hasType
+              ? 'Study evaluator classified INPUT TYPE'
+              : 'No INPUT TYPE: classification found'
+          };
+      # Pipeline coherence
+      - type: llm-rubric
+        value: |
+          Evaluate whether this output shows a coherent evaluation pipeline:
+          1. Biblical segmentation produced a session outline for Philippians
+          2. That outline was fed to the study-evaluator
+          3. The evaluator assessed the segmentation's theological faithfulness
+          4. The evaluator's verdict is based on the actual content from step 1
+
+          FAIL if the evaluator assessed something unrelated to the segmentation output,
+          or if either step is missing entirely.
+          PASS if the evaluator clearly assessed the segmentation outline from step 1
+          and produced a verdict about its faithfulness to the text.
