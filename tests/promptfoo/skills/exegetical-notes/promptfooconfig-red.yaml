@@ -29,6 +29,7 @@
 # RED scenario coverage audit:
 #   S18: Wisdom genre — forced narrative arc on wisdom poetry (Job 38:1-11)
 #   S19: Wisdom genre — missing genre-graduated method (Ecclesiastes 1:1-11)
+#   S20: Sparse MCP data — no degraded-data fallback (Obadiah 1-4)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -535,3 +536,31 @@ tests:
           explores hebel's semantic range with nuance, uses a genre-graduated
           method for redemptive-historical placement, AND places Qoheleth in
           canonical-literary context.
+
+  # =========================================================================
+  # Scenario 20: Sparse MCP Data — Obadiah 1-4
+  # Failure: No degraded-data fallback when MCP tools return empty results;
+  # training-knowledge fills gaps without acknowledging data sparsity
+  # =========================================================================
+  - description: "S20 RED: Sparse data — Obadiah 1-4 without degraded-data fallback"
+    vars:
+      prompt: "Generate exegetical notes for Obadiah 1-4. Include entity data for Edom, cross-references to other Edom passages, and place data for the geographic references. Provide full exegetical analysis."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these sparse-data failures:
+          - Provides entity data for Edom, geographic references, and cross-references
+            from training knowledge without acknowledging that structured data
+            may be sparse or unavailable for this passage
+          - Does not mention that MCP tools might return empty results for minor
+            prophets and does not have a degraded-data fallback strategy
+          - Presents all claims (places, people, cross-references) at uniform
+            confidence without distinguishing verified from unverified data
+          - Does not flag any data gap or indicate that Obadiah is a passage
+            where structured tool data may be limited
+
+          FAIL if the response explicitly acknowledges sparse data availability,
+          flags data gaps for specific categories, and distinguishes verified
+          tool results from training-knowledge fallbacks.
