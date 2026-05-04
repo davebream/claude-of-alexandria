@@ -8,6 +8,7 @@
 #   S8-S12: Phase 4 scenarios (cross-ref labeling, entity data, speaker data, gloss tiers, variants)
 #   S14: Apocalyptic genre governance (Rev 1:9-20)
 #   S15: Citation grounding via commentary_lookup (Gal 3:10-14)
+#   S16-S17: F4 self-critique (indicative ground, redemptive-historical link)
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -459,3 +460,90 @@ tests:
           any verification caveat or commentary_lookup reference.
           FAIL if modern scholarly citations (not in the bundled commentary set)
           are presented without a training-knowledge caveat.
+
+  # =========================================================================
+  # Scenario 16: Self-Critique Catches Moralistic Section 5
+  # Core failure: imperatives presented as freestanding moral instruction
+  # without identifying the indicative theological ground
+  # =========================================================================
+  - description: "S16 GREEN: Self-critique — indicative ground for imperative-dominated passage"
+    vars:
+      prompt: "Generate exegetical notes for Colossians 3:1-11 --output print"
+    assert:
+      # --- Indicative ground explicitly identified ---
+      - type: llm-rubric
+        value: |
+          Check Section 5 (Exegetical Conclusions) for Colossians 3:1-11.
+          This passage is dominated by imperatives (seek, set your minds, put to
+          death, put off). The indicative theological ground is the believer's
+          union with Christ: "you have been raised with Christ" (3:1), "you have
+          died" (3:3), "your life is hidden with Christ in God" (3:4).
+
+          PASS if Section 5 explicitly identifies this indicative ground as the
+          theological basis from which the imperatives flow. The analysis must
+          make clear that the commands are warranted by what God has done (the
+          indicative), not presented as freestanding moral instruction.
+
+          FAIL if the imperatives are listed or explained without explicitly
+          identifying the indicative theological ground (union with Christ in
+          death and resurrection) as their warrant.
+      # --- Genre identified as epistle ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('genre:') && lower.includes('epistle'),
+            score: lower.includes('epistle') ? 1 : 0,
+            reason: lower.includes('epistle')
+              ? 'Genre identified as epistle'
+              : 'Genre not identified as epistle'
+          };
+
+  # =========================================================================
+  # Scenario 17: Self-Critique Ensures Redemptive-Historical Link
+  # Core failure: non-wisdom epistle passage missing cross-testament
+  # redemptive-historical connection in Section 8
+  # =========================================================================
+  - description: "S17 GREEN: Self-critique — redemptive-historical link for epistle"
+    vars:
+      prompt: "Generate exegetical notes for Ephesians 2:1-10 --output print"
+    assert:
+      # --- Redemptive-historical link present in Section 8 ---
+      - type: llm-rubric
+        value: |
+          Check Section 8 (Intertextual Links) for Ephesians 2:1-10.
+          This is an epistle passage (non-wisdom genre), so the skill's
+          self-critique Step 8 requires a redemptive-historical connection
+          placing the passage in the biblical arc.
+
+          PASS if Section 8 includes a redemptive-historical connection that:
+          - Places Eph 2:1-10 in the broader biblical storyline
+            (Creation → Promise → Fulfillment → Consummation)
+          - Traces at least one cross-testament link (e.g., the "dead in
+            trespasses → made alive" pattern connecting to OT themes of
+            exile/restoration, or "by grace through faith" connecting to
+            Abrahamic covenant promise)
+          - Goes beyond flat thematic parallels to show redemptive-historical
+            progression
+
+          FAIL if Section 8 contains only flat cross-references without a
+          redemptive-historical framework, or if no cross-testament link is
+          present connecting Eph 2:1-10 to the broader biblical arc.
+      # --- All 10 sections present ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const sections = [
+            'passage in literary context', 'internal structure',
+            'propositional summary', 'lexical analysis',
+            'exegetical conclusions', 'interpretive guardrails',
+            'open questions', 'intertextual', 'data sources', 'verification'
+          ];
+          const missing = sections.filter(s => !lower.includes(s));
+          return {
+            pass: missing.length === 0,
+            score: 1 - (missing.length / sections.length),
+            reason: missing.length === 0
+              ? 'All 10 sections present'
+              : `Missing: [${missing.join(', ')}]`
+          };

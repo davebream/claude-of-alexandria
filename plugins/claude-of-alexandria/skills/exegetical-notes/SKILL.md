@@ -130,6 +130,19 @@ The output format has exactly 10 sections. Use exactly these section titles:
 
 **Do not abbreviate the output** even if the user asks for "brief" or "essentials." All 10 sections are required for every invocation. The Verification section (Section 10) is never optional.
 
+### Rule 8: Self-Critique Pass Before Delivery
+
+After generating all 10 sections and completing the cross-check (Steps 5-7), run a mandatory self-critique pass (Step 8) with 5 binary checks before delivering output. This is not optional. Do not skip it because the notes "look correct." Do not convince yourself that "this passage doesn't need it."
+
+The 5 checks are:
+1. **Indicative ground** — If Section 2 shows imperative-dominated structure, Section 5 must identify the indicative theological basis for the commands. Imperatives without their warrant is moralism.
+2. **Redemptive-historical link** — For non-wisdom genres, Section 8 must include at least one cross-testament redemptive-historical connection. Missing this flattens the biblical storyline.
+3. **Tier 3 citation format** — Every Tier 3 citation in Section 6 must follow Author (Title, Series, Year) format. A name alone is not a citation.
+4. **Verification data** — Section 10 must contain actual MCP re-query results with specific counts (claims checked, confirmed, corrected), not generic summaries.
+5. **Section completeness** — All 10 sections must be present with exact required titles. No renaming, no omissions.
+
+If any check fails: print a structured correction note, revise the failing section(s), and re-check. Maximum 1 revision iteration. If still failing after revision, deliver with an unresolved note in Section 10.
+
 ### Rule 7: Deliver Output
 
 **File mode** (default, or `--output file`):
@@ -287,7 +300,51 @@ Step 6: Cross-check data claims against MCP tool output
 
 Step 7: Fix any mismatches found in cross-check
 
-Step 8: DELIVER OUTPUT
+Step 8: SELF-CRITIQUE PASS (MANDATORY — DO NOT SKIP)
+   │
+   Run 5 binary checks against the generated notes before delivery:
+   │
+   ├─ Check 1: INDICATIVE GROUND
+   │  Does Section 5 identify the indicative theological ground if
+   │  imperatives dominate the passage (per Section 2 structure)?
+   │  If Section 2 shows imperative-dominated structure and Section 5
+   │  lacks an explicit indicative ground → FAIL
+   │
+   ├─ Check 2: REDEMPTIVE-HISTORICAL LINK
+   │  Does Section 8 include a redemptive-historical connection for
+   │  non-wisdom genres (epistle, narrative, prophecy, apocalyptic)?
+   │  If genre is NOT wisdom/short-letter AND Section 8 lacks a
+   │  redemptive-historical link → FAIL
+   │
+   ├─ Check 3: TIER 3 CITATION FORMAT
+   │  Are all Tier 3 citations in Section 6 in
+   │  Author (Title, Series, Year) format?
+   │  If any Tier 3 citation is a name-drop without title/series → FAIL
+   │
+   ├─ Check 4: VERIFICATION DATA
+   │  Does the Verification section (Section 10) show actual MCP
+   │  re-query results with specific counts, not summaries?
+   │  If Section 10 contains generic text without cross-check counts → FAIL
+   │
+   ├─ Check 5: SECTION COMPLETENESS
+   │  Are all 10 sections present with the exact required titles?
+   │  Are any sections missing or renamed? → FAIL
+   │
+   ├─ ALL CHECKS PASS? → Proceed to Step 9 (deliver)
+   │
+   └─ ANY CHECK FAILS?
+      │
+      ├─ Print structured correction report:
+      │  "[SELF-CRITIQUE] Check N FAILED: [reason]. Correcting..."
+      │
+      ├─ Revise the failing section(s)
+      │
+      ├─ Re-run the 5 checks (max 1 revision iteration)
+      │
+      └─ If still failing after 1 revision: deliver with a
+         "[SELF-CRITIQUE] Unresolved: Check N" note in Section 10
+
+Step 9: DELIVER OUTPUT
    │
    ├─ --output print? → Print ALL 10 sections inline. Do NOT save to file.
    │                     Do NOT summarize. The full document goes in the response.
@@ -586,6 +643,9 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Textual variants ignored for disputed passages | When VARIANTS_SUMMARY shows edition disagreements in the passage, note them in Section 8. Major text-critical issues (Pericope Adulterae, longer ending of Mark, Comma Johanneum) must be flagged. |
 | Clause annotations treated as definitive | SYNTAX_SUMMARY data from OpenText.org is one analytical framework (Porter's SFL). Present as structural evidence, not absolute fact. Data coverage varies by NT book. |
 | Tier A/B citation not grounded via commentary_lookup | After drafting Tier 3 citations, call commentary_lookup for the passage. If the cited author is in the bundled set, verify the position. If not verifiable, mark "[training knowledge — verify before publication]". |
+| Skipping self-critique pass | Step 8 is mandatory. Run all 5 binary checks before delivery. Do not assume "this passage doesn't need it." |
+| Self-critique finds moralistic Section 5 | If imperatives dominate (per Section 2) and Section 5 lacks indicative ground, the self-critique must catch this and revise before delivery |
+| Self-critique finds missing redemptive-historical link | For non-wisdom genres, Section 8 must have a cross-testament link. Self-critique catches the omission and triggers revision |
 
 ---
 
