@@ -21,6 +21,10 @@
 #   S13: NT gloss tiering absent — OpenGNT glosses treated uniformly without tier distinction
 #   S14: Apocalyptic genre mishandled — Rev 1:9-20 treated without genre governance
 #   S15: Ungrounded citation — Tier A/B citation presented without commentary_lookup verification
+#
+# F4 — Self-critique pass:
+#   S16: Moralistic Section 5 — imperatives without indicative ground (Col 3:1-11)
+#   S17: Missing redemptive-historical link — epistle without cross-testament arc (Eph 2:1-10)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -332,6 +336,68 @@ tests:
 
           FAIL if the response explicitly distinguishes between inline and
           concordance glosses, or notes gloss divergence as semantically significant.
+
+  # =========================================================================
+  # Scenario 16: Moralistic Section 5 Without Indicative Ground
+  # Failure: Imperative-dominated passage analyzed without identifying the
+  # indicative theological basis for the commands — moralism, not exegesis
+  # =========================================================================
+  - description: "S16 RED: Moralistic Section 5 — imperatives without indicative ground"
+    vars:
+      prompt: "Generate exegetical notes for Colossians 3:1-11. This passage contains many imperatives (seek, set your minds, put to death, put off). Provide a full exegetical analysis with all standard sections."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response presents the imperatives in Colossians 3:1-11 (seek,
+          set your minds, put to death, put off) without explicitly identifying the
+          indicative theological ground that warrants them. Signs:
+          - The imperatives are listed or explained as freestanding moral commands
+            ("Christians should put to death...", "we must set our minds...")
+          - The indicative basis (Col 3:1 "you have been raised with Christ",
+            3:3 "you have died", 3:4 "your life is hidden with Christ") is either
+            absent or mentioned in passing without being identified as THE
+            theological ground for the imperatives
+          - No explicit statement that the commands derive from the believer's
+            union with Christ in his death and resurrection
+          - The analysis reads as moral instruction rather than grounded exegesis
+
+          FAIL if the response explicitly identifies the indicative theological
+          ground (union with Christ in death/resurrection) as the basis from which
+          the imperatives flow, and labels this as the warrant for the commands.
+
+  # =========================================================================
+  # Scenario 17: Missing Redemptive-Historical Link in Section 8
+  # Failure: Non-wisdom passage analyzed without any cross-testament
+  # redemptive-historical connection in the intertextual links
+  # =========================================================================
+  - description: "S17 RED: Missing redemptive-historical link — epistle without cross-testament arc"
+    vars:
+      prompt: "Generate exegetical notes for Ephesians 2:1-10 with full intertextual analysis. Include all cross-references and connections to other biblical passages."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response's intertextual analysis lacks a structured
+          redemptive-historical connection placing Eph 2:1-10 in the biblical
+          arc (Creation → Promise → Fulfillment → Consummation). Signs:
+          - Cross-references are listed as flat parallels without an organizing
+            redemptive-historical framework
+          - No explicit statement tracing Eph 2:1-10's "dead in trespasses" →
+            "made alive with Christ" → "seated in heavenly places" language to
+            the broader biblical storyline of fall and restoration
+          - OT connections (if present) are thematic parallels rather than
+            redemptive-historical links (e.g., "cf. Psalm 103" without noting
+            how Eph 2 fulfills OT promise)
+          - The section organizes cross-references by topic rather than by their
+            place in the redemptive-historical arc
+
+          FAIL if the response includes a structured redemptive-historical
+          connection that explicitly traces the passage's place in the biblical
+          arc from creation through consummation, with OT promise and NT
+          fulfillment clearly linked.
 
   # =========================================================================
   # Scenario 14: Apocalyptic Genre Governance — Rev 1:9-20
