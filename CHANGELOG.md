@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Citation grounding step (Step 4.5) in `exegetical-notes` skill — Tier A/B scholarly citations are verified against `commentary_lookup` before delivery; unverifiable citations downgraded to "[training knowledge — verify before publication]" caveat
+- Adversarial red-team scenarios (prompt injection, multi-turn moralism pressure, theological manipulation persona) in EXTENDED configs for `exegetical-notes` and `pericope-delimitation` skills — tests skill resilience under adversarial user behavior
+- Quarterly run cadence documentation for EXTENDED configs in `tests/promptfoo/README.md`
 
 ### Changed
 

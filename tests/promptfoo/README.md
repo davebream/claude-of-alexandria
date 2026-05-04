@@ -151,6 +151,40 @@ Compare CAL scenario verdicts against their GREEN counterparts:
 - **Both FAIL** — the skill has a genuine gap (unrelated to judge bias)
 - **GREEN FAIL, CAL PASS** — unlikely but would indicate severe bias; investigate immediately
 
+## EXTENDED Config Run Cadence
+
+EXTENDED configs contain adversarial (ADV/REDTEAM), stress (STRESS), and judge calibration (CAL) scenarios that are too expensive for CI. They run on-demand during skill development and on a quarterly schedule for regression monitoring.
+
+### Quarterly Schedule
+
+Run all EXTENDED configs once per quarter to detect skill resilience drift:
+
+| Quarter | Target Month | Configs to Run |
+|---------|-------------|----------------|
+| Q1 | January | All `promptfooconfig-extended.yaml` files |
+| Q2 | April | All `promptfooconfig-extended.yaml` files |
+| Q3 | July | All `promptfooconfig-extended.yaml` files |
+| Q4 | October | All `promptfooconfig-extended.yaml` files |
+
+### Running All EXTENDED Configs
+
+```bash
+# From repo root — run each skill's EXTENDED config
+npm run eval -- --no-cache --prefix tests/promptfoo -c skills/exegetical-notes/promptfooconfig-extended.yaml
+npm run eval -- --no-cache --prefix tests/promptfoo -c skills/pericope-delimitation/promptfooconfig-extended.yaml
+npm run eval -- --no-cache --prefix tests/promptfoo -c skills/argument-flow/promptfooconfig-extended.yaml
+npm run eval -- --no-cache --prefix tests/promptfoo -c skills/biblical-segmentation/promptfooconfig-extended.yaml
+npm run eval -- --no-cache --prefix tests/promptfoo -c skills/consult-biblical-scholar/promptfooconfig-extended.yaml
+```
+
+### What to Look For
+
+- **ADV/REDTEAM scenarios failing**: Skill resilience has degraded — the model is capitulating to adversarial pressure that it previously resisted. Investigate whether model updates or skill changes caused the regression.
+- **STRESS scenarios failing**: Genre-graduated requirements may need recalibration.
+- **CAL scenarios diverging from GREEN**: Judge position bias detected — review rubric phrasing.
+
+Record quarterly eval IDs in `docs/PROGRESS.md` for longitudinal tracking.
+
 ## Adding New Tests
 
 1. Create `tests/promptfoo/skills/{skill-name}/promptfooconfig-red.yaml` and `promptfooconfig-green.yaml` (or under `agents/` for agent evals).
