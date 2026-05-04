@@ -25,6 +25,9 @@
 # F4 — Self-critique pass:
 #   S16: Moralistic Section 5 — imperatives without indicative ground (Col 3:1-11)
 #   S17: Missing redemptive-historical link — epistle without cross-testament arc (Eph 2:1-10)
+#
+# RED scenario coverage audit:
+#   S18: Wisdom genre — forced narrative arc on wisdom poetry (Job 38:1-11)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -464,3 +467,36 @@ tests:
           FAIL if the response explicitly marks citations as unverified training
           knowledge, calls commentary_lookup to verify positions, or adds
           verification caveats to citations that could not be confirmed.
+
+  # =========================================================================
+  # Scenario 18: Wisdom Genre — Job 38:1-11 (God's Speech from Whirlwind)
+  # Failure: Wisdom poetry treated as narrative; moralistic reading without
+  # theodicy context; forced narrative arc instead of genre-graduated method
+  # =========================================================================
+  - description: "S18 RED: Wisdom genre — Job 38:1-11 forced narrative arc on wisdom poetry"
+    vars:
+      prompt: "Generate exegetical notes for Job 38:1-11. This is God's speech from the whirlwind. Provide full exegetical analysis including lexical analysis, interpretive guardrails, and redemptive-historical significance."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these wisdom-genre failures:
+          - Treats Job 38:1-11 as narrative (what happened next in the story)
+            rather than as wisdom-genre theophanic poetry with its own conventions
+          - Forces a direct redemptive-historical arc (Creation → Promise →
+            Fulfillment → Consummation) rather than using a genre-graduated
+            indirect approach appropriate for wisdom literature
+          - Reads God's questions as rhetorical devices for moral instruction
+            ("God is teaching Job humility") without placing them in the
+            theodicy context of the book's argument
+          - Does not identify "wisdom" or "theophanic poetry" as the governing
+            genre, or does not explain how wisdom genre constrains interpretation
+          - Ignores the book-level literary context: the suffering-innocent
+            framework (chs 1-2), the dialogue cycle (chs 3-37), and God's
+            response as resolution of the book's central question
+
+          FAIL if the response explicitly identifies wisdom/theophanic poetry
+          as the governing genre, uses a genre-graduated redemptive-historical
+          method (indirect, not direct), AND situates the speech in the book's
+          theodicy argument structure.
