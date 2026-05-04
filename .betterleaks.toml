@@ -1,0 +1,18 @@
+# Betterleaks configuration
+# Docs: https://github.com/betterleaks/betterleaks
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Legacy detect-secrets baseline (contains hashed_secret values, not actual secrets)"
+paths = ['''\.secrets\.baseline$''']
+
+[[allowlists]]
+description = "Example/template files with placeholder secrets"
+paths = [
+  '''\.env\.example$''',
+  '''\.env\.test$''',
+  '''\.mcp\.json\.example$''',
+]
+stopwords = ["dummy", "placeholder", "example", "test", "CHANGEME"]

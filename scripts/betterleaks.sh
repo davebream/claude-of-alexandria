@@ -149,11 +149,11 @@ main() {
   case "${cmd}" in
     pre-commit)
       echo "→ Scanning staged files for secrets..."
-      "${BINARY}" git --pre-commit --redact --staged --verbose "${REPO_ROOT}" "$@"
+      "${BINARY}" git --pre-commit --redact --staged --verbose -c "${REPO_ROOT}/.betterleaks.toml" "${REPO_ROOT}" "$@"
       ;;
     scan)
       echo "→ Scanning git history for secrets..."
-      "${BINARY}" git --redact --verbose "${REPO_ROOT}" "$@"
+      "${BINARY}" git --redact --verbose -c "${REPO_ROOT}/.betterleaks.toml" "${REPO_ROOT}" "$@"
       ;;
     help|--help|-h)
       usage
