@@ -77,6 +77,21 @@ tests/promptfoo/skills/{skill-name}/
 
 **Rationale**: Consistency across all skills. A known structure. GREEN stays cheap enough for CI (one llm-rubric per failure mode). EXTENDED runs on-demand for advanced validation.
 
+### Integration Tests
+
+Integration tests verify multi-skill pipeline composition — that one skill's output is valid input for the next.
+
+```
+tests/promptfoo/integration/
+└── promptfooconfig.yaml    # All integration scenarios (no RED/GREEN split)
+```
+
+**When to add a scenario:** When a new skill consumes another skill's output (via `--context`, agent delegation, or user-mediated handoff).
+
+**Structure:** Each scenario issues a multi-step prompt that invokes skills sequentially within one eval call. Assertions verify: (1) downstream skill accepted upstream output, (2) downstream skill referenced upstream data, (3) pipeline coherence via llm-rubric.
+
+**Running:** `npm run eval:integration` from `tests/promptfoo/`.
+
 ---
 
 ## The RED-GREEN-REFACTOR Cycle
