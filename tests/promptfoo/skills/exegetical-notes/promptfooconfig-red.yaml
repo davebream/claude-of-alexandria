@@ -25,6 +25,12 @@
 # F4 — Self-critique pass:
 #   S16: Moralistic Section 5 — imperatives without indicative ground (Col 3:1-11)
 #   S17: Missing redemptive-historical link — epistle without cross-testament arc (Eph 2:1-10)
+#
+# RED scenario coverage audit:
+#   S18: Wisdom genre — forced narrative arc on wisdom poetry (Job 38:1-11)
+#   S19: Wisdom genre — missing genre-graduated method (Ecclesiastes 1:1-11)
+#   S20: Sparse MCP data — no degraded-data fallback (Obadiah 1-4)
+#   S21: Law genre — no covenantal-fulfillment framework (Leviticus 16:1-10)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -464,3 +470,130 @@ tests:
           FAIL if the response explicitly marks citations as unverified training
           knowledge, calls commentary_lookup to verify positions, or adds
           verification caveats to citations that could not be confirmed.
+
+  # =========================================================================
+  # Scenario 18: Wisdom Genre — Job 38:1-11 (God's Speech from Whirlwind)
+  # Failure: Wisdom poetry treated as narrative; moralistic reading without
+  # theodicy context; forced narrative arc instead of genre-graduated method
+  # =========================================================================
+  - description: "S18 RED: Wisdom genre — Job 38:1-11 forced narrative arc on wisdom poetry"
+    vars:
+      prompt: "Generate exegetical notes for Job 38:1-11. This is God's speech from the whirlwind. Provide full exegetical analysis including lexical analysis, interpretive guardrails, and redemptive-historical significance."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these wisdom-genre failures:
+          - Treats Job 38:1-11 as narrative (what happened next in the story)
+            rather than as wisdom-genre theophanic poetry with its own conventions
+          - Forces a direct redemptive-historical arc (Creation → Promise →
+            Fulfillment → Consummation) rather than using a genre-graduated
+            indirect approach appropriate for wisdom literature
+          - Reads God's questions as rhetorical devices for moral instruction
+            ("God is teaching Job humility") without placing them in the
+            theodicy context of the book's argument
+          - Does not identify "wisdom" or "theophanic poetry" as the governing
+            genre, or does not explain how wisdom genre constrains interpretation
+          - Ignores the book-level literary context: the suffering-innocent
+            framework (chs 1-2), the dialogue cycle (chs 3-37), and God's
+            response as resolution of the book's central question
+
+          FAIL if the response explicitly identifies wisdom/theophanic poetry
+          as the governing genre, uses a genre-graduated redemptive-historical
+          method (indirect, not direct), AND situates the speech in the book's
+          theodicy argument structure.
+
+  # =========================================================================
+  # Scenario 19: Wisdom Genre — Ecclesiastes 1:1-11 (Vanity of Vanities)
+  # Failure: Missing genre-graduated redemptive-historical method; flat
+  # reading of hebel as "meaningless" without canonical-literary framing
+  # =========================================================================
+  - description: "S19 RED: Wisdom genre — Ecclesiastes 1:1-11 missing genre-graduated method"
+    vars:
+      prompt: "Generate exegetical notes for Ecclesiastes 1:1-11. Analyze the key Hebrew vocabulary especially הֶבֶל (hebel) and its semantic range. Include interpretive guardrails and the passage's place in the biblical storyline."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these wisdom-genre failures:
+          - Translates הֶבֶל (hebel) flatly as "meaningless" or "vanity" without
+            exploring the semantic range (breath, vapor, enigma, transience) and
+            without noting that translation choice shapes the entire interpretation
+          - Applies a direct redemptive-historical framework rather than a
+            genre-graduated indirect approach (wisdom literature's relationship
+            to the biblical arc is mediated through creation theology, not
+            through direct promise-fulfillment)
+          - Reads Qoheleth as nihilistic or as straightforward pessimism without
+            placing it in canonical context (the epilogue's "fear God" frame,
+            the wisdom tradition's role in Israel's theology)
+          - Does not identify "wisdom" as the governing genre or does not explain
+            how wisdom genre constrains the redemptive-historical methodology
+          - Provides Hebrew vocabulary analysis from training knowledge without
+            verification caveats or MCP tool references
+
+          FAIL if the response explicitly identifies wisdom genre governance,
+          explores hebel's semantic range with nuance, uses a genre-graduated
+          method for redemptive-historical placement, AND places Qoheleth in
+          canonical-literary context.
+
+  # =========================================================================
+  # Scenario 20: Sparse MCP Data — Obadiah 1-4
+  # Failure: No degraded-data fallback when MCP tools return empty results;
+  # training-knowledge fills gaps without acknowledging data sparsity
+  # =========================================================================
+  - description: "S20 RED: Sparse data — Obadiah 1-4 without degraded-data fallback"
+    vars:
+      prompt: "Generate exegetical notes for Obadiah 1-4. Include entity data for Edom, cross-references to other Edom passages, and place data for the geographic references. Provide full exegetical analysis."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these sparse-data failures:
+          - Provides entity data for Edom, geographic references, and cross-references
+            from training knowledge without acknowledging that structured data
+            may be sparse or unavailable for this passage
+          - Does not mention that MCP tools might return empty results for minor
+            prophets and does not have a degraded-data fallback strategy
+          - Presents all claims (places, people, cross-references) at uniform
+            confidence without distinguishing verified from unverified data
+          - Does not flag any data gap or indicate that Obadiah is a passage
+            where structured tool data may be limited
+
+          FAIL if the response explicitly acknowledges sparse data availability,
+          flags data gaps for specific categories, and distinguishes verified
+          tool results from training-knowledge fallbacks.
+
+  # =========================================================================
+  # Scenario 21: Law Genre — Leviticus 16:1-10 (Day of Atonement)
+  # Failure: OT ritual law applied flatly without covenantal-fulfillment
+  # framework; no typological connection to NT fulfillment (Hebrews 9)
+  # =========================================================================
+  - description: "S21 RED: Law genre — Lev 16:1-10 without covenantal-fulfillment framework"
+    vars:
+      prompt: "Generate exegetical notes for Leviticus 16:1-10 (the Day of Atonement instructions). Include the significance of the two goats, the role of Aaron, and the passage's theological importance. Provide full analysis with interpretive guardrails."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these law-genre failures:
+          - Describes the ritual procedures without placing them in a
+            covenantal-fulfillment framework (the Day of Atonement's typological
+            relationship to Christ's atoning work as developed in Hebrews 9-10)
+          - Treats the passage as historical description only ("this is what
+            ancient Israel did") without connecting to progressive revelation
+          - Applies the passage directly to modern readers without attention to
+            covenant administration (old covenant → new covenant transition)
+          - Moralizes the ritual elements ("we should approach God with
+            reverence like Aaron") without grounding in indicative theology
+          - Does not identify "law/ritual" as the governing genre or does not
+            explain how law genre constrains interpretation differently from
+            narrative or epistle
+
+          FAIL if the response explicitly identifies law as the governing genre,
+          places the Day of Atonement in a covenantal-fulfillment framework
+          (typology → Hebrews 9-10), attends to covenant administration, AND
+          grounds application in indicative before imperative.

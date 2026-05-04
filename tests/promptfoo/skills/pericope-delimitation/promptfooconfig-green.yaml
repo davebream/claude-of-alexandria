@@ -10,6 +10,9 @@
 #   S7: Single verse (EXTEND) — structural boundary enforcement
 #   S10: Resistance test — data over memory (discourse features, not tradition)
 #   S11: Speaker-aware boundary — speaker changes as boundary evidence
+#
+# RED scenario coverage audit:
+#   S12: Wisdom poetry boundary — Ecclesiastes 3:1-8 (poem + prose commentary frame)
 
 description: "Pericope Delimitation — GREEN phase (failure-mode corrections)"
 
@@ -164,3 +167,36 @@ tests:
           - Entity-based evidence supplements Masoretic marker evidence
           FAIL if the response evaluates the pericope without any reference to
           structured speaker attribution data.
+
+  # =========================================================================
+  # Scenario 12: Wisdom Poetry Boundary — Ecclesiastes 3:1-8
+  # Correction: poem + prose commentary recognized as discourse unit
+  # =========================================================================
+  - description: "S12 GREEN: Ecc 3:1-8 — wisdom pericope with prose commentary frame"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Ecclesiastes 3:1-8"
+    assert:
+      # Deterministic: prose commentary boundary referenced
+      - type: icontains-any
+        value:
+          - "3:9"
+          - "3:15"
+          - "3:22"
+          - "discourse unit"
+      # Boundary extension recommended
+      - type: llm-rubric
+        value: |
+          Evaluate whether the pericope assessment for Ecclesiastes 3:1-8:
+          1. Identifies the poem (3:1-8) as part of a larger discourse unit
+             that includes the prose commentary (at minimum 3:9-15)
+          2. Recommends extending the pericope to include the commentary frame
+          3. Distinguishes between poetic form boundary (3:8) and discourse
+             unit boundary (the poem + its interpretive commentary)
+          4. Cites textual evidence (discourse features, paragraph breaks, or
+             structural markers) rather than relying on thematic reasoning alone
+
+          PASS if the assessment identifies 3:1-8 as incomplete and recommends
+          extension to 3:1-15 or 3:1-22 with structural evidence.
+          FAIL if 3:1-8 is validated as a complete pericope, or if the
+          recommendation to extend is based only on thematic reasoning
+          without textual markers.

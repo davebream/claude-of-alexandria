@@ -12,6 +12,9 @@
 #
 # Phase 4 entity integration:
 #   S11: Speaker-unaware boundary — dialogue boundary without speaker change evidence
+#
+# RED scenario coverage audit:
+#   S12: Wisdom poetry boundary — Ecclesiastes 3:1-8 chapter divisions as boundary
 
 description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
 
@@ -165,3 +168,34 @@ tests:
 
           FAIL if the response uses structured speaker attribution data
           (speaker changes across v14/v16/v17) as boundary evidence.
+
+  # =========================================================================
+  # Scenario 12: Wisdom Poetry Boundary — Ecclesiastes 3:1-8
+  # Failure: Chapter divisions treated as valid pericope markers for wisdom
+  # poetry; verse-form unit (the "time for everything" poem) analyzed
+  # without considering its prose commentary frame (3:9-15)
+  # =========================================================================
+  - description: "S12 RED: Wisdom pericope — Ecc 3:1-8 chapter divisions as boundary"
+    vars:
+      prompt: "Is Ecclesiastes 3:1-8 a valid pericope for a study on 'a time for everything'? Check if the boundaries are sound."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response validates Ecc 3:1-8 as a complete pericope
+          without strongly objecting that the poem requires its prose
+          commentary frame (3:9-15 or 3:9-22). Signs:
+          - Treats the "time for everything" poem as a self-contained unit
+          - Accepts 3:8 as a natural conclusion because the poem ends there
+          - Does not argue that the interpretive key to the poem lies in
+            Qoheleth's reflective commentary that follows (3:9ff)
+          - Does not distinguish between the poetic form (3:1-8) and the
+            discourse unit (poem + commentary = 3:1-15 or 3:1-22)
+          - Relies on content-level reasoning ("the poem about seasons is
+            complete at v8") without citing textual boundary markers
+
+          FAIL if the response firmly insists that 3:1-8 is incomplete
+          because the prose commentary (3:9-15+) is structurally integral
+          to the discourse unit AND cites textual evidence (not just
+          thematic reasoning) for extending the pericope.

@@ -9,6 +9,12 @@
 #   S14: Apocalyptic genre governance (Rev 1:9-20)
 #   S15: Citation grounding via commentary_lookup (Gal 3:10-14)
 #   S16-S17: F4 self-critique (indicative ground, redemptive-historical link)
+#
+# RED scenario coverage audit:
+#   S18: Wisdom genre — Job 38:1-11 (genre-graduated method)
+#   S19: Wisdom genre — Ecclesiastes 1:1-11 (hebel semantic range)
+#   S20: Sparse MCP data — Obadiah 1-4 (degraded-data fallback)
+#   S21: Law genre — Leviticus 16:1-10 (covenantal-fulfillment framework)
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -547,3 +553,125 @@ tests:
               ? 'All 10 sections present'
               : `Missing: [${missing.join(', ')}]`
           };
+
+  # =========================================================================
+  # Scenario 18: Wisdom Genre — Job 38:1-11
+  # Correction: genre-graduated method for wisdom theophanic poetry
+  # =========================================================================
+  - description: "S18 GREEN: Job 38:1-11 — wisdom genre governance with graduated method"
+    vars:
+      prompt: "Generate exegetical notes for Job 38:1-11 --output print"
+    assert:
+      # Genre identification present
+      - type: icontains
+        value: "wisdom"
+      # Theodicy/theophany context referenced
+      - type: llm-rubric
+        value: |
+          Evaluate whether the exegetical notes for Job 38:1-11:
+          1. Identify wisdom (or theophanic poetry) as the governing genre
+          2. Use a genre-graduated redemptive-historical method (indirect, not
+             direct promise-fulfillment arc)
+          3. Situate God's speech in the book-level theodicy argument (chs 1-2
+             setup, dialogue cycle chs 3-37, divine response chs 38-41)
+          4. Do NOT moralize the divine questions as simple humility lessons
+
+          PASS if all four criteria are met.
+          FAIL if any criterion is violated — especially if a direct
+          redemptive-historical arc is forced or the speech is moralized.
+
+  # =========================================================================
+  # Scenario 19: Wisdom Genre — Ecclesiastes 1:1-11
+  # Correction: genre-graduated method with canonical-literary framing
+  # =========================================================================
+  - description: "S19 GREEN: Ecclesiastes 1:1-11 — genre-graduated wisdom method"
+    vars:
+      prompt: "Generate exegetical notes for Ecclesiastes 1:1-11 --output print"
+    assert:
+      # hebel vocabulary addressed
+      - type: icontains
+        value: "hebel"
+      # Genre-graduated method
+      - type: llm-rubric
+        value: |
+          Evaluate whether the exegetical notes for Ecclesiastes 1:1-11:
+          1. Explore the semantic range of הֶבֶל (hebel) beyond a single flat
+             translation — discussing breath/vapor/transience/enigma options
+          2. Identify wisdom as the governing genre and explain how it constrains
+             the redemptive-historical methodology (indirect, creation-theology
+             mediated, not direct promise-fulfillment)
+          3. Place Qoheleth in canonical-literary context (the epilogue frame,
+             the wisdom tradition's role in Israel's theology)
+          4. Do NOT read Ecclesiastes as nihilistic OR as straightforwardly
+             optimistic — both are genre violations
+
+          PASS if all four criteria are met.
+          FAIL if hebel is translated flatly, a direct redemptive-historical
+          arc is forced, or canonical framing is absent.
+
+  # =========================================================================
+  # Scenario 20: Sparse MCP Data — Obadiah 1-4
+  # Correction: degraded-data fallback with explicit data-gap acknowledgment
+  # =========================================================================
+  - description: "S20 GREEN: Obadiah 1-4 — degraded-data fallback with gap acknowledgment"
+    vars:
+      prompt: "Generate exegetical notes for Obadiah 1-4 --output print"
+    assert:
+      # Deterministic: sparse data acknowledged
+      - type: icontains-any
+        value:
+          - "data gap"
+          - "sparse"
+          - "limited"
+          - "no results"
+      # Data gap acknowledgment
+      - type: llm-rubric
+        value: |
+          Evaluate whether the exegetical notes for Obadiah 1-4:
+          1. Explicitly acknowledge where MCP tool data is sparse or absent
+             (e.g., "query_places returned limited results for Edom references"
+             or "data gap: entity records sparse for this passage")
+          2. Distinguish between verified tool results and training-knowledge
+             fallbacks with different confidence labels
+          3. Do NOT fill data gaps with unacknowledged training-knowledge
+             assertions presented at the same confidence as verified data
+          4. Include whatever data IS available from MCP tools (even partial)
+
+          PASS if data sparsity is explicitly acknowledged and claims are
+          labeled by source (verified vs. training-knowledge fallback).
+          FAIL if all claims are presented at uniform confidence regardless
+          of data availability, or if sparse data is silently backfilled.
+
+  # =========================================================================
+  # Scenario 21: Law Genre — Leviticus 16:1-10
+  # Correction: covenantal-fulfillment framework with typological reading
+  # =========================================================================
+  - description: "S21 GREEN: Lev 16:1-10 — covenantal-fulfillment with typology"
+    vars:
+      prompt: "Generate exegetical notes for Leviticus 16:1-10 --output print"
+    assert:
+      # Deterministic: typological fulfillment referenced
+      - type: icontains-any
+        value:
+          - "Hebrews"
+          - "typolog"
+          - "covenantal"
+          - "fulfillment"
+      # Covenantal framework present
+      - type: llm-rubric
+        value: |
+          Evaluate whether the exegetical notes for Leviticus 16:1-10:
+          1. Identify law/ritual as the governing genre and explain how it
+             constrains interpretation (not narrative, not epistle)
+          2. Place the Day of Atonement in a covenantal-fulfillment framework —
+             specifically connecting to Hebrews 9-10 typological fulfillment
+          3. Attend to covenant administration (old covenant → new covenant
+             transition) when discussing the passage's relevance
+          4. Ground any application in indicative theology (what Christ has
+             accomplished) before imperative (how we respond)
+          5. Do NOT moralize the ritual ("we should approach God like Aaron")
+             without first grounding in the typological-fulfillment reality
+
+          PASS if all five criteria are met.
+          FAIL if the passage is treated as mere history, moralized without
+          typology, or applied directly without covenantal framework.

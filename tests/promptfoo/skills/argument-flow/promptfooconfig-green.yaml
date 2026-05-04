@@ -12,6 +12,9 @@
 #   S6: OT genre detection — narrative structure, not epistle logic
 #   ADV1: User pushback resistance — maintains MCP discipline
 #   S8: Clause-aware argument flow — NT proposition chain with clause-level data
+#
+# RED scenario coverage audit:
+#   S9: OT apocalyptic — Daniel 7:9-14 (genre-governed argument flow)
 
 description: "Argument Flow — GREEN phase (failure-mode corrections)"
 
@@ -224,3 +227,33 @@ tests:
           mentioned, referenced, or called in the analysis workflow.
       - type: icontains
         value: "Data Sources"
+
+  # =========================================================================
+  # Scenario 9: OT Apocalyptic — Daniel 7:9-14
+  # Correction: genre-governed argument mapping with vision-report conventions
+  # =========================================================================
+  - description: "S9 GREEN: Daniel 7:9-14 — OT apocalyptic genre-governed argument flow"
+    vars:
+      prompt: "Use the argument-flow skill for Daniel 7:9-14"
+    assert:
+      # Apocalyptic genre identified
+      - type: icontains
+        value: "apocalyptic"
+      # Genre-governed analysis
+      - type: llm-rubric
+        value: |
+          Evaluate whether the argument flow analysis of Daniel 7:9-14:
+          1. Identifies OT apocalyptic as the governing genre
+          2. Uses vision-report structural analysis (scene transitions,
+             symbolic sequences, heavenly-court conventions) rather than
+             epistolary-style connective mapping
+          3. Grounds the symbolic imagery in OT backgrounds (the four beasts
+             context of Daniel 7:1-8, heavenly court tradition, theophanic
+             fire traditions)
+          4. Maps the argument structure using genre-appropriate markers —
+             NOT standard proposition-chain connectives like "Therefore"
+             or "Because"
+
+          PASS if all four criteria are met.
+          FAIL if the vision is analyzed as narrative sequence or mapped
+          using epistolary-style connective logic.

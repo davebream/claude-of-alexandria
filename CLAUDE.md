@@ -208,6 +208,12 @@ Capture the eval ID from the output line `Eval complete (ID: eval-XXX-...)` and 
 
 ---
 
+## Coverage Matrix
+
+See `docs/coverage-matrix.md` for the RED scenario coverage audit: scenario inventory mapped against biblical books, genres, and MCP tools.
+
+---
+
 ## What Gets Committed
 
 **✅ Commit to Git:**

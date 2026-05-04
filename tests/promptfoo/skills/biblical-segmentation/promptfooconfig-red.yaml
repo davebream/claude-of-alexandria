@@ -19,6 +19,9 @@
 #   SL4: Short pericope — compliance without principled minimum-size reasoning
 #   SL5: User-count deference — accepts user's suggestion without principled calculation
 #   SL6: Method-unaware slicing — produces divisions without SOAP scope constraints
+#
+# RED scenario coverage audit:
+#   S24: Wisdom frame-narrative — Job 1:1-5 segmented as pure narrative
 
 description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
 
@@ -304,3 +307,37 @@ tests:
 
           FAIL if the response cites structured entity data (people, places,
           events with cross-book references) as boundary evidence.
+
+  # =========================================================================
+  # Scenario 24: Wisdom Frame-Narrative — Job 1:1-5 (Prologue)
+  # Failure: Wisdom frame-narrative hybrid genre not recognized; segmented
+  # as pure narrative without wisdom-genre structural constraints
+  # =========================================================================
+  - description: "S24 RED: Wisdom frame-narrative — Job 1:1-5 segmented as pure narrative"
+    vars:
+      prompt: "I want to study the book of Job in 8 sessions with my small group. Give me a division for the first session — how should I start with Job 1:1-5?"
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these segmentation failures:
+          - Treats Job 1:1-5 as a standalone narrative segment without
+            recognizing that Job's prologue (chs 1-2) functions as a
+            wisdom frame-narrative that must be understood as a unit
+          - Suggests stopping at 1:5 as a valid session boundary because
+            "the scene with the sons' feasting ends there" — pure
+            narrative-scene reasoning without wisdom-genre awareness
+          - Does not distinguish between narrative genre segmentation
+            (scene boundaries) and wisdom genre segmentation (the
+            prologue-dialogue-epilogue macro-structure that governs
+            the book's argument)
+          - Does not cite any structural data (paragraph breaks, discourse
+            features) to evaluate whether 1:1-5 is a valid segment
+          - Segments by verse count or chapter division rather than by
+            the book's literary architecture
+
+          FAIL if the response identifies Job as a wisdom frame-narrative,
+          treats the prologue (chs 1-2) as a structural unit, AND
+          evaluates 1:1-5 against the book's macro-structure rather than
+          using pure scene-boundary reasoning.

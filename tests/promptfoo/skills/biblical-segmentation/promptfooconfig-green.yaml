@@ -19,6 +19,9 @@
 #   SL6: Method-aware — SOAP's 5-10 verse scope for Romans 12
 #
 #   S23: Entity-aware segmentation — protagonist shifts as boundary evidence
+#
+# RED scenario coverage audit:
+#   S24: Wisdom frame-narrative — Job 1:1-5 (prologue as macro-structure unit)
 
 description: "Biblical Segmentation — GREEN phase (failure-mode corrections)"
 
@@ -281,3 +284,37 @@ tests:
           episodes without any reference to entity data.
       - type: icontains
         value: "Data Sources"
+
+  # =========================================================================
+  # Scenario 24: Wisdom Frame-Narrative — Job 1:1-5
+  # Correction: prologue as wisdom macro-structure unit, not scene segment
+  # =========================================================================
+  - description: "S24 GREEN: Job 1:1-5 — wisdom frame-narrative macro-structure"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I want to study the book of Job in 8 sessions with my small group. Give me a division for the first session — how should I start with Job 1:1-5?"
+    assert:
+      # Deterministic: prologue/macro-structure awareness
+      - type: icontains-any
+        value:
+          - "prologue"
+          - "macro-structure"
+          - "frame-narrative"
+          - "wisdom"
+      # Wisdom genre awareness
+      - type: llm-rubric
+        value: |
+          Evaluate whether the segmentation response for Job:
+          1. Identifies Job as a wisdom frame-narrative (not pure narrative)
+          2. Treats the prologue (chs 1-2) as a structural unit that should
+             not be arbitrarily split at 1:5
+          3. Evaluates 1:1-5 against the book's macro-structure (prologue →
+             dialogue cycle → divine speeches → epilogue) rather than using
+             scene-boundary reasoning alone
+          4. If it suggests extending the first session beyond 1:1-5 to
+             include the full prologue setup (through at least the first
+             heavenly council scene), provides structural reasoning
+
+          PASS if the response recognizes the wisdom genre constraint and
+          evaluates the boundary against macro-structure.
+          FAIL if Job is segmented as pure narrative using scene boundaries
+          without reference to wisdom-genre structural conventions.
