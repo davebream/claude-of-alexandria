@@ -15,6 +15,9 @@
 #
 # Phase 6 — OpenText.org clause annotations:
 #   S8: Clause annotations absent — NT proposition chain without clause-level data
+#
+# RED scenario coverage audit:
+#   S9: OT apocalyptic — Daniel 7:9-14 without genre governance
 
 description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
 
@@ -210,3 +213,38 @@ tests:
 
           FAIL if the response cites structured clause-level annotation data with
           clause types, clause relations, and attribution to OpenText.org or similar.
+
+  # =========================================================================
+  # Scenario 9: OT Apocalyptic — Daniel 7:9-14 (Ancient of Days Vision)
+  # Failure: Apocalyptic symbolic imagery treated as narrative sequence;
+  # no genre governance for OT apocalyptic; no symbol-referent mapping
+  # =========================================================================
+  - description: "S9 RED: OT apocalyptic — Daniel 7:9-14 without genre governance"
+    vars:
+      prompt: "Map the argument of Daniel 7:9-14. Trace how the passage moves from the Ancient of Days scene through the 'one like a son of man' vision. What is the logical flow?"
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these OT apocalyptic failures:
+          - Maps the passage as a narrative sequence (what happens next) rather
+            than as apocalyptic vision report with symbolic argument structure
+          - Treats the Ancient of Days, the thrones, the fire, and the son of man
+            figure as narrative events rather than symbolic elements requiring
+            genre-governed interpretation (symbol-referent mapping)
+          - Does not identify "apocalyptic" as the governing genre or does not
+            explain how apocalyptic genre constrains the argument-flow method
+          - Produces a proposition chain using epistolary-style connectives
+            (Therefore, Because, For this reason) rather than vision-report
+            structural markers (scene transition, heavenly-court sequence,
+            symbolic-act interpretation)
+          - Does not ground the symbolic imagery in its OT prophetic context
+            (the four beasts from earlier in Daniel 7, the heavenly court
+            tradition from 1 Kings 22, the theophanic fire traditions)
+
+          FAIL if the response explicitly identifies OT apocalyptic as the
+          governing genre, uses genre-appropriate structural analysis (scene
+          transitions, symbolic sequences), grounds imagery in OT backgrounds,
+          AND maps the argument using vision-report conventions rather than
+          epistolary logic.
