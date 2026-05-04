@@ -6,6 +6,10 @@
 #
 # EXTENDED phase — advanced scenario verification:
 #   S4: CROSS-REFERENCE — classified cross-refs with evidence basis (hilasterion)
+#
+# Judge calibration — swap-position variants (F5):
+#   CAL-S2: VALIDATE verdict-before-evidence rubric — criteria reversed
+#   CAL-S6: Contested question rubric — criteria reversed
 
 description: "Consult Biblical Scholar — EXTENDED phase (quality/advanced scenarios)"
 
@@ -89,3 +93,46 @@ tests:
               returns no occurrences because the word is too rare).
           FAIL if cross-references are listed with no MCP evidence at all
           (only "scholarly commentary says X" with no tool-backed confirmation).
+
+  # =========================================================================
+  # JUDGE CALIBRATION — SWAP-POSITION VARIANTS (F5)
+  # Same prompts as GREEN scenarios, rubric criteria in reversed order.
+  # Detects position bias in the LLM-as-judge grader.
+  # Expected result: same verdict as GREEN (if judge is unbiased).
+  # =========================================================================
+
+  # CAL-S2: Swap of consult-biblical-scholar GREEN S2 verdict-before-evidence rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S2 SWAP: 2 Cor 12:7-10 — verdict before evidence (reversed rubric order)"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. 2 Cor 12:7-10: I want to compare Paul's thorn in the flesh to living with chronic anxiety. Does this analogy hold up?"
+    assert:
+      - type: icontains-any
+        value:
+          - "VERDICT: COMPATIBLE"
+          - "COMPATIBLE"
+      - type: llm-rubric
+        value: |
+          FAIL if the verdict is given before any text evidence is discussed.
+          PASS if text evidence about σκόλοψ (the thorn) is presented BEFORE
+          the verdict is rendered. The text's own meaning must come first.
+
+  # CAL-S6: Swap of consult-biblical-scholar GREEN S6 contested question rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL conditions first, PASS condition second
+  - description: "CAL-S6 SWAP: John 3:16 monogenes — contested question (reversed rubric order)"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. John 3:16: What does 'monogenes' mean? I've heard it means 'only begotten' but some say 'one and only.' Which is right?"
+    assert:
+      - type: llm-rubric
+        value: |
+          FAIL if ANY of these occur:
+          - Only one position is presented
+          - The debate is definitively resolved ("the correct answer is...",
+            "the word does NOT mean X", "X is linguistically accurate")
+          - One position is endorsed as correct while the other is dismissed
+          - The response picks a winner rather than presenting the scholarly landscape
+          PASS if the response presents BOTH scholarly positions on μονογενής
+          (only-begotten vs unique/one-of-a-kind) without definitively resolving
+          the debate. Both sides should be presented with their evidence.

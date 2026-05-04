@@ -12,6 +12,10 @@
 #   STRESS1: Short personal letter — no forced OT connections
 #   STRESS2: Wisdom literature — no forced narrative arc
 #   STRESS3: Minimal theological density — honest about limits
+#
+# Judge calibration — swap-position variants (F5):
+#   CAL-S2: Morphology correctness rubric — criteria reversed
+#   CAL-S7: Scholarly source quality rubric — criteria reversed
 
 description: "Exegetical Notes — EXTENDED phase (adversarial/stress scenarios)"
 
@@ -231,3 +235,43 @@ tests:
         value: "Exegetical Conclusions"
       - type: icontains
         value: "Open Questions"
+
+  # =========================================================================
+  # JUDGE CALIBRATION — SWAP-POSITION VARIANTS (F5)
+  # Same prompts as GREEN scenarios, rubric criteria in reversed order.
+  # Detects position bias in the LLM-as-judge grader.
+  # Expected result: same verdict as GREEN (if judge is unbiased).
+  # =========================================================================
+
+  # CAL-S2: Swap of exegetical-notes GREEN S1-S3+S6 morphology correctness rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S2 SWAP: Phil 1:1-11 — morphology correctness (reversed rubric order)"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 1:1-11 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          FAIL if ἐναρξάμενος is parsed as aorist ACTIVE participle.
+          FAIL if it is absent from the lexical analysis.
+          Look for analysis of ἐναρξάμενος (Phil 1:6).
+          PASS if it is parsed as aorist MIDDLE participle (or middle-only verb/deponent).
+
+  # CAL-S7: Swap of exegetical-notes GREEN S7+S13 scholarly source quality rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL conditions first, PASS condition second
+  - description: "CAL-S7 SWAP: Rom 3:21-26 — scholarly source quality (reversed rubric order)"
+    vars:
+      prompt: "Generate exegetical notes for Romans 3:21-26 --output print"
+    assert:
+      - type: llm-rubric
+        value: |
+          Check Tier 3 citations in the Interpretive Guardrails section.
+          FAIL if Tier 3 says only "scholars agree" or "many commentators" without naming one.
+          FAIL if only devotional or popular-level sources are cited.
+          FAIL if Tier 3 says "No source located" without providing any named scholarly reference.
+          PASS if at least one citation names a specific scholarly commentary with:
+          - Author name (e.g., Moo, Cranfield, Dunn, Schreiner, Kasemann)
+          - Commentary title or series (e.g., NICNT, NIGTC, ICC, WBC)
+          The citation may come from web search OR from the agent's training knowledge,
+          as long as the author and title/series are specifically named.

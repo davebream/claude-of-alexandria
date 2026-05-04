@@ -6,6 +6,10 @@
 #
 # EXTENDED phase — advanced scenario verification:
 #   S7: Speaker-aware dialogue flow — speaker transitions as discourse markers
+#
+# Judge calibration — swap-position variants (F5):
+#   CAL-S1: Connective inventory rubric — criteria reversed
+#   CAL-S4: Structural claims rubric — criteria reversed
 
 description: "Argument Flow — EXTENDED phase (quality/advanced scenarios)"
 
@@ -71,3 +75,46 @@ tests:
           - References SPEAKER_SUMMARY, query_speakers, or structured speaker data
           FAIL if speakers are identified only from narrative context without
           any reference to structured speaker data.
+
+  # =========================================================================
+  # JUDGE CALIBRATION — SWAP-POSITION VARIANTS (F5)
+  # Same prompts as GREEN scenarios, rubric criteria in reversed order.
+  # Detects position bias in the LLM-as-judge grader.
+  # Expected result: same verdict as GREEN (if judge is unbiased).
+  # =========================================================================
+
+  # CAL-S1: Swap of argument-flow GREEN S1 connective inventory rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S1 SWAP: Phil 2:1-4 — connective inventory (reversed rubric order)"
+    vars:
+      prompt: "Use the argument-flow skill for Philippians 2:1-4"
+    assert:
+      - type: icontains
+        value: "Proposition Chain"
+      - type: llm-rubric
+        value: |
+          FAIL if no connective inventory is present.
+          PASS if the response includes a connective inventory or table listing
+          Greek connectives found in the passage (e.g., εἰ, οὖν, ἵνα) with
+          their verse references and logical functions.
+
+  # CAL-S4: Swap of argument-flow GREEN S4 structural claims rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S4 SWAP: Col 1:15-20 — structural claims (reversed rubric order)"
+    vars:
+      prompt: "Use the argument-flow skill for Colossians 1:15-20"
+    assert:
+      - type: icontains-any
+        value:
+          - "CONFIDENCE: HIGH"
+          - "CONFIDENCE: MEDIUM"
+          - "CONFIDENCE: LOW"
+      - type: llm-rubric
+        value: |
+          FAIL if "widely recognized as a hymn" or "chiastic structure" is presented
+          at the same confidence level as morphological findings.
+          PASS if structural inferences (hymnic structure, chiastic framing, inclusio,
+          rhetorical patterns) are labeled SEPARATELY as MEDIUM, "agent assessment,"
+          "structural assessment," or "Tier 4" — NOT lumped in with MCP data at HIGH.

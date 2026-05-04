@@ -99,6 +99,58 @@ These failures are **genuine skill gaps** correctly documented by the tests — 
 | consult-biblical-scholar | S6 GREEN | monogenes debate resolved definitively instead of presenting both sides | Documented gap |
 | pericope-delimitation | S10 GREEN | Non-deterministic: EXTEND vs ADJUST for Rom 1:16-17 both valid | Non-deterministic |
 
+## Judge Calibration
+
+The project uses `llm-rubric` assertions graded by a separate judge model. The judge (grader) is intentionally distinct from the generator to reduce self-evaluation bias:
+
+| Role | Model | Config |
+|------|-------|--------|
+| **Generator** | `claude-sonnet-4-6-20250514` via Agent SDK | `providers/with-skill.agent-sdk.yaml` |
+| **Grader (judge)** | `openai:gpt-4o` | Inline in `defaultTest.options.provider` |
+
+### Swap-Position Variants
+
+LLM judges can exhibit **position bias** — scoring differently depending on whether PASS or FAIL criteria appear first in the rubric. To detect this, EXTENDED configs include **swap-position calibration scenarios** (prefixed `CAL-`).
+
+Each CAL scenario:
+1. Uses the **same prompt** as a corresponding GREEN scenario
+2. Reverses the **order of PASS/FAIL criteria** in the rubric (FAIL conditions first, PASS conditions second)
+3. Expects the **same verdict** as the original GREEN test
+
+If a CAL scenario produces a different verdict than its GREEN counterpart, this indicates position bias in the judge that needs investigation.
+
+**Coverage target:** Swap-position variants for at least 20% of GREEN `llm-rubric` scenarios across all skills.
+
+| Skill | GREEN llm-rubric count | CAL scenarios | Coverage |
+|-------|----------------------|---------------|----------|
+| argument-flow | 7 | 2 (S1, S4) | 29% |
+| biblical-segmentation | 11 | 2 (S1, SL2) | 18% |
+| consult-biblical-scholar | 7 | 2 (S2, S6) | 29% |
+| exegetical-notes | 18 | 2 (S2, S7) | 11% |
+| pericope-delimitation | 7 | 2 (S1, S10) | 29% |
+| **Total** | **50** | **10** | **20%** |
+
+### Running Calibration Tests
+
+CAL scenarios live in EXTENDED configs and run on-demand (not in CI):
+
+```bash
+# Run all extended tests for a skill (includes CAL scenarios)
+npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-extended.yaml
+
+# Filter to CAL scenarios only (promptfoo grep filter)
+npm run eval -- --no-cache -c skills/argument-flow/promptfooconfig-extended.yaml --filter-description "CAL-"
+```
+
+### Interpreting Results
+
+Compare CAL scenario verdicts against their GREEN counterparts:
+
+- **Both PASS** — no position bias detected for this rubric
+- **GREEN PASS, CAL FAIL** — position bias detected; the judge favors whichever criterion appears first
+- **Both FAIL** — the skill has a genuine gap (unrelated to judge bias)
+- **GREEN FAIL, CAL PASS** — unlikely but would indicate severe bias; investigate immediately
+
 ## Adding New Tests
 
 1. Create `tests/promptfoo/skills/{skill-name}/promptfooconfig-red.yaml` and `promptfooconfig-green.yaml` (or under `agents/` for agent evals).
