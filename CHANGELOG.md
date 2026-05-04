@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Citation grounding step (Step 4.5) in `exegetical-notes` skill — Tier A/B scholarly citations are verified against `commentary_lookup` before delivery; unverifiable citations downgraded to "[training knowledge — verify before publication]" caveat
+
 ### Changed
 
 - Pinned all promptfoo model IDs from floating `claude-sonnet-4-6` / `sonnet` to dated `claude-sonnet-4-6-20250514` across YAML configs and SDK provider files, preventing silent behavior drift when new model versions are released

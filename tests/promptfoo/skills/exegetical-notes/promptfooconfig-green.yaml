@@ -7,6 +7,7 @@
 #   S1-S7: Core scenarios (structure, data-grounding, tiers, pericope, OT, verification, scholarly)
 #   S8-S12: Phase 4 scenarios (cross-ref labeling, entity data, speaker data, gloss tiers, variants)
 #   S14: Apocalyptic genre governance (Rev 1:9-20)
+#   S15: Citation grounding via commentary_lookup (Gal 3:10-14)
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -419,3 +420,42 @@ tests:
           FAIL if symbols are allegorized without OT prophetic grounding, or if
           apocalyptic genre is not identified as governing the interpretive method,
           or if the redemptive-historical connection to the prophetic tradition is absent.
+
+  # =========================================================================
+  # Scenario 15: Citation Grounding via commentary_lookup — Gal 3:10-14
+  # Core failure: scholarly citations presented without verification against
+  # bundled commentary data; fabricated attributions reach final output
+  # =========================================================================
+  - description: "S15 GREEN: Citation grounding — Tier 3 citations verified via commentary_lookup"
+    vars:
+      prompt: "Generate exegetical notes for Galatians 3:10-14 --output print"
+    assert:
+      # --- commentary_lookup tool was called ---
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('commentary_lookup'),
+            score: lower.includes('commentary_lookup') ? 1 : 0,
+            reason: lower.includes('commentary_lookup')
+              ? 'commentary_lookup referenced in output'
+              : 'No mention of commentary_lookup in output'
+          };
+      # --- Citations carry verification caveats ---
+      - type: llm-rubric
+        value: |
+          Check the Interpretive Guardrails section (Section 6) for Tier 3 citations.
+          PASS if:
+          - At least one scholarly citation includes a verification caveat such as
+            "[training knowledge — verify before publication]", "[not verified via
+            commentary_lookup]", or "[commentary_lookup contradicts: ...]"
+          - Modern commentaries not in the bundled set (e.g., Moo, Fee, Longenecker,
+            Bruce) are marked with a training-knowledge caveat rather than presented
+            at full confidence
+          - Citations from bundled commentaries (adam-clarke, jamieson-fausset-brown,
+            john-gill, keil-delitzsch, matthew-henry, tyndale) are either confirmed
+            or flagged if the commentary text does not support the attributed position
+          FAIL if all Tier 3 citations are presented at uniform confidence without
+          any verification caveat or commentary_lookup reference.
+          FAIL if modern scholarly citations (not in the bundled commentary set)
+          are presented without a training-knowledge caveat.
