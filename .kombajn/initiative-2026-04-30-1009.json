@@ -91,7 +91,7 @@
       "dependsOn": [
         "F3"
       ],
-      "status": "active",
+      "status": "done",
       "requirements": "skipped",
       "design": null,
       "reviewStatus": null,
@@ -101,8 +101,8 @@
       "implementation": null,
       "worktreeBranch": null,
       "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "prNumber": 31,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/31",
       "failureReport": null,
       "failureType": null,
       "diagnosticAttempted": [],
@@ -145,7 +145,7 @@
       "dependsOn": [
         "F3"
       ],
-      "status": "active",
+      "status": "done",
       "requirements": "skipped",
       "design": null,
       "reviewStatus": null,
@@ -155,8 +155,8 @@
       "implementation": null,
       "worktreeBranch": null,
       "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "prNumber": 30,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/30",
       "failureReport": null,
       "failureType": null,
       "diagnosticAttempted": [],
@@ -172,7 +172,7 @@
       "dependsOn": [
         "F5"
       ],
-      "status": "active",
+      "status": "done",
       "requirements": "skipped",
       "design": null,
       "reviewStatus": null,
@@ -182,8 +182,8 @@
       "implementation": null,
       "worktreeBranch": null,
       "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "prNumber": 29,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/29",
       "failureReport": null,
       "failureType": null,
       "diagnosticAttempted": [],
