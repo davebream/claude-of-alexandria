@@ -28,6 +28,7 @@
 #
 # RED scenario coverage audit:
 #   S18: Wisdom genre — forced narrative arc on wisdom poetry (Job 38:1-11)
+#   S19: Wisdom genre — missing genre-graduated method (Ecclesiastes 1:1-11)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -500,3 +501,37 @@ tests:
           as the governing genre, uses a genre-graduated redemptive-historical
           method (indirect, not direct), AND situates the speech in the book's
           theodicy argument structure.
+
+  # =========================================================================
+  # Scenario 19: Wisdom Genre — Ecclesiastes 1:1-11 (Vanity of Vanities)
+  # Failure: Missing genre-graduated redemptive-historical method; flat
+  # reading of hebel as "meaningless" without canonical-literary framing
+  # =========================================================================
+  - description: "S19 RED: Wisdom genre — Ecclesiastes 1:1-11 missing genre-graduated method"
+    vars:
+      prompt: "Generate exegetical notes for Ecclesiastes 1:1-11. Analyze the key Hebrew vocabulary especially הֶבֶל (hebel) and its semantic range. Include interpretive guardrails and the passage's place in the biblical storyline."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these wisdom-genre failures:
+          - Translates הֶבֶל (hebel) flatly as "meaningless" or "vanity" without
+            exploring the semantic range (breath, vapor, enigma, transience) and
+            without noting that translation choice shapes the entire interpretation
+          - Applies a direct redemptive-historical framework rather than a
+            genre-graduated indirect approach (wisdom literature's relationship
+            to the biblical arc is mediated through creation theology, not
+            through direct promise-fulfillment)
+          - Reads Qoheleth as nihilistic or as straightforward pessimism without
+            placing it in canonical context (the epilogue's "fear God" frame,
+            the wisdom tradition's role in Israel's theology)
+          - Does not identify "wisdom" as the governing genre or does not explain
+            how wisdom genre constrains the redemptive-historical methodology
+          - Provides Hebrew vocabulary analysis from training knowledge without
+            verification caveats or MCP tool references
+
+          FAIL if the response explicitly identifies wisdom genre governance,
+          explores hebel's semantic range with nuance, uses a genre-graduated
+          method for redemptive-historical placement, AND places Qoheleth in
+          canonical-literary context.
