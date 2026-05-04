@@ -20,6 +20,7 @@
 #   S12: Textual variants ignored — variant-rich passage analyzed without edition comparison
 #   S13: NT gloss tiering absent — OpenGNT glosses treated uniformly without tier distinction
 #   S14: Apocalyptic genre mishandled — Rev 1:9-20 treated without genre governance
+#   S15: Ungrounded citation — Tier A/B citation presented without commentary_lookup verification
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -367,3 +368,33 @@ tests:
           genre, explains how genre constrains interpretation of symbols, grounds
           imagery in OT prophetic backgrounds (Daniel 7, Zechariah 4), AND traces
           the redemptive-historical significance through the prophetic tradition.
+
+  # =========================================================================
+  # Scenario 15: Ungrounded Citation — Fabricated Scholarly Attribution
+  # Failure: Bare model presents plausible-sounding Tier A/B citations without
+  # verifying them against commentary_lookup. Citations may be fabricated or
+  # misattributed (wrong author, wrong position, wrong passage).
+  # =========================================================================
+  - description: "S15 RED: Ungrounded citation — scholarly attribution without commentary verification"
+    vars:
+      prompt: "Analyze Galatians 3:10-14 exegetically. In your interpretive guardrails, cite specific scholarly commentaries on whether 'curse of the law' refers to the Mosaic law's condemnation or a broader principle. Include author, title, and series for each citation."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response cites scholarly commentaries on Galatians 3:10-14
+          without any verification step or caveat indicating the citations were
+          checked against a commentary database. Signs:
+          - Names authors and attributes specific positions to them (e.g., "Longenecker
+            argues...", "Bruce contends...") without noting these are from training
+            knowledge and unverified
+          - Does not mention commentary_lookup or any verification tool
+          - Does not add caveats like "[training knowledge — verify before publication]"
+            or "[not verified via commentary_lookup]"
+          - Presents all scholarly citations at uniform confidence regardless of
+            whether they could be verified against bundled commentary data
+
+          FAIL if the response explicitly marks citations as unverified training
+          knowledge, calls commentary_lookup to verify positions, or adds
+          verification caveats to citations that could not be confirmed.

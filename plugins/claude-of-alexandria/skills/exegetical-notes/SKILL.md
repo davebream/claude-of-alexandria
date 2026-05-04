@@ -2,8 +2,8 @@
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
-version: 1.0.0
-changed: "2026-04-30"
+version: 1.1.0
+changed: "2026-05-04"
 ---
 
 # Exegetical Notes
@@ -249,6 +249,33 @@ Step 3: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
 Step 4: Web search for Tier 3 scholarly sources
    → Prefer Tier A/B (NICNT, NIGTC, ICC, WBC, BECNT, Hermeneia, BDAG)
    → Note author, title, publisher
+
+Step 4.5: CITATION GROUNDING via commentary_lookup (MANDATORY for Tier A/B citations)
+   │
+   │  After drafting Tier 3 citations (Step 4 or during Section 6 composition):
+   │
+   │  For each Tier A/B citation that references a specific author's position:
+   │  1. Call commentary_lookup for the passage to check if the cited commentary
+   │     is available in the bundled dataset (adam-clarke, jamieson-fausset-brown,
+   │     john-gill, keil-delitzsch, matthew-henry, tyndale)
+   │  2. If the cited author IS in the bundled commentaries:
+   │     - Verify the commentary text supports the attributed position
+   │     - If CONFIRMED: retain the citation as-is
+   │     - If CONTRADICTED: flag the discrepancy in the citation:
+   │       "[commentary_lookup contradicts: commentary text says X, not Y — verify]"
+   │     - If NO RESULT for that passage range: retain citation but add caveat:
+   │       "[not verified via commentary_lookup — passage not covered]"
+   │  3. If the cited author is NOT in the bundled commentaries (e.g., modern
+   │     commentaries like Moo, Fee, O'Brien): the citation cannot be grounded
+   │     via this tool. Mark it:
+   │     "[training knowledge — verify before publication]"
+   │
+   │  This step prevents fabricated scholarly attributions from reaching the
+   │  final output. A citation that cannot be verified is not removed — it is
+   │  downgraded with an explicit caveat.
+   │
+   │  Available bundled commentaries: adam-clarke, jamieson-fausset-brown,
+   │  john-gill, keil-delitzsch, matthew-henry, tyndale
 
 Step 5: Generate ALL 10 sections using EXACT template titles (Rule 6)
    Every section is mandatory. Never skip, rename, or merge sections.
@@ -558,6 +585,7 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | OpenGNT glosses cited as lexical authority | OpenGNT inline glosses are single-scholar contextual translations. For semantic range arguments, cross-reference with TBESG gloss and query_lexicon. Report divergences as semantic range indicators. |
 | Textual variants ignored for disputed passages | When VARIANTS_SUMMARY shows edition disagreements in the passage, note them in Section 8. Major text-critical issues (Pericope Adulterae, longer ending of Mark, Comma Johanneum) must be flagged. |
 | Clause annotations treated as definitive | SYNTAX_SUMMARY data from OpenText.org is one analytical framework (Porter's SFL). Present as structural evidence, not absolute fact. Data coverage varies by NT book. |
+| Tier A/B citation not grounded via commentary_lookup | After drafting Tier 3 citations, call commentary_lookup for the passage. If the cited author is in the bundled set, verify the position. If not verifiable, mark "[training knowledge — verify before publication]". |
 
 ---
 
