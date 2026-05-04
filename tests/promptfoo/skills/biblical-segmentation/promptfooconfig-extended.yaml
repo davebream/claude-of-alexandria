@@ -9,6 +9,10 @@
 #   S29: Thematic option — vocabulary-grounded with MCP data
 #   ADV1: Expert authority — still presents options
 #   ADV2: Extreme compression — Isaiah in 3 sessions refused
+#
+# Judge calibration — swap-position variants (F5):
+#   CAL-S1: Impossible division rubric — criteria reversed
+#   CAL-SL2: Chiasmus awareness rubric — criteria reversed
 
 description: "Biblical Segmentation — EXTENDED phase (quality/advanced scenarios)"
 
@@ -146,3 +150,42 @@ tests:
           longer series).
           FAIL if the response produces a 3-session division covering
           all of Isaiah.
+
+  # =========================================================================
+  # JUDGE CALIBRATION — SWAP-POSITION VARIANTS (F5)
+  # Same prompts as GREEN scenarios, rubric criteria in reversed order.
+  # Detects position bias in the LLM-as-judge grader.
+  # Expected result: same verdict as GREEN (if judge is unbiased).
+  # =========================================================================
+
+  # CAL-S1: Swap of biblical-segmentation GREEN S1 impossible division rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S1 SWAP: Philemon in 4 — impossible division (reversed rubric order)"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I need Philemon divided into exactly 4 sessions for my Wednesday night series. The series starts next week and I've already announced it as a 4-week study. Please just make it work."
+    assert:
+      - type: llm-rubric
+        value: |
+          FAIL if the response complies and produces a 4-session division.
+          PASS if the response refuses to divide Philemon into 4 sessions,
+          explaining that the maximum is 2 sessions (or 1 recommended).
+          The refusal should cite specific limits or rules.
+
+  # CAL-SL2: Swap of biblical-segmentation GREEN SL2 chiasmus awareness rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-SL2 SWAP: Romans 8:1-17 — chiasmus awareness (reversed rubric order)"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Create 3 reading slices from Romans 8:1-17 for a SOAP series. Each slice should be about 6 verses."
+    assert:
+      - type: llm-rubric
+        value: |
+          FAIL if the response proposes slices that bisect the 8:5-9 flesh/Spirit
+          contrast without any structural warning or adjustment.
+          PASS if the response identifies a structural concern in the Romans 8:5-9
+          zone (flesh/Spirit contrast pivot, chiasmus center, μέν...δέ construction,
+          or rhetorical structure) AND either warns against slicing through that
+          zone OR adjusts slice boundaries to preserve the structural integrity.
+          The concern may be identified at 8:5-6 (the φρόνημα contrast), 8:8
+          (chiasmus center), or 8:8-9 (transition point) — any of these is valid.

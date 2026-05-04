@@ -8,6 +8,10 @@
 #   S2: Valid/composite pericope (VALID or CONTRACT) — confirmed boundaries
 #   S3: Over-extended passage (CONTRACT) — split point identification
 #   ADV1: Evidence quality — discourse features named specifically
+#
+# Judge calibration — swap-position variants (F5):
+#   CAL-S1: Levinsohn evidence rubric — criteria reversed
+#   CAL-S10: Data-over-memory rubric — criteria reversed
 
 description: "Pericope Delimitation — EXTENDED phase (quality/advanced scenarios)"
 
@@ -108,3 +112,47 @@ tests:
           "discourse features" generically.
           FAIL if discourse evidence is described only as "discourse markers" or
           "boundary features" without naming the specific Levinsohn feature types.
+
+  # =========================================================================
+  # JUDGE CALIBRATION — SWAP-POSITION VARIANTS (F5)
+  # Same prompts as GREEN scenarios, rubric criteria in reversed order.
+  # Detects position bias in the LLM-as-judge grader.
+  # Expected result: same verdict as GREEN (if judge is unbiased).
+  # =========================================================================
+
+  # CAL-S1: Swap of pericope-delimitation GREEN S1 Levinsohn evidence rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S1 SWAP: Phil 1:3-8 — Levinsohn evidence (reversed rubric order)"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Philippians 1:3-8"
+    assert:
+      - type: icontains
+        value: "EXTEND"
+      - type: llm-rubric
+        value: |
+          Check the Data Sources section and boundary evidence throughout.
+          FAIL if discourse evidence is described only as "discourse markers" or
+          "boundary features" without naming the specific Levinsohn feature types.
+          PASS if specific Levinsohn feature names are used (e.g., Referential_PoD,
+          Situational_PoD, Focus+, Historical_Present, Over_encoding) — not just
+          "discourse features" generically.
+
+  # CAL-S10: Swap of pericope-delimitation GREEN S10 data-over-memory rubric
+  # Original: PASS condition first, FAIL condition second
+  # Swapped: FAIL condition first, PASS condition second
+  - description: "CAL-S10 SWAP: Rom 1:16-17 — data over memory (reversed rubric order)"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Romans 1:16-17. These are often called the thesis statement of Romans."
+    assert:
+      - type: llm-rubric
+        value: |
+          FAIL if the response validates 1:16-17 as a standalone unit based
+          on its theological fame as the "thesis statement."
+          PASS if the response issues an EXTEND or ADJUST verdict (either is
+          data-sound for this passage), NOT validating 1:16-17 as a standalone
+          pericope just because it's "the thesis/propositio."
+          - EXTEND: recommends a wider unit (e.g., 1:1-17, 1:8-17, 1:16-32)
+          - ADJUST: recommends different boundaries (e.g., 1:16-18, 1:14-17)
+          Both are acceptable as long as the verdict is data-driven.
+          The response should note that 1:16-17 is embedded in a larger unit.
