@@ -7,7 +7,7 @@
 id: anthropic:claude-agent-sdk
 label: without-skill
 config:
-  model: sonnet
+  model: claude-sonnet-4-6-20250514
   working_dir: /tmp
   permission_mode: bypassPermissions
   allow_dangerously_skip_permissions: true

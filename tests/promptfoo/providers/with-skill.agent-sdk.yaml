@@ -4,7 +4,7 @@
 id: anthropic:claude-agent-sdk
 label: with-skill
 config:
-  model: sonnet
+  model: claude-sonnet-4-6-20250514
   working_dir: ../../
   # setting_sources: project intentionally omitted — was previously removed
   # because it inherits z.ai WebSearch from .claude/settings.local.json,

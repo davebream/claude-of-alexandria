@@ -6,7 +6,7 @@
 description: "Smoke test — sdk-bare provider isolation"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6
+  - id: anthropic:messages:claude-sonnet-4-6-20250514
     label: bare-model
 
 prompts:
@@ -15,7 +15,7 @@ prompts:
 defaultTest:
   options:
     provider:
-      id: anthropic:messages:claude-sonnet-4-6
+      id: anthropic:messages:claude-sonnet-4-6-20250514
       config:
         temperature: 0
 
