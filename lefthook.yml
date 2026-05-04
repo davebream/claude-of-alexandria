@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: version-sync
+      run: ./scripts/validate-versions.sh
+
+    - name: detect-secrets
+      glob: "*.{ts,js,json,yaml,yml,md,toml,env*}"
+      run: detect-secrets-hook {staged_files}
+      skip:
+        - run: "which detect-secrets-hook > /dev/null 2>&1; test $? -ne 0"
