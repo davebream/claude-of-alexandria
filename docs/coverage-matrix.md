@@ -114,3 +114,30 @@ _Cells showing 0 are coverage gaps._
 | query_pericope | — | ✗ NOT COVERED |
 | query_topic | — | ✗ NOT COVERED |
 | query_doctrine | — | ✗ NOT COVERED |
+
+## Gap Analysis — Top 5 Priority Cells
+
+### Gap 1: Poetry/Wisdom — Job (exegetical-notes)
+**Genre:** Poetry/Wisdom | **Book:** Job | **Skills affected:** exegetical-notes, biblical-segmentation
+**Rationale:** Zero wisdom poetry beyond Psalms in RED. Job's theodicy genre requires genre-graduated redemptive-historical method (indirect, not direct arc). Exercises query_speakers (God's speech from whirlwind) and query_theme.
+**Failure mode expected:** Bare model forces narrative arc on wisdom poetry; reads Job as moral instruction without theodicy context.
+
+### Gap 2: Poetry/Wisdom — Ecclesiastes (exegetical-notes, pericope-delimitation)
+**Genre:** Poetry/Wisdom | **Book:** Ecclesiastes | **Skills affected:** exegetical-notes, pericope-delimitation
+**Rationale:** Genre-graduated redemptive-historical approach needed. Bare model likely flattens "meaningless" (hebel) into nihilism or forces premature resolution.
+**Failure mode expected:** Missing genre-graduated method; flat reading without canonical-literary framing.
+
+### Gap 3: Sparse-MCP-data passage — Obadiah (exegetical-notes)
+**Genre:** Prophecy | **Book:** Obadiah | **Skills affected:** exegetical-notes
+**Rationale:** Tests degraded-data fallback when MCP tools (query_places, query_events, query_people) return EMPTY. Exercises query_cross_references for Edom motif.
+**Failure mode expected:** No degraded-data fallback; bare model fills sparse data with training-knowledge hallucinations.
+
+### Gap 4: Law — Leviticus 16 (exegetical-notes)
+**Genre:** Law | **Book:** Leviticus | **Skills affected:** exegetical-notes
+**Rationale:** Zero law genre scenarios. Day of Atonement ritual requires covenantal-fulfillment framework (Heb 9 typology). Exercises query_ot_quotes, query_theme.
+**Failure mode expected:** Flat application of OT ritual law without covenantal fulfillment; either dismissed as irrelevant or applied moralistically.
+
+### Gap 5: OT Apocalyptic — Daniel 7 (argument-flow)
+**Genre:** Apocalyptic | **Book:** Daniel | **Skills affected:** argument-flow
+**Rationale:** Only NT apocalyptic (Rev) tested. OT apocalyptic has different tool coverage (parallel_text, query_ot_quotes). Daniel 7 is the "son of man" source text for NT Christology.
+**Failure mode expected:** Symbolic imagery treated as narrative sequence; no genre governance for OT apocalyptic.
