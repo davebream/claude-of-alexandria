@@ -30,11 +30,12 @@
     "eval:biblical-scholar": "npm run eval:biblical-scholar:red",
     "eval:study-evaluator:red": "npm run eval -- --no-cache -c agents/study-evaluator/promptfooconfig-red.yaml",
     "eval:study-evaluator": "npm run eval:study-evaluator:red",
+    "eval:integration": "npm run eval -- --no-cache -c integration/promptfooconfig.yaml",
     "eval:smoke": "npm run eval -- --no-cache -c smoke/promptfooconfig.yaml",
     "eval:regression": "npm run eval -- --no-cache -c smoke/promptfooconfig-regression.yaml",
     "eval:calibration": "npm run eval -- --no-cache -c assertions/grader-calibration.yaml",
     "eval:gate": "npm run eval:calibration && npm run eval:regression",
-    "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator",
+    "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator && npm run eval:integration",
     "eval:all:single": "node scripts/merge-all-configs.js && npm run eval -- --no-cache -c promptfooconfig-all.yaml",
     "view": "promptfoo view"
   },
