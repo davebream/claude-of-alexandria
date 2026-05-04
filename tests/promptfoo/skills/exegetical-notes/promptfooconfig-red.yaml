@@ -30,6 +30,7 @@
 #   S18: Wisdom genre — forced narrative arc on wisdom poetry (Job 38:1-11)
 #   S19: Wisdom genre — missing genre-graduated method (Ecclesiastes 1:1-11)
 #   S20: Sparse MCP data — no degraded-data fallback (Obadiah 1-4)
+#   S21: Law genre — no covenantal-fulfillment framework (Leviticus 16:1-10)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -564,3 +565,35 @@ tests:
           FAIL if the response explicitly acknowledges sparse data availability,
           flags data gaps for specific categories, and distinguishes verified
           tool results from training-knowledge fallbacks.
+
+  # =========================================================================
+  # Scenario 21: Law Genre — Leviticus 16:1-10 (Day of Atonement)
+  # Failure: OT ritual law applied flatly without covenantal-fulfillment
+  # framework; no typological connection to NT fulfillment (Hebrews 9)
+  # =========================================================================
+  - description: "S21 RED: Law genre — Lev 16:1-10 without covenantal-fulfillment framework"
+    vars:
+      prompt: "Generate exegetical notes for Leviticus 16:1-10 (the Day of Atonement instructions). Include the significance of the two goats, the role of Aaron, and the passage's theological importance. Provide full analysis with interpretive guardrails."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits ANY of these law-genre failures:
+          - Describes the ritual procedures without placing them in a
+            covenantal-fulfillment framework (the Day of Atonement's typological
+            relationship to Christ's atoning work as developed in Hebrews 9-10)
+          - Treats the passage as historical description only ("this is what
+            ancient Israel did") without connecting to progressive revelation
+          - Applies the passage directly to modern readers without attention to
+            covenant administration (old covenant → new covenant transition)
+          - Moralizes the ritual elements ("we should approach God with
+            reverence like Aaron") without grounding in indicative theology
+          - Does not identify "law/ritual" as the governing genre or does not
+            explain how law genre constrains interpretation differently from
+            narrative or epistle
+
+          FAIL if the response explicitly identifies law as the governing genre,
+          places the Day of Atonement in a covenantal-fulfillment framework
+          (typology → Hebrews 9-10), attends to covenant administration, AND
+          grounds application in indicative before imperative.
