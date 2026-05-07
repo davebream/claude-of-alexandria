@@ -2,8 +2,8 @@
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
-version: 1.1.0
-changed: "2026-05-04"
+version: 1.1.1
+changed: "2026-05-08"
 ---
 
 # Exegetical Notes
@@ -407,21 +407,24 @@ Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology 
 
 **OT gloss tier awareness** (OT passages only):
 - Glosses from `OT_ENRICHMENT_SUMMARY` (Cherith/Andi Wu) are **Tier 3 — single-scholar translation**. Do NOT cite as lexical authority for semantic range arguments.
-- For exegetical decisions about word meaning, consult `LEXICON_SUMMARY` (from `query_lexicon`) which provides standard lexical definitions.
-- Format: "gloss: [Cherith gloss, Tier 3] — cf. lexicon: [standard definition]"
+- For exegetical decisions about word meaning, consult `LEXICON_SUMMARY` (from `query_lexicon`) which provides source-attributed scholarly definitions (BDB for Hebrew).
+- Format: "gloss: [Cherith gloss, Tier 3] — cf. lexicon: [BDB definition]"
 
 **Lexicon integration** (when `LEXICON_SUMMARY` is available):
-- Use `LEXICON_SUMMARY` data for standard lexical definitions of key lemmas
-- Cross-reference Cherith glosses against standard lexicon entries
-- Note significant differences between Cherith contextual glosses and standard lexical range
+- `query_lexicon` returns source-attributed definitions: `lsj_definition` (LSJ for Greek), `abbott_smith_definition` (Abbott-Smith NT-focused Greek), `bdb_definition` (BDB for Hebrew)
+- These are full scholarly entries — use as primary lexical authority for word studies
+- A `sources` array identifies which lexica contributed to each entry
+- Cross-reference Cherith glosses (OT) or OpenGNT inline glosses (NT) against the lexical definitions
+- Note significant differences between contextual glosses and the scholarly lexical range
 
 **NT gloss tier awareness** (NT passages only):
 - OpenGNT provides two gloss sources: inline glosses (single-scholar contextual translations) and TBESG glosses (concordance-level definitions from `gloss_tbesg` field)
 - When both glosses are available and **diverge**, report both as a "semantic range indicator": "OpenGNT gloss: [X] — TBESG gloss: [Y]"
 - OpenGNT glosses are **single-scholar contextual translations** — do not cite as lexical authority
 - TBESG glosses are concordance-level — more stable but less context-sensitive
+- LSJ and Abbott-Smith definitions from `query_lexicon` are full scholarly entries — use as primary lexical authority for Greek word studies
 - Louw-Nida domain codes (`louw_nida`, `louw_nida_domain`) group words by semantic domain — use for Section 4 semantic grouping alongside `semantic_groups.yaml`
-- Strong's numbers from OpenGNT enable cross-referencing with `query_lexicon` for standard definitions
+- Strong's numbers from OpenGNT enable cross-referencing with `query_lexicon` for LSJ/Abbott-Smith definitions
 
 ## 5. Exegetical Conclusions
 

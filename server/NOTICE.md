@@ -17,6 +17,22 @@ https://github.com/STEPBible/STEPBible-Data
 - TBESG: Translators Brief lexicon of Extended Strongs for Greek
 - ~20K lexicon entries with glosses, transliterations, and meanings
 
+## STEPBible TFLSJ — Full Liddell-Scott-Jones Greek Lexicon (CC BY 4.0)
+
+https://github.com/STEPBible/STEPBible-Data
+
+- Full Liddell-Scott-Jones definitions for classical and NT Greek
+- Comprehensive scholarly lexicon entries with etymological and usage data
+- Edited by Tyndale House scholars from the Perseus LSJ source
+
+## STEPBible TBESH — Hebrew Definitions with BDB Sourcing (CC BY 4.0)
+
+https://github.com/STEPBible/STEPBible-Data
+
+- TBESH: Translators Brief lexicon of Extended Strongs for Hebrew
+- Hebrew word definitions derived from Brown-Driver-Briggs and related sources
+- Used as Hebrew lexicon source for the lexicon_bdb table
+
 ## UBS/Paratext Versification Data (MIT)
 
 https://github.com/ubsicap/versification_json

@@ -86,3 +86,4 @@ server/scripts/merge-report.json
 
 # Script output (generated proposals — do not commit)
 server/scripts/output/
+.build-checkpoint.json

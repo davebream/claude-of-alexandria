@@ -67,10 +67,42 @@ for chunk in "$SEED_DIR"/morphology-ot-*.sql; do
 done
 echo "  OT morphology: $ot_count books imported."
 
-# Phase 2: Lexicon, Versification, Cross-References
-echo "Importing lexicon..."
-npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/lexicon.sql" --remote
-echo "  Lexicon imported."
+# Phase 2: Lexicon sources (LSJ, Abbott-Smith, BDB, UBS domains)
+# Note: old lexicon.sql import commented out — kept until migration 0012 is applied
+# npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/lexicon.sql" --remote
+echo "Importing lexicon sources..."
+
+echo "  Importing LSJ Greek lexicon..."
+for chunk in "$SEED_DIR"/lexicon-lsj*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "    Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+done
+echo "  LSJ imported."
+
+echo "  Importing Abbott-Smith Greek lexicon..."
+npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/lexicon-abbott-smith.sql" --remote
+echo "  Abbott-Smith imported."
+
+echo "  Importing BDB Hebrew lexicon..."
+for chunk in "$SEED_DIR"/lexicon-bdb*.sql; do
+  [ -f "$chunk" ] || continue
+  chunk_name=$(basename "$chunk")
+  echo "    Importing $chunk_name..."
+  npx wrangler d1 execute "$DB_NAME" --file="$chunk" --remote
+done
+echo "  BDB imported."
+
+if [ -f "$SEED_DIR/lexicon-ubs-domains.sql" ]; then
+  echo "  Importing UBS semantic domains..."
+  npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/lexicon-ubs-domains.sql" --remote
+  echo "  UBS domains imported."
+else
+  echo "  UBS domains seed file not found — skipping (deferred)."
+fi
+
+echo "  Lexicon sources imported."
 
 echo "Importing versification..."
 npx wrangler d1 execute "$DB_NAME" --file="$SEED_DIR/versification.sql" --remote

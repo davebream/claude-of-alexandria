@@ -183,25 +183,20 @@ Examples:
   - Multiple NT lemmas: lemmas=["πατήρ", "πίστις"]
   - Mixed OT/NT for covenant study: lemmas=["H1285", "διαθήκη"]`;
 
-const DESC_LEXICON = `Query Strong's-based word definitions from the TBESH/TBESG lexicon.
+const DESC_LEXICON = `Query Strong's-based word definitions from multi-source scholarly lexicons.
 
-Returns lexical entries including original word, transliteration, gloss, and meaning. Supports lookup by Strong's number or by original language lemma.
-
-Strong's numbers are concordance-level identifiers, not full lexical entries. Multiple Hebrew/Greek words may share a number. Full definitions require published lexica (BDB, HALOT, BDAG).
+Returns lexical entries with source-attributed definitions from LSJ (Liddell-Scott-Jones for Greek), Abbott-Smith (NT-focused Greek), BDB (Brown-Driver-Briggs for Hebrew), and UBS semantic domain classifications. Supports lookup by Strong's number or by original language lemma.
 
 Args:
   - strongs_ids (string[], optional): Array of Strong's numbers (e.g., ["H1961", "G3056"]). Max 20.
   - lemmas (string[], optional): Array of Greek/Hebrew lemmas to look up. Max 20.
-  - compact (boolean, optional): If true, return only strongs_id, gloss, transliteration (default: false)
-
-Exactly one of strongs_ids or lemmas is required.
-
-Returns: { entries: [{strongs_id, disambiguated, testament, original_word, transliteration, morphology, gloss, meaning}], not_found: string[], errors: string[], lexical_precision: "concordance-level" }
+  - compact (boolean, optional): If true, return only strongs_id, gloss, transliteration (default: false).
 
 Examples:
-  - Hebrew word: strongs_ids=["H1961"] → "to be"
-  - Greek word: strongs_ids=["G3056"] → "logos"
-  - Multiple lookups: strongs_ids=["H430", "H1961", "H7225"]`;
+  - Greek word study: strongs_ids=["G3056"]
+  - Hebrew word study: strongs_ids=["H7225"]
+  - Greek lemma: lemmas=["λόγος"]
+  - Hebrew lemma: lemmas=["רֵאשִׁית"]`;
 
 const DESC_VERSIFICATION = `Check Hebrew-English verse numbering differences for Old Testament books.
 
@@ -447,7 +442,7 @@ async function cachedToolCall(
   handler: () => Promise<CallToolResult>
 ): Promise<CallToolResult> {
   const sortedArgs = stableStringify(args);
-  const cacheKey = new Request(`https://cache/v3/${name}/${encodeURIComponent(sortedArgs)}`);
+  const cacheKey = new Request(`https://cache/v4/${name}/${encodeURIComponent(sortedArgs)}`);
   const cache = caches.default;
 
   const cached = await cache.match(cacheKey);
@@ -459,7 +454,11 @@ async function cachedToolCall(
   const response = new Response(JSON.stringify(result), {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=86400' },
   });
-  await cache.put(cacheKey, response.clone());
+  try {
+    await cache.put(cacheKey, response.clone());
+  } catch {
+    // Cache write failures are non-fatal — response is still returned from handler()
+  }
   return result;
 }
 

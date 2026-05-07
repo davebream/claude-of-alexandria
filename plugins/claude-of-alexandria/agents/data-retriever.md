@@ -28,7 +28,7 @@ When the caller requests "all relevant data", call all applicable tools for the 
 
 **`query_speakers`** — call for all passages with a verse range (speaker data spans both OT and NT). Skip for book-only requests.
 
-**`query_lexicon`** — call when the caller requests lexical data. Skip if not requested. Pass Strong's IDs extracted from morphology results.
+**`query_lexicon`** — call when the caller requests lexical data. Skip if not requested. Pass Strong's IDs extracted from morphology results. Returns source-attributed scholarly definitions: `lsj_definition` (LSJ for Greek), `abbott_smith_definition` (Abbott-Smith NT Greek), `bdb_definition` (BDB for Hebrew), with a `sources` array identifying contributing lexica.
 
 **`check_versification`** — call for OT passages only. Skip for NT. Reports Hebrew/English verse numbering differences.
 
