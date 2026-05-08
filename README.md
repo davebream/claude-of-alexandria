@@ -218,6 +218,33 @@ Skills use historical-grammatical method with explicit theological guardrails:
 
 **Namesake:** Clement of Alexandria (c. 150-215 AD), who demonstrated that rigorous scholarship and faithful theology are not in tension.
 
+## Reporting Data Gaps
+
+Claude of Alexandria ships with 81 thematic keyword groups covering both testaments. These map lemmas (Greek and Hebrew word forms) to theological concepts like "covenant," "joy," or "kingdom." The mapping is good but not exhaustive — you may encounter gaps.
+
+### When you might hit a gap
+
+**A theme doesn't exist.** You're studying a passage about exile, temple imagery, or divine jealousy and `query_theme` returns "theme not found." The concept isn't in the 81-theme inventory at all.
+
+**A lemma isn't mapped.** The theme exists (e.g., "salvation") but a key word in your passage isn't connected to it. You see it in the `unmatched` array from `query_themes_for_lemmas`, or the exegetical-notes skill's Section 4 shows no semantic group for a term you expected to be covered.
+
+**Cross-testament coverage is incomplete.** A theme has OT Strong's codes but no NT Greek lemmas (or vice versa), so tracing the concept across testaments produces a gap on one side.
+
+### How to report it
+
+[Open a data gap issue](https://github.com/davebream/claude-of-alexandria/issues/new?template=data-gap.md). The template asks for:
+
+- The passage you were studying
+- What you searched for (theme name, lemma, concept)
+- What happened (error message, empty results, missing mapping)
+- Whether this is a missing theme or a missing lemma within an existing theme
+
+MCP tool responses include a `report_gap` field with a direct link to the template when they detect potential gaps — look for it in `query_theme`, `query_themes_for_lemmas`, and `query_vocabulary` responses.
+
+### What happens next
+
+Reported gaps feed into the theme expansion pipeline. We analyze the lemma's frequency across the corpus, validate it against lexicon sources (BDB for Hebrew, LSJ for Greek), and — if the evidence supports it — add the mapping. New themes go through the same empirical process: corpus frequency analysis, cross-testament pairing, and lexicon validation before they ship.
+
 ## Contributing
 
 See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is strict about TDD.
