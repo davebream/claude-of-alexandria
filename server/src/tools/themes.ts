@@ -100,6 +100,10 @@ export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolR
     result.unmatched = unmatched;
   }
 
+  if (unmatched.length > 0) {
+    result.report_gap = 'Some lemmas have no theme mapping. If you expected coverage, report it: https://github.com/davebream/claude-of-alexandria/issues/new?template=data-gap.md';
+  }
+
   return {
     content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,

@@ -75,6 +75,7 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
             code: 'INVALID_THEME',
             message: `Theme '${theme}' not found for ${testament.toUpperCase()}.`,
             available_themes: allThemes.map(r => r.theme),
+            report_gap: 'If this theme should exist, report it: https://github.com/davebream/claude-of-alexandria/issues/new?template=data-gap.md',
           }
         })
       }],

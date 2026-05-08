@@ -87,7 +87,7 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
         [testament]
       );
       return {
-        content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_THEME', message: `Theme '${theme}' not found for ${testament.toUpperCase()}.`, available_themes: allThemes.map(r => r.theme) } }) }],
+        content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_THEME', message: `Theme '${theme}' not found for ${testament.toUpperCase()}.`, available_themes: allThemes.map(r => r.theme), report_gap: 'If this theme should exist, report it: https://github.com/davebream/claude-of-alexandria/issues/new?template=data-gap.md' } }) }],
         isError: true,
       };
     }
