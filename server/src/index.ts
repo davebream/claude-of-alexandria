@@ -185,18 +185,25 @@ Examples:
 
 const DESC_LEXICON = `Query Strong's-based word definitions from multi-source scholarly lexicons.
 
-Returns lexical entries with source-attributed definitions from LSJ (Liddell-Scott-Jones for Greek), Abbott-Smith (NT-focused Greek), BDB (Brown-Driver-Briggs for Hebrew), and UBS semantic domain classifications. Supports lookup by Strong's number or by original language lemma.
+Returns lexical entries with source-attributed definitions from LSJ (Liddell-Scott-Jones for Greek), Abbott-Smith (NT-focused Greek), BDB (Brown-Driver-Briggs for Hebrew), and UBS semantic domain classifications. Supports lookup by Strong's number, original language lemma, or English meaning search.
 
 Args:
   - strongs_ids (string[], optional): Array of Strong's numbers (e.g., ["H1961", "G3056"]). Max 20.
   - lemmas (string[], optional): Array of Greek/Hebrew lemmas to look up. Max 20.
+  - search (string, optional): English meaning or concept to search for (e.g., "love", "redemption"). Searches gloss and full definitions across all lexicon sources. Returns up to 20 matches. Min 2 chars, max 100 chars.
   - compact (boolean, optional): If true, return only strongs_id, gloss, transliteration (default: false).
+
+Provide exactly one of: strongs_ids, lemmas, or search.
+
+Search results may be capped at 20 entries across all sources combined (results_capped: true). Callers can infer testament from the Strong's ID prefix: G = Greek (NT), H = Hebrew (OT).
 
 Examples:
   - Greek word study: strongs_ids=["G3056"]
   - Hebrew word study: strongs_ids=["H7225"]
   - Greek lemma: lemmas=["λόγος"]
-  - Hebrew lemma: lemmas=["רֵאשִׁית"]`;
+  - Hebrew lemma: lemmas=["רֵאשִׁית"]
+  - Meaning search: search="love" (returns ἀγάπη, אַהֲבָה, and related words)
+  - Concept search: search="redemption" (returns λύτρον, גָּאַל, and related words)`;
 
 const DESC_VERSIFICATION = `Check Hebrew-English verse numbering differences for Old Testament books.
 
