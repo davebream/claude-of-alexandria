@@ -3,7 +3,7 @@
   "name": "initiative-2026-05-11-1246",
   "created": "2026-05-11",
   "status": "active",
-  "concurrencyVersion": 16,
+  "concurrencyVersion": 20,
   "features": [
     {
       "id": "F1",
@@ -16,7 +16,7 @@
       "design": ".kombajn/plans/2026-05-11-confessional-d1-schema-etl-design.md",
       "reviewStatus": "skipped",
       "reviewPath": null,
-      "plan": null,
+      "plan": ".kombajn/plans/2026-05-11-f1-confessional-d1-schema-etl.md",
       "planReviewStatus": null,
       "planReviewPath": null,
       "implementation": null,
@@ -35,7 +35,7 @@
       "retryCount": 0,
       "retryState": null,
       "lastFailureClass": null,
-      "contractPath": null,
+      "contractPath": ".kombajn/initiative-2026-05-11-1246/contracts/F1-contract.yaml",
       "activities": [
         {
           "ts": "2026-05-11T10:52:18.727Z",
@@ -64,6 +64,15 @@
           "type": "thought",
           "payload": {
             "summary": "Decomposing into 5 tasks: C5 source research (prerequisite), C1 migration DDL, C2 proof-text parser + tests, C3 ETL script body, C4 seed-d1.sh integration — ordered so research gates implementation and parser is testable before ETL consumes it"
+          }
+        },
+        {
+          "ts": "2026-05-11T11:07:03.672Z",
+          "phase": "plan-review",
+          "type": "response",
+          "payload": {
+            "verdict": "ready",
+            "artifactPath": ".kombajn/plans/2026-05-11-f1-confessional-d1-schema-etl.md"
           }
         }
       ],
