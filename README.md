@@ -195,6 +195,7 @@ The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both testaments |
 | `query_lemmas` | Cross-book lemma distribution | Both testaments |
 | `query_theme` | Cross-book distribution of a thematic keyword group | Both testaments |
+| `confessional_lookup` | Confessional and catechetical documents from Reformed, Baptist, Lutheran, and ancient traditions — lookup by slug, scripture citation, keyword, or list | Non-biblical |
 
 Skills call these automatically. You can invoke them directly if needed.
 
