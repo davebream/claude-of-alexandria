@@ -101,14 +101,28 @@ export interface VerseRef {
  * Parse a single Creeds.json proof-text citation into individual verse rows.
  *
  * Citation formats:
- *   Single verse: "Ps.19.1"
- *   Range:        "Gen.1.1-Gen.1.5"  or  "1Cor.15.1-1Cor.15.4"
+ *   Single verse:       "Ps.19.1"
+ *   Dash range:         "Gen.1.1-Gen.1.5"  or  "1Cor.15.1-1Cor.15.4"
+ *   Comma-separated:    "Luke.16.29,Luke.16.31"  (two independent verses, not a range)
  *
  * Returns an array of { book, chapter, verse } objects (one per verse).
  * Returns [] and logs a warning for unresolvable book abbreviations.
  * Clamps verses exceeding chapter length and logs a warning.
  */
 export function parseProofTextRef(citation: string): VerseRef[] {
+  // Handle comma-separated references (multiple independent verses in one citation)
+  if (citation.includes(',')) {
+    const parts = citation.split(',');
+    const results: VerseRef[] = [];
+    for (const part of parts) {
+      const trimmed = part.trim();
+      if (trimmed) {
+        results.push(...parseProofTextRef(trimmed));
+      }
+    }
+    return results;
+  }
+
   // Split on '-' only between two full Book.Ch.V endpoints.
   // A range dash appears between digits (end of first V) and a letter (start of second Book).
   // Since book abbreviations can start with a digit (1Cor), we split on the LAST '-' that is
@@ -154,6 +168,13 @@ function parseSingleRef(ref: string): VerseRef[] {
   return [{ book, chapter, verse: clamped }];
 }
 
+// Creeds.json-specific book abbreviation aliases not covered by lookupBook
+// Maps lowercase Creeds.json abbreviation → lookupBook-compatible abbreviation
+const CREEDS_BOOK_ALIASES: Record<string, string> = {
+  'song': 'SongOfSongs',  // "Song" = Song of Solomon / Song of Songs
+  'cant': 'SongOfSongs',  // Canticum (Latin abbreviation used in some Reformed confessions)
+};
+
 function parseEndpoint(ref: string): { book: string; chapter: number; verse: number } | null {
   // Format: BookAbbrev.chapter.verse  (e.g. "Ps.19.1", "1Cor.15.3")
   const dotCount = (ref.match(/\./g) || []).length;
@@ -166,7 +187,9 @@ function parseEndpoint(ref: string): { book: string; chapter: number; verse: num
   const lastDot = ref.lastIndexOf('.');
   const secondLastDot = ref.lastIndexOf('.', lastDot - 1);
 
-  const bookAbbrev = ref.slice(0, secondLastDot);
+  const rawAbbrev = ref.slice(0, secondLastDot);
+  // Resolve Creeds.json-specific aliases before passing to lookupBook
+  const bookAbbrev = CREEDS_BOOK_ALIASES[rawAbbrev.toLowerCase()] ?? rawAbbrev;
   const chapter = parseInt(ref.slice(secondLastDot + 1, lastDot), 10);
   const verse = parseInt(ref.slice(lastDot + 1), 10);
 
