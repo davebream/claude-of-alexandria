@@ -24,6 +24,7 @@ import { queryVariants, VariantsInputSchema, VariantsOutputSchema } from './tool
 import { bibleLookup, BibleLookupInputSchema, BibleLookupOutputSchema } from './tools/bible-lookup.js';
 import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSchema } from './tools/commentary-lookup.js';
 import { parallelText, ParallelTextInputSchema, ParallelTextOutputSchema, type ParallelTextInput } from './tools/parallel-text.js';
+import { confessionalLookup, ConfessionalLookupInputSchema, ConfessionalLookupOutputSchema, type ConfessionalLookupInput } from './tools/confessional-lookup.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -402,6 +403,41 @@ Examples:
   - All commentaries on Romans 8:28: book="Romans", range="8:28"
   - Matthew Henry on Genesis 1:1-3: book="Genesis", range="1:1-3", commentary="matthew-henry"
   - Tyndale notes on John 3:16: book="John", range="3:16", commentary="tyndale"`;
+
+const DESC_CONFESSIONAL_LOOKUP = `Look up confessional and catechetical content from Reformed, Baptist, Lutheran, and ancient traditions.
+
+Four query modes:
+- "direct": Look up a specific document section by slug + chapter/section or question number
+- "scripture": Find which confessional statements cite a Bible passage (e.g., Romans 8:28-30)
+- "keyword": Substring search on section content (case-insensitive)
+- "list": Enumerate available documents with metadata
+
+Available documents: Westminster Confession of Faith, Westminster Shorter/Larger Catechisms, Heidelberg Catechism, Belgic Confession, Canons of Dort, London Baptist Confession 1689, Apostles' Creed, Nicene Creed, Augsburg Confession, and more.
+
+Filters (tradition: reformed|baptist|ancient|lutheran; format: confession|catechism) apply to all modes.
+
+Args:
+  - mode (string, required): "direct" | "scripture" | "keyword" | "list"
+  - document (string): Document slug — required for mode="direct". Use mode="list" to discover slugs.
+  - chapter (number, optional): Chapter number for direct mode (confession format)
+  - section (number, optional): Section number within chapter for direct mode
+  - question (number, optional): Question number for direct mode (catechism format)
+  - book (string): Bible book name — required for mode="scripture"
+  - range (string): Verse range "8:28" or "8:28-8:30" — required for mode="scripture"
+  - keyword (string): Search term — required for mode="keyword" (min 2 characters)
+  - tradition (string, optional): Filter by tradition: reformed | baptist | ancient | lutheran
+  - format (string, optional): Filter by format: confession | catechism
+  - limit (number, optional): Max sections returned (default: 50, max: 200). Does not apply to mode="list".
+
+Returns: { mode, query_info, documents: [{slug, title, year, tradition, format, sections: [{...}]}], total_documents, total_sections, truncated?, truncation_message? }
+
+Content note: Sections include both plain content and content_with_proofs (text with [1], [2] markers mapping to Scripture citations).
+
+Examples:
+  - WCF on Providence: mode="direct", document="westminster-confession-of-faith", chapter=5
+  - Romans 8:28 citations: mode="scripture", book="Romans", range="8:28"
+  - Reformed confessions on election: mode="keyword", keyword="election", tradition="reformed"
+  - All Reformed catechisms: mode="list", tradition="reformed", format="catechism"`;
 
 const DESC_PARALLEL_TEXT = `Compare biblical text across multiple translations side by side.
 
@@ -852,6 +888,23 @@ function createServer(): McpServer {
       () => parallelText(normalizedArgs as unknown as ParallelTextInput)
     );
   });
+
+  server.registerTool('confessional_lookup', {
+    title: 'Confessional Lookup',
+    description: DESC_CONFESSIONAL_LOOKUP,
+    inputSchema: ConfessionalLookupInputSchema,
+    outputSchema: ConfessionalLookupOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('confessional_lookup', args as unknown as Record<string, unknown>, () =>
+      confessionalLookup(args as unknown as ConfessionalLookupInput)
+    )
+  );
 
   return server;
 }
