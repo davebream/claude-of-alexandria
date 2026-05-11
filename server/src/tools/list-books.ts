@@ -56,6 +56,7 @@ const AVAILABLE_TOOLS = [
   'bible_lookup - look up verse text in 6 translations (OT + NT)',
   'commentary_lookup - look up commentary entries from 6 commentaries (OT + NT)',
   'parallel_text - compare verse text across multiple translations (OT + NT)',
+  'confessional_lookup - confessional and catechetical lookup with 4 modes: direct (by document slug + chapter/section or question), scripture (find statements citing a Bible passage), keyword (substring search on section content), list (enumerate available documents). Traditions: reformed, baptist, ancient, lutheran.',
 ] as const;
 
 const AVAILABLE_TRANSLATIONS = [
