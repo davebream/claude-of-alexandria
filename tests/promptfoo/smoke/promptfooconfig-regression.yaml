@@ -135,6 +135,27 @@ tests:
           // λόγος should resolve via lemma lookup
           return lower.includes('logos') || lower.includes('word') || lower.includes('g3056');
 
+  - description: "R3f: query_lexicon search mode returns Greek result for 'love' (F3)"
+    vars:
+      prompt: >
+        Use the query_lexicon tool with search="love".
+        Return the raw tool output only, no analysis.
+    assert:
+      - type: javascript
+        value: |
+          const out = context.vars?.output || output || '';
+          const lower = out.toLowerCase();
+          // G26 = agape — the canonical Greek word for love; must appear in search results
+          return lower.includes('g0026') || lower.includes('agape') || lower.includes('ἀγάπη') || lower.includes('agapē');
+      - type: javascript
+        value: |
+          // results_capped field must be present (boolean, not a key error)
+          const out = context.vars?.output || output || '';
+          const match = out.match(/results_capped["\s:]+(\w+)/i);
+          if (!match) return false;
+          const val = match[1].toLowerCase();
+          return val === 'true' || val === 'false';
+
   - description: "R4: query_cross_references returns results (Phase 2+)"
     vars:
       prompt: >
