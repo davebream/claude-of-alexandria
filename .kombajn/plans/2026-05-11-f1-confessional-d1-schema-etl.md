@@ -625,7 +625,7 @@ If any test fails, debug the specific failing assertion. Common issues:
 cd server && npm test
 ```
 
-Expected: all pre-existing tests pass, plus the 7 new parser tests.
+Expected: all pre-existing tests pass, plus the 8 new parser tests.
 
 **Step 4: Commit**
 
@@ -634,7 +634,7 @@ git add server/scripts/seed-confessional.ts server/scripts/seed-confessional.tes
 git commit -m "feat(etl): add proof-text reference parser with Vitest tests (C2)"
 ```
 
-**Done when:** all 7 parser tests pass and no regressions in the full suite.
+**Done when:** all 8 parser tests pass and no regressions in the full suite.
 
 ---
 
@@ -930,13 +930,8 @@ async function main(): Promise<void> {
   let skippedSections = 0;
   const unresolvedRefs: string[] = [];
 
-  for (const doc of documents) {
-    const slug = doc.Slug;
-    if (!slug) {
-      console.warn('[seed-confessional] Document without Slug — skipping');
-      continue;
-    }
-
+  // CI-3 fix: documents[] is Array<{ slug: string; doc: CreedsDocument }> — destructure correctly.
+  for (const { slug, doc: creedsDoc } of documents) {
     if (COPYRIGHT_EXCLUDED_SLUGS.has(slug)) {
       console.log(`[seed-confessional] Skipping copyright-excluded document: ${slug}`);
       skippedCopyright++;
@@ -945,18 +940,28 @@ async function main(): Promise<void> {
 
     docId++;
     const tradition = getTradition(slug);
-    const format = doc.Questions ? 'catechism' : 'confession';
-    const year = doc.Year ?? null;
+    const title = creedsDoc.Metadata.Title;
+    const year = creedsDoc.Metadata.Year ? parseInt(creedsDoc.Metadata.Year, 10) : null;
     const authors = null; // Creeds.json does not provide structured author data
 
+    // RC-5 fix: use creedsDoc.Metadata.CreedFormat for format detection instead of data-shape inference.
+    // CreedFormat values: 'Confession' | 'Catechism' | 'Canon' | 'Creed'
+    // Canon and Creed format documents are ingested as confessional_documents rows but will have
+    // zero sections — this is intentional. They represent non-structured texts (creeds, articles)
+    // that lack a chapter/section or question/answer hierarchy.
+    const creeedFormat = creedsDoc.Metadata.CreedFormat?.toLowerCase() ?? 'confession';
+    const format: 'confession' | 'catechism' = creeedFormat === 'catechism' ? 'catechism' : 'confession';
+    const data = creedsDoc.Data;
+
     lines.push(
-      `INSERT OR REPLACE INTO confessional_documents (id, slug, title, year, tradition, format, authors, source) VALUES (${docId}, ${escapeSQL(slug)}, ${escapeSQL(doc.Name)}, ${escapeNum(year)}, ${escapeSQL(tradition)}, ${escapeSQL(format)}, ${escapeSQL(authors)}, 'Creeds.json');`
+      `INSERT OR REPLACE INTO confessional_documents (id, slug, title, year, tradition, format, authors, source) VALUES (${docId}, ${escapeSQL(slug)}, ${escapeSQL(title)}, ${escapeNum(year)}, ${escapeSQL(tradition)}, ${escapeSQL(format)}, ${escapeSQL(authors)}, 'Creeds.json');`
     );
 
-    if (format === 'confession' && doc.Chapters) {
+    if (format === 'confession' && Array.isArray(data)) {
+      const chapters = data as ConfessionChapter[];
       lines.push('');
       lines.push(`-- Sections: ${slug}`);
-      for (const chapter of doc.Chapters) {
+      for (const chapter of chapters) {
         for (const section of chapter.Sections ?? []) {
           if (!section.Content) {
             console.warn(`[seed-confessional] Section missing Content in ${slug} ch${chapter.Chapter} s${section.Section} — skipping`);
@@ -968,7 +973,8 @@ async function main(): Promise<void> {
             `INSERT INTO confessional_sections (id, document_id, chapter_number, chapter_title, section_number, content, content_with_proofs) VALUES (${sectionId}, ${docId}, ${chapter.Chapter}, ${escapeSQL(chapter.Title)}, ${section.Section}, ${escapeSQL(section.Content)}, ${escapeSQL(section.ContentWithProofs)});`
           );
 
-          for (const pt of section.ProofTexts ?? []) {
+          // CI-4 fix: field name is Proofs, not ProofTexts (per interface declarations above).
+          for (const pt of section.Proofs ?? []) {
             for (const ref of pt.References ?? []) {
               const verses = parseProofTextRef(ref);
               if (verses.length === 0) {
@@ -985,10 +991,11 @@ async function main(): Promise<void> {
           }
         }
       }
-    } else if (format === 'catechism' && doc.Questions) {
+    } else if (format === 'catechism' && Array.isArray(data)) {
+      const questions = data as CatechismQuestion[];
       lines.push('');
       lines.push(`-- Questions: ${slug}`);
-      for (const q of doc.Questions) {
+      for (const q of questions) {
         if (!q.Question || !q.Answer) {
           console.warn(`[seed-confessional] Question missing Question/Answer in ${slug} Q${q.Number} — skipping`);
           skippedSections++;
@@ -999,7 +1006,8 @@ async function main(): Promise<void> {
           `INSERT INTO confessional_sections (id, document_id, question_number, question, answer, answer_with_proofs) VALUES (${sectionId}, ${docId}, ${q.Number}, ${escapeSQL(q.Question)}, ${escapeSQL(q.Answer)}, ${escapeSQL(q.AnswerWithProofs)});`
         );
 
-        for (const pt of q.ProofTexts ?? []) {
+        // CI-4 fix: field name is Proofs, not ProofTexts (per interface declarations above).
+        for (const pt of q.Proofs ?? []) {
           for (const ref of pt.References ?? []) {
             const verses = parseProofTextRef(ref);
             if (verses.length === 0) {
@@ -1041,23 +1049,26 @@ async function main(): Promise<void> {
 }
 ```
 
-**Step 3: Run the ETL script against a local Creeds.json to validate**
+**Step 3: Run the ETL script against a local Creeds.json directory to validate**
 
-First, download a single document to test locally:
+CI-5 fix: `--local` expects a directory containing `<slug>.json` files. Download the Westminster
+Shorter Catechism using its slug filename into a directory, then pass the directory path.
+
 ```bash
 mkdir -p /tmp/creeds-test
-curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/westminster-shorter-catechism.json > /tmp/creeds-test/wsc.json
+curl -s "https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds/westminster_shorter_catechism.json" \
+  > /tmp/creeds-test/westminster_shorter_catechism.json
 ```
 
-Run with `--local` flag:
+Run with `--local` pointing to the directory:
 ```bash
-cd server && npx tsx scripts/seed-confessional.ts --local /tmp/creeds-test/wsc.json --output /tmp/confessional-seed-test.sql
+cd server && npx tsx scripts/seed-confessional.ts --local /tmp/creeds-test --output /tmp/confessional-seed-test.sql
 ```
 
 Expected output:
 ```
 [seed-confessional] Output: /tmp/confessional-seed-test.sql
-[seed-confessional] Loading from local path: /tmp/creeds-test/wsc.json
+[seed-confessional] Loading from local directory: /tmp/creeds-test
 [seed-confessional] Loaded 1 documents.
 
 === Validation Report ===
@@ -1068,7 +1079,7 @@ Proof-text rows emitted:     <some number>
 Unresolvable proof refs:     0
 ```
 
-If field names don't match (you get 0 sections), open the JSON and adjust the type definitions (`Chapters`, `Questions`, etc.) to match the actual field names.
+If `section_count = 0`, open the downloaded JSON and verify the `Metadata.CreedFormat` field value and the `Data` array structure. Adjust the type casts in the ETL loop if the actual field names differ.
 
 **Step 4: Apply the test SQL to the local D1 and verify counts**
 
@@ -1087,7 +1098,7 @@ Expected: `doc_count = 1`, `section_count = 107` (Westminster Shorter Catechism 
 cd server && npm test -- scripts/seed-confessional.test.ts
 ```
 
-Expected: all 7 tests still pass.
+Expected: all 8 tests still pass.
 
 **Step 6: Commit**
 
@@ -1245,34 +1256,38 @@ npx wrangler d1 execute claude-of-alexandria --remote --command="SELECT COUNT(*)
 <!-- critic-findings
 critic-rating: ADEQUATE
 findings:
-Domain 1 — Ordering inversions:
-- Task 3 (write tests) depends on Task 1 (research, to confirm citation format) — this dependency is explicit in the task header. Task 4 (parser implementation) depends on Task 3. Task 5 (ETL body) depends on Task 1 and Task 4. Task 6 (integration) depends on Task 5. Order is: 1 → 2 (parallel) → 3 → 4 → 5 → 6. No ordering inversions.
-- Task 2 (migration) is correctly marked as independent — it can run in parallel with Task 1. No inversion.
+R2 revision — fixes applied (CI-3, CI-4, CI-5, RC-4, RC-5):
 
-Domain 2 — Verification gaps:
-- Task 2 Step 3 verifies migration applies locally AND queries the table list. Step 4 smoke-tests INSERT + SELECT. Adequate.
-- Task 4 Step 2 runs tests; Step 3 runs the full suite for regressions. Adequate.
-- Task 5 Step 3 runs the ETL locally; Step 4 applies SQL to local D1 and checks counts; Step 5 re-runs parser tests. Adequate.
-- Task 6 Step 3 validates dry-run counts; Step 4 applies to local D1 and verifies; Step 5 runs an F2 simulation query. Adequate.
-- One gap: Task 6 Step 7 (remote apply) has no explicit count verification embedded in the step — it shows the commands but the expected counts are not stated. Added verification commands to Step 7.
+CI-3 fix confirmed: Loop changed from `for (const doc of documents)` (accesses undefined fields) to
+`for (const { slug, doc: creedsDoc } of documents)`. Fields now accessed as `creedsDoc.Metadata.Title`,
+`creedsDoc.Metadata.Year`, `creedsDoc.Data`. The `if (!slug) { continue }` guard removed — slug is
+always a string from `CREEDS_FILENAMES`, never undefined.
 
-Domain 3 — Hidden dependencies:
-- Tasks 1 and 2 are marked parallel and are genuinely independent (migration DDL doesn't depend on research findings; research doesn't touch the migration). No hidden dependency.
-- The `VERSE_COUNTS` map is used by the parser (Task 4) and the ETL (Task 5). Both are in the same file — no hidden state sharing across files.
-- The `lookupBook` import path `'../src/db/books.js'` is relative from `scripts/` to `src/db/` — confirmed correct by the project structure (`server/scripts/` → `server/src/db/`).
+CI-4 fix confirmed: Both proof-text loops changed from `section.ProofTexts ?? []` and `q.ProofTexts ?? []`
+to `section.Proofs ?? []` and `q.Proofs ?? []`, matching the interface declarations.
 
-Domain 4 — Completeness:
-- C1 (migration) → Task 2. Covered.
-- C2 (parser + tests) → Tasks 3 + 4. Covered.
-- C3 (ETL body) → Task 5. Covered.
-- C4 (seed-d1.sh integration) → Task 6. Covered.
-- C5 (research) → Task 1. Covered.
-- All design components have at least one implementing task. Adequate.
+CI-5 fix confirmed: Task 5 Step 3 now downloads the file as `westminster_shorter_catechism.json`
+(slug filename) into `/tmp/creeds-test/` and passes `--local /tmp/creeds-test` (directory). Expected
+log output updated to "Loading from local directory". Data path through `join(localDir, slug+'.json')`
+will now resolve correctly for the westminster_shorter_catechism slug.
 
-Domain 5 — Code accuracy:
-- The `parseProofTextRef` test for cross-chapter range `Gen.1.28-Gen.2.3` expects 7 rows (4 from Gen 1:28-31 + 3 from Gen 2:1-3). The `VERSE_COUNTS.genesis` map has index 1 = 31 and index 2 = 25 — consistent with the expectation.
-- The `findRangeDash` function uses a reverse scan for the last `-` preceded by a digit and followed by `[A-Za-z0-9]`. This correctly handles `1Cor.15.1-1Cor.15.4` (dash at index 10, preceded by `1`, followed by `1`). Edge case: `Gen.1.28-Gen.2.3` — dash at index 8, preceded by `8`, followed by `G`. Correct.
-- `lookupBook('Ps')` normalizes to `'ps'` (lowercased) — present in `BOOK_MAP` as `'ps'` → canonical `'psalms'`. Verified.
-- `lookupBook('1Cor')` normalizes to `'1cor'` — present as `'1cor'` → canonical `'1_corinthians'`. Verified.
-- The `escapeSQL` helper matches the pattern in `export-d1.ts`. Adequate.
+RC-4 fix confirmed: Task 4 Done When and Task 5 Step 5 both updated from "7 tests" to "8 tests",
+consistent with Task 3 (8 test cases listed) and Task 4 Step 2 (expects 8 passes).
+
+RC-5 fix confirmed: Format detection now uses `creedsDoc.Metadata.CreedFormat?.toLowerCase()` rather
+than `doc.Questions` shape inference. Canon and Creed format documents are documented as intentional
+zero-section ingests (noted inline in the ETL code).
+
+Domain 1 — Ordering: unchanged from prior rating. No inversions.
+
+Domain 2 — Verification: CI-5 fix removes the 0-document silent failure from Task 5 Step 3.
+Minimum-count assertion for section_count is implicit ("Sections ingested: 107" in expected output) —
+the builder will see a mismatch if sections are 0. Adequate.
+
+Domain 3 — Hidden dependencies: none. `VERSE_COUNTS` and loop logic are in one file.
+
+Domain 4 — Completeness: all 5 design components covered. No gaps.
+
+Domain 5 — Code accuracy: parser logic unchanged (was correct in prior review). ETL loop now
+correctly destructures, accesses Metadata fields, and uses Proofs field name.
 critic-findings -->
