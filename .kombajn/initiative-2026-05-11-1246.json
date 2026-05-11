@@ -3,7 +3,7 @@
   "name": "initiative-2026-05-11-1246",
   "created": "2026-05-11",
   "status": "active",
-  "concurrencyVersion": 23,
+  "concurrencyVersion": 26,
   "features": [
     {
       "id": "F1",
@@ -17,8 +17,8 @@
       "reviewStatus": "skipped",
       "reviewPath": null,
       "plan": ".kombajn/plans/2026-05-11-f1-confessional-d1-schema-etl.md",
-      "planReviewStatus": null,
-      "planReviewPath": null,
+      "planReviewStatus": "needs-revision",
+      "planReviewPath": ".kombajn/initiative-2026-05-11-1246/reviews/F1-plan-review-r1.md",
       "implementation": null,
       "githubIssue": 37,
       "issueNumber": 37,
