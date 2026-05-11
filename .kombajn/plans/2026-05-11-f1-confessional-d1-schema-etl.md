@@ -6,7 +6,7 @@
 
 **Architecture:** A single TypeScript ETL script fetches Creeds.json, transforms confession and catechism documents into a unified superset-column sections table (NULL columns for format-incompatible fields), expands proof-text reference ranges to individual verse rows at ingestion time using the existing `lookupBook()` utility and a bundled static verse-count map, and writes SQL INSERT statements to a file applied by `wrangler d1 execute`. The migration defines three tables (`confessional_documents`, `confessional_sections`, `confessional_proof_texts`) and their indexes. The parser function is exported and independently tested with Vitest before the ETL script consumes it.
 
-**Tech Stack:** TypeScript (ESM, `tsx` runner), Vitest 4.x, Wrangler CLI (`wrangler d1 execute`), Creeds.json (`@NonlinearFruit/creeds` npm package or raw GitHub URL), existing `lookupBook()` from `server/src/db/books.ts`.
+**Tech Stack:** TypeScript (ESM, `tsx` runner), Vitest 4.x, Wrangler CLI (`wrangler d1 execute`), Creeds.json (individual document files fetched from raw GitHub URL — no npm package), existing `lookupBook()` from `server/src/db/books.ts`.
 
 ---
 
@@ -36,18 +36,10 @@
 
 **Files:**
 - Read: Creeds.json README at `https://raw.githubusercontent.com/NonlinearFruit/creeds/master/README.md`
-- Read: Sample document JSON from npm package or GitHub raw URL
+- Read: Sample document JSON from GitHub raw URL
 - Create: `server/scripts/creeds-research-notes.txt` (scratch file — gitignored, local only)
 
-**Step 1: Check if npm package exists and is accessible**
-
-```bash
-cd server && npm info @NonlinearFruit/creeds 2>/dev/null | head -20
-```
-
-Expected: Either package info (version, dist-tags) or "npm error 404". If 404, the script will use the raw GitHub URL.
-
-**Step 2: Fetch the Creeds.json README to identify copyright-restricted documents**
+**Step 1: Fetch the Creeds.json README to identify copyright-restricted documents**
 
 ```bash
 curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/README.md | head -200
@@ -55,7 +47,7 @@ curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/README.md
 
 Read carefully. The README lists which documents are in the repository and notes any copyright restrictions. Identify all 20th/21st-century documents that are NOT under a permissive license (Unlicense, CC0, or public domain). These become the copyright exclusion list.
 
-**Step 3: Fetch a confession document to verify the JSON structure**
+**Step 2: Fetch a confession document to verify the JSON structure**
 
 ```bash
 # Westminster Confession of Faith is a safe reference document
@@ -68,7 +60,13 @@ Confirm the presence of these fields:
 - Section level: `Section`, `Content`, `ContentWithProofs`, `ProofTexts`
 - ProofTexts level: array of objects with `Id` (proof group number) and `References` (array of citation strings)
 
-**Step 4: Fetch a catechism document to compare structure**
+Also confirm the URL pattern for individual files. If the above path returns 404, try:
+```bash
+curl -s https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds/westminster_confession_of_faith.json | python3 -m json.tool | head -80
+```
+Record the working URL base in the research notes — Task 5 `CREEDS_BASE_URL` must match.
+
+**Step 3: Fetch a catechism document to compare structure**
 
 ```bash
 curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/westminster-shorter-catechism.json | python3 -m json.tool | head -80
@@ -76,7 +74,7 @@ curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/west
 
 Confirm catechism fields: `Questions` array with `Number`, `Question`, `Answer`, `AnswerWithProofs`, `ProofTexts`.
 
-**Step 5: Verify Thirty-Nine Articles is present**
+**Step 4: Verify Thirty-Nine Articles is present**
 
 ```bash
 curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/thirty-nine-articles.json | python3 -m json.tool | head -20
@@ -84,20 +82,20 @@ curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/thir
 
 If 404: note it is absent and exclude from tradition map.
 
-**Step 6: Confirm proof-text citation format**
+**Step 5: Confirm proof-text citation format**
 
-Look at ProofTexts `References` array from Step 3. Examples to verify:
+Look at ProofTexts `References` array from Step 2. Examples to verify:
 - Single verse format: `"Ps.19.1"` or `"Gen.1.1"`
 - Range format: `"Gen.1.1-Gen.1.5"` or `"1Cor.15.1-1Cor.15.4"`
 - Note whether the dash separator `-` is always between two full `Book.Ch.V` endpoints (not abbreviated ranges like `Gen.1.1-5`)
 
-**Step 7: Record research findings**
+**Step 6: Record research findings**
 
 Write `server/scripts/creeds-research-notes.txt` with:
 ```
 DATE: <today>
-NPM_PACKAGE: exists | 404
-SOURCE_URL: <URL used>
+SOURCE_URL_BASE: <confirmed base URL, e.g. https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds>
+FILE_PATTERN: <filename pattern, e.g. <slug>.json>
 COPYRIGHT_EXCLUSIONS: <comma-separated list of document slugs to exclude>
 CONFESSION_FIELDS: <actual field names confirmed>
 CATECHISM_FIELDS: <actual field names confirmed>
@@ -124,7 +122,7 @@ This file gates Tasks 3 and 4. Do not proceed to Task 3 until this file exists a
 **Step 1: Verify the next migration number**
 
 ```bash
-ls /path/to/server/migrations/ | sort | tail -5
+ls server/migrations/ | sort | tail -5
 ```
 
 Confirm `0012_drop_old_lexicon.sql` is the latest. The new file is `0013_add_confessional.sql`.
@@ -303,6 +301,16 @@ describe('parseProofTextRef', () => {
     expect(warnSpy).toHaveBeenCalled();
     warnSpy.mockRestore();
   });
+
+  it('expands a cross-book range spanning Malachi into Matthew', () => {
+    // Mal 4 has 6 verses; Matt 1:1 is the first verse of Matthew
+    // Mal.4.5-Matt.1.1 → Mal 4:5, Mal 4:6, Matt 1:1 = 3 verses
+    const result = parseProofTextRef('Mal.4.5-Matt.1.1');
+    expect(result).toHaveLength(3);
+    expect(result[0]).toEqual({ book: 'malachi', chapter: 4, verse: 5 });
+    expect(result[1]).toEqual({ book: 'malachi', chapter: 4, verse: 6 });
+    expect(result[2]).toEqual({ book: 'matthew', chapter: 1, verse: 1 });
+  });
 });
 ```
 
@@ -312,9 +320,9 @@ describe('parseProofTextRef', () => {
 cd server && npm test -- scripts/seed-confessional.test.ts
 ```
 
-Expected: all tests fail with `Cannot find module './seed-confessional.js'` or similar. This is correct — the implementation does not exist yet.
+Expected: all 8 tests fail with `Cannot find module './seed-confessional.js'` or similar. This is correct — the implementation does not exist yet.
 
-**Done when:** test file exists and tests fail for the right reason (missing implementation).
+**Done when:** test file exists and 8 tests fail for the right reason (missing implementation).
 
 ---
 
@@ -604,7 +612,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 cd server && npm test -- scripts/seed-confessional.test.ts
 ```
 
-Expected: all 7 tests pass.
+Expected: all 8 tests pass.
 
 If any test fails, debug the specific failing assertion. Common issues:
 - `Gen.1.28-Gen.2.3`: verify the `VERSE_COUNTS.genesis` array has index 1 = 31 (Gen 1 has 31 verses) and index 2 = 25 (Gen 2 has 25 verses). Expected result: Gen 1:28-31 = 4 rows + Gen 2:1-3 = 3 rows = 7 total.
@@ -617,7 +625,7 @@ If any test fails, debug the specific failing assertion. Common issues:
 cd server && npm test
 ```
 
-Expected: all pre-existing tests pass, plus the 7 new parser tests.
+Expected: all pre-existing tests pass, plus the 8 new parser tests.
 
 **Step 4: Commit**
 
@@ -626,7 +634,7 @@ git add server/scripts/seed-confessional.ts server/scripts/seed-confessional.tes
 git commit -m "feat(etl): add proof-text reference parser with Vitest tests (C2)"
 ```
 
-**Done when:** all 7 parser tests pass and no regressions in the full suite.
+**Done when:** all 8 parser tests pass and no regressions in the full suite.
 
 ---
 
@@ -643,20 +651,22 @@ git commit -m "feat(etl): add proof-text reference parser with Vitest tests (C2)
 
 **Context note:** Before writing, open `server/scripts/creeds-research-notes.txt` from Task 1 to get the confirmed field names, source URL, and copyright exclusion list. The implementation below uses the field names from the design doc (`Chapters`, `Sections`, `Questions`, `ProofTexts`) — adjust to the actual field names found during research.
 
-**Step 1: Install or verify access to the Creeds.json source**
+**Step 1: Verify the Creeds.json source repo**
 
-Check whether the npm package exists (from Task 1 research):
-
-```bash
-cd server && npm info @NonlinearFruit/creeds version 2>/dev/null
+The repository is `NonlinearFruit/Creeds.json` (capital C, `.json` in the name). Individual document files live at:
+```
+https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds/<filename>.json
 ```
 
-If it exists, install it as a dev dependency:
+There is no aggregate `dist/creeds.json` file. The ETL script fetches each file individually using a hardcoded list of the 43 known filenames (derived from Task 1 research). No npm package installation is needed.
+
+Verify one file is reachable before proceeding:
 ```bash
-cd server && npm install --save-dev @NonlinearFruit/creeds
+curl -o /dev/null -w "%{http_code}\n" \
+  "https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds/westminster_shorter_catechism.json"
 ```
 
-If not, the script will fetch from the raw GitHub URL — no installation needed.
+Expected: `200`. If not 200, check the `SOURCE_URL_BASE` recorded in `server/scripts/creeds-research-notes.txt` (from Task 1) and update `CREEDS_BASE_URL` in the script to the confirmed URL before proceeding. Use `--local` as an escape hatch if network is unavailable.
 
 **Step 2: Replace the stub `main()` in `seed-confessional.ts`**
 
@@ -676,50 +686,73 @@ Add the copyright exclusion set and tradition map after `VERSE_COUNTS` (before t
 
 ```typescript
 // ─── Copyright exclusion list ──────────────────────────────────────────────
-// Documents in Creeds.json that are NOT under the Unlicense or public domain.
-// UPDATE this list based on creeds-research-notes.txt from Task 1 research.
-// Slugs must exactly match the document's slug key in the Creeds.json source.
+// Documents whose Metadata.SourceAttribution indicates a copyright restriction.
+// Slugs are the filename without '.json' (e.g. 'chicago_statement_on_biblical_inerrancy').
+// Confirmed from Creeds.json repo inspection (May 2026):
+//   - chicago_statement_on_biblical_inerrancy: "Copyright - Alliance of Confessing Evangelicals, Inc"
+//   - helvetic_consensus: "Translation Copyright 1990 - Martin Klauber"
+//   - shema_yisrael: "Copyright - Crossway"
+// UPDATE if additional copyrighted documents are found during Task 1 research.
 const COPYRIGHT_EXCLUDED_SLUGS = new Set<string>([
-  'chicago-statement-on-biblical-inerrancy',
-  'chicago-statement-on-biblical-hermeneutics',
-  'chicago-statement-on-biblical-application',
-  'lausanne-covenant',
-  'amsterdam-declaration',
-  // ADD any additional slugs found during C5 research
+  'chicago_statement_on_biblical_inerrancy',
+  'helvetic_consensus',
+  'shema_yisrael',
 ]);
 
 // ─── Tradition classification map ─────────────────────────────────────────
-// Maps document slug → tradition string. Covers all ~43 documents in Creeds.json.
+// Maps document slug (filename without .json) → tradition string.
+// Covers all 43 confirmed documents in NonlinearFruit/Creeds.json (May 2026).
 // 'other' is the fallback for any slug not explicitly listed.
 const TRADITION_MAP: Record<string, string> = {
   // Reformed / Presbyterian
-  'westminster-confession-of-faith':          'reformed',
-  'westminster-shorter-catechism':            'reformed',
-  'westminster-larger-catechism':             'reformed',
-  'belgic-confession':                        'reformed',
-  'heidelberg-catechism':                     'reformed',
-  'canons-of-dort':                           'reformed',
-  'london-baptist-confession-1689':           'reformed',
-  'second-london-baptist-confession':         'reformed',
-  'savoy-declaration':                        'reformed',
-  'abstract-of-principles':                   'reformed',
-  'new-hampshire-confession':                 'reformed',
-  // Ancient
-  'apostles-creed':                           'ancient',
-  'nicene-creed':                             'ancient',
-  'athanasian-creed':                         'ancient',
-  'chalcedonian-definition':                  'ancient',
-  'definition-of-chalcedon':                  'ancient',
-  // Lutheran
-  'augsburg-confession':                      'lutheran',
-  'luthers-small-catechism':                  'lutheran',
-  'luthers-large-catechism':                  'lutheran',
-  'formula-of-concord':                       'lutheran',
-  // Anglican
-  'thirty-nine-articles':                     'anglican',
-  // Anabaptist
-  'schleitheim-confession':                   'anabaptist',
-  'dordrecht-confession':                     'anabaptist',
+  'westminster_confession_of_faith':          'reformed',
+  'westminster_shorter_catechism':            'reformed',
+  'westminster_larger_catechism':             'reformed',
+  'belgic_confession_of_faith':               'reformed',
+  'heidelberg_catechism':                     'reformed',
+  'canons_of_dort':                           'reformed',
+  'london_baptist_1689':                      'reformed',
+  'savoy_declaration':                        'reformed',
+  'abstract_of_principles':                   'reformed',
+  'puritan_catechism':                        'reformed',
+  'keachs_catechism':                         'reformed',
+  '1695_baptist_catechism':                   'reformed',
+  'catechism_for_young_children':             'reformed',
+  'exposition_of_the_assemblies_catechism':   'reformed',
+  'shorter_catechism_explained':              'reformed',
+  'matthew_henrys_scripture_catechism':       'reformed',
+  // Ancient / Ecumenical
+  'apostles_creed':                           'ancient',
+  'nicene_creed':                             'ancient',
+  'athanasian_creed':                         'ancient',
+  'chalcedonian_definition':                  'ancient',
+  // Reformation / Continental
+  'scots_confession':                         'reformed',
+  'french_confession_of_faith':               'reformed',
+  'second_helvetic_confession':               'reformed',
+  'first_helvetic_confession':                'reformed',
+  'first_confession_of_basel':                'reformed',
+  'waldensian_confession':                    'reformed',
+  'tetrapolitan_confession':                  'reformed',
+  'ten_theses_of_berne':                      'reformed',
+  'consensus_tigurinus':                      'reformed',
+  'zwinglis_67_articles':                     'reformed',
+  'zwinglis_fidei_ratio':                     'reformed',
+  'council_of_orange':                        'ancient',
+  // Patristic / Early Church
+  'gregorys_declaration_of_faith':            'ancient',
+  'ignatius_creed':                           'ancient',
+  'irenaeus_rule_of_faith':                   'ancient',
+  'tertullians_rule_of_faith':                'ancient',
+  // Scripture passages / hymns
+  'christ_hymn_of_colossians':                'other',
+  'christ_hymn_of_philippians':               'other',
+  'christian_shema':                          'other',
+  'confession_of_peter':                      'other',
+  // Copyright-excluded (slugs present for reference — excluded by COPYRIGHT_EXCLUDED_SLUGS)
+  'chicago_statement_on_biblical_inerrancy':  'other',
+  'helvetic_consensus':                       'reformed',
+  'shema_yisrael':                            'other',
   // ADD slugs found during C5 research; unknown slugs default to 'other'
 };
 
@@ -743,8 +776,10 @@ function escapeNum(val: number | null | undefined): string {
 }
 
 // ─── Creeds.json type definitions ─────────────────────────────────────────
-// Adjust field names based on research in creeds-research-notes.txt
-interface ProofTextEntry {
+// Confirmed by inspecting NonlinearFruit/Creeds.json repo (May 2026).
+// Each document JSON has: { Metadata: {...}, Data: [...] | {...} }
+// "Proofs" is the field name (not "ProofTexts").
+interface ProofEntry {
   Id: number;
   References: string[];
 }
@@ -752,13 +787,13 @@ interface ProofTextEntry {
 interface ConfessionSection {
   Section: number;
   Content: string;
-  ContentWithProofs: string;
-  ProofTexts: ProofTextEntry[];
+  ContentWithProofs?: string;
+  Proofs: ProofEntry[];
 }
 
 interface ConfessionChapter {
   Chapter: number;
-  Title: string;
+  Title?: string;
   Sections: ConfessionSection[];
 }
 
@@ -766,18 +801,64 @@ interface CatechismQuestion {
   Number: number;
   Question: string;
   Answer: string;
-  AnswerWithProofs: string;
-  ProofTexts: ProofTextEntry[];
+  AnswerWithProofs?: string;
+  Proofs: ProofEntry[];
+}
+
+// Canon-format documents (e.g. Zwingli's 67 Articles, Consensus Tigurinus)
+interface CanonArticle {
+  Article: string | number;
+  Title?: string;
+  Content: string;
+  ContentWithProofs?: string;
+  Proofs?: ProofEntry[];
+}
+
+// Creed-format documents (e.g. Apostles' Creed): Data is a dict not an array
+interface CreedData {
+  Content: string;
+  ContentWithProofs?: string;
+  Proofs?: ProofEntry[];
+}
+
+interface CreedsMetadata {
+  Title: string;
+  Year?: string;
+  SourceAttribution?: string;
+  CreedFormat?: string;  // 'Confession' | 'Catechism' | 'Canon' | 'Creed'
 }
 
 interface CreedsDocument {
-  Slug: string;
-  Name: string;
-  Year?: number;
-  Type?: string;
-  Chapters?: ConfessionChapter[];
-  Questions?: CatechismQuestion[];
+  Metadata: CreedsMetadata;
+  // Data is an array for Confession/Catechism/Canon formats,
+  // or an object (CreedData) for simple Creed format
+  Data: ConfessionChapter[] | CatechismQuestion[] | CanonArticle[] | CreedData;
 }
+
+// ─── Confirmed document filenames in NonlinearFruit/Creeds.json ───────────
+// Source: creeds/ directory listing, May 2026 (43 files total).
+// The repo has no aggregate JSON file — each document is fetched individually.
+// Filenames without .json extension = the slug used in TRADITION_MAP and copyright check.
+const CREEDS_FILENAMES = [
+  '1695_baptist_catechism', 'abstract_of_principles', 'apostles_creed',
+  'athanasian_creed', 'belgic_confession_of_faith', 'canons_of_dort',
+  'catechism_for_young_children', 'chalcedonian_definition',
+  'chicago_statement_on_biblical_inerrancy', 'christ_hymn_of_colossians',
+  'christ_hymn_of_philippians', 'christian_shema', 'confession_of_peter',
+  'consensus_tigurinus', 'council_of_orange', 'exposition_of_the_assemblies_catechism',
+  'first_confession_of_basel', 'first_helvetic_confession', 'french_confession_of_faith',
+  'gregorys_declaration_of_faith', 'heidelberg_catechism', 'helvetic_consensus',
+  'ignatius_creed', 'irenaeus_rule_of_faith', 'keachs_catechism',
+  'london_baptist_1689', 'matthew_henrys_scripture_catechism', 'nicene_creed',
+  'puritan_catechism', 'savoy_declaration', 'scots_confession',
+  'second_helvetic_confession', 'shema_yisrael', 'shorter_catechism_explained',
+  'ten_theses_of_berne', 'tertullians_rule_of_faith', 'tetrapolitan_confession',
+  'waldensian_confession', 'westminster_confession_of_faith',
+  'westminster_larger_catechism', 'westminster_shorter_catechism',
+  'zwinglis_67_articles', 'zwinglis_fidei_ratio',
+] as const;
+
+const CREEDS_BASE_URL = 'https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds';
 
 // ─── ETL main ─────────────────────────────────────────────────────────────
 async function main(): Promise<void> {
@@ -785,41 +866,49 @@ async function main(): Promise<void> {
   const localIndex = args.indexOf('--local');
   const outputIndex = args.indexOf('--output');
 
+  // RC-3: Guard against missing --local argument
+  if (localIndex !== -1 && !args[localIndex + 1]) {
+    console.error('[seed-confessional] --local flag requires a path argument (directory containing <slug>.json files)');
+    process.exit(1);
+  }
+
   const outputPath = outputIndex !== -1 ? args[outputIndex + 1] : '/tmp/confessional-seed.sql';
-  const localPath = localIndex !== -1 ? args[localIndex + 1] : null;
+  const localDir = localIndex !== -1 ? args[localIndex + 1] : null;
 
   console.log(`[seed-confessional] Output: ${outputPath}`);
 
   // ── Phase 1: Fetch source ──
-  let documents: CreedsDocument[];
+  // CI-1 fix: There is no aggregate creeds.json file in the repo.
+  // Each document is fetched individually from creeds/<slug>.json.
+  const documents: Array<{ slug: string; doc: CreedsDocument }> = [];
 
-  if (localPath) {
-    console.log(`[seed-confessional] Loading from local path: ${localPath}`);
-    const raw = readFileSync(localPath, 'utf-8');
-    const parsed = JSON.parse(raw);
-    // Handle both array format and object format
-    documents = Array.isArray(parsed) ? parsed : Object.values(parsed);
-  } else {
-    console.log('[seed-confessional] Fetching Creeds.json from GitHub...');
-    // Try npm package data first, fall back to raw GitHub
-    let sourceUrl: string;
-    try {
-      // @NonlinearFruit/creeds exports individual document files
-      // Fetch the index or the aggregated JSON from the GitHub releases/raw URL
-      sourceUrl = 'https://raw.githubusercontent.com/NonlinearFruit/creeds/master/dist/creeds.json';
-      const response = await fetch(sourceUrl);
-      if (!response.ok) {
-        // Fallback: fetch individual files via the API listing
-        throw new Error(`HTTP ${response.status} from ${sourceUrl}`);
+  if (localDir) {
+    console.log(`[seed-confessional] Loading from local directory: ${localDir}`);
+    for (const slug of CREEDS_FILENAMES) {
+      const filePath = join(localDir, `${slug}.json`);
+      try {
+        const raw = readFileSync(filePath, 'utf-8');
+        const doc = JSON.parse(raw) as CreedsDocument;
+        documents.push({ slug, doc });
+      } catch (err) {
+        console.warn(`[seed-confessional] Skipping ${slug}: ${err}`);
       }
-      const raw = await response.text();
-      const parsed = JSON.parse(raw);
-      documents = Array.isArray(parsed) ? parsed : Object.values(parsed);
-      console.log(`[seed-confessional] Fetched from ${sourceUrl}`);
-    } catch (err) {
-      console.error(`[seed-confessional] Fatal: cannot fetch Creeds.json: ${err}`);
-      console.error('Tip: Use --local <path> to load from a local file.');
-      process.exit(1);
+    }
+  } else {
+    console.log('[seed-confessional] Fetching individual document files from GitHub...');
+    for (const slug of CREEDS_FILENAMES) {
+      const url = `${CREEDS_BASE_URL}/${slug}.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.warn(`[seed-confessional] HTTP ${response.status} fetching ${slug} — skipping`);
+          continue;
+        }
+        const doc = await response.json() as CreedsDocument;
+        documents.push({ slug, doc });
+      } catch (err) {
+        console.warn(`[seed-confessional] Error fetching ${slug}: ${err} — skipping`);
+      }
     }
   }
 
@@ -841,13 +930,8 @@ async function main(): Promise<void> {
   let skippedSections = 0;
   const unresolvedRefs: string[] = [];
 
-  for (const doc of documents) {
-    const slug = doc.Slug;
-    if (!slug) {
-      console.warn('[seed-confessional] Document without Slug — skipping');
-      continue;
-    }
-
+  // CI-3 fix: documents[] is Array<{ slug: string; doc: CreedsDocument }> — destructure correctly.
+  for (const { slug, doc: creedsDoc } of documents) {
     if (COPYRIGHT_EXCLUDED_SLUGS.has(slug)) {
       console.log(`[seed-confessional] Skipping copyright-excluded document: ${slug}`);
       skippedCopyright++;
@@ -856,18 +940,28 @@ async function main(): Promise<void> {
 
     docId++;
     const tradition = getTradition(slug);
-    const format = doc.Questions ? 'catechism' : 'confession';
-    const year = doc.Year ?? null;
+    const title = creedsDoc.Metadata.Title;
+    const year = creedsDoc.Metadata.Year ? parseInt(creedsDoc.Metadata.Year, 10) : null;
     const authors = null; // Creeds.json does not provide structured author data
 
+    // RC-5 fix: use creedsDoc.Metadata.CreedFormat for format detection instead of data-shape inference.
+    // CreedFormat values: 'Confession' | 'Catechism' | 'Canon' | 'Creed'
+    // Canon and Creed format documents are ingested as confessional_documents rows but will have
+    // zero sections — this is intentional. They represent non-structured texts (creeds, articles)
+    // that lack a chapter/section or question/answer hierarchy.
+    const creeedFormat = creedsDoc.Metadata.CreedFormat?.toLowerCase() ?? 'confession';
+    const format: 'confession' | 'catechism' = creeedFormat === 'catechism' ? 'catechism' : 'confession';
+    const data = creedsDoc.Data;
+
     lines.push(
-      `INSERT OR REPLACE INTO confessional_documents (id, slug, title, year, tradition, format, authors, source) VALUES (${docId}, ${escapeSQL(slug)}, ${escapeSQL(doc.Name)}, ${escapeNum(year)}, ${escapeSQL(tradition)}, ${escapeSQL(format)}, ${escapeSQL(authors)}, 'Creeds.json');`
+      `INSERT OR REPLACE INTO confessional_documents (id, slug, title, year, tradition, format, authors, source) VALUES (${docId}, ${escapeSQL(slug)}, ${escapeSQL(title)}, ${escapeNum(year)}, ${escapeSQL(tradition)}, ${escapeSQL(format)}, ${escapeSQL(authors)}, 'Creeds.json');`
     );
 
-    if (format === 'confession' && doc.Chapters) {
+    if (format === 'confession' && Array.isArray(data)) {
+      const chapters = data as ConfessionChapter[];
       lines.push('');
       lines.push(`-- Sections: ${slug}`);
-      for (const chapter of doc.Chapters) {
+      for (const chapter of chapters) {
         for (const section of chapter.Sections ?? []) {
           if (!section.Content) {
             console.warn(`[seed-confessional] Section missing Content in ${slug} ch${chapter.Chapter} s${section.Section} — skipping`);
@@ -879,7 +973,8 @@ async function main(): Promise<void> {
             `INSERT INTO confessional_sections (id, document_id, chapter_number, chapter_title, section_number, content, content_with_proofs) VALUES (${sectionId}, ${docId}, ${chapter.Chapter}, ${escapeSQL(chapter.Title)}, ${section.Section}, ${escapeSQL(section.Content)}, ${escapeSQL(section.ContentWithProofs)});`
           );
 
-          for (const pt of section.ProofTexts ?? []) {
+          // CI-4 fix: field name is Proofs, not ProofTexts (per interface declarations above).
+          for (const pt of section.Proofs ?? []) {
             for (const ref of pt.References ?? []) {
               const verses = parseProofTextRef(ref);
               if (verses.length === 0) {
@@ -896,10 +991,11 @@ async function main(): Promise<void> {
           }
         }
       }
-    } else if (format === 'catechism' && doc.Questions) {
+    } else if (format === 'catechism' && Array.isArray(data)) {
+      const questions = data as CatechismQuestion[];
       lines.push('');
       lines.push(`-- Questions: ${slug}`);
-      for (const q of doc.Questions) {
+      for (const q of questions) {
         if (!q.Question || !q.Answer) {
           console.warn(`[seed-confessional] Question missing Question/Answer in ${slug} Q${q.Number} — skipping`);
           skippedSections++;
@@ -910,7 +1006,8 @@ async function main(): Promise<void> {
           `INSERT INTO confessional_sections (id, document_id, question_number, question, answer, answer_with_proofs) VALUES (${sectionId}, ${docId}, ${q.Number}, ${escapeSQL(q.Question)}, ${escapeSQL(q.Answer)}, ${escapeSQL(q.AnswerWithProofs)});`
         );
 
-        for (const pt of q.ProofTexts ?? []) {
+        // CI-4 fix: field name is Proofs, not ProofTexts (per interface declarations above).
+        for (const pt of q.Proofs ?? []) {
           for (const ref of pt.References ?? []) {
             const verses = parseProofTextRef(ref);
             if (verses.length === 0) {
@@ -952,23 +1049,26 @@ async function main(): Promise<void> {
 }
 ```
 
-**Step 3: Run the ETL script against a local Creeds.json to validate**
+**Step 3: Run the ETL script against a local Creeds.json directory to validate**
 
-First, download a single document to test locally:
+CI-5 fix: `--local` expects a directory containing `<slug>.json` files. Download the Westminster
+Shorter Catechism using its slug filename into a directory, then pass the directory path.
+
 ```bash
 mkdir -p /tmp/creeds-test
-curl -s https://raw.githubusercontent.com/NonlinearFruit/creeds/master/data/westminster-shorter-catechism.json > /tmp/creeds-test/wsc.json
+curl -s "https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds/westminster_shorter_catechism.json" \
+  > /tmp/creeds-test/westminster_shorter_catechism.json
 ```
 
-Run with `--local` flag:
+Run with `--local` pointing to the directory:
 ```bash
-cd server && npx tsx scripts/seed-confessional.ts --local /tmp/creeds-test/wsc.json --output /tmp/confessional-seed-test.sql
+cd server && npx tsx scripts/seed-confessional.ts --local /tmp/creeds-test --output /tmp/confessional-seed-test.sql
 ```
 
 Expected output:
 ```
 [seed-confessional] Output: /tmp/confessional-seed-test.sql
-[seed-confessional] Loading from local path: /tmp/creeds-test/wsc.json
+[seed-confessional] Loading from local directory: /tmp/creeds-test
 [seed-confessional] Loaded 1 documents.
 
 === Validation Report ===
@@ -979,7 +1079,7 @@ Proof-text rows emitted:     <some number>
 Unresolvable proof refs:     0
 ```
 
-If field names don't match (you get 0 sections), open the JSON and adjust the type definitions (`Chapters`, `Questions`, etc.) to match the actual field names.
+If `section_count = 0`, open the downloaded JSON and verify the `Metadata.CreedFormat` field value and the `Data` array structure. Adjust the type casts in the ETL loop if the actual field names differ.
 
 **Step 4: Apply the test SQL to the local D1 and verify counts**
 
@@ -998,7 +1098,7 @@ Expected: `doc_count = 1`, `section_count = 107` (Westminster Shorter Catechism 
 cd server && npm test -- scripts/seed-confessional.test.ts
 ```
 
-Expected: all 7 tests still pass.
+Expected: all 8 tests still pass.
 
 **Step 6: Commit**
 
@@ -1156,34 +1256,38 @@ npx wrangler d1 execute claude-of-alexandria --remote --command="SELECT COUNT(*)
 <!-- critic-findings
 critic-rating: ADEQUATE
 findings:
-Domain 1 — Ordering inversions:
-- Task 3 (write tests) depends on Task 1 (research, to confirm citation format) — this dependency is explicit in the task header. Task 4 (parser implementation) depends on Task 3. Task 5 (ETL body) depends on Task 1 and Task 4. Task 6 (integration) depends on Task 5. Order is: 1 → 2 (parallel) → 3 → 4 → 5 → 6. No ordering inversions.
-- Task 2 (migration) is correctly marked as independent — it can run in parallel with Task 1. No inversion.
+R2 revision — fixes applied (CI-3, CI-4, CI-5, RC-4, RC-5):
 
-Domain 2 — Verification gaps:
-- Task 2 Step 3 verifies migration applies locally AND queries the table list. Step 4 smoke-tests INSERT + SELECT. Adequate.
-- Task 4 Step 2 runs tests; Step 3 runs the full suite for regressions. Adequate.
-- Task 5 Step 3 runs the ETL locally; Step 4 applies SQL to local D1 and checks counts; Step 5 re-runs parser tests. Adequate.
-- Task 6 Step 3 validates dry-run counts; Step 4 applies to local D1 and verifies; Step 5 runs an F2 simulation query. Adequate.
-- One gap: Task 6 Step 7 (remote apply) has no explicit count verification embedded in the step — it shows the commands but the expected counts are not stated. Added verification commands to Step 7.
+CI-3 fix confirmed: Loop changed from `for (const doc of documents)` (accesses undefined fields) to
+`for (const { slug, doc: creedsDoc } of documents)`. Fields now accessed as `creedsDoc.Metadata.Title`,
+`creedsDoc.Metadata.Year`, `creedsDoc.Data`. The `if (!slug) { continue }` guard removed — slug is
+always a string from `CREEDS_FILENAMES`, never undefined.
 
-Domain 3 — Hidden dependencies:
-- Tasks 1 and 2 are marked parallel and are genuinely independent (migration DDL doesn't depend on research findings; research doesn't touch the migration). No hidden dependency.
-- The `VERSE_COUNTS` map is used by the parser (Task 4) and the ETL (Task 5). Both are in the same file — no hidden state sharing across files.
-- The `lookupBook` import path `'../src/db/books.js'` is relative from `scripts/` to `src/db/` — confirmed correct by the project structure (`server/scripts/` → `server/src/db/`).
+CI-4 fix confirmed: Both proof-text loops changed from `section.ProofTexts ?? []` and `q.ProofTexts ?? []`
+to `section.Proofs ?? []` and `q.Proofs ?? []`, matching the interface declarations.
 
-Domain 4 — Completeness:
-- C1 (migration) → Task 2. Covered.
-- C2 (parser + tests) → Tasks 3 + 4. Covered.
-- C3 (ETL body) → Task 5. Covered.
-- C4 (seed-d1.sh integration) → Task 6. Covered.
-- C5 (research) → Task 1. Covered.
-- All design components have at least one implementing task. Adequate.
+CI-5 fix confirmed: Task 5 Step 3 now downloads the file as `westminster_shorter_catechism.json`
+(slug filename) into `/tmp/creeds-test/` and passes `--local /tmp/creeds-test` (directory). Expected
+log output updated to "Loading from local directory". Data path through `join(localDir, slug+'.json')`
+will now resolve correctly for the westminster_shorter_catechism slug.
 
-Domain 5 — Code accuracy:
-- The `parseProofTextRef` test for cross-chapter range `Gen.1.28-Gen.2.3` expects 7 rows (4 from Gen 1:28-31 + 3 from Gen 2:1-3). The `VERSE_COUNTS.genesis` map has index 1 = 31 and index 2 = 25 — consistent with the expectation.
-- The `findRangeDash` function uses a reverse scan for the last `-` preceded by a digit and followed by `[A-Za-z0-9]`. This correctly handles `1Cor.15.1-1Cor.15.4` (dash at index 10, preceded by `1`, followed by `1`). Edge case: `Gen.1.28-Gen.2.3` — dash at index 8, preceded by `8`, followed by `G`. Correct.
-- `lookupBook('Ps')` normalizes to `'ps'` (lowercased) — present in `BOOK_MAP` as `'ps'` → canonical `'psalms'`. Verified.
-- `lookupBook('1Cor')` normalizes to `'1cor'` — present as `'1cor'` → canonical `'1_corinthians'`. Verified.
-- The `escapeSQL` helper matches the pattern in `export-d1.ts`. Adequate.
+RC-4 fix confirmed: Task 4 Done When and Task 5 Step 5 both updated from "7 tests" to "8 tests",
+consistent with Task 3 (8 test cases listed) and Task 4 Step 2 (expects 8 passes).
+
+RC-5 fix confirmed: Format detection now uses `creedsDoc.Metadata.CreedFormat?.toLowerCase()` rather
+than `doc.Questions` shape inference. Canon and Creed format documents are documented as intentional
+zero-section ingests (noted inline in the ETL code).
+
+Domain 1 — Ordering: unchanged from prior rating. No inversions.
+
+Domain 2 — Verification: CI-5 fix removes the 0-document silent failure from Task 5 Step 3.
+Minimum-count assertion for section_count is implicit ("Sections ingested: 107" in expected output) —
+the builder will see a mismatch if sections are 0. Adequate.
+
+Domain 3 — Hidden dependencies: none. `VERSE_COUNTS` and loop logic are in one file.
+
+Domain 4 — Completeness: all 5 design components covered. No gaps.
+
+Domain 5 — Code accuracy: parser logic unchanged (was correct in prior review). ETL loop now
+correctly destructures, accesses Metadata fields, and uses Proofs field name.
 critic-findings -->

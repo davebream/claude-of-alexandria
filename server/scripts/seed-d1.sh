@@ -211,11 +211,19 @@ for chunk in "$SEED_DIR"/commentary-*.sql; do
 done
 echo "  $commentary_count commentary files imported."
 
+# Phase 8: Confessional documents (Creeds.json, Unlicense)
+echo "Seeding confessional documents..."
+npx tsx "$(dirname "$0")/seed-confessional.ts" --output /tmp/confessional-seed.sql
+npx wrangler d1 execute "$DB_NAME" --file=/tmp/confessional-seed.sql --remote
+echo "  Confessional documents seeded."
+echo ""
+
 # Post-seed verification
 echo ""
 echo "=== Verification ==="
 npx wrangler d1 execute "$DB_NAME" --command="SELECT translation, COUNT(*) as count FROM bible_verses GROUP BY translation;" --remote
 npx wrangler d1 execute "$DB_NAME" --command="SELECT commentary, COUNT(*) as count FROM commentary_entries GROUP BY commentary;" --remote
+npx wrangler d1 execute "$DB_NAME" --command="SELECT tradition, COUNT(*) as count FROM confessional_documents GROUP BY tradition;" --remote
 
 echo ""
 echo "=== Seeding complete. NT: $nt_count batches, OT: $ot_count books, Variants: $var_count, Discourse: $disc_count, Verses: $verse_count, Commentaries: $commentary_count ==="
