@@ -3,7 +3,7 @@
   "name": "initiative-2026-05-11-1246",
   "created": "2026-05-11",
   "status": "active",
-  "concurrencyVersion": 26,
+  "concurrencyVersion": 37,
   "features": [
     {
       "id": "F1",
@@ -74,6 +74,24 @@
             "verdict": "ready",
             "artifactPath": ".kombajn/plans/2026-05-11-f1-confessional-d1-schema-etl.md"
           }
+        },
+        {
+          "ts": "2026-05-11T11:17:35.661Z",
+          "phase": "plan",
+          "type": "thought",
+          "payload": {
+            "summary": "Revision pass: fix CI-1 by replacing speculative dist/creeds.json URL with confirmed individual-file fetch loop over actual repo NonlinearFruit/Creeds.json (creeds/<slug>.json); fix CI-2 by replacing /path/to/ placeholder; address RC-1 (remove dead npm path), RC-2 (add cross-book range test), RC-3 (guard --local missing arg); update type definitions to match confirmed field names (Proofs not ProofTexts, Data array, Metadata block)"
+          }
+        },
+        {
+          "ts": "2026-05-11T11:23:16.998Z",
+          "phase": "plan",
+          "type": "response",
+          "payload": {
+            "verdict": "ready",
+            "artifactPath": ".kombajn/plans/2026-05-11-f1-confessional-d1-schema-etl.md",
+            "note": "Revised per R1 review: removed npm code path (RC-1), Task 1 renumbered 6 steps, URL confirmation step added, Task 5 CREEDS_BASE_URL cross-reference added"
+          }
         }
       ],
       "revisionCount": 0,
@@ -127,7 +145,7 @@
       "name": "Add FTS5 full-text search over lexicon definitions",
       "priority": "P1",
       "dependsOn": [],
-      "status": "active",
+      "status": "done",
       "tier": "standard",
       "requirements": "skipped",
       "design": ".kombajn/plans/2026-05-11-fts-lexicon-search-design.md",
@@ -136,15 +154,15 @@
       "plan": ".kombajn/plans/2026-05-11-fts-lexicon-search-plan.md",
       "planReviewStatus": "ready",
       "planReviewPath": ".kombajn/initiative-2026-05-11-1246/reviews/F3-plan-review-r1.md",
-      "implementation": null,
+      "implementation": ".claude/worktrees/feat-F3-fts-lexicon-search",
       "githubIssue": 41,
       "issueNumber": 41,
       "pipelineDepth": "medium",
       "complexity": "M",
-      "worktreeBranch": null,
-      "worktreePath": null,
-      "prNumber": null,
-      "prUrl": null,
+      "worktreeBranch": "feat/F3-fts-lexicon-search",
+      "worktreePath": ".claude/worktrees/feat-F3-fts-lexicon-search",
+      "prNumber": 44,
+      "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/44",
       "costUsd": null,
       "costSpawnCount": 0,
       "costKnownSpawnCount": 0,
