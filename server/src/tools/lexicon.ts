@@ -29,6 +29,8 @@ export const LexiconInputSchema = {
     .describe("Array of Strong's numbers (e.g., [\"H1961\", \"G3056\"]). Max 20."),
   lemmas: jsonArray(z.array(z.string()).min(1).max(20)).optional()
     .describe('Array of Greek/Hebrew lemmas to look up. Max 20.'),
+  search: z.string().min(2).max(100).optional()
+    .describe('English meaning or concept to search for (e.g., "love", "redemption"). Searches gloss and full definitions across all lexicon sources. Returns up to 20 matches. Mutually exclusive with strongs_ids and lemmas.'),
   compact: z.boolean().optional()
     .describe('If true, return only strongs_id, gloss, transliteration (default: false)'),
 };
@@ -51,6 +53,7 @@ export const LexiconOutputSchema = {
     sources: z.array(z.string()).optional(),
   })),
   not_found: z.array(z.string()),
+  results_capped: z.boolean().optional(),
   errors: z.array(z.string()),
 };
 
@@ -97,23 +100,45 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
   const errors: string[] = [];
 
   // Validate: at least one parameter required
-  if (!args.strongs_ids && !args.lemmas) {
+  if (!args.strongs_ids && !args.lemmas && !args.search) {
     return {
       content: [{ type: 'text', text: JSON.stringify({
-        error: { code: 'MISSING_INPUT', message: "At least one of 'strongs_ids' or 'lemmas' is required." }
+        error: { code: 'MISSING_INPUT', message: "At least one of 'strongs_ids', 'lemmas', or 'search' is required." }
       }) }],
       isError: true,
     };
   }
 
-  // Validate: mutual exclusivity
-  if (args.strongs_ids && args.lemmas) {
+  // Validate: mutual exclusivity — exactly one of the three inputs allowed
+  const inputCount = [args.strongs_ids, args.lemmas, args.search].filter(Boolean).length;
+  if (inputCount > 1) {
     return {
       content: [{ type: 'text', text: JSON.stringify({
-        error: { code: 'INVALID_INPUT', message: "Provide either 'strongs_ids' or 'lemmas', not both." }
+        error: { code: 'INVALID_INPUT', message: "Provide exactly one of: 'strongs_ids', 'lemmas', or 'search'." }
       }) }],
       isError: true,
     };
+  }
+
+  // Validate: search length (Zod handles this at the schema level when invoked via MCP,
+  // but we also guard here for direct programmatic calls with `as any` casts in tests)
+  if (args.search !== undefined) {
+    if (args.search.length < 2) {
+      return {
+        content: [{ type: 'text', text: JSON.stringify({
+          error: { code: 'INVALID_INPUT', message: 'Search term must be at least 2 characters.' }
+        }) }],
+        isError: true,
+      };
+    }
+    if (args.search.length > 100) {
+      return {
+        content: [{ type: 'text', text: JSON.stringify({
+          error: { code: 'INVALID_INPUT', message: 'Search term must be 100 characters or fewer.' }
+        }) }],
+        isError: true,
+      };
+    }
   }
 
   const compact = args.compact ?? false;
@@ -349,6 +374,156 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     }
     notFound = args.lemmas.filter(l => !foundLemmas.has(l));
     entries = [...entryMap.values()];
+
+  } else if (args.search) {
+    // ─── Meaning search via LIKE queries ─────────────────────────────────
+    // NOTE: LIKE '%term%' defeats B-tree indexes (full-table scan). This is
+    // intentional and acceptable: ~31,400 total rows across three lexicon tables
+    // is well within D1 SQLite response time bounds for an interactive tool.
+    // If table size grows significantly, consider a partial index on LOWER(gloss)
+    // or FTS5 once cloudflare/workers-sdk#9519 is resolved.
+
+    // Sanitize: strip SQL wildcard characters to prevent unintended broadening.
+    // This is NOT a security issue (parameterized queries prevent injection),
+    // but '%' or '_' in user input would make the pattern unintentionally broad.
+    const term = args.search.trim().toLowerCase().replace(/[%_]/g, '');
+    const pattern = `%${term}%`;
+
+    const entryMap = new Map<string, SourceRow>();
+
+    // Run all three table queries concurrently. Use Promise.allSettled so a
+    // failure on one source does not abort results from the others.
+    const [lsjResult, asResult, bdbResult] = await Promise.allSettled([
+      query(
+        `SELECT strongs_id, gloss, original_word, transliteration, definition as lsj_definition
+         FROM lexicon_lsj WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
+        [pattern, pattern]
+      ),
+      query(
+        `SELECT strongs_id, gloss, original_word, transliteration, definition as abbott_smith_definition
+         FROM lexicon_abbott_smith WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
+        [pattern, pattern]
+      ),
+      query(
+        `SELECT strongs_id, gloss, original_word, transliteration, definition as bdb_definition
+         FROM lexicon_bdb WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
+        [pattern, pattern]
+      ),
+    ]);
+
+    // Collect errors from rejected promises
+    if (lsjResult.status === 'rejected') {
+      errors.push(`LSJ search failed: ${lsjResult.reason}`);
+    }
+    if (asResult.status === 'rejected') {
+      errors.push(`Abbott-Smith search failed: ${asResult.reason}`);
+    }
+    if (bdbResult.status === 'rejected') {
+      errors.push(`BDB search failed: ${bdbResult.reason}`);
+    }
+
+    // Merge LSJ results (primary Greek source — wins precedence over Abbott-Smith)
+    if (lsjResult.status === 'fulfilled') {
+      for (const row of lsjResult.value) {
+        entryMap.set(row.strongs_id as string, {
+          strongs_id: row.strongs_id as string,
+          gloss: row.gloss as string,
+          original_word: row.original_word as string,
+          transliteration: row.transliteration as string | null,
+          lsj_definition: row.lsj_definition as string | null,
+          abbott_smith_definition: null,
+          bdb_definition: null,
+          ubs_semantic_domains: [],
+          sources: ['lsj'],
+        });
+      }
+    }
+
+    // Merge Abbott-Smith results — merge into existing LSJ entry if present
+    if (asResult.status === 'fulfilled') {
+      for (const row of asResult.value) {
+        const existing = entryMap.get(row.strongs_id as string);
+        if (existing) {
+          existing.abbott_smith_definition = row.abbott_smith_definition as string | null;
+          if (!existing.sources!.includes('abbott-smith')) existing.sources!.push('abbott-smith');
+        } else {
+          entryMap.set(row.strongs_id as string, {
+            strongs_id: row.strongs_id as string,
+            gloss: row.gloss as string,
+            original_word: row.original_word as string,
+            transliteration: row.transliteration as string | null,
+            lsj_definition: null,
+            abbott_smith_definition: row.abbott_smith_definition as string | null,
+            bdb_definition: null,
+            ubs_semantic_domains: [],
+            sources: ['abbott-smith'],
+          });
+        }
+      }
+    }
+
+    // Merge BDB results (Hebrew — no Strong's ID collision with Greek)
+    if (bdbResult.status === 'fulfilled') {
+      for (const row of bdbResult.value) {
+        entryMap.set(row.strongs_id as string, {
+          strongs_id: row.strongs_id as string,
+          gloss: row.gloss as string,
+          original_word: row.original_word as string,
+          transliteration: row.transliteration as string | null,
+          lsj_definition: null,
+          abbott_smith_definition: null,
+          bdb_definition: row.bdb_definition as string | null,
+          ubs_semantic_domains: [],
+          sources: ['bdb'],
+        });
+      }
+    }
+
+    // Deterministic ordering: Greek entries (G prefix) before Hebrew (H prefix),
+    // then lexicographic by Strong's ID within each group.
+    const allEntries = [...entryMap.values()].sort((a, b) => {
+      const aPrefix = a.strongs_id.startsWith('G') ? 0 : 1;
+      const bPrefix = b.strongs_id.startsWith('G') ? 0 : 1;
+      if (aPrefix !== bPrefix) return aPrefix - bPrefix;
+      return a.strongs_id.localeCompare(b.strongs_id);
+    });
+
+    const resultsCapped = allEntries.length > 20;
+    entries = allEntries.slice(0, 20);
+
+    // Fetch UBS domains for matched entries
+    if (entries.length > 0) {
+      const allFoundIds = entries.map(e => e.strongs_id);
+      const ph = allFoundIds.map(() => '?').join(', ');
+      try {
+        const ubsRows = await query(
+          `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph})`,
+          allFoundIds
+        );
+        for (const row of ubsRows) {
+          const entry = entryMap.get(row.strongs_id as string);
+          if (entry) {
+            entry.ubs_semantic_domains!.push({ code: row.domain_code as string, name: row.domain_name as string });
+            const ubsSource = (row.strongs_id as string).startsWith('G') ? 'ubs-sdgnt' : 'ubs-sdbh';
+            if (!entry.sources!.includes(ubsSource)) entry.sources!.push(ubsSource);
+          }
+        }
+      } catch (e) {
+        errors.push(`UBS domains lookup failed: ${e}`);
+      }
+    }
+
+    // Build search-specific result (no not_found field)
+    const searchResult = {
+      entries: entries.map(e => formatEntry(e, compact)),
+      results_capped: resultsCapped,
+      errors,
+    };
+
+    return {
+      content: [{ type: 'text', text: JSON.stringify(searchResult) }],
+      structuredContent: searchResult,
+    };
   }
 
   const result = {
