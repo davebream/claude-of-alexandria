@@ -1,0 +1,62 @@
+DATE: 2026-05-11
+SOURCE_URL_BASE: https://raw.githubusercontent.com/NonlinearFruit/Creeds.json/master/creeds
+FILE_PATTERN: <slug>.json (e.g. westminster_confession_of_faith.json)
+TOTAL_FILES: 43
+
+COPYRIGHT_EXCLUSIONS: chicago_statement_on_biblical_inerrancy,helvetic_consensus,shema_yisrael
+NOTE_COPYRIGHT: Determined from Metadata.SourceAttribution field in each document JSON.
+  - chicago_statement_on_biblical_inerrancy: "Copyright - Alliance of Confessing Evangelicals, Inc"
+  - helvetic_consensus: "Translation Copyright 1990 - Martin Klauber"
+  - shema_yisrael: "Copyright - Crossway"
+
+THIRTY_NINE_ARTICLES: absent (404 on thirty_nine_articles.json and all variant slugs)
+
+CONFESSION_FIELDS:
+  Top level: Metadata, Data
+  Metadata: Title, Year, CreedFormat, SourceAttribution (and others: Authors, AlternativeTitles, Location, OriginStory, OriginalLanguage, SourceUrl)
+  Data: array of chapters
+  Chapter: { Chapter (int), Title (str), Sections (array) }
+  Section: { Section (int), Content (str), ContentWithProofs (str), Proofs (array) }
+  Proof: { Id (int), References (array of str) }
+
+CATECHISM_FIELDS:
+  Top level: Metadata, Data
+  Metadata: Title, Year, CreedFormat, SourceAttribution
+  Data: array of questions
+  Question: { Number (int), Question (str), Answer (str) }
+  NOTE: Some catechisms have AnswerWithProofs and Proofs fields (WLC has them; WSC does NOT)
+  Westminster Larger Catechism: { Number, Question, Answer, AnswerWithProofs, Proofs }
+  Westminster Shorter Catechism: { Number, Question, Answer } (NO proofs in this document)
+
+PROOF_TEXT_FORMAT: Dot-notation with period separators. Book.Chapter.Verse
+  Single verse: "Ps.19.1", "Rom.11.36", "1Cor.10.31"
+  Range: "Ps.19.1-Ps.19.3", "Rom.1.19-Rom.1.20"
+  Range always uses two full Book.Ch.V endpoints (not abbreviated like Gen.1.1-5)
+  Dash between digit (end of first verse number) and letter (start of second book abbreviation)
+  Books with digit prefix: "1Cor", "2Tim", "1Pet", etc.
+
+CREED_FORMAT_VALUES: "Confession" | "Catechism" | "Canon" | "Creed"
+  Canon: Zwingli's 67 articles, Canons of Dort, Council of Orange, Tetrapolitan, etc.
+  Creed: Apostles', Nicene, Athanasian, etc.
+
+CONFIRMED_FILENAMES (43 total):
+1695_baptist_catechism, abstract_of_principles, apostles_creed, athanasian_creed,
+belgic_confession_of_faith, canons_of_dort, catechism_for_young_children, chalcedonian_definition,
+chicago_statement_on_biblical_inerrancy, christ_hymn_of_colossians, christ_hymn_of_philippians,
+christian_shema, confession_of_peter, consensus_tigurinus, council_of_orange,
+exposition_of_the_assemblies_catechism, first_confession_of_basel, first_helvetic_confession,
+french_confession_of_faith, gregorys_declaration_of_faith, heidelberg_catechism, helvetic_consensus,
+ignatius_creed, irenaeus_rule_of_faith, keachs_catechism, london_baptist_1689,
+matthew_henrys_scripture_catechism, nicene_creed, puritan_catechism, savoy_declaration,
+scots_confession, second_helvetic_confession, shema_yisrael, shorter_catechism_explained,
+ten_theses_of_berne, tertullians_rule_of_faith, tetrapolitan_confession, waldensian_confession,
+westminster_confession_of_faith, westminster_larger_catechism, westminster_shorter_catechism,
+zwinglis_67_articles, zwinglis_fidei_ratio
+
+NOTES:
+- No aggregate JSON file exists in the repo. Each document is a separate file in creeds/ dir.
+- The field is "Proofs" (not "ProofTexts") in both Confession sections and Catechism questions.
+- Catechism format: some docs (WLC) have Proofs + AnswerWithProofs; others (WSC) do not.
+- Canon/Creed format documents also have Data as array but structure varies.
+- Year field is a string (e.g., "1647"), not an integer. Parse with parseInt().
+- Thirty-Nine Articles is ABSENT from this repo (all slug variants returned 404).
