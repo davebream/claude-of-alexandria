@@ -3,7 +3,7 @@
   "name": "initiative-2026-05-11-1246",
   "created": "2026-05-11",
   "status": "active",
-  "concurrencyVersion": 5,
+  "concurrencyVersion": 8,
   "features": [
     {
       "id": "F1",
@@ -113,7 +113,7 @@
       "status": "active",
       "tier": "standard",
       "requirements": "skipped",
-      "design": null,
+      "design": ".kombajn/plans/2026-05-11-fts-lexicon-search-design.md",
       "reviewStatus": null,
       "reviewPath": null,
       "plan": null,
@@ -148,6 +148,15 @@
               "FTS5 in primary DB with documentation (accepted risk)",
               "Wait for upstream fix (blocks feature)"
             ]
+          }
+        },
+        {
+          "ts": "2026-05-11T10:55:26.115Z",
+          "phase": "design",
+          "type": "response",
+          "payload": {
+            "verdict": "ready",
+            "artifactPath": ".kombajn/plans/2026-05-11-fts-lexicon-search-design.md"
           }
         }
       ],
