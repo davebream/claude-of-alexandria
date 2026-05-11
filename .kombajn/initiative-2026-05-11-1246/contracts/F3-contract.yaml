@@ -1,0 +1,62 @@
+schemaVersion: 1
+feature: F3
+title: "Add FTS5 Full-Text Search over Lexicon Definitions"
+
+acceptanceTests:
+  - id: AT-F3-01
+    description: "query_lexicon with search='love' returns at least one Greek entry containing G26 (ἀγάπη) or 'agape'"
+    blocking: true
+    verify:
+      type: promptfoo
+      configPath: "tests/promptfoo/smoke/promptfooconfig-regression.yaml"
+      scenario: "R3d: query_lexicon search mode returns Greek result for 'love' (F3)"
+
+  - id: AT-F3-02
+    description: "search parameter is mutually exclusive with strongs_ids and lemmas — providing two returns INVALID_INPUT"
+    blocking: true
+    verify:
+      type: unit
+      command: "cd server && npx vitest run src/tools/lexicon.test.ts --reporter=verbose"
+      grep: "rejects search combined with strongs_ids"
+
+  - id: AT-F3-03
+    description: "search term shorter than 2 chars returns INVALID_INPUT"
+    blocking: true
+    verify:
+      type: unit
+      command: "cd server && npx vitest run src/tools/lexicon.test.ts --reporter=verbose"
+      grep: "rejects search term shorter than 2 characters"
+
+  - id: AT-F3-04
+    description: "D1 failure on one table does not abort results from other tables (Promise.allSettled contract)"
+    blocking: true
+    verify:
+      type: unit
+      command: "cd server && npx vitest run src/tools/lexicon.test.ts --reporter=verbose"
+      grep: "handles partial D1 failure gracefully"
+
+  - id: AT-F3-05
+    description: "results_capped boolean is present in search responses"
+    blocking: true
+    verify:
+      type: unit
+      command: "cd server && npx vitest run src/tools/lexicon.test.ts --reporter=verbose"
+      grep: "results_capped"
+
+  - id: AT-F3-06
+    description: "TypeScript compiles without errors after schema changes"
+    blocking: true
+    verify:
+      type: shell
+      command: "cd server && npx tsc --noEmit"
+      expectedExitCode: 0
+
+observableOutputs:
+  - description: "query_lexicon tool description updated to document search parameter"
+    path: "server/src/index.ts"
+    grep: "search.*English meaning"
+
+constraints:
+  - "No FTS5 virtual tables may be created in any D1 migration (cloudflare/workers-sdk#9519)"
+  - "search parameter name and mutual-exclusion contract must be preserved"
+  - "results_capped must remain boolean (not integer count)"
