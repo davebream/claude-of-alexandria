@@ -177,10 +177,16 @@ const CREEDS_BOOK_ALIASES: Record<string, string> = {
 
 function parseEndpoint(ref: string): { book: string; chapter: number; verse: number } | null {
   // Format: BookAbbrev.chapter.verse  (e.g. "Ps.19.1", "1Cor.15.3")
+  // Also handles chapter-only refs: "Ps.88" → treat as "Ps.88.1" (verse 1)
   const dotCount = (ref.match(/\./g) || []).length;
-  if (dotCount < 2) {
-    console.warn(`[seed-confessional] Cannot parse ref endpoint: "${ref}" (expected 2 dots)`);
+  if (dotCount < 1) {
+    console.warn(`[seed-confessional] Cannot parse ref endpoint: "${ref}" (expected at least 1 dot)`);
     return null;
+  }
+  if (dotCount === 1) {
+    // Chapter-only reference (e.g. "Gen.1", "Ps.88") — default to verse 1
+    console.warn(`[seed-confessional] Chapter-only ref: "${ref}" — defaulting to verse 1`);
+    return parseEndpoint(`${ref}.1`);
   }
 
   // Split on the LAST two dots to get chapter and verse
@@ -262,11 +268,20 @@ function expandRange(startStr: string, endStr: string): VerseRef[] {
   const bookCounts = VERSE_COUNTS[start.book];
 
   for (let ch = start.chapter; ch <= end.chapter; ch++) {
-    const startV = ch === start.chapter ? start.verse : 1;
-    const endV = ch === end.chapter
+    const rawStartV = ch === start.chapter ? start.verse : 1;
+    const rawEndV = ch === end.chapter
       ? end.verse
       : (bookCounts ? bookCounts[ch] : end.verse);
-    const clampedEndV = bookCounts ? Math.min(endV, bookCounts[ch] ?? endV) : endV;
+    const chMax = bookCounts ? (bookCounts[ch] ?? rawEndV) : rawEndV;
+    // Clamp both start and end verse to chapter max
+    const startV = Math.min(rawStartV, chMax);
+    const clampedEndV = Math.min(rawEndV, chMax);
+    if (rawStartV > chMax) {
+      console.warn(`[seed-confessional] Start verse ${rawStartV} exceeds chapter length for ${start.book} ${ch} (max ${chMax}) — clamping`);
+    }
+    if (rawEndV > chMax) {
+      console.warn(`[seed-confessional] End verse ${rawEndV} exceeds chapter length for ${start.book} ${ch} (max ${chMax}) — clamping`);
+    }
     for (let v = startV; v <= clampedEndV; v++) {
       results.push({ book: start.book, chapter: ch, verse: v });
     }
@@ -369,14 +384,14 @@ interface ProofEntry {
 }
 
 interface ConfessionSection {
-  Section: number;
+  Section: number | string;  // Canons of Dort uses string sections like "A1", "R1"
   Content: string;
   ContentWithProofs?: string;
   Proofs: ProofEntry[];
 }
 
 interface ConfessionChapter {
-  Chapter: number;
+  Chapter: number | string;  // Canons of Dort uses string chapter numbers
   Title?: string;
   Sections: ConfessionSection[];
 }
@@ -524,7 +539,10 @@ async function main(): Promise<void> {
     docId++;
     const tradition = getTradition(slug);
     const title = creedsDoc.Metadata.Title;
-    const year = creedsDoc.Metadata.Year ? parseInt(creedsDoc.Metadata.Year, 10) : null;
+    // Year may be prefixed with "c. " (circa) or other text — extract first integer found
+    const yearRaw = creedsDoc.Metadata.Year;
+    const yearMatch = yearRaw ? yearRaw.match(/\d{3,4}/) : null;
+    const year = yearMatch ? parseInt(yearMatch[0], 10) : null;
     const authors = null; // Creeds.json does not provide structured author data in a consistently parseable form
 
     // Use creedsDoc.Metadata.CreedFormat for format detection instead of data-shape inference.
@@ -545,15 +563,27 @@ async function main(): Promise<void> {
       lines.push('');
       lines.push(`-- Sections: ${slug}`);
       for (const chapter of chapters) {
+        // Coerce chapter number to integer (Canons of Dort uses string "1", "2", etc.)
+        const chapterNum = typeof chapter.Chapter === 'number'
+          ? chapter.Chapter
+          : parseInt(String(chapter.Chapter), 10);
+        const chapterNumSql = isNaN(chapterNum) ? 'NULL' : String(chapterNum);
+
         for (const section of chapter.Sections ?? []) {
           if (!section.Content) {
             console.warn(`[seed-confessional] Section missing Content in ${slug} ch${chapter.Chapter} s${section.Section} — skipping`);
             skippedSections++;
             continue;
           }
+          // Coerce section number to integer (Canons of Dort uses "A1", "R1" etc.)
+          const sectionNum = typeof section.Section === 'number'
+            ? section.Section
+            : parseInt(String(section.Section).replace(/[^0-9]/g, ''), 10);
+          const sectionNumSql = isNaN(sectionNum) ? 'NULL' : String(sectionNum);
+
           sectionId++;
           lines.push(
-            `INSERT INTO confessional_sections (id, document_id, chapter_number, chapter_title, section_number, content, content_with_proofs) VALUES (${sectionId}, ${docId}, ${chapter.Chapter}, ${escapeSQL(chapter.Title)}, ${section.Section}, ${escapeSQL(section.Content)}, ${escapeSQL(section.ContentWithProofs)});`
+            `INSERT INTO confessional_sections (id, document_id, chapter_number, chapter_title, section_number, content, content_with_proofs) VALUES (${sectionId}, ${docId}, ${chapterNumSql}, ${escapeSQL(chapter.Title)}, ${sectionNumSql}, ${escapeSQL(section.Content)}, ${escapeSQL(section.ContentWithProofs)});`
           );
 
           // Field name is Proofs, not ProofTexts (confirmed during C5 research)
