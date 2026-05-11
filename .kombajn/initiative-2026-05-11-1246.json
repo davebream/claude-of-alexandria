@@ -3,7 +3,7 @@
   "name": "initiative-2026-05-11-1246",
   "created": "2026-05-11",
   "status": "active",
-  "concurrencyVersion": 20,
+  "concurrencyVersion": 23,
   "features": [
     {
       "id": "F1",
@@ -134,8 +134,8 @@
       "reviewStatus": "skipped",
       "reviewPath": null,
       "plan": ".kombajn/plans/2026-05-11-fts-lexicon-search-plan.md",
-      "planReviewStatus": null,
-      "planReviewPath": null,
+      "planReviewStatus": "ready",
+      "planReviewPath": ".kombajn/initiative-2026-05-11-1246/reviews/F3-plan-review-r1.md",
       "implementation": null,
       "githubIssue": 41,
       "issueNumber": 41,
