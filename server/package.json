@@ -16,12 +16,12 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260520.1",
+    "@cloudflare/workers-types": "^4.20260527.1",
     "@types/node": "^25.9.1",
     "sql.js": "^1.14.1",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6",
-    "wrangler": "^4.93.0"
+    "vitest": "^4.1.7",
+    "wrangler": "^4.95.0"
   }
 }
