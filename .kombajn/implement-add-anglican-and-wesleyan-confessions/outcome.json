@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "done",
+  "failureType": null,
+  "gateResults": [
+    {
+      "gate": "tests-pass",
+      "status": "PASS"
+    }
+  ],
+  "mergeStatus": "pr-created",
+  "mergeDetails": {
+    "flow": "pr-no-merge",
+    "prNumber": 74,
+    "prUrl": "https://github.com/davebream/claude-of-alexandria/pull/74"
+  },
+  "worktreePath": ".worktrees/epic/implement-add-anglican-and-wesleyan-confessions/T1",
+  "manifestPath": ".kombajn/implement-add-anglican-and-wesleyan-confessions.json",
+  "completedAt": "2026-06-15T22:53:17Z",
+  "lockEpoch": null
+}
