@@ -484,7 +484,7 @@ Three query modes:
 - "passage": Given a Bible book + verse range, returns which season(s) include it (many-to-many)
 - "list": Enumerate all available seasons
 
-Curated Protestant-oriented dataset covering 12 seasons of the Western church year: Advent, Christmas / Christmastide, Epiphany, Ordinary Time (Post-Epiphany), Lent, Holy Week, Easter / Eastertide, Pentecost, Ordinary Time (Post-Pentecost), Reformation Sunday, All Saints, Christ the King. Tradition tags distinguish western (default) and reformed entries.
+Curated Protestant-oriented dataset covering 12 seasons of the Western church year: Advent, Christmas / Christmastide, Epiphany, Lent, Holy Week, Easter / Eastertide, Ascension, Pentecost, Trinity Sunday, Ordinary Time, Reformation Sunday, Christ the King / Reign of Christ. Tradition tags distinguish western (default) and reformed entries. Use mode="list" for the authoritative, queryable season names.
 
 Args:
   - mode (string, required): "season" | "passage" | "list"
