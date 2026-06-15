@@ -58,22 +58,24 @@ Do TDD. The cost of unnecessary rigor is minutes. The cost of insufficient rigor
 
 ---
 
-## The Two Test Configs
+## The Three Test Configs
 
-Every skill requires **exactly two** promptfoo config files. Not one. Not three. Two.
+Every skill has **exactly two required** promptfoo config files, and one optional extended config.
 
 ```
 tests/promptfoo/skills/{skill-name}/
-├── promptfooconfig-red.yaml    # RED phase — bare model failures
-└── promptfooconfig-green.yaml  # GREEN phase — skill corrections
+├── promptfooconfig-red.yaml       # RED phase — bare model failures (required)
+├── promptfooconfig-green.yaml     # GREEN phase — failure-mode corrections (required)
+└── promptfooconfig-extended.yaml  # EXTENDED phase — quality/ADV/STRESS scenarios (optional)
 ```
 
 **RED** runs prompts against the bare model (no skills, no MCP). It documents what goes wrong.
 **GREEN** runs the same prompts with skills and MCP enabled. It proves the skill corrects each failure.
+**EXTENDED** runs quality, adversarial (ADV), and stress (STRESS) scenarios that have no corresponding RED failure. These run on-demand during skill development, not in CI.
 
-**Do not create additional test files.** No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. Everything goes in the two canonical configs.
+**Do not create additional test files** beyond these three canonical configs. No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. If it does not fit RED, GREEN, or EXTENDED, reconsider whether it belongs.
 
-**Rationale**: Consistency across all skills. A known structure. Anyone who opens the test directory knows exactly what they will find. This is a library, not a filing cabinet.
+**Rationale**: Consistency across all skills. A known structure. GREEN stays cheap enough for CI (one llm-rubric per failure mode). EXTENDED runs on-demand for advanced validation.
 
 ---
 
@@ -150,7 +152,7 @@ claude-of-alexandria/
 ├── plugins/
 │   └── claude-of-alexandria/     # The plugin
 │       ├── .claude-plugin/
-│       │   └── manifest.json     # Plugin manifest (skills array)
+│       │   └── plugin.json       # Plugin manifest (skills array)
 │       ├── agents/               # Sub-agent collection
 │       │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
 │       ├── skills/               # The skill collection

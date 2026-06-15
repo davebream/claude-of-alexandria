@@ -1,7 +1,7 @@
 # RED Scenario Coverage Matrix
 
 **Last updated:** 2026-05-04
-**Total RED scenarios:** 58 (skills) + 14 (agents) = 72 (includes 7 new pairs added by coverage audit)
+**Total RED scenarios:** 53 (skills) + 11 (agents) = 64 (includes 7 new pairs added by coverage audit)
 
 ## Genre Taxonomy
 
@@ -113,14 +113,10 @@ _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
 | query_ot_quotes | exeg-S14, bs-S3 | ✓ Covered |
 | query_places | exeg-S20 (Obadiah — degraded-data scenario) ★ | ✓ Covered (degraded-data path) |
 | query_events | — | ✗ NOT COVERED |
-| query_themes | — | ✗ NOT COVERED |
+| query_theme | — | ✗ NOT COVERED |
 | query_lexicon | — | ✗ NOT COVERED |
-| query_timeline | — | ✗ NOT COVERED |
-| query_parallel_text | — | ✗ NOT COVERED |
-| query_book_outline | — | ✗ NOT COVERED |
-| query_pericope | — | ✗ NOT COVERED |
-| query_topic | — | ✗ NOT COVERED |
-| query_doctrine | — | ✗ NOT COVERED |
+| parallel_text | — | ✗ NOT COVERED |
+| confessional_lookup | — | ✗ NOT COVERED |
 
 ## Gap Analysis — Top 5 Priority Cells
 

@@ -18,7 +18,7 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes 22 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes 23 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 **Core linguistic tools:**
 
@@ -56,6 +56,7 @@ The reference server exposes 22 tools. Skills call these automatically; you do n
 | `bible_lookup` | Verse text in 6 translations | Both |
 | `commentary_lookup` | Commentary entries from 6 commentaries | Both |
 | `parallel_text` | Compare verse text across multiple translations | Both |
+| `confessional_lookup` | Creeds and confessions (4 query modes) | — |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 
@@ -144,7 +145,7 @@ Sub-agents are spawned by skills automatically. They are not invoked directly.
 
 ## Development
 
-This plugin is built using Test-Driven Development. 89 automated promptfoo tests (41 RED + 47 GREEN + 1 smoke) verify skill correctness against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
+This plugin is built using Test-Driven Development. 104 automated promptfoo tests (53 RED + 50 GREEN + 1 smoke) verify skill correctness against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
 
 See [CLAUDE.md](CLAUDE.md) for development guidelines and the Librarian's instructions.
 
