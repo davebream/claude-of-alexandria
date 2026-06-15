@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryCrossReferences, traceCrossReferencePath, NODE_BUDGET, EDGE_BUDGET, RANGE_EXPLODE_CAP, CHARACTER_LIMIT_EXPORT } from './cross-references.js';
+import { queryCrossReferences, traceCrossReferencePath } from './cross-references.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -636,34 +636,20 @@ describe('traceCrossReferencePath — traversal', () => {
     expect(body.hops).toBe(2);
   });
 
-  it('FIX 2 — multi-verse to-side frontier group yields correct connecting_ref', async () => {
-    // Frontier at hop 1: {Romans 8:27, Romans 8:28} (same book/chapter group).
-    // Edge pointing TO Romans 8:27-29 is returned by to-side query.
-    // The matched verse from the frontier is Romans 8:27 (first match).
-    // prev must be Romans 8:27 (not verses[0] blindly if ordering differs).
-    // FIX 2 ensures prev = matchedVerse = 27, connectingVerse = Romans|8|27.
-
-    // Setup: Genesis 3:15 has two from-side edges to Romans 8:27 and Romans 8:28.
-    const EDGE_GEN_ROM27: Record<string, unknown> = {
-      from_book: 'Genesis', from_chapter: 3, from_verse: 15,
-      to_book: 'Romans', to_chapter: 8, to_verse_start: 27, to_verse_end: 27,
-      votes: 5, review_status: 'ok',
-    };
-    const EDGE_GEN_ROM28: Record<string, unknown> = {
-      from_book: 'Genesis', from_chapter: 3, from_verse: 15,
-      to_book: 'Romans', to_chapter: 8, to_verse_start: 28, to_verse_end: 28,
-      votes: 5, review_status: 'ok',
-    };
-    // Edge pointing back: Isaiah 53:1 → Romans 8:27-29 (to-side).
-    // When frontier = {Romans 8:27, Romans 8:28}, to-side query on (Romans, 8) returns this edge.
-    // The matched frontier verse is 27 (since 27 ∈ [27,29]).
-    // prev should be Romans|8|27 and connectingVerse = Romans|8|27.
+  it('FIX 2 — to-side range match yields connecting_ref at the MATCHED frontier verse, not to_verse_start', async () => {
+    // Discriminating scenario: the connecting verse (27) must differ from the edge's
+    // to_verse_start (26). The OLD bug hardcoded connectingVerse = to_verse_start → "Romans 8:26";
+    // the FIX uses the actual matched frontier verse → "Romans 8:27".
+    //
+    // Source = Romans 8:27, Target = Revelation 12:1.
+    // Hop 0 (to-side from source 8:27): Isaiah 53:1 → Romans 8:26-28 (range CONTAINS 27,
+    //   but starts at 26). matchedVerse = 27 (the frontier verse), to_verse_start = 26.
+    // Hop 1 (from-side from Isaiah 53:1): Isaiah 53:1 → Revelation 12:1 = target.
     const EDGE_ISA_ROM: Record<string, unknown> = {
       from_book: 'Isaiah', from_chapter: 53, from_verse: 1,
-      to_book: 'Romans', to_chapter: 8, to_verse_start: 27, to_verse_end: 29,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: 26, to_verse_end: 28,
       votes: 5, review_status: 'ok',
     };
-    // Edge from Isaiah 53:1 → Revelation 12:1
     const EDGE_ISA_REV: Record<string, unknown> = {
       from_book: 'Isaiah', from_chapter: 53, from_verse: 1,
       to_book: 'Revelation', to_chapter: 12, to_verse_start: 1, to_verse_end: 1,
@@ -675,21 +661,21 @@ describe('traceCrossReferencePath — traversal', () => {
       const p = params as unknown[];
       if (s.includes('from_book') && s.includes('from_verse IN')) {
         const fb = p[0] as string; const fc = p[1] as number; const verses = p.slice(3) as number[];
-        if (fb === 'Genesis' && fc === 3 && verses.includes(15)) return Promise.resolve([EDGE_GEN_ROM27, EDGE_GEN_ROM28]);
+        // Only Isaiah 53:1 has a from-side edge (to Revelation); Romans has none.
         if (fb === 'Isaiah' && fc === 53 && verses.includes(1)) return Promise.resolve([EDGE_ISA_REV]);
         return Promise.resolve([]);
       }
       if (s.includes('to_book') && s.includes('to_verse_start <=')) {
         const tb = p[0] as string; const tc = p[1] as number; const maxV = p[3] as number;
-        // Return the to-side edge when querying Romans 8 with maxVerse ≥ 27
-        if (tb === 'Romans' && tc === 8 && maxV >= 27) return Promise.resolve([EDGE_ISA_ROM]);
+        // From the source frontier {Romans 8:27}: maxVerse = 27 ≥ to_verse_start 26 → returned.
+        if (tb === 'Romans' && tc === 8 && maxV >= 26) return Promise.resolve([EDGE_ISA_ROM]);
         return Promise.resolve([]);
       }
       return Promise.resolve([]);
     });
 
     const result = await traceCrossReferencePath({
-      from_book: 'Genesis', from_range: '3:15',
+      from_book: 'Romans', from_range: '8:27',
       to_book: 'Revelation', to_range: '12:1',
       max_hops: 3,
     });
@@ -697,12 +683,14 @@ describe('traceCrossReferencePath — traversal', () => {
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
     expect(body.found).toBe(true);
-    // The path must include a hop from Isaiah 53:1 whose connecting_ref is Romans 8:27
-    // (the actual matched frontier verse, not blindly the first verse in the group)
-    const isaHop = body.path.find((h: { from_ref: string }) => h.from_ref === 'Isaiah 53:1');
-    expect(isaHop).toBeDefined();
-    // connecting_ref must be a Romans 8 verse (specifically 27, 28, or within the matched range)
-    expect(isaHop.connecting_ref).toMatch(/^Romans 8:/);
+    // Hop 0 is the to-side edge Isaiah 53:1 → Romans 8:26-28, traversed backward from the
+    // source verse 27. Its junction (connecting_ref) is the MATCHED frontier verse, 27 —
+    // NOT to_verse_start (26). This assertion fails against the pre-fix verses[0]/to_verse_start code.
+    const romHop = body.path.find((h: { to_ref: string }) => h.to_ref.startsWith('Romans 8:'));
+    expect(romHop).toBeDefined();
+    expect(romHop.from_ref).toBe('Isaiah 53:1');
+    expect(romHop.to_ref).toBe('Romans 8:26-28'); // rendered verbatim from the stored edge (range preserved)
+    expect(romHop.connecting_ref).toBe('Romans 8:27');
   });
 
   it('summary counters reflect traversal (nodes_visited and edges_examined)', async () => {

@@ -4,7 +4,7 @@ import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
+export const CHARACTER_LIMIT = 25_000;
 
 // ─── trace_cross_reference_path schemas ──────────────────────────────────────
 
@@ -223,7 +223,7 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
 export const NODE_BUDGET = 2000;
 export const EDGE_BUDGET = 20000;
 export const RANGE_EXPLODE_CAP = 8;
-export const CHARACTER_LIMIT_EXPORT = 25_000;
+// CHARACTER_LIMIT is exported from its single definition near the top of this file.
 
 const ATTRIBUTION = 'Cross-reference edges reflect the OpenBible.info editorial tradition with community vote weights; each hop is an attributed association, not an asserted theological dependence.';
 
