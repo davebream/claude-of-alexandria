@@ -191,7 +191,10 @@ describe('escapeSQL', () => {
   });
 
   it('leaves backslash literal (SQLite does not treat \\\\ as escape)', () => {
-    expect(escapeSQL('path\\file')).toBe("'path\\\\file'");
+    // Input: path\file (one backslash)
+    // SQLite does not treat backslash as escape, so output should be 'path\file' (unchanged)
+    // In JS string: "'path\\file'" (two chars: backslash then f)
+    expect(escapeSQL('path\\file')).toBe("'path\\file'");
   });
 
   it('every emitted string literal has balanced single quotes (no lone apostrophe)', () => {
