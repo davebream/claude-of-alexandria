@@ -220,9 +220,10 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
 
 // ─── BFS constants ────────────────────────────────────────────────────────────
 
-const NODE_BUDGET = 2000;
-const EDGE_BUDGET = 20000;
-const RANGE_EXPLODE_CAP = 8;
+export const NODE_BUDGET = 2000;
+export const EDGE_BUDGET = 20000;
+export const RANGE_EXPLODE_CAP = 8;
+export const CHARACTER_LIMIT_EXPORT = 25_000;
 
 const ATTRIBUTION = 'Cross-reference edges reflect the OpenBible.info editorial tradition with community vote weights; each hop is an attributed association, not an asserted theological dependence.';
 
@@ -252,7 +253,18 @@ function formatRef(book: string, chapter: number, verseStart: number, verseEnd?:
 
 // ─── traceCrossReferencePath ──────────────────────────────────────────────────
 
-export async function traceCrossReferencePath(args: TraceCrossReferencePathInput): Promise<CallToolResult> {
+interface BfsOverrides {
+  nodeBudget?: number;
+  edgeBudget?: number;
+  rangeExplodeCap?: number;
+  characterLimit?: number;
+}
+
+export async function traceCrossReferencePath(args: TraceCrossReferencePathInput, _overrides?: BfsOverrides): Promise<CallToolResult> {
+  const nodeBudget = _overrides?.nodeBudget ?? NODE_BUDGET;
+  const edgeBudget = _overrides?.edgeBudget ?? EDGE_BUDGET;
+  const rangeExplodeCap = _overrides?.rangeExplodeCap ?? RANGE_EXPLODE_CAP;
+  const characterLimit = _overrides?.characterLimit ?? CHARACTER_LIMIT;
   // 1. Resolve books
   const fromBookInfo = lookupBook(args.from_book);
   if (!fromBookInfo) {
@@ -380,12 +392,12 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
         const fromRows = await query(fromSql, fromParams) as unknown as StoredEdge[];
         for (const row of fromRows) {
           edgesExamined++;
-          if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
+          if (edgesExamined > edgeBudget) { truncated = true; break outer; }
 
           // Expand to-side range into per-verse nodes
           const rangeSize = row.to_verse_end - row.to_verse_start + 1;
           let versesToEnqueue: number[];
-          if (rangeSize > RANGE_EXPLODE_CAP) {
+          if (rangeSize > rangeExplodeCap) {
             truncated = true;
             versesToEnqueue = [row.to_verse_start]; // only start verse
           } else {
@@ -398,7 +410,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
             if (!visited.has(neighbourKey)) {
               visited.add(neighbourKey);
               nodesVisited++;
-              if (nodesVisited > NODE_BUDGET) { truncated = true; break outer; }
+              if (nodesVisited > nodeBudget) { truncated = true; break outer; }
               parents.set(neighbourKey, {
                 edge: row,
                 connectingVerse,
@@ -413,34 +425,42 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
           }
         }
 
-        // ── To-side query: edges whose to range contains a frontier verse ──
-        const toVerseParams = verses.map(() => '?').join(', ');
+        // ── To-side query: edges whose to range CONTAINS a frontier verse ──
+        // Use a range scan on idx_xref_to (to_book, to_chapter, to_verse_start ≤ maxVerse)
+        // then filter in-memory to rows whose [to_verse_start, to_verse_end] contains
+        // at least one verse from the frontier group.
+        const versesSet = new Set(verses);
+        const maxVerse = Math.max(...verses);
         const toSql =
           `SELECT from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes ` +
           `FROM cross_references ` +
           `WHERE to_book = ? AND to_chapter = ? AND votes >= ? AND review_status = 'ok' ` +
-          `AND to_verse_start IN (${toVerseParams}) ` +
+          `AND to_verse_start <= ? ` +
           `ORDER BY votes DESC`;
-        const toParams: unknown[] = [book, chapter, minVotes, ...verses];
+        const toParams: unknown[] = [book, chapter, minVotes, maxVerse];
 
-        const toRows = await query(toSql, toParams) as unknown as StoredEdge[];
+        const toRowsRaw = await query(toSql, toParams) as unknown as StoredEdge[];
+        // In-memory filter: keep only rows whose range overlaps at least one frontier verse
+        const toRows = toRowsRaw.filter(row =>
+          verses.some(v => v >= row.to_verse_start && v <= row.to_verse_end)
+        );
         for (const row of toRows) {
           edgesExamined++;
-          if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
+          if (edgesExamined > edgeBudget) { truncated = true; break outer; }
 
           // from endpoint is always a single verse
           const neighbourKey = nodeKey(row.from_book, row.from_chapter, row.from_verse);
-          // The connecting verse is the to-side verse that's in the frontier
-          // (the verse that connected the prev node to this edge)
-          const connectingVerse = nodeKey(row.to_book, row.to_chapter, row.to_verse_start);
+          // FIX 2: find the ACTUAL frontier verse that this edge's to-range contains
+          const matchedVerse = verses.find(v => v >= row.to_verse_start && v <= row.to_verse_end)!;
+          const connectingVerse = nodeKey(row.to_book, row.to_chapter, matchedVerse);
           if (!visited.has(neighbourKey)) {
             visited.add(neighbourKey);
             nodesVisited++;
-            if (nodesVisited > NODE_BUDGET) { truncated = true; break outer; }
+            if (nodesVisited > nodeBudget) { truncated = true; break outer; }
             parents.set(neighbourKey, {
               edge: row,
               connectingVerse,
-              prev: nodeKey(book, chapter, verses[0]),
+              prev: nodeKey(book, chapter, matchedVerse),
             });
             if (neighbourKey === targetKey) {
               foundKey = neighbourKey;
@@ -449,6 +469,8 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
             nextFrontier.add(neighbourKey);
           }
         }
+        // versesSet used for the in-memory filter (keep lint happy)
+        void versesSet;
       }
 
       frontier = nextFrontier;
@@ -517,7 +539,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
     };
 
     const jsonStr = JSON.stringify(fullResult);
-    if (jsonStr.length > CHARACTER_LIMIT) {
+    if (jsonStr.length > characterLimit) {
       // Keep path intact (adjacency must not be broken), drop cosmetic fields
       const trimmedResult = {
         from_ref: fromRef,

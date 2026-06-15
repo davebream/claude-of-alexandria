@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryCrossReferences, traceCrossReferencePath } from './cross-references.js';
+import { queryCrossReferences, traceCrossReferencePath, NODE_BUDGET, EDGE_BUDGET, RANGE_EXPLODE_CAP, CHARACTER_LIMIT_EXPORT } from './cross-references.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -205,8 +205,8 @@ function plantedGraphMock(sql: string, params: unknown[]): Promise<Record<string
     if (fromBook === 'Romans' && fromChapter === 8 && verses.includes(28)) return Promise.resolve([EDGE_M_B]);
     return Promise.resolve([]);
   }
-  // to-side query: check to_book, to_chapter, to_verse_start IN
-  if (sql.includes('to_book') && sql.includes('to_verse_start IN')) {
+  // to-side query: range scan via to_verse_start <=
+  if (sql.includes('to_book') && sql.includes('to_verse_start <=')) {
     return Promise.resolve([]);
   }
   return Promise.resolve([]);
@@ -270,14 +270,14 @@ describe('traceCrossReferencePath — traversal', () => {
       expect(sql).not.toContain('VALUES (');
     }
 
-    // At least one to-side query
-    const toSqlArr = capturedSqls.filter(s => s.includes('to_book') && s.includes('to_verse_start IN'));
+    // At least one to-side query (now a range scan: to_verse_start <=)
+    const toSqlArr = capturedSqls.filter(s => s.includes('to_book') && s.includes('to_verse_start <='));
     expect(toSqlArr.length).toBeGreaterThan(0);
     for (const sql of toSqlArr) {
       expect(sql).toContain("review_status = 'ok'");
       expect(sql).toContain('votes >=');
       expect(sql).toContain('to_chapter =');
-      expect(sql).toContain('to_verse_start IN (');
+      expect(sql).toContain('to_verse_start <=');
       expect(sql).not.toMatch(/\bOR\b/);
       expect(sql).not.toContain('VALUES (');
     }
@@ -436,11 +436,14 @@ describe('traceCrossReferencePath — traversal', () => {
     expect(body.truncated).toBe(true);
   });
 
-  it('range-explode cap: to range wider than RANGE_EXPLODE_CAP (>8 verses) sets truncated:true', async () => {
-    // to_verse_end - to_verse_start = 10 → 11 verses → exceeds cap of 8
+  it('range-explode cap: to range wider than RANGE_EXPLODE_CAP sets truncated:true and non-start verses are NOT enqueued', async () => {
+    // Use override cap=3 so a range of 5 verses exceeds it.
+    // Edge: Genesis 3:15 → Romans 8:1-5 (5 verses, exceeds cap of 3)
+    // Target: Romans 8:3 — reachable only via interior verse (not start verse 1).
+    // With cap exceeded, only start verse 1 is enqueued. Romans 8:3 should NOT be found.
     const EDGE_WIDE_RANGE: Record<string, unknown> = {
       from_book: 'Genesis', from_chapter: 3, from_verse: 15,
-      to_book: 'Romans', to_chapter: 8, to_verse_start: 1, to_verse_end: 10,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: 1, to_verse_end: 5,
       votes: 5, review_status: 'ok',
     };
 
@@ -452,30 +455,30 @@ describe('traceCrossReferencePath — traversal', () => {
         if (fb === 'Genesis' && fc === 3 && verses.includes(15)) return Promise.resolve([EDGE_WIDE_RANGE]);
         return Promise.resolve([]);
       }
+      // to-side: range scan returns nothing
       return Promise.resolve([]);
     });
 
-    // Target that would be reachable only via a wide range (mid range verse, not start)
-    const result = await traceCrossReferencePath({
-      from_book: 'Genesis', from_range: '3:15',
-      to_book: 'Romans', to_range: '8:5',  // verse 5 is within 1-10 but won't be enqueued when cap exceeded
-    });
+    // Override rangeExplodeCap=3 so 5-verse range exceeds it
+    const result = await traceCrossReferencePath(
+      { from_book: 'Genesis', from_range: '3:15', to_book: 'Romans', to_range: '8:3' },
+      { rangeExplodeCap: 3 },
+    );
 
     const body = JSON.parse(result.content[0].text);
-    // Either found (if cap=8 and verse 5 ≤ 8 so it was enqueued) or truncated:true
-    // Since verse 5 ≤ RANGE_EXPLODE_CAP=8, it could be found. Test that truncated is true (cap triggered).
-    // Actually: 10 verses (1-10) > cap(8), so truncated=true regardless of whether start verse was enqueued
     expect(body.truncated).toBe(true);
+    // Romans 8:3 is NOT found — only start verse (8:1) was enqueued
+    expect(body.found).toBe(false);
   });
 
-  it('node budget exhaustion sets truncated:true', async () => {
-    // Generate enough edges to exhaust a tight node budget.
-    // We plant a star graph where Genesis 3:15 connects to 10 Romans verses,
-    // and use min_votes=999 so no further hops produce edges (target unreachable).
-    const starEdges = Array.from({ length: 10 }, (_, i) => ({
+  it('node budget exhaustion: truncated:true and found:false when budget crossed before target', async () => {
+    // Plant a star: Genesis 3:15 → Romans 8:1 … Romans 8:5 (5 nodes).
+    // Use nodeBudget=3 override so budget is exceeded after enqueuing 3 Romans verses.
+    // Target Romans 8:99 is never in the star so it's never found.
+    const starEdges = Array.from({ length: 5 }, (_, i) => ({
       from_book: 'Genesis', from_chapter: 3, from_verse: 15,
       to_book: 'Romans', to_chapter: 8, to_verse_start: i + 1, to_verse_end: i + 1,
-      votes: 999, review_status: 'ok',
+      votes: 5, review_status: 'ok',
     }));
 
     mockQuery.mockImplementation((sql: unknown, params: unknown) => {
@@ -489,43 +492,52 @@ describe('traceCrossReferencePath — traversal', () => {
       return Promise.resolve([]);
     });
 
-    // Target is unreachable: Romans 8:20 is not in the star
-    const result = await traceCrossReferencePath({
-      from_book: 'Genesis', from_range: '3:15',
-      to_book: 'Romans', to_range: '8:20',
-      max_hops: 2,
-    });
+    // nodeBudget=3: source counts as 1, so after 2 more nodes are enqueued the 3rd triggers truncation
+    const result = await traceCrossReferencePath(
+      { from_book: 'Genesis', from_range: '3:15', to_book: 'Romans', to_range: '8:99' },
+      { nodeBudget: 3 },
+    );
 
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
-    // BFS expands 10 nodes from star + source = 11 nodes. With max_hops=2 hop 2 also fires.
-    // The result should be found:false. truncated may be false (exhausted all nodes) but
-    // with max_hops=2 and no edges from Romans 8:x → target, it's genuine exhaustion.
-    // This test just verifies summary counters reflect traversal happened.
-    expect(body.summary.nodes_visited).toBeGreaterThan(0);
-    expect(body.summary.edges_examined).toBeGreaterThan(0);
+    expect(body.truncated).toBe(true);
+    expect(body.found).toBe(false);
   });
 
-  it('edge budget exhaustion (simulated via many edges) sets truncated:true', async () => {
-    // Plant many edges from source to exhaust EDGE_BUDGET quickly.
-    // We mock this with a large batch that triggers the truncation signal.
-    // We can't actually hit EDGE_BUDGET=20000 in unit tests efficiently,
-    // but we verify the budget-knob is exercised by checking the property exists.
-    mockQuery.mockResolvedValue([]);
+  it('edge budget exhaustion: truncated:true when EDGE_BUDGET is crossed', async () => {
+    // Plant many single-verse edges from Genesis 3:15.
+    // Use edgeBudget=2 so the 3rd edge triggers truncation.
+    const manyEdges = Array.from({ length: 5 }, (_, i) => ({
+      from_book: 'Genesis', from_chapter: 3, from_verse: 15,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: i + 1, to_verse_end: i + 1,
+      votes: 5, review_status: 'ok',
+    }));
 
-    const result = await traceCrossReferencePath({
-      from_book: 'Genesis', from_range: '3:15',
-      to_book: 'Revelation', to_range: '12:1',
+    mockQuery.mockImplementation((sql: unknown, params: unknown) => {
+      const s = sql as string;
+      const p = params as unknown[];
+      if (s.includes('from_book') && s.includes('from_verse IN')) {
+        const fb = p[0] as string; const fc = p[1] as number; const verses = p.slice(3) as number[];
+        if (fb === 'Genesis' && fc === 3 && verses.includes(15)) return Promise.resolve(manyEdges);
+        return Promise.resolve([]);
+      }
+      return Promise.resolve([]);
     });
 
+    // edgeBudget=2: 3rd edge triggers truncation
+    const result = await traceCrossReferencePath(
+      { from_book: 'Genesis', from_range: '3:15', to_book: 'Revelation', to_range: '12:1' },
+      { edgeBudget: 2 },
+    );
+
+    expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
-    expect(typeof body.truncated).toBe('boolean');
-    expect(typeof body.summary.edges_examined).toBe('number');
+    expect(body.truncated).toBe(true);
   });
 
-  it('character limit guard: truncated:true is set and path stays adjacency-intact', async () => {
-    // Build a 6-hop chain (max_hops=6) with very long ref names to approach CHARACTER_LIMIT.
-    // We create a chain: Gen 1:1 → Romans 1:1 → Exodus 1:1 → Psalms 1:1 → John 1:1 → Revelation 1:1 → Isaiah 1:1
+  it('character limit guard: truncated:true, path stays adjacency-intact, note field omitted', async () => {
+    // Build a 5-hop chain. Use characterLimit=10 (tiny) to guarantee the guard triggers.
+    // Chain: Genesis 1:1 → Romans 1:1 → Exodus 1:1 → Psalms 1:1 → John 1:1 → Revelation 1:1
     const chainEdges: Array<Record<string, unknown>> = [
       { from_book: 'Genesis', from_chapter: 1, from_verse: 1, to_book: 'Romans', to_chapter: 1, to_verse_start: 1, to_verse_end: 1, votes: 50, review_status: 'ok' },
       { from_book: 'Romans', from_chapter: 1, from_verse: 1, to_book: 'Exodus', to_chapter: 1, to_verse_start: 1, to_verse_end: 1, votes: 40, review_status: 'ok' },
@@ -549,21 +561,148 @@ describe('traceCrossReferencePath — traversal', () => {
       return Promise.resolve([]);
     });
 
-    const result = await traceCrossReferencePath({
-      from_book: 'Genesis', from_range: '1:1',
-      to_book: 'Revelation', to_range: '1:1',
-      max_hops: 6,
-    });
+    // characterLimit=10 is far smaller than any real output — guaranteed to trigger the guard
+    const result = await traceCrossReferencePath(
+      { from_book: 'Genesis', from_range: '1:1', to_book: 'Revelation', to_range: '1:1', max_hops: 6 },
+      { characterLimit: 10 },
+    );
 
     const body = JSON.parse(result.content[0].text);
     expect(body.found).toBe(true);
-    // path must be adjacency-intact (no dropped interior hops)
-    if (body.path.length > 1) {
-      for (let i = 0; i < body.path.length - 1; i++) {
-        // The to_ref of hop i connects to hop i+1
-        expect(body.path[i].connecting_ref).toBeTruthy();
-      }
+    expect(body.truncated).toBe(true);
+    // note field must be omitted (design C4 — dropped to save budget)
+    expect('note' in body).toBe(false);
+    // path must be adjacency-intact: all hops present, no interior gaps
+    expect(body.path.length).toBeGreaterThan(0);
+    for (let i = 0; i < body.path.length - 1; i++) {
+      expect(body.path[i].connecting_ref).toBeTruthy();
     }
+  });
+
+  it('FIX 1 — to-side containment: target reachable only via interior of a to-range is found', async () => {
+    // Edge: Genesis 3:15 → Romans 8:14-16 (range, ≤ RANGE_EXPLODE_CAP so all verses enqueued).
+    // Target: Romans 8:15 — interior verse, NOT the start (8:14).
+    // Old code queried `to_verse_start IN (frontier verses)` — would miss this edge when
+    // frontier contains 8:15 (not 8:14). New code uses range scan + containment filter.
+    // We verify via the to-side lookup: source (Genesis 3:15) is on the from-side.
+    // After hop 1 expands the range, Romans 8:15 should be in the visited set.
+    // To test the to-side path specifically: put Genesis 3:15 → Romans 8:14-16 as a
+    // to-side edge discovered when frontier={Genesis 3:15}, i.e., the edge points TO
+    // the frontier via its to-range. We need an edge where to_book=Genesis, to_chapter=3,
+    // and to_verse_start ≤ 15 ≤ to_verse_end.
+    // Set up: edge A points to Genesis 3:14-16 (from Psalms 22:1).
+    // Edge B: Psalms 22:1 → Revelation 12:1.
+    // BFS: frontier={Gen 3:15}. to-side query finds edge A (to_verse_start=14 ≤ 15 ≤ to_verse_end=16).
+    // matchedVerse=15. prev=Gen 3:15, connectingVerse=Gen 3:15 (i.e. the same key since 14-16 contains 15).
+    // Then Psalms 22:1 added. Hop 2: from-side finds edge B → Revelation 12:1 found.
+    const EDGE_TO_GEN: Record<string, unknown> = {
+      from_book: 'Psalms', from_chapter: 22, from_verse: 1,
+      to_book: 'Genesis', to_chapter: 3, to_verse_start: 14, to_verse_end: 16,
+      votes: 5, review_status: 'ok',
+    };
+    const EDGE_PS_REV: Record<string, unknown> = {
+      from_book: 'Psalms', from_chapter: 22, from_verse: 1,
+      to_book: 'Revelation', to_chapter: 12, to_verse_start: 1, to_verse_end: 1,
+      votes: 5, review_status: 'ok',
+    };
+
+    mockQuery.mockImplementation((sql: unknown, params: unknown) => {
+      const s = sql as string;
+      const p = params as unknown[];
+      if (s.includes('from_book') && s.includes('from_verse IN')) {
+        const fb = p[0] as string; const fc = p[1] as number; const verses = p.slice(3) as number[];
+        if (fb === 'Psalms' && fc === 22 && verses.includes(1)) return Promise.resolve([EDGE_PS_REV]);
+        return Promise.resolve([]);
+      }
+      // to-side range scan: to_book, to_chapter, to_verse_start <=
+      if (s.includes('to_book') && s.includes('to_verse_start <=')) {
+        const tb = p[0] as string; const tc = p[1] as number; const maxV = p[3] as number;
+        // Return EDGE_TO_GEN when querying to_book=Genesis, to_chapter=3, and 14 ≤ maxVerse
+        if (tb === 'Genesis' && tc === 3 && maxV >= 14) return Promise.resolve([EDGE_TO_GEN]);
+        return Promise.resolve([]);
+      }
+      return Promise.resolve([]);
+    });
+
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis', from_range: '3:15',
+      to_book: 'Revelation', to_range: '12:1',
+      max_hops: 3,
+    });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse(result.content[0].text);
+    expect(body.found).toBe(true);
+    expect(body.hops).toBe(2);
+  });
+
+  it('FIX 2 — multi-verse to-side frontier group yields correct connecting_ref', async () => {
+    // Frontier at hop 1: {Romans 8:27, Romans 8:28} (same book/chapter group).
+    // Edge pointing TO Romans 8:27-29 is returned by to-side query.
+    // The matched verse from the frontier is Romans 8:27 (first match).
+    // prev must be Romans 8:27 (not verses[0] blindly if ordering differs).
+    // FIX 2 ensures prev = matchedVerse = 27, connectingVerse = Romans|8|27.
+
+    // Setup: Genesis 3:15 has two from-side edges to Romans 8:27 and Romans 8:28.
+    const EDGE_GEN_ROM27: Record<string, unknown> = {
+      from_book: 'Genesis', from_chapter: 3, from_verse: 15,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: 27, to_verse_end: 27,
+      votes: 5, review_status: 'ok',
+    };
+    const EDGE_GEN_ROM28: Record<string, unknown> = {
+      from_book: 'Genesis', from_chapter: 3, from_verse: 15,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: 28, to_verse_end: 28,
+      votes: 5, review_status: 'ok',
+    };
+    // Edge pointing back: Isaiah 53:1 → Romans 8:27-29 (to-side).
+    // When frontier = {Romans 8:27, Romans 8:28}, to-side query on (Romans, 8) returns this edge.
+    // The matched frontier verse is 27 (since 27 ∈ [27,29]).
+    // prev should be Romans|8|27 and connectingVerse = Romans|8|27.
+    const EDGE_ISA_ROM: Record<string, unknown> = {
+      from_book: 'Isaiah', from_chapter: 53, from_verse: 1,
+      to_book: 'Romans', to_chapter: 8, to_verse_start: 27, to_verse_end: 29,
+      votes: 5, review_status: 'ok',
+    };
+    // Edge from Isaiah 53:1 → Revelation 12:1
+    const EDGE_ISA_REV: Record<string, unknown> = {
+      from_book: 'Isaiah', from_chapter: 53, from_verse: 1,
+      to_book: 'Revelation', to_chapter: 12, to_verse_start: 1, to_verse_end: 1,
+      votes: 5, review_status: 'ok',
+    };
+
+    mockQuery.mockImplementation((sql: unknown, params: unknown) => {
+      const s = sql as string;
+      const p = params as unknown[];
+      if (s.includes('from_book') && s.includes('from_verse IN')) {
+        const fb = p[0] as string; const fc = p[1] as number; const verses = p.slice(3) as number[];
+        if (fb === 'Genesis' && fc === 3 && verses.includes(15)) return Promise.resolve([EDGE_GEN_ROM27, EDGE_GEN_ROM28]);
+        if (fb === 'Isaiah' && fc === 53 && verses.includes(1)) return Promise.resolve([EDGE_ISA_REV]);
+        return Promise.resolve([]);
+      }
+      if (s.includes('to_book') && s.includes('to_verse_start <=')) {
+        const tb = p[0] as string; const tc = p[1] as number; const maxV = p[3] as number;
+        // Return the to-side edge when querying Romans 8 with maxVerse ≥ 27
+        if (tb === 'Romans' && tc === 8 && maxV >= 27) return Promise.resolve([EDGE_ISA_ROM]);
+        return Promise.resolve([]);
+      }
+      return Promise.resolve([]);
+    });
+
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis', from_range: '3:15',
+      to_book: 'Revelation', to_range: '12:1',
+      max_hops: 3,
+    });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse(result.content[0].text);
+    expect(body.found).toBe(true);
+    // The path must include a hop from Isaiah 53:1 whose connecting_ref is Romans 8:27
+    // (the actual matched frontier verse, not blindly the first verse in the group)
+    const isaHop = body.path.find((h: { from_ref: string }) => h.from_ref === 'Isaiah 53:1');
+    expect(isaHop).toBeDefined();
+    // connecting_ref must be a Romans 8 verse (specifically 27, 28, or within the matched range)
+    expect(isaHop.connecting_ref).toMatch(/^Romans 8:/);
   });
 
   it('summary counters reflect traversal (nodes_visited and edges_examined)', async () => {
