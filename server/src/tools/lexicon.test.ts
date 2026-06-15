@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryLexicon } from './lexicon.js';
+import { queryLexicon, expandParentheticalGloss } from './lexicon.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -192,5 +192,32 @@ describe('queryLexicon search — result shape', () => {
     const body = JSON.parse(result.content[0].text);
     expect(body.entries.some((e: any) => e.strongs_id === 'H1285')).toBe(true);
     expect(body.errors.length).toBeGreaterThan(0); // error recorded
+  });
+});
+
+// ── expandParentheticalGloss ──────────────────────────────────────────────────
+
+describe('expandParentheticalGloss', () => {
+  const cases: [string, string[]][] = [
+    // base ends 'n', suffix starts 'e' — no overlap, single naive form
+    ['when(-ever)', ['when', 'whenever']],
+    // base ends 's', suffix starts 'l' — no overlap
+    ['thus(-ly)', ['thus', 'thusly']],
+    // two suffixes, no overlaps
+    ['light(-en, -ning)', ['light', 'lighten', 'lightning']],
+    // two suffixes: -ever has overlap (e===e) → emit naive+elided; -fore no overlap
+    ['where(-ever, -fore)', ['where', 'whereever', 'wherever', 'wherefore']],
+    // single suffix with overlap: base ends 'e', suffix starts 'e'
+    ['where(-ever)', ['where', 'whereever', 'wherever']],
+    // no parens — returned unchanged
+    ['love', ['love']],
+    // no parens — long gloss unchanged
+    ['Bel and the Dragon', ['Bel and the Dragon']],
+    // parens present but first inner element does NOT start with '-' — returned unchanged
+    ['God (the Almighty)', ['God (the Almighty)']],
+  ];
+
+  it.each(cases)('expandParentheticalGloss(%s) → %j', (gloss, expected) => {
+    expect(expandParentheticalGloss(gloss)).toEqual(expected);
   });
 });

@@ -22,6 +22,59 @@ function stripDiacritics(text: string): string {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '');
 }
 
+/**
+ * Expand a compact parenthetical gloss into all spelled-out variant forms.
+ *
+ * Examples:
+ *   "when(-ever)"          → ["when", "whenever"]
+ *   "where(-ever)"         → ["where", "whereever", "wherever"]
+ *   "where(-ever, -fore)"  → ["where", "whereever", "wherever", "wherefore"]
+ *   "love"                 → ["love"]
+ *   "God (the Almighty)"   → ["God (the Almighty)"]  (first inner element not '-')
+ *
+ * Architecture Invariant: returns [gloss] unchanged when there is no parenthetical
+ * group whose first inner element starts with '-'. Never mutates the displayed gloss.
+ *
+ * Dual-form elision rule: when base's last char equals the suffix's first char,
+ * emit both the naive concatenation (base + suffix) AND the single-char-elided
+ * form (base + suffix.slice(1)), to handle e.g. "where(-ever)" → "whereever" + "wherever".
+ */
+export function expandParentheticalGloss(gloss: string): string[] {
+  const match = gloss.match(/^(.+?)\((-[^)]+)\)(.*)$/);
+  if (!match) return [gloss];
+
+  const base = match[1];
+  const inner = match[2];
+
+  // Split on comma, trim whitespace
+  const parts = inner.split(',').map(p => p.trim());
+
+  // If the first part does not start with '-', this is not an abbreviation group
+  if (!parts[0].startsWith('-')) return [gloss];
+
+  const expandedForms: string[] = [];
+
+  for (const part of parts) {
+    if (part.startsWith('-')) {
+      // Naive concatenation: drop the hyphen
+      const naive = base + part.slice(1);
+      expandedForms.push(naive);
+
+      // Dual-form elision: if base's last char equals suffix's first char (part[1]),
+      // also emit the single-char-elided form
+      if (base[base.length - 1] === part[1]) {
+        const elided = base + part.slice(2);
+        expandedForms.push(elided);
+      }
+    } else {
+      // Part does not start with '-': append as-is
+      expandedForms.push(part);
+    }
+  }
+
+  return [base, ...expandedForms];
+}
+
 // ─── Schema ──────────────────────────────────────────────────────────────────
 
 export const LexiconInputSchema = {
