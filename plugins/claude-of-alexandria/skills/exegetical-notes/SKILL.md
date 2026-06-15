@@ -232,6 +232,11 @@ Step 2b: CONTROVERSY CHECK (run after data-retriever, before composing sections)
    │
    ├─ Call `query_controversies` with the passage reference (e.g., book + chapter range)
    │  OR with the book/chapter slug if a topic keyword is known.
+   │  Arg shape: `mode: "passage"` with `book` + `range` for passage-anchored notes;
+   │  `mode: "topic"` with `topic` when a specific disputed topic is known;
+   │  `mode: "list"` to enumerate all available controversy records.
+   │  Example (passage): `query_controversies: {"mode": "passage", "book": "Exodus", "range": "12:1-40"}`
+   │  Example (topic):   `query_controversies: {"mode": "topic", "topic": "exodus date"}`
    │  Also check the `chapter_contested` flag returned by `query_events` for the passage —
    │  a `true` flag is a secondary signal to call `query_controversies` if not already done.
    │

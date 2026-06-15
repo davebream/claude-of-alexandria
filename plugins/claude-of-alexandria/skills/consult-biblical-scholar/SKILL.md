@@ -340,6 +340,11 @@ Agent tool:
 
 2a. Call `query_controversies` for the passage and/or topic
    → Call BEFORE composing any prose response
+   → Arg shape: `mode: "passage"` with `book` + `range` when a passage is identified;
+     `mode: "topic"` with `topic` for open-ended questions (e.g., topic mode, Exodus dating);
+     `mode: "list"` to enumerate all available controversy records.
+     Example (passage): `query_controversies: {"mode": "passage", "book": "Exodus", "range": "12:1-40"}`
+     Example (topic):   `query_controversies: {"mode": "topic", "topic": "exodus date"}`
    → If `topics` array is non-empty: insert the both-sides block per the Flagged Controversies rule above
    → If `topics` is empty: proceed without controversy block
    → Fallback: if the tool call fails, note "Controversy check unavailable" and proceed
