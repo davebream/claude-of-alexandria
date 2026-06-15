@@ -80,7 +80,7 @@ describe('mode="topic"', () => {
 
   it('false-positive guard: "dan" does NOT match "Abundant Grace Doctrine" (no substring trap)', async () => {
     // Topic search for "dan" must not return rows whose keyword is "abundant"
-    // The mock returns empty to simulate no match — the SQL must be structured to avoid false positives
+    // Verify the SQL uses exact keyword match (lower(k.value) = lower(?)) not LIKE for keyword branch
     mockQuery.mockResolvedValue([]);
 
     const result = await queryControversies({ mode: 'topic', topic: 'dan' });
@@ -88,6 +88,12 @@ describe('mode="topic"', () => {
     expect(result.isError).toBeFalsy();
     const body = JSON.parse((result.content[0] as { text: string }).text);
     expect(body.topics).toEqual([]);
+
+    // Introspect the SQL: keyword branch must use exact equality (lower(k.value) = lower(?))
+    // not a LIKE which would let "dan" match "abundant"
+    const sqlArg = mockQuery.mock.calls[0][0] as string;
+    expect(sqlArg).toContain('json_each');
+    expect(sqlArg).toMatch(/lower\(k\.value\)\s*=\s*lower\(\?\)/);
   });
 
   it('strips LIKE metacharacters from topic input (%_)', async () => {
@@ -190,6 +196,27 @@ describe('mode="passage"', () => {
     const body = JSON.parse((result.content[0] as { text: string }).text);
     expect(body.topics).toEqual([]);
   });
+
+  it('chapter-only range (e.g. "12") parses via parseChapterRange and queries with CHAPTER_ONLY_MAX_VERSE bounds', async () => {
+    mockLookupBook.mockReturnValue({ canonical: 'exodus', displayName: 'Exodus', testament: 'ot', morphologyFile: 'exodus' });
+    mockQuery.mockResolvedValue([passageTopicRow]);
+
+    const result = await queryControversies({ mode: 'passage', book: 'Exodus', range: '12' });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse((result.content[0] as { text: string }).text);
+    expect(body.mode).toBe('passage');
+    expect(body.topics).toHaveLength(1);
+    expect(body.topics[0].topic).toBe('Date of the Exodus');
+
+    // Verify the encoded positions passed to query use chapter-only encoding:
+    // encodePosition(12, 1) for start and encodePosition(12, 999) for end
+    // encodePosition(ch, v) = ch * 1000 + v → start=12001, end=12999
+    const params = mockQuery.mock.calls[0][1] as unknown[];
+    expect(params).toContain('exodus');     // book param
+    expect(params).toContain(12999);        // end_enc = encodePosition(12, CHAPTER_ONLY_MAX_VERSE=999)
+    expect(params).toContain(12001);        // start_enc = encodePosition(12, 1)
+  });
 });
 
 // ─── mode="list" ─────────────────────────────────────────────────────────────
@@ -279,7 +306,7 @@ describe('robustness', () => {
     expect(body.topics.length).toBeGreaterThan(0);
   });
 
-  it('response includes neutrality_caveat and attribution', async () => {
+  it('response includes neutrality_caveat and controversies-specific attribution mentioning curated scholarship', async () => {
     mockQuery.mockResolvedValue([exodusTopicRow]);
 
     const result = await queryControversies({ mode: 'topic', topic: 'exodus' });
@@ -287,5 +314,8 @@ describe('robustness', () => {
     const body = JSON.parse((result.content[0] as { text: string }).text);
     expect(body.neutrality_caveat).toBeTruthy();
     expect(body.attribution).toBeTruthy();
+    // Attribution must describe the controversies dataset specifically — not Theographic/TIPNR entity data
+    expect(body.attribution.toLowerCase()).toContain('curated');
+    expect(body.attribution.toLowerCase()).toContain('scholarship');
   });
 });

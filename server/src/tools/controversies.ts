@@ -7,7 +7,6 @@ import {
   CHAPTER_ONLY_MAX_VERSE,
   parseVerseRange,
   parseChapterRange,
-  ENTITY_ATTRIBUTION,
 } from './utils.js';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -17,7 +16,8 @@ const CHARACTER_LIMIT = 25_000;
 const NEUTRALITY_CAVEAT =
   'This catalogs academic dispute and the major scholarly positions; it does not adjudicate which view is correct. Present positions with their evidence; do not resolve a contested debate.';
 
-const ATTRIBUTION = ENTITY_ATTRIBUTION;
+const ATTRIBUTION =
+  'Controversy data: curated in-house from cited academic scholarship (see each topic\'s sources). Positions are summarized neutrally and do not adjudicate contested debates.';
 
 // ─── Input Schema ─────────────────────────────────────────────────────────────
 
@@ -121,7 +121,7 @@ function rowToTopic(row: TopicRow) {
 
 function applyCharacterLimit(
   result: Record<string, unknown>,
-  topics: ReturnType<typeof rowToTopic>[],
+  topics: unknown[],
 ): Record<string, unknown> {
   const serialized = JSON.stringify(result);
   if (serialized.length <= CHARACTER_LIMIT || topics.length <= 1) return result;
@@ -182,9 +182,10 @@ async function handleList(args: ControversiesInput): Promise<CallToolResult> {
     neutrality_caveat: NEUTRALITY_CAVEAT,
   };
 
+  const finalResult = applyCharacterLimit(result, topics);
   return {
-    content: [{ type: 'text', text: JSON.stringify(result) }],
-    structuredContent: result,
+    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
+    structuredContent: finalResult,
   };
 }
 
@@ -198,6 +199,9 @@ async function handleTopic(args: ControversiesInput): Promise<CallToolResult> {
   // Strip LIKE metacharacters per lexicon.ts precedent (avoid false-positive substring matches)
   const safeTopic = args.topic.replace(/[%_]/g, '');
 
+  // ESCAPE '\\' is retained for SQLite compatibility but is inert here because
+  // metacharacters are stripped before use (safeTopic has no % or _ characters).
+  // This matches the lexicon.ts precedent: strip, don't escape.
   const sql = `
     SELECT t.topic, t.slug, t.category, t.rating, t.summary, t.positions, t.sources, t.note
     FROM controversy_topics t
