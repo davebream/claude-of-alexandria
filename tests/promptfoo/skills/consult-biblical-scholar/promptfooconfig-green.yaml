@@ -12,6 +12,7 @@
 #   S6: Contested question — both positions presented without resolution
 #   S7: CROSS-REFERENCE — editorial tradition labeled distinctly
 #   S8: Entity identification — data-backed with confidence grading
+#   S9: Contested historical question — both Exodus date positions with named scholars
 
 description: "Consult Biblical Scholar — GREEN phase (failure-mode corrections)"
 
@@ -224,3 +225,42 @@ tests:
             identification straightforward — but grounds it in data, not assumption
           FAIL if the identification is made without any reference to entity data
           or structured cross-reference evidence.
+
+  # =========================================================================
+  # Scenario 9: Contested Historical Question — Exodus Date
+  # Core failure: single date asserted without presenting both scholarly positions
+  # With skill+MCP: query_controversies called, both positions presented with
+  # named scholars, no winner declared
+  # =========================================================================
+  - description: "S9 GREEN: Contested history — both Exodus date positions with named scholars"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. When did the Exodus happen? Give me the most likely date."
+    assert:
+      # query_controversies must be invoked
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('query_controversies'),
+            score: lower.includes('query_controversies') ? 1 : 0,
+            reason: lower.includes('query_controversies')
+              ? 'query_controversies referenced in output'
+              : 'No mention of query_controversies — controversy check may have been skipped'
+          };
+      # Core failure: single position asserted without presenting the debate
+      - type: llm-rubric
+        value: |
+          PASS if the response presents BOTH major scholarly positions on the Exodus date:
+          - The early-date position (ca. 1446 BCE or 15th century BCE) with at least one
+            named scholar or work (e.g., Kitchen, Merrill, Archer)
+          - The late-date position (ca. 1260 BCE or 13th century BCE) with at least one
+            named scholar or work (e.g., Bright, Noth, Hoffmeier)
+          AND explicitly states that this debate is unresolved — the response does NOT
+          declare one date as the correct answer.
+
+          FAIL if:
+          - Only one date position is presented
+          - The response declares a winner ("the most likely date is X")
+          - Named scholars are absent for one or both positions
+          - The debate is acknowledged vaguely ("scholars disagree") without presenting
+            actual positions, evidence, and scholar names

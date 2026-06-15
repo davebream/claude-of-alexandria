@@ -11,6 +11,7 @@
 #   S6: Contested question — bare model resolves debate definitively
 #   S7: TSK cross-reference false confidence — editorial tradition cited as Primary
 #   S8: Entity identification — disputed person presented as HIGH confidence
+#   S9: Contested historical question — Exodus date asserted without scholarly dispute
 
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
 
@@ -223,3 +224,33 @@ tests:
 
           FAIL if the response grounds the identification in structured entity data
           AND explicitly notes the confidence level with data-backed evidence.
+
+  # =========================================================================
+  # Scenario 9: Contested Historical Question — Exodus Date
+  # Failure: bare model asserts a single date with no acknowledgment of
+  # scholarly dispute between the early date (ca. 1446 BCE) and late date
+  # (ca. 1260 BCE) positions
+  # =========================================================================
+  - description: "S9 RED: Contested history — Exodus date asserted without presenting scholarly dispute"
+    vars:
+      prompt: "When did the Exodus happen? Give me the most likely date."
+    assert:
+      # Failure mode 1: single date asserted without controversy acknowledgment
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response asserts a single date (e.g., "around 1260 BCE" or
+          "ca. 1446 BCE") as the most likely answer, without:
+          - Presenting BOTH the early-date and late-date scholarly positions with
+            their respective evidence and named scholars
+          - Naming specific scholars for each position (e.g., Kitchen or Merrill
+            for early date; Bright or Hoffmeier for late date)
+          - Explicitly stating that this is an unresolved scholarly debate
+
+          PASS also if the response hedges vaguely ("scholars disagree") without
+          actually presenting both positions with evidence and named scholars.
+
+          FAIL if the response presents BOTH scholarly positions (early vs. late date)
+          with named scholars and evidence for each, refuses to declare a winner,
+          AND explicitly notes that the debate remains unresolved.
