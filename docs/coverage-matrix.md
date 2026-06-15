@@ -1,7 +1,7 @@
 # RED Scenario Coverage Matrix
 
-**Last updated:** 2026-05-04
-**Total RED scenarios:** 53 (skills) + 11 (agents) = 64 (includes 7 new pairs added by coverage audit)
+**Last updated:** 2026-06-15
+**Total RED scenarios:** 56 (skills) + 11 (agents) = 67 (includes 3 new passage-glossary RED scenarios)
 
 ## Genre Taxonomy
 
@@ -80,18 +80,21 @@
 | dr-S2 | data-retriever (agent) | Gen 37:2-11 | Genesis | Narrative | OT data retrieval | query_morphology, query_vocabulary |
 | se-S1 | study-evaluator (agent) | Phil 1:1-11 | Philippians | Epistle | Evaluation without criteria | query_morphology, query_vocabulary |
 | se-S2 | study-evaluator (agent) | Gen 37:2-11 | Genesis | Narrative | OT evaluation without criteria | query_morphology, query_vocabulary |
+| gloss-S1 | passage-glossary | John 1:1-5 | John | Gospel | Duplicate headword rows without dedup | query_morphology, query_lexicon |
+| gloss-S2 | passage-glossary | John 1:1-5 | John | Gospel | Glosses fabricated from training data, no MCP grounding | query_morphology, query_lexicon |
+| gloss-S3 | passage-glossary | John 1:1-18 | John | Gospel | >20-lemma span; bare model omits lemmas or lacks grounding | query_morphology, query_lexicon |
 
 ## Genre × Skill Heatmap
 
-| Genre | exegetical-notes | argument-flow | biblical-segmentation | pericope-delimitation | consult-biblical-scholar |
-|-------|-----------------|---------------|----------------------|----------------------|-------------------------|
-| Narrative | 3 (Gen) | 1 (Gen) | 7 (Gen, Ps) | 2 (Gen) | 1 (Gen) |
-| Law | 1 (Lev) ★ | 0 | 0 | 0 | 0 |
-| Poetry/Wisdom | 2 (Job, Ecc) ★ | 0 | 3 (Ps, Job) ★ | 1 (Ecc) ★ | 0 |
-| Prophecy | 1 (Obadiah) ★ | 0 | 0 | 0 | 0 |
-| Apocalyptic | 1 (Rev) | 1 (Dan) ★ | 1 (Rev) | 0 | 0 |
-| Epistle | 9 | 6 | 4 | 4 | 8 |
-| Gospel | 1 (John) | 0 | 1 (John) | 0 | 0 |
+| Genre | exegetical-notes | argument-flow | biblical-segmentation | pericope-delimitation | consult-biblical-scholar | passage-glossary |
+|-------|-----------------|---------------|----------------------|----------------------|-------------------------|-----------------|
+| Narrative | 3 (Gen) | 1 (Gen) | 7 (Gen, Ps) | 2 (Gen) | 1 (Gen) | 0 |
+| Law | 1 (Lev) ★ | 0 | 0 | 0 | 0 | 0 |
+| Poetry/Wisdom | 2 (Job, Ecc) ★ | 0 | 3 (Ps, Job) ★ | 1 (Ecc) ★ | 0 | 0 |
+| Prophecy | 1 (Obadiah) ★ | 0 | 0 | 0 | 0 | 0 |
+| Apocalyptic | 1 (Rev) | 1 (Dan) ★ | 1 (Rev) | 0 | 0 | 0 |
+| Epistle | 9 | 6 | 4 | 4 | 8 | 0 |
+| Gospel | 1 (John) | 0 | 1 (John) | 0 | 0 | 3 (John) ★ |
 
 _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
 
@@ -99,7 +102,7 @@ _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
 
 | Tool | GREEN Scenarios Using It | Status |
 |------|------------------------|--------|
-| query_morphology | exeg-S1/S2/S3/S5/S7/S16, arg-S1/S3/S4/S5/ADV1/S6, cbs-S1/S2/S3/S5, bs-S1/S2, dr-S1/S2, se-S1/S2 | ✓ Covered |
+| query_morphology | exeg-S1/S2/S3/S5/S7/S16, arg-S1/S3/S4/S5/ADV1/S6, cbs-S1/S2/S3/S5, bs-S1/S2, dr-S1/S2, se-S1/S2, gloss-S1/S2/S3 | ✓ Covered |
 | query_vocabulary | exeg-S1/S2/S3/S5/S11/S13, cbs-S1/S2/S3/S5, bs-S1/S2, dr-S1/S2, se-S1/S2 | ✓ Covered |
 | bible_lookup | exeg-S1/S4 | ✓ Covered |
 | commentary_lookup | exeg-S1/S7/S15, cbs-S1/S6/S7 | ✓ Covered |
@@ -114,7 +117,7 @@ _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
 | query_places | exeg-S20 (Obadiah — degraded-data scenario) ★ | ✓ Covered (degraded-data path) |
 | query_events | — | ✗ NOT COVERED |
 | query_theme | — | ✗ NOT COVERED |
-| query_lexicon | — | ✗ NOT COVERED |
+| query_lexicon | gloss-S1/S2/S3 | ✓ Covered |
 | parallel_text | — | ✗ NOT COVERED |
 | confessional_lookup | — | ✗ NOT COVERED |
 | query_controversies | cbs-S9, exeg-S22 | ✓ Covered |
