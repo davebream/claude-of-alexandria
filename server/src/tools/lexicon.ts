@@ -75,6 +75,18 @@ export function expandParentheticalGloss(gloss: string): string[] {
   return [base, ...expandedForms];
 }
 
+/**
+ * Returns true if the gloss directly contains the term OR any expanded form
+ * (from expandParentheticalGloss) contains the term. Case-insensitive.
+ *
+ * Used as a post-filter after the broadened SQL fetch to keep only rows that
+ * genuinely match the user's search term — either directly or via expansion.
+ * Never mutates the gloss; the displayed gloss stays verbatim.
+ */
+export function glossMatchesTerm(gloss: string, term: string): boolean {
+  return expandParentheticalGloss(gloss).some(form => form.toLowerCase().includes(term));
+}
+
 // ─── Schema ──────────────────────────────────────────────────────────────────
 
 export const LexiconInputSchema = {
@@ -449,18 +461,27 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     const [lsjResult, asResult, bdbResult] = await Promise.allSettled([
       query(
         `SELECT strongs_id, gloss, original_word, transliteration, definition as lsj_definition
-         FROM lexicon_lsj WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
-        [pattern, pattern]
+         FROM lexicon_lsj
+         WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
+         LIMIT 40`,
+        [pattern, pattern, pattern, pattern]
       ),
       query(
         `SELECT strongs_id, gloss, original_word, transliteration, definition as abbott_smith_definition
-         FROM lexicon_abbott_smith WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
-        [pattern, pattern]
+         FROM lexicon_abbott_smith
+         WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
+         LIMIT 40`,
+        [pattern, pattern, pattern, pattern]
       ),
       query(
         `SELECT strongs_id, gloss, original_word, transliteration, definition as bdb_definition
-         FROM lexicon_bdb WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? LIMIT 20`,
-        [pattern, pattern]
+         FROM lexicon_bdb
+         WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
+         LIMIT 40`,
+        [pattern, pattern, pattern, pattern]
       ),
     ]);
 
@@ -478,6 +499,13 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     // Merge LSJ results (primary Greek source — wins precedence over Abbott-Smith)
     if (lsjResult.status === 'fulfilled') {
       for (const row of lsjResult.value) {
+        // Post-filter: discard broadened-fetch candidates that don't match the user's term
+        // (either directly via gloss/definition LIKE, or via parenthetical expansion).
+        const directMatch =
+          (row.gloss as string)?.toLowerCase().includes(term) ||
+          ((row.lsj_definition as string | null) ?? '').toLowerCase().includes(term);
+        if (!directMatch && !glossMatchesTerm(row.gloss as string, term)) continue;
+
         entryMap.set(row.strongs_id as string, {
           strongs_id: row.strongs_id as string,
           gloss: row.gloss as string,
@@ -495,6 +523,12 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     // Merge Abbott-Smith results — merge into existing LSJ entry if present
     if (asResult.status === 'fulfilled') {
       for (const row of asResult.value) {
+        // Post-filter: discard broadened-fetch candidates that don't match the user's term
+        const directMatch =
+          (row.gloss as string)?.toLowerCase().includes(term) ||
+          ((row.abbott_smith_definition as string | null) ?? '').toLowerCase().includes(term);
+        if (!directMatch && !glossMatchesTerm(row.gloss as string, term)) continue;
+
         const existing = entryMap.get(row.strongs_id as string);
         if (existing) {
           existing.abbott_smith_definition = row.abbott_smith_definition as string | null;
@@ -518,6 +552,12 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     // Merge BDB results (Hebrew — no Strong's ID collision with Greek)
     if (bdbResult.status === 'fulfilled') {
       for (const row of bdbResult.value) {
+        // Post-filter: discard broadened-fetch candidates that don't match the user's term
+        const directMatch =
+          (row.gloss as string)?.toLowerCase().includes(term) ||
+          ((row.bdb_definition as string | null) ?? '').toLowerCase().includes(term);
+        if (!directMatch && !glossMatchesTerm(row.gloss as string, term)) continue;
+
         entryMap.set(row.strongs_id as string, {
           strongs_id: row.strongs_id as string,
           gloss: row.gloss as string,

@@ -148,7 +148,7 @@ describe('queryLexicon search — result shape', () => {
 
     mockQuery
       .mockResolvedValueOnce(lsjRows) // LSJ hits cap
-      .mockResolvedValueOnce([{ strongs_id: 'G9999', gloss: 'extra', original_word: 'extra', transliteration: null, abbott_smith_definition: 'extra' }])
+      .mockResolvedValueOnce([{ strongs_id: 'G9999', gloss: 'word-extra', original_word: 'extra', transliteration: null, abbott_smith_definition: 'word-extra' }])
       .mockResolvedValueOnce([]) // BDB
       .mockResolvedValueOnce([]); // UBS
 
@@ -230,5 +230,69 @@ describe('lexicon parenthetical expansion matching', () => {
     expect('when(-ever)'.toLowerCase().includes('whenever')).toBe(false);
     // Expansion-based match — the behaviour the fix introduces:
     expect(glossMatchesTerm('when(-ever)', 'whenever')).toBe(true);
+  });
+});
+
+// ── SQL-pattern assertion (guards the '%(-%' literal) ────────────────────────
+
+describe('queryLexicon search — SQL broadening clause', () => {
+  it('broadens the gloss fetch with a contains-(- clause, not an ends-with clause', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryLexicon({ search: 'whenever' } as any);
+    const sqlStrings = mockQuery.mock.calls.map(c => String(c[0]));
+    const tableQueries = sqlStrings.filter(s => /FROM lexicon_/.test(s));
+    expect(tableQueries.length).toBeGreaterThan(0);
+    for (const sql of tableQueries) {
+      expect(sql).toContain("LIKE '%(-%'"); // contains (- anywhere
+      expect(sql).not.toMatch(/LIKE '%\(-'(?!%)/); // never the ends-with form
+    }
+  });
+});
+
+// ── GREEN integration tests for parenthetical expansion ──────────────────────
+
+describe('queryLexicon search — parenthetical expansion (GREEN)', () => {
+  it('[GREEN] search "whenever" matches gloss "when(-ever)" via expansion', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G3698', gloss: 'when(-ever)', original_word: 'ὁπότε', transliteration: 'hopote', lsj_definition: 'when' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS — fires because entries.length > 0
+    const result = await queryLexicon({ search: 'whenever' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries).toHaveLength(1);
+    expect(body.entries[0].strongs_id).toBe('G3698');
+    expect(body.entries[0].gloss).toBe('when(-ever)'); // displayed gloss unchanged
+  });
+
+  it('[GREEN] search "thusly" matches gloss "thus(-ly)" via expansion', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G3779', gloss: 'thus(-ly)', original_word: 'οὕτως', transliteration: 'houtos', lsj_definition: 'thus' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS
+    const result = await queryLexicon({ search: 'thusly' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries).toHaveLength(1);
+    expect(body.entries[0].strongs_id).toBe('G3779');
+    expect(body.entries[0].gloss).toBe('thus(-ly)'); // displayed gloss unchanged
+  });
+
+  it('non-parenthetical direct match "love" (G26) still returned after broadened fetch + post-filter', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G26', gloss: 'love', original_word: 'ἀγάπη', transliteration: 'agape', lsj_definition: 'love' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS
+    const result = await queryLexicon({ search: 'love' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries.some((e: any) => e.strongs_id === 'G26')).toBe(true);
+    expect(body.entries.find((e: any) => e.strongs_id === 'G26').gloss).toBe('love');
   });
 });
