@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryLexicon } from './lexicon.js';
+import { queryLexicon, expandParentheticalGloss, glossMatchesTerm } from './lexicon.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -148,7 +148,7 @@ describe('queryLexicon search — result shape', () => {
 
     mockQuery
       .mockResolvedValueOnce(lsjRows) // LSJ hits cap
-      .mockResolvedValueOnce([{ strongs_id: 'G9999', gloss: 'extra', original_word: 'extra', transliteration: null, abbott_smith_definition: 'extra' }])
+      .mockResolvedValueOnce([{ strongs_id: 'G9999', gloss: 'word-extra', original_word: 'extra', transliteration: null, abbott_smith_definition: 'word-extra' }])
       .mockResolvedValueOnce([]) // BDB
       .mockResolvedValueOnce([]); // UBS
 
@@ -192,5 +192,115 @@ describe('queryLexicon search — result shape', () => {
     const body = JSON.parse(result.content[0].text);
     expect(body.entries.some((e: any) => e.strongs_id === 'H1285')).toBe(true);
     expect(body.errors.length).toBeGreaterThan(0); // error recorded
+  });
+});
+
+// ── expandParentheticalGloss ──────────────────────────────────────────────────
+
+describe('expandParentheticalGloss', () => {
+  const cases: [string, string[]][] = [
+    // base ends 'n', suffix starts 'e' — no overlap, single naive form
+    ['when(-ever)', ['when', 'whenever']],
+    // base ends 's', suffix starts 'l' — no overlap
+    ['thus(-ly)', ['thus', 'thusly']],
+    // two suffixes, no overlaps
+    ['light(-en, -ning)', ['light', 'lighten', 'lightning']],
+    // two suffixes: -ever has overlap (e===e) → emit naive+elided; -fore no overlap
+    ['where(-ever, -fore)', ['where', 'whereever', 'wherever', 'wherefore']],
+    // single suffix with overlap: base ends 'e', suffix starts 'e'
+    ['where(-ever)', ['where', 'whereever', 'wherever']],
+    // no parens — returned unchanged
+    ['love', ['love']],
+    // no parens — long gloss unchanged
+    ['Bel and the Dragon', ['Bel and the Dragon']],
+    // parens present but first inner element does NOT start with '-' — returned unchanged
+    ['God (the Almighty)', ['God (the Almighty)']],
+  ];
+
+  it.each(cases)('expandParentheticalGloss(%s) → %j', (gloss, expected) => {
+    expect(expandParentheticalGloss(gloss)).toEqual(expected);
+  });
+
+  it('preserves case in output for mixed-case input', () => {
+    expect(expandParentheticalGloss('When(-ever)')).toEqual(['When', 'Whenever']);
+  });
+});
+
+// ── Predicate-level parenthetical expansion matching ─────────────────────────
+
+describe('lexicon parenthetical expansion matching', () => {
+  it('[RED] expansion-based matching surfaces "whenever" in gloss "when(-ever)" where raw substring fails', () => {
+    // Raw substring match — the production miss this feature fixes:
+    expect('when(-ever)'.toLowerCase().includes('whenever')).toBe(false);
+    // Expansion-based match — the behaviour the fix introduces:
+    expect(glossMatchesTerm('when(-ever)', 'whenever')).toBe(true);
+  });
+
+  it('case-insensitive match: mixed-case gloss "When(-ever)" matches term "whenever"', () => {
+    expect(glossMatchesTerm('When(-ever)', 'whenever')).toBe(true);
+  });
+});
+
+// ── SQL-pattern assertion (guards the '%(-%' literal) ────────────────────────
+
+describe('queryLexicon search — SQL broadening clause', () => {
+  it('broadens the gloss fetch with a contains-(- clause, not an ends-with clause', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryLexicon({ search: 'whenever' } as any);
+    const sqlStrings = mockQuery.mock.calls.map(c => String(c[0]));
+    const tableQueries = sqlStrings.filter(s => /FROM lexicon_/.test(s));
+    expect(tableQueries.length).toBeGreaterThan(0);
+    for (const sql of tableQueries) {
+      expect(sql).toContain("LIKE '%(-%'"); // contains (- anywhere
+      expect(sql).not.toMatch(/LIKE '%\(-'(?!%)/); // never the ends-with form
+    }
+  });
+});
+
+// ── GREEN integration tests for parenthetical expansion ──────────────────────
+
+describe('queryLexicon search — parenthetical expansion (GREEN)', () => {
+  it('[GREEN] search "whenever" matches gloss "when(-ever)" via expansion', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G3698', gloss: 'when(-ever)', original_word: 'ὁπότε', transliteration: 'hopote', lsj_definition: 'when' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS — fires because entries.length > 0
+    const result = await queryLexicon({ search: 'whenever' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries).toHaveLength(1);
+    expect(body.entries[0].strongs_id).toBe('G3698');
+    expect(body.entries[0].gloss).toBe('when(-ever)'); // displayed gloss unchanged
+  });
+
+  it('[GREEN] search "thusly" matches gloss "thus(-ly)" via expansion', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G3779', gloss: 'thus(-ly)', original_word: 'οὕτως', transliteration: 'houtos', lsj_definition: 'thus' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS
+    const result = await queryLexicon({ search: 'thusly' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries).toHaveLength(1);
+    expect(body.entries[0].strongs_id).toBe('G3779');
+    expect(body.entries[0].gloss).toBe('thus(-ly)'); // displayed gloss unchanged
+  });
+
+  it('non-parenthetical direct match "love" (G26) still returned after broadened fetch + post-filter', async () => {
+    mockQuery
+      .mockResolvedValueOnce([
+        { strongs_id: 'G26', gloss: 'love', original_word: 'ἀγάπη', transliteration: 'agape', lsj_definition: 'love' },
+      ])
+      .mockResolvedValueOnce([]) // Abbott-Smith
+      .mockResolvedValueOnce([]) // BDB
+      .mockResolvedValueOnce([]); // UBS
+    const result = await queryLexicon({ search: 'love' } as any);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.entries.some((e: any) => e.strongs_id === 'G26')).toBe(true);
+    expect(body.entries.find((e: any) => e.strongs_id === 'G26').gloss).toBe('love');
   });
 });
