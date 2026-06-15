@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-5%20%2B%206%20agents-orange" alt="Skills"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-6%20%2B%206%20agents-orange" alt="Skills"></a>
   <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-96%20automated-yellow" alt="Tests"></a>
 </p>
 
@@ -45,7 +45,7 @@ GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural ch
 
 ## Current Collection
 
-**5 skills + 6 sub-agents, all production.** Coverage: all 66 canonical books.
+**6 skills + 6 sub-agents, all production.** Coverage: all 66 canonical books.
 
 ### Skills
 
@@ -100,6 +100,16 @@ Maps the logical argument of a biblical passage using discourse markers:
 - Grounds every interpretive claim in retrieved data
 
 16 core CI tests (8 RED + 8 GREEN) + 3 extended scenarios. For epistles and discourse-heavy passages.
+
+#### [passage-glossary](plugins/claude-of-alexandria/skills/passage-glossary/)
+
+Assembles a passage reader with a deduplicated lemma glossary:
+
+- Pulls the lemmas of a passage via morphology, deduplicates them, and renders each distinct headword once
+- Grounds every gloss in MCP lexicon data; supports multi-passage spans
+- Always English output
+
+Composes existing morphology and lexicon tools into a graded-reader study artifact.
 
 ### Sub-Agents
 
@@ -232,5 +242,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>5 skills, 6 sub-agents, 136 automated tests (103 core CI + 32 extended + 1 smoke). All 66 biblical books. 358 server unit tests.</sub>
+  <sub>6 skills, 6 sub-agents, 136 automated tests (103 core CI + 32 extended + 1 smoke). All 66 biblical books. 358 server unit tests.</sub>
 </p>
