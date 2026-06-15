@@ -5,6 +5,9 @@
  */
 
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   THIRTY_NINE_ARTICLES,
   WESLEY_ARTICLES,
@@ -13,6 +16,9 @@ import {
   buildSeedSql,
 } from './seed-confessional-anglican-wesleyan.js';
 import { escapeSQL } from './sql-escape.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const MIGRATION_PATH = join(__dirname, '..', 'migrations', '0019_seed_anglican_wesleyan.sql');
 
 // ─── Dataset counts ────────────────────────────────────────────────────────────
 
@@ -369,6 +375,15 @@ describe('transcription integrity — Wesley Articles', () => {
     const art25 = WESLEY_ARTICLES.find(a => a.number === 25);
     expect(art25).toBeDefined();
     expect(art25!.content.trim().length).toBeGreaterThan(60);
+  });
+});
+
+describe('migration drift guard', () => {
+  it('committed 0019 migration is byte-identical to buildSeedSql() output', () => {
+    const committed = readFileSync(MIGRATION_PATH, 'utf-8');
+    // Normalize a single trailing newline difference (editors/tools may add one).
+    const norm = (s: string) => s.replace(/\n+$/, '\n');
+    expect(norm(committed)).toBe(norm(buildSeedSql()));
   });
 });
 
