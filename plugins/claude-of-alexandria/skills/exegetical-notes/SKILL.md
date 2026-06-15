@@ -1,9 +1,9 @@
 ---
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
-allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
-version: 1.1.1
-changed: "2026-05-08"
+allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
+version: 1.2.0
+changed: "2026-06-15"
 ---
 
 # Exegetical Notes
@@ -209,6 +209,7 @@ Include the pos_filter request for NT epistles. Omit it for OT and non-epistolar
 **Direct MCP calls retained for:**
 - Cross-check verification (Step 6) — must verify claims against fresh MCP data
 - Supplementary queries discovered during section composition
+- `query_controversies` (Step 2b) — always called directly by the skill, not delegated to data-retriever
 
 ---
 
@@ -226,6 +227,32 @@ Step 2: GATHER DATA via data-retriever agent
    Logical connectives for Section 2 (epistles):
    γάρ=grounds, οὖν=inference, δέ=contrast/continuation, ἀλλά=strong contrast,
    ἵνα=purpose, ὥστε=result, εἰ=condition, διότι/ὅτι=causal
+
+Step 2b: CONTROVERSY CHECK (run after data-retriever, before composing sections)
+   │
+   ├─ Call `query_controversies` with the passage reference (e.g., book + chapter range)
+   │  OR with the book/chapter slug if a topic keyword is known.
+   │  Also check the `chapter_contested` flag returned by `query_events` for the passage —
+   │  a `true` flag is a secondary signal to call `query_controversies` if not already done.
+   │
+   ├─ If `query_controversies` returns non-empty `topics`:
+   │  A. In Section 7 (Open Questions): add a subsection "## Contested Historical/Critical Questions"
+   │     listing each controversy topic with:
+   │     - A summary of the dispute
+   │     - ALL major positions with their evidence and named scholars
+   │     - The `neutrality_caveat` verbatim or nearly verbatim
+   │     - A note: "This analysis does not resolve this dispute."
+   │  B. In Section 5 (Exegetical Conclusions): do NOT assert a position on the contested
+   │     dimension. If the conclusion requires the contested claim, label it:
+   │     "[DISPUTED — see Section 7]" and present both positions.
+   │  C. Confidence on the contested claim is LOW or MEDIUM at most, regardless of
+   │     what the morphological or discourse data appears to support.
+   │
+   ├─ If `query_controversies` returns `{topics: []}` (no match):
+   │  Proceed without a controversy block. No obligation to add one.
+   │
+   └─ If `query_controversies` call fails: note "Controversy check unavailable" in
+      Section 7 and proceed normally.
 
 Step 3: PERICOPE CHECK (MANDATORY — DO NOT SKIP)
    │
@@ -647,6 +674,8 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Clause annotations treated as definitive | SYNTAX_SUMMARY data from OpenText.org is one analytical framework (Porter's SFL). Present as structural evidence, not absolute fact. Data coverage varies by NT book. |
 | Tier A/B citation not grounded via commentary_lookup | After drafting Tier 3 citations, call commentary_lookup for the passage. If the cited author is in the bundled set, verify the position. If not verifiable, mark "[training knowledge — verify before publication]". |
 | Skipping self-critique pass | Step 8 is mandatory. Run all 5 binary checks before delivery. Do not assume "this passage doesn't need it." |
+| Asserting one position on a flagged controversy | `query_controversies` returned a record but Section 5 asserts only one interpretive/historical position | When a controversy record is returned, label the contested claim "[DISPUTED — see Section 7]" and present both positions there. Do NOT collapse the debate into a single exegetical conclusion. |
+| Skipping controversy check | Notes composed for a passage with contested historical or critical questions without calling `query_controversies` | Step 2b is mandatory after Step 2. A `{topics:[]}` result permits normal composition. Non-empty results require a "Contested Historical/Critical Questions" subsection in Section 7. |
 | Self-critique finds moralistic Section 5 | If imperatives dominate (per Section 2) and Section 5 lacks indicative ground, the self-critique must catch this and revise before delivery |
 | Self-critique finds missing redemptive-historical link | For non-wisdom genres, Section 8 must have a cross-testament link. Self-critique catches the omission and triggers revision |
 
