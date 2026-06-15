@@ -117,6 +117,7 @@ _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
 | query_lexicon | — | ✗ NOT COVERED |
 | parallel_text | — | ✗ NOT COVERED |
 | confessional_lookup | — | ✗ NOT COVERED |
+| query_controversies | cbs-controversy-S1, exeg-controversy-S1 | ✓ Covered |
 
 ## Gap Analysis — Top 5 Priority Cells
 
