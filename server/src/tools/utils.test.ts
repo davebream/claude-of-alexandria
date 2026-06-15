@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseVerseRange, slugifySeason, encodePosition } from './utils.js';
+import { parseVerseRange, slugifySeason, encodePosition, slugify } from './utils.js';
 
 describe('parseVerseRange', () => {
   // Existing formats (backwards compatibility)
@@ -85,5 +85,37 @@ describe('encodePosition', () => {
 
   it('encodes chapter 23, verse 999 as 23999', () => {
     expect(encodePosition(23, 999)).toBe(23999);
+  });
+});
+
+describe('slugify', () => {
+  it("converts 'Date of the Exodus' to 'date-of-the-exodus'", () => {
+    expect(slugify('Date of the Exodus')).toBe('date-of-the-exodus');
+  });
+
+  it("converts 'Authorship & dating of Daniel' to 'authorship-dating-of-daniel'", () => {
+    expect(slugify('Authorship & dating of Daniel')).toBe('authorship-dating-of-daniel');
+  });
+
+  it('lowercases input', () => {
+    expect(slugify('UPPER CASE')).toBe('upper-case');
+  });
+
+  it('collapses consecutive non-alphanumeric chars to a single dash', () => {
+    expect(slugify('hello  --  world')).toBe('hello-world');
+  });
+
+  it('trims leading and trailing dashes', () => {
+    expect(slugify('  --hello world--  ')).toBe('hello-world');
+  });
+
+  it('is idempotent: slugify(slugify(x)) === slugify(x)', () => {
+    const input = 'Date of the Exodus';
+    expect(slugify(slugify(input))).toBe(slugify(input));
+  });
+
+  it('produces same result as slugifySeason for season-like strings', () => {
+    expect(slugify('Christmas / Christmastide')).toBe(slugifySeason('Christmas / Christmastide'));
+    expect(slugify('Advent')).toBe(slugifySeason('Advent'));
   });
 });
