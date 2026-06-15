@@ -332,21 +332,230 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
     };
   }
 
-  // 4. BFS traversal (deferred to Task 2 — placeholder for now)
-  // Task 2 will replace this with the full traversal engine.
-  const result = {
-    from_ref: fromRef,
-    to_ref: toRef,
-    found: false,
-    truncated: false,
-    hops: 0,
-    max_hops: maxHops,
-    path: [] as Array<{ from_ref: string; to_ref: string; votes: number; connecting_ref: string }>,
-    summary: { nodes_visited: 0, edges_examined: 0, min_votes: minVotes },
-    attribution: ATTRIBUTION,
-  };
-  return {
-    content: [{ type: 'text', text: JSON.stringify(result) }],
-    structuredContent: result,
-  };
+  // 4. BFS traversal — complete-up-to-budget bidirectional BFS
+  try {
+    type ParentEntry = { edge: StoredEdge; connectingVerse: NodeKey; prev: NodeKey };
+
+    const visited = new Set<NodeKey>([sourceKey]);
+    const parents = new Map<NodeKey, ParentEntry>();
+    let frontier = new Set<NodeKey>([sourceKey]);
+
+    let truncated = false;
+    let foundKey: NodeKey | null = null;
+    let nodesVisited = 1; // source counts
+    let edgesExamined = 0;
+
+    outer:
+    for (let hop = 0; hop < maxHops; hop++) {
+      if (frontier.size === 0) break;
+
+      // Group frontier by (book, chapter)
+      const byBookChapter = new Map<string, { book: string; chapter: number; verses: number[] }>();
+      for (const key of frontier) {
+        const [book, chStr, vStr] = key.split('|');
+        const chapter = Number(chStr);
+        const verse = Number(vStr);
+        const groupKey = `${book}|${chapter}`;
+        const existing = byBookChapter.get(groupKey);
+        if (existing) {
+          existing.verses.push(verse);
+        } else {
+          byBookChapter.set(groupKey, { book, chapter, verses: [verse] });
+        }
+      }
+
+      const nextFrontier = new Set<NodeKey>();
+
+      for (const { book, chapter, verses } of byBookChapter.values()) {
+        // ── From-side query: edges whose from endpoint is a frontier verse ──
+        const fromVerseParams = verses.map(() => '?').join(', ');
+        const fromSql =
+          `SELECT from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes ` +
+          `FROM cross_references ` +
+          `WHERE from_book = ? AND from_chapter = ? AND votes >= ? AND review_status = 'ok' ` +
+          `AND from_verse IN (${fromVerseParams}) ` +
+          `ORDER BY votes DESC`;
+        const fromParams: unknown[] = [book, chapter, minVotes, ...verses];
+
+        const fromRows = await query(fromSql, fromParams) as StoredEdge[];
+        for (const row of fromRows) {
+          edgesExamined++;
+          if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
+
+          // Expand to-side range into per-verse nodes
+          const rangeSize = row.to_verse_end - row.to_verse_start + 1;
+          let versesToEnqueue: number[];
+          if (rangeSize > RANGE_EXPLODE_CAP) {
+            truncated = true;
+            versesToEnqueue = [row.to_verse_start]; // only start verse
+          } else {
+            versesToEnqueue = Array.from({ length: rangeSize }, (_, i) => row.to_verse_start + i);
+          }
+
+          for (const toVerse of versesToEnqueue) {
+            const neighbourKey = nodeKey(row.to_book, row.to_chapter, toVerse);
+            const connectingVerse = nodeKey(row.to_book, row.to_chapter, toVerse);
+            if (!visited.has(neighbourKey)) {
+              visited.add(neighbourKey);
+              nodesVisited++;
+              if (nodesVisited > NODE_BUDGET) { truncated = true; break outer; }
+              parents.set(neighbourKey, {
+                edge: row,
+                connectingVerse,
+                prev: nodeKey(book, chapter, row.from_verse),
+              });
+              if (neighbourKey === targetKey || connectingVerse === targetKey) {
+                foundKey = neighbourKey === targetKey ? neighbourKey : connectingVerse;
+                break outer;
+              }
+              nextFrontier.add(neighbourKey);
+            }
+          }
+        }
+
+        // ── To-side query: edges whose to range contains a frontier verse ──
+        const toVerseParams = verses.map(() => '?').join(', ');
+        const toSql =
+          `SELECT from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes ` +
+          `FROM cross_references ` +
+          `WHERE to_book = ? AND to_chapter = ? AND votes >= ? AND review_status = 'ok' ` +
+          `AND to_verse_start IN (${toVerseParams}) ` +
+          `ORDER BY votes DESC`;
+        const toParams: unknown[] = [book, chapter, minVotes, ...verses];
+
+        const toRows = await query(toSql, toParams) as StoredEdge[];
+        for (const row of toRows) {
+          edgesExamined++;
+          if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
+
+          // from endpoint is always a single verse
+          const neighbourKey = nodeKey(row.from_book, row.from_chapter, row.from_verse);
+          // The connecting verse is the to-side verse that's in the frontier
+          // (the verse that connected the prev node to this edge)
+          const connectingVerse = nodeKey(row.to_book, row.to_chapter, row.to_verse_start);
+          if (!visited.has(neighbourKey)) {
+            visited.add(neighbourKey);
+            nodesVisited++;
+            if (nodesVisited > NODE_BUDGET) { truncated = true; break outer; }
+            parents.set(neighbourKey, {
+              edge: row,
+              connectingVerse,
+              prev: nodeKey(book, chapter, verses[0]),
+            });
+            if (neighbourKey === targetKey) {
+              foundKey = neighbourKey;
+              break outer;
+            }
+            nextFrontier.add(neighbourKey);
+          }
+        }
+      }
+
+      frontier = nextFrontier;
+    }
+
+    // If the loop completed normally (without break outer) with frontier non-empty,
+    // we hit the max_hops budget — mark truncated.
+    if (foundKey === null && frontier.size > 0) {
+      truncated = true;
+    }
+
+    // 5. Path reconstruction
+    let path: Array<{ from_ref: string; to_ref: string; votes: number; connecting_ref: string }> = [];
+    let found = false;
+    let hops = 0;
+
+    if (foundKey !== null) {
+      found = true;
+      // Walk back from target to source using parents map
+      const hopChain: Array<{ edge: StoredEdge; connectingVerse: NodeKey }> = [];
+      let current = foundKey;
+      while (parents.has(current)) {
+        const entry = parents.get(current)!;
+        hopChain.unshift({ edge: entry.edge, connectingVerse: entry.connectingVerse });
+        current = entry.prev;
+      }
+      hops = hopChain.length;
+
+      // connecting_ref semantics: the junction vertex shared between consecutive hops.
+      // For hop N (N > 0): connecting_ref = hopChain[N-1].connectingVerse (the pivot from the prior hop).
+      // For hop 0: connecting_ref = hopChain[0].connectingVerse (the to endpoint, shared with hop 1).
+      path = hopChain.map(({ edge, connectingVerse: _cv }, i) => {
+        const junctionKey = i === 0 ? hopChain[0].connectingVerse : hopChain[i - 1].connectingVerse;
+        const [jBook, jChStr, jVStr] = junctionKey.split('|');
+        const connectingRef = `${jBook} ${jChStr}:${jVStr}`;
+        const edgeToRef = formatRef(edge.to_book, edge.to_chapter, edge.to_verse_start,
+          edge.to_verse_end !== edge.to_verse_start ? edge.to_verse_end : undefined);
+        const edgeFromRef = formatRef(edge.from_book, edge.from_chapter, edge.from_verse);
+        return {
+          from_ref: edgeFromRef,
+          to_ref: edgeToRef,
+          votes: edge.votes,
+          connecting_ref: connectingRef,
+        };
+      });
+    }
+
+    // 6. Apply CHARACTER_LIMIT guard
+    const summary = { nodes_visited: nodesVisited, edges_examined: edgesExamined, min_votes: minVotes };
+    let note: string | undefined;
+    if (minVotes > 1) {
+      note = `min_votes=${minVotes} may have excluded low-vote edges that would connect the verses in the full graph.`;
+    }
+
+    const fullResult = {
+      from_ref: fromRef,
+      to_ref: toRef,
+      found,
+      truncated,
+      hops,
+      max_hops: maxHops,
+      path,
+      summary,
+      attribution: ATTRIBUTION,
+      note,
+    };
+
+    const jsonStr = JSON.stringify(fullResult);
+    if (jsonStr.length > CHARACTER_LIMIT) {
+      // Keep path intact (adjacency must not be broken), drop cosmetic fields
+      const trimmedResult = {
+        from_ref: fromRef,
+        to_ref: toRef,
+        found,
+        truncated: true,
+        hops,
+        max_hops: maxHops,
+        path,
+        summary,
+        attribution: ATTRIBUTION,
+        // note omitted to save budget
+      };
+      return {
+        content: [{ type: 'text', text: JSON.stringify(trimmedResult) }],
+        structuredContent: trimmedResult,
+      };
+    }
+
+    // Remove undefined note from output
+    if (note === undefined) {
+      const { note: _n, ...resultWithoutNote } = fullResult;
+      void _n;
+      return {
+        content: [{ type: 'text', text: JSON.stringify(resultWithoutNote) }],
+        structuredContent: resultWithoutNote,
+      };
+    }
+
+    return {
+      content: [{ type: 'text', text: JSON.stringify(fullResult) }],
+      structuredContent: fullResult,
+    };
+  } catch {
+    // Mid-traversal query failure: abort, discard partials, return isError
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'TRAVERSAL_ERROR', message: 'A database query failed during traversal.' } }) }],
+      isError: true,
+    };
+  }
 }
