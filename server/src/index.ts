@@ -25,6 +25,7 @@ import { bibleLookup, BibleLookupInputSchema, BibleLookupOutputSchema } from './
 import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSchema } from './tools/commentary-lookup.js';
 import { parallelText, ParallelTextInputSchema, ParallelTextOutputSchema, type ParallelTextInput } from './tools/parallel-text.js';
 import { confessionalLookup, ConfessionalLookupInputSchema, ConfessionalLookupOutputSchema, type ConfessionalLookupInput } from './tools/confessional-lookup.js';
+import { liturgicalLookup, LiturgicalLookupInputSchema, LiturgicalLookupOutputSchema, type LiturgicalLookupInput } from './tools/liturgical-lookup.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -475,6 +476,33 @@ Examples:
   - All translations of John 3:16: book="John", range="3:16"
   - KJV vs BSB for Romans 8:28-30: book="Romans", range="8:28-30", translations=["KJV", "BSB"]
   - Psalm 23 across all: book="Psalms", range="23:1-23:6"`;
+
+const DESC_LITURGICAL_LOOKUP = `Look up church-year seasons → recommended passages and themes, or reverse-lookup a Bible passage → which liturgical season(s) feature it.
+
+Three query modes:
+- "season": Given a season name, returns all curated readings for that season with themes and notes
+- "passage": Given a Bible book + verse range, returns which season(s) include it (many-to-many)
+- "list": Enumerate all available seasons
+
+Curated Protestant-oriented dataset covering 12 seasons of the Western church year: Advent, Christmas / Christmastide, Epiphany, Lent, Holy Week, Easter / Eastertide, Ascension, Pentecost, Trinity Sunday, Ordinary Time, Reformation Sunday, Christ the King / Reign of Christ. Tradition tags distinguish western (default) and reformed entries. Use mode="list" for the authoritative, queryable season names.
+
+Args:
+  - mode (string, required): "season" | "passage" | "list"
+  - season (string): Season display name — required for mode="season" (e.g., "Advent", "Christmas / Christmastide"). Use mode="list" to discover available seasons.
+  - book (string): Bible book name — required for mode="passage"
+  - range (string): Verse range "9:2-7", chapter-only "23", or chapter range "9-11" — required for mode="passage"
+  - tradition (string, optional): Filter by tradition: "western" | "reformed"
+  - limit (number, optional): Max readings returned (default: 50, max: 200). Does not apply to mode="list".
+
+Returns (season/list): { mode, query_info, seasons: [{season, season_slug, tradition, themes, readings: [{reference_display, book, start_chapter, start_verse, end_chapter, end_verse, themes, note}]}], total_seasons, total_readings, truncated? }
+
+Returns (passage): { mode, query_info, seasons: [{season, season_slug, tradition, readings: [...]}], total_seasons, total_readings, truncated? }
+
+Examples:
+  - Advent readings: mode="season", season="Advent"
+  - Readings for Isaiah 9:2-7: mode="passage", book="Isaiah", range="9:2-7"
+  - Which seasons include Psalm 23: mode="passage", book="Psalms", range="23"
+  - All Reformed entries: mode="list", tradition="reformed"`;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
@@ -939,6 +967,23 @@ function createServer(): McpServer {
   }, async (args, _extra) =>
     cachedToolCall('confessional_lookup', args as unknown as Record<string, unknown>, () =>
       confessionalLookup(args as unknown as ConfessionalLookupInput)
+    )
+  );
+
+  server.registerTool('liturgical_lookup', {
+    title: 'Liturgical Lookup',
+    description: DESC_LITURGICAL_LOOKUP,
+    inputSchema: LiturgicalLookupInputSchema,
+    outputSchema: LiturgicalLookupOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('liturgical_lookup', args as unknown as Record<string, unknown>, () =>
+      liturgicalLookup(args as unknown as LiturgicalLookupInput)
     )
   );
 

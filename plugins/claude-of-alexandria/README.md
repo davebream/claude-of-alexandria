@@ -18,7 +18,7 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes 23 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes 24 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 **Core linguistic tools:**
 
@@ -57,6 +57,7 @@ The reference server exposes 23 tools. Skills call these automatically; you do n
 | `commentary_lookup` | Commentary entries from 6 commentaries | Both |
 | `parallel_text` | Compare verse text across multiple translations | Both |
 | `confessional_lookup` | Creeds and confessions (4 query modes) | — |
+| `liturgical_lookup` | Church-year season → passages + themes, passage → season(s) lookup | — |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 

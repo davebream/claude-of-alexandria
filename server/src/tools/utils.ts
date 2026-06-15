@@ -1,5 +1,32 @@
 export const ENTITY_ATTRIBUTION = 'Entity data: Theographic (CC BY-SA 4.0) / TIPNR by Tyndale House (CC BY 4.0). Entity identifications per TIPNR — verify contested identifications against critical commentaries.';
 
+/**
+ * Derive a canonical season slug from a display name.
+ * Single source of truth for season slugs — used by both seed ETL and the tool.
+ * Examples: 'Christmas / Christmastide' → 'christmas-christmastide', 'Advent' → 'advent'
+ */
+export function slugifySeason(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/**
+ * Encode a chapter + verse position as a single integer sort key.
+ * This is the SINGLE SOURCE OF TRUTH for start_enc / end_enc values.
+ * Both the seed ETL (buildReadingRow) and the tool (handlePassage) MUST use this.
+ * Formula: chapter * 1000 + verse
+ * Examples: (9, 6) → 9006, (23, 1) → 23001, (23, 999) → 23999
+ */
+export function encodePosition(chapter: number, verse: number): number {
+  return chapter * 1000 + verse;
+}
+
+/**
+ * Sentinel verse used for chapter-only upper bounds.
+ * A chapter-only ref like "Psalm 23" encodes to [23001, 23999].
+ * Both seed and tool use this constant to stay in sync.
+ */
+export const CHAPTER_ONLY_MAX_VERSE = 999;
+
 export function parseChapterRange(range?: string): { min?: number; max?: number } | { error: string } {
   if (!range) return {};
   const parts = range.split('-');
