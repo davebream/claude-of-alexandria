@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import {
   parseReference,
   buildReadingRow,
+  readingInsertSql,
   LITURGICAL_DATASET,
 } from './seed-liturgical.js';
 import { slugifySeason } from '../src/tools/utils.js';
@@ -138,24 +139,27 @@ describe('LITURGICAL_DATASET', () => {
 });
 
 describe('seed-liturgical SQL output', () => {
-  it('(f) emitted SQL string contains INSERT INTO liturgical_readings', async () => {
-    // Dynamically import to call a helper that generates the SQL lines
-    // We test the shape by generating rows for a known season
+  it('(f) emits idempotent INSERT OR REPLACE rows via the production emitter', async () => {
+    // Use the real production emitter (readingInsertSql), not a reconstructed string,
+    // so this test actually guards the emitted SQL shape and the idempotency verb.
     const rows: string[] = [];
+    let readingId = 0;
     for (const season of LITURGICAL_DATASET) {
       for (const reading of season.readings) {
         const row = buildReadingRow(season.season, season.season_order, season.tradition, reading);
         if (row) {
-          rows.push(
-            `INSERT INTO liturgical_readings (season, season_slug, season_order, tradition, book, start_chapter, start_verse, end_chapter, end_verse, start_enc, end_enc, reference_display, themes, note, source) VALUES ('${row.season}', '${row.season_slug}', ${row.season_order}, '${row.tradition}', '${row.book}', ${row.start_chapter}, ${row.start_verse}, ${row.end_chapter}, ${row.end_verse}, ${row.start_enc}, ${row.end_enc}, '${row.reference_display}', '${row.themes}', ${row.note === null ? 'NULL' : `'${row.note}'`}, 'curated-in-house');`
-          );
+          readingId++;
+          rows.push(readingInsertSql(readingId, row));
         }
       }
     }
     const sql = rows.join('\n');
-    expect(sql).toContain('INSERT INTO liturgical_readings');
+    // Idempotency-critical: every row must be INSERT OR REPLACE, never a bare INSERT
+    // (a bare INSERT would PK-conflict when re-applied over already-seeded rows).
+    expect(sql).toContain('INSERT OR REPLACE INTO liturgical_readings');
+    expect(sql).not.toMatch(/INSERT INTO liturgical_readings/);
     // Must have at least 24 inserts (contract AC-2: ≥2 readings × 12 seasons)
-    const insertCount = (sql.match(/INSERT INTO liturgical_readings/g) ?? []).length;
+    const insertCount = (sql.match(/INSERT OR REPLACE INTO liturgical_readings/g) ?? []).length;
     expect(insertCount).toBeGreaterThanOrEqual(24);
   });
 });

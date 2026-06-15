@@ -455,6 +455,14 @@ function escapeNum(val: number | null | undefined): string {
   return String(val);
 }
 
+// ─── SQL emitter ─────────────────────────────────────────────────────────────
+// INSERT OR REPLACE makes the emitted SQL idempotent: re-applying the seed (e.g.
+// as a tracked migration over an already-seeded production table, or on a repeated
+// deploy) upserts by primary key instead of failing with a UNIQUE/PK conflict.
+export function readingInsertSql(readingId: number, row: LiturgicalReadingRow): string {
+  return `INSERT OR REPLACE INTO liturgical_readings (id, season, season_slug, season_order, tradition, book, start_chapter, start_verse, end_chapter, end_verse, start_enc, end_enc, reference_display, themes, note, source) VALUES (${escapeNum(readingId)}, ${escapeSQL(row.season)}, ${escapeSQL(row.season_slug)}, ${escapeNum(row.season_order)}, ${escapeSQL(row.tradition)}, ${escapeSQL(row.book)}, ${escapeNum(row.start_chapter)}, ${escapeNum(row.start_verse)}, ${escapeNum(row.end_chapter)}, ${escapeNum(row.end_verse)}, ${escapeNum(row.start_enc)}, ${escapeNum(row.end_enc)}, ${escapeSQL(row.reference_display)}, ${escapeSQL(row.themes)}, ${escapeSQL(row.note)}, 'curated-in-house');`;
+}
+
 // ─── ETL main ──────────────────────────────────────────────────────────────
 
 async function main(): Promise<void> {
@@ -492,9 +500,7 @@ async function main(): Promise<void> {
       }
       readingId++;
       totalReadings++;
-      lines.push(
-        `INSERT INTO liturgical_readings (id, season, season_slug, season_order, tradition, book, start_chapter, start_verse, end_chapter, end_verse, start_enc, end_enc, reference_display, themes, note, source) VALUES (${escapeNum(readingId)}, ${escapeSQL(row.season)}, ${escapeSQL(row.season_slug)}, ${escapeNum(row.season_order)}, ${escapeSQL(row.tradition)}, ${escapeSQL(row.book)}, ${escapeNum(row.start_chapter)}, ${escapeNum(row.start_verse)}, ${escapeNum(row.end_chapter)}, ${escapeNum(row.end_verse)}, ${escapeNum(row.start_enc)}, ${escapeNum(row.end_enc)}, ${escapeSQL(row.reference_display)}, ${escapeSQL(row.themes)}, ${escapeSQL(row.note)}, 'curated-in-house');`
-      );
+      lines.push(readingInsertSql(readingId, row));
     }
   }
 
