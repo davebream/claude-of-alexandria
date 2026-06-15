@@ -215,6 +215,17 @@ describe('mode="passage"', () => {
     expect(body.error.code).toBe('INVALID_RANGE');
   });
 
+  it('returns INVALID_RANGE for malformed chapter-only input (no colon, non-numeric)', async () => {
+    // routes through parseChapterRange's error path (no colon in range)
+    mockLookupBook.mockReturnValue({ canonical: 'isaiah', displayName: 'Isaiah', testament: 'ot', morphologyFile: 'isaiah' });
+
+    const result = await liturgicalLookup({ mode: 'passage', book: 'Isaiah', range: 'abc' });
+
+    expect(result.isError).toBe(true);
+    const body = JSON.parse((result.content[0] as { text: string }).text);
+    expect(body.error.code).toBe('INVALID_RANGE');
+  });
+
   // --- Overlap correctness: single verse 9:6 ---
   it('single verse 9:6 — builds correct overlap bounds', async () => {
     mockLookupBook.mockReturnValue({ canonical: 'isaiah', displayName: 'Isaiah', testament: 'ot', morphologyFile: 'isaiah' });
@@ -223,11 +234,11 @@ describe('mode="passage"', () => {
     await liturgicalLookup({ mode: 'passage', book: 'Isaiah', range: '9:6' });
 
     const params = mockQuery.mock.calls[0][1] as unknown[];
-    // single verse 9:6 → startEnc = endEnc = 9006
-    // overlap: start_enc <= queryEnd(9006) AND end_enc >= queryStart(9006)
-    expect(params).toContain(9006); // query start enc
-    // params should include the book + start/end bounds
+    // single verse 9:6 → queryStart = queryEnd = 9006
+    // bind order: [canonical, queryEnd, queryStart] (WHERE book=? AND start_enc<=? AND end_enc>=?)
     expect(params[0]).toBe('isaiah');
+    expect(params[1]).toBe(9006); // queryEnd — start_enc <= queryEnd
+    expect(params[2]).toBe(9006); // queryStart — end_enc >= queryStart
   });
 
   // --- Overlap correctness: same-chapter range 9:2-7 ---
@@ -238,10 +249,10 @@ describe('mode="passage"', () => {
     await liturgicalLookup({ mode: 'passage', book: 'Isaiah', range: '9:2-7' });
 
     const params = mockQuery.mock.calls[0][1] as unknown[];
+    // bind order: [canonical, queryEnd, queryStart] (WHERE book=? AND start_enc<=? AND end_enc>=?)
     expect(params[0]).toBe('isaiah');
-    // queryEnd = 9007, queryStart = 9002
-    expect(params).toContain(9007); // start_enc <= queryEnd
-    expect(params).toContain(9002); // end_enc >= queryStart
+    expect(params[1]).toBe(9007); // queryEnd — start_enc <= 9007
+    expect(params[2]).toBe(9002); // queryStart — end_enc >= 9002
   });
 
   // --- Overlap correctness: cross-chapter 9:2-11:9 ---
