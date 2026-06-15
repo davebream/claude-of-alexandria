@@ -18,6 +18,7 @@ import { lookupBook } from '../src/db/books.js';
 const VALID_RATINGS = new Set(['low', 'medium', 'high']);
 const VALID_CATEGORIES = new Set(['dating', 'authorship', 'composition', 'historicity', 'harmonization']);
 const VALID_SOURCE_TIERS = new Set(['A', 'B', 'C']);
+// Broadened: covers label, view, evidence, and summary
 const ADJUDICATIVE_PATTERN = /\b(correct|refuted|debunked|disproven)\b/i;
 
 describe('CONTROVERSY_DATASET integrity', () => {
@@ -45,6 +46,11 @@ describe('CONTROVERSY_DATASET integrity', () => {
         expect(topic.positions.length).toBeGreaterThanOrEqual(2);
       });
 
+      // Item 6: broadened adjudicative-language guard — covers summary, view, evidence, AND label
+      it('summary does not contain adjudicative language', () => {
+        expect(ADJUDICATIVE_PATTERN.test(topic.summary)).toBe(false);
+      });
+
       for (const position of topic.positions) {
         describe(`position: "${position.label}"`, () => {
           it('has non-empty evidence', () => {
@@ -58,8 +64,26 @@ describe('CONTROVERSY_DATASET integrity', () => {
           it('label does not contain adjudicative language', () => {
             expect(ADJUDICATIVE_PATTERN.test(position.label)).toBe(false);
           });
+
+          // Item 6: also check view and evidence fields
+          it('view does not contain adjudicative language', () => {
+            expect(ADJUDICATIVE_PATTERN.test(position.view)).toBe(false);
+          });
+
+          it('evidence does not contain adjudicative language', () => {
+            expect(ADJUDICATIVE_PATTERN.test(position.evidence)).toBe(false);
+          });
         });
       }
+
+      // Item 4: at least 1 source with tier A or B (not merely a valid tier)
+      it('has at least 1 source with tier A or B', () => {
+        const tierAOrB = topic.sources.filter(s => s.tier === 'A' || s.tier === 'B');
+        expect(
+          tierAOrB.length,
+          `topic "${topic.topic}" has no Tier A or B source`
+        ).toBeGreaterThanOrEqual(1);
+      });
 
       it('has at least 1 source with a valid tier', () => {
         expect(topic.sources.length).toBeGreaterThanOrEqual(1);
@@ -88,15 +112,67 @@ describe('CONTROVERSY_DATASET integrity', () => {
           expect(bookInfo, `book "${row.book}" not found via lookupBook`).not.toBeNull();
         }
       });
+
+      // Item 7: no scholar name appears in two different positions of the same topic
+      it('no scholar name appears in more than one position', () => {
+        const seenScholars = new Map<string, string>(); // normalised name → first position label
+        for (const position of topic.positions) {
+          for (const scholar of position.scholars) {
+            // Normalise: lowercase, strip parenthetical qualifications like "(nuanced early-late)"
+            const normalised = scholar.replace(/\s*\(.*?\)/g, '').trim().toLowerCase();
+            if (seenScholars.has(normalised)) {
+              throw new Error(
+                `Scholar "${scholar}" appears in both "${seenScholars.get(normalised)}" and "${position.label}" within topic "${topic.topic}"`
+              );
+            }
+            seenScholars.set(normalised, position.label);
+          }
+        }
+      });
     });
   }
 });
 
+// Item 8: SQL escaping tests
 describe('topicInsertSql', () => {
   it('returns a string starting with INSERT OR REPLACE', () => {
     const topic = CONTROVERSY_DATASET[0];
     const sql = topicInsertSql(1, topic);
     expect(sql).toMatch(/^INSERT OR REPLACE INTO controversy_topics/);
+  });
+
+  it('escapes apostrophes in string values (single-quote → double-single-quote)', () => {
+    // Use a topic known to contain apostrophes (e.g. "Tell el-Dab'a" in Date of the Exodus),
+    // or construct a minimal fixture topic to guarantee the apostrophe is present.
+    const apostropheTopic = {
+      ...CONTROVERSY_DATASET[0],
+      summary: "O'Brien's test topic",
+    };
+    const sql = topicInsertSql(1, apostropheTopic);
+    // The escaped form must appear; the raw form must not appear outside quotes
+    expect(sql).toContain("O''Brien''s");
+    // Ensure the raw unescaped form is absent (double-quote escaped is O''Brien, raw is O'Brien)
+    // We check that the SQL does NOT contain a raw single-quote immediately after O
+    expect(sql).not.toMatch(/O'Brien's/);
+  });
+});
+
+// Item 8: negative test — buildPassageRows throws on unresolvable book/range
+describe('buildPassageRows', () => {
+  it('throws on an unresolvable book name', () => {
+    const badTopic = {
+      ...CONTROVERSY_DATASET[0],
+      passages: ['Nonexistent 1:1'],
+    };
+    expect(() => buildPassageRows(badTopic as never, 1)).toThrow(/Unresolvable book/);
+  });
+
+  it('throws on an unparseable reference format', () => {
+    const badTopic = {
+      ...CONTROVERSY_DATASET[0],
+      passages: ['not-a-reference'],
+    };
+    expect(() => buildPassageRows(badTopic as never, 1)).toThrow(/Cannot parse reference/);
   });
 });
 

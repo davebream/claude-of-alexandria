@@ -78,7 +78,7 @@ export const CONTROVERSY_DATASET: ControversyTopic[] = [
           'period. Proponents argue that the city Avaris (Tell el-Dab\'a) shows a Semitic population ' +
           'presence during the Middle Bronze Age consistent with an earlier sojourn. Some correlate the ' +
           'Amarna letters with the period of Israelite conquest.',
-        scholars: ['Bryant Wood', 'John Bimson', 'Andrew Steinmann', 'James Hoffmeier (nuanced early-late)'],
+        scholars: ['Bryant Wood', 'John Bimson', 'Andrew Steinmann', 'Charles Aling'],
       },
       {
         label: 'Late (13th-century BCE) date',
@@ -143,7 +143,7 @@ export const CONTROVERSY_DATASET: ControversyTopic[] = [
           'Greek translation implies circulation well before 165 BCE. Proponents argue that "Darius ' +
           'the Mede" is a historical figure whose identity has not yet been definitively resolved, and ' +
           'that "vaticinium ex eventu" arguments depend on a prior commitment against predictive prophecy.',
-        scholars: ['Joyce Baldwin', 'Stephen Miller', 'Gleason Archer', 'John Goldingay (moderately traditional on date)'],
+        scholars: ['Joyce Baldwin', 'Stephen Miller', 'Gleason Archer'],
       },
       {
         label: 'Maccabean 2nd-century pseudepigraphical view',
@@ -368,7 +368,9 @@ async function main(): Promise<void> {
   console.log(`Passages emitted: ${totalPassages}`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
