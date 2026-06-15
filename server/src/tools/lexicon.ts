@@ -38,9 +38,12 @@ function stripDiacritics(text: string): string {
  * Dual-form elision rule: when base's last char equals the suffix's first char,
  * emit both the naive concatenation (base + suffix) AND the single-char-elided
  * form (base + suffix.slice(1)), to handle e.g. "where(-ever)" → "whereever" + "wherever".
+ *
+ * Note: any text trailing the parenthetical group is ignored. Trailing-remainder
+ * forms like "over(-flow)ing" are out of scope.
  */
 export function expandParentheticalGloss(gloss: string): string[] {
-  const match = gloss.match(/^(.+?)\((-[^)]+)\)(.*)$/);
+  const match = gloss.match(/^(.+?)\((-[^)]+)\)/);
   if (!match) return [gloss];
 
   const base = match[1];

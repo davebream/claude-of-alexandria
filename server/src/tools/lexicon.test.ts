@@ -220,6 +220,10 @@ describe('expandParentheticalGloss', () => {
   it.each(cases)('expandParentheticalGloss(%s) → %j', (gloss, expected) => {
     expect(expandParentheticalGloss(gloss)).toEqual(expected);
   });
+
+  it('preserves case in output for mixed-case input', () => {
+    expect(expandParentheticalGloss('When(-ever)')).toEqual(['When', 'Whenever']);
+  });
 });
 
 // ── Predicate-level parenthetical expansion matching ─────────────────────────
@@ -230,6 +234,10 @@ describe('lexicon parenthetical expansion matching', () => {
     expect('when(-ever)'.toLowerCase().includes('whenever')).toBe(false);
     // Expansion-based match — the behaviour the fix introduces:
     expect(glossMatchesTerm('when(-ever)', 'whenever')).toBe(true);
+  });
+
+  it('case-insensitive match: mixed-case gloss "When(-ever)" matches term "whenever"', () => {
+    expect(glossMatchesTerm('When(-ever)', 'whenever')).toBe(true);
   });
 });
 
