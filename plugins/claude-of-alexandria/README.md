@@ -57,6 +57,7 @@ The reference server exposes 23 tools. Skills call these automatically; you do n
 | `commentary_lookup` | Commentary entries from 6 commentaries | Both |
 | `parallel_text` | Compare verse text across multiple translations | Both |
 | `confessional_lookup` | Creeds and confessions (4 query modes) | — |
+| `liturgical_lookup` | Church-year season → passages + themes, passage → season(s) lookup | — |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 
