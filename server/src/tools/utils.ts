@@ -1,12 +1,21 @@
 export const ENTITY_ATTRIBUTION = 'Entity data: Theographic (CC BY-SA 4.0) / TIPNR by Tyndale House (CC BY 4.0). Entity identifications per TIPNR — verify contested identifications against critical commentaries.';
 
 /**
+ * Generic slug function: lowercase, collapse non-alphanumeric runs to dashes, trim leading/trailing dashes.
+ * Examples: 'Date of the Exodus' → 'date-of-the-exodus', 'Hello  --  World' → 'hello-world'
+ */
+export function slugify(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/**
  * Derive a canonical season slug from a display name.
  * Single source of truth for season slugs — used by both seed ETL and the tool.
  * Examples: 'Christmas / Christmastide' → 'christmas-christmastide', 'Advent' → 'advent'
+ * Delegates to slugify — identical behavior.
  */
 export function slugifySeason(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slugify(name);
 }
 
 /**

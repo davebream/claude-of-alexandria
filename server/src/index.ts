@@ -26,6 +26,7 @@ import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSc
 import { parallelText, ParallelTextInputSchema, ParallelTextOutputSchema, type ParallelTextInput } from './tools/parallel-text.js';
 import { confessionalLookup, ConfessionalLookupInputSchema, ConfessionalLookupOutputSchema, type ConfessionalLookupInput } from './tools/confessional-lookup.js';
 import { liturgicalLookup, LiturgicalLookupInputSchema, LiturgicalLookupOutputSchema, type LiturgicalLookupInput } from './tools/liturgical-lookup.js';
+import { queryControversies, ControversiesInputSchema, ControversiesOutputSchema, type ControversiesInput } from './tools/controversies.js';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -504,6 +505,27 @@ Examples:
   - Which seasons include Psalm 23: mode="passage", book="Psalms", range="23"
   - All Reformed entries: mode="list", tradition="reformed"`;
 
+const DESC_QUERY_CONTROVERSIES = `Catalog disputed historical and theological claims in Scripture — scholarly positions, evidence, and major interpreters for each controversy.
+
+Three query modes:
+- "topic": Given a topic name or keyword, returns matching controversies with positions and sources
+- "passage": Given a Bible book + verse range, returns controversies associated with that passage
+- "list": Enumerate all available controversy topics with optional rating/category filter
+
+Dataset covers historicity debates (Exodus date, authorship of Isaiah, Mosaic authorship of Pentateuch, Daniel's date) and other disputed claims. Each topic includes major scholarly positions with supporting evidence and representative scholars.
+
+This tool catalogs academic dispute only — it does not adjudicate which view is correct.
+
+Args:
+  - mode (string, required): "topic" | "passage" | "list"
+  - topic (string): Topic name or keyword — required for mode="topic"
+  - book (string): Bible book name — required for mode="passage"
+  - range (string): Verse or chapter range (e.g., "12:1-51", "12", "1") — required for mode="passage"
+  - rating (string, optional): Filter by rating for mode="list" (e.g., "debated", "minority", "majority")
+  - category (string, optional): Filter by category for mode="list" (e.g., "historicity", "authorship", "theology")
+
+Returns: { mode, query_info, topics: [{topic, slug, category, rating, summary, positions: [{label, view, evidence, scholars}], sources: [{citation, tier}], note}], attribution, neutrality_caveat }`;
+
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 
 // CORS is not required for MCP clients (Claude Desktop, Claude Code are native
@@ -561,7 +583,7 @@ async function cachedToolCall(
 // per request is cheap (constructor only sets up handler maps, no I/O).
 function createServer(): McpServer {
   const server = new McpServer(
-    { name: 'claude-of-alexandria-mcp', version: '3.3.0' },
+    { name: 'claude-of-alexandria-mcp', version: '3.4.0' },
     { capabilities: { tools: {} } }
   );
 
@@ -987,6 +1009,23 @@ function createServer(): McpServer {
     )
   );
 
+  server.registerTool('query_controversies', {
+    title: 'Query Controversies',
+    description: DESC_QUERY_CONTROVERSIES,
+    inputSchema: ControversiesInputSchema,
+    outputSchema: ControversiesOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_controversies', args as unknown as Record<string, unknown>, () =>
+      queryControversies(args as unknown as ControversiesInput)
+    )
+  );
+
   return server;
 }
 
@@ -1014,12 +1053,12 @@ export default {
       try {
         await env.DB.prepare('SELECT 1').first();
         return new Response(
-          JSON.stringify({ status: 'ok', version: '3.3.0', db: 'connected' }),
+          JSON.stringify({ status: 'ok', version: '3.4.0', db: 'connected' }),
           { headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       } catch {
         return new Response(
-          JSON.stringify({ status: 'degraded', version: '3.3.0', db: 'unreachable' }),
+          JSON.stringify({ status: 'degraded', version: '3.4.0', db: 'unreachable' }),
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }

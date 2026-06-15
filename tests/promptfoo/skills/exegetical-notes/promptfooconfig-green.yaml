@@ -15,6 +15,9 @@
 #   S19: Wisdom genre — Ecclesiastes 1:1-11 (hebel semantic range)
 #   S20: Sparse MCP data — Obadiah 1-4 (degraded-data fallback)
 #   S21: Law genre — Leviticus 16:1-10 (covenantal-fulfillment framework)
+#
+# Controversy awareness (Phase 5 — historicity metadata layer):
+#   S22: Contested authorship — Daniel 7:13-14 notes surface both positions, no winner
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -675,3 +678,48 @@ tests:
           PASS if all five criteria are met.
           FAIL if the passage is treated as mere history, moralized without
           typology, or applied directly without covenantal framework.
+
+  # =========================================================================
+  # Scenario 22: Contested Passage — Daniel 7:13-14
+  # Core failure: notes assert one critical/traditional authorship position as settled
+  # With skill+MCP: query_controversies called, both positions surfaced in
+  # Section 7, no winner declared in Section 5
+  # =========================================================================
+  - description: "S22 GREEN: Contested authorship — Daniel 7:13-14 surfaces both positions"
+    vars:
+      prompt: "Generate exegetical notes for Daniel 7:13-14 --output print. Include the authorship and dating context."
+    assert:
+      # query_controversies must be invoked
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('query_controversies'),
+            score: lower.includes('query_controversies') ? 1 : 0,
+            reason: lower.includes('query_controversies')
+              ? 'query_controversies referenced in output'
+              : 'No mention of query_controversies — controversy check may have been skipped'
+          };
+      # Both authorship positions must be presented
+      - type: llm-rubric
+        value: |
+          Evaluate whether the exegetical notes for Daniel 7:13-14 surface the
+          authorship/dating dispute rather than asserting one position as settled.
+
+          PASS if ALL of the following are true:
+          - Both the traditional authorship position (6th century BCE, historical Daniel)
+            AND the critical position (2nd century BCE, Maccabean pseudonymous authorship)
+            are presented — with at least one named scholar or work for each
+          - The notes do NOT declare one position correct or more likely
+          - The contested dimension is flagged in Section 7 (Open Questions) or
+            Section 5 (Exegetical Conclusions) with a note that this is disputed
+          - The neutrality caveat or equivalent is present (e.g., "this analysis does
+            not resolve this dispute")
+
+          FAIL if:
+          - Only one authorship/dating position is presented
+          - One position is asserted as "the scholarly consensus" without presenting
+            the other position's evidence and proponents
+          - The authorship/dating question is avoided entirely without acknowledging
+            it as a live scholarly dispute
+          - Named scholars are absent for one or both positions

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
-import { parseChapterRange, ENTITY_ATTRIBUTION } from './utils.js';
+import { parseChapterRange, ENTITY_ATTRIBUTION, encodePosition, CHAPTER_ONLY_MAX_VERSE } from './utils.js';
 
 const CHARACTER_LIMIT = 25_000;
 
@@ -29,6 +29,12 @@ export const EventsOutputSchema = {
     participants: z.array(z.string()).optional(),
     locations: z.array(z.string()).optional(),
     chapters: z.array(z.number()),
+    chapter_contested: z.boolean().optional(),
+    controversies: z.array(z.object({
+      topic: z.string(),
+      slug: z.string(),
+      rating: z.string(),
+    })).optional(),
   })),
   chronology_caveat: z.string(),
   summary: z.object({
@@ -128,10 +134,41 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     WHERE el.event_id IN (${placeholders})
   `;
 
-  const [chaptersRows, participantsRows, locationsRows] = await Promise.all([
+  // Build controversy-overlap query for the requested chapter span (chapter-only enc bounds)
+  // Overlap condition: start_enc <= encodePosition(maxChapter, CHAPTER_ONLY_MAX_VERSE)
+  //                   AND end_enc >= encodePosition(minChapter, 1)
+  // When no chapter_range is given we use unbounded (all passages for the book).
+  let controversyOverlapPromise: Promise<Record<string, unknown>[]>;
+  {
+    const minChapter = ('min' in chapterRange && chapterRange.min !== undefined) ? chapterRange.min : 1;
+    const maxChapter = ('max' in chapterRange && chapterRange.max !== undefined) ? chapterRange.max : 999999;
+    const spanStartEnc = encodePosition(minChapter, 1);
+    const spanEndEnc = encodePosition(maxChapter, CHAPTER_ONLY_MAX_VERSE);
+
+    const controversySql = `
+      SELECT
+        CAST((p.start_enc / 1000) AS INTEGER) AS start_chapter,
+        CAST((p.end_enc / 1000) AS INTEGER) AS end_chapter,
+        t.topic,
+        t.slug,
+        t.rating
+      FROM controversy_passages p
+      JOIN controversy_topics t ON t.id = p.topic_id
+      WHERE p.book = ?
+        AND p.start_enc <= ?
+        AND p.end_enc >= ?
+    `;
+    controversyOverlapPromise = query(controversySql, [bookCanonical, spanEndEnc, spanStartEnc]).catch(err => {
+      console.error('[query_events] controversy overlap query failed:', err);
+      return [];
+    });
+  }
+
+  const [chaptersRows, participantsRows, locationsRows, controversyRows] = await Promise.all([
     query(chaptersSql, chaptersParams),
     query(participantsSql, eventIds),
     query(locationsSql, eventIds),
+    controversyOverlapPromise,
   ]);
 
   // Group chapters by event
@@ -164,17 +201,63 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     }
   }
 
+  // Build controversy passage ranges for chapter-membership lookup
+  // Each row: { start_chapter, end_chapter, topic, slug, rating }
+  const ratingOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
+  type ControvRow = { start_chapter: number; end_chapter: number; topic: string; slug: string; rating: string };
+  const controvPassages: ControvRow[] = controversyRows.map(r => ({
+    start_chapter: r.start_chapter as number,
+    end_chapter: r.end_chapter as number,
+    topic: r.topic as string,
+    slug: r.slug as string,
+    rating: r.rating as string,
+  }));
+
   // Build response
   const events = eventRows.map(r => {
     const eid = r.id as number;
-    return {
+    const chapters = chaptersByEvent.get(eid) || [];
+
+    // Per-chapter set membership: find topics whose passage ranges overlap any chapter
+    const matchedTopics = new Map<string, ControvRow>();
+    for (const chapter of chapters) {
+      for (const passage of controvPassages) {
+        if (chapter >= passage.start_chapter && chapter <= passage.end_chapter) {
+          if (!matchedTopics.has(passage.slug)) {
+            matchedTopics.set(passage.slug, passage);
+          }
+        }
+      }
+    }
+
+    const baseEvent = {
       title: r.title as string,
       start_date: (r.start_date as string) ?? null,
       duration: (r.duration as string) ?? null,
       sort_key: (r.sort_key as number) ?? null,
       participants: participantsByEvent.get(eid) || [],
       locations: locationsByEvent.get(eid) || [],
-      chapters: chaptersByEvent.get(eid) || [],
+      chapters,
+    };
+
+    if (matchedTopics.size === 0) {
+      return baseEvent;
+    }
+
+    // Sort: rating desc (high>medium>low) then slug asc
+    const controversies = Array.from(matchedTopics.values())
+      .sort((a, b) => {
+        const ra = ratingOrder[a.rating] ?? 99;
+        const rb = ratingOrder[b.rating] ?? 99;
+        if (ra !== rb) return ra - rb;
+        return a.slug.localeCompare(b.slug);
+      })
+      .map(p => ({ topic: p.topic, slug: p.slug, rating: p.rating }));
+
+    return {
+      ...baseEvent,
+      chapter_contested: true as const,
+      controversies,
     };
   });
 

@@ -197,6 +197,7 @@ The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite
 | `query_theme` | Cross-book distribution of a thematic keyword group | Both testaments |
 | `confessional_lookup` | Confessional and catechetical documents from Reformed, Baptist, Lutheran, and ancient traditions — lookup by slug, scripture citation, keyword, or list | Non-biblical |
 | `liturgical_lookup` | Church-year season → recommended passages + themes, and reverse passage → season(s) lookup (curated, Protestant-oriented) | Non-biblical |
+| `query_controversies` | Look up academically contested topics (historicity/dating/authorship) by topic or passage → rating + balanced both-sides positions with sources. Also surfaces a `chapter_contested` discovery flag via `query_events` when a queried chapter overlaps known controversial passages. | Non-biblical |
 
 Skills call these automatically. You can invoke them directly if needed.
 
@@ -231,5 +232,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>5 skills, 6 sub-agents, 136 automated tests (103 core CI + 32 extended + 1 smoke). All 66 biblical books.</sub>
+  <sub>5 skills, 6 sub-agents, 136 automated tests (103 core CI + 32 extended + 1 smoke). All 66 biblical books. 358 server unit tests.</sub>
 </p>

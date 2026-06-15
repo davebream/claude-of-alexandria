@@ -1,9 +1,9 @@
 ---
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
-allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
-version: 1.0.0
-changed: "2026-04-30"
+allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
+version: 1.1.0
+changed: "2026-06-15"
 ---
 
 # Consult Biblical Scholar
@@ -44,6 +44,37 @@ Four tiers:
 **Contested scholarly debates require confidence splitting.** When scholars genuinely disagree on a question (e.g., the meaning of μονογενής), do NOT pick a winner. Present both positions with their evidence. Split confidence by claim type:
 - Morphological facts (what MCP returns) → can be **HIGH**
 - Semantic/theological debate (what scholars dispute) → **MEDIUM** at best
+
+**Flagged controversies require both-sides presentation.** At the MEANING, VALIDATE, and CROSS-REFERENCE entry points, call `query_controversies` with the passage reference and/or the topic keyword. When `query_controversies` returns one or more records (non-empty `topics` array):
+1. Present ALL major positions with their evidence and named scholars — do not summarize into one view.
+2. Surface the `neutrality_caveat` from the response verbatim or nearly verbatim.
+3. Do NOT declare a winner, even if one position appears stronger based on the MCP linguistic data.
+4. Apply confidence splitting: linguistic/morphological sub-claims may be HIGH; the disputed historical or interpretive conclusion is LOW or MEDIUM at most.
+
+**When `query_controversies` returns `{topics: []}` (no match):** proceed normally without a controversy block.
+
+**Example (Exodus dating):**
+```
+CONFIDENCE: HIGH (morphological context), LOW (date dispute)
+[Called query_controversies: topic "exodus date" — record returned]
+
+Scholarly positions:
+- Early Date (ca. 1446 BCE): based on 1 Kings 6:1 (480 years before Temple) and Judges chronology.
+  Scholars: Kitchen (On the Reliability of the Old Testament, 2003), Merrill (Kingdom of Priests, 1996).
+- Late Date (ca. 1260 BCE): based on Ramesses II Raamses/Pithom building campaigns.
+  Scholars: Bright (A History of Israel, 4th ed., 2000), Hoffmeier (Israel in Egypt, 1997).
+
+Neutrality caveat: [verbatim from query_controversies neutrality_caveat]
+
+The agent does not resolve this debate. The morphological data in the text is uninformative on the date question.
+```
+
+**Wrong:**
+```
+CONFIDENCE: MEDIUM
+The Exodus most likely occurred around 1260 BCE based on the archaeological evidence for Ramesses II.
+```
+(Resolved a flagged controversy. Dismissed one scholarly position without presenting it.)
 
 **Wrong:**
 ```
@@ -307,6 +338,17 @@ Agent tool:
    → Parse agent response for: CONFIDENCE, analysis, verdict (if VALIDATE), sources
    → If agent spawn fails: fall back to direct MCP tool calls per Rule 2 table
 
+2a. Call `query_controversies` for the passage and/or topic
+   → Call BEFORE composing any prose response
+   → Arg shape: `mode: "passage"` with `book` + `range` when a passage is identified;
+     `mode: "topic"` with `topic` for open-ended questions (e.g., topic mode, Exodus dating);
+     `mode: "list"` to enumerate all available controversy records.
+     Example (passage): `query_controversies: {"mode": "passage", "book": "Exodus", "range": "12:1-40"}`
+     Example (topic):   `query_controversies: {"mode": "topic", "topic": "exodus date"}`
+   → If `topics` array is non-empty: insert the both-sides block per the Flagged Controversies rule above
+   → If `topics` is empty: proceed without controversy block
+   → Fallback: if the tool call fails, note "Controversy check unavailable" and proceed
+
 3. Topic mode (if no passage)
    → Print the ⚠️ TOPIC MODE warning block FIRST, before any analysis.
      This warning is the FIRST text the user sees. Not after the answer.
@@ -413,6 +455,8 @@ Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph
 | **TSK false confidence** | Cross-references from CROSS_REFERENCES_SUMMARY cited as Primary evidence | TSK/OpenBible cross-references are editorial tradition candidates, NOT linguistically verified. Always label: "Editorial tradition (N votes) — candidate." Never cite as Primary or Secondary. |
 | **Entity overconfidence** | Disputed person identification presented as HIGH | When entity data marks a person as disputed=true, flag it. Split confidence: entity existence HIGH, identification MEDIUM. |
 | **Speaker data as settled exegesis** | Angel-of-the-LORD attribution presented as theological fact | Speaker attributions from MACULA/FCBH are dataset interpretations. Flag Angel-of-the-LORD as "dataset attribution, not settled exegesis." |
+| **Silently picked one side of a flagged controversy** | `query_controversies` returned a record but only one position was presented, or the dispute was resolved without stating "the agent does not resolve this debate" | When a controversy record is returned, ALL major positions must be presented with named scholars and evidence. No winner. No synthesis that erases positions. |
+| **Skipping `query_controversies`** | Answered a historically or interpretively contested question without calling `query_controversies` first | At MEANING, VALIDATE, and CROSS-REFERENCE entry, call `query_controversies` with passage and/or topic. A `{topics:[]}` result permits normal response. A non-empty result requires both-sides presentation. |
 
 ---
 

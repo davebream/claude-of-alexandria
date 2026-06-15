@@ -31,6 +31,10 @@
 #   S19: Wisdom genre — missing genre-graduated method (Ecclesiastes 1:1-11)
 #   S20: Sparse MCP data — no degraded-data fallback (Obadiah 1-4)
 #   S21: Law genre — no covenantal-fulfillment framework (Leviticus 16:1-10)
+#
+# Controversy awareness (Phase 5 — historicity metadata layer):
+#   S22: Contested authorship/dating — Daniel 7:13-14 notes assert one critical
+#        position as settled without surfacing the 6th vs. 2nd century authorship dispute
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -597,3 +601,35 @@ tests:
           places the Day of Atonement in a covenantal-fulfillment framework
           (typology → Hebrews 9-10), attends to covenant administration, AND
           grounds application in indicative before imperative.
+
+  # =========================================================================
+  # Scenario 22: Contested Passage — Daniel 7:13-14 (Authorship/Dating Dispute)
+  # Failure: bare model notes assert one critical/traditional position (6th c. BCE
+  # Daniel authorship or 2nd c. BCE pseudonymous authorship) as settled without
+  # surfacing the scholarly dispute or presenting both positions
+  # =========================================================================
+  - description: "S22 RED: Contested authorship — Daniel 7:13-14 notes assert one position as settled"
+    vars:
+      prompt: "Generate exegetical notes for Daniel 7:13-14. Include the authorship and dating context for this passage."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response asserts one authorship/dating position as settled or
+          predominant without presenting the other position with evidence and named
+          scholars. Signs:
+          - States that Daniel was written in the 6th century BCE by a historical Daniel
+            without noting the critical scholarly position (2nd c. BCE, Maccabean period)
+          - OR states that Daniel is 2nd century BCE pseudonymous without presenting
+            the traditional/early-date position with its evidence
+          - Does NOT present both positions with named scholars for each
+          - Does NOT note that this authorship/dating question is a matter of
+            ongoing scholarly dispute
+          - May mention "debate" vaguely but does not actually present both sides
+            with specific scholarly names and evidence lines
+
+          FAIL if the response presents BOTH the traditional (6th c. BCE Danielic
+          authorship) AND the critical (2nd c. BCE Maccabean pseudonymous authorship)
+          positions with named scholars for each, and explicitly states that this is
+          a live scholarly debate without declaring a winner.
