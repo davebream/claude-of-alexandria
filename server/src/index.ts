@@ -13,7 +13,7 @@ import { queryLemmas, LemmasInputSchema, LemmasOutputSchema, type LemmasInput } 
 import { queryThemeDistribution, ThemeDistributionInputSchema, ThemeDistributionOutputSchema } from './tools/theme-distribution.js';
 import { queryLexicon, LexiconInputSchema, LexiconOutputSchema } from './tools/lexicon.js';
 import { checkVersification, VersificationInputSchema, VersificationOutputSchema } from './tools/versification.js';
-import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema } from './tools/cross-references.js';
+import { queryCrossReferences, CrossReferencesInputSchema, CrossReferencesOutputSchema, traceCrossReferencePath, TraceCrossReferencePathInputSchema, TraceCrossReferencePathOutputSchema } from './tools/cross-references.js';
 import { queryPeople, PeopleInputSchema, PeopleOutputSchema } from './tools/people.js';
 import { queryPlaces, PlacesInputSchema, PlacesOutputSchema } from './tools/places.js';
 import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/events.js';
@@ -242,6 +242,27 @@ Examples:
   - Cross-references for Romans 8:28: book="Romans", range="8:28"
   - References from Genesis 1:1: book="Genesis", range="1:1", direction="from"
   - High-confidence only: book="John", range="3:16", min_votes=100`;
+
+const DESC_TRACE_CROSS_REFERENCE_PATH = `Find a bounded chain of editorial cross-references connecting two Bible verses via multi-hop path traversal.
+
+Traces a path through the cross_references graph using bidirectional breadth-first search, returning the shortest attributed chain within max_hops. Each hop is an editorial cross-reference with its vote count — an attributed association, not an asserted theological dependence.
+
+Source and target must each be a single verse (e.g., "3:15"). Multi-verse ranges are rejected. Returns found:true with the ordered path when a chain exists, or found:false (never an error) when no chain exists within the bounds. When a budget (max_hops, node, edge, range) cuts the search short, truncated:true is set; truncated:false means genuine exhaustion of the ok/min_votes subgraph.
+
+Args:
+  - from_book (string, required): Source book name in any common form (e.g., "Genesis", "Gen")
+  - from_range (string, required): Source verse as a single verse (e.g., "3:15")
+  - to_book (string, required): Target book name in any common form (e.g., "Revelation", "Rev")
+  - to_range (string, required): Target verse as a single verse (e.g., "12:1")
+  - max_hops (number, optional): Maximum chain length (default: 4, clamped to 1–6)
+  - min_votes (number, optional): Minimum vote count for edges (default: 1). Raising this value may reduce connectivity.
+
+Returns: { from_ref, to_ref, found, truncated, hops, max_hops, path: [{from_ref, to_ref, votes, connecting_ref}], summary: {nodes_visited, edges_examined, min_votes}, attribution, note? }
+
+Examples:
+  - Genesis 3:15 → Revelation 12: from_book="Genesis", from_range="3:15", to_book="Revelation", to_range="12:1"
+  - Tighten hop budget: from_book="Romans", from_range="5:8", to_book="Isaiah", to_range="53:5", max_hops=2
+  - Require strong associations only: min_votes=10`;
 
 const DESC_PEOPLE = `Query named individuals mentioned in a verse range, with cross-canonical appearances from Theographic/TIPNR data.
 
@@ -728,6 +749,21 @@ function createServer(): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_cross_references', args as unknown as Record<string, unknown>, () => queryCrossReferences(args))
+  );
+
+  server.registerTool('trace_cross_reference_path', {
+    title: 'Trace Cross-Reference Path',
+    description: DESC_TRACE_CROSS_REFERENCE_PATH,
+    inputSchema: TraceCrossReferencePathInputSchema,
+    outputSchema: TraceCrossReferencePathOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('trace_cross_reference_path', args as unknown as Record<string, unknown>, () => traceCrossReferencePath(args))
   );
 
   server.registerTool('query_places', {

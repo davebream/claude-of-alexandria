@@ -377,7 +377,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
           `ORDER BY votes DESC`;
         const fromParams: unknown[] = [book, chapter, minVotes, ...verses];
 
-        const fromRows = await query(fromSql, fromParams) as StoredEdge[];
+        const fromRows = await query(fromSql, fromParams) as unknown as StoredEdge[];
         for (const row of fromRows) {
           edgesExamined++;
           if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
@@ -423,7 +423,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
           `ORDER BY votes DESC`;
         const toParams: unknown[] = [book, chapter, minVotes, ...verses];
 
-        const toRows = await query(toSql, toParams) as StoredEdge[];
+        const toRows = await query(toSql, toParams) as unknown as StoredEdge[];
         for (const row of toRows) {
           edgesExamined++;
           if (edgesExamined > EDGE_BUDGET) { truncated = true; break outer; }
