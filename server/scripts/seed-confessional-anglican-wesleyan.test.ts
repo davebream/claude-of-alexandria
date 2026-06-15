@@ -16,6 +16,8 @@ import {
   buildSeedSql,
 } from './seed-confessional-anglican-wesleyan.js';
 import { escapeSQL } from './sql-escape.js';
+import { z } from 'zod';
+import { ConfessionalLookupInputSchema } from '../src/tools/confessional-lookup.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const MIGRATION_PATH = join(__dirname, '..', 'migrations', '0019_seed_anglican_wesleyan.sql');
@@ -375,6 +377,22 @@ describe('transcription integrity — Wesley Articles', () => {
     const art25 = WESLEY_ARTICLES.find(a => a.number === 25);
     expect(art25).toBeDefined();
     expect(art25!.content.trim().length).toBeGreaterThan(60);
+  });
+});
+
+describe('tradition enum', () => {
+  const schema = z.object(ConfessionalLookupInputSchema);
+
+  it('accepts tradition "anglican"', () => {
+    expect(schema.safeParse({ mode: 'list', tradition: 'anglican' }).success).toBe(true);
+  });
+
+  it('accepts tradition "methodist"', () => {
+    expect(schema.safeParse({ mode: 'list', tradition: 'methodist' }).success).toBe(true);
+  });
+
+  it('still rejects an unknown tradition', () => {
+    expect(schema.safeParse({ mode: 'list', tradition: 'jedi' }).success).toBe(false);
   });
 });
 

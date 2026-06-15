@@ -36,7 +36,7 @@ export const ConfessionalLookupInputSchema = {
     .describe('Verse range: "8:28-8:30", "8:28-30", or single verse "8:28". Required for mode="scripture".'),
   keyword: z.string().optional()
     .describe('Substring to search in section content. Required for mode="keyword". Case-insensitive LIKE match.'),
-  tradition: z.enum(['reformed', 'baptist', 'ancient', 'lutheran']).optional()
+  tradition: z.enum(['reformed', 'baptist', 'ancient', 'lutheran', 'anglican', 'methodist']).optional()
     .describe('Filter by confessional tradition.'),
   format: z.enum(['confession', 'catechism']).optional()
     .describe('Filter by document format.'),
