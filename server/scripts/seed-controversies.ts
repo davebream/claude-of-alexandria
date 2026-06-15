@@ -341,10 +341,17 @@ export const CONTROVERSY_DATASET: ControversyTopic[] = [
         evidence:
           'Joshua 6:20-21 and Joshua 11:16-23 describe comprehensive military victories. William F. Albright ' +
           'identified Late Bronze Age destruction layers at sites such as Lachish, Bethel, and Tell Beit ' +
-          'Mirsim with the Israelite conquest. Bryant Wood challenged Kathleen Kenyon\'s dating of Jericho ' +
-          'and argued that the evidence at Tell es-Sultan fits a 15th-century conquest. The biblical text ' +
-          'is taken as a primary historical source for a real military campaign.',
-        scholars: ['William F. Albright', 'Bryant Wood'],
+          'Mirsim with the Israelite conquest. Yigael Yadin\'s excavations at Hazor documented a massive ' +
+          'destruction layer at the end of the Late Bronze Age (ca. 13th century BCE) that he attributed ' +
+          'to the Israelite conquest described in Joshua 11:10-11. The Merneptah Stele (ca. 1209 BCE) ' +
+          'attests Israel as a people group already present in Canaan, establishing an external anchor ' +
+          'that the Israelite settlement was underway by the late 13th century. Proponents argue that the ' +
+          'biblical text\'s internal coherence — its named commanders, specific battle sequences, and ' +
+          'un-idealized acknowledgments of incomplete conquest (Judges 1) — reflects genuine historical ' +
+          'memory rather than invention. Bryant Wood (a minority position among archaeologists) challenged ' +
+          'Kathleen Kenyon\'s dating of Jericho and argued the evidence at Tell es-Sultan fits a ' +
+          '15th-century conquest.',
+        scholars: ['William F. Albright', 'Yigael Yadin', 'Bryant Wood (on Jericho re-dating)'],
       },
       {
         label: 'Peaceful infiltration model',
