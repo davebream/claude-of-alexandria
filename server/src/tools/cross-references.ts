@@ -80,7 +80,7 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
   const results: RefRow[] = [];
 
   if (direction === 'from' || direction === 'both') {
-    let sql = 'SELECT * FROM cross_references WHERE from_book = ? AND votes >= ?';
+    let sql = "SELECT * FROM cross_references WHERE from_book = ? AND votes >= ? AND review_status = 'ok'";
     const params: unknown[] = [bookName, minVotes];
 
     if (verseRange) {
@@ -103,7 +103,7 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
   }
 
   if (direction === 'to' || direction === 'both') {
-    let sql = 'SELECT * FROM cross_references WHERE to_book = ? AND votes >= ?';
+    let sql = "SELECT * FROM cross_references WHERE to_book = ? AND votes >= ? AND review_status = 'ok'";
     const params: unknown[] = [bookName, minVotes];
 
     if (verseRange) {
