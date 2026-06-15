@@ -1,0 +1,114 @@
+# Promptfoo RED-phase tests for passage-glossary skill.
+# Agent is completely bare: no skills, no MCP, no biblical tools.
+# These tests document failure modes that the skill must prevent.
+#
+# Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/passage-glossary/promptfooconfig-red.yaml
+#
+# RED phase — bare model failure documentation:
+#   S1: Duplicate lemma rows — bare model does not dedup θεός/λόγος in John 1:1-5
+#   S2: Missing MCP grounding — glosses fabricated from training data, not query_lexicon
+#   S3: Resistance test — >20-lemma span; bare model omits lemmas or lacks grounding
+
+description: "Passage Glossary — RED phase (bare model, no skill, no MCP)"
+
+providers:
+  - id: anthropic:messages:claude-sonnet-4-6-20250514
+    label: bare-model
+
+prompts:
+  - "{{prompt}}"
+
+# Grading provider must be non-thinking model for llm-rubric JSON parsing.
+# Required: promptfoo defaults to OpenAI grading if no provider is specified.
+defaultTest:
+  options:
+    provider:
+      id: openai:gpt-4o
+      config:
+        temperature: 0
+  assert:
+    - type: not-icontains
+      value: "API Error: 429"
+
+tests:
+
+  # =========================================================================
+  # Scenario 1: Duplicate Lemma Rows — John 1:1-5
+  # Failure: Bare model produces a glossary where θεός and/or λόγος appear
+  # more than once (one row per occurrence) instead of once per headword.
+  # The dedup key (strongs ?? lemma) is not applied without the skill.
+  # =========================================================================
+  - description: "S1 RED: John 1:1-5 — duplicate headword rows without skill dedup"
+    vars:
+      prompt: "Produce a passage reader for John 1:1-5. Include the passage text followed by a ## Glossary section listing every distinct Greek headword with its gloss. John 1:1-5 contains θεός (God) and λόγος (Word) multiple times — make sure your glossary handles repeated words correctly."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response's ## Glossary section shows any of these dedup failures:
+          - θεός appears more than once as a glossary row (e.g., one row per occurrence
+            in vv. 1, 2, 6, 12, 13, 18 rather than a single deduplicated entry)
+          - λόγος appears more than once as a glossary row
+          - The glossary rows are not consistently keyed on Strong's numbers
+            (e.g., G2316 for θεός, G3056 for λόγος) — each key should appear exactly once
+          - The glossary lists words in verse-occurrence order with repeats, rather than
+            in a deduplicated first-occurrence list
+
+          FAIL if the response produces a properly deduplicated ## Glossary where every
+          headword (keyed on Strong's number when present) appears exactly once, with
+          explicit [G####] tokens on each row.
+
+  # =========================================================================
+  # Scenario 2: Missing MCP Grounding — Fabricated Glosses
+  # Failure: Bare model invents glosses from training knowledge; does not call
+  # query_morphology or query_lexicon; no ## Glossary per-row key tokens.
+  # =========================================================================
+  - description: "S2 RED: John 1:1-5 — glosses fabricated from training data, no MCP tools"
+    vars:
+      prompt: "Use query_morphology and query_lexicon to build a passage glossary for John 1:1-5 --output print. Show the passage text then a ## Glossary section with one row per distinct headword in format: lemma [STRONG'S | (no-strongs)] — gloss"
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits any of these MCP-grounding failures:
+          - Produces glosses from training knowledge without actually calling
+            query_morphology or query_lexicon (the tools are not available to this bare model)
+          - Does not show [G####] Strong's tokens on every glossary row
+          - Glosses do not cite an MCP data source (e.g., "[query_lexicon]" or
+            "via query_morphology") — they read as recalled definitions
+          - The ## Glossary rows lack the mandatory per-row key token format
+            (lemma [G####] — gloss) that the skill enforces
+
+          FAIL if the response actually invokes query_morphology and query_lexicon,
+          returns data from those tools, AND formats every glossary row with an
+          explicit [G####] or (no-strongs) key token attributed to MCP data.
+
+  # =========================================================================
+  # Scenario 3: Resistance Test — >20-Lemma Span (John 1:1-18)
+  # Failure: Bare model either omits lemmas, fabricates glosses without batching
+  # calls at ≤20, or produces a non-grounded glossary. The ≤20 batching rule
+  # from query_lexicon is not applied without the skill's explicit instructions.
+  # =========================================================================
+  - description: "S3 RED: John 1:1-18 — >20-lemma span; bare model omits or lacks MCP grounding"
+    vars:
+      prompt: "Produce a complete passage glossary for John 1:1-18 --output print. Include every distinct Greek headword. John 1:1-18 has well over 20 unique lemmas — list all of them in the ## Glossary section."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response exhibits any of these failure modes for a >20-lemma span:
+          - Omits lemmas that appear in the passage (the list is incomplete relative to
+            the actual vocabulary of John 1:1-18)
+          - Duplicates headwords (the same lemma listed more than once without strong
+            deduplication evidence such as [G####] tokens)
+          - Provides glosses without citing MCP tool calls (no reference to
+            query_morphology, query_lexicon, or any structured lexical data source)
+          - Does not mention batching or the ≤20 limit on query_lexicon calls —
+            a skill-guided agent would explicitly handle this
+
+          FAIL if the response produces a demonstrably complete, deduplicated glossary
+          for all of John 1:1-18 with explicit [G####] key tokens on every row AND
+          cites query_morphology / query_lexicon as the data sources.
