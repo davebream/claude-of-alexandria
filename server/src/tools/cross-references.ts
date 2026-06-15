@@ -6,6 +6,43 @@ import { parseVerseRange } from './utils.js';
 
 const CHARACTER_LIMIT = 25_000;
 
+// ─── trace_cross_reference_path schemas ──────────────────────────────────────
+
+export const TraceCrossReferencePathInputSchema = {
+  from_book: z.string().describe('Source book name in any common form (e.g., "Genesis", "Gen")'),
+  from_range: z.string().describe('Source verse as a single verse (e.g., "3:15"). Multi-verse ranges are rejected.'),
+  to_book: z.string().describe('Target book name in any common form (e.g., "Revelation", "Rev")'),
+  to_range: z.string().describe('Target verse as a single verse (e.g., "12:1"). Multi-verse ranges are rejected.'),
+  max_hops: z.number().optional().describe('Maximum number of hops to search (default: 4, clamped to 1–6)'),
+  min_votes: z.number().optional().describe('Minimum vote count for edges (default: 1). Raising this value may reduce connectivity.'),
+};
+
+export type TraceCrossReferencePathInput = z.output<z.ZodObject<typeof TraceCrossReferencePathInputSchema>>;
+
+const HopSchema = z.object({
+  from_ref: z.string(),
+  to_ref: z.string(),
+  votes: z.number(),
+  connecting_ref: z.string(),
+});
+
+export const TraceCrossReferencePathOutputSchema = {
+  from_ref: z.string(),
+  to_ref: z.string(),
+  found: z.boolean(),
+  truncated: z.boolean(),
+  hops: z.number(),
+  max_hops: z.number(),
+  path: z.array(HopSchema),
+  summary: z.object({
+    nodes_visited: z.number(),
+    edges_examined: z.number(),
+    min_votes: z.number(),
+  }),
+  attribution: z.string(),
+  note: z.string().optional(),
+};
+
 export const CrossReferencesInputSchema = {
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "Psalms")'),
   range: z.string().optional().describe('Verse range: "8:28" (single verse) or "8:28-8:39" (range). Omit for entire book.'),
@@ -175,6 +212,139 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
     },
   };
 
+  return {
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
+  };
+}
+
+// ─── BFS constants ────────────────────────────────────────────────────────────
+
+const NODE_BUDGET = 2000;
+const EDGE_BUDGET = 20000;
+const RANGE_EXPLODE_CAP = 8;
+
+const ATTRIBUTION = 'Cross-reference edges reflect the OpenBible.info editorial tradition with community vote weights; each hop is an attributed association, not an asserted theological dependence.';
+
+// ─── StoredEdge (row shape from D1) ──────────────────────────────────────────
+
+interface StoredEdge {
+  from_book: string;
+  from_chapter: number;
+  from_verse: number;
+  to_book: string;
+  to_chapter: number;
+  to_verse_start: number;
+  to_verse_end: number;
+  votes: number;
+}
+
+type NodeKey = string; // "book|chapter|verse"
+
+function nodeKey(book: string, chapter: number, verse: number): NodeKey {
+  return `${book}|${chapter}|${verse}`;
+}
+
+function formatRef(book: string, chapter: number, verseStart: number, verseEnd?: number): string {
+  const rangeEnd = verseEnd !== undefined && verseEnd !== verseStart ? `-${verseEnd}` : '';
+  return `${book} ${chapter}:${verseStart}${rangeEnd}`;
+}
+
+// ─── traceCrossReferencePath ──────────────────────────────────────────────────
+
+export async function traceCrossReferencePath(args: TraceCrossReferencePathInput): Promise<CallToolResult> {
+  // 1. Resolve books
+  const fromBookInfo = lookupBook(args.from_book);
+  if (!fromBookInfo) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({
+        error: { code: 'BOOK_NOT_FOUND', message: `Book '${args.from_book}' not found.`, suggestions: suggestBooks(args.from_book) }
+      }) }],
+      isError: true,
+    };
+  }
+
+  const toBookInfo = lookupBook(args.to_book);
+  if (!toBookInfo) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({
+        error: { code: 'BOOK_NOT_FOUND', message: `Book '${args.to_book}' not found.`, suggestions: suggestBooks(args.to_book) }
+      }) }],
+      isError: true,
+    };
+  }
+
+  // 2. Parse and validate verse ranges (must be single verses)
+  const fromParsed = parseVerseRange(args.from_range);
+  if ('error' in fromParsed) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: fromParsed.error } }) }],
+      isError: true,
+    };
+  }
+  if (fromParsed.startChapter !== fromParsed.endChapter || fromParsed.startVerse !== fromParsed.endVerse) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: 'Source and target must each be a single verse (e.g., "3:15"). Multi-verse ranges are not supported.' } }) }],
+      isError: true,
+    };
+  }
+
+  const toParsed = parseVerseRange(args.to_range);
+  if ('error' in toParsed) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: toParsed.error } }) }],
+      isError: true,
+    };
+  }
+  if (toParsed.startChapter !== toParsed.endChapter || toParsed.startVerse !== toParsed.endVerse) {
+    return {
+      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: 'Source and target must each be a single verse (e.g., "3:15"). Multi-verse ranges are not supported.' } }) }],
+      isError: true,
+    };
+  }
+
+  const fromBookName = fromBookInfo.displayName;
+  const toBookName = toBookInfo.displayName;
+  const maxHops = Math.max(1, Math.min(6, args.max_hops ?? 4));
+  const minVotes = args.min_votes ?? 1;
+
+  const sourceKey = nodeKey(fromBookName, fromParsed.startChapter, fromParsed.startVerse);
+  const targetKey = nodeKey(toBookName, toParsed.startChapter, toParsed.startVerse);
+  const fromRef = formatRef(fromBookName, fromParsed.startChapter, fromParsed.startVerse);
+  const toRef = formatRef(toBookName, toParsed.startChapter, toParsed.startVerse);
+
+  // 3. Short-circuit: same source and target
+  if (sourceKey === targetKey) {
+    const result = {
+      from_ref: fromRef,
+      to_ref: toRef,
+      found: true,
+      truncated: false,
+      hops: 0,
+      max_hops: maxHops,
+      path: [],
+      summary: { nodes_visited: 1, edges_examined: 0, min_votes: minVotes },
+      attribution: ATTRIBUTION,
+    };
+    return {
+      content: [{ type: 'text', text: JSON.stringify(result) }],
+      structuredContent: result,
+    };
+  }
+
+  // 4. BFS traversal (deferred to Task 2 — placeholder for now)
+  // Task 2 will replace this with the full traversal engine.
+  const result = {
+    from_ref: fromRef,
+    to_ref: toRef,
+    found: false,
+    truncated: false,
+    hops: 0,
+    max_hops: maxHops,
+    path: [] as Array<{ from_ref: string; to_ref: string; votes: number; connecting_ref: string }>,
+    summary: { nodes_visited: 0, edges_examined: 0, min_votes: minVotes },
+    attribution: ATTRIBUTION,
+  };
   return {
     content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,

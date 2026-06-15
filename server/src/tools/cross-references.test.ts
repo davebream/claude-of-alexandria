@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryCrossReferences } from './cross-references.js';
+import { queryCrossReferences, traceCrossReferencePath } from './cross-references.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -11,6 +11,85 @@ const mockQuery = vi.mocked(queryModule.query);
 
 beforeEach(() => {
   vi.clearAllMocks();
+});
+
+// ── traceCrossReferencePath — resolution ─────────────────────────────────────
+
+describe('traceCrossReferencePath — resolution', () => {
+  it('book not found returns isError with suggestions', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Nonexistentbook',
+      from_range: '1:1',
+      to_book: 'Genesis',
+      to_range: '1:1',
+    });
+    expect(result.isError).toBe(true);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.error.code).toBe('BOOK_NOT_FOUND');
+    expect(Array.isArray(body.error.suggestions)).toBe(true);
+  });
+
+  it('to_book not found returns isError with suggestions', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis',
+      from_range: '1:1',
+      to_book: 'Nonexistentbook',
+      to_range: '1:1',
+    });
+    expect(result.isError).toBe(true);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.error.code).toBe('BOOK_NOT_FOUND');
+  });
+
+  it('invalid from_range returns isError INVALID_RANGE', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis',
+      from_range: 'notarange',
+      to_book: 'Romans',
+      to_range: '8:28',
+    });
+    expect(result.isError).toBe(true);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.error.code).toBe('INVALID_RANGE');
+  });
+
+  it('multi-verse from_range returns isError INVALID_RANGE (single verse required)', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis',
+      from_range: '3:15-16',
+      to_book: 'Romans',
+      to_range: '8:28',
+    });
+    expect(result.isError).toBe(true);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.error.code).toBe('INVALID_RANGE');
+  });
+
+  it('multi-verse to_range returns isError INVALID_RANGE (single verse required)', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis',
+      from_range: '3:15',
+      to_book: 'Romans',
+      to_range: '8:28-30',
+    });
+    expect(result.isError).toBe(true);
+    const body = JSON.parse(result.content[0].text);
+    expect(body.error.code).toBe('INVALID_RANGE');
+  });
+
+  it('same source and target verse returns found:true hops:0 path:[] not an error', async () => {
+    const result = await traceCrossReferencePath({
+      from_book: 'Genesis',
+      from_range: '3:15',
+      to_book: 'Genesis',
+      to_range: '3:15',
+    });
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse(result.content[0].text);
+    expect(body.found).toBe(true);
+    expect(body.hops).toBe(0);
+    expect(body.path).toEqual([]);
+  });
 });
 
 // ── review_status filter ──────────────────────────────────────────────────────
