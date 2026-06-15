@@ -245,7 +245,7 @@ claude-of-alexandria/
 ├── plugins/
 │   └── claude-of-alexandria/     # The plugin
 │       ├── .claude-plugin/
-│       │   └── manifest.json     # Plugin manifest (skills array)
+│       │   └── plugin.json       # Plugin manifest (skills array)
 │       ├── agents/               # Sub-agent collection
 │       │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
 │       ├── skills/               # The skill collection

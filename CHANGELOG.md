@@ -9,9 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `confessional_lookup` MCP tool with 4 query modes, backed by a new D1 schema and ETL for confessional documents (Creeds.json). The reference MCP server now exposes 23 tools.
+- `search` parameter for the lexicon tool — LIKE-based substring queries across LSJ, Abbott-Smith, and BDB
 - Adversarial red-team scenarios (prompt injection, multi-turn moralism pressure, theological manipulation persona) in EXTENDED configs for `exegetical-notes` and `pericope-delimitation` skills — tests skill resilience under adversarial user behavior
 - Quarterly run cadence documentation for EXTENDED configs in `tests/promptfoo/README.md`
 - Self-critique Step 9 in `exegetical-notes` skill — 5 binary checks before output delivery: indicative ground for imperative-dominated passages, redemptive-historical link for non-wisdom genres, Tier 3 citation format, verification data quality, and section completeness. Maximum 1 revision iteration if any check fails.
+
+### Changed
+
+- Lexicon definitions replaced single-table glosses with multi-source scholarly definitions
 
 ### Changed
 
