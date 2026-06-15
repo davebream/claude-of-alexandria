@@ -371,3 +371,30 @@ describe('transcription integrity — Wesley Articles', () => {
     expect(art25!.content.trim().length).toBeGreaterThan(60);
   });
 });
+
+describe('transcription integrity — no source-tooling artifacts (all 64 articles)', () => {
+  const all = [...THIRTY_NINE_ARTICLES, ...WESLEY_ARTICLES];
+
+  it('no article content carries a [NNNN]-style footnote-anchor artifact', () => {
+    for (const art of all) {
+      expect(
+        art.content,
+        `Art ${art.number} ("${art.title}") contains a footnote-anchor artifact`
+      ).not.toMatch(/\[\d{2,}\]/);
+    }
+  });
+
+  it('no article content has doubled spaces or control characters (OCR/column-merge artifacts)', () => {
+    for (const art of all) {
+      expect(art.content, `Art ${art.number} has a doubled space`).not.toMatch(/ {2,}/);
+      const ctrl = [...art.content].find((ch) => {
+        const c = ch.charCodeAt(0);
+        return c < 0x20 || c === 0x7f;
+      });
+      expect(
+        ctrl,
+        `Art ${art.number} has a control character (U+${ctrl ? ctrl.charCodeAt(0).toString(16) : ''})`
+      ).toBeUndefined();
+    }
+  });
+});
