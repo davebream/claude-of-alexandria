@@ -26,7 +26,15 @@ const INPUT_FILE = join(SCRIPTS_DIR, 'cross_references.txt');
 const OUTPUT_FILE = join(OUT_DIR, 'cross-references.sql');
 const SKIP_REPORT = join(OUT_DIR, 'cross-references-skip-report.txt');
 const BATCH_SIZE = 500;
+// MIN_ROW_COUNT gates on resolved (ok) rows only — not total rows
 const MIN_ROW_COUNT = 300_000;
+
+// ─── Column list (arity lock: must stay in sync with INSERT header and row tuples) ──
+export const XREF_COLUMNS = [
+  'id', 'from_book', 'from_chapter', 'from_verse',
+  'to_book', 'to_chapter', 'to_verse_start', 'to_verse_end',
+  'votes', 'review_status', 'from_raw', 'to_raw',
+] as const;
 
 // ─── OpenBible abbreviation → canonical book name ────────────────────────────
 const BOOK_MAP: Record<string, string> = {
@@ -50,7 +58,7 @@ const BOOK_MAP: Record<string, string> = {
   'Jude': 'Jude', 'Rev': 'Revelation',
 };
 
-function escapeSQL(val: string): string {
+export function escapeSQL(val: string): string {
   return "'" + val.replace(/'/g, "''") + "'";
 }
 
@@ -120,86 +128,195 @@ function parseToRef(ref: string): { book: string; chapter: number; verseStart: n
   };
 }
 
-async function main() {
-  console.log('Reading cross_references.txt...');
-  const content = readFileSync(INPUT_FILE, 'utf-8');
-  const lines = content.split('\n');
-  console.log(`  Total lines: ${lines.length}`);
+// ─── Exported types ───────────────────────────────────────────────────────────
 
+export type ReviewStatus = 'ok' | 'unresolved_source' | 'unresolved_target' | 'unresolved_both';
+
+export interface ClassifiedEdge {
+  reviewStatus: ReviewStatus;
+  from: ParsedRef | null;
+  to: { book: string; chapter: number; verseStart: number; verseEnd: number } | null;
+  fromRaw: string;
+  toRaw: string;
+}
+
+export interface Counts {
+  ok: number;
+  unresolved_source: number;
+  unresolved_target: number;
+  unresolved_both: number;
+  malformedLines: number;
+}
+
+// ─── Pure, unit-testable helpers ─────────────────────────────────────────────
+
+/**
+ * Classify a from/to reference pair, returning the review status and parsed
+ * endpoint data. fromRaw/toRaw always carry the original strings.
+ */
+export function classifyEdge(fromStr: string, toStr: string): ClassifiedEdge {
+  const from = parseRef(fromStr);
+  const to = parseToRef(toStr);
+
+  let reviewStatus: ReviewStatus;
+  if (from && to) {
+    reviewStatus = 'ok';
+  } else if (!from && to) {
+    reviewStatus = 'unresolved_source';
+  } else if (from && !to) {
+    reviewStatus = 'unresolved_target';
+  } else {
+    reviewStatus = 'unresolved_both';
+  }
+
+  return { reviewStatus, from, to, fromRaw: fromStr, toRaw: toStr };
+}
+
+/**
+ * Process raw TSV lines from the cross_references.txt input.
+ *
+ * Returns:
+ *   rows    — SQL value tuples (one per retained edge, matching XREF_COLUMNS arity)
+ *   counts  — per-status tallies including malformedLines
+ *
+ * Line-level guards (parts.length < 3, isNaN(votes), header/blank lines)
+ * increment malformedLines and skip — these are not edges.
+ * Every from/to/votes triple is RETAINED regardless of resolution status.
+ */
+export function processLines(lines: string[]): { rows: string[]; counts: Counts } {
   const rows: string[] = [];
-  const skipped: string[] = [];
+  const counts: Counts = {
+    ok: 0,
+    unresolved_source: 0,
+    unresolved_target: 0,
+    unresolved_both: 0,
+    malformedLines: 0,
+  };
+
   let id = 1;
 
   for (const line of lines) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('From Verse')) continue;
+    if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('From Verse')) {
+      counts.malformedLines++;
+      continue;
+    }
 
     const parts = trimmed.split('\t');
     if (parts.length < 3) {
-      skipped.push(`Malformed line: ${trimmed}`);
+      counts.malformedLines++;
       continue;
     }
 
     const [fromStr, toStr, votesStr] = parts;
     const votes = parseInt(votesStr, 10);
     if (isNaN(votes)) {
-      skipped.push(`Invalid votes: ${trimmed}`);
+      counts.malformedLines++;
       continue;
     }
 
-    const fromRef = parseRef(fromStr);
-    const toRef = parseToRef(toStr);
+    // Classify the edge — every from/to/votes triple is retained
+    const { reviewStatus, from, to, fromRaw, toRaw } = classifyEdge(fromStr, toStr);
+    counts[reviewStatus]++;
 
-    if (!fromRef) {
-      skipped.push(`Unmappable from-ref: ${fromStr}`);
-      continue;
-    }
-    if (!toRef) {
-      skipped.push(`Unmappable to-ref: ${toStr}`);
-      continue;
-    }
+    // Build the row tuple for this edge.
+    // For an UNRESOLVED endpoint, the book column stores the FULL original reference
+    // string (e.g. 'Sir.1.1') — NOT the bare book abbreviation — so distinct unresolved
+    // refs occupy distinct UNIQUE keys (collision-safety CR-1).
+    const fromBook = from ? escapeSQL(from.book) : escapeSQL(fromRaw);
+    const fromChapter = from ? from.chapter : 0;
+    const fromVerse = from ? from.verse : 0;
+
+    const toBook = to ? escapeSQL(to.book) : escapeSQL(toRaw);
+    const toChapter = to ? to.chapter : 0;
+    const toVerseStart = to ? to.verseStart : 0;
+    const toVerseEnd = to ? to.verseEnd : 0;
+
+    // from_raw / to_raw: NULL for resolved endpoints, escaped string for unresolved
+    const fromRawCol = from ? 'NULL' : escapeSQL(fromRaw);
+    const toRawCol = to ? 'NULL' : escapeSQL(toRaw);
 
     rows.push(
-      `(${id}, ${escapeSQL(fromRef.book)}, ${fromRef.chapter}, ${fromRef.verse}, ` +
-      `${escapeSQL(toRef.book)}, ${toRef.chapter}, ${toRef.verseStart}, ${toRef.verseEnd}, ` +
-      `${votes})`
+      `(${id}, ${fromBook}, ${fromChapter}, ${fromVerse}, ` +
+      `${toBook}, ${toChapter}, ${toVerseStart}, ${toVerseEnd}, ` +
+      `${votes}, ${escapeSQL(reviewStatus)}, ${fromRawCol}, ${toRawCol})`
     );
     id++;
   }
 
-  console.log(`  Parsed rows: ${rows.length}`);
-  console.log(`  Skipped: ${skipped.length}`);
+  return { rows, counts };
+}
 
-  // Assertion
-  if (rows.length < MIN_ROW_COUNT) {
-    console.error(`ASSERTION FAILED: Expected >= ${MIN_ROW_COUNT} rows, got ${rows.length}`);
+// ─── Main (filesystem + DB; excluded from unit tests via entry guard) ─────────
+
+async function main() {
+  console.log('Reading cross_references.txt...');
+  const content = readFileSync(INPUT_FILE, 'utf-8');
+  const lines = content.split('\n');
+  console.log(`  Total lines: ${lines.length}`);
+
+  // Collect malformed-line details for the skip report (main()-only concern)
+  const skippedLines: string[] = [];
+  const mainLines = lines.map((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('From Verse')) {
+      return line; // passthrough; processLines will count it
+    }
+    const parts = trimmed.split('\t');
+    if (parts.length < 3) {
+      skippedLines.push(`Malformed line: ${trimmed}`);
+    } else {
+      const votes = parseInt(parts[2], 10);
+      if (isNaN(votes)) {
+        skippedLines.push(`Invalid votes: ${trimmed}`);
+      } else {
+        const { reviewStatus, fromRaw, toRaw } = classifyEdge(parts[0], parts[1]);
+        if (reviewStatus !== 'ok') {
+          skippedLines.push(`${reviewStatus}: from=${fromRaw} to=${toRaw}`);
+        }
+      }
+    }
+    return line;
+  });
+
+  const { rows, counts } = processLines(mainLines);
+
+  console.log(`  Retained rows: ${rows.length} (ok: ${counts.ok}, unresolved: ${counts.unresolved_source + counts.unresolved_target + counts.unresolved_both})`);
+  console.log(`  Malformed lines: ${counts.malformedLines}`);
+
+  // Assertion gates on resolved (ok) rows — so adding unresolved rows can't mask a regression
+  if (counts.ok < MIN_ROW_COUNT) {
+    console.error(`ASSERTION FAILED: Expected >= ${MIN_ROW_COUNT} resolved (ok) rows, got ${counts.ok}`);
     process.exit(1);
   }
 
-  // Write skip report
+  // Write skip report (all non-ok lines for auditability)
   mkdirSync(OUT_DIR, { recursive: true });
-  writeFileSync(SKIP_REPORT, skipped.join('\n'), 'utf-8');
+  writeFileSync(SKIP_REPORT, skippedLines.join('\n'), 'utf-8');
   console.log(`  Skip report: ${SKIP_REPORT}`);
 
-  // Write SQL in batches
+  // Write SQL in batches using the canonical XREF_COLUMNS list
   writeFileSync(OUTPUT_FILE, '-- Auto-generated by generate-cross-references.ts\n');
   appendFileSync(OUTPUT_FILE, '-- Source: OpenBible.info Cross References (CC BY 4.0)\n\n');
 
   for (let i = 0; i < rows.length; i += BATCH_SIZE) {
     const batch = rows.slice(i, i + BATCH_SIZE);
     const sql =
-      'INSERT OR IGNORE INTO cross_references ' +
-      '(id, from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, to_verse_end, votes) VALUES\n' +
+      `INSERT OR IGNORE INTO cross_references (${XREF_COLUMNS.join(', ')}) VALUES\n` +
       batch.join(',\n') +
       ';\n\n';
     appendFileSync(OUTPUT_FILE, sql);
   }
 
   console.log(`\nWrote ${rows.length} rows to ${OUTPUT_FILE}`);
+  console.log(`Flagged edges — ok: ${counts.ok}, unresolved_source: ${counts.unresolved_source}, unresolved_target: ${counts.unresolved_target}, unresolved_both: ${counts.unresolved_both}, malformed lines: ${counts.malformedLines}`);
   console.log('Done.');
 }
 
-main().catch((err) => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+// Only run main() when executed directly (not when imported by tests)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error('Fatal error:', err);
+    process.exit(1);
+  });
+}
