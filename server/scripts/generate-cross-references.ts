@@ -255,8 +255,6 @@ async function main() {
   const lines = content.split('\n');
   console.log(`  Total lines: ${lines.length}`);
 
-  const skipped: string[] = [];
-
   // Collect malformed-line details for the skip report (main()-only concern)
   const skippedLines: string[] = [];
   const mainLines = lines.map((line) => {
