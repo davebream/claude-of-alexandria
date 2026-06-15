@@ -24,6 +24,9 @@
     "eval:biblical-segmentation:green": "npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-green.yaml",
     "eval:biblical-segmentation:extended": "npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-extended.yaml",
     "eval:biblical-segmentation": "npm run eval:biblical-segmentation:red && npm run eval:biblical-segmentation:green",
+    "eval:passage-glossary:red": "npm run eval -- --no-cache -c skills/passage-glossary/promptfooconfig-red.yaml",
+    "eval:passage-glossary:green": "npm run eval -- --no-cache -c skills/passage-glossary/promptfooconfig-green.yaml",
+    "eval:passage-glossary": "npm run eval:passage-glossary:red && npm run eval:passage-glossary:green",
     "eval:data-retriever:red": "npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml",
     "eval:data-retriever": "npm run eval:data-retriever:red",
     "eval:biblical-scholar:red": "npm run eval -- --no-cache -c agents/biblical-scholar/promptfooconfig-red.yaml",
@@ -35,7 +38,7 @@
     "eval:regression": "npm run eval -- --no-cache -c smoke/promptfooconfig-regression.yaml",
     "eval:calibration": "npm run eval -- --no-cache -c assertions/grader-calibration.yaml",
     "eval:gate": "npm run eval:calibration && npm run eval:regression",
-    "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator && npm run eval:integration",
+    "eval:all": "npm run eval:exegetical-notes && npm run eval:pericope-delimitation && npm run eval:argument-flow && npm run eval:consult-biblical-scholar && npm run eval:biblical-segmentation && npm run eval:passage-glossary && npm run eval:data-retriever && npm run eval:biblical-scholar && npm run eval:study-evaluator && npm run eval:integration",
     "eval:all:single": "node scripts/merge-all-configs.js && npm run eval -- --no-cache -c promptfooconfig-all.yaml",
     "view": "promptfoo view"
   },
