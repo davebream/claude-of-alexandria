@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseVerseRange } from './utils.js';
+import { parseVerseRange, slugifySeason, encodePosition } from './utils.js';
 
 describe('parseVerseRange', () => {
   // Existing formats (backwards compatibility)
@@ -53,5 +53,37 @@ describe('parseVerseRange', () => {
   it('rejects empty string', () => {
     const result = parseVerseRange('');
     expect(result).toHaveProperty('error');
+  });
+});
+
+describe('slugifySeason', () => {
+  it("converts 'Christmas / Christmastide' to 'christmas-christmastide'", () => {
+    expect(slugifySeason('Christmas / Christmastide')).toBe('christmas-christmastide');
+  });
+
+  it("converts 'Advent' to 'advent'", () => {
+    expect(slugifySeason('Advent')).toBe('advent');
+  });
+
+  it("converts 'Christ the King' to 'christ-the-king'", () => {
+    expect(slugifySeason('Christ the King')).toBe('christ-the-king');
+  });
+});
+
+describe('encodePosition', () => {
+  it('encodes chapter 9, verse 6 as 9006', () => {
+    expect(encodePosition(9, 6)).toBe(9006);
+  });
+
+  it('encodes chapter 11, verse 9 as 11009', () => {
+    expect(encodePosition(11, 9)).toBe(11009);
+  });
+
+  it('encodes chapter 23, verse 1 as 23001', () => {
+    expect(encodePosition(23, 1)).toBe(23001);
+  });
+
+  it('encodes chapter 23, verse 999 as 23999', () => {
+    expect(encodePosition(23, 999)).toBe(23999);
   });
 });
