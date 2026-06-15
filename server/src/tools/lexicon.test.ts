@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { queryLexicon, expandParentheticalGloss } from './lexicon.js';
+import { queryLexicon, expandParentheticalGloss, glossMatchesTerm } from './lexicon.js';
 import * as queryModule from '../db/query.js';
 
 // Mock the query() function so tests don't need a real D1 database.
@@ -219,5 +219,16 @@ describe('expandParentheticalGloss', () => {
 
   it.each(cases)('expandParentheticalGloss(%s) → %j', (gloss, expected) => {
     expect(expandParentheticalGloss(gloss)).toEqual(expected);
+  });
+});
+
+// ── Predicate-level parenthetical expansion matching ─────────────────────────
+
+describe('lexicon parenthetical expansion matching', () => {
+  it('[RED] expansion-based matching surfaces "whenever" in gloss "when(-ever)" where raw substring fails', () => {
+    // Raw substring match — the production miss this feature fixes:
+    expect('when(-ever)'.toLowerCase().includes('whenever')).toBe(false);
+    // Expansion-based match — the behaviour the fix introduces:
+    expect(glossMatchesTerm('when(-ever)', 'whenever')).toBe(true);
   });
 });
