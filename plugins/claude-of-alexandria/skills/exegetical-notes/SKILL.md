@@ -2,8 +2,8 @@
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.2.0
-changed: "2026-06-15"
+version: 1.3.0
+changed: "2026-07-17"
 ---
 
 # Exegetical Notes
@@ -51,10 +51,32 @@ Section 4 (Lexical Analysis) must:
 - Cite actual counts from data-retriever's `VOCABULARY_SUMMARY` (or direct `query_vocabulary` fallback)
 - Cite per-occurrence verse references from data-retriever's `VERSE_REFERENCES` (or direct `query_morphology` with `word_filter` fallback)
 - Never say "appears frequently" — give exact count AND verse references
-- Format: `lemma (reference): morph description [query_morphology]`
+- Format: `lemma (translit) (reference): morph description [query_morphology]`
 
-**Valid:** `ἐναρξάμενος (1:6): lemma ἐνάρχομαι, aorist middle participle, nom. sg. masc. [query_morphology]`
+**Valid:** `ἐναρξάμενος (enarxamenos) (1:6): lemma ἐνάρχομαι (enarchomai), aorist middle participle, nom. sg. masc. [query_morphology]`
 **Invalid:** `ἐναρξάμενος is an aorist participle meaning "having begun"`
+
+### Rule 2a: Transliteration Rendering
+
+Render every Greek/Hebrew word as **script + the MCP-supplied transliteration**, never a
+romanization recalled from training data. `query_morphology` returns two distinct
+transliteration fields, and the convention is applied **per field, per position**:
+
+- **`text_translit`** — the inflected **surface form** as it appears in the passage.
+  Render this next to the word when it appears in running prose.
+- **`lemma_translit`** — the **dictionary headword** transliteration. Render this next to
+  a cited lemma.
+
+**Three cases:**
+
+1. **First occurrence in the output:** `script (translit)` — e.g. `ἐναρξάμενος (enarxamenos)`,
+   lemma `ἐνάρχομαι (enarchomai)`.
+2. **Every occurrence thereafter:** `translit` alone — e.g. `enarxamenos`.
+3. **MCP transliteration null/absent for that field:** bare `script` — **never invent a
+   romanization.** A word's surface form and lemma headword are independently null/populated
+   (e.g. a surface form may render `αὐτὸ (auto)` while its lemma headword renders bare
+   `αὐτός` because `lemma_translit` is null for that lemma). Do not "correct" or improve an
+   awkward server value — render it verbatim.
 
 ### Rule 3: Tier All Interpretive Claims
 
@@ -428,7 +450,7 @@ Step 9: DELIVER OUTPUT
 ## 4. Lexical Analysis
 
 [For each key lemma:]
-**[Greek/Hebrew] ([reference])**: lemma [lemma form], [full parsing] [query_morphology]
+**[Greek/Hebrew] ([translit]) ([reference])**: lemma [lemma form] ([lemma translit]), [full parsing] [query_morphology]
 Gloss: "[translation]"
 [Semantic group from semantic_groups.yaml if applicable]
 Frequency in [book]: Nx (ch:v, ch:v, ...) [VERSE_REFERENCES or query_morphology word_filter]
@@ -691,14 +713,14 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 ```markdown
 ## 4. Lexical Analysis
 
-**ἐναρξάμενος (1:6)**: lemma ἐνάρχομαι, aorist middle participle,
+**ἐναρξάμενος (enarxamenos) (1:6)**: lemma ἐνάρχομαι (enarchomai), aorist middle participle,
 nominative singular masculine [query_morphology]
 Gloss: "having begun"
 Semantic note: Middle voice is significant — "begun in/among themselves" or
 reflexive causative. Contrast with active voice ἐναρχόμενος (not attested here).
 Frequency in Philippians: 1x (this passage) [query_vocabulary]
 
-**ἐπιτελέσει (1:6)**: lemma ἐπιτελέω, future active indicative,
+**ἐπιτελέσει (epitelesei) (1:6)**: lemma ἐπιτελέω (epiteleō), future active indicative,
 3rd person singular [query_morphology]
 Gloss: "will complete/finish"
 Temporal referent: ἄχρι ἡμέρας Χριστοῦ Ἰησοῦ — eschatological frame.
