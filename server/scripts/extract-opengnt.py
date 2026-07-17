@@ -389,6 +389,13 @@ def parse_base_text(content: str) -> list[dict]:
                 else:
                     ln_raw = ln_field
 
+        # Col 9: 〔transSBLcap｜transSBL｜transSBLcapNoPunc｜transSBLNoPunc〕 — SBL romanization
+        translit = None
+        if len(cols) > 9:
+            col9 = split_subfields(cols[9])
+            if col9 and col9[0]:
+                translit = col9[0]  # transSBLcap — capitalization-preserving
+
         # Col 10: 〔TBESG｜IT｜LT｜ST｜Español〕 — fallback for TBESG gloss
         tbesg_base = ""
         if len(cols) > 10:
@@ -433,6 +440,7 @@ def parse_base_text(content: str) -> list[dict]:
             "normalized": ogntu,     # unaccented form
             "lemma": lexeme,
             "strongs": sn,
+            "transliteration": translit,
             "rmac": rmac,
             "pos": pos,
             "ln_raw": ln_raw,
@@ -824,6 +832,7 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
     file_num = 0
     total_rows = 0
     strongs_missing = 0
+    translit_missing = 0
 
     for file_start in range(0, len(words), ROWS_PER_FILE):
         file_num += 1
@@ -848,6 +857,9 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
                     strongs = w.get("strongs")
                     if not strongs:
                         strongs_missing += 1
+
+                    if not w.get("transliteration"):
+                        translit_missing += 1
 
                     vals = (
                         sql_escape(w["book"]),
@@ -881,6 +893,16 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
     if strongs_missing > 0:
         print(f"  WARNING: {strongs_missing} words missing Strong's numbers")
     print(f"  Morphology: {total_rows} rows across {file_num} files")
+
+    translit_covered = total_rows - translit_missing
+    translit_pct = (translit_covered * 100.0 / total_rows) if total_rows else 0.0
+    print(
+        f"  Transliteration: {translit_covered:,} / {total_rows:,} "
+        f"({translit_pct:.2f}%)"
+    )
+    if translit_missing > 0:
+        print(f"  ERROR: {translit_missing} NT words missing transliteration (expected 100% coverage)", file=sys.stderr)
+        sys.exit(1)
 
 
 def write_variants_sql(variants: list[dict], output_dir: Path) -> None:
