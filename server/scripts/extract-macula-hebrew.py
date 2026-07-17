@@ -749,15 +749,22 @@ def write_sql_files(books: dict[str, list[dict]], output_dir: Path) -> None:
 
 
 def write_translit_staging_sql(books: dict[str, list[dict]], output_dir: Path) -> None:
-    """Emit the chunked OT transliteration staging SQL (Task 3 / design C4).
+    """Emit the chunked OT transliteration staging SQL (Task 3 / design C4),
+    ONE self-contained file per OT book (Phase-2 review fix — cloudflare-
+    platform-expert flagged the original single-file-per-testament shape as
+    a D1 timeout risk: `wrangler d1 execute --file` caps an entire batch call
+    at 30s, and this wrangler has no `d1 import`, so one file carrying all 39
+    books' INSERTs + UPDATEs shared one 30s budget. Per-book granularity
+    mirrors the existing primary OT seed (morphology-ot-<book>.sql, 39
+    files), which already ships this corpus per-book via `execute --file` in
+    seed-d1.sh today.
 
-    This is the SECOND, new output mode — a narrower row shape (key + text +
-    transliteration only) into a scratch `translit_staging` table, distinct
-    from write_sql_files's primary per-book seed output which this function
-    never touches. Structure: head-drop -> CREATE TABLE translit_staging ->
-    chunked INSERTs -> one correlated UPDATE per OT book -> tail-drop.
-    Excludes any (book, chapter, verse, word_position, text) key with 2+ raw
-    rows (AC-10 — never propagate a transliteration across a colliding pair;
+    Each file is fully self-contained — its own head-drop, CREATE TABLE,
+    chunked INSERTs for ONLY that book's rows, that book's correlated
+    UPDATE, and its own tail-drop — so a file can be applied in isolation.
+    write_sql_files's primary per-book seed output is untouched. Excludes
+    any (book, chapter, verse, word_position, text) key with 2+ raw rows
+    (AC-10 — never propagate a transliteration across a colliding pair;
     measured against the real corpus this is exactly the 2 known keys,
     1_samuel 16:14:6 and deuteronomy 7:8:5, both 'וּ'). Gitignored (decision
     0005) — exists only in the worktree/runner, never committed.
@@ -769,19 +776,24 @@ def write_translit_staging_sql(books: dict[str, list[dict]], output_dir: Path) -
 
     collision_keys = _detect_ot_collision_keys(books)
 
-    row_sql: list[str] = []
-    books_present: list[str] = []
-    included_count = 0
-    excluded_count = 0
+    if collision_keys:
+        print(f"  Translit staging: {len(collision_keys)} OT collision key(s) detected and excluded:")
+        for book_name, chapter, verse, word_position, text in sorted(collision_keys):
+            print(f"    {book_name} {chapter}:{verse}:{word_position} {text!r}")
+
+    total_included = 0
+    total_excluded = 0
+    total_insert_statements = 0
+    books_written: list[str] = []
 
     for book_name, words in sorted(books.items()):
-        book_has_rows = False
+        row_sql: list[str] = []
         for w in words:
             if not w.get("transliteration"):
                 continue
             key = (book_name, w["chapter"], w["verse"], w["word_position"], w["text"])
             if key in collision_keys:
-                excluded_count += 1
+                total_excluded += 1
                 continue
             row_sql.append(
                 "  ({}, {}, {}, {}, {}, {})".format(
@@ -793,60 +805,58 @@ def write_translit_staging_sql(books: dict[str, list[dict]], output_dir: Path) -
                     sql_escape(w["transliteration"]),
                 )
             )
-            included_count += 1
-            book_has_rows = True
-        if book_has_rows:
-            books_present.append(book_name)
+            total_included += 1
 
-    if collision_keys:
-        print(f"  Translit staging: {len(collision_keys)} OT collision key(s) detected and excluded:")
-        for book_name, chapter, verse, word_position, text in sorted(collision_keys):
-            print(f"    {book_name} {chapter}:{verse}:{word_position} {text!r}")
+        if not row_sql:
+            continue
 
-    insert_statements = _pack_staging_insert_statements(
-        "translit_staging",
-        "book, chapter, verse, word_position, text, transliteration",
-        row_sql,
-    )
-    update_statements = [
-        _translit_update_statement(book, testament="ot", include_text=True)
-        for book in books_present
-    ]
-
-    filepath = output_dir / "morphology-translit-ot-001.sql"
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(
-            "-- OT transliteration staging (Macula Hebrew) — "
-            "generated in-runner, never committed (decision 0005)\n"
+        insert_statements = _pack_staging_insert_statements(
+            "translit_staging",
+            "book, chapter, verse, word_position, text, transliteration",
+            row_sql,
         )
-        f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
-        f.write(
-            "CREATE TABLE translit_staging (\n"
-            "  book TEXT NOT NULL,\n"
-            "  chapter INTEGER NOT NULL,\n"
-            "  verse INTEGER NOT NULL,\n"
-            "  word_position INTEGER NOT NULL,\n"
-            "  text TEXT NOT NULL,\n"
-            "  transliteration TEXT NOT NULL,\n"
-            "  UNIQUE(book, chapter, verse, word_position, text)\n"
-            ");\n\n"
+        update_statement = _translit_update_statement(
+            book_name, testament="ot", include_text=True
         )
-        for stmt in insert_statements:
-            f.write(stmt)
+
+        filename = f"morphology-translit-ot-{book_name.replace('_', '-')}.sql"
+        filepath = output_dir / filename
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(
+                f"-- OT transliteration staging (Macula Hebrew) — {book_name} — "
+                "generated in-runner, never committed (decision 0005)\n"
+            )
+            f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+            f.write(
+                "CREATE TABLE translit_staging (\n"
+                "  book TEXT NOT NULL,\n"
+                "  chapter INTEGER NOT NULL,\n"
+                "  verse INTEGER NOT NULL,\n"
+                "  word_position INTEGER NOT NULL,\n"
+                "  text TEXT NOT NULL,\n"
+                "  transliteration TEXT NOT NULL,\n"
+                "  UNIQUE(book, chapter, verse, word_position, text)\n"
+                ");\n\n"
+            )
+            for stmt in insert_statements:
+                f.write(stmt)
+                f.write("\n")
+            f.write(update_statement)
             f.write("\n")
-        for stmt in update_statements:
-            f.write(stmt)
-            f.write("\n")
-        f.write("DROP TABLE translit_staging;\n")
+            f.write("DROP TABLE translit_staging;\n")
+
+        total_insert_statements += len(insert_statements)
+        books_written.append(book_name)
 
     _update_counts_sidecar(
-        output_dir / "morphology-translit-counts.json", "ot", included_count
+        output_dir / "morphology-translit-counts.json", "ot", total_included
     )
     print(
-        f"  Translit staging: {included_count:,} OT rows "
-        f"({excluded_count} excluded by collision key), "
-        f"{len(insert_statements)} INSERT statement(s), "
-        f"{len(update_statements)} book UPDATE(s)"
+        f"  Translit staging: {total_included:,} OT rows across "
+        f"{len(books_written)} per-book file(s) "
+        f"({total_excluded} excluded by collision key), "
+        f"{total_insert_statements} INSERT statement(s) total, "
+        f"1 UPDATE per book"
     )
 
 

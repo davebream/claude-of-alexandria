@@ -54,6 +54,33 @@ opengnt = _load_module("extract_opengnt", "extract-opengnt.py")
 macula = _load_module("extract_macula_hebrew", "extract-macula-hebrew.py")
 
 
+def _split_sql_statements(content: str) -> list[str]:
+    """Split SQL text into whole top-level statements by tracking paren
+    depth — a ';' only ends a statement at depth 0. A naive
+    `content.split(";\\n")` fragments a multi-line UPDATE at the ')' that
+    closes its EXISTS(...) subquery whenever that close isn't also the
+    statement's true end, silently checking sub-fragments instead of whole
+    statements (Phase-2 review fix — code-reviewer flagged this as vacuous
+    coverage on test_c)."""
+    statements = []
+    depth = 0
+    start = 0
+    for i, ch in enumerate(content):
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        elif ch == ";" and depth == 0:
+            stmt = content[start:i + 1].strip()
+            if stmt:
+                statements.append(stmt)
+            start = i + 1
+    tail = content[start:].strip()
+    if tail:
+        statements.append(tail)
+    return statements
+
+
 def _load_fixture():
     """Parse testdata/translit-fixture.tsv into NT word dicts and OT book
     dicts, shaped exactly like the real parsers' output (the generator's
@@ -143,41 +170,63 @@ class StructuralGeneratorTests(unittest.TestCase):
     def test_c_every_statement_under_byte_ceiling(self):
         """(c) every emitted statement is < 100,000 bytes, and the fixture's
         two oversized padded rows force >= 2 INSERT chunks so this assertion
-        actually exercises the boundary it exists for."""
+        actually exercises the boundary it exists for.
+
+        Splits on real statement boundaries (paren-depth-tracked, only a
+        top-level ';' ends a statement) rather than a naive content.split(";\\n")
+        — the naive split fragments each multi-line UPDATE at the ');' that
+        closes its EXISTS(...) subquery whenever that isn't also the true
+        end of the statement, which silently checked sub-fragments instead
+        of whole UPDATE statements (Phase-2 review fix — code-reviewer)."""
         files, _ = self._generate()
         for name, content in files.items():
-            for stmt in content.split(";\n"):
-                stmt = stmt.strip()
-                if not stmt:
-                    continue
-                size = len((stmt + ";\n").encode("utf-8"))
+            for stmt in _split_sql_statements(content):
+                size = len(stmt.encode("utf-8"))
                 self.assertLess(
                     size, 100_000, f"{name}: statement is {size} bytes, >= the D1 ceiling"
                 )
-        nt_file = files.get("morphology-translit-nt-001.sql", "")
+                # Every UPDATE statement must be checked as a WHOLE unit —
+                # confirm depth-tracked splitting never hands us a bare
+                # fragment that stops mid-statement at the EXISTS(...) close.
+                if stmt.strip().startswith("UPDATE"):
+                    self.assertIn(
+                        "EXISTS", stmt, f"{name}: UPDATE fragment missing EXISTS guard"
+                    )
+                    self.assertTrue(
+                        stmt.rstrip().endswith(";"),
+                        f"{name}: UPDATE fragment does not end at a real statement boundary",
+                    )
+        nt_file = files.get("morphology-translit-nt-matthew.sql", "")
         insert_count = nt_file.count("INSERT INTO translit_staging")
         self.assertGreaterEqual(
-            insert_count, 2, "fixture does not force >= 2 INSERT chunks in the NT file"
+            insert_count, 2, "fixture does not force >= 2 INSERT chunks in the NT matthew file"
         )
 
     def test_d_collision_keys_excluded(self):
         """(d) the fabricated OT collision key pair (test_collision_book
-        9:9:9 'פ') is excluded from the OT staging INSERTs entirely."""
+        9:9:9 'פ') is excluded from the OT staging INSERTs entirely — and,
+        since every one of its rows collides, no per-book file is emitted
+        for it at all."""
         files, _ = self._generate()
-        ot_file = files.get("morphology-translit-ot-001.sql", "")
-        self.assertTrue(ot_file, "OT staging file was not generated")
         self.assertNotIn(
-            "test_collision_book",
-            ot_file,
-            "fabricated collision key was not excluded from the OT staging INSERTs",
+            "morphology-translit-ot-test_collision_book.sql",
+            files,
+            "a per-book file was emitted for a book with zero non-colliding rows",
         )
+        for name, content in files.items():
+            self.assertNotIn(
+                "test_collision_book",
+                content,
+                f"{name}: fabricated collision key was not excluded from the OT staging INSERTs",
+            )
 
     def test_blank_transliteration_row_is_skipped_not_inserted(self):
         """Sanity check on the fixture's blank-transliteration OT row
         (genesis 1:1:2) — it must never appear as a staged INSERT row,
         distinct from being NULL in morphology (that's the designed OT gap)."""
         files, _ = self._generate()
-        ot_file = files.get("morphology-translit-ot-001.sql", "")
+        ot_file = files.get("morphology-translit-ot-genesis.sql", "")
+        self.assertTrue(ot_file, "OT genesis staging file was not generated")
         self.assertNotIn("1, 1, 2, 'בָּרָא'", ot_file)
 
 
@@ -217,7 +266,7 @@ class CorpusScaleTests(unittest.TestCase):
             "Eph 6:23 pos 5 not found in the committed primary NT seed chunk",
         )
 
-        staging_path = D1_SEED_DIR / "morphology-translit-nt-001.sql"
+        staging_path = D1_SEED_DIR / "morphology-translit-nt-ephesians.sql"
         self.assertTrue(
             staging_path.exists(),
             f"{staging_path} not found — run extract-opengnt.py --emit translit-staging first",

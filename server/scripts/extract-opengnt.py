@@ -1008,15 +1008,22 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
 
 
 def write_translit_staging_sql(words: list[dict], output_dir: Path) -> None:
-    """Emit the chunked NT transliteration staging SQL (Task 3 / design C4).
+    """Emit the chunked NT transliteration staging SQL (Task 3 / design C4),
+    ONE self-contained file per NT book (Phase-2 review fix — cloudflare-
+    platform-expert flagged the original single-file-per-testament shape as
+    a D1 timeout risk: `wrangler d1 execute --file` caps an entire batch call
+    at 30s, and this wrangler has no `d1 import`, so one file carrying all 27
+    books' INSERTs + UPDATEs shared one 30s budget. Per-book granularity
+    mirrors the existing primary OT seed (morphology-ot-<book>.sql, 39
+    files), which already ships this corpus per-book via `execute --file` in
+    seed-d1.sh today.
 
-    This is the SECOND, new output mode — a narrower row shape (key +
-    transliteration only) into a scratch `translit_staging` table, distinct
-    from write_morphology_sql's primary 28-chunk seed output which this
-    function never touches. Structure: head-drop -> CREATE TABLE
-    translit_staging -> chunked INSERTs -> one correlated UPDATE per NT book
-    -> tail-drop. Gitignored (decision 0005) — exists only in the
-    worktree/runner, never committed.
+    Each file is fully self-contained — its own head-drop, CREATE TABLE,
+    chunked INSERTs for ONLY that book's rows, that book's correlated
+    UPDATE, and its own tail-drop — so a file can be applied in isolation.
+    write_morphology_sql's primary 28-chunk seed output is untouched.
+    Gitignored (decision 0005) — exists only in the worktree/runner, never
+    committed.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1037,11 +1044,18 @@ def write_translit_staging_sql(words: list[dict], output_dir: Path) -> None:
         key=lambda w: (w["book_code"], w["chapter"], w["verse"], w["word_position"]),
     )
 
-    row_sql = []
-    books_present: list[str] = []
-    seen_books: set[str] = set()
+    by_book: dict[str, list[dict]] = {}
+    book_order: list[str] = []
     for w in ordered:
-        row_sql.append(
+        if w["book"] not in by_book:
+            by_book[w["book"]] = []
+            book_order.append(w["book"])
+        by_book[w["book"]].append(w)
+
+    total_insert_statements = 0
+    for book in book_order:
+        book_words = by_book[book]
+        row_sql = [
             "  ({}, {}, {}, {}, {})".format(
                 sql_escape(w["book"]),
                 w["chapter"],
@@ -1049,53 +1063,53 @@ def write_translit_staging_sql(words: list[dict], output_dir: Path) -> None:
                 w["word_position"],
                 sql_escape(w["transliteration"]),
             )
-        )
-        if w["book"] not in seen_books:
-            seen_books.add(w["book"])
-            books_present.append(w["book"])
+            for w in book_words
+        ]
 
-    insert_statements = _pack_staging_insert_statements(
-        "translit_staging",
-        "book, chapter, verse, word_position, transliteration",
-        row_sql,
-    )
-    update_statements = [
-        _translit_update_statement(book, testament="nt", include_text=False)
-        for book in books_present
-    ]
+        insert_statements = _pack_staging_insert_statements(
+            "translit_staging",
+            "book, chapter, verse, word_position, transliteration",
+            row_sql,
+        )
+        update_statement = _translit_update_statement(
+            book, testament="nt", include_text=False
+        )
 
-    filepath = output_dir / "morphology-translit-nt-001.sql"
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(
-            "-- NT transliteration staging (OpenGNT transSBLcap) — "
-            "generated in-runner, never committed (decision 0005)\n"
-        )
-        f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
-        f.write(
-            "CREATE TABLE translit_staging (\n"
-            "  book TEXT NOT NULL,\n"
-            "  chapter INTEGER NOT NULL,\n"
-            "  verse INTEGER NOT NULL,\n"
-            "  word_position INTEGER NOT NULL,\n"
-            "  transliteration TEXT NOT NULL,\n"
-            "  UNIQUE(book, chapter, verse, word_position)\n"
-            ");\n\n"
-        )
-        for stmt in insert_statements:
-            f.write(stmt)
+        filename = f"morphology-translit-nt-{book.replace('_', '-')}.sql"
+        filepath = output_dir / filename
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(
+                f"-- NT transliteration staging (OpenGNT transSBLcap) — {book} — "
+                "generated in-runner, never committed (decision 0005)\n"
+            )
+            f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+            f.write(
+                "CREATE TABLE translit_staging (\n"
+                "  book TEXT NOT NULL,\n"
+                "  chapter INTEGER NOT NULL,\n"
+                "  verse INTEGER NOT NULL,\n"
+                "  word_position INTEGER NOT NULL,\n"
+                "  transliteration TEXT NOT NULL,\n"
+                "  UNIQUE(book, chapter, verse, word_position)\n"
+                ");\n\n"
+            )
+            for stmt in insert_statements:
+                f.write(stmt)
+                f.write("\n")
+            f.write(update_statement)
             f.write("\n")
-        for stmt in update_statements:
-            f.write(stmt)
-            f.write("\n")
-        f.write("DROP TABLE translit_staging;\n")
+            f.write("DROP TABLE translit_staging;\n")
+
+        total_insert_statements += len(insert_statements)
 
     _update_counts_sidecar(
         output_dir / "morphology-translit-counts.json", "nt", len(ordered)
     )
     print(
-        f"  Translit staging: {len(ordered):,} NT rows, "
-        f"{len(insert_statements)} INSERT statement(s), "
-        f"{len(update_statements)} book UPDATE(s)"
+        f"  Translit staging: {len(ordered):,} NT rows across "
+        f"{len(book_order)} per-book file(s), "
+        f"{total_insert_statements} INSERT statement(s) total, "
+        f"1 UPDATE per book"
     )
 
 
