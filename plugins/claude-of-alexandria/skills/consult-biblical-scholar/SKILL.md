@@ -100,7 +100,7 @@ what scholars dispute.
 **Correct:**
 ```
 CONFIDENCE: HIGH
-Evidence: query_morphology confirms ἐκένωσεν as aorist active indicative with reflexive ἑαυτόν
+Evidence: query_morphology confirms ἐκένωσεν (ekenōsen) as aorist active indicative with reflexive ἑαυτόν (heauton)
 ```
 
 **Wrong:**
