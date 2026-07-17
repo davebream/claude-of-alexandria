@@ -6,7 +6,36 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
     groups:
+      # wrangler and @cloudflare/workers-types are peer-coupled, and wrangler
+      # moves its required workers-types major inside its own MINOR releases:
+      #
+      #   wrangler 4.107.0  peer-> @cloudflare/workers-types ^4.20260701.1
+      #   wrangler 4.108.0  peer-> @cloudflare/workers-types ^5.20260706.1
+      #
+      # Grouping by update-type splits that pair: the wrangler minor lands in
+      # minor-and-patch and auto-merges, while the workers-types major it now
+      # requires waits in a standalone PR. main is then left pinning wrangler
+      # against a workers-types major it does not accept, and `npm ci` fails
+      # with ERESOLVE the moment the registry publishes a matching v5.
+      #
+      # Dependabot does not read peer ranges, so the coupling has to be declared
+      # here. Group the toolchain across every update type — the pair always
+      # travels in one PR. A major in the group makes the PR report
+      # semver-major, so dependabot-auto-merge.yml leaves it for manual review.
+      cloudflare-toolchain:
+        patterns:
+          - "wrangler"
+          - "@cloudflare/*"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
       minor-and-patch:
+        # Excluded rather than relying on group ordering, so the coupling above
+        # cannot be broken by a future reorder of this file.
+        exclude-patterns:
+          - "wrangler"
+          - "@cloudflare/*"
         update-types:
           - "minor"
           - "patch"
