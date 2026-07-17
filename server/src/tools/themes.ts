@@ -132,9 +132,11 @@ export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolR
   const unmatched = uniqueLemmas.filter(l => !matches[l]);
 
   // lemma_translit — keyed over the lemma set the response ACTUALLY EMITS, not
-  // over all requested lemmas. When include_unmatched is false, unmatched
-  // lemmas are keyed over the suppressed lemmas back into the payload
-  // (include_unmatched is documented as "Set false to reduce payload").
+  // over all requested lemmas. When include_unmatched is false, the unmatched
+  // lemmas are omitted from lemma_translit too, so the suppressed lemmas do not
+  // leak back into the payload (include_unmatched is documented as "Set false to
+  // reduce payload"). A client can always look up any lemma it sees as a key in
+  // `matches` (and, when present, in `unmatched`).
   const translitKeys = includeUnmatched
     ? [...Object.keys(matches), ...unmatched]
     : Object.keys(matches);

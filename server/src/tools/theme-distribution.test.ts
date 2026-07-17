@@ -263,3 +263,45 @@ describe('query_theme_distribution — by_lemma keeps its existing nested Record
     expect(body.books[0].by_lemma).toEqual({ 'ἀγάπη': { '1': 3 } });
   });
 });
+
+// ─── Truncation branch: key-set coverage must survive book truncation (Phase-5 review) ──
+
+describe('query_theme_distribution — truncated response still covers every surviving by_lemma key', () => {
+  it('truncates books past CHARACTER_LIMIT yet lemma_translit covers every retained by_lemma lemma', async () => {
+    // Build a large fixture: many books × many lemmas × many chapters so the
+    // serialized payload exceeds CHARACTER_LIMIT (25,000) and the truncation
+    // branch fires. Every lemma is in theme_lemmas, so lemma_translit must key
+    // all of them regardless of how many books survive truncation.
+    const lemmas = Array.from({ length: 12 }, (_, i) => `lemma_${i}`);
+    const books = Array.from({ length: 70 }, (_, b) => `book_${b}`);
+    const distRows = books.flatMap(book =>
+      lemmas.flatMap(lemma =>
+        Array.from({ length: 5 }, (_, ch) => ({ book, chapter: ch + 1, lemma, frequency: (ch + 1) * 7 }))
+      )
+    );
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) {
+        // every lemma resolves to a translit (present-and-non-null)
+        return lemmas.map(l => ({ original_word_nfc: l, transliteration: `tr_${l}` }));
+      }
+      if (/DISTINCT theme/i.test(sql)) return [{ theme: 'love' }];
+      if (/DISTINCT lemma/i.test(sql)) return lemmas.map(l => ({ lemma: l }));
+      if (/JOIN thematic_keywords/i.test(sql)) return distRows;
+      return [];
+    });
+    const result = await queryThemeDistribution({ theme: 'love', testament: 'nt' } as any);
+    const body = JSON.parse(result.content[0].text as string);
+
+    // (a) truncation actually fired
+    expect(body.truncated).toBe(true);
+    expect(body.books.length).toBeLessThan(70);
+
+    // (b) every by_lemma key in every SURVIVING book has a lemma_translit entry
+    for (const book of body.books) {
+      for (const lemma of Object.keys(book.by_lemma)) {
+        expect(body.lemma_translit).toHaveProperty(lemma);
+        expect(body.lemma_translit[lemma]).toBe(`tr_${lemma}`);
+      }
+    }
+  });
+});
