@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The `exegetical-notes` and `consult-biblical-scholar` skills now render Greek and Hebrew words as original script plus SBL transliteration (e.g. `ἀγάπη (agapē)`), sourced from the MCP data — word-study output reads like scholarly material without requiring original-script literacy. `biblical-segmentation` renders discourse-marker Greek in bare script honestly, since its data source supplies no transliteration for those words.
 - Lexicon definitions replaced single-table glosses with multi-source scholarly definitions
 
 ### Changed
