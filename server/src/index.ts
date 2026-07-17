@@ -120,7 +120,7 @@ Args:
     - "basic" (default): text, normalized, lemma, pos, parsing, text_translit
     - "syntax": + clause_id, clause_type, strongs, lemma_translit
     - "full": + gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain
-    - "lexical": compact word-study set (text, lemma, strongs, gloss, text_translit, lemma_translit only)
+    - "lexical": compact word-study set (text, lemma, strongs, gloss, louw_nida, text_translit, lemma_translit only)
   - strongs_filter (string, optional): Filter words by Strong's number (e.g., "H7225a" for OT, "G2316" for NT). Requires range.
 
 Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing, ...enrichment fields}], summary: {total_words, by_pos} }
