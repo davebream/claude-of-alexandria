@@ -29,6 +29,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Gate the deploy on the same checks CI runs. This workflow fires on push
+      # to main independently of ci.yml, so without these it will ship code that
+      # fails typecheck or tests — and apply D1 migrations to production first.
+      # Until 2026-07-17 the only thing standing between a broken main and a live
+      # deploy was `npm ci` happening to fail for the same reason CI did.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
       - name: Apply D1 migrations
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
