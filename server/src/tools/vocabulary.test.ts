@@ -71,7 +71,7 @@ describe('query_vocabulary — lexicon tie-break, executed via sql.js (not mockQ
       return rows;
     });
 
-    await queryVocabulary({ book: 'Romans' } as any);
+    const result = await queryVocabulary({ book: 'Romans' } as any);
 
     const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
     expect(lexiconCall, 'expected a lexicon_lsj lookup statement').toBeDefined();
@@ -86,6 +86,12 @@ describe('query_vocabulary — lexicon tie-break, executed via sql.js (not mockQ
 
     expect(rows).toHaveLength(1);
     expect(rows[0].transliteration).toBe('agapē-low');
+
+    // The tool's OWN response must carry the resolved value — not just the
+    // re-executed SQL above. A broken map-key or `?? null` wiring bug would
+    // still pass the assertions above while emitting an all-null response.
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemmas[0].lemma_translit).toBe('agapē-low');
   });
 });
 
@@ -109,10 +115,46 @@ describe('query_vocabulary — bind budget', () => {
 
 describe('query_vocabulary — bounded lexicon statement count', () => {
   it('issues a bounded number of lexicon_lsj statements per call (not one per lemma)', async () => {
-    mockQuery.mockResolvedValue([]);
+    // Feed a real lemma row through the ranked-lemma query so the lexicon
+    // lookup's `lemmaRows.length > 0` gate actually fires. mockResolvedValue([])
+    // would make every query() call return [], the gate would never open, and
+    // this assertion would pass vacuously (0 <= 2) regardless of implementation.
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'ἀγάπη', transliteration: 'agapē' }];
+      if (/SELECT lemma, total FROM/i.test(sql)) return [{ lemma: 'ἀγάπη', total: 3 }];
+      if (/SELECT v\.lemma, v\.chapter/i.test(sql)) return [{ lemma: 'ἀγάπη', chapter: 1, frequency: 3 }];
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 1 }];
+      return [];
+    });
     await queryVocabulary({ book: 'Romans' } as any);
     const lexiconCalls = mockQuery.mock.calls.filter(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCalls.length).toBeGreaterThan(0);
     expect(lexiconCalls.length).toBeLessThanOrEqual(2);
+  });
+});
+
+describe('query_vocabulary — lexicon call count stays flat across multiple lemmas', () => {
+  it('does not scale lexicon statement count with the number of distinct lemmas', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [];
+      if (/SELECT lemma, total FROM/i.test(sql)) {
+        return [
+          { lemma: 'ἀγάπη', total: 3 },
+          { lemma: 'χάρις', total: 2 },
+        ];
+      }
+      if (/SELECT v\.lemma, v\.chapter/i.test(sql)) {
+        return [
+          { lemma: 'ἀγάπη', chapter: 1, frequency: 3 },
+          { lemma: 'χάρις', chapter: 1, frequency: 2 },
+        ];
+      }
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 2 }];
+      return [];
+    });
+    await queryVocabulary({ book: 'Romans' } as any);
+    const lexiconCalls = mockQuery.mock.calls.filter(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCalls).toHaveLength(1);
   });
 });
 

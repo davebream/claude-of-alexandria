@@ -35,7 +35,7 @@ async function makeMinimalDb(): Promise<Database> {
 }
 
 describe('query_lemmas — lexicon tie-break, executed via sql.js (not mockQuery)', () => {
-  it('resolves to the LOWER strongs_id transliteration when one lemma maps to two Strong\'s numbers', async () => {
+  it('resolves to the LOWER strongs_id transliteration when one lemma maps to two Strong\'s numbers, and the tool response carries it', async () => {
     const db = await makeMinimalDb();
     db.run(
       `INSERT INTO lexicon_lsj (strongs_id, original_word, original_word_nfc, original_word_stripped, transliteration, gloss)
@@ -43,27 +43,60 @@ describe('query_lemmas — lexicon tie-break, executed via sql.js (not mockQuery
               ('G9999', 'ἀγάπη', 'ἀγάπη', 'αγαπη', 'agapē-high', 'love-alt')`
     );
 
-    mockQuery.mockResolvedValue([
-      { lemma: 'ἀγάπη', book: 'romans', chapter: 1, frequency: 3 },
-    ]);
+    // Route only the lexicon_lsj statement through the real sql.js database —
+    // lemmas.ts's own vocabulary lookup has no table here, so it stays canned.
+    // This exercises the tool's real map path (row.original_word_nfc → lemma)
+    // instead of a mock that returns vocabulary-shaped rows for every call.
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (/FROM lexicon_lsj/i.test(sql)) {
+        const stmt = db.prepare(sql);
+        if (params.length > 0) stmt.bind(params);
+        const rows: Record<string, unknown>[] = [];
+        while (stmt.step()) rows.push(stmt.getAsObject());
+        stmt.free();
+        return rows;
+      }
+      return [{ lemma: 'ἀγάπη', book: 'romans', chapter: 1, frequency: 3 }];
+    });
 
-    await queryLemmas({ lemmas: ['ἀγάπη'] } as any);
+    const result = await queryLemmas({ lemmas: ['ἀγάπη'] } as any);
 
     const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
     expect(lexiconCall, 'expected a lexicon_lsj lookup statement').toBeDefined();
     const [sql, params] = lexiconCall!;
 
-    const stmt = db.prepare(String(sql));
-    stmt.bind(params as unknown[]);
+    const verifyStmt = db.prepare(String(sql));
+    verifyStmt.bind(params as unknown[]);
     const rows: { original_word_nfc: string; transliteration: string }[] = [];
-    while (stmt.step()) {
-      rows.push(stmt.getAsObject() as { original_word_nfc: string; transliteration: string });
+    while (verifyStmt.step()) {
+      rows.push(verifyStmt.getAsObject() as { original_word_nfc: string; transliteration: string });
     }
-    stmt.free();
+    verifyStmt.free();
     db.close();
 
     expect(rows).toHaveLength(1);
     expect(rows[0].transliteration).toBe('agapē-low');
+
+    // The tool's OWN response must carry the resolved value — not just the
+    // re-executed SQL above. A broken map-key or `?? null` wiring bug would
+    // still pass the assertions above while emitting an all-null response.
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemmas[0].lemma_translit).toBe('agapē-low');
+  });
+});
+
+describe('query_lemmas — lexicon call count stays flat across multiple lemmas', () => {
+  it('does not scale lexicon statement count with the number of distinct lemmas', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [];
+      return [
+        { lemma: 'ἀγάπη', book: 'romans', chapter: 1, frequency: 3 },
+        { lemma: 'χάρις', book: 'romans', chapter: 1, frequency: 2 },
+      ];
+    });
+    await queryLemmas({ lemmas: ['ἀγάπη', 'χάρις'] } as any);
+    const lexiconCalls = mockQuery.mock.calls.filter(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCalls).toHaveLength(1);
   });
 });
 

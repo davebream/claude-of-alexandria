@@ -75,7 +75,7 @@ describe('query_discourse_features — lexicon tie-break, executed via sql.js (n
       return rows;
     });
 
-    await queryDiscourseFeatures({ book: 'John' } as any);
+    const result = await queryDiscourseFeatures({ book: 'John' } as any);
 
     const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
     expect(lexiconCall, 'expected a lexicon_lsj lookup statement').toBeDefined();
@@ -90,6 +90,12 @@ describe('query_discourse_features — lexicon tie-break, executed via sql.js (n
 
     expect(rows).toHaveLength(1);
     expect(rows[0].transliteration).toBe('agapē-low');
+
+    // The tool's OWN response must carry the resolved value — not just the
+    // re-executed SQL above. A broken map-key or `?? null` wiring bug would
+    // still pass the assertions above while emitting an all-null response.
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.features.historical_present[0].word_translit).toBe('agapē-low');
   });
 });
 
@@ -109,10 +115,43 @@ describe('query_discourse_features — bind budget', () => {
 
 describe('query_discourse_features — bounded lexicon statement count', () => {
   it('issues a bounded number of lexicon_lsj statements per call (not one per word/batch)', async () => {
-    mockQuery.mockResolvedValue([]);
+    // Feed a real discourse_features row so the `rows.length > 0` gate that
+    // guards the lexicon lookup actually fires. mockResolvedValue([]) would
+    // make the primary query return [], the gate would never open, and this
+    // assertion would pass vacuously (0 <= 2) regardless of implementation.
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'ἀγάπη', transliteration: 'agapē' }];
+      if (/FROM discourse_boundaries/i.test(sql)) return [];
+      if (/DISTINCT feature FROM/i.test(sql)) return [];
+      if (/FROM discourse_features WHERE/i.test(sql)) {
+        return [{ chapter: 1, verse: 1, feature: 'historical_present', feature_description: 'desc', word: 'ἀγάπη' }];
+      }
+      return [];
+    });
     await queryDiscourseFeatures({ book: 'John' } as any);
     const lexiconCalls = mockQuery.mock.calls.filter(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCalls.length).toBeGreaterThan(0);
     expect(lexiconCalls.length).toBeLessThanOrEqual(2);
+  });
+});
+
+describe('query_discourse_features — lexicon call count stays flat across multiple words', () => {
+  it('does not scale lexicon statement count with the number of distinct words', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [];
+      if (/FROM discourse_boundaries/i.test(sql)) return [];
+      if (/DISTINCT feature FROM/i.test(sql)) return [];
+      if (/FROM discourse_features WHERE/i.test(sql)) {
+        return [
+          { chapter: 1, verse: 1, feature: 'historical_present', feature_description: 'desc', word: 'ἀγάπη' },
+          { chapter: 1, verse: 2, feature: 'historical_present', feature_description: 'desc', word: 'χάρις' },
+        ];
+      }
+      return [];
+    });
+    await queryDiscourseFeatures({ book: 'John' } as any);
+    const lexiconCalls = mockQuery.mock.calls.filter(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCalls).toHaveLength(1);
   });
 });
 

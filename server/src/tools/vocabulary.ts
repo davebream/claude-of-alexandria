@@ -174,9 +174,10 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
   const lemmaRows = await query(sql, params);
 
   // Ranked-lemma-name subquery — the same set the outer lemmaRows query already
-  // selected, minus the totals. Reused as the IN (…) operand for both the
-  // by-chapter lookup below and the lexicon transliteration lookup further
-  // down, so both stay at a fixed bind count regardless of result size.
+  // selected, minus the totals. Used as the IN (…) operand for the lexicon
+  // transliteration lookup further down, so that lookup stays at a fixed bind
+  // count regardless of result size. (The by-chapter lookup below inlines its
+  // own copy of this ranking subquery rather than referencing this one.)
   const rankedLemmaNamesSql = theme
     ? `SELECT lemma FROM (
          SELECT v2.lemma, SUM(v2.frequency) as total
