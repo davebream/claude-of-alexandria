@@ -50,6 +50,10 @@ export const DistributionEntry = z.object({
   total_occurrences: z.number(),
   books_count: z.number(),
   distribution: z.record(z.string(), z.record(z.string(), z.number())),
+  // SBL transliteration sibling — present-and-null when unpopulated, never
+  // omitted (AC-10). Always null for OT/Hebrew lemmas: lexicon_lsj is
+  // Greek-only, so the join simply finds no match — no special-casing needed.
+  lemma_translit: z.string().nullable().optional(),
 });
 
 export const LemmasOutputSchema = {
@@ -129,6 +133,41 @@ async function queryForTestament(
   });
 }
 
+// ─── Lexicon transliteration lookup ───────────────────────────────────────────
+// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
+// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
+// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration 0011).
+// A single guarded IN (…) is fine here: lemmas.ts already bounds its input at
+// MAX_LEMMAS = 50, well under D1_PARAM_LIMIT.
+// Wrapped so a lexicon failure degrades every entry to lemma_translit: null
+// rather than failing the whole call — the primary lemma data already succeeded.
+async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+  if (lemmas.length === 0) return {};
+  if (lemmas.length > D1_PARAM_LIMIT) return {};
+
+  try {
+    const placeholders = lemmas.map(() => '?').join(', ');
+    const rows = await query(
+      `SELECT original_word_nfc, transliteration FROM (
+         SELECT original_word_nfc, transliteration,
+                ROW_NUMBER() OVER (PARTITION BY original_word_nfc ORDER BY strongs_id) AS rn
+         FROM lexicon_lsj
+         WHERE original_word_nfc IN (${placeholders})
+       ) WHERE rn = 1`,
+      lemmas
+    );
+
+    const map: Record<string, string | null> = {};
+    for (const row of rows) {
+      map[row.original_word_nfc as string] = row.transliteration as string | null;
+    }
+    return map;
+  } catch {
+    // Degrade to null for every requested lemma rather than erroring the call.
+    return {};
+  }
+}
+
 // ─── Main handler ─────────────────────────────────────────────────────────────
 
 export async function queryLemmas(args: LemmasInput): Promise<CallToolResult> {
@@ -168,24 +207,34 @@ export async function queryLemmas(args: LemmasInput): Promise<CallToolResult> {
 
   const allResults = [...otResults, ...ntResults];
 
+  // Attach lemma_translit siblings — present-and-null uniformly (AC-10). One
+  // bounded lookup statement covers every distinct lemma found across both
+  // testaments; OT/Hebrew lemmas simply find no lexicon_lsj match.
+  const distinctLemmas = [...new Set(allResults.map(r => r.lemma))];
+  const translitMap = await lookupLemmaTranslit(distinctLemmas);
+  const allResultsWithTranslit = allResults.map(r => ({
+    ...r,
+    lemma_translit: translitMap[r.lemma] ?? null,
+  }));
+
   // Compute not_found per testament
   const foundLemmas = new Set(allResults.map(r => r.lemma));
   const notFound = lemmas.filter(l => !foundLemmas.has(l));
 
   // Build response
   let result: Record<string, unknown> = {
-    lemmas: allResults,
+    lemmas: allResultsWithTranslit,
     not_found: notFound,
     total_requested: lemmas.length,
-    total_found: allResults.length,
+    total_found: allResultsWithTranslit.length,
   };
 
   // Truncation: binary search for largest subset that fits under character limit.
   // Keeps the most-distributed lemmas (highest books_count).
   let serialized = JSON.stringify(result);
-  if (serialized.length > CHARACTER_LIMIT && allResults.length > 1) {
+  if (serialized.length > CHARACTER_LIMIT && allResultsWithTranslit.length > 1) {
     // Sort by books_count descending so index 0 = most-distributed
-    const sorted = [...allResults].sort((a, b) => b.books_count - a.books_count);
+    const sorted = [...allResultsWithTranslit].sort((a, b) => b.books_count - a.books_count);
     let lo = 1, hi = sorted.length;
     while (lo < hi) {
       const mid = Math.ceil((lo + hi) / 2);
