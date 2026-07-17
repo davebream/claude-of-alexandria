@@ -50,7 +50,51 @@ export const ThemeDistributionOutputSchema = {
   }),
   truncated: z.boolean().optional(),
   truncation_message: z.string().optional(),
+  // Parallel lookup map — { lemma → transliteration|null } — keyed over the
+  // SAME Greek lemma that appears as a KEY in each book's `by_lemma` above.
+  // `by_lemma` cannot be restructured to carry transliteration inline
+  // without changing an existing field's type (forbidden by AC-11), so this
+  // sibling map covers `theme_lemmas`, a superset of every `by_lemma` key
+  // across every book. Present-and-null when unpopulated, never omitted
+  // (AC-10) — same uniform rule as the value-shaped tools' siblings.
+  lemma_translit: z.record(z.string(), z.string().nullable()),
 };
+
+// ─── Lexicon transliteration lookup ───────────────────────────────────────────
+// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
+// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
+// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration
+// 0011). `theme_lemmas` is not size-bounded (it is however many lemmas a
+// theme has), so the IN (…) operand is a subquery reproducing the exact
+// theme_lemmas query rather than a literal list — the bind count stays fixed
+// at (theme, testament) regardless of how many lemmas that set contains.
+//
+// Wrapped so a lexicon failure degrades every key to lemma_translit: null
+// rather than failing the whole call — the primary distribution data
+// already succeeded.
+async function lookupLemmaTranslit(theme: string, testament: string): Promise<Record<string, string | null>> {
+  try {
+    const rows = await query(
+      `SELECT original_word_nfc, transliteration FROM (
+         SELECT original_word_nfc, transliteration,
+                ROW_NUMBER() OVER (PARTITION BY original_word_nfc ORDER BY strongs_id) AS rn
+         FROM lexicon_lsj
+         WHERE original_word_nfc IN (
+           SELECT DISTINCT lemma FROM thematic_keywords WHERE theme = ? AND testament = ?
+         )
+       ) WHERE rn = 1`,
+      [theme, testament]
+    );
+
+    const map: Record<string, string | null> = {};
+    for (const row of rows) {
+      map[row.original_word_nfc as string] = row.transliteration as string | null;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
 
 // ─── Main handler ─────────────────────────────────────────────────────────────
 
@@ -103,6 +147,15 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
 
   const themeLemmas = lemmaRows.map(r => r.lemma as string);
 
+  // lemma_translit — one bounded lexicon statement covering theme_lemmas,
+  // a superset of every by_lemma key across every book (AC-10 present-and-
+  // null; AC-12 bounded — fixed at (theme, testament) regardless of size).
+  const translitLookup = await lookupLemmaTranslit(theme, testament);
+  const lemmaTranslit: Record<string, string | null> = {};
+  for (const lemma of themeLemmas) {
+    lemmaTranslit[lemma] = translitLookup[lemma] ?? null;
+  }
+
   // Group by canonical book → lemma → chapter
   const grouped: Record<string, Record<string, Record<string, number>>> = {};
   for (const row of rows) {
@@ -141,6 +194,7 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
       total_occurrences: totalOccurrences,
       books_count: books.length,
     },
+    lemma_translit: lemmaTranslit,
   };
 
   // Truncation: binary search for the largest book subset under the character limit.
@@ -167,6 +221,7 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
       summary: { total_occurrences: totalOccurrences, books_count: books.length },
       truncated: true,
       truncation_message: `Response truncated from ${books.length} to ${truncatedBooks.length} books (character limit). Full coverage: ${books.length} books, ${totalOccurrences} total occurrences.`,
+      lemma_translit: lemmaTranslit,
     };
     serialized = JSON.stringify(result);
   }

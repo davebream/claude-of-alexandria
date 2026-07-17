@@ -25,7 +25,51 @@ export const ThemesOutputSchema = {
   total_lemmas: z.number(),
   matched_count: z.number(),
   unmatched_count: z.number(),
+  // Parallel lookup map — { lemma → transliteration|null } — keyed over the
+  // SAME Greek lemma that appears as a KEY in `matches` above. `matches`
+  // cannot be restructured to carry transliteration inline without changing
+  // an existing field's type (forbidden by AC-11), so this sibling map
+  // covers exactly the lemma set the response actually emits. Present-and-
+  // null when unpopulated, never omitted (AC-10) — same uniform rule as the
+  // value-shaped tools' `lemma_translit`/`word_translit` siblings.
+  lemma_translit: z.record(z.string(), z.string().nullable()),
 };
+
+// ─── Lexicon transliteration lookup ───────────────────────────────────────────
+// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
+// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
+// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration
+// 0011). A single guarded IN (…) is fine here: the key set is bounded by the
+// input schema's max(100) lemmas, well under D1's ~100 bind-param ceiling —
+// same reasoning as lemmas.ts.
+//
+// Wrapped so a lexicon failure degrades every key to lemma_translit: null
+// rather than failing the whole call — the primary matches data already
+// succeeded.
+async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+  if (lemmas.length === 0 || lemmas.length > 100) return {};
+
+  try {
+    const placeholders = lemmas.map(() => '?').join(', ');
+    const rows = await query(
+      `SELECT original_word_nfc, transliteration FROM (
+         SELECT original_word_nfc, transliteration,
+                ROW_NUMBER() OVER (PARTITION BY original_word_nfc ORDER BY strongs_id) AS rn
+         FROM lexicon_lsj
+         WHERE original_word_nfc IN (${placeholders})
+       ) WHERE rn = 1`,
+      lemmas
+    );
+
+    const map: Record<string, string | null> = {};
+    for (const row of rows) {
+      map[row.original_word_nfc as string] = row.transliteration as string | null;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
 
 export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolResult> {
   const testament = args.testament;
@@ -87,6 +131,19 @@ export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolR
   // Derive unmatched
   const unmatched = uniqueLemmas.filter(l => !matches[l]);
 
+  // lemma_translit — keyed over the lemma set the response ACTUALLY EMITS, not
+  // over all requested lemmas. When include_unmatched is false, unmatched
+  // lemmas are keyed over the suppressed lemmas back into the payload
+  // (include_unmatched is documented as "Set false to reduce payload").
+  const translitKeys = includeUnmatched
+    ? [...Object.keys(matches), ...unmatched]
+    : Object.keys(matches);
+  const translitLookup = await lookupLemmaTranslit(translitKeys);
+  const lemmaTranslit: Record<string, string | null> = {};
+  for (const lemma of translitKeys) {
+    lemmaTranslit[lemma] = translitLookup[lemma] ?? null;
+  }
+
   const result: Record<string, unknown> = {
     testament,
     themes,
@@ -94,6 +151,7 @@ export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolR
     total_lemmas: uniqueLemmas.length,
     matched_count: uniqueLemmas.length - unmatched.length,
     unmatched_count: unmatched.length,
+    lemma_translit: lemmaTranslit,
   };
 
   if (includeUnmatched) {
