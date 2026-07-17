@@ -139,7 +139,7 @@ describe('query_morphology — MorphologyWordEntry schema shape', () => {
 describe('query_morphology — structuredContent', () => {
   it('sets structuredContent on success', async () => {
     mockQuery.mockResolvedValue([
-      { chapter: 1, verse: 1, word_position: 1, text: 'ἐν', normalized: 'ἐν', lemma: 'ἐν', pos: 'prep', parsing: null, transliteration: 'en' },
+      { chapter: 1, verse: 1, word_position: 1, text: 'ἐν', normalized: 'ἐν', lemma: 'ἐν', pos: 'prep', parsing: null, text_translit: 'en' },
     ]);
     const result = await queryMorphology({ book: 'John', range: '1:1-1:1' } as any);
     expect(result.isError).toBeFalsy();
@@ -157,7 +157,7 @@ const NT_ROW_WITH_MATCH = {
   clause_id: 'c1', clause_type: 'main', strongs: 'G0026',
   gloss: 'love', semantic_frame: null, subject_ref: null, participant_ref: null,
   gloss_tbesg: null, louw_nida: null, louw_nida_domain: null,
-  transliteration: 'agapē',
+  text_translit: 'agapē',
   lemma_translit: 'agapē',
 };
 
@@ -206,7 +206,7 @@ const OT_ROW_UNPOPULATED = {
   clause_id: null, clause_type: null, strongs: 'H7225',
   gloss: null, semantic_frame: null, subject_ref: null, participant_ref: null,
   gloss_tbesg: null, louw_nida: null, louw_nida_domain: null,
-  transliteration: null,
+  text_translit: null,
   lemma_translit: null,
 };
 

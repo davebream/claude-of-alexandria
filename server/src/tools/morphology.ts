@@ -67,10 +67,15 @@ export const MorphologyOutputSchema = {
 // All columns are qualified with `m.` — the table is aliased below because
 // lexicon_lsj (joined for lemma_translit) shares column names (transliteration,
 // gloss) with morphology, and an unqualified reference is ambiguous under the join.
-const BASIC_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.normalized, m.lemma, m.pos, m.parsing';
-const SYNTAX_COLS = `${BASIC_COLS}, m.clause_id, m.clause_type, m.strongs`;
+//
+// text_translit (m.transliteration) is basic-level — it needs no join, since it
+// lives on morphology itself. lemma_translit (lx.transliteration) derives from
+// strongs via lexicon_lsj, which is itself a syntax+ field, so it is only
+// selected — and only joined — at syntax/full/lexical.
+const BASIC_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.normalized, m.lemma, m.pos, m.parsing, m.transliteration AS text_translit';
+const SYNTAX_COLS = `${BASIC_COLS}, m.clause_id, m.clause_type, m.strongs, lx.transliteration AS lemma_translit`;
 const FULL_COLS = `${SYNTAX_COLS}, m.gloss, m.semantic_frame, m.subject_ref, m.participant_ref, m.gloss_tbesg, m.louw_nida, m.louw_nida_domain`;
-const LEXICAL_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.lemma, m.strongs, m.gloss, m.louw_nida';
+const LEXICAL_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.lemma, m.strongs, m.gloss, m.louw_nida, m.transliteration AS text_translit, lx.transliteration AS lemma_translit';
 
 function selectColumns(fields: string | undefined): string {
   switch (fields) {
@@ -79,6 +84,14 @@ function selectColumns(fields: string | undefined): string {
     case 'lexical': return LEXICAL_COLS;
     default: return BASIC_COLS;
   }
+}
+
+// lemma_translit requires the lexicon_lsj join at syntax/full/lexical.
+// NB: this predicate deliberately does NOT reuse `includesSyntax` further down
+// (fields === 'syntax' || fields === 'full') — that predicate excludes 'lexical',
+// and lemma_translit must reach 'lexical' too.
+function needsLexiconJoin(fields: string | undefined): boolean {
+  return fields === 'syntax' || fields === 'full' || fields === 'lexical';
 }
 
 const DEFAULT_MORPHOLOGY_LIMIT = 5000;
@@ -119,10 +132,14 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   const wordFilter = args.word_filter;
   const fields = args.fields;
   const columns = selectColumns(fields);
+  const lexiconJoin = needsLexiconJoin(fields)
+    ? 'LEFT JOIN lexicon_lsj lx ON m.strongs = lx.strongs_id'
+    : '';
 
   let sql = `
     SELECT ${columns}
     FROM morphology m
+    ${lexiconJoin}
     WHERE m.book = ? AND m.testament = ?
     AND (m.chapter > ? OR (m.chapter = ? AND m.verse >= ?))
     AND (m.chapter < ? OR (m.chapter = ? AND m.verse <= ?))
@@ -172,12 +189,20 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
       text: r.text as string,
     };
 
+    // SBL transliteration siblings — present-and-null uniformly whenever the
+    // column is selected, never omitted (AC-10). text_translit is selected at
+    // every level; lemma_translit only at syntax/full/lexical (needsLexiconJoin).
+    // This deliberately diverges from the omit-when-null convention used below
+    // for the pre-existing syntax/full enrichment fields — do not "fix" it back.
+    word.text_translit = r.text_translit as string | null;
+
     if (isLexical) {
       // Lexical: text, lemma, strongs, gloss, louw_nida
       word.lemma = r.lemma as string;
       word.strongs = r.strongs as string | null;
       word.gloss = r.gloss as string | null;
       if (r.louw_nida != null) word.louw_nida = r.louw_nida as string;
+      word.lemma_translit = r.lemma_translit as string | null;
     } else {
       // Basic fields always present
       word.normalized = r.normalized as string | null;
@@ -190,6 +215,7 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
         if (r.clause_id != null) word.clause_id = r.clause_id as string;
         if (r.clause_type != null) word.clause_type = r.clause_type as string;
         if (r.strongs != null) word.strongs = r.strongs as string;
+        word.lemma_translit = r.lemma_translit as string | null;
       }
 
       // Full fields — include only if value is non-null
