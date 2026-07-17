@@ -127,6 +127,8 @@ Returns: { book, range, testament, words: [{verse, position, text, normalized, l
 
 Note: OT enrichment fields (gloss, strongs, clause_type, semantic_frame, subject_ref, participant_ref) are populated from Macula Hebrew data. NT enrichment fields (gloss, strongs, gloss_tbesg, louw_nida, louw_nida_domain) are populated from OpenGNT data. Null-only enrichment fields are omitted from the response.
 
+Note: the added transliteration fields count against the response's character budget. A "fields=basic" call now returns roughly 10–12% fewer words than before this change, because the response is truncated once it exceeds the size limit. Narrow "range" or use "fields=lexical" to mitigate.
+
 Examples:
   - Basic morphology: book="John", range="1:1-1:5"
   - OT with full enrichment: book="Genesis", range="1:1-1:5", fields="full"

@@ -189,6 +189,20 @@ npm run deploy       # wrangler deploy (maintainers only)
 
 **Database changes go through migrations.** Add a numbered file to `server/migrations/` — never mutate a shipped migration, never hand-edit the deployed database. Migrations must be idempotent so a reseed is safe.
 
+### Two-Tier Data Model: Schema vs. Bulk Corpus Data
+
+This project has two, clearly separated paths for getting data into D1. Which one you use depends on the *size* of what you're shipping — get this wrong and you either break every future deploy, or you bloat the repository's permanent history.
+
+**Tier 1 — `server/migrations/`: schema + small seeds.** Numbered, version-controlled SQL files. The largest one committed to date is ~48K. These auto-apply on merge to `main` via `deploy-worker.yml`, and they run **before** the Worker deploy.
+
+**Tier 2 — `server/d1-seed/`: bulk corpus data.** This directory is **gitignored** (`.gitignore:74`) — nothing under it is ever committed, and `git add -f` must never be used to force it in. Bulk corpus data (tens of megabytes, whole-Bible morphology backfills, and similar) is **generated in-runner**: a dedicated GitHub Actions workflow checks out the repo, runs the relevant ETL script(s) from `server/scripts/`, generates the SQL locally on the runner, and applies it directly via `wrangler d1 execute --file` (the `/import` endpoint). The generated SQL itself is never written to git history — what's version-controlled is the *generator* and its pinned upstream inputs, which is a stronger guarantee than committing output, because the result is reproducible rather than merely trusted. See `decisions/0005` for the full rationale, and `.github/workflows/backfill-transliteration.yml` for the reference implementation (the transliteration backfill).
+
+**The invariant that makes this non-negotiable:** a failed migration blocks all future deploys, and it cannot be legally repaired — this file already forbids mutating a shipped migration, and hand-clearing the `d1_migrations` tracking table counts as the same kind of prohibited hand-editing. There is no safe way to "fix" a bad migration after the fact. Consequently, **bulk data must never go into a migration file.** If a change touches more than a small seed's worth of rows, it belongs in the generate-in-runner path (Tier 2), not Tier 1.
+
+**Each bulk backfill ships its own dedicated runner**, triggered on its own named generator script(s) — not a wildcard glob. `backfill-transliteration.yml` triggers only on changes to `extract-opengnt.py` and `extract-macula-hebrew.py`; it will not pick up unrelated future ETL scripts, and a broad `server/scripts/extract-*.py` glob would incorrectly fire this workflow on edits to any of the other extract scripts.
+
+**A reseed can silently wipe a backfill.** Running `seed-d1.sh` re-applies the committed NT/OT seed files, which do not carry backfilled columns like `transliteration` in their column lists — so a reseed after the transliteration backfill silently drops it, and the backfill workflow does **not** auto-re-fire (a reseed touches no `extract-*.py` path). If this happens, the repair is a manual `workflow_dispatch` of `backfill-transliteration.yml`.
+
 **A new tool is not done until it is wired.** `scripts/validate-skill-tools.sh` checks that the tools a skill declares actually exist on the server, and CI runs it on every PR.
 
 ---
@@ -217,7 +231,7 @@ The validation scripts live in `scripts/` and run standalone — `./scripts/vali
 
 ### When to Update
 
-Update `CHANGELOG.md` as part of every release commit (`chore(release): bump version`). Do not defer it. Do not update it separately.
+Add an entry under `## [Unreleased]` as part of the feature or fix commit that merges the change — do not defer it to a later cleanup pass. The **release** commit (`chore(release): bump version`) then promotes `[Unreleased]` to a dated version heading and bumps both version manifests; it does not introduce new entries.
 
 ### Format
 
