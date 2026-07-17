@@ -22,6 +22,9 @@
 #
 # RED scenario coverage audit:
 #   S24: Wisdom frame-narrative — Job 1:1-5 (prologue as macro-structure unit)
+#
+# #98 — Greek/Hebrew script + transliteration rendering:
+#   S25: Null-honesty — discourse-marker Greek renders bare script, no invented romanization
 
 description: "Biblical Segmentation — GREEN phase (failure-mode corrections)"
 
@@ -318,3 +321,31 @@ tests:
           evaluates the boundary against macro-structure.
           FAIL if Job is segmented as pure narrative using scene boundaries
           without reference to wisdom-genre structural conventions.
+
+  # =========================================================================
+  # Scenario 25: Null-Honesty — Discourse-Marker Greek (#98)
+  # AC-5: query_discourse_features supplies no transliteration for its words
+  # (verified live: word_translit null). The skill must render these words in
+  # bare script and must NOT invent a romanization — this is a null-handling
+  # correction, not the script (translit) convention (there is no MCP value to
+  # render). This is the skill's weakest-by-design evidence: no divergent-value
+  # provenance probe is possible here, only a rubric check on discipline.
+  # =========================================================================
+  - description: "S25 GREEN: John 1 historical presents — bare script, no invented romanization"
+    vars:
+      prompt: "Use the biblical-segmentation skill. I'm segmenting John 1 and want to use the historical-present verbs (like ἔρχεται and βλέπει) as discourse-boundary evidence. Cite the specific Markers with their verse locations."
+    assert:
+      - type: llm-rubric
+        value: |
+          Check how the historical-present Greek words (e.g. ἔρχεται, βλέπει) are
+          rendered in the Markers column or discourse evidence.
+
+          PASS if the words are rendered in bare Greek script WITHOUT a
+          transliteration attached, consistent with query_discourse_features
+          supplying no transliteration for these words. It is also acceptable if
+          the response explicitly notes that transliteration is unavailable for
+          these discourse-marker words from this data source.
+
+          FAIL if a transliteration appears next to these words that is not
+          attributed to an MCP tool (i.e., it reads as invented/recalled from
+          memory rather than sourced from structured data).
