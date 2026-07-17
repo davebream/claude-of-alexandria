@@ -902,6 +902,7 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
     )
     if translit_missing > 0:
         print(f"  ERROR: {translit_missing} NT words missing transliteration (expected 100% coverage)", file=sys.stderr)
+        print("  ERROR: seed files were written but are INVALID — do not load them", file=sys.stderr)
         sys.exit(1)
 
 

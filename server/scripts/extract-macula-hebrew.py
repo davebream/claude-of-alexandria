@@ -525,7 +525,6 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
 
     total_words = 0
     total_missing = 0
-    split_words = 0
     split_missing = 0
     unsplit_words = 0
     unsplit_missing = 0
@@ -537,7 +536,6 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
             total_words += 1
             total_missing += 1 if missing else 0
             if is_split:
-                split_words += 1
                 split_missing += 1 if missing else 0
             else:
                 unsplit_words += 1
