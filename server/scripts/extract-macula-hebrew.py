@@ -16,6 +16,7 @@ Source:
     https://github.com/Clear-Bible/macula-hebrew/
 """
 
+import argparse
 import hashlib
 import json
 import os
@@ -331,6 +332,121 @@ def sql_escape(val: str | None) -> str:
     return f"'{escaped}'"
 
 
+# ─── Translit staging SQL helpers (Task 3 / design C4) ────────────────────────
+# Shared by extract-opengnt.py (NT) and extract-macula-hebrew.py (OT) — each
+# script owns its own copy (this codebase has no shared module between the
+# two ETL scripts), kept intentionally identical so a diff between them is
+# the review surface for behavioral drift.
+
+# D1's hard per-statement SQL length limit. The staging-SQL generator chunks
+# INSERTs by measured encoded byte length against this ceiling — never by a
+# fixed row count — and refuses to emit anything at or above it.
+STAGING_STMT_MAX_BYTES = 100_000
+
+
+def _pack_staging_insert_statements(table: str, col_list: str, row_sql: list[str]) -> list[str]:
+    """Pack pre-formatted VALUES rows into 'INSERT INTO table (...) VALUES ...;'
+    statements, splitting on measured ENCODED byte length so every statement
+    stays strictly under STAGING_STMT_MAX_BYTES — never a row-count heuristic."""
+    prefix = f"INSERT INTO {table} ({col_list}) VALUES\n"
+
+    def build(rows: list[str]) -> str:
+        return prefix + ",\n".join(rows) + ";\n"
+
+    statements: list[str] = []
+    current: list[str] = []
+
+    for row in row_sql:
+        candidate = current + [row]
+        if current and len(build(candidate).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            statements.append(build(current))
+            current = [row]
+        else:
+            current = candidate
+
+        if len(build([row]).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: a single staging row for {table} exceeds the "
+                f"{STAGING_STMT_MAX_BYTES}-byte D1 statement limit on its own",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    if current:
+        statements.append(build(current))
+
+    for stmt in statements:
+        size = len(stmt.encode("utf-8"))
+        if size >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: generated {table} INSERT statement is {size} bytes, "
+                f">= the {STAGING_STMT_MAX_BYTES}-byte D1 limit",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return statements
+
+
+def _translit_update_statement(book: str, testament: str, include_text: bool) -> str:
+    """The correlated SELECT + EXISTS + testament UPDATE form from design C4.
+    NT keys on 4 parts; OT adds `text` to both the SELECT join and the EXISTS
+    guard. Never substitute UPDATE...FROM (D1 blocks sqlite_version(), so
+    SQLite >= 3.33 support is unconfirmed) and never drop the EXISTS guard
+    (it is what makes re-runs non-destructive — prevents a NULL-wipe)."""
+    select_text_predicate = "\n    AND s.text = morphology.text" if include_text else ""
+    exists_text_predicate = "\n      AND s.text = morphology.text" if include_text else ""
+    return (
+        "UPDATE morphology\n"
+        "SET transliteration = (\n"
+        "  SELECT s.transliteration FROM translit_staging s\n"
+        "  WHERE s.book = morphology.book\n"
+        "    AND s.chapter = morphology.chapter\n"
+        "    AND s.verse = morphology.verse\n"
+        "    AND s.word_position = morphology.word_position"
+        f"{select_text_predicate}\n"
+        ")\n"
+        f"WHERE morphology.book = {sql_escape(book)}\n"
+        f"  AND morphology.testament = '{testament}'\n"
+        "  AND EXISTS (\n"
+        "    SELECT 1 FROM translit_staging s\n"
+        "    WHERE s.book = morphology.book\n"
+        "      AND s.chapter = morphology.chapter\n"
+        "      AND s.verse = morphology.verse\n"
+        "      AND s.word_position = morphology.word_position"
+        f"{exists_text_predicate}\n"
+        "  );\n"
+    )
+
+
+def _update_counts_sidecar(path: Path, key: str, count: int) -> None:
+    """Merge {key: count} into the shared counts sidecar without clobbering
+    the other testament's entry — both ETL scripts write to this one file."""
+    counts = {}
+    if path.exists():
+        try:
+            counts = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            counts = {}
+    counts[key] = count
+    path.write_text(json.dumps(counts, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def _detect_ot_collision_keys(books: dict[str, list[dict]]) -> set[tuple]:
+    """A (book, chapter, verse, word_position, text) key is a collision when
+    2+ raw parsed rows share it. AC-10: never propagate a transliteration
+    across a colliding pair — excluding the FULL key drops every row that
+    shares it (populated or blank), so a genuine future collision fails
+    loudly at INSERT time (UNIQUE violation) rather than silently mismatching
+    provenance between two distinct source words."""
+    counts: dict[tuple, int] = {}
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"], w["text"])
+            counts[key] = counts.get(key, 0) + 1
+    return {key for key, n in counts.items() if n > 1}
+
+
 def download_tsv(dest_dir: Path) -> Path:
     """Download Macula Hebrew TSV via Git LFS. Skip if cached and checksum matches."""
     dest_dir.mkdir(parents=True, exist_ok=True)
@@ -632,6 +748,108 @@ def write_sql_files(books: dict[str, list[dict]], output_dir: Path) -> None:
     print(f"\nTotal: {total_rows} rows across {len(books)} books")
 
 
+def write_translit_staging_sql(books: dict[str, list[dict]], output_dir: Path) -> None:
+    """Emit the chunked OT transliteration staging SQL (Task 3 / design C4).
+
+    This is the SECOND, new output mode — a narrower row shape (key + text +
+    transliteration only) into a scratch `translit_staging` table, distinct
+    from write_sql_files's primary per-book seed output which this function
+    never touches. Structure: head-drop -> CREATE TABLE translit_staging ->
+    chunked INSERTs -> one correlated UPDATE per OT book -> tail-drop.
+    Excludes any (book, chapter, verse, word_position, text) key with 2+ raw
+    rows (AC-10 — never propagate a transliteration across a colliding pair;
+    measured against the real corpus this is exactly the 2 known keys,
+    1_samuel 16:14:6 and deuteronomy 7:8:5, both 'וּ'). Gitignored (decision
+    0005) — exists only in the worktree/runner, never committed.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for old_file in output_dir.glob("morphology-translit-ot-*.sql"):
+        old_file.unlink()
+
+    collision_keys = _detect_ot_collision_keys(books)
+
+    row_sql: list[str] = []
+    books_present: list[str] = []
+    included_count = 0
+    excluded_count = 0
+
+    for book_name, words in sorted(books.items()):
+        book_has_rows = False
+        for w in words:
+            if not w.get("transliteration"):
+                continue
+            key = (book_name, w["chapter"], w["verse"], w["word_position"], w["text"])
+            if key in collision_keys:
+                excluded_count += 1
+                continue
+            row_sql.append(
+                "  ({}, {}, {}, {}, {}, {})".format(
+                    sql_escape(book_name),
+                    w["chapter"],
+                    w["verse"],
+                    w["word_position"],
+                    sql_escape(w["text"]),
+                    sql_escape(w["transliteration"]),
+                )
+            )
+            included_count += 1
+            book_has_rows = True
+        if book_has_rows:
+            books_present.append(book_name)
+
+    if collision_keys:
+        print(f"  Translit staging: {len(collision_keys)} OT collision key(s) detected and excluded:")
+        for book_name, chapter, verse, word_position, text in sorted(collision_keys):
+            print(f"    {book_name} {chapter}:{verse}:{word_position} {text!r}")
+
+    insert_statements = _pack_staging_insert_statements(
+        "translit_staging",
+        "book, chapter, verse, word_position, text, transliteration",
+        row_sql,
+    )
+    update_statements = [
+        _translit_update_statement(book, testament="ot", include_text=True)
+        for book in books_present
+    ]
+
+    filepath = output_dir / "morphology-translit-ot-001.sql"
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(
+            "-- OT transliteration staging (Macula Hebrew) — "
+            "generated in-runner, never committed (decision 0005)\n"
+        )
+        f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+        f.write(
+            "CREATE TABLE translit_staging (\n"
+            "  book TEXT NOT NULL,\n"
+            "  chapter INTEGER NOT NULL,\n"
+            "  verse INTEGER NOT NULL,\n"
+            "  word_position INTEGER NOT NULL,\n"
+            "  text TEXT NOT NULL,\n"
+            "  transliteration TEXT NOT NULL,\n"
+            "  UNIQUE(book, chapter, verse, word_position, text)\n"
+            ");\n\n"
+        )
+        for stmt in insert_statements:
+            f.write(stmt)
+            f.write("\n")
+        for stmt in update_statements:
+            f.write(stmt)
+            f.write("\n")
+        f.write("DROP TABLE translit_staging;\n")
+
+    _update_counts_sidecar(
+        output_dir / "morphology-translit-counts.json", "ot", included_count
+    )
+    print(
+        f"  Translit staging: {included_count:,} OT rows "
+        f"({excluded_count} excluded by collision key), "
+        f"{len(insert_statements)} INSERT statement(s), "
+        f"{len(update_statements)} book UPDATE(s)"
+    )
+
+
 def verify_genesis(books: dict[str, list[dict]]) -> None:
     """Spot-check Genesis 1:1 data quality."""
     print("\nVerification — Genesis 1:1:")
@@ -674,7 +892,25 @@ def verify_genesis(books: dict[str, list[dict]]) -> None:
         print(f"  Normalized check: {w['text']!r} → {w['normalized']!r} [{status}]")
 
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Macula Hebrew OT ETL")
+    parser.add_argument(
+        "--emit",
+        choices=("all", "translit-staging"),
+        default="all",
+        help=(
+            "'all' (default) regenerates the 39 morphology-ot-*.sql per-book "
+            "files — unchanged from today's behavior. 'translit-staging' "
+            "emits ONLY the chunked morphology-translit-ot-*.sql staging "
+            "SQL, without touching the primary per-book seed files."
+        ),
+    )
+    return parser.parse_args(argv)
+
+
 def main():
+    args = parse_args()
+
     script_dir = Path(__file__).parent
     server_dir = script_dir.parent
     cache_dir = server_dir / ".cache"
@@ -695,8 +931,12 @@ def main():
     verify_genesis(books)
 
     # Step 4: Write SQL
-    print(f"\nWriting SQL seed files to {output_dir}...")
-    write_sql_files(books, output_dir)
+    if args.emit == "translit-staging":
+        print(f"\nWriting translit staging SQL only to {output_dir} (--emit translit-staging)...")
+        write_translit_staging_sql(books, output_dir)
+    else:
+        print(f"\nWriting SQL seed files to {output_dir}...")
+        write_sql_files(books, output_dir)
 
     print("\nDone.")
 

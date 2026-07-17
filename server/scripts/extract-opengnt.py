@@ -22,6 +22,7 @@ Sources:
     CrossWire Bible Society / Robinson RMAC (CC BY-SA 3.0)
 """
 
+import argparse
 import hashlib
 import io
 import json
@@ -57,6 +58,12 @@ EXPECTED_SHA256_OPENTEXT = "da3acbfb8ee640c8924a92983fbeda7008f3cc167437d61546e6
 
 BATCH_SIZE = 100        # rows per INSERT statement
 ROWS_PER_FILE = 5000    # rows per SQL seed file
+
+# D1's hard per-statement SQL length limit. The staging-SQL generator (Task 3 /
+# design C4) chunks INSERTs by measured encoded byte length against this
+# ceiling — never by a fixed row count — and refuses to emit anything at or
+# above it.
+STAGING_STMT_MAX_BYTES = 100_000
 
 # ─── NT book mapping (OGNT codes 40-66 → canonical names) ────────────────────
 NT_BOOK_MAP = {
@@ -188,6 +195,100 @@ def sql_escape(val) -> str:
         return "NULL"
     escaped = str(val).replace("'", "''")
     return f"'{escaped}'"
+
+
+# ─── Translit staging SQL helpers (Task 3 / design C4) ────────────────────────
+# Shared by extract-opengnt.py (NT) and extract-macula-hebrew.py (OT) — each
+# script owns its own copy (this codebase has no shared module between the
+# two ETL scripts), kept intentionally identical so a diff between them is
+# the review surface for behavioral drift.
+
+def _pack_staging_insert_statements(table: str, col_list: str, row_sql: list[str]) -> list[str]:
+    """Pack pre-formatted VALUES rows into 'INSERT INTO table (...) VALUES ...;'
+    statements, splitting on measured ENCODED byte length so every statement
+    stays strictly under STAGING_STMT_MAX_BYTES — never a row-count heuristic."""
+    prefix = f"INSERT INTO {table} ({col_list}) VALUES\n"
+
+    def build(rows: list[str]) -> str:
+        return prefix + ",\n".join(rows) + ";\n"
+
+    statements: list[str] = []
+    current: list[str] = []
+
+    for row in row_sql:
+        candidate = current + [row]
+        if current and len(build(candidate).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            statements.append(build(current))
+            current = [row]
+        else:
+            current = candidate
+
+        if len(build([row]).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: a single staging row for {table} exceeds the "
+                f"{STAGING_STMT_MAX_BYTES}-byte D1 statement limit on its own",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    if current:
+        statements.append(build(current))
+
+    for stmt in statements:
+        size = len(stmt.encode("utf-8"))
+        if size >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: generated {table} INSERT statement is {size} bytes, "
+                f">= the {STAGING_STMT_MAX_BYTES}-byte D1 limit",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return statements
+
+
+def _translit_update_statement(book: str, testament: str, include_text: bool) -> str:
+    """The correlated SELECT + EXISTS + testament UPDATE form from design C4.
+    NT keys on 4 parts; OT adds `text` to both the SELECT join and the EXISTS
+    guard. Never substitute UPDATE...FROM (D1 blocks sqlite_version(), so
+    SQLite >= 3.33 support is unconfirmed) and never drop the EXISTS guard
+    (it is what makes re-runs non-destructive — prevents a NULL-wipe)."""
+    select_text_predicate = "\n    AND s.text = morphology.text" if include_text else ""
+    exists_text_predicate = "\n      AND s.text = morphology.text" if include_text else ""
+    return (
+        "UPDATE morphology\n"
+        "SET transliteration = (\n"
+        "  SELECT s.transliteration FROM translit_staging s\n"
+        "  WHERE s.book = morphology.book\n"
+        "    AND s.chapter = morphology.chapter\n"
+        "    AND s.verse = morphology.verse\n"
+        "    AND s.word_position = morphology.word_position"
+        f"{select_text_predicate}\n"
+        ")\n"
+        f"WHERE morphology.book = {sql_escape(book)}\n"
+        f"  AND morphology.testament = '{testament}'\n"
+        "  AND EXISTS (\n"
+        "    SELECT 1 FROM translit_staging s\n"
+        "    WHERE s.book = morphology.book\n"
+        "      AND s.chapter = morphology.chapter\n"
+        "      AND s.verse = morphology.verse\n"
+        "      AND s.word_position = morphology.word_position"
+        f"{exists_text_predicate}\n"
+        "  );\n"
+    )
+
+
+def _update_counts_sidecar(path: Path, key: str, count: int) -> None:
+    """Merge {key: count} into the shared counts sidecar without clobbering
+    the other testament's entry — both ETL scripts write to this one file."""
+    counts = {}
+    if path.exists():
+        try:
+            counts = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            counts = {}
+    counts[key] = count
+    path.write_text(json.dumps(counts, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def get_rmac_pos(rmac: str) -> str:
@@ -906,6 +1007,98 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
         sys.exit(1)
 
 
+def write_translit_staging_sql(words: list[dict], output_dir: Path) -> None:
+    """Emit the chunked NT transliteration staging SQL (Task 3 / design C4).
+
+    This is the SECOND, new output mode — a narrower row shape (key +
+    transliteration only) into a scratch `translit_staging` table, distinct
+    from write_morphology_sql's primary 28-chunk seed output which this
+    function never touches. Structure: head-drop -> CREATE TABLE
+    translit_staging -> chunked INSERTs -> one correlated UPDATE per NT book
+    -> tail-drop. Gitignored (decision 0005) — exists only in the
+    worktree/runner, never committed.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for old_file in output_dir.glob("morphology-translit-nt-*.sql"):
+        old_file.unlink()
+
+    missing = sum(1 for w in words if not w.get("transliteration"))
+    if missing > 0:
+        print(
+            f"ERROR: {missing} NT words missing transliteration — refusing "
+            "to emit staging SQL (expected 100% coverage)",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    ordered = sorted(
+        words,
+        key=lambda w: (w["book_code"], w["chapter"], w["verse"], w["word_position"]),
+    )
+
+    row_sql = []
+    books_present: list[str] = []
+    seen_books: set[str] = set()
+    for w in ordered:
+        row_sql.append(
+            "  ({}, {}, {}, {}, {})".format(
+                sql_escape(w["book"]),
+                w["chapter"],
+                w["verse"],
+                w["word_position"],
+                sql_escape(w["transliteration"]),
+            )
+        )
+        if w["book"] not in seen_books:
+            seen_books.add(w["book"])
+            books_present.append(w["book"])
+
+    insert_statements = _pack_staging_insert_statements(
+        "translit_staging",
+        "book, chapter, verse, word_position, transliteration",
+        row_sql,
+    )
+    update_statements = [
+        _translit_update_statement(book, testament="nt", include_text=False)
+        for book in books_present
+    ]
+
+    filepath = output_dir / "morphology-translit-nt-001.sql"
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(
+            "-- NT transliteration staging (OpenGNT transSBLcap) — "
+            "generated in-runner, never committed (decision 0005)\n"
+        )
+        f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+        f.write(
+            "CREATE TABLE translit_staging (\n"
+            "  book TEXT NOT NULL,\n"
+            "  chapter INTEGER NOT NULL,\n"
+            "  verse INTEGER NOT NULL,\n"
+            "  word_position INTEGER NOT NULL,\n"
+            "  transliteration TEXT NOT NULL,\n"
+            "  UNIQUE(book, chapter, verse, word_position)\n"
+            ");\n\n"
+        )
+        for stmt in insert_statements:
+            f.write(stmt)
+            f.write("\n")
+        for stmt in update_statements:
+            f.write(stmt)
+            f.write("\n")
+        f.write("DROP TABLE translit_staging;\n")
+
+    _update_counts_sidecar(
+        output_dir / "morphology-translit-counts.json", "nt", len(ordered)
+    )
+    print(
+        f"  Translit staging: {len(ordered):,} NT rows, "
+        f"{len(insert_statements)} INSERT statement(s), "
+        f"{len(update_statements)} book UPDATE(s)"
+    )
+
+
 def write_variants_sql(variants: list[dict], output_dir: Path) -> None:
     """Write numbered SQL seed files for textual variants."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1274,7 +1467,26 @@ def print_summary(words, variants, boundaries) -> None:
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="OpenGNT NT ETL")
+    parser.add_argument(
+        "--emit",
+        choices=("all", "translit-staging"),
+        default="all",
+        help=(
+            "'all' (default) regenerates the 28 morphology-nt-*.sql chunks "
+            "plus variants/discourse-boundaries/syntax output — unchanged "
+            "from today's behavior. 'translit-staging' emits ONLY the "
+            "chunked morphology-translit-nt-*.sql staging SQL, without "
+            "touching the primary seed chunks."
+        ),
+    )
+    return parser.parse_args(argv)
+
+
 def main():
+    args = parse_args()
+
     script_dir = Path(__file__).parent
     server_dir = script_dir.parent
     cache_dir = server_dir / ".cache"
@@ -1357,11 +1569,15 @@ def main():
         print("\nValidation PASS: all words have Strong's numbers")
 
     # Step 10: Write SQL seed files
-    print("\nStep 10: Writing SQL seed files...")
-    write_morphology_sql(words, output_dir)
-    write_variants_sql(variants, output_dir)
-    write_discourse_boundaries_sql(boundaries, output_dir)
-    write_syntax_sql(opentext_rows, output_dir)
+    if args.emit == "translit-staging":
+        print("\nStep 10: Writing translit staging SQL only (--emit translit-staging)...")
+        write_translit_staging_sql(words, output_dir)
+    else:
+        print("\nStep 10: Writing SQL seed files...")
+        write_morphology_sql(words, output_dir)
+        write_variants_sql(variants, output_dir)
+        write_discourse_boundaries_sql(boundaries, output_dir)
+        write_syntax_sql(opentext_rows, output_dir)
 
     print("\nDone.")
 
