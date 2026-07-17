@@ -39,6 +39,15 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    # @types/node's major tracks the Node runtime major. Bumping it past the
+    # version we actually run makes the compiler describe APIs that do not exist
+    # at runtime — typechecks clean, fails in production. It reached ^26 while
+    # CI ran Node 20 and the Worker deployed on 22. The major belongs to a
+    # deliberate Node upgrade (bump .nvmrc, then this), not to a weekly bot run.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
 
   - package-ecosystem: "npm"
     directory: "/tests/promptfoo"
