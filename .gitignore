@@ -87,3 +87,7 @@ server/scripts/merge-report.json
 # Script output (generated proposals — do not commit)
 server/scripts/output/
 .build-checkpoint.json
+
+# kombajn CLI — pipeline artifacts and local config are not part of the
+# distributed project (see CLAUDE.md: no private tooling in a public repo).
+.kombajn/
