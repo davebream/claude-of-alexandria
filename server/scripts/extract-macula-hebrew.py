@@ -16,6 +16,7 @@ Source:
     https://github.com/Clear-Bible/macula-hebrew/
 """
 
+import argparse
 import hashlib
 import json
 import os
@@ -331,6 +332,121 @@ def sql_escape(val: str | None) -> str:
     return f"'{escaped}'"
 
 
+# ─── Translit staging SQL helpers (Task 3 / design C4) ────────────────────────
+# Shared by extract-opengnt.py (NT) and extract-macula-hebrew.py (OT) — each
+# script owns its own copy (this codebase has no shared module between the
+# two ETL scripts), kept intentionally identical so a diff between them is
+# the review surface for behavioral drift.
+
+# D1's hard per-statement SQL length limit. The staging-SQL generator chunks
+# INSERTs by measured encoded byte length against this ceiling — never by a
+# fixed row count — and refuses to emit anything at or above it.
+STAGING_STMT_MAX_BYTES = 100_000
+
+
+def _pack_staging_insert_statements(table: str, col_list: str, row_sql: list[str]) -> list[str]:
+    """Pack pre-formatted VALUES rows into 'INSERT INTO table (...) VALUES ...;'
+    statements, splitting on measured ENCODED byte length so every statement
+    stays strictly under STAGING_STMT_MAX_BYTES — never a row-count heuristic."""
+    prefix = f"INSERT INTO {table} ({col_list}) VALUES\n"
+
+    def build(rows: list[str]) -> str:
+        return prefix + ",\n".join(rows) + ";\n"
+
+    statements: list[str] = []
+    current: list[str] = []
+
+    for row in row_sql:
+        candidate = current + [row]
+        if current and len(build(candidate).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            statements.append(build(current))
+            current = [row]
+        else:
+            current = candidate
+
+        if len(build([row]).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: a single staging row for {table} exceeds the "
+                f"{STAGING_STMT_MAX_BYTES}-byte D1 statement limit on its own",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    if current:
+        statements.append(build(current))
+
+    for stmt in statements:
+        size = len(stmt.encode("utf-8"))
+        if size >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: generated {table} INSERT statement is {size} bytes, "
+                f">= the {STAGING_STMT_MAX_BYTES}-byte D1 limit",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return statements
+
+
+def _translit_update_statement(book: str, testament: str, include_text: bool) -> str:
+    """The correlated SELECT + EXISTS + testament UPDATE form from design C4.
+    NT keys on 4 parts; OT adds `text` to both the SELECT join and the EXISTS
+    guard. Never substitute UPDATE...FROM (D1 blocks sqlite_version(), so
+    SQLite >= 3.33 support is unconfirmed) and never drop the EXISTS guard
+    (it is what makes re-runs non-destructive — prevents a NULL-wipe)."""
+    select_text_predicate = "\n    AND s.text = morphology.text" if include_text else ""
+    exists_text_predicate = "\n      AND s.text = morphology.text" if include_text else ""
+    return (
+        "UPDATE morphology\n"
+        "SET transliteration = (\n"
+        "  SELECT s.transliteration FROM translit_staging s\n"
+        "  WHERE s.book = morphology.book\n"
+        "    AND s.chapter = morphology.chapter\n"
+        "    AND s.verse = morphology.verse\n"
+        "    AND s.word_position = morphology.word_position"
+        f"{select_text_predicate}\n"
+        ")\n"
+        f"WHERE morphology.book = {sql_escape(book)}\n"
+        f"  AND morphology.testament = '{testament}'\n"
+        "  AND EXISTS (\n"
+        "    SELECT 1 FROM translit_staging s\n"
+        "    WHERE s.book = morphology.book\n"
+        "      AND s.chapter = morphology.chapter\n"
+        "      AND s.verse = morphology.verse\n"
+        "      AND s.word_position = morphology.word_position"
+        f"{exists_text_predicate}\n"
+        "  );\n"
+    )
+
+
+def _update_counts_sidecar(path: Path, key: str, count: int) -> None:
+    """Merge {key: count} into the shared counts sidecar without clobbering
+    the other testament's entry — both ETL scripts write to this one file."""
+    counts = {}
+    if path.exists():
+        try:
+            counts = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            counts = {}
+    counts[key] = count
+    path.write_text(json.dumps(counts, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def _detect_ot_collision_keys(books: dict[str, list[dict]]) -> set[tuple]:
+    """A (book, chapter, verse, word_position, text) key is a collision when
+    2+ raw parsed rows share it. AC-10: never propagate a transliteration
+    across a colliding pair — excluding the FULL key drops every row that
+    shares it (populated or blank), so a genuine future collision fails
+    loudly at INSERT time (UNIQUE violation) rather than silently mismatching
+    provenance between two distinct source words."""
+    counts: dict[tuple, int] = {}
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"], w["text"])
+            counts[key] = counts.get(key, 0) + 1
+    return {key for key, n in counts.items() if n > 1}
+
+
 def download_tsv(dest_dir: Path) -> Path:
     """Download Macula Hebrew TSV via Git LFS. Skip if cached and checksum matches."""
     dest_dir.mkdir(parents=True, exist_ok=True)
@@ -409,6 +525,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
     COL_REF = 1
     COL_CLASS = 2
     COL_TEXT = 3
+    COL_TRANSLITERATION = 4
     COL_STRONGNUMBERX = 6
     COL_GLOSS = 11
     COL_MORPH = 15
@@ -444,6 +561,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
                 continue
 
             text = fields[COL_TEXT]
+            transliteration = fields[COL_TRANSLITERATION] or None
             morph_code = fields[COL_MORPH]
             lang = fields[COL_LANG]
             lemma = fields[COL_LEMMA] or ""
@@ -484,6 +602,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
                 "verse": verse,
                 "word_position": word_pos,
                 "text": text,
+                "transliteration": transliteration,
                 "normalized": normalized,
                 "lemma": lemma,
                 "pos": pos,
@@ -502,6 +621,72 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
             books[book_name].append(word)
 
     print(f"  Parsed {line_num} lines, skipped {skipped}, got {sum(len(w) for w in books.values())} words in {len(books)} books")
+
+    # ─── Transliteration coverage + concentration gates ──────────────────────
+    # Coverage is expected to sit around 79.63% (378,954/475,911) because the
+    # ~20% gap is systematic: MACULA splits some Hebrew words into multiple
+    # morpheme sub-segment rows sharing one (book,chapter,verse,word_position)
+    # key, and only the first sub-segment of a split typically carries a
+    # transliteration. A random-looking (non-concentrated) shortfall would mean
+    # the column read is wrong, not that the gap is expected.
+    MIN_OT_COVERAGE_PCT = 79.5
+    MAX_UNSPLIT_MISSING_PCT = 5.0    # blank rate allowed among non-split rows
+    MIN_SPLIT_CONCENTRATION_PCT = 90.0  # % of all blanks that must be split rows
+
+    key_counts: dict[tuple, int] = {}
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"])
+            key_counts[key] = key_counts.get(key, 0) + 1
+
+    total_words = 0
+    total_missing = 0
+    split_missing = 0
+    unsplit_words = 0
+    unsplit_missing = 0
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"])
+            is_split = key_counts[key] > 1
+            missing = w["transliteration"] is None
+            total_words += 1
+            total_missing += 1 if missing else 0
+            if is_split:
+                split_missing += 1 if missing else 0
+            else:
+                unsplit_words += 1
+                unsplit_missing += 1 if missing else 0
+
+    coverage_pct = (total_words - total_missing) * 100.0 / total_words if total_words else 0.0
+    print(f"  Transliteration: {total_words - total_missing:,} / {total_words:,} ({coverage_pct:.2f}%)")
+
+    if coverage_pct < MIN_OT_COVERAGE_PCT:
+        print(
+            f"ERROR: OT transliteration coverage {coverage_pct:.2f}% is below "
+            f"the {MIN_OT_COVERAGE_PCT}% floor (expected ~79.63%)",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    if total_missing > 0:
+        unsplit_missing_pct = unsplit_missing * 100.0 / unsplit_words if unsplit_words else 0.0
+        split_concentration_pct = split_missing * 100.0 / total_missing
+        print(
+            f"  Transliteration shortfall: {unsplit_missing_pct:.2f}% of non-split "
+            f"rows missing; {split_concentration_pct:.2f}% of all missing rows are "
+            f"morpheme-split sub-segments"
+        )
+        if (
+            unsplit_missing_pct > MAX_UNSPLIT_MISSING_PCT
+            or split_concentration_pct < MIN_SPLIT_CONCENTRATION_PCT
+        ):
+            print(
+                "ERROR: transliteration shortfall is not concentrated in "
+                "morpheme-split sub-segments — the column read may be wrong",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
     return books
 
 
@@ -563,6 +748,118 @@ def write_sql_files(books: dict[str, list[dict]], output_dir: Path) -> None:
     print(f"\nTotal: {total_rows} rows across {len(books)} books")
 
 
+def write_translit_staging_sql(books: dict[str, list[dict]], output_dir: Path) -> None:
+    """Emit the chunked OT transliteration staging SQL (Task 3 / design C4),
+    ONE self-contained file per OT book (Phase-2 review fix — cloudflare-
+    platform-expert flagged the original single-file-per-testament shape as
+    a D1 timeout risk: `wrangler d1 execute --file` caps an entire batch call
+    at 30s, and this wrangler has no `d1 import`, so one file carrying all 39
+    books' INSERTs + UPDATEs shared one 30s budget. Per-book granularity
+    mirrors the existing primary OT seed (morphology-ot-<book>.sql, 39
+    files), which already ships this corpus per-book via `execute --file` in
+    seed-d1.sh today.
+
+    Each file is fully self-contained — its own head-drop, CREATE TABLE,
+    chunked INSERTs for ONLY that book's rows, that book's correlated
+    UPDATE, and its own tail-drop — so a file can be applied in isolation.
+    write_sql_files's primary per-book seed output is untouched. Excludes
+    any (book, chapter, verse, word_position, text) key with 2+ raw rows
+    (AC-10 — never propagate a transliteration across a colliding pair;
+    measured against the real corpus this is exactly the 2 known keys,
+    1_samuel 16:14:6 and deuteronomy 7:8:5, both 'וּ'). Gitignored (decision
+    0005) — exists only in the worktree/runner, never committed.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for old_file in output_dir.glob("morphology-translit-ot-*.sql"):
+        old_file.unlink()
+
+    collision_keys = _detect_ot_collision_keys(books)
+
+    if collision_keys:
+        print(f"  Translit staging: {len(collision_keys)} OT collision key(s) detected and excluded:")
+        for book_name, chapter, verse, word_position, text in sorted(collision_keys):
+            print(f"    {book_name} {chapter}:{verse}:{word_position} {text!r}")
+
+    total_included = 0
+    total_excluded = 0
+    total_insert_statements = 0
+    books_written: list[str] = []
+
+    for book_name, words in sorted(books.items()):
+        row_sql: list[str] = []
+        for w in words:
+            if not w.get("transliteration"):
+                continue
+            key = (book_name, w["chapter"], w["verse"], w["word_position"], w["text"])
+            if key in collision_keys:
+                total_excluded += 1
+                continue
+            row_sql.append(
+                "  ({}, {}, {}, {}, {}, {})".format(
+                    sql_escape(book_name),
+                    w["chapter"],
+                    w["verse"],
+                    w["word_position"],
+                    sql_escape(w["text"]),
+                    sql_escape(w["transliteration"]),
+                )
+            )
+            total_included += 1
+
+        if not row_sql:
+            continue
+
+        insert_statements = _pack_staging_insert_statements(
+            "translit_staging",
+            "book, chapter, verse, word_position, text, transliteration",
+            row_sql,
+        )
+        update_statement = _translit_update_statement(
+            book_name, testament="ot", include_text=True
+        )
+
+        filename = f"morphology-translit-ot-{book_name.replace('_', '-')}.sql"
+        filepath = output_dir / filename
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(
+                f"-- OT transliteration staging (Macula Hebrew) — {book_name} — "
+                "generated in-runner, never committed (decision 0005)\n"
+            )
+            f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+            f.write(
+                "CREATE TABLE translit_staging (\n"
+                "  book TEXT NOT NULL,\n"
+                "  chapter INTEGER NOT NULL,\n"
+                "  verse INTEGER NOT NULL,\n"
+                "  word_position INTEGER NOT NULL,\n"
+                "  text TEXT NOT NULL,\n"
+                "  transliteration TEXT NOT NULL,\n"
+                "  UNIQUE(book, chapter, verse, word_position, text)\n"
+                ");\n\n"
+            )
+            for stmt in insert_statements:
+                f.write(stmt)
+                f.write("\n")
+            f.write(update_statement)
+            f.write("\n")
+            f.write("DROP TABLE translit_staging;\n")
+
+        total_insert_statements += len(insert_statements)
+        books_written.append(book_name)
+
+    _update_counts_sidecar(
+        output_dir / "morphology-translit-counts.json", "ot", total_included
+    )
+    print(
+        f"  Translit staging: {total_included:,} OT rows across "
+        f"{len(books_written)} per-book file(s) "
+        f"({total_excluded} excluded by collision key), "
+        f"{total_insert_statements} INSERT statement(s) total, "
+        f"1 UPDATE per book"
+    )
+
+
 def verify_genesis(books: dict[str, list[dict]]) -> None:
     """Spot-check Genesis 1:1 data quality."""
     print("\nVerification — Genesis 1:1:")
@@ -605,7 +902,25 @@ def verify_genesis(books: dict[str, list[dict]]) -> None:
         print(f"  Normalized check: {w['text']!r} → {w['normalized']!r} [{status}]")
 
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Macula Hebrew OT ETL")
+    parser.add_argument(
+        "--emit",
+        choices=("all", "translit-staging"),
+        default="all",
+        help=(
+            "'all' (default) regenerates the 39 morphology-ot-*.sql per-book "
+            "files — unchanged from today's behavior. 'translit-staging' "
+            "emits ONLY the chunked morphology-translit-ot-*.sql staging "
+            "SQL, without touching the primary per-book seed files."
+        ),
+    )
+    return parser.parse_args(argv)
+
+
 def main():
+    args = parse_args()
+
     script_dir = Path(__file__).parent
     server_dir = script_dir.parent
     cache_dir = server_dir / ".cache"
@@ -626,8 +941,12 @@ def main():
     verify_genesis(books)
 
     # Step 4: Write SQL
-    print(f"\nWriting SQL seed files to {output_dir}...")
-    write_sql_files(books, output_dir)
+    if args.emit == "translit-staging":
+        print(f"\nWriting translit staging SQL only to {output_dir} (--emit translit-staging)...")
+        write_translit_staging_sql(books, output_dir)
+    else:
+        print(f"\nWriting SQL seed files to {output_dir}...")
+        write_sql_files(books, output_dir)
 
     print("\nDone.")
 

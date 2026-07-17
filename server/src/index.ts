@@ -115,17 +115,19 @@ Args:
   - range (string, required): Verse range as "chapter:verse-chapter:verse" (e.g., "1:1-1:11") or single verse "1:6"
   - testament (string, optional): "nt" or "ot" — auto-detected from book if omitted
   - pos_filter (string, optional): Filter by part of speech (e.g., "verb", "noun", "adjective", "preposition", "conjunction")
-  - word_filter (string, optional): Filter by exact word form — matches against surface text, normalized form, or lemma
+  - word_filter (string, optional): Filter by exact word form — matches against surface text, normalized form, or lemma in the ORIGINAL script (Greek/Hebrew) only. Transliteration (text_translit) is output-only and is not a valid filter input.
   - fields (string, optional): Level of detail — each level includes all fields from previous levels:
-    - "basic" (default): text, normalized, lemma, pos, parsing
-    - "syntax": + clause_id, clause_type, strongs
+    - "basic" (default): text, normalized, lemma, pos, parsing, text_translit
+    - "syntax": + clause_id, clause_type, strongs, lemma_translit
     - "full": + gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain
-    - "lexical": compact word-study set (text, lemma, strongs, gloss only)
+    - "lexical": compact word-study set (text, lemma, strongs, gloss, louw_nida, text_translit, lemma_translit only)
   - strongs_filter (string, optional): Filter words by Strong's number (e.g., "H7225a" for OT, "G2316" for NT). Requires range.
 
 Returns: { book, range, testament, words: [{verse, position, text, normalized, lemma, pos, parsing, ...enrichment fields}], summary: {total_words, by_pos} }
 
 Note: OT enrichment fields (gloss, strongs, clause_type, semantic_frame, subject_ref, participant_ref) are populated from Macula Hebrew data. NT enrichment fields (gloss, strongs, gloss_tbesg, louw_nida, louw_nida_domain) are populated from OpenGNT data. Null-only enrichment fields are omitted from the response.
+
+Note: the added transliteration fields count against the response's character budget. A "fields=basic" call now returns roughly 10–12% fewer words than before this change, because the response is truncated once it exceeds the size limit. Narrow "range" or use "fields=lexical" to mitigate.
 
 Examples:
   - Basic morphology: book="John", range="1:1-1:5"

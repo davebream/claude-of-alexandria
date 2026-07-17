@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- SBL transliteration alongside original-script Greek and Hebrew: `query_morphology` now returns `text_translit` (basic tier and up) and `lemma_translit` (syntax tier and up); the vocabulary, theme, and discourse tools return parallel transliterated forms as well, so word-length responses no longer require original-script literacy to read.
 - New `passage-glossary` skill — produces a passage plus a deduplicated, MCP-grounded lemma glossary (a graded-reader study artifact).
 - Controversy metadata layer: `query_controversies` MCP tool for looking up academically contested biblical topics (historicity, dating, authorship) by topic name or passage reference — returns a contentiousness rating plus balanced both-sides scholarly positions with sources. Backed by new `controversy_topics` and `controversy_passages` D1 tables seeded with 7 curated, scholarship-verified topics (Exodus dating, Daniel, Pentateuch authorship, Deutero-Isaiah, Conquest models, United Monarchy, Patriarchal narratives). A `chapter_contested` discovery flag on `query_events` surfaces controversy awareness during narrative event queries. Both-sides controversy wiring added to `consult-biblical-scholar` and `exegetical-notes` skills.
 - `confessional_lookup` MCP tool with 4 query modes, backed by a new D1 schema and ETL for confessional documents (Creeds.json). The reference MCP server now exposes 23 tools.

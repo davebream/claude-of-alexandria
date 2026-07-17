@@ -15,15 +15,20 @@ export const DiscourseInputSchema = {
 
 export type DiscourseInput = z.output<z.ZodObject<typeof DiscourseInputSchema>>;
 
+export const DiscourseFeatureRow = z.object({
+  chapter: z.number(),
+  verse: z.number(),
+  word: z.string().nullable(),
+  feature_description: z.string().nullable(),
+  // SBL transliteration sibling — present-and-null when unpopulated, never
+  // omitted (AC-10).
+  word_translit: z.string().nullable().optional(),
+});
+
 export const DiscourseOutputSchema = {
   book: z.string(),
   chapter_range: z.string(),
-  features: z.record(z.string(), z.array(z.object({
-    chapter: z.number(),
-    verse: z.number(),
-    word: z.string().nullable(),
-    feature_description: z.string().nullable(),
-  }))),
+  features: z.record(z.string(), z.array(DiscourseFeatureRow)),
   summary: z.record(z.string(), z.number()),
   available_features: z.array(z.string()),
   word_level_boundaries: z.array(z.object({
@@ -74,22 +79,25 @@ export async function queryDiscourseFeatures(args: DiscourseInput): Promise<Call
 
   const requestedFeatures = args.features ?? DEFAULT_FEATURES;
 
-  let sql = 'SELECT chapter, verse, feature, feature_description, word FROM discourse_features WHERE book = ?';
-  const params: unknown[] = [bookInfo.canonical];
+  // WHERE clause built once and reused for both the primary rows query and the
+  // lexicon transliteration lookup below — same filters, so the lexicon lookup
+  // sees exactly the same word set the primary query already selected.
+  let whereClause = 'book = ?';
+  const whereParams: unknown[] = [bookInfo.canonical];
 
   if ('min' in rangeResult && rangeResult.min !== undefined) {
-    sql += ' AND chapter >= ? AND chapter <= ?';
-    params.push(rangeResult.min, rangeResult.max);
+    whereClause += ' AND chapter >= ? AND chapter <= ?';
+    whereParams.push(rangeResult.min, rangeResult.max);
   }
 
   if (requestedFeatures.length > 0) {
-    sql += ` AND feature IN (${requestedFeatures.map(() => '?').join(',')})`;
-    params.push(...requestedFeatures);
+    whereClause += ` AND feature IN (${requestedFeatures.map(() => '?').join(',')})`;
+    whereParams.push(...requestedFeatures);
   }
 
-  sql += ' ORDER BY chapter, verse LIMIT 5000';
+  const sql = `SELECT chapter, verse, feature, feature_description, word FROM discourse_features WHERE ${whereClause} ORDER BY chapter, verse LIMIT 5000`;
 
-  const rows = await query(sql, params);
+  const rows = await query(sql, whereParams);
 
   const allFeaturesRows = await query(
     'SELECT DISTINCT feature FROM discourse_features WHERE book = ? ORDER BY feature',
@@ -97,17 +105,49 @@ export async function queryDiscourseFeatures(args: DiscourseInput): Promise<Call
   );
   const availableFeatures = allFeaturesRows.map(r => r.feature as string);
 
-  const features: Record<string, { chapter: number; verse: number; word: string | null; feature_description: string | null }[]> = {};
+  // word_translit — word → lexicon_lsj.original_word_nfc → transliteration,
+  // deterministic lowest-strongs_id tie-break (original_word_nfc is NOT unique).
+  // discourse_features has no distinct-word cap and LIMIT 5000 rows can carry
+  // far more than ~100 distinct words, so the IN (…) operand reproduces the
+  // SAME WHERE filter as the primary query (as a DISTINCT word subquery)
+  // instead of a literal list — one bounded statement, fixed bind count,
+  // never one lookup per row (AC-12). Wrapped so a lexicon failure degrades
+  // every row to word_translit: null rather than failing the whole call.
+  let wordTranslitMap: Record<string, string | null> = {};
+  if (rows.length > 0) {
+    try {
+      const translitRows = await query(
+        `SELECT original_word_nfc, transliteration FROM (
+           SELECT original_word_nfc, transliteration,
+                  ROW_NUMBER() OVER (PARTITION BY original_word_nfc ORDER BY strongs_id) AS rn
+           FROM lexicon_lsj
+           WHERE original_word_nfc IN (
+             SELECT DISTINCT word FROM discourse_features WHERE ${whereClause}
+           )
+         ) WHERE rn = 1`,
+        whereParams
+      );
+      for (const row of translitRows) {
+        wordTranslitMap[row.original_word_nfc as string] = row.transliteration as string | null;
+      }
+    } catch {
+      wordTranslitMap = {};
+    }
+  }
+
+  const features: Record<string, { chapter: number; verse: number; word: string | null; feature_description: string | null; word_translit: string | null }[]> = {};
   const summary: Record<string, number> = {};
 
   for (const row of rows) {
     const feature = row.feature as string;
     if (!features[feature]) features[feature] = [];
+    const word = row.word as string | null;
     features[feature].push({
       chapter: row.chapter as number,
       verse: row.verse as number,
-      word: row.word as string | null,
+      word,
       feature_description: row.feature_description as string | null,
+      word_translit: (word !== null ? wordTranslitMap[word] : undefined) ?? null,
     });
     summary[feature] = (summary[feature] ?? 0) + 1;
   }

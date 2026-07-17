@@ -112,6 +112,25 @@ jobs:
         if: steps.filter.outputs.server == 'true' || github.event_name == 'push'
         run: cd server && npm test
 
+  python-etl-tests:
+    name: Python ETL Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Run translit generator structural tests
+        # Structural suite only — fixture-driven, no network, no
+        # server/.cache/, no server/d1-seed/. The corpus-scale suite
+        # (--corpus) needs the ~101MB upstream download and is run locally
+        # (Task 15) and in-runner (Task 16), never in CI.
+        run: python3 server/scripts/test_translit_generator.py -v
+
   audit:
     name: Dependency Audit
     runs-on: ubuntu-latest

@@ -16,21 +16,28 @@ export type VocabularyInput = z.output<z.ZodObject<typeof VocabularyInputSchema>
 
 const CHARACTER_LIMIT = 25_000;
 
-const LemmaEntry = z.object({
+export const LemmaEntry = z.object({
   lemma: z.string(),
   total: z.number(),
   by_chapter: z.record(z.string(), z.number()),
+  // SBL transliteration sibling — present-and-null when unpopulated, never
+  // omitted (AC-10). Always null for OT/Hebrew lemmas: lexicon_lsj is
+  // Greek-only, so the join simply finds no match — no special-casing needed.
+  lemma_translit: z.string().nullable().optional(),
+});
+
+export const ClusterEntry = z.object({
+  lemma: z.string(),
+  concentration: z.number(),
+  chapter_range: z.string(),
+  total_occurrences: z.number(),
+  lemma_translit: z.string().nullable().optional(),
 });
 
 const ClusteringSchema = z.object({
   has_clustering: z.boolean(),
   notable_count: z.number(),
-  clusters: z.array(z.object({
-    lemma: z.string(),
-    concentration: z.number(),
-    chapter_range: z.string(),
-    total_occurrences: z.number(),
-  })),
+  clusters: z.array(ClusterEntry),
 }).nullable();
 
 export const VocabularyOutputSchema = {
@@ -50,6 +57,45 @@ export const VocabularyOutputSchema = {
   truncated: z.boolean().optional(),
   truncation_message: z.string().optional(),
 };
+
+// ─── Lexicon transliteration lookup ───────────────────────────────────────────
+// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
+// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
+// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration 0011).
+//
+// D1 limits SQL variables to ~100 per statement (same warning as the by-chapter
+// lookup above), and up to MAX_VOCABULARY_LIMIT = 500 lemmas can be in play, so a
+// literal IN (?,?,?...) is not an option here. Instead the IN operand is a
+// subquery — reproducing whatever set of lemma names the caller already selected
+// — so the bind count stays fixed regardless of how many lemmas that set contains.
+//
+// Wrapped so a lexicon failure degrades every entry to lemma_translit: null
+// rather than failing the whole call — the primary vocabulary data already
+// succeeded.
+async function lookupTranslitViaSubquery(
+  lemmaSelectSql: string,
+  lemmaSelectParams: unknown[]
+): Promise<Record<string, string | null>> {
+  try {
+    const rows = await query(
+      `SELECT original_word_nfc, transliteration FROM (
+         SELECT original_word_nfc, transliteration,
+                ROW_NUMBER() OVER (PARTITION BY original_word_nfc ORDER BY strongs_id) AS rn
+         FROM lexicon_lsj
+         WHERE original_word_nfc IN (${lemmaSelectSql})
+       ) WHERE rn = 1`,
+      lemmaSelectParams
+    );
+
+    const map: Record<string, string | null> = {};
+    for (const row of rows) {
+      map[row.original_word_nfc as string] = row.transliteration as string | null;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
 
 export async function queryVocabulary(args: VocabularyInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -127,6 +173,30 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
 
   const lemmaRows = await query(sql, params);
 
+  // Ranked-lemma-name subquery — the same set the outer lemmaRows query already
+  // selected, minus the totals. Used as the IN (…) operand for the lexicon
+  // transliteration lookup further down, so that lookup stays at a fixed bind
+  // count regardless of result size. (The by-chapter lookup below inlines its
+  // own copy of this ranking subquery rather than referencing this one.)
+  const rankedLemmaNamesSql = theme
+    ? `SELECT lemma FROM (
+         SELECT v2.lemma, SUM(v2.frequency) as total
+         FROM vocabulary v2
+         JOIN thematic_keywords tk2 ON tk2.lemma = v2.lemma AND tk2.testament = v2.testament
+         WHERE v2.book = ? AND v2.testament = ? AND tk2.theme = ?
+         GROUP BY v2.lemma
+       ) WHERE total >= ?
+       ORDER BY total DESC LIMIT ?`
+    : `SELECT lemma FROM (
+         SELECT lemma, SUM(frequency) as total FROM vocabulary
+         WHERE book = ? AND testament = ?
+         GROUP BY lemma
+       ) WHERE total >= ?
+       ORDER BY total DESC LIMIT ?`;
+  const rankedLemmaNamesParams = theme
+    ? [canonical, testament, theme, minFrequency, limit]
+    : [canonical, testament, minFrequency, limit];
+
   // D1 limits SQL variables to ~100 per statement, so we cannot use IN (?,?,?...) for
   // large lemma lists. Instead, reproduce the ranking subquery inline so the by-chapter
   // lookup uses only a fixed number of bound parameters regardless of result size.
@@ -176,10 +246,17 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
     byChapterMap[lemma][chapter] = row.frequency as number;
   }
 
+  // lemma_translit — one bounded lexicon statement covering exactly the ranked
+  // lemma set already selected above (AC-10 present-and-null; AC-12 bounded).
+  const lemmaTranslitMap = lemmaRows.length > 0
+    ? await lookupTranslitViaSubquery(rankedLemmaNamesSql, rankedLemmaNamesParams)
+    : {};
+
   const lemmaList = lemmaRows.map(r => ({
     lemma: r.lemma as string,
     total: r.total as number,
     by_chapter: byChapterMap[r.lemma as string] ?? {},
+    lemma_translit: lemmaTranslitMap[r.lemma as string] ?? null,
   }));
 
   let clustering = null;
@@ -188,6 +265,14 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
       'SELECT lemma, concentration, chapter_start, chapter_end, total_occurrences FROM vocabulary_clusters WHERE book = ? AND testament = ? ORDER BY concentration DESC',
       [canonical, testament]
     );
+    // lemma_translit — a second bounded lexicon statement, scoped to cluster
+    // lemmas (a different set from the ranked lemma list above; may not overlap).
+    const clusterTranslitMap = clusterRows.length > 0
+      ? await lookupTranslitViaSubquery(
+          'SELECT lemma FROM vocabulary_clusters WHERE book = ? AND testament = ?',
+          [canonical, testament]
+        )
+      : {};
     clustering = {
       has_clustering: clusterRows.length > 0,
       notable_count: clusterRows.length,
@@ -196,6 +281,7 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
         concentration: r.concentration as number,
         chapter_range: `${r.chapter_start}-${r.chapter_end}`,
         total_occurrences: r.total_occurrences as number,
+        lemma_translit: clusterTranslitMap[r.lemma as string] ?? null,
       })),
     };
   }

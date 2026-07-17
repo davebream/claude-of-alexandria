@@ -22,6 +22,8 @@ Sources:
     CrossWire Bible Society / Robinson RMAC (CC BY-SA 3.0)
 """
 
+import argparse
+import hashlib
 import io
 import json
 import os
@@ -32,7 +34,14 @@ import zipfile
 from pathlib import Path
 
 # ─── Source URLs ──────────────────────────────────────────────────────────────
-GITHUB_RAW = "https://raw.githubusercontent.com/eliranwong/OpenGNT/master"
+# Pinned to an immutable commit SHA (not `master`) so a downstream backfill run
+# is reproducible and cannot silently pick up upstream edits.
+# Pinned 2026-07-17. To re-pin: `git ls-remote https://github.com/eliranwong/OpenGNT master`,
+# take the new SHA, update COMMIT_SHA below, then recompute EXPECTED_SHA256_* by
+# downloading each of the three artifacts from the new pinned URL and hashing them
+# (`shasum -a 256 <file>`), mirroring extract-macula-hebrew.py's COMMIT_SHA/LFS_OID pin.
+COMMIT_SHA = "0029589cccd50bd48b1941aa041a956de6c29ac4"
+GITHUB_RAW = f"https://raw.githubusercontent.com/eliranwong/OpenGNT/{COMMIT_SHA}"
 BASE_TEXT_URL = f"{GITHUB_RAW}/OpenGNT_BASE_TEXT.zip"
 KEYED_FEATURES_URL = f"{GITHUB_RAW}/OpenGNT_keyedFeatures.csv.zip"
 OPENTEXT_URL = (
@@ -40,8 +49,21 @@ OPENTEXT_URL = (
     "OpenText_v1_formatted_in_HTML.csv.zip"
 )
 
+# Expected SHA-256 of each downloaded artifact at COMMIT_SHA, computed once when
+# the pin above was set. Verified on both the fresh-download and cache-hit paths
+# in download_file() — mirrors extract-macula-hebrew.py's EXPECTED_SHA256 check.
+EXPECTED_SHA256_BASE_TEXT = "7d8377bad8d8c836272ca67a646024a303e524434345c61ee288b82d13f8e712"
+EXPECTED_SHA256_FEATURES_CSV = "323d20c53e482ffe3861190fa7cd9ecdb866d6ed354f3e395d1fa88de4868d51"
+EXPECTED_SHA256_OPENTEXT = "da3acbfb8ee640c8924a92983fbeda7008f3cc167437d61546e669ad1bfc8988"
+
 BATCH_SIZE = 100        # rows per INSERT statement
 ROWS_PER_FILE = 5000    # rows per SQL seed file
+
+# D1's hard per-statement SQL length limit. The staging-SQL generator (Task 3 /
+# design C4) chunks INSERTs by measured encoded byte length against this
+# ceiling — never by a fixed row count — and refuses to emit anything at or
+# above it.
+STAGING_STMT_MAX_BYTES = 100_000
 
 # ─── NT book mapping (OGNT codes 40-66 → canonical names) ────────────────────
 NT_BOOK_MAP = {
@@ -175,6 +197,100 @@ def sql_escape(val) -> str:
     return f"'{escaped}'"
 
 
+# ─── Translit staging SQL helpers (Task 3 / design C4) ────────────────────────
+# Shared by extract-opengnt.py (NT) and extract-macula-hebrew.py (OT) — each
+# script owns its own copy (this codebase has no shared module between the
+# two ETL scripts), kept intentionally identical so a diff between them is
+# the review surface for behavioral drift.
+
+def _pack_staging_insert_statements(table: str, col_list: str, row_sql: list[str]) -> list[str]:
+    """Pack pre-formatted VALUES rows into 'INSERT INTO table (...) VALUES ...;'
+    statements, splitting on measured ENCODED byte length so every statement
+    stays strictly under STAGING_STMT_MAX_BYTES — never a row-count heuristic."""
+    prefix = f"INSERT INTO {table} ({col_list}) VALUES\n"
+
+    def build(rows: list[str]) -> str:
+        return prefix + ",\n".join(rows) + ";\n"
+
+    statements: list[str] = []
+    current: list[str] = []
+
+    for row in row_sql:
+        candidate = current + [row]
+        if current and len(build(candidate).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            statements.append(build(current))
+            current = [row]
+        else:
+            current = candidate
+
+        if len(build([row]).encode("utf-8")) >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: a single staging row for {table} exceeds the "
+                f"{STAGING_STMT_MAX_BYTES}-byte D1 statement limit on its own",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    if current:
+        statements.append(build(current))
+
+    for stmt in statements:
+        size = len(stmt.encode("utf-8"))
+        if size >= STAGING_STMT_MAX_BYTES:
+            print(
+                f"ERROR: generated {table} INSERT statement is {size} bytes, "
+                f">= the {STAGING_STMT_MAX_BYTES}-byte D1 limit",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return statements
+
+
+def _translit_update_statement(book: str, testament: str, include_text: bool) -> str:
+    """The correlated SELECT + EXISTS + testament UPDATE form from design C4.
+    NT keys on 4 parts; OT adds `text` to both the SELECT join and the EXISTS
+    guard. Never substitute UPDATE...FROM (D1 blocks sqlite_version(), so
+    SQLite >= 3.33 support is unconfirmed) and never drop the EXISTS guard
+    (it is what makes re-runs non-destructive — prevents a NULL-wipe)."""
+    select_text_predicate = "\n    AND s.text = morphology.text" if include_text else ""
+    exists_text_predicate = "\n      AND s.text = morphology.text" if include_text else ""
+    return (
+        "UPDATE morphology\n"
+        "SET transliteration = (\n"
+        "  SELECT s.transliteration FROM translit_staging s\n"
+        "  WHERE s.book = morphology.book\n"
+        "    AND s.chapter = morphology.chapter\n"
+        "    AND s.verse = morphology.verse\n"
+        "    AND s.word_position = morphology.word_position"
+        f"{select_text_predicate}\n"
+        ")\n"
+        f"WHERE morphology.book = {sql_escape(book)}\n"
+        f"  AND morphology.testament = '{testament}'\n"
+        "  AND EXISTS (\n"
+        "    SELECT 1 FROM translit_staging s\n"
+        "    WHERE s.book = morphology.book\n"
+        "      AND s.chapter = morphology.chapter\n"
+        "      AND s.verse = morphology.verse\n"
+        "      AND s.word_position = morphology.word_position"
+        f"{exists_text_predicate}\n"
+        "  );\n"
+    )
+
+
+def _update_counts_sidecar(path: Path, key: str, count: int) -> None:
+    """Merge {key: count} into the shared counts sidecar without clobbering
+    the other testament's entry — both ETL scripts write to this one file."""
+    counts = {}
+    if path.exists():
+        try:
+            counts = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            counts = {}
+    counts[key] = count
+    path.write_text(json.dumps(counts, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
 def get_rmac_pos(rmac: str) -> str:
     """Map RMAC code to human-readable POS string."""
     if not rmac:
@@ -225,14 +341,24 @@ def enrich_louw_nida(ln_raw: str) -> tuple:
 
 # ─── Download Functions ───────────────────────────────────────────────────────
 
-def download_file(url: str, dest: Path) -> Path:
-    """Download a file from URL if not already cached."""
+def download_file(url: str, dest: Path, expected_sha256: str) -> Path:
+    """Download a file from URL, verifying SHA-256 on both the cache-hit and
+    fresh-download paths. Mirrors extract-macula-hebrew.py's download_tsv()."""
     if dest.exists():
-        print(f"  Cached: {dest.name}")
-        return dest
+        print(f"  Checking existing file: {dest.name}")
+        sha256 = hashlib.sha256()
+        with open(dest, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                sha256.update(chunk)
+        if sha256.hexdigest() == expected_sha256:
+            print(f"  Checksum matches — skipping download.")
+            return dest
+        else:
+            print(f"  Checksum mismatch — re-downloading.")
 
     print(f"  Downloading: {url.split('/')[-1]}...")
     req = urllib.request.Request(url, headers={"User-Agent": "claude-of-alexandria-etl/1.0"})
+    sha256 = hashlib.sha256()
     with urllib.request.urlopen(req) as resp, open(dest, "wb") as out:
         total = 0
         while True:
@@ -240,8 +366,17 @@ def download_file(url: str, dest: Path) -> Path:
             if not chunk:
                 break
             out.write(chunk)
+            sha256.update(chunk)
             total += len(chunk)
-    print(f"    Downloaded {total / 1024:.0f} KB")
+
+    if sha256.hexdigest() != expected_sha256:
+        dest.unlink()
+        print(f"ERROR: SHA-256 mismatch for {dest.name}!", file=sys.stderr)
+        print(f"  Expected: {expected_sha256}", file=sys.stderr)
+        print(f"  Got:      {sha256.hexdigest()}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"    Downloaded {total / 1024:.0f} KB, checksum verified.")
     return dest
 
 
@@ -355,6 +490,13 @@ def parse_base_text(content: str) -> list[dict]:
                 else:
                     ln_raw = ln_field
 
+        # Col 9: 〔transSBLcap｜transSBL｜transSBLcapNoPunc｜transSBLNoPunc〕 — SBL romanization
+        translit = None
+        if len(cols) > 9:
+            col9 = split_subfields(cols[9])
+            if col9 and col9[0]:
+                translit = col9[0]  # transSBLcap — capitalization-preserving
+
         # Col 10: 〔TBESG｜IT｜LT｜ST｜Español〕 — fallback for TBESG gloss
         tbesg_base = ""
         if len(cols) > 10:
@@ -399,6 +541,7 @@ def parse_base_text(content: str) -> list[dict]:
             "normalized": ogntu,     # unaccented form
             "lemma": lexeme,
             "strongs": sn,
+            "transliteration": translit,
             "rmac": rmac,
             "pos": pos,
             "ln_raw": ln_raw,
@@ -790,6 +933,7 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
     file_num = 0
     total_rows = 0
     strongs_missing = 0
+    translit_missing = 0
 
     for file_start in range(0, len(words), ROWS_PER_FILE):
         file_num += 1
@@ -814,6 +958,9 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
                     strongs = w.get("strongs")
                     if not strongs:
                         strongs_missing += 1
+
+                    if not w.get("transliteration"):
+                        translit_missing += 1
 
                     vals = (
                         sql_escape(w["book"]),
@@ -847,6 +994,123 @@ def write_morphology_sql(words: list[dict], output_dir: Path) -> None:
     if strongs_missing > 0:
         print(f"  WARNING: {strongs_missing} words missing Strong's numbers")
     print(f"  Morphology: {total_rows} rows across {file_num} files")
+
+    translit_covered = total_rows - translit_missing
+    translit_pct = (translit_covered * 100.0 / total_rows) if total_rows else 0.0
+    print(
+        f"  Transliteration: {translit_covered:,} / {total_rows:,} "
+        f"({translit_pct:.2f}%)"
+    )
+    if translit_missing > 0:
+        print(f"  ERROR: {translit_missing} NT words missing transliteration (expected 100% coverage)", file=sys.stderr)
+        print("  ERROR: seed files were written but are INVALID — do not load them", file=sys.stderr)
+        sys.exit(1)
+
+
+def write_translit_staging_sql(words: list[dict], output_dir: Path) -> None:
+    """Emit the chunked NT transliteration staging SQL (Task 3 / design C4),
+    ONE self-contained file per NT book (Phase-2 review fix — cloudflare-
+    platform-expert flagged the original single-file-per-testament shape as
+    a D1 timeout risk: `wrangler d1 execute --file` caps an entire batch call
+    at 30s, and this wrangler has no `d1 import`, so one file carrying all 27
+    books' INSERTs + UPDATEs shared one 30s budget. Per-book granularity
+    mirrors the existing primary OT seed (morphology-ot-<book>.sql, 39
+    files), which already ships this corpus per-book via `execute --file` in
+    seed-d1.sh today.
+
+    Each file is fully self-contained — its own head-drop, CREATE TABLE,
+    chunked INSERTs for ONLY that book's rows, that book's correlated
+    UPDATE, and its own tail-drop — so a file can be applied in isolation.
+    write_morphology_sql's primary 28-chunk seed output is untouched.
+    Gitignored (decision 0005) — exists only in the worktree/runner, never
+    committed.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for old_file in output_dir.glob("morphology-translit-nt-*.sql"):
+        old_file.unlink()
+
+    missing = sum(1 for w in words if not w.get("transliteration"))
+    if missing > 0:
+        print(
+            f"ERROR: {missing} NT words missing transliteration — refusing "
+            "to emit staging SQL (expected 100% coverage)",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    ordered = sorted(
+        words,
+        key=lambda w: (w["book_code"], w["chapter"], w["verse"], w["word_position"]),
+    )
+
+    by_book: dict[str, list[dict]] = {}
+    book_order: list[str] = []
+    for w in ordered:
+        if w["book"] not in by_book:
+            by_book[w["book"]] = []
+            book_order.append(w["book"])
+        by_book[w["book"]].append(w)
+
+    total_insert_statements = 0
+    for book in book_order:
+        book_words = by_book[book]
+        row_sql = [
+            "  ({}, {}, {}, {}, {})".format(
+                sql_escape(w["book"]),
+                w["chapter"],
+                w["verse"],
+                w["word_position"],
+                sql_escape(w["transliteration"]),
+            )
+            for w in book_words
+        ]
+
+        insert_statements = _pack_staging_insert_statements(
+            "translit_staging",
+            "book, chapter, verse, word_position, transliteration",
+            row_sql,
+        )
+        update_statement = _translit_update_statement(
+            book, testament="nt", include_text=False
+        )
+
+        filename = f"morphology-translit-nt-{book.replace('_', '-')}.sql"
+        filepath = output_dir / filename
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(
+                f"-- NT transliteration staging (OpenGNT transSBLcap) — {book} — "
+                "generated in-runner, never committed (decision 0005)\n"
+            )
+            f.write("DROP TABLE IF EXISTS translit_staging;\n\n")
+            f.write(
+                "CREATE TABLE translit_staging (\n"
+                "  book TEXT NOT NULL,\n"
+                "  chapter INTEGER NOT NULL,\n"
+                "  verse INTEGER NOT NULL,\n"
+                "  word_position INTEGER NOT NULL,\n"
+                "  transliteration TEXT NOT NULL,\n"
+                "  UNIQUE(book, chapter, verse, word_position)\n"
+                ");\n\n"
+            )
+            for stmt in insert_statements:
+                f.write(stmt)
+                f.write("\n")
+            f.write(update_statement)
+            f.write("\n")
+            f.write("DROP TABLE translit_staging;\n")
+
+        total_insert_statements += len(insert_statements)
+
+    _update_counts_sidecar(
+        output_dir / "morphology-translit-counts.json", "nt", len(ordered)
+    )
+    print(
+        f"  Translit staging: {len(ordered):,} NT rows across "
+        f"{len(book_order)} per-book file(s), "
+        f"{total_insert_statements} INSERT statement(s) total, "
+        f"1 UPDATE per book"
+    )
 
 
 def write_variants_sql(variants: list[dict], output_dir: Path) -> None:
@@ -1217,7 +1481,26 @@ def print_summary(words, variants, boundaries) -> None:
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="OpenGNT NT ETL")
+    parser.add_argument(
+        "--emit",
+        choices=("all", "translit-staging"),
+        default="all",
+        help=(
+            "'all' (default) regenerates the 28 morphology-nt-*.sql chunks "
+            "plus variants/discourse-boundaries/syntax output — unchanged "
+            "from today's behavior. 'translit-staging' emits ONLY the "
+            "chunked morphology-translit-nt-*.sql staging SQL, without "
+            "touching the primary seed chunks."
+        ),
+    )
+    return parser.parse_args(argv)
+
+
 def main():
+    args = parse_args()
+
     script_dir = Path(__file__).parent
     server_dir = script_dir.parent
     cache_dir = server_dir / ".cache"
@@ -1229,12 +1512,22 @@ def main():
 
     # Step 1: Download source files
     print("Step 1: Downloading source files...")
-    base_zip = download_file(BASE_TEXT_URL, cache_dir / "OpenGNT_BASE_TEXT.zip")
-    feat_zip = download_file(KEYED_FEATURES_URL, cache_dir / "OpenGNT_keyedFeatures.csv.zip")
+    base_zip = download_file(
+        BASE_TEXT_URL, cache_dir / "OpenGNT_BASE_TEXT.zip", EXPECTED_SHA256_BASE_TEXT
+    )
+    feat_zip = download_file(
+        KEYED_FEATURES_URL,
+        cache_dir / "OpenGNT_keyedFeatures.csv.zip",
+        EXPECTED_SHA256_FEATURES_CSV,
+    )
 
     opentext_zip = None
     try:
-        opentext_zip = download_file(OPENTEXT_URL, cache_dir / "OpenGNT_OpenTextAnnotations.csv.zip")
+        opentext_zip = download_file(
+            OPENTEXT_URL,
+            cache_dir / "OpenGNT_OpenTextAnnotations.csv.zip",
+            EXPECTED_SHA256_OPENTEXT,
+        )
     except Exception as e:
         print(f"  WARNING: Could not download OpenText annotations: {e}")
         print("  Syntax annotations will be skipped")
@@ -1290,11 +1583,15 @@ def main():
         print("\nValidation PASS: all words have Strong's numbers")
 
     # Step 10: Write SQL seed files
-    print("\nStep 10: Writing SQL seed files...")
-    write_morphology_sql(words, output_dir)
-    write_variants_sql(variants, output_dir)
-    write_discourse_boundaries_sql(boundaries, output_dir)
-    write_syntax_sql(opentext_rows, output_dir)
+    if args.emit == "translit-staging":
+        print("\nStep 10: Writing translit staging SQL only (--emit translit-staging)...")
+        write_translit_staging_sql(words, output_dir)
+    else:
+        print("\nStep 10: Writing SQL seed files...")
+        write_morphology_sql(words, output_dir)
+        write_variants_sql(variants, output_dir)
+        write_discourse_boundaries_sql(boundaries, output_dir)
+        write_syntax_sql(opentext_rows, output_dir)
 
     print("\nDone.")
 

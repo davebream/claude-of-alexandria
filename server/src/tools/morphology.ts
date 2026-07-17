@@ -25,32 +25,38 @@ export const MorphologyInputSchema = {
 
 export type MorphologyInput = z.output<z.ZodObject<typeof MorphologyInputSchema>>;
 
+export const MorphologyWordEntry = z.object({
+  verse: z.string(),
+  position: z.number(),
+  text: z.string(),
+  normalized: z.string().nullable().optional(),
+  lemma: z.string().optional(),
+  pos: z.string().optional(),
+  parsing: z.record(z.string(), z.string()).nullable().optional(),
+  // Present when fields='syntax' or 'full' — omitted otherwise
+  clause_id: z.string().nullable().optional(),
+  clause_type: z.string().nullable().optional(),
+  strongs: z.string().nullable().optional(),
+  // Present when fields='full' — omitted otherwise
+  gloss: z.string().nullable().optional(),
+  semantic_frame: z.string().nullable().optional(),
+  subject_ref: z.string().nullable().optional(),
+  participant_ref: z.string().nullable().optional(),
+  // NT-specific (OpenGNT) — present when fields='full' for NT passages
+  gloss_tbesg: z.string().nullable().optional(),
+  louw_nida: z.string().nullable().optional(),
+  louw_nida_domain: z.string().nullable().optional(),
+  // SBL transliteration siblings — present-and-null when unpopulated, never omitted (AC-10).
+  // text_translit: all levels. lemma_translit: syntax/full/lexical only (absent at basic — no join).
+  text_translit: z.string().nullable().optional(),
+  lemma_translit: z.string().nullable().optional(),
+});
+
 export const MorphologyOutputSchema = {
   book: z.string(),
   range: z.string(),
   testament: z.string(),
-  words: z.array(z.object({
-    verse: z.string(),
-    position: z.number(),
-    text: z.string(),
-    normalized: z.string().nullable().optional(),
-    lemma: z.string().optional(),
-    pos: z.string().optional(),
-    parsing: z.record(z.string(), z.string()).nullable().optional(),
-    // Present when fields='syntax' or 'full' — omitted otherwise
-    clause_id: z.string().nullable().optional(),
-    clause_type: z.string().nullable().optional(),
-    strongs: z.string().nullable().optional(),
-    // Present when fields='full' — omitted otherwise
-    gloss: z.string().nullable().optional(),
-    semantic_frame: z.string().nullable().optional(),
-    subject_ref: z.string().nullable().optional(),
-    participant_ref: z.string().nullable().optional(),
-    // NT-specific (OpenGNT) — present when fields='full' for NT passages
-    gloss_tbesg: z.string().nullable().optional(),
-    louw_nida: z.string().nullable().optional(),
-    louw_nida_domain: z.string().nullable().optional(),
-  })),
+  words: z.array(MorphologyWordEntry),
   summary: z.object({
     total_words: z.number(),
     by_pos: z.record(z.string(), z.number()),
@@ -58,10 +64,18 @@ export const MorphologyOutputSchema = {
 };
 
 // ─── Column selection by fields level ─────────────────────────────────────────
-const BASIC_COLS = 'chapter, verse, word_position, text, normalized, lemma, pos, parsing';
-const SYNTAX_COLS = `${BASIC_COLS}, clause_id, clause_type, strongs`;
-const FULL_COLS = `${SYNTAX_COLS}, gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain`;
-const LEXICAL_COLS = 'chapter, verse, word_position, text, lemma, strongs, gloss, louw_nida';
+// All columns are qualified with `m.` — the table is aliased below because
+// lexicon_lsj (joined for lemma_translit) shares column names (transliteration,
+// gloss) with morphology, and an unqualified reference is ambiguous under the join.
+//
+// text_translit (m.transliteration) is basic-level — it needs no join, since it
+// lives on morphology itself. lemma_translit (lx.transliteration) derives from
+// strongs via lexicon_lsj, which is itself a syntax+ field, so it is only
+// selected — and only joined — at syntax/full/lexical.
+const BASIC_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.normalized, m.lemma, m.pos, m.parsing, m.transliteration AS text_translit';
+const SYNTAX_COLS = `${BASIC_COLS}, m.clause_id, m.clause_type, m.strongs, lx.transliteration AS lemma_translit`;
+const FULL_COLS = `${SYNTAX_COLS}, m.gloss, m.semantic_frame, m.subject_ref, m.participant_ref, m.gloss_tbesg, m.louw_nida, m.louw_nida_domain`;
+const LEXICAL_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.lemma, m.strongs, m.gloss, m.louw_nida, m.transliteration AS text_translit, lx.transliteration AS lemma_translit';
 
 function selectColumns(fields: string | undefined): string {
   switch (fields) {
@@ -70,6 +84,14 @@ function selectColumns(fields: string | undefined): string {
     case 'lexical': return LEXICAL_COLS;
     default: return BASIC_COLS;
   }
+}
+
+// lemma_translit requires the lexicon_lsj join at syntax/full/lexical.
+// NB: this predicate deliberately does NOT reuse `includesSyntax` further down
+// (fields === 'syntax' || fields === 'full') — that predicate excludes 'lexical',
+// and lemma_translit must reach 'lexical' too.
+function needsLexiconJoin(fields: string | undefined): boolean {
+  return fields === 'syntax' || fields === 'full' || fields === 'lexical';
 }
 
 const DEFAULT_MORPHOLOGY_LIMIT = 5000;
@@ -110,13 +132,17 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   const wordFilter = args.word_filter;
   const fields = args.fields;
   const columns = selectColumns(fields);
+  const lexiconJoin = needsLexiconJoin(fields)
+    ? 'LEFT JOIN lexicon_lsj lx ON m.strongs = lx.strongs_id'
+    : '';
 
   let sql = `
     SELECT ${columns}
-    FROM morphology
-    WHERE book = ? AND testament = ?
-    AND (chapter > ? OR (chapter = ? AND verse >= ?))
-    AND (chapter < ? OR (chapter = ? AND verse <= ?))
+    FROM morphology m
+    ${lexiconJoin}
+    WHERE m.book = ? AND m.testament = ?
+    AND (m.chapter > ? OR (m.chapter = ? AND m.verse >= ?))
+    AND (m.chapter < ? OR (m.chapter = ? AND m.verse <= ?))
   `;
   const params: unknown[] = [
     bookInfo.canonical, testament,
@@ -125,12 +151,12 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   ];
 
   if (posFilter) {
-    sql += ' AND pos = ?';
+    sql += ' AND m.pos = ?';
     params.push(posFilter);
   }
 
   if (wordFilter) {
-    sql += ' AND (text = ? OR normalized = ? OR lemma = ?)';
+    sql += ' AND (m.text = ? OR m.normalized = ? OR m.lemma = ?)';
     params.push(wordFilter, wordFilter, wordFilter);
   }
 
@@ -139,15 +165,15 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     const match = args.strongs_filter.match(/^([HG])0*(\d+)([a-z]?)$/);
     if (match) {
       const normalized = `${match[1]}${match[2].padStart(4, '0')}${match[3]}`;
-      sql += ' AND strongs = ?';
+      sql += ' AND m.strongs = ?';
       params.push(normalized);
     } else {
-      sql += ' AND strongs = ?';
+      sql += ' AND m.strongs = ?';
       params.push(args.strongs_filter);
     }
   }
 
-  sql += ' ORDER BY chapter, verse, word_position LIMIT ?';
+  sql += ' ORDER BY m.chapter, m.verse, m.word_position LIMIT ?';
   params.push(DEFAULT_MORPHOLOGY_LIMIT);
 
   const rows = await query(sql, params);
@@ -163,12 +189,20 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
       text: r.text as string,
     };
 
+    // SBL transliteration siblings — present-and-null uniformly whenever the
+    // column is selected, never omitted (AC-10). text_translit is selected at
+    // every level; lemma_translit only at syntax/full/lexical (needsLexiconJoin).
+    // This deliberately diverges from the omit-when-null convention used below
+    // for the pre-existing syntax/full enrichment fields — do not "fix" it back.
+    word.text_translit = r.text_translit as string | null;
+
     if (isLexical) {
       // Lexical: text, lemma, strongs, gloss, louw_nida
       word.lemma = r.lemma as string;
       word.strongs = r.strongs as string | null;
       word.gloss = r.gloss as string | null;
       if (r.louw_nida != null) word.louw_nida = r.louw_nida as string;
+      word.lemma_translit = r.lemma_translit as string | null;
     } else {
       // Basic fields always present
       word.normalized = r.normalized as string | null;
@@ -181,6 +215,7 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
         if (r.clause_id != null) word.clause_id = r.clause_id as string;
         if (r.clause_type != null) word.clause_type = r.clause_type as string;
         if (r.strongs != null) word.strongs = r.strongs as string;
+        word.lemma_translit = r.lemma_translit as string | null;
       }
 
       // Full fields — include only if value is non-null
