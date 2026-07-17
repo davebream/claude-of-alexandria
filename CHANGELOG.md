@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.4.0] - 2026-07-17
+
 ### Added
 
 - SBL transliteration alongside original-script Greek and Hebrew: `query_morphology` now returns `text_translit` (basic tier and up) and `lemma_translit` (syntax tier and up); the vocabulary, theme, and discourse tools return parallel transliterated forms as well, so word-length responses no longer require original-script literacy to read.
