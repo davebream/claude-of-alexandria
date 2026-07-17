@@ -22,6 +22,9 @@
 #
 # RED scenario coverage audit:
 #   S24: Wisdom frame-narrative — Job 1:1-5 segmented as pure narrative
+#
+# #98 — Greek/Hebrew script + transliteration rendering:
+#   S25: Discourse-feature Greek — invented romanization from memory (no null-honesty)
 
 description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
 
@@ -341,3 +344,31 @@ tests:
           treats the prologue (chs 1-2) as a structural unit, AND
           evaluates 1:1-5 against the book's macro-structure rather than
           using pure scene-boundary reasoning.
+
+  # =========================================================================
+  # Scenario 25: Discourse-Feature Greek — Invented Romanization (#98)
+  # Failure: the bare model romanizes discourse-marker Greek (e.g. ἔρχεται,
+  # βλέπει) from memory, with no provenance discipline and no acknowledgment
+  # that the underlying data source may supply no transliteration at all
+  # =========================================================================
+  - description: "S25 RED: John 1 historical presents — undisciplined transliteration of discourse-feature Greek"
+    vars:
+      prompt: "I'm segmenting John 1 and want to use the historical-present verbs (like ἔρχεται and βλέπει) as discourse-boundary evidence. List the historical presents with their transliteration and explain how they mark structure."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response transliterates the discourse-marker Greek words
+          (e.g. ἔρχεται, βλέπει) confidently from memory, with no rule-grounded,
+          provenance-disciplined convention. Signs:
+          - Transliterations are given with no citation of a discourse-feature
+            data source (e.g. query_discourse_features) as their origin
+          - No acknowledgment that the transliteration might not be available
+            from structured data and could require inventing a romanization
+          - Transliteration is presented at the same confidence as the
+            historical-present grammatical claim itself
+
+          FAIL if the response explicitly states that transliteration is only
+          rendered when a cited tool supplies it, and otherwise renders bare
+          script rather than inventing a romanization.
