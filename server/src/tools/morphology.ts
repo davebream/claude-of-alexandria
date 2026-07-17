@@ -64,10 +64,13 @@ export const MorphologyOutputSchema = {
 };
 
 // ─── Column selection by fields level ─────────────────────────────────────────
-const BASIC_COLS = 'chapter, verse, word_position, text, normalized, lemma, pos, parsing';
-const SYNTAX_COLS = `${BASIC_COLS}, clause_id, clause_type, strongs`;
-const FULL_COLS = `${SYNTAX_COLS}, gloss, semantic_frame, subject_ref, participant_ref, gloss_tbesg, louw_nida, louw_nida_domain`;
-const LEXICAL_COLS = 'chapter, verse, word_position, text, lemma, strongs, gloss, louw_nida';
+// All columns are qualified with `m.` — the table is aliased below because
+// lexicon_lsj (joined for lemma_translit) shares column names (transliteration,
+// gloss) with morphology, and an unqualified reference is ambiguous under the join.
+const BASIC_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.normalized, m.lemma, m.pos, m.parsing';
+const SYNTAX_COLS = `${BASIC_COLS}, m.clause_id, m.clause_type, m.strongs`;
+const FULL_COLS = `${SYNTAX_COLS}, m.gloss, m.semantic_frame, m.subject_ref, m.participant_ref, m.gloss_tbesg, m.louw_nida, m.louw_nida_domain`;
+const LEXICAL_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.lemma, m.strongs, m.gloss, m.louw_nida';
 
 function selectColumns(fields: string | undefined): string {
   switch (fields) {
@@ -119,10 +122,10 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
 
   let sql = `
     SELECT ${columns}
-    FROM morphology
-    WHERE book = ? AND testament = ?
-    AND (chapter > ? OR (chapter = ? AND verse >= ?))
-    AND (chapter < ? OR (chapter = ? AND verse <= ?))
+    FROM morphology m
+    WHERE m.book = ? AND m.testament = ?
+    AND (m.chapter > ? OR (m.chapter = ? AND m.verse >= ?))
+    AND (m.chapter < ? OR (m.chapter = ? AND m.verse <= ?))
   `;
   const params: unknown[] = [
     bookInfo.canonical, testament,
@@ -131,12 +134,12 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   ];
 
   if (posFilter) {
-    sql += ' AND pos = ?';
+    sql += ' AND m.pos = ?';
     params.push(posFilter);
   }
 
   if (wordFilter) {
-    sql += ' AND (text = ? OR normalized = ? OR lemma = ?)';
+    sql += ' AND (m.text = ? OR m.normalized = ? OR m.lemma = ?)';
     params.push(wordFilter, wordFilter, wordFilter);
   }
 
@@ -145,15 +148,15 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     const match = args.strongs_filter.match(/^([HG])0*(\d+)([a-z]?)$/);
     if (match) {
       const normalized = `${match[1]}${match[2].padStart(4, '0')}${match[3]}`;
-      sql += ' AND strongs = ?';
+      sql += ' AND m.strongs = ?';
       params.push(normalized);
     } else {
-      sql += ' AND strongs = ?';
+      sql += ' AND m.strongs = ?';
       params.push(args.strongs_filter);
     }
   }
 
-  sql += ' ORDER BY chapter, verse, word_position LIMIT ?';
+  sql += ' ORDER BY m.chapter, m.verse, m.word_position LIMIT ?';
   params.push(DEFAULT_MORPHOLOGY_LIMIT);
 
   const rows = await query(sql, params);
