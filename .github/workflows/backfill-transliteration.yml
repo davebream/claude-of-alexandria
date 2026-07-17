@@ -215,8 +215,13 @@ jobs:
           result=$(npx wrangler@4.108.0 d1 execute claude-of-alexandria --remote --json \
             --command "SELECT testament, COUNT(*) AS n FROM morphology WHERE transliteration IS NOT NULL GROUP BY testament" 2>/dev/null)
 
-          actual_nt=$(echo "${result}" | jq -e '.[0].results[] | select(.testament == "nt") | .n')
-          actual_ot=$(echo "${result}" | jq -e '.[0].results[] | select(.testament == "ot") | .n')
+          # Defensive extraction: a testament entirely missing from the result set
+          # (e.g. every OT UPDATE silently no-op'd — the exact scenario this gate
+          # exists to catch) must become 0 and flow into the comparison + the
+          # remediation message below, NOT abort the step early under `set -e`
+          # with a bare exit code that erases the guidance. (Cloudflare review C1.)
+          actual_nt=$(echo "${result}" | jq -r '[.[0].results[]? | select(.testament == "nt") | .n][0] // 0')
+          actual_ot=$(echo "${result}" | jq -r '[.[0].results[]? | select(.testament == "ot") | .n][0] // 0')
 
           echo "Production coverage: nt=${actual_nt} ot=${actual_ot} (expected nt=138013 ot=378952)"
 
