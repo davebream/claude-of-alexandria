@@ -16,21 +16,23 @@ export type VocabularyInput = z.output<z.ZodObject<typeof VocabularyInputSchema>
 
 const CHARACTER_LIMIT = 25_000;
 
-const LemmaEntry = z.object({
+export const LemmaEntry = z.object({
   lemma: z.string(),
   total: z.number(),
   by_chapter: z.record(z.string(), z.number()),
 });
 
+export const ClusterEntry = z.object({
+  lemma: z.string(),
+  concentration: z.number(),
+  chapter_range: z.string(),
+  total_occurrences: z.number(),
+});
+
 const ClusteringSchema = z.object({
   has_clustering: z.boolean(),
   notable_count: z.number(),
-  clusters: z.array(z.object({
-    lemma: z.string(),
-    concentration: z.number(),
-    chapter_range: z.string(),
-    total_occurrences: z.number(),
-  })),
+  clusters: z.array(ClusterEntry),
 }).nullable();
 
 export const VocabularyOutputSchema = {

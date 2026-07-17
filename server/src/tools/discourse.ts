@@ -15,15 +15,17 @@ export const DiscourseInputSchema = {
 
 export type DiscourseInput = z.output<z.ZodObject<typeof DiscourseInputSchema>>;
 
+export const DiscourseFeatureRow = z.object({
+  chapter: z.number(),
+  verse: z.number(),
+  word: z.string().nullable(),
+  feature_description: z.string().nullable(),
+});
+
 export const DiscourseOutputSchema = {
   book: z.string(),
   chapter_range: z.string(),
-  features: z.record(z.string(), z.array(z.object({
-    chapter: z.number(),
-    verse: z.number(),
-    word: z.string().nullable(),
-    feature_description: z.string().nullable(),
-  }))),
+  features: z.record(z.string(), z.array(DiscourseFeatureRow)),
   summary: z.record(z.string(), z.number()),
   available_features: z.array(z.string()),
   word_level_boundaries: z.array(z.object({

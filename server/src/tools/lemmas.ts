@@ -44,7 +44,7 @@ export const LemmasInputSchema = {
 
 export type LemmasInput = z.output<z.ZodObject<typeof LemmasInputSchema>>;
 
-const DistributionEntry = z.object({
+export const DistributionEntry = z.object({
   lemma: z.string(),
   testament: z.enum(['ot', 'nt']),
   total_occurrences: z.number(),

@@ -25,32 +25,38 @@ export const MorphologyInputSchema = {
 
 export type MorphologyInput = z.output<z.ZodObject<typeof MorphologyInputSchema>>;
 
+export const MorphologyWordEntry = z.object({
+  verse: z.string(),
+  position: z.number(),
+  text: z.string(),
+  normalized: z.string().nullable().optional(),
+  lemma: z.string().optional(),
+  pos: z.string().optional(),
+  parsing: z.record(z.string(), z.string()).nullable().optional(),
+  // Present when fields='syntax' or 'full' — omitted otherwise
+  clause_id: z.string().nullable().optional(),
+  clause_type: z.string().nullable().optional(),
+  strongs: z.string().nullable().optional(),
+  // Present when fields='full' — omitted otherwise
+  gloss: z.string().nullable().optional(),
+  semantic_frame: z.string().nullable().optional(),
+  subject_ref: z.string().nullable().optional(),
+  participant_ref: z.string().nullable().optional(),
+  // NT-specific (OpenGNT) — present when fields='full' for NT passages
+  gloss_tbesg: z.string().nullable().optional(),
+  louw_nida: z.string().nullable().optional(),
+  louw_nida_domain: z.string().nullable().optional(),
+  // SBL transliteration siblings — present-and-null when unpopulated, never omitted (AC-10).
+  // text_translit: all levels. lemma_translit: syntax/full/lexical only (absent at basic — no join).
+  text_translit: z.string().nullable().optional(),
+  lemma_translit: z.string().nullable().optional(),
+});
+
 export const MorphologyOutputSchema = {
   book: z.string(),
   range: z.string(),
   testament: z.string(),
-  words: z.array(z.object({
-    verse: z.string(),
-    position: z.number(),
-    text: z.string(),
-    normalized: z.string().nullable().optional(),
-    lemma: z.string().optional(),
-    pos: z.string().optional(),
-    parsing: z.record(z.string(), z.string()).nullable().optional(),
-    // Present when fields='syntax' or 'full' — omitted otherwise
-    clause_id: z.string().nullable().optional(),
-    clause_type: z.string().nullable().optional(),
-    strongs: z.string().nullable().optional(),
-    // Present when fields='full' — omitted otherwise
-    gloss: z.string().nullable().optional(),
-    semantic_frame: z.string().nullable().optional(),
-    subject_ref: z.string().nullable().optional(),
-    participant_ref: z.string().nullable().optional(),
-    // NT-specific (OpenGNT) — present when fields='full' for NT passages
-    gloss_tbesg: z.string().nullable().optional(),
-    louw_nida: z.string().nullable().optional(),
-    louw_nida_domain: z.string().nullable().optional(),
-  })),
+  words: z.array(MorphologyWordEntry),
   summary: z.object({
     total_words: z.number(),
     by_pos: z.record(z.string(), z.number()),
