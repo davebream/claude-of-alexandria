@@ -409,6 +409,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
     COL_REF = 1
     COL_CLASS = 2
     COL_TEXT = 3
+    COL_TRANSLITERATION = 4
     COL_STRONGNUMBERX = 6
     COL_GLOSS = 11
     COL_MORPH = 15
@@ -444,6 +445,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
                 continue
 
             text = fields[COL_TEXT]
+            transliteration = fields[COL_TRANSLITERATION] or None
             morph_code = fields[COL_MORPH]
             lang = fields[COL_LANG]
             lemma = fields[COL_LEMMA] or ""
@@ -484,6 +486,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
                 "verse": verse,
                 "word_position": word_pos,
                 "text": text,
+                "transliteration": transliteration,
                 "normalized": normalized,
                 "lemma": lemma,
                 "pos": pos,
@@ -502,6 +505,74 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
             books[book_name].append(word)
 
     print(f"  Parsed {line_num} lines, skipped {skipped}, got {sum(len(w) for w in books.values())} words in {len(books)} books")
+
+    # ─── Transliteration coverage + concentration gates ──────────────────────
+    # Coverage is expected to sit around 79.63% (378,954/475,911) because the
+    # ~20% gap is systematic: MACULA splits some Hebrew words into multiple
+    # morpheme sub-segment rows sharing one (book,chapter,verse,word_position)
+    # key, and only the first sub-segment of a split typically carries a
+    # transliteration. A random-looking (non-concentrated) shortfall would mean
+    # the column read is wrong, not that the gap is expected.
+    MIN_OT_COVERAGE_PCT = 79.5
+    MAX_UNSPLIT_MISSING_PCT = 5.0    # blank rate allowed among non-split rows
+    MIN_SPLIT_CONCENTRATION_PCT = 90.0  # % of all blanks that must be split rows
+
+    key_counts: dict[tuple, int] = {}
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"])
+            key_counts[key] = key_counts.get(key, 0) + 1
+
+    total_words = 0
+    total_missing = 0
+    split_words = 0
+    split_missing = 0
+    unsplit_words = 0
+    unsplit_missing = 0
+    for book_name, words in books.items():
+        for w in words:
+            key = (book_name, w["chapter"], w["verse"], w["word_position"])
+            is_split = key_counts[key] > 1
+            missing = w["transliteration"] is None
+            total_words += 1
+            total_missing += 1 if missing else 0
+            if is_split:
+                split_words += 1
+                split_missing += 1 if missing else 0
+            else:
+                unsplit_words += 1
+                unsplit_missing += 1 if missing else 0
+
+    coverage_pct = (total_words - total_missing) * 100.0 / total_words if total_words else 0.0
+    print(f"  Transliteration: {total_words - total_missing:,} / {total_words:,} ({coverage_pct:.2f}%)")
+
+    if coverage_pct < MIN_OT_COVERAGE_PCT:
+        print(
+            f"ERROR: OT transliteration coverage {coverage_pct:.2f}% is below "
+            f"the {MIN_OT_COVERAGE_PCT}% floor (expected ~79.63%)",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    if total_missing > 0:
+        unsplit_missing_pct = unsplit_missing * 100.0 / unsplit_words if unsplit_words else 0.0
+        split_concentration_pct = split_missing * 100.0 / total_missing
+        print(
+            f"  Transliteration shortfall: {unsplit_missing_pct:.2f}% of non-split "
+            f"rows missing; {split_concentration_pct:.2f}% of all missing rows are "
+            f"morpheme-split sub-segments"
+        )
+        if (
+            unsplit_missing_pct > MAX_UNSPLIT_MISSING_PCT
+            or split_concentration_pct < MIN_SPLIT_CONCENTRATION_PCT
+        ):
+            print(
+                "ERROR: transliteration shortfall is not concentrated in "
+                "morpheme-split sub-segments — the column read may be wrong",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
     return books
 
 
