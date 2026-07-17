@@ -204,7 +204,21 @@ After fetching VOCABULARY_SUMMARY, enrich the top lemmas with book-wide verse re
 
 ## Compression Guidelines
 
-- **Morphology:** Group by POS, list lemmas with frequencies. Example: "Verbs: λέγω (3x, present active indicative), πιστεύω (2x, aorist active subjunctive)". For NT morphology (fields="full" when caller requests), include OpenGNT enrichment fields:
+**Transliteration is a required, non-droppable field.** `query_morphology`, `query_lemmas`,
+and `query_themes_for_lemmas` return `text_translit` (inflected surface form) and/or
+`lemma_translit` (dictionary headword) transliteration. Compression is lossy by design —
+it may drop enrichment fields to save space — but transliteration is never one of them.
+Every compressed line that emits a lemma or surface form MUST carry its transliteration
+alongside it (`word (translit)` / `lemma (lemma_translit)`), verbatim from the MCP
+response, or explicitly state that the source field was null for that word. A caller
+downstream must be able to trust that "no transliteration present" means "the server
+returned null," never "compression dropped it."
+
+- **Morphology:** Group by POS, list lemmas with frequencies and their transliteration.
+  Example: "Verbs: λέγω (legō, 3x, present active indicative), πιστεύω (pisteuō, 2x, aorist
+  active subjunctive)". If `text_translit`/`lemma_translit` is null for a word, state the
+  word bare — do not invent a romanization. For NT morphology (fields="full" when caller
+  requests), include OpenGNT enrichment fields:
   - gloss_tbesg: TBESG lexicon gloss (may differ from OpenGNT gloss — note both when they diverge)
   - louw_nida: Louw-Nida semantic domain code (e.g., "33.D")
   - louw_nida_domain: Louw-Nida domain label (e.g., "Communication")
@@ -218,7 +232,7 @@ After fetching VOCABULARY_SUMMARY, enrich the top lemmas with book-wide verse re
 - **Discourse:** List features found with verse locations. Example: "Historical Present at 1:29, 1:36; Left-Dislocation at 1:12"
 - **Paragraph breaks:** List markers with locations. Example: "פ at 1:1, ס at 1:5, פ at 2:1"
 - **Vocabulary:** Top lemmas by frequency with chapter distribution
-- **Verse references:** lemma (Nx): ch:v, ch:v, ... — one line per lemma, sorted by frequency descending. Example: `χαρά (5x): 1:4, 1:25, 2:2, 2:29, 4:1`
+- **Verse references:** lemma (translit) (Nx): ch:v, ch:v, ... — one line per lemma, sorted by frequency descending, transliteration carried from `query_morphology`/`query_vocabulary`. Example: `χαρά (chara) (5x): 1:4, 1:25, 2:2, 2:29, 4:1`
 - **OT quotes:** Source → target mapping with quote type
 - **Lemma distribution:** Book → occurrence count table
 - **Themes:** Theme → lemma groupings

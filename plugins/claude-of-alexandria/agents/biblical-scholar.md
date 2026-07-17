@@ -124,12 +124,19 @@ VERDICT: [SUPPORTED|COMPATIBLE|NOT SUPPORTED|INSUFFICIENT DATA]
 - **NOT SUPPORTED** — Text actively opposes this reading
 - **INSUFFICIENT DATA** — Cannot render verdict (confidence < MEDIUM)
 
+**Transliteration rendering (all modes):** Every Greek/Hebrew word/lemma rendered to the
+reader carries the MCP-supplied transliteration, script first + `(translit)`, never a
+romanization from memory. When the source field is null, render bare script — never invent.
+ANALYZE/VALIDATE source `text_translit`/`lemma_translit` from `query_morphology` via
+data-retriever's compression (which carries transliteration as a required, non-droppable
+field). TRACE sources `lemma_translit` from `query_lemmas`/`query_themes_for_lemmas`.
+
 ### TRACE mode
 
 ```
 MODE: TRACE
 CONFIDENCE: [HIGH|MEDIUM|LOW|CANNOT ANSWER]
-LEMMA: [lemma] ([gloss])
+LEMMA: [lemma] ([lemma_translit]) — [gloss]
 
 ## Distribution
 | Book | Occurrences | Chapters |

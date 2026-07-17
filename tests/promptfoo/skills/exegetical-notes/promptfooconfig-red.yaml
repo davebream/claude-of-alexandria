@@ -35,6 +35,9 @@
 # Controversy awareness (Phase 5 — historicity metadata layer):
 #   S22: Contested authorship/dating — Daniel 7:13-14 notes assert one critical
 #        position as settled without surfacing the 6th vs. 2nd century authorship dispute
+#
+# #98 — Greek/Hebrew script + transliteration rendering:
+#   S25: No MCP-grounded transliteration convention + wrong provenance (lemma οὗτος)
 
 description: "Exegetical Notes — RED phase (bare model, no skill, no MCP)"
 
@@ -633,3 +636,33 @@ tests:
           authorship) AND the critical (2nd c. BCE Maccabean pseudonymous authorship)
           positions with named scholars for each, and explicitly states that this is
           a live scholarly debate without declaring a winner.
+
+  # =========================================================================
+  # Scenario 25: MCP-Grounded Transliteration Convention (#98)
+  # Failure: no rendering convention (bare script or invented romanization) +
+  # wrong provenance — a from-memory romanization of the lemma οὗτος produces
+  # "houtos", never the deployed server's idiosyncratic lemma_translit "ohutos"
+  # =========================================================================
+  - description: "S25 RED: Lexical Analysis — no MCP-grounded transliteration convention, wrong provenance"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 1:6. In the Lexical Analysis section, include the dictionary (lemma) form of the demonstrative pronoun τοῦτο, including its transliteration."
+    assert:
+      - type: javascript
+        value: "!output.toLowerCase().includes('ohutos')"
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response does NOT render Greek/Hebrew words using an explicit,
+          MCP-grounded "script (transliteration)" convention. Signs:
+          - Greek words appear in bare script with no transliteration at all, OR
+          - A transliteration is given but with no stated rule and no citation of
+            a tool (e.g. query_morphology) as its source — it reads as if recalled
+            from training knowledge
+          - No distinction is drawn between the surface form and the lemma
+            (dictionary headword) transliteration
+
+          FAIL if the response states an explicit rendering rule (script first
+          occurrence + transliteration, transliteration alone thereafter, bare
+          script when no data exists) AND cites an MCP tool as the source of the
+          transliteration value.

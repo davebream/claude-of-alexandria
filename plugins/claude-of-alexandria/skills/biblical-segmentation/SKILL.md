@@ -2,8 +2,8 @@
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.0.0
-changed: "2026-04-30"
+version: 1.1.0
+changed: "2026-07-17"
 ---
 
 # Biblical Text Segmentation
@@ -287,7 +287,16 @@ Use data from `query_discourse_features`. Cite specific features at boundary ver
 
 **Example:** `HP βλέπει (1:29) + Situational PoD (τῇ ἐπαύριον); Levinsohn confirms boundary`
 
+**Transliteration (null-honesty):** `query_discourse_features` currently returns no
+transliteration for its discourse-marker words. Per the rendering convention shared with
+`exegetical-notes` and `consult-biblical-scholar` (script + MCP-supplied transliteration,
+never invented), render these Greek words in **bare script**, exactly as above — do not
+invent a romanization from memory for a word whose MCP source supplies none.
+
 ### OT Books — Masoretic Paragraph Markers
+
+**Transliteration:** פ/ס Masoretic paragraph markers are not lemmas and carry no
+transliteration — cite them bare, as below. Never invent a romanization for them.
 
 Use data from `query_paragraph_breaks`. **Lead with boundary status at session's STARTING verse:**
 

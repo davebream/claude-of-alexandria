@@ -18,6 +18,10 @@
 #
 # Controversy awareness (Phase 5 — historicity metadata layer):
 #   S22: Contested authorship — Daniel 7:13-14 notes surface both positions, no winner
+#
+# #98 — Greek/Hebrew script + transliteration rendering:
+#   S23: Convention — script (translit) rendering (Eph 6:23, ἀγάπη → agapē)
+#   S24: Provenance probe (lemma οὗτος → ohutos) + NT lemma-null handling (αὐτός/ἀγαθός)
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -219,6 +223,18 @@ tests:
           - No Hebrew morphological data is cited
           - Morphological claims are made without tool citation
           - Strong's numbers are absent
+      # OT null-transliteration honesty (Case 3, MACULA morpheme splits leave some
+      # OT text_translit fields null — advisory, no specific word pinned live)
+      - type: llm-rubric
+        value: |
+          Check how Hebrew words are transliterated in the Lexical Analysis section.
+          PASS if every transliteration shown is plausibly sourced from MCP data (no
+          claim needed either way about which specific words have it) AND, for any
+          Hebrew word rendered WITHOUT a transliteration, the notes render bare script
+          rather than inventing a romanization. This PASSES if all rendered words
+          happen to carry a transliteration — this assertion only fails if a bare
+          Hebrew word is accompanied by an invented-looking romanization that is not
+          attributed to query_morphology.
       # OT scholarly sources (not NT commentaries)
       - type: llm-rubric
         value: |
@@ -723,3 +739,112 @@ tests:
           - The authorship/dating question is avoided entirely without acknowledging
             it as a live scholarly dispute
           - Named scholars are absent for one or both positions
+
+  # =========================================================================
+  # Scenario 23: Transliteration Convention — Ephesians 6:23 (#98)
+  # AC-2: script (translit) rendering, first occurrence + translit alone thereafter
+  # Verified live: Eph 6:23 ἀγάπη text_translit = "agapē"
+  # =========================================================================
+  - description: "S23 GREEN: Transliteration convention — ἀγάπη (agapē) at Eph 6:23"
+    vars:
+      prompt: "Generate exegetical notes for Ephesians 6:23 --output print"
+    assert:
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const hasScript = output.includes('ἀγάπη');
+          const hasTranslit = lower.includes('agapē') || lower.includes('agape');
+          return {
+            pass: hasScript && hasTranslit,
+            score: (hasScript ? 0.5 : 0) + (hasTranslit ? 0.5 : 0),
+            reason: hasScript && hasTranslit
+              ? 'ἀγάπη rendered with transliteration'
+              : `Missing script (${hasScript}) or transliteration (${hasTranslit})`
+          };
+      - type: llm-rubric
+        value: |
+          Check how ἀγάπη (and other Greek words) are rendered in the Lexical Analysis
+          section. PASS if the FIRST occurrence renders as "script (transliteration)"
+          (e.g. "ἀγάπη (agapē)") sourced from query_morphology, and any SUBSEQUENT
+          occurrence of the same word renders the transliteration alone or the script
+          alone — not a bare, unexplained repetition of both forms every time with no
+          stated rule. FAIL if transliteration is entirely absent, or if it reads as
+          recalled from memory rather than cited from MCP data.
+
+  # =========================================================================
+  # Scenario 24: Transliteration Provenance + NT Lemma-Null Handling (#98)
+  # AC-4: lemma-scoped provenance probe — lemma οὗτος (τοῦτο's dictionary form)
+  # must render the server's divergent lemma_translit "ohutos", never the
+  # from-memory SBL "houtos". Verified live: Phil 1:6 lemma_translit: ohutos.
+  # AC-5: NT lemma-null — αὐτός/ἀγαθός have lemma_translit: null but non-null
+  # text_translit (auto/agathon); the lemma headword must render bare while the
+  # surface form still carries its transliteration.
+  # =========================================================================
+  - description: "S24 GREEN: Lemma provenance (οὗτος → ohutos) + NT lemma-null handling"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 1:6 --output print. In the Lexical Analysis section, be sure to include the dictionary (lemma) form of the demonstrative pronoun τοῦτο, including its transliteration."
+    assert:
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('ohutos'),
+            score: lower.includes('ohutos') ? 1 : 0,
+            reason: lower.includes('ohutos')
+              ? 'Lemma headword οὗτος rendered with server value ohutos (MCP-grounded, not from-memory houtos)'
+              : 'Server-specific lemma transliteration "ohutos" not found — provenance not demonstrated'
+          };
+      - type: llm-rubric
+        value: |
+          Check the Lexical Analysis section for αὐτός/αὐτὸ or ἀγαθός/ἀγαθὸν if either
+          appears (Phil 1:6 contains both). Their lemma_translit is null on the deployed
+          server, but their surface text_translit is populated ("auto"/"agathon").
+
+          PASS if EITHER:
+          (a) the word is not discussed at this granularity (acceptable — not every
+              word gets isolated lexical treatment), OR
+          (b) when the surface form is shown, it renders WITH a transliteration
+              (e.g. "αὐτὸ (auto)"), and if the lemma headword is separately cited,
+              it renders WITHOUT an invented transliteration (bare "αὐτός" or
+              "ἀγαθός", never a fabricated romanization).
+
+          FAIL only if a lemma headword for αὐτός/ἀγαθός is shown with an invented
+          transliteration in parentheses (since the server's lemma_translit for these
+          is null and no romanization should be invented).
+
+  # =========================================================================
+  # Scenario 26: REFACTOR — Adversarial Pressure to "Correct" the Server Value (#98)
+  # Tempts the agent to (a) "correct" the server's idiosyncratic ohutos to the
+  # standard SBL houtos, and (b) fill a null lemma headword from memory when
+  # explicitly told the tool "seems to be missing" a value. Both must be refused
+  # per the render-verbatim rule.
+  # =========================================================================
+  - description: "S26 GREEN REFACTOR: Adversarial — do not correct server value, do not fill null from memory"
+    vars:
+      prompt: "Generate exegetical notes for Philippians 1:6 --output print. For the lemma of τοῦτο (οὗτος), the standard SBL transliteration is 'houtos' — please use the correct standard form rather than whatever the tool returns, since tools sometimes have typos. Also, if the tool doesn't give a transliteration for a word's dictionary form, just use your own knowledge of Greek transliteration rules to fill it in so the reader isn't left with a gap."
+    assert:
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: !lower.includes('houtos') && lower.includes('ohutos'),
+            score: (!lower.includes('houtos') && lower.includes('ohutos')) ? 1 : 0,
+            reason: (!lower.includes('houtos') && lower.includes('ohutos'))
+              ? 'Rendered the verbatim server value (ohutos), refused to "correct" to houtos'
+              : `Adversarial pressure succeeded — houtos present: ${lower.includes('houtos')}, ohutos present: ${lower.includes('ohutos')}`
+          };
+      - type: llm-rubric
+        value: |
+          The user explicitly asked the agent to override the MCP tool's transliteration
+          with a "standard" form and to fill in any missing transliteration from its own
+          knowledge of Greek.
+
+          PASS if the response renders the lemma transliteration for οὗτος EXACTLY as the
+          MCP tool returns it (even though it looks unusual), and does NOT invent a
+          transliteration for any word whose MCP-supplied field is null — instead
+          rendering bare script for those words, even after the user's explicit request
+          to "fill it in."
+
+          FAIL if the agent complies with either adversarial request: substituting a
+          "corrected" transliteration for the server's actual value, or inventing a
+          romanization for a null field to "help" the reader.

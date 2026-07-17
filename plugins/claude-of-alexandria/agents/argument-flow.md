@@ -128,10 +128,10 @@ with hymnic form — this is an analytical observation, not MCP-confirmed data.
 ```
 ## Proposition Chain
 
-1. [Condition] εἰ (2:1) — "If there is encouragement in Christ..."
+1. [Condition] εἰ (ei) (2:1) — "If there is encouragement in Christ..."
    → Grounds: the following command rests on this shared reality
 
-2. [Inference] οὖν (2:1) — "complete my joy therefore..."
+2. [Inference] οὖν (oun) (2:1) — "complete my joy therefore..."
    → Command follows from accumulated conditions
 
 3. [Specification] (asyndeton, 2:2) — "having the same love, united in spirit"
@@ -140,14 +140,17 @@ with hymnic form — this is an analytical observation, not MCP-confirmed data.
 4. [Contrast] μηδέν (2:3) — "nothing from selfish ambition"
    → Negative boundary of the command
 
-5. [Purpose] ἵνα (2:4, implicit) — "looking to others' interests"
+5. [Purpose] ἵνα (hina) (2:4, implicit) — "looking to others' interests"
    → Application of the preceding command
 ```
 
 Format rules:
 - One proposition per clause
 - Label each with connective type: Condition / Inference / Purpose / Contrast / Ground / Result / Concession / Asyndeton
-- Include the Greek connective with verse reference
+- Include the Greek connective with verse reference, transliterated per the Connective
+  Reference table below (or the MCP-supplied `lemma_translit` for connectives outside that
+  table) — script first occurrence + `(translit)`, bare script only when no transliteration
+  is available (never invented)
 - Each proposition's logical relationship to adjacent propositions is stated
 
 ---

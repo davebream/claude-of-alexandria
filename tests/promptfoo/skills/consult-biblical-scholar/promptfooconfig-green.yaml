@@ -13,6 +13,10 @@
 #   S7: CROSS-REFERENCE — editorial tradition labeled distinctly
 #   S8: Entity identification — data-backed with confidence grading
 #   S9: Contested historical question — both Exodus date positions with named scholars
+#
+# #98 — Greek/Hebrew script + transliteration rendering:
+#   S10: Convention — script (translit) rendering (Phil 1:6, ἐπιτελέσει/ἐπιτελέω)
+#   S11: Provenance probe (lemma οὗτος → ohutos) + NT lemma-null handling
 
 description: "Consult Biblical Scholar — GREEN phase (failure-mode corrections)"
 
@@ -264,3 +268,67 @@ tests:
           - Named scholars are absent for one or both positions
           - The debate is acknowledged vaguely ("scholars disagree") without presenting
             actual positions, evidence, and scholar names
+
+  # =========================================================================
+  # Scenario 10: Transliteration Convention — Phil 1:6 ἐπιτελέσει/ἐπιτελέω (#98)
+  # AC-2: script (translit) rendering, verified live text_translit/lemma_translit
+  # =========================================================================
+  - description: "S10 GREEN: Transliteration convention — ἐπιτελέσει (epitelesei) / ἐπιτελέω (epiteleō)"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. What does 'epiteleo' mean in Philippians 1:6? Include the Greek script and its transliteration."
+    assert:
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          const hasScript = output.includes('ἐπιτελ');
+          const hasTranslit = lower.includes('epitele');
+          return {
+            pass: hasScript && hasTranslit,
+            score: (hasScript ? 0.5 : 0) + (hasTranslit ? 0.5 : 0),
+            reason: hasScript && hasTranslit
+              ? 'ἐπιτελέσει/ἐπιτελέω rendered with transliteration'
+              : `Missing script (${hasScript}) or transliteration (${hasTranslit})`
+          };
+      - type: llm-rubric
+        value: |
+          Check how ἐπιτελέσει / ἐπιτελέω is rendered. PASS if the transliteration is
+          presented as sourced from MCP data (query_morphology), in the
+          "script (transliteration)" convention on first occurrence — e.g.
+          "ἐπιτελέσει (epitelesei)", lemma "ἐπιτελέω (epiteleō)". FAIL if the
+          transliteration is absent, or reads as recalled from memory with no
+          MCP grounding.
+
+  # =========================================================================
+  # Scenario 11: Transliteration Provenance + NT Lemma-Null Handling (#98)
+  # AC-4: lemma-scoped provenance probe — lemma οὗτος must render the server's
+  # divergent lemma_translit "ohutos", never the from-memory SBL "houtos".
+  # AC-5: NT lemma-null — αὐτός/ἀγαθός have lemma_translit: null.
+  # =========================================================================
+  - description: "S11 GREEN: Lemma provenance (οὗτος → ohutos) + NT lemma-null handling"
+    vars:
+      prompt: "Use the consult-biblical-scholar skill. I'm doing a word study on the demonstrative pronoun τοῦτο in Philippians 1:6. What is its dictionary (lemma) form, and how is that lemma transliterated?"
+    assert:
+      - type: javascript
+        value: |
+          const lower = output.toLowerCase();
+          return {
+            pass: lower.includes('ohutos'),
+            score: lower.includes('ohutos') ? 1 : 0,
+            reason: lower.includes('ohutos')
+              ? 'Lemma headword οὗτος rendered with server value ohutos (MCP-grounded, not from-memory houtos)'
+              : 'Server-specific lemma transliteration "ohutos" not found — provenance not demonstrated'
+          };
+      - type: llm-rubric
+        value: |
+          Check for αὐτός/αὐτὸ or ἀγαθός/ἀγαθὸν if either is discussed (Phil 1:6
+          contains both). Their lemma_translit is null on the deployed server, but
+          their surface text_translit is populated ("auto"/"agathon").
+
+          PASS if EITHER:
+          (a) the word is not discussed at this granularity, OR
+          (b) when the surface form is shown, it renders WITH a transliteration
+              (e.g. "αὐτὸ (auto)"), and if the lemma headword is separately cited,
+              it renders WITHOUT an invented transliteration.
+
+          FAIL only if a lemma headword for αὐτός/ἀγαθός is shown with an invented
+          transliteration in parentheses.

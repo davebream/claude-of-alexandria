@@ -2,8 +2,8 @@
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
 allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.1.0
-changed: "2026-06-15"
+version: 1.2.0
+changed: "2026-07-17"
 ---
 
 # Consult Biblical Scholar
@@ -100,7 +100,7 @@ what scholars dispute.
 **Correct:**
 ```
 CONFIDENCE: HIGH
-Evidence: query_morphology confirms ἐκένωσεν as aorist active indicative with reflexive ἑαυτόν
+Evidence: query_morphology confirms ἐκένωσεν (ekenōsen) as aorist active indicative with reflexive ἑαυτόν (heauton)
 ```
 
 **Wrong:**
@@ -108,6 +108,32 @@ Evidence: query_morphology confirms ἐκένωσεν as aorist active indicativ
 The text clearly shows Jesus voluntarily emptied himself.
 ```
 (No confidence declaration. No MCP citation. Training knowledge presented as established fact.)
+
+---
+
+### Rule 1a: Transliteration Rendering
+
+Render every Greek/Hebrew word as **script + the MCP-supplied transliteration**, never a
+romanization recalled from training data. `query_morphology` returns two distinct
+transliteration fields, and the convention is applied **per field, per position**:
+
+- **`text_translit`** — the inflected **surface form** as it appears in the passage.
+  Render this next to the word when it appears in running prose.
+- **`lemma_translit`** — the **dictionary headword** transliteration. Render this next to
+  a cited lemma.
+
+**Three cases:**
+
+1. **First occurrence in the output:** `script (translit)` — e.g. `ἐπιτελέσει (epitelesei)`,
+   lemma `ἐπιτελέω (epiteleō)`.
+2. **Every occurrence thereafter:** `translit` alone — e.g. `epitelesei`.
+3. **MCP transliteration null/absent for that field:** bare `script` — **never invent a
+   romanization.** A word's surface form and lemma headword are independently null/populated.
+   Do not "correct" or improve an awkward server value — render it verbatim, even when it
+   looks unusual (e.g. an idiosyncratic server romanization is still the correct render).
+
+This convention is identical to `exegetical-notes`' Transliteration Rendering rule — the two
+skills must not disagree.
 
 ---
 
@@ -176,10 +202,10 @@ Epiteleo (ἐπιτελέω) means "to complete" — this is from the prefix epi
 
 **Correct:**
 ```
-[Called query_morphology for Phil 1:6 — result: ἐπιτελέσει, lemma ἐπιτελέω, future active indicative, 3rd singular]
+[Called query_morphology for Phil 1:6 — result: ἐπιτελέσει (text_translit: epitelesei), lemma ἐπιτελέω (lemma_translit: epiteleō), future active indicative, 3rd singular]
 [Called query_vocabulary for Philippians — result: ἐπιτελέω appears 1x in Philippians (1:6)]
 
-ἐπιτελέσει (1:6): lemma ἐπιτελέω, future active indicative, 3rd singular [query_morphology]
+ἐπιτελέσει (epitelesei) (1:6): lemma ἐπιτελέω (epiteleō), future active indicative, 3rd singular [query_morphology]
 Frequency in Philippians: 1x [query_vocabulary]
 ```
 
