@@ -22,6 +22,7 @@ Sources:
     CrossWire Bible Society / Robinson RMAC (CC BY-SA 3.0)
 """
 
+import hashlib
 import io
 import json
 import os
@@ -32,13 +33,27 @@ import zipfile
 from pathlib import Path
 
 # ─── Source URLs ──────────────────────────────────────────────────────────────
-GITHUB_RAW = "https://raw.githubusercontent.com/eliranwong/OpenGNT/master"
+# Pinned to an immutable commit SHA (not `master`) so a downstream backfill run
+# is reproducible and cannot silently pick up upstream edits.
+# Pinned 2026-07-17. To re-pin: `git ls-remote https://github.com/eliranwong/OpenGNT master`,
+# take the new SHA, update COMMIT_SHA below, then recompute EXPECTED_SHA256_* by
+# downloading each of the three artifacts from the new pinned URL and hashing them
+# (`shasum -a 256 <file>`), mirroring extract-macula-hebrew.py's COMMIT_SHA/LFS_OID pin.
+COMMIT_SHA = "0029589cccd50bd48b1941aa041a956de6c29ac4"
+GITHUB_RAW = f"https://raw.githubusercontent.com/eliranwong/OpenGNT/{COMMIT_SHA}"
 BASE_TEXT_URL = f"{GITHUB_RAW}/OpenGNT_BASE_TEXT.zip"
 KEYED_FEATURES_URL = f"{GITHUB_RAW}/OpenGNT_keyedFeatures.csv.zip"
 OPENTEXT_URL = (
     f"{GITHUB_RAW}/mapping_OpenTextAnnotations/"
     "OpenText_v1_formatted_in_HTML.csv.zip"
 )
+
+# Expected SHA-256 of each downloaded artifact at COMMIT_SHA, computed once when
+# the pin above was set. Verified on both the fresh-download and cache-hit paths
+# in download_file() — mirrors extract-macula-hebrew.py's EXPECTED_SHA256 check.
+EXPECTED_SHA256_BASE_TEXT = "7d8377bad8d8c836272ca67a646024a303e524434345c61ee288b82d13f8e712"
+EXPECTED_SHA256_FEATURES_CSV = "323d20c53e482ffe3861190fa7cd9ecdb866d6ed354f3e395d1fa88de4868d51"
+EXPECTED_SHA256_OPENTEXT = "da3acbfb8ee640c8924a92983fbeda7008f3cc167437d61546e669ad1bfc8988"
 
 BATCH_SIZE = 100        # rows per INSERT statement
 ROWS_PER_FILE = 5000    # rows per SQL seed file
@@ -225,14 +240,24 @@ def enrich_louw_nida(ln_raw: str) -> tuple:
 
 # ─── Download Functions ───────────────────────────────────────────────────────
 
-def download_file(url: str, dest: Path) -> Path:
-    """Download a file from URL if not already cached."""
+def download_file(url: str, dest: Path, expected_sha256: str) -> Path:
+    """Download a file from URL, verifying SHA-256 on both the cache-hit and
+    fresh-download paths. Mirrors extract-macula-hebrew.py's download_tsv()."""
     if dest.exists():
-        print(f"  Cached: {dest.name}")
-        return dest
+        print(f"  Checking existing file: {dest.name}")
+        sha256 = hashlib.sha256()
+        with open(dest, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                sha256.update(chunk)
+        if sha256.hexdigest() == expected_sha256:
+            print(f"  Checksum matches — skipping download.")
+            return dest
+        else:
+            print(f"  Checksum mismatch — re-downloading.")
 
     print(f"  Downloading: {url.split('/')[-1]}...")
     req = urllib.request.Request(url, headers={"User-Agent": "claude-of-alexandria-etl/1.0"})
+    sha256 = hashlib.sha256()
     with urllib.request.urlopen(req) as resp, open(dest, "wb") as out:
         total = 0
         while True:
@@ -240,8 +265,17 @@ def download_file(url: str, dest: Path) -> Path:
             if not chunk:
                 break
             out.write(chunk)
+            sha256.update(chunk)
             total += len(chunk)
-    print(f"    Downloaded {total / 1024:.0f} KB")
+
+    if sha256.hexdigest() != expected_sha256:
+        dest.unlink()
+        print(f"ERROR: SHA-256 mismatch for {dest.name}!", file=sys.stderr)
+        print(f"  Expected: {expected_sha256}", file=sys.stderr)
+        print(f"  Got:      {sha256.hexdigest()}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"    Downloaded {total / 1024:.0f} KB, checksum verified.")
     return dest
 
 
@@ -1229,12 +1263,22 @@ def main():
 
     # Step 1: Download source files
     print("Step 1: Downloading source files...")
-    base_zip = download_file(BASE_TEXT_URL, cache_dir / "OpenGNT_BASE_TEXT.zip")
-    feat_zip = download_file(KEYED_FEATURES_URL, cache_dir / "OpenGNT_keyedFeatures.csv.zip")
+    base_zip = download_file(
+        BASE_TEXT_URL, cache_dir / "OpenGNT_BASE_TEXT.zip", EXPECTED_SHA256_BASE_TEXT
+    )
+    feat_zip = download_file(
+        KEYED_FEATURES_URL,
+        cache_dir / "OpenGNT_keyedFeatures.csv.zip",
+        EXPECTED_SHA256_FEATURES_CSV,
+    )
 
     opentext_zip = None
     try:
-        opentext_zip = download_file(OPENTEXT_URL, cache_dir / "OpenGNT_OpenTextAnnotations.csv.zip")
+        opentext_zip = download_file(
+            OPENTEXT_URL,
+            cache_dir / "OpenGNT_OpenTextAnnotations.csv.zip",
+            EXPECTED_SHA256_OPENTEXT,
+        )
     except Exception as e:
         print(f"  WARNING: Could not download OpenText annotations: {e}")
         print("  Syntax annotations will be skipped")
