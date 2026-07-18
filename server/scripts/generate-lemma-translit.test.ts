@@ -383,6 +383,34 @@ describe('buildTables — safe-suffix alias recovery (decisions/0008)', () => {
   });
 });
 
+// (l2) buildTables — additive baseInfo/emittedKeys exposure (census reuse, C0).
+describe('buildTables — baseInfo/emittedKeys exposure (census reuse)', () => {
+  it('returns baseInfo as a Map keyed by unpadded base with translits.size===1 for a singleton base', () => {
+    const rows = parseInput('בֵּן\tH1121\t5\n');
+    const { baseInfo } = buildTables(rows);
+    expect(baseInfo).toBeInstanceOf(Map);
+    const info = baseInfo.get('H1121');
+    expect(info).toBeDefined();
+    expect(info!.translits.size).toBe(1);
+    expect(info!.representative).toBe(transliterateLemma('בֵּן'));
+  });
+
+  it('returns baseInfo with translits.size>=2 for a homograph base', () => {
+    const rows = parseInput('רֵאשִׁית\tH8500a\t2\nחָכְמָה\tH8500b\t7\n');
+    const { baseInfo } = buildTables(rows);
+    const info = baseInfo.get('H8500');
+    expect(info).toBeDefined();
+    expect(info!.translits.size).toBeGreaterThanOrEqual(2);
+  });
+
+  it('returns emittedKeys containing an expected emitted key', () => {
+    const rows = parseInput('רֵאשִׁית\tH7225a\t5\n');
+    const { emittedKeys } = buildTables(rows);
+    expect(emittedKeys.has('H7225a')).toBe(true);
+    expect(emittedKeys.has('H7225')).toBe(true);
+  });
+});
+
 // (m) Consumer-key extraction — the imperative shell reads the same wrangler
 // `d1 execute --json` output the coverage gate consumes, plucking the `lemma`
 // column (where OT Strong's numbers live for vocabulary / thematic_keywords).

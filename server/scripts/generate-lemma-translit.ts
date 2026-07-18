@@ -82,6 +82,20 @@ export interface Tables {
   lemmaEntries: Entry[];
   strongsEntries: Entry[];
   baseline: Baseline;
+  /**
+   * Full-corpus per-base pointed-lemma multiset, keyed by UNPADDED base
+   * strongs. Returned (additive, DOC-b) so external read-only tooling (the
+   * lemma_translit null census) can reuse the generator's own classification
+   * data without re-deriving it — zero drift on the singleton/homograph
+   * decision `classifySuffixedStrongs` applies.
+   */
+  baseInfo: Map<string, BaseInfo>;
+  /**
+   * Every strongs spelling actually emitted to `strongsEntries` (exact, base,
+   * both unpadded variants, and safe-suffix aliases). Returned (additive,
+   * DOC-b) for the same external-reuse reason as `baseInfo` above.
+   */
+  emittedKeys: ReadonlySet<string>;
 }
 
 /** Per-base transliteration facts over a base strongs' pointed lemmas. */
@@ -280,6 +294,13 @@ function pickRepresentative(candidates: Map<string, number>): string {
  * Exclusions (never transliterated): empty-lemma rows (defensive; emit already
  * drops them) and unpointed (consonants-only) lemmas. Excluded lemmas never
  * participate in the strongs representative pools.
+ *
+ * DOC-b: also returns `baseInfo` and `emittedKeys` — internal state this
+ * function already computes to drive safe-suffix recovery. The exposure is
+ * additive and rule-preserving (no threshold, recovery rule, or anti-guessing
+ * boundary changes); it exists solely so external read-only tooling (the
+ * lemma_translit null census) can reuse the exact classification data this
+ * generator ships, instead of re-deriving it and risking drift.
  */
 export function buildTables(rows: Row[], consumerKeys: Iterable<string> = []): Tables {
   // Distinct-lemma exclusion bookkeeping.
@@ -438,7 +459,7 @@ export function buildTables(rows: Row[], consumerKeys: Iterable<string> = []): T
     library_version: LIBRARY_VERSION,
   };
 
-  return { lemmaEntries, strongsEntries, baseline };
+  return { lemmaEntries, strongsEntries, baseline, baseInfo, emittedKeys };
 }
 
 /**
