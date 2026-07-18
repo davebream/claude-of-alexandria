@@ -68,7 +68,13 @@ export interface Baseline {
   lemma_rows: number;
   strongs_rows_exact: number;
   strongs_rows_base: number;
+  // Safe-suffix alias rows (decisions/0008): sense-suffixed consumer keys whose
+  // base attests exactly one pointed lemma. Folded into the gate's row-count oracle.
+  strongs_rows_alias: number;
   excluded: { empty: number; unpointed: number; subsegment: number };
+  // The exact alias keys emitted above — the gate treats a declared key that is
+  // absent from the shipped table as a blocking regression, not an honest null.
+  safe_recoverable_strongs: string[];
   library_version: string;
 }
 
@@ -77,6 +83,21 @@ export interface Tables {
   strongsEntries: Entry[];
   baseline: Baseline;
 }
+
+/** Per-base transliteration facts over a base strongs' pointed lemmas. */
+export interface BaseInfo {
+  /** Distinct SBL transliterations attested across the base's pointed lemmas. */
+  translits: Set<string>;
+  /** Highest-count representative (equals the sole translit when singleton). */
+  representative: string;
+}
+
+/** Verdict for a sense-suffixed consumer key under the safe-recovery rule. */
+export type SuffixVerdict =
+  | { kind: 'not-suffixed' }
+  | { kind: 'already-emitted' }
+  | { kind: 'safe-recover'; value: string }
+  | { kind: 'keep-null'; reason: 'homograph' | 'no-attested-base' };
 
 // ─── Pure helpers ───────────────────────────────────────────────────────────
 
@@ -130,6 +151,72 @@ export function unpad(strongs: string): string {
   if (!m) return strongs;
   const num = m[1].replace(/^0+/, '') || '0';
   return `H${num}${m[2] ?? ''}`;
+}
+
+/**
+ * Classify a consumer OT Strong's key for safe-suffix recovery (decisions/0008).
+ *
+ * A sense-suffixed consumer key (e.g. `H1121a`, from the vocabulary namespace)
+ * that has no exact/derived row already emitted resolves to its BASE strongs'
+ * transliteration IFF the base attests exactly one distinct pointed lemma — a
+ * singleton has no alternative sense to guess wrong, so serving it is the corpus
+ * answer, not a guess. A homograph base (≥2 distinct romanizations), an
+ * unattested base, or an already-emitted key all decline (the key stays null).
+ *
+ * Pure: no I/O. `baseInfo` is keyed by the UNPADDED base spelling; the lookup
+ * unpads the consumer key's base so padded or unpadded consumer keys both match.
+ */
+export function classifySuffixedStrongs(
+  consumerKey: string,
+  baseInfo: Map<string, BaseInfo>,
+  emittedKeys: ReadonlySet<string>,
+): SuffixVerdict {
+  if (!/[a-z]$/.test(consumerKey)) return { kind: 'not-suffixed' };
+  if (emittedKeys.has(consumerKey)) return { kind: 'already-emitted' };
+  const info = baseInfo.get(unpad(baseStrongs(consumerKey)));
+  if (!info) return { kind: 'keep-null', reason: 'no-attested-base' };
+  if (info.translits.size !== 1) return { kind: 'keep-null', reason: 'homograph' };
+  return { kind: 'safe-recover', value: info.representative };
+}
+
+/**
+ * Extract consumer Strong's keys from a wrangler `d1 execute --json` payload (or
+ * a bare string array), plucking the `lemma` column — where OT Strong's numbers
+ * live in vocabulary / thematic_keywords. Mirrors the coverage gate's extractKeys
+ * so the generator and the gate consume the SAME consumer-key file. Order-
+ * preserving dedupe; null/undefined dropped.
+ */
+export function extractConsumerKeys(jsonText: string): string[] {
+  const json = JSON.parse(jsonText) as unknown;
+  const values: unknown[] = [];
+  if (Array.isArray(json)) {
+    if (json.length === 0) return [];
+    if (typeof json[0] === 'string') {
+      values.push(...json);
+    } else if (json[0] && Array.isArray((json[0] as { results?: unknown }).results)) {
+      for (const stmt of json as Array<{ results?: Array<Record<string, unknown>> }>) {
+        for (const row of stmt.results ?? []) values.push(row.lemma);
+      }
+    } else {
+      for (const row of json as Array<Record<string, unknown>>) values.push(row?.lemma);
+    }
+  } else if (json && Array.isArray((json as { results?: unknown }).results)) {
+    for (const row of (json as { results: Array<Record<string, unknown>> }).results) {
+      values.push(row.lemma);
+    }
+  } else {
+    throw new Error('Unrecognized consumer-key JSON shape');
+  }
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const v of values) {
+    if (v === null || v === undefined) continue;
+    const s = String(v);
+    if (seen.has(s)) continue;
+    seen.add(s);
+    out.push(s);
+  }
+  return out;
 }
 
 /** Escape a SQL string literal (double single quotes) and wrap in quotes. */
@@ -194,7 +281,7 @@ function pickRepresentative(candidates: Map<string, number>): string {
  * drops them) and unpointed (consonants-only) lemmas. Excluded lemmas never
  * participate in the strongs representative pools.
  */
-export function buildTables(rows: Row[]): Tables {
+export function buildTables(rows: Row[], consumerKeys: Iterable<string> = []): Tables {
   // Distinct-lemma exclusion bookkeeping.
   const emptyLemmas = new Set<string>();
   const unpointedLemmas = new Set<string>();
@@ -291,20 +378,63 @@ export function buildTables(rows: Row[]): Tables {
   addUnpaddedVariants(exactEntries, exactUnpadded);
   addUnpaddedVariants(baseEntries, baseUnpadded);
 
-  const strongsEntries = [...exactEntries, ...exactUnpadded, ...baseEntries, ...baseUnpadded];
+  // Per-base transliteration facts, keyed by the UNPADDED base (the consumer
+  // namespace), over the base's pointed lemmas. Drives safe-suffix recovery.
+  const baseInfo = new Map<string, BaseInfo>();
+  for (const [base, cands] of baseGroups) {
+    const translits = new Set<string>();
+    for (const lemma of cands.keys()) translits.add(rep(lemma));
+    const key = unpad(base);
+    const existing = baseInfo.get(key);
+    if (existing) {
+      for (const t of translits) existing.translits.add(t);
+    } else {
+      baseInfo.set(key, { translits, representative: rep(pickRepresentative(cands)) });
+    }
+  }
+
+  // Safe-suffix aliases (decisions/0008): a sense-suffixed consumer key with no
+  // exact/derived spelling already emitted, whose base attests exactly one
+  // pointed lemma, gets an alias row carrying that single transliteration.
+  // Emitted LAST so the first-writer-wins `emittedKeys` guard forbids an alias
+  // shadowing any attested exact/base/unpadded spelling. Iterated over sorted
+  // distinct keys so the output is deterministic regardless of input order.
+  const safeSuffixAliases: Entry[] = [];
+  const safeRecoverable: string[] = [];
+  const uniqueConsumerKeys = [...new Set(consumerKeys)].sort((a, b) =>
+    Buffer.compare(Buffer.from(a, 'utf8'), Buffer.from(b, 'utf8')),
+  );
+  for (const consumerKey of uniqueConsumerKeys) {
+    const verdict = classifySuffixedStrongs(consumerKey, baseInfo, emittedKeys);
+    if (verdict.kind !== 'safe-recover') continue;
+    emittedKeys.add(consumerKey);
+    safeSuffixAliases.push({ key: consumerKey, value: verdict.value });
+    safeRecoverable.push(consumerKey);
+  }
+
+  const strongsEntries = [
+    ...exactEntries,
+    ...exactUnpadded,
+    ...baseEntries,
+    ...baseUnpadded,
+    ...safeSuffixAliases,
+  ];
 
   const baseline: Baseline = {
     lemma_rows: lemmaEntries.length,
     // Counts fold in the unpadded variants so their sum equals the emitted row
     // count (the gate's self-consistency oracle). exact-derived (as-attested +
-    // its unpadded spellings) vs base-derived (base + its unpadded spellings).
+    // its unpadded spellings) vs base-derived (base + its unpadded spellings) vs
+    // safe-suffix aliases.
     strongs_rows_exact: exactEntries.length + exactUnpadded.length,
     strongs_rows_base: baseEntries.length + baseUnpadded.length,
+    strongs_rows_alias: safeSuffixAliases.length,
     excluded: {
       empty: emptyLemmas.size,
       unpointed: unpointedLemmas.size,
       subsegment: 0, // emit already handles sub-segment finding; kept for schema parity
     },
+    safe_recoverable_strongs: safeRecoverable,
     library_version: LIBRARY_VERSION,
   };
 
@@ -382,14 +512,20 @@ export function buildTableSql(
 
 // ─── Main (filesystem; excluded from unit tests via entry guard) ──────────────
 function main(argv: string[]): number {
-  if (argv.length !== 2) {
-    console.error('usage: generate-lemma-translit.ts <in.tsv> <out-dir>');
+  if (argv.length < 2 || argv.length > 3) {
+    console.error('usage: generate-lemma-translit.ts <in.tsv> <out-dir> [consumer-keys.json]');
     return 2;
   }
-  const [inPath, outDir] = argv;
+  const [inPath, outDir, consumerKeysPath] = argv;
 
   const rows = parseInput(readFileSync(inPath, 'utf8'));
-  const { lemmaEntries, strongsEntries, baseline } = buildTables(rows);
+  // Consumer keys (the sense-suffixed OT Strong's the vocabulary/lemmas/themes
+  // tools query) drive safe-suffix alias recovery (decisions/0008). Optional: with
+  // no file, no aliases are emitted (identical to the pre-0008 output).
+  const consumerKeys = consumerKeysPath
+    ? extractConsumerKeys(readFileSync(consumerKeysPath, 'utf8'))
+    : [];
+  const { lemmaEntries, strongsEntries, baseline } = buildTables(rows, consumerKeys);
 
   // Loud apostrophe guard over every emitted transliteration value.
   assertNoAsciiApostrophe(lemmaEntries);
@@ -415,7 +551,8 @@ function main(argv: string[]): number {
   console.error(`lemma_translit_he rows: ${baseline.lemma_rows}`);
   console.error(
     `lemma_translit_he_strongs rows: ${strongsEntries.length} ` +
-      `(exact ${baseline.strongs_rows_exact}, base-only ${baseline.strongs_rows_base})`,
+      `(exact ${baseline.strongs_rows_exact}, base-only ${baseline.strongs_rows_base}, ` +
+      `safe-suffix alias ${baseline.strongs_rows_alias})`,
   );
   console.error(
     `excluded: empty ${baseline.excluded.empty}, unpointed ${baseline.excluded.unpointed}, subsegment ${baseline.excluded.subsegment}`,

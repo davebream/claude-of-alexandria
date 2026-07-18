@@ -94,16 +94,6 @@ jobs:
           mod.download_tsv(pathlib.Path(".cache"))
           PY
 
-      - name: Generate lemma_translit SQL in-runner
-        # emit derives (lemma, strongs, count) sharing the extractor's exact
-        # lemma+strongs parse; the generator writes lemma_translit_he.sql,
-        # lemma_translit_he_strongs.sql, and lemma-translit-baseline.json.
-        # Nothing is committed — outputs live in RUNNER_TEMP.
-        run: |
-          set -euo pipefail
-          python3 scripts/emit-lemma-strongs.py .cache/macula-hebrew.tsv "${RUNNER_TEMP}/emit.tsv"
-          npx tsx scripts/generate-lemma-translit.ts "${RUNNER_TEMP}/emit.tsv" "${RUNNER_TEMP}/out"
-
       - name: Fetch consumer keys from production D1
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -112,6 +102,8 @@ jobs:
         # pure function of its inputs. For OT, vocabulary.lemma and
         # thematic_keywords.lemma hold Strong's numbers (strongs-space); morphology
         # holds pointed lemmas (lemma-space). --json emits [{results:[{lemma:…}]}].
+        # This runs BEFORE generation (decisions/0008): the generator consumes the
+        # SAME strongs-keys.json to decide which sense-suffixed keys to alias.
         run: |
           set -euo pipefail
           npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
@@ -120,6 +112,20 @@ jobs:
           npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
             --command "SELECT DISTINCT lemma FROM morphology WHERE testament='ot' AND lemma <> ''" \
             > "${RUNNER_TEMP}/lemma-keys.json"
+
+      - name: Generate lemma_translit SQL in-runner
+        # emit derives (lemma, strongs, count) sharing the extractor's exact
+        # lemma+strongs parse; the generator writes lemma_translit_he.sql,
+        # lemma_translit_he_strongs.sql, and lemma-translit-baseline.json.
+        # The strongs-keys.json (consumer keys, fetched above) drives safe-suffix
+        # alias recovery (decisions/0008) — a sense-suffixed consumer key whose base
+        # attests exactly one pointed lemma gets an alias row. Nothing is committed
+        # — outputs live in RUNNER_TEMP.
+        run: |
+          set -euo pipefail
+          python3 scripts/emit-lemma-strongs.py .cache/macula-hebrew.tsv "${RUNNER_TEMP}/emit.tsv"
+          npx tsx scripts/generate-lemma-translit.ts \
+            "${RUNNER_TEMP}/emit.tsv" "${RUNNER_TEMP}/out" "${RUNNER_TEMP}/strongs-keys.json"
 
       - name: Coverage gate (BLOCKING — refuses the apply on any unexplained gap)
         # THE authoritative guard. Loads the generated SQL into a scratch sqlite

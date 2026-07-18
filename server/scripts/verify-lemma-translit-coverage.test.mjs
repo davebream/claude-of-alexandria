@@ -289,3 +289,75 @@ describe('coverage gate', () => {
     db.close();
   });
 });
+
+// Safe-suffix alias recovery (decisions/0008): the generator now emits alias
+// rows for singleton-base sense-suffixed keys, records them in the baseline, and
+// the gate blocks if one is DROPPED (a regression that would re-introduce a null).
+describe('coverage gate — safe-suffix aliases (decisions/0008)', () => {
+  it('(a) self-consistency folds the alias row count into the expected strongs total', () => {
+    // Three strongs rows: 2 exact/base + 1 alias. Baseline declares the split.
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H0001', 'H1121', 'H1121a']),
+    });
+    const a = checkSelfConsistency(
+      db,
+      baseline({ strongs_rows_exact: 2, strongs_rows_base: 0, strongs_rows_alias: 1 }),
+    );
+    db.close();
+    expect(a.ok).toBe(true);
+    expect(a.strongsActual).toBe(3);
+    expect(a.strongsExpected).toBe(3);
+  });
+
+  it('(b) a DROPPED safe-recoverable alias BLOCKS as a would-be-bug', () => {
+    // The base H1121 is present but the alias H1121a was dropped. Because H1121a
+    // is a declared safe-recoverable key, its absence is a regression, not honest
+    // null. (H0001 resolves directly, so the wholesale-empty floor does not fire.)
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H0001', 'H1121']),
+    });
+    const b = checkStrongsSpace(db, ['H0001', 'H1121a'], new Set(['H1121a']));
+    db.close();
+    expect(b.ok).toBe(false);
+    expect(b.wouldBeBug).toEqual(['H1121a']);
+    expect(b.explainedAbsence).toEqual([]);
+  });
+
+  it('(b) a present safe-recoverable alias resolves directly', () => {
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H0001', 'H1121a']),
+    });
+    const b = checkStrongsSpace(db, ['H0001', 'H1121a'], new Set(['H1121a']));
+    db.close();
+    expect(b.ok).toBe(true);
+    expect(b.directlyResolved).toBe(2);
+    expect(b.wouldBeBug).toEqual([]);
+  });
+
+  it('runChecks reads baseline.safe_recoverable_strongs and blocks a dropped alias', () => {
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H0001', 'H1121']), // H1121a dropped
+    });
+    const result = runChecks(db, {
+      baseline: baseline({
+        strongs_rows_exact: 2,
+        strongs_rows_base: 0,
+        strongs_rows_alias: 0,
+        safe_recoverable_strongs: ['H1121a'],
+      }),
+      strongsConsumerKeys: ['H0001', 'H1121a'],
+      lemmaConsumerKeys: [POINTED, 'רֵאשִׁית'],
+    });
+    db.close();
+    expect(result.pass).toBe(false);
+    expect(result.b.wouldBeBug).toEqual(['H1121a']);
+  });
+});

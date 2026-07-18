@@ -23,6 +23,8 @@ import {
   buildTableSql,
   chunkInsertStatements,
   assertNoAsciiApostrophe,
+  classifySuffixedStrongs,
+  extractConsumerKeys,
   LEMMA_COLUMNS,
   STRONGS_COLUMNS,
 } from './generate-lemma-translit.js';
@@ -293,5 +295,108 @@ describe('column locks', () => {
   it('lemma and strongs tables each declare two columns', () => {
     expect(LEMMA_COLUMNS.length).toBe(2);
     expect(STRONGS_COLUMNS.length).toBe(2);
+  });
+});
+
+// (k) Pure safe-suffix classifier (decisions/0008). A sense-suffixed consumer
+// key resolves to its base's transliteration ONLY when the base attests exactly
+// one pointed lemma; homograph / unattested / already-present all decline.
+describe('classifySuffixedStrongs (decisions/0008)', () => {
+  const baseInfo = new Map([
+    ['H1121', { translits: new Set(['bēn']), representative: 'bēn' }],
+    ['H8500', { translits: new Set(['rēʾšîṯ', 'ḥāḵmâ']), representative: 'ḥāḵmâ' }],
+  ]);
+  const emitted = new Set(['H7225a']);
+
+  it('singleton base -> safe-recover with the base value', () => {
+    expect(classifySuffixedStrongs('H1121a', baseInfo, emitted)).toEqual({
+      kind: 'safe-recover',
+      value: 'bēn',
+    });
+  });
+
+  it('homograph base (>=2 distinct translits) -> keep-null (homograph)', () => {
+    expect(classifySuffixedStrongs('H8500c', baseInfo, emitted)).toEqual({
+      kind: 'keep-null',
+      reason: 'homograph',
+    });
+  });
+
+  it('base attested by no pointed lemma -> keep-null (no-attested-base)', () => {
+    expect(classifySuffixedStrongs('H9999z', baseInfo, emitted)).toEqual({
+      kind: 'keep-null',
+      reason: 'no-attested-base',
+    });
+  });
+
+  it('a key with no trailing lowercase letter is not a suffix candidate', () => {
+    expect(classifySuffixedStrongs('H7225', baseInfo, emitted)).toEqual({ kind: 'not-suffixed' });
+  });
+
+  it('a key already emitted as an attested spelling declines (no shadow)', () => {
+    expect(classifySuffixedStrongs('H7225a', baseInfo, emitted)).toEqual({ kind: 'already-emitted' });
+  });
+});
+
+// (l) buildTables safe-suffix alias emission (decisions/0008): consumer keys are
+// the sense-suffixed OT Strong's the vocabulary/lemmas/themes tools query.
+describe('buildTables — safe-suffix alias recovery (decisions/0008)', () => {
+  it('emits an alias row for a singleton-base consumer key (H1121a -> bēn)', () => {
+    const rows = parseInput('בֵּן\tH1121\t5\n'); // base H1121 attests only בֵּן
+    const { strongsEntries, baseline } = buildTables(rows, ['H1121a']);
+    const alias = strongsEntries.find((e) => e.key === 'H1121a');
+    expect(alias).toBeDefined();
+    expect(alias!.value).toBe(transliterateLemma('בֵּן'));
+    expect(baseline.safe_recoverable_strongs).toContain('H1121a');
+    expect(baseline.strongs_rows_alias).toBe(1);
+  });
+
+  it('emits NO alias for a homograph-base consumer key (H8500c)', () => {
+    const rows = parseInput('רֵאשִׁית\tH8500a\t2\nחָכְמָה\tH8500b\t7\n'); // base H8500 = 2 lemmas
+    const { strongsEntries, baseline } = buildTables(rows, ['H8500c']);
+    expect(strongsEntries.find((e) => e.key === 'H8500c')).toBeUndefined();
+    expect(baseline.safe_recoverable_strongs).not.toContain('H8500c');
+    expect(baseline.strongs_rows_alias).toBe(0);
+  });
+
+  it('never shadows an attested exact key: a consumer key equal to an emitted key adds no duplicate', () => {
+    const rows = parseInput('רֵאשִׁית\tH7225a\t5\n'); // H7225a is an attested exact key
+    const { strongsEntries, baseline } = buildTables(rows, ['H7225a']);
+    expect(strongsEntries.filter((e) => e.key === 'H7225a')).toHaveLength(1);
+    expect(baseline.safe_recoverable_strongs).not.toContain('H7225a');
+    expect(baseline.strongs_rows_alias).toBe(0);
+  });
+
+  it('with no consumer keys, emits no aliases (backward compatible)', () => {
+    const rows = parseInput('בֵּן\tH1121\t5\n');
+    const { baseline } = buildTables(rows);
+    expect(baseline.strongs_rows_alias).toBe(0);
+    expect(baseline.safe_recoverable_strongs).toEqual([]);
+  });
+
+  it('baseline row-count partition (exact + base + alias) equals emitted strongs rows', () => {
+    const rows = parseInput('בֵּן\tH1121\t5\n');
+    const { strongsEntries, baseline } = buildTables(rows, ['H1121a']);
+    expect(
+      baseline.strongs_rows_exact + baseline.strongs_rows_base + baseline.strongs_rows_alias,
+    ).toBe(strongsEntries.length);
+  });
+});
+
+// (m) Consumer-key extraction — the imperative shell reads the same wrangler
+// `d1 execute --json` output the coverage gate consumes, plucking the `lemma`
+// column (where OT Strong's numbers live for vocabulary / thematic_keywords).
+describe('extractConsumerKeys (decisions/0008)', () => {
+  it('reads the wrangler d1 execute --json shape and plucks the lemma column', () => {
+    const json = '[{"results":[{"lemma":"H1121a"},{"lemma":"H834a"}],"success":true}]';
+    expect(extractConsumerKeys(json)).toEqual(['H1121a', 'H834a']);
+  });
+
+  it('reads a bare string array and dedupes', () => {
+    expect(extractConsumerKeys('["H1121a","H1121a","H834a"]')).toEqual(['H1121a', 'H834a']);
+  });
+
+  it('returns [] for empty input', () => {
+    expect(extractConsumerKeys('[]')).toEqual([]);
   });
 });

@@ -172,7 +172,10 @@ export function checkSelfConsistency(db, baseline) {
   const lemmaActual = Number(scalar(db, 'SELECT COUNT(*) FROM lemma_translit_he'));
   const strongsActual = Number(scalar(db, 'SELECT COUNT(*) FROM lemma_translit_he_strongs'));
   const lemmaExpected = baseline.lemma_rows;
-  const strongsExpected = baseline.strongs_rows_exact + baseline.strongs_rows_base;
+  const strongsExpected =
+    baseline.strongs_rows_exact +
+    baseline.strongs_rows_base +
+    (baseline.strongs_rows_alias ?? 0); // safe-suffix aliases (decisions/0008)
   const ok = lemmaActual === lemmaExpected && strongsActual === strongsExpected;
   return { ok, lemmaActual, lemmaExpected, strongsActual, strongsExpected };
 }
@@ -196,10 +199,12 @@ export function checkSelfConsistency(db, baseline) {
  *     does not attest). null is the correct honest answer here (never guess),
  *     so it is a known coverage boundary, not a bug.
  *
- * NOTE: a DOWNWARD base variant (base(H1004b)=H1004) is deliberately NOT treated
- * as a resolving sibling: H1004b is a distinct sense the corpus does not attest,
- * and serving it the base family's transliteration would be a guess. Only exact
- * padding-siblings (same digits + same suffix) count.
+ * NOTE: a DOWNWARD base variant (base(H1004b)=H1004) is NOT a padding-sibling and
+ * does not, on its own, make an absent suffixed key a bug. Under decisions/0008 the
+ * generator resolves such a key by emitting an explicit ALIAS row ONLY when the
+ * base attests exactly one pointed lemma; those keys arrive in `safeRecoverable`.
+ * An absent key that IS in `safeRecoverable` is a dropped-alias regression (blocks);
+ * a suffixed key that is NOT (homograph / unattested base) stays honest-null.
  *
  * FLOOR: the attestation-aware classification above has a blind spot — if the
  * strongs table ships WHOLLY EMPTY, every consumer key falls into
@@ -212,7 +217,7 @@ export function checkSelfConsistency(db, baseline) {
  * thousands resolve directly and the ~165 honest-null boundary never approaches
  * the total, so this floor only ever trips on a wholesale-empty/dropped table.
  */
-export function checkStrongsSpace(db, consumerStrongsKeys) {
+export function checkStrongsSpace(db, consumerStrongsKeys, safeRecoverable = new Set()) {
   const present = columnSet(db, 'SELECT strongs FROM lemma_translit_he_strongs');
   const wouldBeBug = [];
   const explainedAbsence = [];
@@ -221,6 +226,13 @@ export function checkStrongsSpace(db, consumerStrongsKeys) {
     if (present.has(k)) {
       directlyResolved += 1;
       continue; // resolves directly
+    }
+    // A declared safe-recoverable alias (decisions/0008) that is ABSENT is a
+    // dropped-alias regression: the generator emits it on green data, so its
+    // absence would re-introduce a null the corpus can resolve. Blocks.
+    if (safeRecoverable.has(k)) {
+      wouldBeBug.push(k);
+      continue;
     }
     const siblings = [pad(k), unpad(k)].filter((s) => s !== k);
     if (siblings.some((s) => present.has(s))) {
@@ -268,7 +280,8 @@ export function checkLemmaSpace(db, consumerLemmaKeys) {
  */
 export function runChecks(db, { baseline, strongsConsumerKeys, lemmaConsumerKeys }) {
   const a = checkSelfConsistency(db, baseline);
-  const b = checkStrongsSpace(db, strongsConsumerKeys);
+  const safeRecoverable = new Set(baseline.safe_recoverable_strongs ?? []);
+  const b = checkStrongsSpace(db, strongsConsumerKeys, safeRecoverable);
   const c = checkLemmaSpace(db, lemmaConsumerKeys);
   return { pass: a.ok && b.ok && c.ok, a, b, c };
 }

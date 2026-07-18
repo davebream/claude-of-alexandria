@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Hebrew transliteration now covers dozens of additional common Old Testament words in the vocabulary, lemma, and theme tools — words like בֵּן (*bēn*, "son"), אֲשֶׁר (*ʾăšer*, "who/which"), and עַל (*ʿal*, "on") that previously came back blank because their sense-tagged Strong's number did not match the transliteration lookup. Coverage is added only where the underlying Strong's number maps to a single, unambiguous word, so a transliteration is never guessed; genuinely ambiguous or unattested entries stay blank as before.
 - The `lemma_translit` field returned by the word-length tools (`query_morphology`, `query_lemmas`, `query_vocabulary`, `query_theme`, `query_themes_for_lemmas`) now documents in its own schema when and why the value can be `null` — an unpointed (consonantal) lemma, or a Strong's number that MACULA does not attest with a pointed lemma — and states that `null` is a defined, honest outcome, not an error and not a sign the word is missing from the text. Readers and downstream tools no longer have to guess whether a blank transliteration signals a bug.
 
 ## [3.5.0] - 2026-07-18
