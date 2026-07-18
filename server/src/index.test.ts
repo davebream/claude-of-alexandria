@@ -166,4 +166,37 @@ describe('runCachedToolCall', () => {
 
     expect(result).toEqual(FAKE_RESULT);
   });
+
+  it('caches fire-and-forget and returns the result when no ExecutionContext is present', async () => {
+    const { putCalls } = stubCache();
+    const handler = vi.fn(async () => FAKE_RESULT);
+
+    // No ctx on reqCtx — exercises the `else void put` fallback branch (local dev / non-fetch callers).
+    const result = await runCachedToolCall('t', { a: 1 }, handler, { cacheVersion: 'v5' });
+
+    expect(result).toEqual(FAKE_RESULT);
+    expect(handler).toHaveBeenCalledTimes(1);
+    // The put is scheduled fire-and-forget; flush the microtask queue then confirm it ran.
+    await Promise.resolve();
+    expect(putCalls).toHaveLength(1);
+    expect(putCalls[0]!.url).toContain('/v5/');
+  });
+
+  it('swallows an async cache.put rejection and still returns the handler result', async () => {
+    const cache = {
+      match: vi.fn(async (_req: Request) => undefined),
+      put: vi.fn(async (_req: Request, _res: Response) => {
+        throw new Error('put failed');
+      }),
+    };
+    vi.stubGlobal('caches', { default: cache });
+    const ctx = fakeExecutionContext();
+    const handler = vi.fn(async () => FAKE_RESULT);
+
+    const result = await runCachedToolCall('t', { a: 1 }, handler, { ctx, cacheVersion: 'v5' });
+
+    expect(result).toEqual(FAKE_RESULT);
+    // The scheduled put rejects, but the inner `.catch(() => {})` swallows it — awaiting must not throw.
+    await expect(Promise.all(ctx.waited)).resolves.toBeDefined();
+  });
 });
