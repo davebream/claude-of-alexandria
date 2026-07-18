@@ -49,6 +49,7 @@
  * report must state this and spot-check a sample.
  */
 
+import { readFileSync, writeFileSync } from 'fs';
 import {
   baseStrongs,
   unpad,
@@ -315,7 +316,168 @@ export function renderCensusReport(result: CensusResult, meta: CensusReportMeta)
   return lines.join('\n');
 }
 
-// Re-exported for the runner (main(), added in a later task) and for callers
-// who want the generator's own pure input-parsing helpers without a second
-// import specifier.
+// ─── Runner / data acquisition (C2) ────────────────────────────────────────────
+
+/**
+ * Extract the FULL shipped `lemma_translit_he_strongs` key set from a wrangler
+ * `d1 execute --json` payload (or a bare string array), plucking the `strongs`
+ * column. Mirrors `extractConsumerKeys` in generate-lemma-translit.ts, which
+ * plucks `lemma` instead — the two consumer namespaces use different column
+ * names for the same JSON shape.
+ */
+export function extractShippedStrongsKeys(jsonText: string): string[] {
+  const json = JSON.parse(jsonText) as unknown;
+  const values: unknown[] = [];
+  if (Array.isArray(json)) {
+    if (json.length === 0) return [];
+    if (typeof json[0] === 'string') {
+      values.push(...json);
+    } else if (json[0] && Array.isArray((json[0] as { results?: unknown }).results)) {
+      for (const stmt of json as Array<{ results?: Array<Record<string, unknown>> }>) {
+        for (const row of stmt.results ?? []) values.push(row.strongs);
+      }
+    } else {
+      for (const row of json as Array<Record<string, unknown>>) values.push(row?.strongs);
+    }
+  } else if (json && Array.isArray((json as { results?: unknown }).results)) {
+    for (const row of (json as { results: Array<Record<string, unknown>> }).results) {
+      values.push(row.strongs);
+    }
+  } else {
+    throw new Error('Unrecognized shipped-strongs JSON shape');
+  }
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const v of values) {
+    if (v === null || v === undefined) continue;
+    const s = String(v);
+    if (seen.has(s)) continue;
+    seen.add(s);
+    out.push(s);
+  }
+  return out;
+}
+
+function printUsage(): void {
+  console.error(
+    'usage: census-lemma-translit-nulls.ts --emit <emit.tsv> --consumer-keys <keys.json> ' +
+      '--shipped-strongs <strongs.json> --out <report.md>',
+  );
+  console.error('');
+  console.error('Live data acquisition (documented, not run automatically by this script):');
+  console.error('  1. Regenerate emit.tsv from .cache/macula-hebrew.tsv:');
+  console.error('     python3 server/scripts/emit-lemma-strongs.py .cache/macula-hebrew.tsv <emit.tsv>');
+  console.error('  2. Fetch consumer keys (bypasses the 24h Worker response cache, OR-10):');
+  console.error(
+    '     wrangler d1 execute claude-of-alexandria --remote --json --command ' +
+      '"SELECT DISTINCT lemma FROM vocabulary WHERE testament=\'ot\' ' +
+      'UNION SELECT DISTINCT lemma FROM thematic_keywords WHERE testament=\'ot\'" > consumer-keys.json',
+  );
+  console.error('  3. Fetch the full shipped strongs key set:');
+  console.error(
+    '     wrangler d1 execute claude-of-alexandria --remote --json --command ' +
+      '"SELECT strongs FROM lemma_translit_he_strongs" > shipped-strongs.json',
+  );
+}
+
+function parseArgs(argv: string[]): Record<string, string> {
+  const args: Record<string, string> = {};
+  for (let i = 0; i < argv.length; i += 2) {
+    const flag = argv[i];
+    if (!flag || !flag.startsWith('--')) {
+      throw new Error(`Expected a --flag, got ${JSON.stringify(flag)}`);
+    }
+    const value = argv[i + 1];
+    if (value === undefined) throw new Error(`Missing value for ${flag}`);
+    args[flag.slice(2)] = value;
+  }
+  return args;
+}
+
+/**
+ * CLI entry point (C2). Reads fixture-style inputs (explicit file paths — the
+ * unit-test / offline path; see the docblock's live-acquisition commands for
+ * the credentialed path) and invokes `censusNulls`. Fails closed: on a missing/
+ * unreadable input file OR a `floorTripped` degenerate input, it prints a
+ * clear message and writes NO report — a truncated census is worse than none.
+ *
+ * `baseInfo`, `emittedKeys`, and `safeRecoverable` all come from a SINGLE
+ * `buildTables(emitRows, consumerKeys)` call (RC-1) — never a separately
+ * generated `--safe-recoverable` file — so the recovered set the census diffs
+ * against is the exact set this run computed, never a value that could drift.
+ */
+export function main(argv: string[]): number {
+  let args: Record<string, string>;
+  try {
+    args = parseArgs(argv);
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : err);
+    printUsage();
+    return 2;
+  }
+
+  const { emit, out } = args;
+  const consumerKeysPath = args['consumer-keys'];
+  const shippedStrongsPath = args['shipped-strongs'];
+  if (!emit || !consumerKeysPath || !shippedStrongsPath || !out) {
+    printUsage();
+    return 2;
+  }
+
+  let emitContent: string;
+  let consumerKeysContent: string;
+  let shippedStrongsContent: string;
+  try {
+    emitContent = readFileSync(emit, 'utf8');
+    consumerKeysContent = readFileSync(consumerKeysPath, 'utf8');
+    shippedStrongsContent = readFileSync(shippedStrongsPath, 'utf8');
+  } catch (err) {
+    console.error('Fatal: could not read an input file —', err instanceof Error ? err.message : err);
+    console.error('Refusing to write a partial report.');
+    return 1;
+  }
+
+  const emitRows = parseInput(emitContent);
+  const consumerKeys = extractConsumerKeys(consumerKeysContent);
+  const shippedStrongsKeys = new Set(extractShippedStrongsKeys(shippedStrongsContent));
+
+  const { baseInfo, emittedKeys, baseline } = buildTables(emitRows, consumerKeys);
+  const result = censusNulls({
+    emitRows,
+    consumerKeys,
+    shippedStrongsKeys,
+    baseInfo,
+    emittedKeys,
+    safeRecoverable: baseline.safe_recoverable_strongs,
+  });
+
+  if (result.floorTripped) {
+    console.error(
+      'FLOOR TRIPPED: the consumer-key set is empty, or zero keys resolve directly against ' +
+        'the shipped strongs table. This is a degenerate input (wrong DB binding, mis-scoped ' +
+        'token, or a dropped/empty table), not a clean census. Refusing to write a report.',
+    );
+    return 1;
+  }
+
+  const report = renderCensusReport(result, {
+    generatedAt: new Date().toISOString().slice(0, 10),
+  });
+  writeFileSync(out, report, 'utf8');
+  console.error(`Census report written to ${out}`);
+  console.error(`recovered=${result.recoveredCount} residual=${result.residualCount}`);
+  return 0;
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  try {
+    process.exit(main(process.argv.slice(2)));
+  } catch (err) {
+    console.error('Fatal error:', err instanceof Error ? err.message : err);
+    process.exit(1);
+  }
+}
+
+// Re-exported for callers who want the generator's own pure input-parsing
+// helpers without a second import specifier.
 export { parseInput, extractConsumerKeys, buildTables };

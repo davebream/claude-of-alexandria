@@ -7,9 +7,12 @@
  * buckets, not merely field presence, per plan-review CR-1/RC-2/RC-4.
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
+import { mkdtempSync, writeFileSync, existsSync, rmSync, readFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 import { parseInput, buildTables } from './generate-lemma-translit.js';
-import { censusNulls, renderCensusReport } from './census-lemma-translit-nulls.js';
+import { censusNulls, renderCensusReport, main } from './census-lemma-translit-nulls.js';
 
 // (a) Homograph base -> residual null key lands in `homograph`.
 describe('censusNulls — homograph bucket', () => {
@@ -387,5 +390,87 @@ describe('renderCensusReport', () => {
     };
     const report = renderCensusReport(result, { generatedAt: '2026-07-18' });
     expect(report).toContain('H1121a');
+  });
+});
+
+// Task 5 — main() runner: fixture-driven CLI, fail-closed on missing file / floorTripped.
+describe('main() — census runner', () => {
+  let dir: string;
+
+  afterEach(() => {
+    if (dir) rmSync(dir, { recursive: true, force: true });
+  });
+
+  function writeFixtures(overrides: { consumerKeys?: unknown; shippedStrongs?: unknown } = {}) {
+    dir = mkdtempSync(join(tmpdir(), 'census-runner-'));
+    const emitPath = join(dir, 'emit.tsv');
+    const consumerKeysPath = join(dir, 'consumer-keys.json');
+    const shippedStrongsPath = join(dir, 'shipped-strongs.json');
+    const outPath = join(dir, 'report.md');
+
+    writeFileSync(emitPath, 'בֵּן\tH1121\t5\n', 'utf8');
+    writeFileSync(
+      consumerKeysPath,
+      JSON.stringify(overrides.consumerKeys ?? ['H1121a']),
+      'utf8',
+    );
+    writeFileSync(
+      shippedStrongsPath,
+      JSON.stringify(overrides.shippedStrongs ?? ['H1121', 'H1121a']),
+      'utf8',
+    );
+
+    return { emitPath, consumerKeysPath, shippedStrongsPath, outPath };
+  }
+
+  it('fixture inputs produce a report and exit 0', () => {
+    const { emitPath, consumerKeysPath, shippedStrongsPath, outPath } = writeFixtures();
+    const code = main([
+      '--emit',
+      emitPath,
+      '--consumer-keys',
+      consumerKeysPath,
+      '--shipped-strongs',
+      shippedStrongsPath,
+      '--out',
+      outPath,
+    ]);
+    expect(code).toBe(0);
+    expect(existsSync(outPath)).toBe(true);
+    expect(readFileSync(outPath, 'utf8')).toContain('recovered');
+  });
+
+  it('a missing input file exits non-zero and writes no report', () => {
+    const { consumerKeysPath, shippedStrongsPath, outPath } = writeFixtures();
+    const code = main([
+      '--emit',
+      join(dir, 'does-not-exist.tsv'),
+      '--consumer-keys',
+      consumerKeysPath,
+      '--shipped-strongs',
+      shippedStrongsPath,
+      '--out',
+      outPath,
+    ]);
+    expect(code).not.toBe(0);
+    expect(existsSync(outPath)).toBe(false);
+  });
+
+  it('a floorTripped (degenerate) input exits non-zero and writes no report', () => {
+    const { emitPath, consumerKeysPath, shippedStrongsPath, outPath } = writeFixtures({
+      consumerKeys: [],
+    });
+    const code = main([
+      '--emit',
+      emitPath,
+      '--consumer-keys',
+      consumerKeysPath,
+      '--shipped-strongs',
+      shippedStrongsPath,
+      '--out',
+      outPath,
+    ]);
+    expect(code).not.toBe(0);
+    expect(existsSync(outPath)).toBe(false);
   });
 });
