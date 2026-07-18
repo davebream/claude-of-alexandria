@@ -100,13 +100,20 @@ transliteration backfill (a reseed does not auto-re-fire the completeness
 regeneration). After this regeneration, treat `data.sql`'s vocabulary rows as
 vestigial; a future reseed must be followed by re-running this procedure.
 
-## Automation (proposed — not yet wired)
+## Automation
 
-A dedicated `workflow_dispatch` GitHub Actions workflow can run steps 1–5
-in-runner and apply to production, mirroring `.github/workflows/backfill-transliteration.yml`
+`.github/workflows/regenerate-vocabulary.yml` runs steps 1–5 in-runner and
+applies to production, mirroring `.github/workflows/backfill-transliteration.yml`
 (clone pinned corpora → extractors at min=1 → `generate-vocabulary-sql.py` →
-per-file `wrangler d1 execute` loop → coverage-gate on μεταξύ-in-John). It is a
-**destructive full-table replace on production D1 with no human in the loop
-(`decisions/0004`)**, so it is intentionally left for a maintainer to review and
-commit rather than being stood up automatically. Ask the repo owner before
-wiring it.
+per-file `wrangler d1 execute` loop → coverage-gate on μεταξύ-in-John and
+H7225-in-Genesis).
+
+It is a **destructive full-table replace on production D1 with no human in the
+loop (`decisions/0004`)**, so — unlike the UPDATE-only transliteration backfill —
+it has **no `push:` trigger** and fires **only** via `workflow_dispatch`. To run
+it: Actions → *Regenerate Vocabulary* → *Run workflow*, type
+`REGENERATE-VOCABULARY` into the confirm field (an empty/wrong value fails fast
+before any clone), and review/override the pinned corpus SHAs. Requires the
+`CLOUDFLARE_API_TOKEN` repo secret (already used by the transliteration backfill).
+
+The manual steps above remain the fallback if the workflow is unavailable.
