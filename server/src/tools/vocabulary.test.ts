@@ -333,3 +333,22 @@ describe('query_vocabulary — OT Hebrew lemma_translit via lemma_translit_he_st
     expect(body.lemmas[0].lemma_translit).toBe('agapē');
   });
 });
+
+// ─── lemma_translit null semantics (schema documentation) ─────────────────────
+// A consumer that sees `lemma_translit: null` must be able to learn from the
+// schema alone that null is a defined outcome (not an error), and why it occurs.
+describe('vocabulary — lemma_translit documents null semantics', () => {
+  it('LemmaEntry states null, reassures it is not an error, and gives the cause', () => {
+    const d = (LemmaEntry.shape.lemma_translit.description ?? '').toLowerCase();
+    expect(d).toContain('null');
+    expect(d).toContain('not an error');
+    expect(d).toContain('attest');
+  });
+
+  it('ClusterEntry states null, reassures it is not an error, and gives the cause', () => {
+    const d = (ClusterEntry.shape.lemma_translit.description ?? '').toLowerCase();
+    expect(d).toContain('null');
+    expect(d).toContain('not an error');
+    expect(d).toContain('attest');
+  });
+});

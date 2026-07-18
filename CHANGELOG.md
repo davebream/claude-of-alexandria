@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The version reported by the MCP server's handshake (`serverInfo.version`) and its `/health` endpoint is now taken from the server package version, so it always matches the released version. Previously it was a hardcoded string that release bumps did not touch, so both silently reported an old version (stuck at `3.4.0`) — making it impossible to tell from the live server which version was actually deployed.
 
+### Changed
+
+- The `lemma_translit` field returned by the word-length tools (`query_morphology`, `query_lemmas`, `query_vocabulary`, `query_theme`, `query_themes_for_lemmas`) now documents in its own schema when and why the value can be `null` — an unpointed (consonantal) lemma, or a Strong's number that MACULA does not attest with a pointed lemma — and states that `null` is a defined, honest outcome, not an error and not a sign the word is missing from the text. Readers and downstream tools no longer have to guess whether a blank transliteration signals a bug.
+
 ## [3.5.0] - 2026-07-18
 
 ### Added

@@ -50,8 +50,14 @@ export const MorphologyWordEntry = z.object({
   // text_translit: all levels. lemma_translit: syntax/full/lexical only (absent at basic — no join).
   text_translit: z.string().nullable().optional(),
   lemma_translit: z.string().nullable().optional().describe(
-    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). '
-    + 'Greek (NT): source-read from OpenGNT.'
+    "Transliteration of the lemma. Hebrew (OT): derived — deterministic SBL "
+    + "rendering of the pointed lemma, keyed by the pointed lemma itself "
+    + "(decisions/0007). Greek (NT): source-read from OpenGNT. "
+    + "May be null: for OT when the lemma is unpointed (a consonantal skeleton "
+    + "with no niqqud), which cannot be rendered without guessing; for NT when the "
+    + "lexicon has no match. (Absent — not null — at fields='basic', which performs "
+    + "no lexicon join.) Null is a defined honest boundary, not an error, and does "
+    + "not mean the word is absent from the text."
   ),
 });
 

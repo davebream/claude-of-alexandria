@@ -311,3 +311,22 @@ describe('query_lemmas — lexicon error path degrades to null', () => {
     expect(body.lemmas[0].lemma_translit).toBeNull();
   });
 });
+
+// ─── lemma_translit null semantics (schema documentation) ─────────────────────
+// A consumer that sees `lemma_translit: null` must be able to learn from the
+// schema alone that null is a defined outcome (not an error), and why it occurs.
+describe('DistributionEntry — lemma_translit documents null semantics', () => {
+  const d = (DistributionEntry.shape.lemma_translit.description ?? '').toLowerCase();
+
+  it('states the value can be null', () => {
+    expect(d).toContain('null');
+  });
+
+  it('reassures that null is not an error', () => {
+    expect(d).toContain('not an error');
+  });
+
+  it('explains the honest-null cause (no attested pointed lemma)', () => {
+    expect(d).toContain('attest');
+  });
+});

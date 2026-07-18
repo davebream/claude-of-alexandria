@@ -24,7 +24,14 @@ export const LemmaEntry = z.object({
   // omitted (AC-10). Testament-aware source: NT lemmas read lexicon_lsj, OT
   // lemmas (Strong's numbers) read lemma_translit_he_strongs.
   lemma_translit: z.string().nullable().optional().describe(
-    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+    "Transliteration of the lemma. Hebrew (OT): derived — deterministic SBL "
+    + "rendering of the pointed lemma, keyed by Strong's number (decisions/0007). "
+    + "Greek (NT): source-read from OpenGNT. "
+    + "May be null: for OT when no pointed lemma is attested for the Strong's "
+    + "number — an unpointed/consonantal-only lemma, or a sense-suffixed or Aramaic "
+    + "Strong's that MACULA does not attest; for NT when the lexicon has no match. "
+    + "Null is a defined honest boundary, not an error, and does not mean the word "
+    + "is absent from the text."
   ),
 });
 
@@ -34,7 +41,14 @@ export const ClusterEntry = z.object({
   chapter_range: z.string(),
   total_occurrences: z.number(),
   lemma_translit: z.string().nullable().optional().describe(
-    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+    "Transliteration of the lemma. Hebrew (OT): derived — deterministic SBL "
+    + "rendering of the pointed lemma, keyed by Strong's number (decisions/0007). "
+    + "Greek (NT): source-read from OpenGNT. "
+    + "May be null: for OT when no pointed lemma is attested for the Strong's "
+    + "number — an unpointed/consonantal-only lemma, or a sense-suffixed or Aramaic "
+    + "Strong's that MACULA does not attest; for NT when the lexicon has no match. "
+    + "Null is a defined honest boundary, not an error, and does not mean the word "
+    + "is absent from the text."
   ),
 });
 

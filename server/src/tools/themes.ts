@@ -34,7 +34,14 @@ export const ThemesOutputSchema = {
   // (AC-10) — same uniform rule as the value-shaped tools' `lemma_translit`/
   // `word_translit` siblings.
   lemma_translit: z.record(z.string(), z.string().nullable()).describe(
-    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+    "Map of lemma → transliteration. Hebrew (OT): derived — deterministic SBL "
+    + "rendering of the pointed lemma, keyed by Strong's number (decisions/0007). "
+    + "Greek (NT): source-read from OpenGNT. "
+    + "A value may be null: for OT when no pointed lemma is attested for the "
+    + "Strong's number — an unpointed/consonantal-only lemma, or a sense-suffixed "
+    + "or Aramaic Strong's that MACULA does not attest; for NT when the lexicon "
+    + "has no match. Null is a defined honest boundary, not an error, and does not "
+    + "mean the word is absent from the text."
   ),
 };
 

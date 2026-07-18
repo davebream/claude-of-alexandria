@@ -385,3 +385,23 @@ describe('query_theme_distribution — truncated response still covers every sur
     }
   });
 });
+
+// ─── lemma_translit null semantics (schema documentation) ─────────────────────
+// The lemma_translit map carries `null` values for lemmas with no attested
+// pointed lemma. A consumer must be able to learn from the schema alone that
+// null is a defined outcome (not an error), and why it occurs.
+describe('ThemeDistributionOutputSchema — lemma_translit documents null semantics', () => {
+  const d = (ThemeDistributionOutputSchema.lemma_translit.description ?? '').toLowerCase();
+
+  it('states values can be null', () => {
+    expect(d).toContain('null');
+  });
+
+  it('reassures that null is not an error', () => {
+    expect(d).toContain('not an error');
+  });
+
+  it('explains the honest-null cause (no attested pointed lemma)', () => {
+    expect(d).toContain('attest');
+  });
+});

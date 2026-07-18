@@ -395,3 +395,23 @@ describe('query_morphology — parameterized binding regression (apostrophe safe
     expect(params as unknown[]).toContain(filterValue);
   });
 });
+
+// ─── lemma_translit null semantics (schema documentation) ─────────────────────
+// morphology keys translit on the POINTED LEMMA (not the Strong's number), so
+// its honest-null cause differs: an unpointed (consonantal) lemma has no derived
+// rendering. A consumer must be able to learn this from the schema alone.
+describe('MorphologyWordEntry — lemma_translit documents null semantics', () => {
+  const d = (MorphologyWordEntry.shape.lemma_translit.description ?? '').toLowerCase();
+
+  it('states the value can be null', () => {
+    expect(d).toContain('null');
+  });
+
+  it('reassures that null is not an error', () => {
+    expect(d).toContain('not an error');
+  });
+
+  it('explains the honest-null cause (unpointed lemma)', () => {
+    expect(d).toContain('unpointed');
+  });
+});
