@@ -45,6 +45,51 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: npx wrangler d1 migrations apply claude-of-alexandria --remote
 
+      # Warn-only drift signal for the derived Hebrew lemma_translit tables.
+      # The authoritative, blocking coverage gate lives in backfill-lemma-translit.yml;
+      # this step is purely informational and MUST NEVER fail the deploy (belt-and-suspenders:
+      # continue-on-error AND an always-`exit 0` shell). It catches the case where a morphology
+      # reseed or MACULA upgrade left the tables stale — the backfill does not auto-refire then.
+      - name: Hebrew translit coverage drift check (warn-only, never blocks deploy)
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set +e
+          echo "== Hebrew translit coverage drift check (informational; NEVER blocks the deploy) =="
+
+          # strongs arm: distinct OT vocabulary + thematic_keywords lemmas (Strong's numbers for OT)
+          # with no matching row in lemma_translit_he_strongs (consumed by query_lemmas/vocabulary/theme).
+          strongs_json=$(npx wrangler d1 execute claude-of-alexandria --remote --json \
+            --command "SELECT COUNT(*) AS n FROM (SELECT lemma FROM vocabulary WHERE testament='ot' AND lemma NOT IN (SELECT strongs FROM lemma_translit_he_strongs) UNION SELECT lemma FROM thematic_keywords WHERE testament='ot' AND lemma NOT IN (SELECT strongs FROM lemma_translit_he_strongs)) t;" 2>/dev/null)
+
+          # lemma arm: distinct non-empty OT morphology lemmas (pointed Hebrew) with no matching
+          # row in lemma_translit_he (consumed by query_morphology).
+          lemma_json=$(npx wrangler d1 execute claude-of-alexandria --remote --json \
+            --command "SELECT COUNT(*) AS n FROM (SELECT DISTINCT lemma FROM morphology WHERE testament='ot' AND lemma <> '' AND lemma NOT IN (SELECT lemma FROM lemma_translit_he)) t;" 2>/dev/null)
+
+          strongs_missing=$(printf '%s' "$strongs_json" | grep -oE '"n"[[:space:]]*:[[:space:]]*[0-9]+' | head -n1 | grep -oE '[0-9]+')
+          lemma_missing=$(printf '%s' "$lemma_json" | grep -oE '"n"[[:space:]]*:[[:space:]]*[0-9]+' | head -n1 | grep -oE '[0-9]+')
+          strongs_missing=${strongs_missing:-unknown}
+          lemma_missing=${lemma_missing:-unknown}
+
+          echo "strongs-arm (OT vocabulary+thematic_keywords lemmas missing a lemma_translit_he_strongs row): ${strongs_missing}"
+          echo "lemma-arm   (OT morphology lemmas missing a lemma_translit_he row):                            ${lemma_missing}"
+          echo "These counts are INFORMATIONAL. A nonzero count is EXPECTED at steady state — there is a known"
+          echo "coverage boundary (unpointed lemmas, sense-suffixed/Aramaic strongs MACULA does not attest)."
+          echo "Baseline on current data is roughly ~165 (strongs-arm) and ~200 (lemma-arm). A LARGE increase"
+          echo "over that baseline is the drift signal that the backfill needs re-running."
+
+          warn=0
+          case "$strongs_missing" in ''|*[!0-9]*) : ;; *) [ "$strongs_missing" -gt 500 ] && warn=1 ;; esac
+          case "$lemma_missing"   in ''|*[!0-9]*) : ;; *) [ "$lemma_missing"   -gt 600 ] && warn=1 ;; esac
+          if [ "$warn" = "1" ]; then
+            echo "::warning::Hebrew translit coverage far exceeds the known baseline — the lemma_translit_he / lemma_translit_he_strongs tables look stale or empty (a morphology reseed or MACULA upgrade drops them without auto-refiring the backfill). REPAIR: manually trigger the 'backfill-lemma-translit.yml' workflow via workflow_dispatch to regenerate them."
+          fi
+
+          # This step is a post-hoc drift signal only; it must never gate or fail the deploy.
+          exit 0
+
       - name: Deploy to Cloudflare Workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
