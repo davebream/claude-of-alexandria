@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The version reported by the MCP server's handshake (`serverInfo.version`) and its `/health` endpoint is now taken from the server package version, so it always matches the released version. Previously it was a hardcoded string that release bumps did not touch, so both silently reported an old version (stuck at `3.4.0`) — making it impossible to tell from the live server which version was actually deployed.
+
 ## [3.5.0] - 2026-07-18
 
 ### Added

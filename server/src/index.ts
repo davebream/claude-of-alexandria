@@ -27,6 +27,10 @@ import { parallelText, ParallelTextInputSchema, ParallelTextOutputSchema, type P
 import { confessionalLookup, ConfessionalLookupInputSchema, ConfessionalLookupOutputSchema, type ConfessionalLookupInput } from './tools/confessional-lookup.js';
 import { liturgicalLookup, LiturgicalLookupInputSchema, LiturgicalLookupOutputSchema, type LiturgicalLookupInput } from './tools/liturgical-lookup.js';
 import { queryControversies, ControversiesInputSchema, ControversiesOutputSchema, type ControversiesInput } from './tools/controversies.js';
+// Single source of truth for the served version. Bundled in at build time from
+// package.json, which the release commit bumps — so serverInfo/health can never
+// silently drift from the plugin version again.
+import { version as SERVER_VERSION } from '../package.json';
 
 // ─── Rich tool descriptions ───────────────────────────────────────────────────
 
@@ -585,7 +589,7 @@ async function cachedToolCall(
 // per request is cheap (constructor only sets up handler maps, no I/O).
 function createServer(): McpServer {
   const server = new McpServer(
-    { name: 'claude-of-alexandria-mcp', version: '3.4.0' },
+    { name: 'claude-of-alexandria-mcp', version: SERVER_VERSION },
     { capabilities: { tools: {} } }
   );
 
@@ -1055,12 +1059,12 @@ export default {
       try {
         await env.DB.prepare('SELECT 1').first();
         return new Response(
-          JSON.stringify({ status: 'ok', version: '3.4.0', db: 'connected' }),
+          JSON.stringify({ status: 'ok', version: SERVER_VERSION, db: 'connected' }),
           { headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       } catch {
         return new Response(
-          JSON.stringify({ status: 'degraded', version: '3.4.0', db: 'unreachable' }),
+          JSON.stringify({ status: 'degraded', version: SERVER_VERSION, db: 'unreachable' }),
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }
