@@ -143,13 +143,21 @@ def extract_book_lemmas(morphgnt_path: Path, book_code: str) -> Dict:
     }
 
 
-def filter_significant_lemmas(lemmas: Dict, min_occurrences: int = 3) -> Dict:
+def filter_significant_lemmas(lemmas: Dict, min_occurrences: int = 1) -> Dict:
     """
-    Filter to lemmas with significant occurrence counts.
+    Filter to lemmas with at least ``min_occurrences`` in this book.
+
+    Default is 1 (keep everything). The extraction is PER BOOK, so any
+    threshold above 1 silently drops rare-per-book lemmas from the vocabulary
+    table — which is what powers query_vocabulary and (for OT) query_lemmas.
+    A threshold of 3 caused μεταξύ (once in John 4:31) to be excluded, making
+    the tools report 0 occurrences of μεταξύ in John. Keep the default at 1 so
+    the seeded table is a complete per-book/chapter frequency index; callers
+    filter by frequency at query time instead.
 
     Args:
         lemmas: Dict of lemma data
-        min_occurrences: Minimum total occurrences to include
+        min_occurrences: Minimum total occurrences in this book to include
 
     Returns:
         Filtered dict
@@ -256,8 +264,9 @@ def main():
     parser.add_argument(
         '--min-occurrences', '-n',
         type=int,
-        default=3,
-        help='Minimum occurrences to include lemma (default: 3)'
+        default=1,
+        help='Minimum per-book occurrences to include lemma (default: 1 = complete; '
+             'values >1 drop rare-per-book lemmas and make the tools under-report)'
     )
     parser.add_argument(
         '--book', '-b',

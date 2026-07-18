@@ -99,13 +99,38 @@ async function queryForTestament(
   const displayMap = getDisplayMap();
   const placeholders = lemmas.map(() => '?').join(', ');
 
-  const rows = await query(
-    `SELECT v.lemma, v.book, v.chapter, v.frequency
-     FROM vocabulary v
-     WHERE v.testament = ? AND v.lemma IN (${placeholders})
-     ORDER BY v.lemma, v.book, v.chapter`,
-    [testament, ...lemmas]
-  );
+  // NT distribution is read from the complete, unfiltered `morphology` table
+  // (word-level ground truth), NOT the precomputed `vocabulary` table. The
+  // vocabulary ETL applies a per-book significance threshold (min_occurrences)
+  // and silently drops rare-per-book lemmas — e.g. μεταξύ occurs once in
+  // John 4:31, so the min-3 filter excluded it and the tool reported 0
+  // occurrences in John. COUNT(*) over morphology yields exact per-book/chapter
+  // frequencies with no threshold. NT lemma keys are Greek lexical forms, which
+  // match morphology.lemma byte-for-byte (and match query_morphology's output,
+  // the documented source of these keys).
+  //
+  // OT still reads `vocabulary`: OT keys are Strong's numbers whose format
+  // (unpadded, base sense — "H430", "H7225") matches vocabulary.lemma but NOT
+  // morphology.strongs (zero-padded, sense-suffixed — "H0430", "H1886a").
+  // Reconciling those formats is a separate effort (cf. decisions/0007–0008);
+  // OT completeness is delivered by lowering the vocabulary ETL threshold and
+  // reseeding, not by repointing here.
+  const rows = testament === 'nt'
+    ? await query(
+        `SELECT lemma, book, chapter, COUNT(*) AS frequency
+         FROM morphology
+         WHERE testament = ? AND lemma IN (${placeholders})
+         GROUP BY lemma, book, chapter
+         ORDER BY lemma, book, chapter`,
+        [testament, ...lemmas]
+      )
+    : await query(
+        `SELECT v.lemma, v.book, v.chapter, v.frequency
+         FROM vocabulary v
+         WHERE v.testament = ? AND v.lemma IN (${placeholders})
+         ORDER BY v.lemma, v.book, v.chapter`,
+        [testament, ...lemmas]
+      );
 
   // Group rows by lemma → book → chapter
   const grouped: Record<string, Record<string, Record<string, number>>> = {};

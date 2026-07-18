@@ -221,13 +221,21 @@ def extract_book_lemmas_by_verse(morphhb_path: Path, book_code: str) -> Dict:
     }
 
 
-def filter_significant_lemmas(lemmas: Dict, min_occurrences: int = 5) -> Dict:
+def filter_significant_lemmas(lemmas: Dict, min_occurrences: int = 1) -> Dict:
     """
-    Filter to lemmas with significant occurrence counts.
+    Filter to lemmas with at least ``min_occurrences`` in this book.
+
+    Default is 1 (keep everything). The extraction is PER BOOK, so any
+    threshold above 1 silently drops rare-per-book lemmas from the vocabulary
+    table that powers query_vocabulary and query_lemmas. The old default of 5
+    dropped, e.g., H7225 (רֵאשִׁית) in Genesis (Gen 1:1 is a <5-per-book usage),
+    so query_lemmas reported no Genesis occurrence. Keep the default at 1 so the
+    seeded table is a complete per-book/chapter frequency index; callers filter
+    by frequency at query time instead.
 
     Args:
         lemmas: Dict of lemma data
-        min_occurrences: Minimum total occurrences to include
+        min_occurrences: Minimum total occurrences in this book to include
 
     Returns:
         Filtered dict
@@ -300,8 +308,9 @@ def main():
     parser.add_argument(
         '--min-occurrences', '-n',
         type=int,
-        default=5,
-        help='Minimum occurrences to include lemma (default: 5)'
+        default=1,
+        help='Minimum per-book occurrences to include lemma (default: 1 = complete; '
+             'values >1 drop rare-per-book lemmas and make the tools under-report)'
     )
     parser.add_argument(
         '--book', '-b',

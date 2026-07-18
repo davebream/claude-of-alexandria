@@ -34,6 +34,79 @@ async function makeMinimalDb(): Promise<Database> {
   return db;
 }
 
+// ─── NT distribution reads the complete morphology table (regression) ─────────
+// query_lemmas must report EXACT cross-book distribution, so its NT path reads
+// the unfiltered word-level `morphology` table — not the precomputed
+// `vocabulary` table, which applies a per-book significance threshold at ETL
+// time and silently drops rare-per-book lemmas. The canonical failure: μεταξύ
+// (G3342) occurs once in John 4:31, so the min-3 vocabulary filter excluded it,
+// and the tool reported 0 occurrences of μεταξύ in John despite the morphology
+// data carrying it. This executes the tool's real SQL against a sql.js
+// morphology table seeded with μεταξύ's true NT distribution.
+async function makeMorphologyDb(): Promise<Database> {
+  if (!SQL) SQL = await initSqlJs();
+  const db = new SQL.Database();
+  db.run(`
+    CREATE TABLE morphology (
+      book TEXT NOT NULL, testament TEXT NOT NULL,
+      chapter INTEGER NOT NULL, verse INTEGER NOT NULL, lemma TEXT NOT NULL
+    );
+  `);
+  // μεταξύ (G3342), one row per attested occurrence in the NT.
+  const occ: [string, number, number][] = [
+    ['matthew', 18, 15], ['matthew', 23, 35],
+    ['luke', 11, 51], ['luke', 16, 26],
+    ['john', 4, 31],
+    ['acts', 12, 6], ['acts', 13, 42], ['acts', 15, 9],
+    ['romans', 2, 15],
+  ];
+  for (const [book, chapter, verse] of occ) {
+    db.run(`INSERT INTO morphology (book, testament, chapter, verse, lemma) VALUES (?, 'nt', ?, ?, 'μεταξύ')`, [book, chapter, verse]);
+  }
+  return db;
+}
+
+describe('query_lemmas — NT distribution reads morphology (μεταξύ / John 4:31 regression)', () => {
+  it('reports μεταξύ in John 4:31 and every other NT book — not just books that clear a frequency threshold', async () => {
+    const db = await makeMorphologyDb();
+
+    // Route the distribution query through the real morphology table; the
+    // translit lookups have no tables here, so they return empty → null translit.
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (/FROM lexicon_lsj/i.test(sql)) return [];
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [];
+      const stmt = db.prepare(sql);
+      if (params.length > 0) stmt.bind(params as unknown[]);
+      const rows: Record<string, unknown>[] = [];
+      while (stmt.step()) rows.push(stmt.getAsObject());
+      stmt.free();
+      return rows;
+    });
+
+    const result = await queryLemmas({ lemmas: ['μεταξύ'] } as any);
+    db.close();
+
+    const body = JSON.parse(result.content[0].text as string);
+    const entry = body.lemmas.find((e: { lemma: string }) => e.lemma === 'μεταξύ');
+    expect(entry, 'expected a distribution entry for μεταξύ').toBeDefined();
+
+    // John 4:31 is the headline case the threshold used to drop.
+    expect(entry.distribution).toHaveProperty('John');
+    expect(entry.distribution.John).toEqual({ '4': 1 });
+
+    // The full NT distribution — all five books, exact per-chapter counts.
+    expect(entry.distribution).toEqual({
+      Matthew: { '18': 1, '23': 1 },
+      Luke: { '11': 1, '16': 1 },
+      John: { '4': 1 },
+      Acts: { '12': 1, '13': 1, '15': 1 },
+      Romans: { '2': 1 },
+    });
+    expect(entry.total_occurrences).toBe(9);
+    expect(entry.books_count).toBe(5);
+  });
+});
+
 describe('query_lemmas — lexicon tie-break, executed via sql.js (not mockQuery)', () => {
   it('resolves to the LOWER strongs_id transliteration when one lemma maps to two Strong\'s numbers, and the tool response carries it', async () => {
     const db = await makeMinimalDb();
