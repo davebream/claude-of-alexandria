@@ -26,31 +26,51 @@ export const ThemesOutputSchema = {
   matched_count: z.number(),
   unmatched_count: z.number(),
   // Parallel lookup map — { lemma → transliteration|null } — keyed over the
-  // SAME Greek lemma that appears as a KEY in `matches` above. `matches`
-  // cannot be restructured to carry transliteration inline without changing
-  // an existing field's type (forbidden by AC-11), so this sibling map
-  // covers exactly the lemma set the response actually emits. Present-and-
-  // null when unpopulated, never omitted (AC-10) — same uniform rule as the
-  // value-shaped tools' `lemma_translit`/`word_translit` siblings.
-  lemma_translit: z.record(z.string(), z.string().nullable()),
+  // SAME lemma that appears as a KEY in `matches` above (a Greek surface form
+  // for NT, a Strong's number for OT). `matches` cannot be restructured to
+  // carry transliteration inline without changing an existing field's type
+  // (forbidden by AC-11), so this sibling map covers exactly the lemma set the
+  // response actually emits. Present-and-null when unpopulated, never omitted
+  // (AC-10) — same uniform rule as the value-shaped tools' `lemma_translit`/
+  // `word_translit` siblings.
+  lemma_translit: z.record(z.string(), z.string().nullable()).describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+  ),
 };
 
-// ─── Lexicon transliteration lookup ───────────────────────────────────────────
-// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
-// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
-// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration
-// 0011). A single guarded IN (…) is fine here: the key set is bounded by the
-// input schema's max(100) lemmas, well under D1's ~100 bind-param ceiling —
-// same reasoning as lemmas.ts.
+// ─── Transliteration lookup ────────────────────────────────────────────────────
+// A themes call is single-testament, so the lookup source is a clean branch, not
+// a partition-and-merge. Either branch is bounded by the input schema's max(100)
+// lemmas — a single guarded IN (?,?,…) stays well under D1's ~100 bind-param
+// ceiling (same reasoning as lemmas.ts).
+//   • OT — the "lemma" IS a Strong's number, so it keys directly into
+//     lemma_translit_he_strongs.strongs (PRIMARY KEY, so no tie-break needed).
+//     Values are derived (decisions/0007), shipped via backfill-lemma-translit.yml.
+//   • NT — the lemma is a Greek surface form keyed against lexicon_lsj.original_word_nfc,
+//     which is NOT unique, hence the lowest-strongs_id ROW_NUMBER() tie-break
+//     (see idx_lsj_original_word_nfc, migration 0011).
 //
-// Wrapped so a lexicon failure degrades every key to lemma_translit: null
-// rather than failing the whole call — the primary matches data already
-// succeeded.
-async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+// Wrapped so a lookup failure degrades every key to lemma_translit: null rather
+// than failing the whole call — the primary matches data already succeeded.
+async function lookupLemmaTranslit(lemmas: string[], testament: 'nt' | 'ot'): Promise<Record<string, string | null>> {
   if (lemmas.length === 0 || lemmas.length > 100) return {};
 
   try {
     const placeholders = lemmas.map(() => '?').join(', ');
+
+    if (testament === 'ot') {
+      const rows = await query(
+        `SELECT strongs, transliteration FROM lemma_translit_he_strongs
+         WHERE strongs IN (${placeholders})`,
+        lemmas
+      );
+      const map: Record<string, string | null> = {};
+      for (const row of rows) {
+        map[row.strongs as string] = row.transliteration as string | null;
+      }
+      return map;
+    }
+
     const rows = await query(
       `SELECT original_word_nfc, transliteration FROM (
          SELECT original_word_nfc, transliteration,
@@ -140,7 +160,7 @@ export async function queryThemesForLemmas(args: ThemesInput): Promise<CallToolR
   const translitKeys = includeUnmatched
     ? [...Object.keys(matches), ...unmatched]
     : Object.keys(matches);
-  const translitLookup = await lookupLemmaTranslit(translitKeys);
+  const translitLookup = await lookupLemmaTranslit(translitKeys, testament);
   const lemmaTranslit: Record<string, string | null> = {};
   for (const lemma of translitKeys) {
     lemmaTranslit[lemma] = translitLookup[lemma] ?? null;

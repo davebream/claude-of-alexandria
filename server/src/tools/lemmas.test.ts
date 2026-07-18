@@ -175,6 +175,127 @@ describe('query_lemmas — present-and-null when no lexicon match', () => {
   });
 });
 
+// ─── Partition-and-merge routing (Task 6) ─────────────────────────────────────
+// The translit lookup is split by testament: NT (Greek) lemmas resolve via
+// lexicon_lsj; OT (H-number) lemmas resolve via lemma_translit_he_strongs.
+//
+// Mock discrimination (LOAD-BEARING, non-vacuous): the mock branches on BOTH
+//   (a) the SQL — which physical table is being queried, and
+//   (b) the bind params — which keys were asked for —
+// and returns a row ONLY when the queried key byte-matches a SEEDED key for
+// THAT table. A key routed to the wrong table's statement is not among that
+// table's seeds, so it returns nothing → the tool emits null. This makes
+// misrouting FAIL loudly instead of passing silently.
+function wireRoutingMock(
+  lexiconSeeds: Record<string, string>,
+  strongsSeeds: Record<string, string>,
+): void {
+  mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+    const keys = (params as unknown[]).map(String);
+    if (/FROM lexicon_lsj/i.test(sql)) {
+      // NT path — key column is original_word_nfc. Exact byte-match only.
+      return keys
+        .filter((k) => Object.prototype.hasOwnProperty.call(lexiconSeeds, k))
+        .map((k) => ({ original_word_nfc: k, transliteration: lexiconSeeds[k] }));
+    }
+    if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+      // OT path — key column is strongs. Exact byte-match only.
+      return keys
+        .filter((k) => Object.prototype.hasOwnProperty.call(strongsSeeds, k))
+        .map((k) => ({ strongs: k, transliteration: strongsSeeds[k] }));
+    }
+    // vocabulary distribution query: params = [testament, ...lemmas]. Return
+    // one distribution row per requested lemma so every input is "found".
+    const [testament, ...lemmas] = keys;
+    return lemmas.map((lemma) => ({
+      lemma,
+      book: testament === 'ot' ? 'genesis' : 'romans',
+      chapter: 1,
+      frequency: 1,
+    }));
+  });
+}
+
+function translitFor(result: Awaited<ReturnType<typeof queryLemmas>>, lemma: string): string | null {
+  const body = JSON.parse(result.content[0].text as string);
+  const entry = body.lemmas.find((e: { lemma: string }) => e.lemma === lemma);
+  expect(entry, `expected an entry for ${lemma}`).toBeDefined();
+  return entry.lemma_translit;
+}
+
+describe('query_lemmas — partition-and-merge translit routing', () => {
+  it('routes NT via lexicon_lsj and OT via lemma_translit_he_strongs, and a cross-routed key does not resolve', async () => {
+    // πατήρ seeded ONLY in lexicon_lsj; H7225 seeded ONLY in the strongs table.
+    // Neither table holds the other's key, so any misroute yields null.
+    wireRoutingMock({ πατήρ: 'patēr' }, { H7225: 'rēʾšît' });
+
+    const result = await queryLemmas({ lemmas: ['H7225', 'πατήρ'] } as any);
+
+    // Correct routing resolves both.
+    expect(translitFor(result, 'πατήρ')).toBe('patēr');
+    expect(translitFor(result, 'H7225')).toBe('rēʾšît');
+
+    // Prove the discrimination is real: the strongs statement never carried the
+    // Greek key, and the lexicon statement never carried the H-number.
+    const strongsCalls = mockQuery.mock.calls.filter(([s]) => /FROM lemma_translit_he_strongs/i.test(String(s)));
+    const lexiconCalls = mockQuery.mock.calls.filter(([s]) => /FROM lexicon_lsj/i.test(String(s)));
+    expect(strongsCalls.length).toBeGreaterThan(0);
+    expect(lexiconCalls.length).toBeGreaterThan(0);
+    const strongsParams = strongsCalls.flatMap(([, p]) => (p as unknown[]).map(String));
+    const lexiconParams = lexiconCalls.flatMap(([, p]) => (p as unknown[]).map(String));
+    expect(strongsParams).toContain('H7225');
+    expect(strongsParams).not.toContain('πατήρ');
+    expect(lexiconParams).toContain('πατήρ');
+    expect(lexiconParams).not.toContain('H7225');
+  });
+
+  it('resolves BOTH divergent Strong\'s forms — exact (H7225a) and base (H7225) — mirroring dual-form emission', async () => {
+    // The strongs table carries both the morphology-side exact key and the
+    // consumer-side base key; both consumer rows must resolve.
+    wireRoutingMock({}, { H7225: 'rēʾšît', H7225a: 'rēʾšît' });
+
+    const result = await queryLemmas({ lemmas: ['H7225', 'H7225a'] } as any);
+
+    expect(translitFor(result, 'H7225')).toBe('rēʾšît');
+    expect(translitFor(result, 'H7225a')).toBe('rēʾšît');
+  });
+
+  it('resolves a three-digit Strong\'s key; a zero-padded variant resolves iff seeded (else null — Task 9 gate is the prod guard)', async () => {
+    // Only the unpadded H430 is seeded. Guards the zero-padding/format axis.
+    wireRoutingMock({}, { H430: 'ʾĕlōhîm' });
+
+    const result = await queryLemmas({ lemmas: ['H430', 'H0430'] } as any);
+
+    // Unpadded resolves.
+    expect(translitFor(result, 'H430')).toBe('ʾĕlōhîm');
+    // Padded variant is a distinct byte-string, not seeded → null. Current,
+    // documented behavior; the Task 9 gate normalizes format upstream in prod.
+    expect(translitFor(result, 'H0430')).toBeNull();
+  });
+
+  it('yields null for an OT strongs absent from the table while NT results are byte-unchanged', async () => {
+    wireRoutingMock({ πατήρ: 'patēr' }, { H7225: 'rēʾšît' });
+
+    const result = await queryLemmas({ lemmas: ['H9999', 'πατήρ'] } as any);
+
+    expect(translitFor(result, 'H9999')).toBeNull();
+    expect(translitFor(result, 'πατήρ')).toBe('patēr');
+  });
+
+  it('degrades OT lemma_translit to null when the strongs statement rejects but the primary query succeeds', async () => {
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) throw new Error('D1 timeout on lemma_translit_he_strongs');
+      if (/FROM lexicon_lsj/i.test(sql)) return [];
+      const [testament, ...lemmas] = (params as unknown[]).map(String);
+      return lemmas.map((lemma) => ({ lemma, book: testament === 'ot' ? 'genesis' : 'romans', chapter: 1, frequency: 1 }));
+    });
+
+    const result = await queryLemmas({ lemmas: ['H7225'] } as any);
+    expect(result.isError).toBeFalsy();
+    expect(translitFor(result, 'H7225')).toBeNull();
+  });
+});
+
 // ─── Error path (Step 4a) ─────────────────────────────────────────────────────
 
 describe('query_lemmas — lexicon error path degrades to null', () => {

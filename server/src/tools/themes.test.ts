@@ -196,8 +196,9 @@ describe('query_themes — structuredContent', () => {
 // ─── Present-and-null: OT fixture (Step 4a) ───────────────────────────────────
 
 describe('query_themes — OT fixture: every map value is null, keys still present', () => {
-  it('keys the map over the requested OT lemmas but every value is null (lexicon_lsj is Greek-only)', async () => {
+  it('keys the map over the requested OT lemmas but every value is null when the Hebrew table has no match', async () => {
     mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [];
       if (/FROM lexicon_lsj/i.test(sql)) return [];
       if (/FROM thematic_keywords/i.test(sql)) return [{ lemma: 'H0430', theme: 'deity' }];
       return [];
@@ -206,6 +207,84 @@ describe('query_themes — OT fixture: every map value is null, keys still prese
     const body = JSON.parse(result.content[0].text as string);
     expect(body.lemma_translit).toHaveProperty('H0430');
     expect(body.lemma_translit['H0430']).toBeNull();
+  });
+});
+
+// ─── OT Hebrew branch (Task 8) ────────────────────────────────────────────────
+// For OT the theme "lemma" IS a Strong's number, so the translit lookup must
+// route to lemma_translit_he_strongs (keyed on `strongs`), NOT lexicon_lsj (Greek,
+// keyed on original_word_nfc). themes.ts feeds the keys as BIND PARAMS
+// (WHERE strongs IN (?, ?, …), params = the lemma array), so the mock discriminates
+// on BOTH the table name AND the bound params: it returns a row only for a
+// byte-matching seeded strongs that actually appears in params.
+//
+// Two traps make these assertions load-bearing rather than vacuous:
+//   1. lexicon_lsj is seeded with the SAME key (H7225) → 'GREEK-WRONG'. A misroute
+//      to the Greek table for an OT call would surface 'GREEK-WRONG' (a *value*,
+//      not null), so a table-blind fix cannot pass by accident.
+//   2. The Hebrew seed carries a decoy key (H9999) that is never requested. Because
+//      the mock returns rows only for byte-matching seeded keys present in params,
+//      a broken bind (empty/wrong params) yields NO row → null → the test fails.
+
+describe('query_themes — OT Hebrew lemma_translit via lemma_translit_he_strongs', () => {
+  const heSeed: Record<string, string> = { H7225: 'rēʾšît', H9999: 'DECOY-HEB' };
+
+  it('resolves the OT map key via lemma_translit_he_strongs (not lexicon_lsj)', async () => {
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+        // bind-param seam: return rows only for byte-matching seeded keys in params
+        return (params as string[])
+          .filter(k => k in heSeed)
+          .map(k => ({ strongs: k, transliteration: heSeed[k] }));
+      }
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H7225', transliteration: 'GREEK-WRONG' }];
+      if (/FROM thematic_keywords/i.test(sql)) return [{ lemma: 'H7225', theme: 'beginning' }];
+      return [];
+    });
+
+    const result = await queryThemesForLemmas({ lemmas: ['H7225'], testament: 'ot' } as any);
+
+    // OT calls must never touch the Greek lexicon table.
+    const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCall, 'OT call must not query lexicon_lsj').toBeUndefined();
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'OT call must query lemma_translit_he_strongs').toBeDefined();
+
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit['H7225']).toBe('rēʾšît');
+  });
+
+  it('returns null for an OT strongs absent from lemma_translit_he_strongs (present-and-null)', async () => {
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+        return (params as string[])
+          .filter(k => k in heSeed)
+          .map(k => ({ strongs: k, transliteration: heSeed[k] }));
+      }
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H0430', transliteration: 'GREEK-WRONG' }];
+      if (/FROM thematic_keywords/i.test(sql)) return [{ lemma: 'H0430', theme: 'deity' }];
+      return [];
+    });
+
+    const result = await queryThemesForLemmas({ lemmas: ['H0430'], testament: 'ot' } as any);
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit).toHaveProperty('H0430');
+    expect(body.lemma_translit['H0430']).toBeNull();
+  });
+
+  it('leaves the NT/Greek path routed to lexicon_lsj (unchanged)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [{ strongs: 'ἀγάπη', transliteration: 'HEB-WRONG' }];
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'ἀγάπη', transliteration: 'agapē' }];
+      if (/FROM thematic_keywords/i.test(sql)) return [{ lemma: 'ἀγάπη', theme: 'love' }];
+      return [];
+    });
+
+    const result = await queryThemesForLemmas({ lemmas: ['ἀγάπη'], testament: 'nt' } as any);
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'NT call must not query the Hebrew table').toBeUndefined();
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit['ἀγάπη']).toBe('agapē');
   });
 });
 

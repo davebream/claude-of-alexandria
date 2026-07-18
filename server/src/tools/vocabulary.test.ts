@@ -13,6 +13,7 @@ const mockQuery = vi.mocked(queryModule.query);
 vi.mock('../db/books.js', () => ({
   lookupBook: vi.fn((name: string) => {
     if (name === 'Romans') return { canonical: 'romans', displayName: 'Romans', testament: 'nt' };
+    if (name === 'Genesis') return { canonical: 'genesis', displayName: 'Genesis', testament: 'ot' };
     return null;
   }),
   suggestBooks: vi.fn(() => []),
@@ -230,5 +231,105 @@ describe('query_vocabulary — lexicon error path degrades to null', () => {
     const body = JSON.parse(result.content[0].text as string);
     expect(body.lemmas[0]).toHaveProperty('lemma_translit');
     expect(body.lemmas[0].lemma_translit).toBeNull();
+  });
+});
+
+// ─── OT Hebrew branch (Task 7) ────────────────────────────────────────────────
+// For OT the vocabulary "lemma" IS a Strong's number, so the translit lookup must
+// route to lemma_translit_he_strongs (keyed on `strongs`), NOT lexicon_lsj (Greek,
+// keyed on original_word_nfc). The key is fed via SUBQUERY, so the mock cannot
+// discriminate on a bind param — it MUST discriminate on the SQL TABLE NAME.
+//
+// Two traps make these assertions load-bearing rather than vacuous:
+//   1. lexicon_lsj is seeded with the SAME key (H7225) → 'GREEK-WRONG'. A misroute
+//      to the Greek table for an OT call would surface 'GREEK-WRONG' (a *value*,
+//      not null), so a table-blind fix cannot pass by accident.
+//   2. The Hebrew map carries a mismatched decoy key (H9999). The handler's
+//      map[strongs] byte-match must resolve H7225 specifically, not "return the
+//      first row of whichever map came back".
+
+describe('query_vocabulary — OT Hebrew lemma_translit via lemma_translit_he_strongs', () => {
+  it('resolves the ranked-lemma path via lemma_translit_he_strongs (not lexicon_lsj)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+        return [
+          { strongs: 'H7225', transliteration: 'rēʾšît' },
+          { strongs: 'H9999', transliteration: 'DECOY-HEB' }, // mismatched key — must NOT be picked
+        ];
+      }
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H7225', transliteration: 'GREEK-WRONG' }];
+      if (/SELECT lemma, total FROM/i.test(sql)) return [{ lemma: 'H7225', total: 3 }];
+      if (/SELECT v\.lemma, v\.chapter/i.test(sql)) return [{ lemma: 'H7225', chapter: 1, frequency: 3 }];
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 1 }];
+      return [];
+    });
+
+    const result = await queryVocabulary({ book: 'Genesis' } as any);
+
+    // OT calls must never touch the Greek lexicon table.
+    const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCall, 'OT call must not query lexicon_lsj').toBeUndefined();
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'OT call must query lemma_translit_he_strongs').toBeDefined();
+
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemmas[0].lemma_translit).toBe('rēʾšît');
+  });
+
+  it('resolves the check_clustering=true path (RC-2 guard: both call sites are testament-aware)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+        return [
+          { strongs: 'H7225', transliteration: 'rēʾšît' },
+          { strongs: 'H9999', transliteration: 'DECOY-HEB' },
+        ];
+      }
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H7225', transliteration: 'GREEK-WRONG' }];
+      if (/FROM vocabulary_clusters/i.test(sql)) {
+        return [{ lemma: 'H7225', concentration: 0.5, chapter_start: 1, chapter_end: 2, total_occurrences: 4 }];
+      }
+      if (/SELECT lemma, total FROM/i.test(sql)) return [];
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 0 }];
+      return [];
+    });
+
+    const result = await queryVocabulary({ book: 'Genesis', check_clustering: true } as any);
+    const body = JSON.parse(result.content[0].text as string);
+    // A one-call-site fix would leave the cluster translit routed to lexicon_lsj
+    // and this would surface 'GREEK-WRONG' or null instead of the Hebrew value.
+    expect(body.clustering.clusters[0].lemma_translit).toBe('rēʾšît');
+  });
+
+  it('returns null for an OT strongs absent from lemma_translit_he_strongs', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return []; // no match
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H7225', transliteration: 'GREEK-WRONG' }];
+      if (/SELECT lemma, total FROM/i.test(sql)) return [{ lemma: 'H7225', total: 3 }];
+      if (/SELECT v\.lemma, v\.chapter/i.test(sql)) return [{ lemma: 'H7225', chapter: 1, frequency: 3 }];
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 1 }];
+      return [];
+    });
+
+    const result = await queryVocabulary({ book: 'Genesis' } as any);
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemmas[0]).toHaveProperty('lemma_translit');
+    expect(body.lemmas[0].lemma_translit).toBeNull();
+  });
+
+  it('leaves the NT/Greek path routed to lexicon_lsj (unchanged)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [{ strongs: 'ἀγάπη', transliteration: 'HEB-WRONG' }];
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'ἀγάπη', transliteration: 'agapē' }];
+      if (/SELECT lemma, total FROM/i.test(sql)) return [{ lemma: 'ἀγάπη', total: 3 }];
+      if (/SELECT v\.lemma, v\.chapter/i.test(sql)) return [{ lemma: 'ἀγάπη', chapter: 1, frequency: 3 }];
+      if (/COUNT\(DISTINCT lemma\)/i.test(sql)) return [{ cnt: 1 }];
+      return [];
+    });
+
+    const result = await queryVocabulary({ book: 'Romans' } as any);
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'NT call must not query the Hebrew table').toBeUndefined();
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemmas[0].lemma_translit).toBe('agapē');
   });
 });

@@ -39,6 +39,10 @@ async function makeMinimalDb(): Promise<Database> {
       original_word TEXT, original_word_nfc TEXT, original_word_stripped TEXT,
       transliteration TEXT, gloss TEXT, definition TEXT
     );
+    CREATE TABLE lemma_translit_he (
+      lemma TEXT PRIMARY KEY,
+      transliteration TEXT NOT NULL
+    );
   `);
   return db;
 }
@@ -69,6 +73,32 @@ describe('query_morphology — sql.js prepare() ambiguity gate', () => {
   it('prepares the ACTUAL SQL emitted by queryMorphology at fields=syntax cleanly', async () => {
     mockQuery.mockResolvedValue([]);
     await queryMorphology({ book: 'John', range: '1:1-1:1', fields: 'syntax' } as any);
+
+    const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
+    expect(call, 'expected a call whose SQL selects FROM morphology m').toBeDefined();
+    const sql = String(call![0]);
+
+    const db = await makeMinimalDb();
+    expect(() => db.prepare(sql)).not.toThrow();
+    db.close();
+  });
+
+  // ─── OT join shape: lemma_translit_he shares BOTH `lemma` and `transliteration`
+  // column names with morphology, so an unqualified projection is ambiguous under
+  // the OT join, exactly as lexicon_lsj is under the NT join.
+  it('REJECTS an unqualified column reference once the lemma_translit_he join is present', async () => {
+    const db = await makeMinimalDb();
+    expect(() =>
+      db.prepare(
+        'SELECT transliteration FROM morphology LEFT JOIN lemma_translit_he ON morphology.lemma = lemma_translit_he.lemma'
+      )
+    ).toThrow(/ambiguous column name/);
+    db.close();
+  });
+
+  it('prepares the ACTUAL SQL emitted by queryMorphology at fields=syntax for OT cleanly', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryMorphology({ book: 'Genesis', range: '1:1-1:1', fields: 'syntax' } as any);
 
     const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
     expect(call, 'expected a call whose SQL selects FROM morphology m').toBeDefined();
@@ -121,6 +151,99 @@ describe('query_morphology — generated SQL structure', () => {
     const sql = String(call![0]);
     expect(sql).toMatch(/LEFT JOIN lexicon_lsj lx ON m\.strongs = lx\.strongs_id/);
     expect(sql).toMatch(/lx\.transliteration AS lemma_translit/);
+  });
+});
+
+// ─── OT testament-conditional join (lemma_translit_he) ──────────────────────────
+// OT morphology has no Strong's-keyed Hebrew lexicon; lemma_translit is derived
+// and stored in lemma_translit_he, keyed by the exact pointed Hebrew lemma. The
+// join therefore switches on testament: OT → lemma_translit_he ON m.lemma; NT →
+// lexicon_lsj ON m.strongs (unchanged). Alias stays `lx` either way, so the
+// column projections (lx.transliteration AS lemma_translit) never change.
+
+describe('query_morphology — OT testament-conditional join', () => {
+  it('OT syntax joins lemma_translit_he on m.lemma, never lexicon_lsj', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryMorphology({ book: 'Genesis', range: '1:1-1:1', fields: 'syntax' } as any);
+    const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
+    const sql = String(call![0]);
+    expect(sql).toMatch(/LEFT JOIN lemma_translit_he lx ON m\.lemma = lx\.lemma/);
+    expect(sql).not.toMatch(/lexicon_lsj/);
+    expect(sql).toMatch(/lx\.transliteration AS lemma_translit/);
+  });
+
+  it('OT lexical joins lemma_translit_he on m.lemma, never lexicon_lsj', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryMorphology({ book: 'Genesis', range: '1:1-1:1', fields: 'lexical' } as any);
+    const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
+    const sql = String(call![0]);
+    expect(sql).toMatch(/LEFT JOIN lemma_translit_he lx ON m\.lemma = lx\.lemma/);
+    expect(sql).not.toMatch(/lexicon_lsj/);
+    expect(sql).toMatch(/lx\.transliteration AS lemma_translit/);
+  });
+
+  it('NT syntax still joins lexicon_lsj on m.strongs, never lemma_translit_he (AC-5 byte-identical)', async () => {
+    mockQuery.mockResolvedValue([]);
+    await queryMorphology({ book: 'John', range: '1:1-1:1', fields: 'syntax' } as any);
+    const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
+    const sql = String(call![0]);
+    expect(sql).toMatch(/LEFT JOIN lexicon_lsj lx ON m\.strongs = lx\.strongs_id/);
+    expect(sql).not.toMatch(/lemma_translit_he/);
+  });
+
+  // ─── Execution seam (NON-VACUOUS) ────────────────────────────────────────────
+  // The OT lookup key is a JOIN column (m.lemma), NOT a bind param — so a
+  // param-aware mock cannot guard it. Instead we execute the ACTUAL composed SQL
+  // against a real sql.js DB with a seeded morphology row + lemma_translit_he row,
+  // and assert the transliteration flows back only when the lemma BYTES match.
+
+  async function runOtSyntaxAgainstSqlJs(heRows: Array<[string, string]>): Promise<Record<string, unknown>> {
+    mockQuery.mockResolvedValue([]);
+    await queryMorphology({ book: 'Genesis', range: '1:1-1:1', fields: 'syntax' } as any);
+    const call = mockQuery.mock.calls.find(([sql]) => /FROM morphology m/.test(String(sql)));
+    const [sql, params] = call!;
+    const p = params as unknown[];
+
+    const db = await makeMinimalDb();
+    // Seed one OT morphology row whose book/testament match the captured params,
+    // in chapter 1 verse 1 so it falls inside the 1:1-1:1 range. Pointed lemma.
+    db.run(
+      `INSERT INTO morphology (book, chapter, verse, word_position, testament, text, normalized, lemma, pos, strongs, transliteration)
+       VALUES (?, 1, 1, 1, ?, 'בְּרֵאשִׁית', 'בראשית', 'רֵאשִׁית', 'noun', 'H7225', 'bǝrēʾšît')`,
+      [p[0] as string, p[1] as string]
+    );
+    for (const [lemma, translit] of heRows) {
+      db.run('INSERT INTO lemma_translit_he (lemma, transliteration) VALUES (?, ?)', [lemma, translit]);
+    }
+
+    const stmt = db.prepare(String(sql));
+    stmt.bind(p as any[]);
+    const stepped = stmt.step();
+    expect(stepped, 'expected the seeded morphology row to be returned by the composed SQL').toBe(true);
+    const row = stmt.getAsObject();
+    stmt.free();
+    db.close();
+    return row;
+  }
+
+  it('EXECUTES the composed OT SQL: a byte-matching lemma_translit_he row yields non-null lemma_translit', async () => {
+    // lemma_translit_he.lemma byte-matches morphology.lemma ('רֵאשִׁית').
+    const row = await runOtSyntaxAgainstSqlJs([['רֵאשִׁית', 'rēʾšît']]);
+    expect(row.lemma_translit).toBe('rēʾšît');
+    // Sanity: text_translit (m.transliteration) is unaffected by the join (AC-4).
+    expect(row.text_translit).toBe('bǝrēʾšît');
+  });
+
+  it('EXECUTES the composed OT SQL: a non-byte-matching lemma yields lemma_translit null (LEFT JOIN miss)', async () => {
+    // Different lemma bytes → no join match → null under the LEFT JOIN.
+    const row = await runOtSyntaxAgainstSqlJs([['שָׁמַיִם', 'šāmayim']]);
+    expect(row.lemma_translit).toBeNull();
+    expect(row.text_translit).toBe('bǝrēʾšît');
+  });
+
+  it('EXECUTES the composed OT SQL: an absent lemma yields lemma_translit null', async () => {
+    const row = await runOtSyntaxAgainstSqlJs([]);
+    expect(row.lemma_translit).toBeNull();
   });
 });
 

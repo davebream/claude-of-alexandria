@@ -51,9 +51,12 @@ export const DistributionEntry = z.object({
   books_count: z.number(),
   distribution: z.record(z.string(), z.record(z.string(), z.number())),
   // SBL transliteration sibling — present-and-null when unpopulated, never
-  // omitted (AC-10). Always null for OT/Hebrew lemmas: lexicon_lsj is
-  // Greek-only, so the join simply finds no match — no special-casing needed.
-  lemma_translit: z.string().nullable().optional(),
+  // omitted (AC-10). Sourced per testament: NT/Greek from lexicon_lsj (source-
+  // read from OpenGNT); OT/Hebrew from lemma_translit_he_strongs, keyed by
+  // Strong's number (derived — deterministic SBL rendering, decisions/0007).
+  lemma_translit: z.string().nullable().optional().describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+  ),
 });
 
 export const LemmasOutputSchema = {
@@ -133,15 +136,22 @@ async function queryForTestament(
   });
 }
 
-// ─── Lexicon transliteration lookup ───────────────────────────────────────────
-// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
-// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
-// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration 0011).
-// A single guarded IN (…) is fine here: lemmas.ts already bounds its input at
-// MAX_LEMMAS = 50, well under D1_PARAM_LIMIT.
-// Wrapped so a lexicon failure degrades every entry to lemma_translit: null
+// ─── Transliteration lookup (partitioned by testament) ────────────────────────
+// The two testaments source transliteration from different tables, so this
+// lookup partitions its input via isOtLemma and routes each half separately,
+// then merges the two result maps:
+//   • NT (Greek) → lexicon_lsj.original_word_nfc  (source-read from OpenGNT)
+//   • OT (H-number) → lemma_translit_he_strongs.strongs  (derived, decisions/0007)
+// Each half is independently guarded with try/catch → {} so a failure (or a
+// missing table) degrades that partition's entries to lemma_translit: null
 // rather than failing the whole call — the primary lemma data already succeeded.
-async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+
+// NT: lemma → lexicon_lsj.original_word_nfc → transliteration, with a
+// deterministic lowest-strongs_id tie-break (a lemma can map to multiple
+// Strong's numbers; original_word_nfc is NOT unique — see
+// idx_lsj_original_word_nfc, migration 0011). A single guarded IN (…) is fine:
+// lemmas.ts already bounds input at MAX_LEMMAS = 50, well under D1_PARAM_LIMIT.
+async function lookupNtTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
   if (lemmas.length === 0) return {};
   if (lemmas.length > D1_PARAM_LIMIT) return {};
 
@@ -166,6 +176,50 @@ async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, str
     // Degrade to null for every requested lemma rather than erroring the call.
     return {};
   }
+}
+
+// OT: Strong's number → lemma_translit_he_strongs.strongs → transliteration.
+// The table carries BOTH exact ('H7225a') and base ('H7225') forms, so the
+// consumer key is matched directly with no format massaging here.
+async function lookupOtTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+  if (lemmas.length === 0) return {};
+  if (lemmas.length > D1_PARAM_LIMIT) return {};
+
+  try {
+    const placeholders = lemmas.map(() => '?').join(', ');
+    const rows = await query(
+      `SELECT strongs, transliteration FROM lemma_translit_he_strongs
+       WHERE strongs IN (${placeholders})`,
+      lemmas
+    );
+
+    const map: Record<string, string | null> = {};
+    for (const row of rows) {
+      map[row.strongs as string] = row.transliteration as string | null;
+    }
+    return map;
+  } catch {
+    // Degrade to null for every requested lemma rather than erroring the call.
+    return {};
+  }
+}
+
+// Partition distinct lemmas by testament, resolve each half against its own
+// table, and merge the two maps into one lemma → transliteration lookup.
+async function lookupLemmaTranslit(lemmas: string[]): Promise<Record<string, string | null>> {
+  const otLemmas: string[] = [];
+  const ntLemmas: string[] = [];
+  for (const lemma of lemmas) {
+    if (isOtLemma(lemma)) otLemmas.push(lemma);
+    else ntLemmas.push(lemma);
+  }
+
+  const [ntMap, otMap] = await Promise.all([
+    lookupNtTranslit(ntLemmas),
+    lookupOtTranslit(otLemmas),
+  ]);
+
+  return { ...ntMap, ...otMap };
 }
 
 // ─── Main handler ─────────────────────────────────────────────────────────────
@@ -207,9 +261,9 @@ export async function queryLemmas(args: LemmasInput): Promise<CallToolResult> {
 
   const allResults = [...otResults, ...ntResults];
 
-  // Attach lemma_translit siblings — present-and-null uniformly (AC-10). One
-  // bounded lookup statement covers every distinct lemma found across both
-  // testaments; OT/Hebrew lemmas simply find no lexicon_lsj match.
+  // Attach lemma_translit siblings — present-and-null uniformly (AC-10). The
+  // lookup partitions distinct lemmas by testament and resolves each half
+  // against its own table (NT → lexicon_lsj, OT → lemma_translit_he_strongs).
   const distinctLemmas = [...new Set(allResults.map(r => r.lemma))];
   const translitMap = await lookupLemmaTranslit(distinctLemmas);
   const allResultsWithTranslit = allResults.map(r => ({

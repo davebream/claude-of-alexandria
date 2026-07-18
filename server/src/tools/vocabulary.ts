@@ -21,9 +21,11 @@ export const LemmaEntry = z.object({
   total: z.number(),
   by_chapter: z.record(z.string(), z.number()),
   // SBL transliteration sibling — present-and-null when unpopulated, never
-  // omitted (AC-10). Always null for OT/Hebrew lemmas: lexicon_lsj is
-  // Greek-only, so the join simply finds no match — no special-casing needed.
-  lemma_translit: z.string().nullable().optional(),
+  // omitted (AC-10). Testament-aware source: NT lemmas read lexicon_lsj, OT
+  // lemmas (Strong's numbers) read lemma_translit_he_strongs.
+  lemma_translit: z.string().nullable().optional().describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+  ),
 });
 
 export const ClusterEntry = z.object({
@@ -31,7 +33,9 @@ export const ClusterEntry = z.object({
   concentration: z.number(),
   chapter_range: z.string(),
   total_occurrences: z.number(),
-  lemma_translit: z.string().nullable().optional(),
+  lemma_translit: z.string().nullable().optional().describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+  ),
 });
 
 const ClusteringSchema = z.object({
@@ -72,11 +76,34 @@ export const VocabularyOutputSchema = {
 // Wrapped so a lexicon failure degrades every entry to lemma_translit: null
 // rather than failing the whole call — the primary vocabulary data already
 // succeeded.
+// Testament-aware: a vocabulary call is single-testament, so the lookup source is
+// a clean branch, not a partition-and-merge.
+//   • OT — the "lemma" IS a Strong's number, so it keys directly into
+//     lemma_translit_he_strongs.strongs (PRIMARY KEY, so no tie-break needed).
+//     Values are derived (decisions/0007), shipped via backfill-lemma-translit.yml.
+//   • NT — the lemma is a Greek surface form keyed against lexicon_lsj.original_word_nfc,
+//     which is NOT unique, hence the lowest-strongs_id ROW_NUMBER() tie-break.
+// Making the shared helper branch (rather than either call site) guarantees BOTH
+// the ranked-lemma path and the clusters path stay testament-consistent.
 async function lookupTranslitViaSubquery(
+  testament: 'nt' | 'ot',
   lemmaSelectSql: string,
   lemmaSelectParams: unknown[]
 ): Promise<Record<string, string | null>> {
   try {
+    const map: Record<string, string | null> = {};
+    if (testament === 'ot') {
+      const rows = await query(
+        `SELECT strongs, transliteration FROM lemma_translit_he_strongs
+         WHERE strongs IN (${lemmaSelectSql})`,
+        lemmaSelectParams
+      );
+      for (const row of rows) {
+        map[row.strongs as string] = row.transliteration as string | null;
+      }
+      return map;
+    }
+
     const rows = await query(
       `SELECT original_word_nfc, transliteration FROM (
          SELECT original_word_nfc, transliteration,
@@ -86,8 +113,6 @@ async function lookupTranslitViaSubquery(
        ) WHERE rn = 1`,
       lemmaSelectParams
     );
-
-    const map: Record<string, string | null> = {};
     for (const row of rows) {
       map[row.original_word_nfc as string] = row.transliteration as string | null;
     }
@@ -249,7 +274,7 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
   // lemma_translit — one bounded lexicon statement covering exactly the ranked
   // lemma set already selected above (AC-10 present-and-null; AC-12 bounded).
   const lemmaTranslitMap = lemmaRows.length > 0
-    ? await lookupTranslitViaSubquery(rankedLemmaNamesSql, rankedLemmaNamesParams)
+    ? await lookupTranslitViaSubquery(testament, rankedLemmaNamesSql, rankedLemmaNamesParams)
     : {};
 
   const lemmaList = lemmaRows.map(r => ({
@@ -269,6 +294,7 @@ export async function queryVocabulary(args: VocabularyInput): Promise<CallToolRe
     // lemmas (a different set from the ranked lemma list above; may not overlap).
     const clusterTranslitMap = clusterRows.length > 0
       ? await lookupTranslitViaSubquery(
+          testament,
           'SELECT lemma FROM vocabulary_clusters WHERE book = ? AND testament = ?',
           [canonical, testament]
         )

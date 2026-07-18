@@ -131,6 +131,12 @@ jobs:
         # (Task 15) and in-runner (Task 16), never in CI.
         run: python3 server/scripts/test_translit_generator.py -v
 
+      - name: Run lemma/strongs emit tests
+        # Fixture-driven byte-identity + exclusion tests for the derived
+        # Hebrew lemma_translit emit step (extract-macula-hebrew.parse_lemma_field
+        # shared-source pin). No network, no corpus download.
+        run: python3 server/scripts/test_emit_lemma_strongs.py -v
+
   audit:
     name: Dependency Audit
     runs-on: ubuntu-latest
