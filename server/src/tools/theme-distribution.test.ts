@@ -194,8 +194,9 @@ describe('query_theme_distribution — structuredContent', () => {
 // ─── Present-and-null: OT fixture (Step 4a) ───────────────────────────────────
 
 describe('query_theme_distribution — OT fixture: every map value is null, keys still present', () => {
-  it('keys the map over theme_lemmas but every value is null (lexicon_lsj is Greek-only)', async () => {
+  it('keys the map over theme_lemmas but every value is null when the Hebrew table has no match', async () => {
     mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [];
       if (/FROM lexicon_lsj/i.test(sql)) return [];
       if (/DISTINCT theme/i.test(sql)) return [{ theme: 'deity' }];
       if (/DISTINCT lemma/i.test(sql)) return [{ lemma: 'H0430' }];
@@ -206,6 +207,85 @@ describe('query_theme_distribution — OT fixture: every map value is null, keys
     const body = JSON.parse(result.content[0].text as string);
     expect(body.lemma_translit).toHaveProperty('H0430');
     expect(body.lemma_translit['H0430']).toBeNull();
+  });
+});
+
+// ─── OT Hebrew branch (Task 8) ────────────────────────────────────────────────
+// For OT the theme "lemma" IS a Strong's number, so the translit lookup must
+// route to lemma_translit_he_strongs (keyed on `strongs`), NOT lexicon_lsj (Greek,
+// keyed on original_word_nfc). theme-distribution.ts feeds the keys via a SUBQUERY
+// (params are [theme, testament]), so the mock CANNOT discriminate on a bind param —
+// it MUST discriminate on the SQL TABLE NAME. Note the Hebrew SQL contains both
+// "lemma_translit_he_strongs" and "DISTINCT lemma" (its subquery operand), so the
+// lemma_translit_he_strongs branch MUST be matched before the DISTINCT-lemma branch.
+//
+// Two traps make these assertions load-bearing rather than vacuous:
+//   1. lexicon_lsj is seeded with the SAME key (H7225) → 'GREEK-WRONG'. A misroute
+//      to the Greek table for an OT call would surface 'GREEK-WRONG' (a *value*,
+//      not null), so a table-blind fix cannot pass by accident.
+//   2. The Hebrew map carries a mismatched decoy key (H9999). The handler's
+//      map[strongs] byte-match must resolve H7225 specifically, not "return the
+//      first row of whichever map came back".
+
+describe('query_theme_distribution — OT Hebrew lemma_translit via lemma_translit_he_strongs', () => {
+  it('resolves the OT map key via lemma_translit_he_strongs (not lexicon_lsj)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) {
+        return [
+          { strongs: 'H7225', transliteration: 'rēʾšît' },
+          { strongs: 'H9999', transliteration: 'DECOY-HEB' }, // mismatched key — must NOT be picked
+        ];
+      }
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H7225', transliteration: 'GREEK-WRONG' }];
+      if (/DISTINCT theme/i.test(sql)) return [{ theme: 'beginning' }];
+      if (/DISTINCT lemma/i.test(sql)) return [{ lemma: 'H7225' }];
+      if (/JOIN thematic_keywords/i.test(sql)) return [{ book: 'romans', chapter: 1, lemma: 'H7225', frequency: 3 }];
+      return [];
+    });
+
+    const result = await queryThemeDistribution({ theme: 'beginning', testament: 'ot' } as any);
+
+    // OT calls must never touch the Greek lexicon table.
+    const lexiconCall = mockQuery.mock.calls.find(([sql]) => /FROM lexicon_lsj/i.test(String(sql)));
+    expect(lexiconCall, 'OT call must not query lexicon_lsj').toBeUndefined();
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'OT call must query lemma_translit_he_strongs').toBeDefined();
+
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit['H7225']).toBe('rēʾšît');
+  });
+
+  it('returns null for an OT strongs absent from lemma_translit_he_strongs (present-and-null)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return []; // no match
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'H0430', transliteration: 'GREEK-WRONG' }];
+      if (/DISTINCT theme/i.test(sql)) return [{ theme: 'deity' }];
+      if (/DISTINCT lemma/i.test(sql)) return [{ lemma: 'H0430' }];
+      if (/JOIN thematic_keywords/i.test(sql)) return [];
+      return [];
+    });
+
+    const result = await queryThemeDistribution({ theme: 'deity', testament: 'ot' } as any);
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit).toHaveProperty('H0430');
+    expect(body.lemma_translit['H0430']).toBeNull();
+  });
+
+  it('leaves the NT/Greek path routed to lexicon_lsj (unchanged)', async () => {
+    mockQuery.mockImplementation(async (sql: string) => {
+      if (/FROM lemma_translit_he_strongs/i.test(sql)) return [{ strongs: 'ἀγάπη', transliteration: 'HEB-WRONG' }];
+      if (/FROM lexicon_lsj/i.test(sql)) return [{ original_word_nfc: 'ἀγάπη', transliteration: 'agapē' }];
+      if (/DISTINCT theme/i.test(sql)) return [{ theme: 'love' }];
+      if (/DISTINCT lemma/i.test(sql)) return [{ lemma: 'ἀγάπη' }];
+      if (/JOIN thematic_keywords/i.test(sql)) return [{ book: 'romans', chapter: 1, lemma: 'ἀγάπη', frequency: 3 }];
+      return [];
+    });
+
+    const result = await queryThemeDistribution({ theme: 'love', testament: 'nt' } as any);
+    const heCall = mockQuery.mock.calls.find(([sql]) => /FROM lemma_translit_he_strongs/i.test(String(sql)));
+    expect(heCall, 'NT call must not query the Hebrew table').toBeUndefined();
+    const body = JSON.parse(result.content[0].text as string);
+    expect(body.lemma_translit['ἀγάπη']).toBe('agapē');
   });
 });
 

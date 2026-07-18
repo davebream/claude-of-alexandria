@@ -51,29 +51,51 @@ export const ThemeDistributionOutputSchema = {
   truncated: z.boolean().optional(),
   truncation_message: z.string().optional(),
   // Parallel lookup map — { lemma → transliteration|null } — keyed over the
-  // SAME Greek lemma that appears as a KEY in each book's `by_lemma` above.
-  // `by_lemma` cannot be restructured to carry transliteration inline
-  // without changing an existing field's type (forbidden by AC-11), so this
-  // sibling map covers `theme_lemmas`, a superset of every `by_lemma` key
-  // across every book. Present-and-null when unpopulated, never omitted
-  // (AC-10) — same uniform rule as the value-shaped tools' siblings.
-  lemma_translit: z.record(z.string(), z.string().nullable()),
+  // SAME lemma that appears as a KEY in each book's `by_lemma` above (a Greek
+  // surface form for NT, a Strong's number for OT). `by_lemma` cannot be
+  // restructured to carry transliteration inline without changing an existing
+  // field's type (forbidden by AC-11), so this sibling map covers
+  // `theme_lemmas`, a superset of every `by_lemma` key across every book.
+  // Present-and-null when unpopulated, never omitted (AC-10) — same uniform
+  // rule as the value-shaped tools' siblings.
+  lemma_translit: z.record(z.string(), z.string().nullable()).describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). Greek (NT): source-read from OpenGNT.'
+  ),
 };
 
-// ─── Lexicon transliteration lookup ───────────────────────────────────────────
-// lemma → lexicon_lsj.original_word_nfc → transliteration, with a deterministic
-// lowest-strongs_id tie-break (a lemma can map to multiple Strong's numbers,
-// original_word_nfc is NOT unique — see idx_lsj_original_word_nfc, migration
-// 0011). `theme_lemmas` is not size-bounded (it is however many lemmas a
-// theme has), so the IN (…) operand is a subquery reproducing the exact
-// theme_lemmas query rather than a literal list — the bind count stays fixed
-// at (theme, testament) regardless of how many lemmas that set contains.
+// ─── Transliteration lookup ────────────────────────────────────────────────────
+// A theme-distribution call is single-testament, so the lookup source is a clean
+// branch, not a partition-and-merge. `theme_lemmas` is not size-bounded (it is
+// however many lemmas a theme has), so in BOTH branches the IN (…) operand is a
+// subquery reproducing the exact theme_lemmas query rather than a literal list —
+// the bind count stays fixed at (theme, testament) regardless of how many lemmas
+// that set contains.
+//   • OT — the "lemma" IS a Strong's number, so it keys directly into
+//     lemma_translit_he_strongs.strongs (PRIMARY KEY, so no tie-break needed).
+//     Values are derived (decisions/0007), shipped via backfill-lemma-translit.yml.
+//   • NT — the lemma is a Greek surface form keyed against lexicon_lsj.original_word_nfc,
+//     which is NOT unique, hence the lowest-strongs_id ROW_NUMBER() tie-break
+//     (see idx_lsj_original_word_nfc, migration 0011).
 //
-// Wrapped so a lexicon failure degrades every key to lemma_translit: null
-// rather than failing the whole call — the primary distribution data
-// already succeeded.
+// Wrapped so a lookup failure degrades every key to lemma_translit: null rather
+// than failing the whole call — the primary distribution data already succeeded.
 async function lookupLemmaTranslit(theme: string, testament: string): Promise<Record<string, string | null>> {
   try {
+    if (testament === 'ot') {
+      const rows = await query(
+        `SELECT strongs, transliteration FROM lemma_translit_he_strongs
+         WHERE strongs IN (
+           SELECT DISTINCT lemma FROM thematic_keywords WHERE theme = ? AND testament = ?
+         )`,
+        [theme, testament]
+      );
+      const map: Record<string, string | null> = {};
+      for (const row of rows) {
+        map[row.strongs as string] = row.transliteration as string | null;
+      }
+      return map;
+    }
+
     const rows = await query(
       `SELECT original_word_nfc, transliteration FROM (
          SELECT original_word_nfc, transliteration,
