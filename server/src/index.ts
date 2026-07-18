@@ -545,9 +545,25 @@ const CORS_HEADERS = {
 
 // ─── Response cache ───────────────────────────────────────────────────────────
 
-// Cache MCP tool results keyed by tool name + sorted args JSON.
-// Biblical reference data is static — entries never need invalidation.
+// Cache MCP tool results keyed by a version-prefixed namespace + tool name +
+// sorted args JSON. See the invalidation-contract comment above cachedToolCall
+// below for how the version prefix drives global cache invalidation.
 // Cache intercepts inside the CallTool handler before MCP serialization.
+
+// Bump this to orphan every previously cached entry (see invalidation contract
+// below). Can also be overridden per-deploy via env.CACHE_VERSION.
+const DEFAULT_CACHE_VERSION = 'v5';
+
+// Per-request context: the ExecutionContext (used to schedule non-blocking
+// cache writes via waitUntil) and the resolved cache-version namespace.
+// Captured once per request in fetch() and threaded through createServer()'s
+// closure — see C2 in the design doc for why this must NOT be module-global
+// mutable state (ctx is per-request-distinct, unlike env.DB).
+interface RequestCtx {
+  ctx?: ExecutionContext;
+  cacheVersion: string;
+}
+
 function stableStringify(obj: Record<string, unknown>): string {
   return JSON.stringify(obj, (_, v) =>
     v && typeof v === 'object' && !Array.isArray(v)
@@ -556,13 +572,27 @@ function stableStringify(obj: Record<string, unknown>): string {
   );
 }
 
+// Pure key-derivation seam: builds the cache key URL from an already-resolved
+// version, the tool name, and the (stably-stringified) sorted args.
+export function cacheKeyUrl(version: string, name: string, sortedArgs: string): string {
+  return `https://cache/${version}/${name}/${encodeURIComponent(sortedArgs)}`;
+}
+
+// Resolves the cache-version namespace for a request: env.CACHE_VERSION wins
+// when set to a non-empty string; otherwise falls back to DEFAULT_CACHE_VERSION.
+// Uses `||` (not `??`) so an empty-string override is treated as unset rather
+// than producing a broken `https://cache//...` key.
+export function resolveCacheVersion(env: { CACHE_VERSION?: string }): string {
+  return env.CACHE_VERSION || DEFAULT_CACHE_VERSION;
+}
+
 async function cachedToolCall(
   name: string,
   args: Record<string, unknown>,
   handler: () => Promise<CallToolResult>
 ): Promise<CallToolResult> {
   const sortedArgs = stableStringify(args);
-  const cacheKey = new Request(`https://cache/v4/${name}/${encodeURIComponent(sortedArgs)}`);
+  const cacheKey = new Request(cacheKeyUrl(DEFAULT_CACHE_VERSION, name, sortedArgs));
   const cache = caches.default;
 
   const cached = await cache.match(cacheKey);
@@ -1043,6 +1073,7 @@ function createServer(): McpServer {
 
 interface Env {
   DB: D1Database;
+  CACHE_VERSION?: string;
 }
 
 export default {
