@@ -359,7 +359,13 @@ export function chunkInsertStatements(
 }
 
 /**
- * Build the full per-table SQL block: BEGIN; DELETE; chunked INSERTs; COMMIT;.
+ * Build the full per-table SQL block: DELETE; chunked INSERTs.
+ *
+ * NO explicit BEGIN/COMMIT wrapper (decisions/0006): modern
+ * `wrangler d1 execute --file --remote` routes through the atomic R2 bulk-import
+ * path, which wraps its OWN transaction — an explicit BEGIN/COMMIT inside it is
+ * redundant and can error. DELETE-then-INSERT idempotency is unaffected: the
+ * importer's transaction still makes the file's DELETE + INSERTs atomic.
  */
 export function buildTableSql(
   table: string,
@@ -371,7 +377,7 @@ export function buildTableSql(
   );
   const statements = chunkInsertStatements(table, columns, tuples);
   const body = statements.length > 0 ? statements.join('\n') + '\n' : '';
-  return `BEGIN;\nDELETE FROM ${table};\n${body}COMMIT;\n`;
+  return `DELETE FROM ${table};\n${body}`;
 }
 
 // ─── Main (filesystem; excluded from unit tests via entry guard) ──────────────

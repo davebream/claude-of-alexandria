@@ -20,6 +20,7 @@ import {
   unpad,
   parseInput,
   buildTables,
+  buildTableSql,
   chunkInsertStatements,
   assertNoAsciiApostrophe,
   LEMMA_COLUMNS,
@@ -253,6 +254,37 @@ describe('buildTables — three-digit base strongs round-trip', () => {
     const entry = strongsEntries.find((e) => e.key === 'H430');
     expect(entry).toBeDefined();
     expect(entry!.value).toBe(transliterateLemma('אֱלֹהִים'));
+  });
+});
+
+// (j) No BEGIN/COMMIT wrapper (decisions/0006: the bulk importer wraps its own
+// transaction). The per-table SQL is DELETE + chunked INSERTs only.
+describe('buildTableSql — no BEGIN/COMMIT transaction wrapper (decisions/0006)', () => {
+  const entries = [
+    { key: 'H0001', value: 'ʾāb' },
+    { key: 'H1', value: 'ʾāb' },
+  ];
+
+  it('emits DELETE + INSERT but NO BEGIN or COMMIT', () => {
+    const sql = buildTableSql('lemma_translit_he_strongs', STRONGS_COLUMNS, entries);
+    expect(sql).not.toMatch(/\bBEGIN\b/);
+    expect(sql).not.toMatch(/\bCOMMIT\b/);
+    expect(sql).toMatch(/^DELETE FROM lemma_translit_he_strongs;/);
+    expect(sql).toMatch(/INSERT INTO lemma_translit_he_strongs \(strongs, transliteration\) VALUES/);
+  });
+
+  it('starts with the DELETE (idempotent reseed) and keeps each INSERT <= 100000 bytes', () => {
+    const sql = buildTableSql('lemma_translit_he', LEMMA_COLUMNS, entries);
+    expect(sql.startsWith('DELETE FROM lemma_translit_he;\n')).toBe(true);
+    for (const stmt of sql.split('\n').filter((l) => l.startsWith('INSERT'))) {
+      expect(Buffer.byteLength(stmt, 'utf8')).toBeLessThanOrEqual(100000);
+    }
+  });
+
+  it('an empty entry list still emits the DELETE (a clean truncate) and no wrapper', () => {
+    const sql = buildTableSql('lemma_translit_he', LEMMA_COLUMNS, []);
+    expect(sql).toBe('DELETE FROM lemma_translit_he;\n');
+    expect(sql).not.toMatch(/BEGIN|COMMIT|INSERT/);
   });
 });
 
