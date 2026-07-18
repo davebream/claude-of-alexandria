@@ -586,13 +586,14 @@ export function resolveCacheVersion(env: { CACHE_VERSION?: string }): string {
   return env.CACHE_VERSION || DEFAULT_CACHE_VERSION;
 }
 
-async function cachedToolCall(
+export async function runCachedToolCall(
   name: string,
   args: Record<string, unknown>,
-  handler: () => Promise<CallToolResult>
+  handler: () => Promise<CallToolResult>,
+  reqCtx: RequestCtx
 ): Promise<CallToolResult> {
   const sortedArgs = stableStringify(args);
-  const cacheKey = new Request(cacheKeyUrl(DEFAULT_CACHE_VERSION, name, sortedArgs));
+  const cacheKey = new Request(cacheKeyUrl(reqCtx.cacheVersion, name, sortedArgs));
   const cache = caches.default;
 
   const cached = await cache.match(cacheKey);
@@ -605,9 +606,10 @@ async function cachedToolCall(
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=86400' },
   });
   try {
-    await cache.put(cacheKey, response.clone());
+    const put = cache.put(cacheKey, response.clone()).catch(() => {});
+    if (reqCtx.ctx) reqCtx.ctx.waitUntil(put); else void put;
   } catch {
-    // Cache write failures are non-fatal — response is still returned from handler()
+    // Cache scheduling failures are non-fatal — the handler result is still returned
   }
   return result;
 }
@@ -617,11 +619,19 @@ async function cachedToolCall(
 // Per-request McpServer instance. The MCP SDK's Protocol.connect() is single-use
 // — calling it twice on the same Server throws "Already connected". Creating
 // per request is cheap (constructor only sets up handler maps, no I/O).
-function createServer(): McpServer {
+function createServer(reqCtx: RequestCtx): McpServer {
   const server = new McpServer(
     { name: 'claude-of-alexandria-mcp', version: SERVER_VERSION },
     { capabilities: { tools: {} } }
   );
+
+  // Bound-local closure over this request's reqCtx — the ~28 call sites below
+  // are unchanged; each resolves to the per-request cache version + ExecutionContext.
+  const cachedToolCall = (
+    name: string,
+    args: Record<string, unknown>,
+    handler: () => Promise<CallToolResult>
+  ) => runCachedToolCall(name, args, handler, reqCtx);
 
   server.registerTool('list_books', {
     title: 'List Biblical Books',
@@ -1077,7 +1087,7 @@ interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // CORS preflight
@@ -1118,8 +1128,11 @@ export default {
     // Inject D1 binding for this request
     setDb(env.DB);
 
+    // Per-request context: ExecutionContext + resolved cache-version namespace.
+    const reqCtx: RequestCtx = { ctx, cacheVersion: resolveCacheVersion(env) };
+
     // Per-request Server and transport
-    const server = createServer();
+    const server = createServer(reqCtx);
     // Stateless mode: sessionIdGenerator omitted intentionally.
     // Per-request transports require stateless mode — each request creates a new
     // transport with no session history. Stateful mode would reject all non-initialize
