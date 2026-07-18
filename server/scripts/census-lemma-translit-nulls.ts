@@ -91,6 +91,8 @@ export interface CensusResult {
   shippedNotRegenerated: string[];
   /** Degenerate-input guard: empty consumer set, or zero direct resolutions. */
   floorTripped: boolean;
+  /** AC-1: per-key evidence strings for the category table renderer (C3). */
+  evidenceByKey: Record<string, string>;
 }
 
 export interface CensusInput {
@@ -113,6 +115,30 @@ const STALE_0008_KEYS = ['H1121a', 'H1004b', 'H834a'] as const;
 export function censusNulls(input: CensusInput): CensusResult {
   const { emitRows, consumerKeys, shippedStrongsKeys, baseInfo, safeRecoverable } = input;
   const uniqueConsumerKeys = [...new Set(consumerKeys)];
+
+  // Degenerate-input guard (floorTripped): computed FIRST, before the
+  // classification loop's corruption-guard throw. On an empty/degenerate
+  // shipped-strongs read, real consumer keys over a singleton-pointed base
+  // (e.g. H430) would otherwise hit the throw before this guard is ever
+  // evaluated — the maintainer would see a misleading "investigate
+  // baseInfo/emitRows drift" error instead of the intended FLOOR TRIPPED
+  // diagnostic. Short-circuit here: no classification, no throw.
+  const directlyResolved = uniqueConsumerKeys.filter((k) => shippedStrongsKeys.has(k)).length;
+  const floorTripped = uniqueConsumerKeys.length === 0 || directlyResolved === 0;
+  if (floorTripped) {
+    return {
+      homograph: [],
+      unpointed: [],
+      unattestedAramaic: [],
+      missedRecoveries: [],
+      recoveredCount: 0,
+      residualCount: 0,
+      stale0008: {},
+      shippedNotRegenerated: [],
+      floorTripped: true,
+      evidenceByKey: {},
+    };
+  }
 
   // Raw per-base grouping of emitRows, BEFORE the niqqud filter — the one
   // analysis the generator's own baseInfo cannot provide (it is post-filter).
@@ -141,6 +167,7 @@ export function censusNulls(input: CensusInput): CensusResult {
   const homograph: CategorizedKey[] = [];
   const unpointed: CategorizedKey[] = [];
   const unattestedAramaic: CategorizedKey[] = [];
+  const evidenceByKey: Record<string, string> = {};
 
   for (const key of residualKeys) {
     if (missedSet.has(key)) continue; // excluded FIRST (plan-review CR-1)
@@ -149,6 +176,7 @@ export function censusNulls(input: CensusInput): CensusResult {
     const info = baseInfo.get(base);
     if (info && info.translits.size >= 2) {
       homograph.push({ key, base });
+      evidenceByKey[key] = `${info.translits.size} distinct romanizations`;
       continue;
     }
 
@@ -157,6 +185,7 @@ export function censusNulls(input: CensusInput): CensusResult {
       const anyPointed = rawRows.some((r) => hasNiqqud(r.lemma));
       if (!anyPointed) {
         unpointed.push({ key, base });
+        evidenceByKey[key] = `${rawRows.length} raw row(s), none pointed`;
         continue;
       }
       // Raw rows exist AND at least one carries niqqud, yet the key matched
@@ -171,6 +200,7 @@ export function censusNulls(input: CensusInput): CensusResult {
       );
     } else {
       unattestedAramaic.push({ key, base });
+      evidenceByKey[key] = '0 raw rows in MACULA extract';
     }
   }
 
@@ -205,9 +235,6 @@ export function censusNulls(input: CensusInput): CensusResult {
     else stale0008[key] = { status: 'null', reason: 'not-a-consumer-key' };
   }
 
-  const directlyResolved = uniqueConsumerKeys.filter((k) => shippedStrongsKeys.has(k)).length;
-  const floorTripped = uniqueConsumerKeys.length === 0 || directlyResolved === 0;
-
   return {
     homograph,
     unpointed,
@@ -217,7 +244,8 @@ export function censusNulls(input: CensusInput): CensusResult {
     residualCount,
     stale0008,
     shippedNotRegenerated,
-    floorTripped,
+    floorTripped: false,
+    evidenceByKey,
   };
 }
 
@@ -228,14 +256,19 @@ export interface CensusReportMeta {
   generatedAt: string;
 }
 
-function renderCategorySection(title: string, entries: CategorizedKey[]): string {
+function renderCategorySection(
+  title: string,
+  entries: CategorizedKey[],
+  evidenceByKey: Record<string, string>,
+): string {
   const lines = [`### ${title} (${entries.length})`, ''];
   if (entries.length === 0) {
     lines.push('_None._');
   } else {
     lines.push('| Strong\'s key | Base | Evidence |', '|---|---|---|');
     for (const { key, base } of entries) {
-      lines.push(`| ${key} | ${base} | ${title.toLowerCase()} |`);
+      const evidence = evidenceByKey[key] ?? title.toLowerCase();
+      lines.push(`| ${key} | ${base} | ${evidence} |`);
     }
   }
   lines.push('');
@@ -267,9 +300,11 @@ export function renderCensusReport(result: CensusResult, meta: CensusReportMeta)
   }
   lines.push('');
 
-  lines.push(renderCategorySection('Homograph', result.homograph));
-  lines.push(renderCategorySection('Unpointed', result.unpointed));
-  lines.push(renderCategorySection('Unattested / Aramaic', result.unattestedAramaic));
+  lines.push(renderCategorySection('Homograph', result.homograph, result.evidenceByKey));
+  lines.push(renderCategorySection('Unpointed', result.unpointed, result.evidenceByKey));
+  lines.push(
+    renderCategorySection('Unattested / Aramaic', result.unattestedAramaic, result.evidenceByKey),
+  );
 
   lines.push('## AC-2: missed recoveries (safe-recoverable but not shipped)');
   lines.push('');

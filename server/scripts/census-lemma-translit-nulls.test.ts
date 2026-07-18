@@ -18,7 +18,11 @@ import { censusNulls, renderCensusReport, main } from './census-lemma-translit-n
 describe('censusNulls — homograph bucket', () => {
   it('a suffixed key over a homograph base is classified homograph', () => {
     const rows = parseInput('רֵאשִׁית\tH8500a\t2\nחָכְמָה\tH8500b\t7\n');
-    const consumerKeys = ['H8500c'];
+    // 'H8500a' is directly attested (exact) and included alongside the
+    // residual-null key so this fixture does not trip the floorTripped guard
+    // (see the ordering fix above) — a real vocabulary key set always has
+    // some directly-resolving members.
+    const consumerKeys = ['H8500a', 'H8500c'];
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     const shippedStrongsKeys = new Set(emittedKeys);
 
@@ -41,8 +45,12 @@ describe('censusNulls — homograph bucket', () => {
 // (b) Base attested only consonantally (no niqqud) -> `unpointed`.
 describe('censusNulls — unpointed bucket', () => {
   it('a suffixed key over a consonants-only base is classified unpointed', () => {
-    const rows = parseInput('אבג\tH9\t4\n');
-    const consumerKeys = ['H9a'];
+    // H9 is unpointed (never emitted — unpointed lemmas are excluded from
+    // the generator's exact table), so a second, POINTED row (H1121) is
+    // added purely to give the fixture a directly-resolving consumer key and
+    // avoid tripping the floorTripped guard (see the ordering fix above).
+    const rows = parseInput('אבג\tH9\t4\nבֵּן\tH1121\t5\n');
+    const consumerKeys = ['H1121', 'H9a'];
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     const shippedStrongsKeys = new Set(emittedKeys);
 
@@ -65,7 +73,9 @@ describe('censusNulls — unpointed bucket', () => {
 describe('censusNulls — unattestedAramaic bucket', () => {
   it('a suffixed key whose base has zero raw rows is classified unattestedAramaic', () => {
     const rows = parseInput('בֵּן\tH1121\t5\n'); // unrelated base, H500 never attested
-    const consumerKeys = ['H500a'];
+    // 'H1121' is directly attested (exact); included so the fixture does not
+    // trip the floorTripped guard (see the ordering fix above).
+    const consumerKeys = ['H1121', 'H500a'];
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     const shippedStrongsKeys = new Set(emittedKeys);
 
@@ -87,7 +97,9 @@ describe('censusNulls — unattestedAramaic bucket', () => {
 describe('censusNulls — non-suffixed residual null routing', () => {
   it('a bare non-suffixed key with zero raw rows lands in unattestedAramaic, not dropped', () => {
     const rows = parseInput('בֵּן\tH1121\t5\n');
-    const consumerKeys = ['H430']; // no trailing lowercase letter
+    // 'H1121' is directly attested (exact); included so the fixture does not
+    // trip the floorTripped guard (see the ordering fix above).
+    const consumerKeys = ['H1121', 'H430']; // H430 has no trailing lowercase letter
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     const shippedStrongsKeys = new Set(emittedKeys);
 
@@ -110,7 +122,10 @@ describe('censusNulls — non-suffixed residual null routing', () => {
 describe('censusNulls — CR-1: missedRecoveries excluded from honest-null buckets', () => {
   it('a singleton-base alias dropped from production is a missed recovery, never a thrown/bucketed null', () => {
     const rows = parseInput('בֵּן\tH1121\t5\n'); // base H1121 attests exactly one pointed lemma
-    const consumerKeys = ['H1121a'];
+    // 'H1121' is directly attested (exact) and is shipped below, so this
+    // fixture does not trip the floorTripped guard (see the ordering fix
+    // above) while 'H1121a' remains the missed-recovery under test.
+    const consumerKeys = ['H1121', 'H1121a'];
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     // emittedKeys (as returned by buildTables) already includes the recovered
     // alias 'H1121a' — mirroring runtime so the wiring cannot mask a false
@@ -118,7 +133,7 @@ describe('censusNulls — CR-1: missedRecoveries excluded from honest-null bucke
     expect(emittedKeys.has('H1121a')).toBe(true);
     expect(baseline.safe_recoverable_strongs).toContain('H1121a');
 
-    // Production DID NOT ship the alias — the AC-2 defect under test.
+    // Production shipped the base but DID NOT ship the alias — the AC-2 defect under test.
     const shippedStrongsKeys = new Set(['H1121']);
 
     expect(() =>
@@ -205,6 +220,37 @@ describe('censusNulls — floorTripped degenerate-input guard', () => {
     });
     expect(result.floorTripped).toBe(true);
   });
+
+  // [ordering fix] floorTripped must be evaluated BEFORE the classification
+  // loop's corruption-guard throw. On a degenerate empty shipped-strongs read
+  // with a real consumer key over a singleton-pointed base (H430 — exactly the
+  // shape that would otherwise hit the throw), the census must short-circuit
+  // cleanly instead of crashing with a misleading corruption-guard error.
+  it('short-circuits cleanly (no throw) for a singleton-pointed-base key when shippedStrongsKeys is empty', () => {
+    const rows = parseInput('אֱלֹהִים\tH430\t100\n'); // pointed, singleton base
+    const consumerKeys = ['H430']; // would hit the corruption-guard throw if classified
+    const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
+
+    let result;
+    expect(() => {
+      result = censusNulls({
+        emitRows: rows,
+        consumerKeys,
+        shippedStrongsKeys: new Set(), // degenerate/empty read
+        baseInfo,
+        emittedKeys,
+        safeRecoverable: baseline.safe_recoverable_strongs,
+      });
+    }).not.toThrow();
+
+    expect(result!.floorTripped).toBe(true);
+    expect(result!.homograph).toEqual([]);
+    expect(result!.unpointed).toEqual([]);
+    expect(result!.unattestedAramaic).toEqual([]);
+    expect(result!.missedRecoveries).toEqual([]);
+    expect(result!.recoveredCount).toBe(0);
+    expect(result!.residualCount).toBe(0);
+  });
 });
 
 // (h) shippedNotRegenerated reverse cross-check.
@@ -233,6 +279,33 @@ describe('censusNulls — shippedNotRegenerated reverse cross-check', () => {
     expect(result.shippedNotRegenerated).toEqual(['H500c']);
     // H500c resolves directly (it's shipped) so it's not a residual null.
     expect(result.homograph).toEqual([]);
+  });
+});
+
+// [reverse-cross-check refinement] a suffixed key that is shipped AND
+// freshly emitted-as-exact (present in emittedKeys) must NOT be flagged in
+// shippedNotRegenerated. This pins the emittedKeys-based (vs
+// safeRecoverable-based) implementation choice: the key here is
+// deliberately absent from safeRecoverable, so a safeRecoverable-based check
+// would incorrectly flag it while the emittedKeys-based check does not.
+describe('censusNulls — shippedNotRegenerated excludes freshly emitted (not just safe-recoverable) keys', () => {
+  it('does not flag a shipped suffixed key present in emittedKeys but absent from safeRecoverable', () => {
+    const consumerKeys = ['H500a'];
+    const shippedStrongsKeys = new Set(['H500a']);
+    const emittedKeys = new Set(['H500a']); // freshly emitted-as-exact
+    const baseInfo = new Map(); // unused: H500a resolves directly, never classified
+    const safeRecoverable: string[] = []; // deliberately NOT safe-recoverable
+
+    const result = censusNulls({
+      emitRows: [],
+      consumerKeys,
+      shippedStrongsKeys,
+      baseInfo,
+      emittedKeys,
+      safeRecoverable,
+    });
+
+    expect(result.shippedNotRegenerated).toEqual([]);
   });
 });
 
@@ -280,14 +353,19 @@ describe('censusNulls — RC-2 pin test against a fresh buildTables run', () => 
 // only this singleton-pointed-base drift shape reaches the throw.
 describe('censusNulls — corruption-guard throw (fail-closed, never silent-drop)', () => {
   it('throws for a non-suffixed singleton-pointed-base key absent from shipped and not safe-recoverable', () => {
-    const rows = parseInput('אֱלֹהִים\tH430\t100\n'); // pointed, singleton base
-    const consumerKeys = ['H430']; // non-suffixed: never enters the alias pool
+    // A NON-empty shipped set (H1121 resolves directly) so this fixture does
+    // NOT trip the floorTripped guard — the corruption-guard throw for H430
+    // must fire, not be masked by a floor short-circuit (see the ordering fix
+    // above, which tests the empty-shipped-set / floorTripped variant of this
+    // exact singleton-pointed-base shape).
+    const rows = parseInput('בֵּן\tH1121\t5\nאֱלֹהִים\tH430\t100\n'); // pointed, singleton bases
+    const consumerKeys = ['H1121', 'H430']; // H1121 resolves directly; H430 non-suffixed
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     expect(baseInfo.get('H430')!.translits.size).toBe(1);
     expect(baseline.safe_recoverable_strongs).not.toContain('H430');
 
-    // H430 has drifted out of the shipped set entirely.
-    const shippedStrongsKeys = new Set<string>();
+    // H430 has drifted out of the shipped set; H1121 has not.
+    const shippedStrongsKeys = new Set(['H1121']);
 
     expect(() =>
       censusNulls({
@@ -303,7 +381,9 @@ describe('censusNulls — corruption-guard throw (fail-closed, never silent-drop
 
   it('does NOT throw for a malformed/zero-rows key — it lands in unattestedAramaic', () => {
     const rows = parseInput('בֵּן\tH1121\t5\n');
-    const consumerKeys = ['H9999'];
+    // 'H1121' is directly attested (exact); included so the fixture does not
+    // trip the floorTripped guard (see the ordering fix above).
+    const consumerKeys = ['H1121', 'H9999'];
     const { baseInfo, emittedKeys, baseline } = buildTables(rows, consumerKeys);
     const shippedStrongsKeys = new Set(emittedKeys);
     let result;
@@ -362,6 +442,11 @@ describe('renderCensusReport', () => {
       },
       shippedNotRegenerated: [] as string[],
       floorTripped: false,
+      evidenceByKey: {
+        H1004b: '2 distinct romanizations',
+        H9a: '4 raw row(s), none pointed',
+        H500a: '0 raw rows in MACULA extract',
+      },
     };
     const report = renderCensusReport(result, { generatedAt: '2026-07-18' });
 
@@ -374,6 +459,10 @@ describe('renderCensusReport', () => {
     expect(report).toContain('H1004b');
     expect(report).toMatch(/aramaic.*caveat/i);
     expect(report).toMatch(/zero raw rows/i);
+    // AC-1: real per-bucket evidence, not a lowercased bucket title.
+    expect(report).toContain('2 distinct romanizations');
+    expect(report).toContain('4 raw row(s), none pointed');
+    expect(report).toContain('0 raw rows in MACULA extract');
   });
 
   it('reports missedRecoveries when non-empty (AC-2 section is not silently empty)', () => {
@@ -387,6 +476,7 @@ describe('renderCensusReport', () => {
       stale0008: {},
       shippedNotRegenerated: [],
       floorTripped: false,
+      evidenceByKey: {},
     };
     const report = renderCensusReport(result, { generatedAt: '2026-07-18' });
     expect(report).toContain('H1121a');
