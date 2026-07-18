@@ -47,6 +47,16 @@
  * instead land in baseInfo and classify as homograph/singleton — so this
  * bucket is a superset that MAY include non-Aramaic unattested bases too; the
  * report must state this and spot-check a sample.
+ *
+ * RESOLVED (issue #117, 2026-07-18): the superset was fully adjudicated against
+ * the raw MACULA corpus. Of the 10 zero-raw-row OT bases, exactly 1 is genuine
+ * biblical Aramaic (H7260 רַבְרַב, which MACULA tags under the Aramaic base
+ * H7229 in Daniel) and 9 are Hebrew whose Strong's number MACULA never assigns
+ * (a byform/homograph, or a compound/phrase MACULA decomposes) — so their word
+ * is attested under a DIFFERENT number, not missing. Zero bases are extraction
+ * gaps: MACULA assigns none of the 10 numbers to any row, so the extractor has
+ * nothing to drop; every entry is a genuine honest-null. Full per-base evidence:
+ * docs/reviews/2026-07-18-residual-null-aramaic-classification.md (local).
  */
 
 import { readFileSync, writeFileSync } from 'fs';
@@ -345,6 +355,14 @@ export function renderCensusReport(result: CensusResult, meta: CensusReportMeta)
       'homograph or singleton-recoverable, not land here — so this bucket is a superset ' +
       'that may include genuinely-unattested non-Aramaic bases too. Spot-check a sample ' +
       'before treating every entry as confirmed Aramaic.',
+  );
+  lines.push('');
+  lines.push(
+    'RESOLVED for the 10 OT bases in the base #114 census (issue #117, 2026-07-18): ' +
+      '1 is genuine biblical Aramaic (H7260, tagged under Aramaic H7229 in Daniel), 9 are ' +
+      'Hebrew whose Strong’s number MACULA never assigns (byform/homograph/decomposed ' +
+      'compound), and 0 are extraction gaps — all are genuine honest-nulls. See ' +
+      'docs/reviews/2026-07-18-residual-null-aramaic-classification.md.',
   );
   lines.push('');
 
