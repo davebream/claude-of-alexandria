@@ -67,6 +67,31 @@ export function hasNiqqud(lemma) {
 }
 
 /**
+ * Unpadded strongs spelling — MIRRORS unpad() in generate-lemma-translit.ts.
+ * Strip leading zeros from the numeric portion, preserving H + trailing suffix.
+ * `H0001`->`H1`, `H0871a`->`H871a`, `H1090a`->`H1090a`. Non-numeric: unchanged.
+ */
+export function unpad(strongs) {
+  const m = /^H(\d+)([a-z])?$/.exec(strongs);
+  if (!m) return strongs;
+  const num = m[1].replace(/^0+/, '') || '0';
+  return `H${num}${m[2] ?? ''}`;
+}
+
+/**
+ * Padded strongs spelling — the inverse of unpad, zero-padding the numeric
+ * portion to at least 4 digits (matching morphology.strongs / the emit).
+ * `H1`->`H0001`, `H14`->`H0014`, `H871a`->`H0871a`, `H1090a`->`H1090a`. A number
+ * already >= 4 digits, or a non-numeric strongs, is returned unchanged.
+ */
+export function pad(strongs) {
+  const m = /^H(\d+)([a-z])?$/.exec(strongs);
+  if (!m) return strongs;
+  const num = m[1].length >= 4 ? m[1] : m[1].padStart(4, '0');
+  return `H${num}${m[2] ?? ''}`;
+}
+
+/**
  * Normalize consumer-key JSON into a deduped array of string keys.
  * Accepts, in order:
  *   - an array of strings                       → used directly
@@ -151,11 +176,49 @@ export function checkSelfConsistency(db, baseline) {
   return { ok, lemmaActual, lemmaExpected, strongsActual, strongsExpected };
 }
 
-/** (b) every consumer strongs key resolves in lemma_translit_he_strongs. */
+/**
+ * (b) Attestation-aware strongs-space check. An unresolved consumer strongs is
+ * classified against the generated table's key set:
+ *
+ *   - would-be-bug (BLOCKS): a padding-sibling of the consumer key (its `pad`
+ *     or `unpad` spelling) IS a table key, yet the consumer's exact spelling is
+ *     not. The table has both a padded and an unpadded spelling for EVERY
+ *     attested strongs (a pointed lemma exists to serve), so a sibling being
+ *     present while the exact spelling is absent means a spelling the generator
+ *     should have emitted was dropped — the real silent-null bug (this is what
+ *     the padding mismatch was). After the generator fix this count is 0; a
+ *     regression in the unpadded/padded emission would push it above 0.
+ *
+ *   - explained-absence (does NOT block, but is counted): NO spelling of the
+ *     key is a table key — no pointed lemma is attested for this strongs under
+ *     any spelling (unpointed-only, or a sense-suffix / Aramaic strongs MACULA
+ *     does not attest). null is the correct honest answer here (never guess),
+ *     so it is a known coverage boundary, not a bug.
+ *
+ * NOTE: a DOWNWARD base variant (base(H1004b)=H1004) is deliberately NOT treated
+ * as a resolving sibling: H1004b is a distinct sense the corpus does not attest,
+ * and serving it the base family's transliteration would be a guess. Only exact
+ * padding-siblings (same digits + same suffix) count.
+ */
 export function checkStrongsSpace(db, consumerStrongsKeys) {
   const present = columnSet(db, 'SELECT strongs FROM lemma_translit_he_strongs');
-  const missing = consumerStrongsKeys.filter((k) => !present.has(k));
-  return { ok: missing.length === 0, missing, consumerCount: consumerStrongsKeys.length };
+  const wouldBeBug = [];
+  const explainedAbsence = [];
+  for (const k of consumerStrongsKeys) {
+    if (present.has(k)) continue; // resolves directly
+    const siblings = [pad(k), unpad(k)].filter((s) => s !== k);
+    if (siblings.some((s) => present.has(s))) {
+      wouldBeBug.push(k);
+    } else {
+      explainedAbsence.push(k);
+    }
+  }
+  return {
+    ok: wouldBeBug.length === 0,
+    wouldBeBug,
+    explainedAbsence,
+    consumerCount: consumerStrongsKeys.length,
+  };
 }
 
 /**
@@ -207,9 +270,10 @@ export function formatReport(result) {
   );
   lines.push(
     `(b) strongs-space anti-join: ${b.ok ? 'PASS' : 'FAIL'} — ` +
-      `${b.consumerCount} consumer keys, ${b.missing.length} unresolved`,
+      `${b.consumerCount} consumer keys, ${b.wouldBeBug.length} would-be-bug (derivable but missing), ` +
+      `${b.explainedAbsence.length} explained-absence (no pointed lemma — honest null)`,
   );
-  if (!b.ok) lines.push(`    unresolved strongs: ${JSON.stringify(sample(b.missing))}`);
+  if (!b.ok) lines.push(`    would-be-bug strongs: ${JSON.stringify(sample(b.wouldBeBug))}`);
   lines.push(
     `(c) lemma-space anti-join: ${c.ok ? 'PASS' : 'FAIL'} — ` +
       `${c.consumerCount} consumer keys, ${c.explained.length} explained (excluded), ` +

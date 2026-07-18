@@ -2,6 +2,8 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import initSqlJs from 'sql.js';
 import {
   hasNiqqud,
+  unpad,
+  pad,
   extractKeys,
   buildScratchDb,
   columnSet,
@@ -59,6 +61,23 @@ describe('hasNiqqud', () => {
   it('is true for a pointed lemma and false for a consonantal skeleton', () => {
     expect(hasNiqqud(POINTED)).toBe(true);
     expect(hasNiqqud(UNPOINTED)).toBe(false);
+  });
+});
+
+describe('pad / unpad — strongs padding-sibling normalizers', () => {
+  it('unpad strips leading zeros, preserving the suffix', () => {
+    expect(unpad('H0001')).toBe('H1');
+    expect(unpad('H0871a')).toBe('H871a');
+    expect(unpad('H1090a')).toBe('H1090a');
+  });
+  it('pad zero-pads to >=4 digits, preserving the suffix', () => {
+    expect(pad('H1')).toBe('H0001');
+    expect(pad('H871a')).toBe('H0871a');
+    expect(pad('H1090a')).toBe('H1090a');
+  });
+  it('are inverse on the padded/unpadded axis', () => {
+    expect(unpad(pad('H1'))).toBe('H1');
+    expect(pad(unpad('H0430'))).toBe('H0430');
   });
 });
 
@@ -120,16 +139,52 @@ describe('coverage gate', () => {
     expect(result.c.ok).toBe(true);
   });
 
-  it('strongs gap detected — a consumer strongs with no row fails part (b)', () => {
+  it('would-be-bug (BLOCKS) — a consumer strongs whose padding-sibling IS a table key fails part (b)', () => {
+    // Table has the UNPADDED spelling H430; the consumer asks for the PADDED
+    // H0430. A pointed lemma clearly exists (H430 resolves), so the missing
+    // padded spelling is a real spelling-coverage bug — exactly the padding
+    // mismatch class this gate guards.
     const db = buildScratchDb(SQL, {
       migrationSql: MIGRATION_SQL,
       lemmaSql: lemmaSql(),
-      strongsSql: strongsSql(['H0001']), // H0430 absent
+      strongsSql: strongsSql(['H0001', 'H430']),
     });
     const b = checkStrongsSpace(db, ['H0001', 'H0430']);
     db.close();
     expect(b.ok).toBe(false);
-    expect(b.missing).toEqual(['H0430']);
+    expect(b.wouldBeBug).toEqual(['H0430']);
+    expect(b.explainedAbsence).toEqual([]);
+  });
+
+  it('explained-absence (does NOT block) — a consumer strongs with NO spelling in the table is counted, not failed', () => {
+    // No padding-sibling of H9999 is a table key, so no pointed lemma is
+    // attested under any spelling — null is the honest answer, not a bug.
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H0001', 'H0430']),
+    });
+    const b = checkStrongsSpace(db, ['H0001', 'H9999']);
+    db.close();
+    expect(b.ok).toBe(true);
+    expect(b.wouldBeBug).toEqual([]);
+    expect(b.explainedAbsence).toEqual(['H9999']);
+  });
+
+  it('a sense-suffix consumer key (H1004b) whose only sibling is a base form is explained-absence, not a bug', () => {
+    // Table attests H1004a and its base H1004 (downward base). The consumer's
+    // distinct sense H1004b must NOT be treated as derivable — base is not a
+    // resolving sibling. Honest null.
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(['H1004a', 'H1004']),
+    });
+    const b = checkStrongsSpace(db, ['H1004b']);
+    db.close();
+    expect(b.ok).toBe(true);
+    expect(b.explainedAbsence).toEqual(['H1004b']);
+    expect(b.wouldBeBug).toEqual([]);
   });
 
   it('lemma gap detected — a POINTED consumer lemma with no row is unexplained', () => {
