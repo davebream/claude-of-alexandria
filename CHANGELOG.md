@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.5.0] - 2026-07-18
+
 ### Added
 
 - Hebrew words now carry a dictionary-form SBL transliteration (`lemma_translit`) across the word-length tools (`query_morphology`, `query_lemmas`, `query_vocabulary`, `query_theme`, `query_themes_for_lemmas`) — previously only Greek dictionary forms were transliterated, so a non-Hebraist reader could see `ἀγάπη (agapē)` but not a Hebrew equivalent. The Hebrew value is derived deterministically from the already-stored pointed lemma (SBL Academic with spirantization) and marked as derived; surface transliteration and Greek forms are unchanged, and an unpointed lemma stays blank rather than guessed.
