@@ -546,12 +546,20 @@ const CORS_HEADERS = {
 // ─── Response cache ───────────────────────────────────────────────────────────
 
 // Cache MCP tool results keyed by a version-prefixed namespace + tool name +
-// sorted args JSON. See the invalidation-contract comment above cachedToolCall
-// below for how the version prefix drives global cache invalidation.
+// sorted args JSON: `https://cache/<CACHE_VERSION>/<tool>/<sorted-args>`.
 // Cache intercepts inside the CallTool handler before MCP serialization.
-
-// Bump this to orphan every previously cached entry (see invalidation contract
-// below). Can also be overridden per-deploy via env.CACHE_VERSION.
+//
+// Invalidation contract: a Cloudflare Worker cannot enumerate or purge
+// `caches.default` — there is no API to list or delete-by-prefix. Global
+// invalidation is therefore achieved by bumping CACHE_VERSION (either this
+// constant, on a code deploy, or the env.CACHE_VERSION override, for an
+// operational bump without a deploy — e.g. after a D1 data backfill).
+// Bumping the version changes every cache key's namespace, so all subsequent
+// requests miss and re-read current D1 data; entries under the orphaned
+// namespace are never actively deleted — they are simply never matched again
+// and are left for the platform's TTL/LRU reaping. The 24h `max-age=86400`
+// TTL below is therefore also the upper bound on staleness: even without a
+// version bump, any entry self-expires within 24h of being written.
 const DEFAULT_CACHE_VERSION = 'v5';
 
 // Per-request context: the ExecutionContext (used to schedule non-blocking

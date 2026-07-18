@@ -12,3 +12,12 @@ binding = "DB"
 database_name = "claude-of-alexandria"
 database_id = "b78d74b2-3d31-4cf0-ad4c-743d298e2e6e"
 migrations_dir = "migrations"
+
+# Operational lever for the tool-response cache (see the invalidation-contract
+# comment above cachedToolCall in src/index.ts). A Worker cannot purge
+# caches.default, so global cache invalidation is done by bumping the cache
+# version — either the DEFAULT_CACHE_VERSION constant in code (redeploy), or
+# this env var (no redeploy needed, e.g. right after a D1 data backfill).
+# Uncomment and bump the value to force an out-of-band cache flush:
+# [vars]
+# CACHE_VERSION = "v6"
