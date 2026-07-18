@@ -514,6 +514,28 @@ def parse_ref(ref: str) -> tuple[str, int, int, int] | None:
     return match.group(1), int(match.group(2)), int(match.group(3)), int(match.group(4))
 
 
+# Column index of the pointed lemma in the MACULA Hebrew TSV. Module-level (not
+# just a local in process_tsv) so the lemma/strongs emit script can share the
+# exact same parse — see parse_lemma_field.
+COL_LEMMA = 17
+
+
+def parse_lemma_field(line: str) -> str:
+    """Return the raw pointed-lemma bytes for one MACULA Hebrew TSV data line.
+
+    The single source of the lemma parse, called by both process_tsv's row loop
+    and emit-lemma-strongs.py. The value is returned verbatim — no .strip(), no
+    Unicode normalization — because the transliteration backfill joins on lemma
+    bytes that must be byte-identical to what process_tsv stores into
+    morphology.lemma. Uses the same split + column index + field padding as the
+    extractor's loop so the two can never drift apart.
+    """
+    fields = line.strip("\n").split("\t")
+    while len(fields) < 32:
+        fields.append("")
+    return fields[COL_LEMMA] or ""
+
+
 def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
     """Parse TSV into per-book word lists."""
     books: dict[str, list[dict]] = {}
@@ -530,7 +552,8 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
     COL_GLOSS = 11
     COL_MORPH = 15
     COL_LANG = 16
-    COL_LEMMA = 17
+    # COL_LEMMA lives at module scope; the lemma read goes through
+    # parse_lemma_field(line) so the emit script shares one source of the parse.
     COL_FRAME = 29
     COL_SUBJREF = 30
     COL_PARTICIPANTREF = 31
@@ -564,7 +587,7 @@ def process_tsv(tsv_path: Path) -> dict[str, list[dict]]:
             transliteration = fields[COL_TRANSLITERATION] or None
             morph_code = fields[COL_MORPH]
             lang = fields[COL_LANG]
-            lemma = fields[COL_LEMMA] or ""
+            lemma = parse_lemma_field(line)
             gloss = fields[COL_GLOSS] or None
             strongnumberx = fields[COL_STRONGNUMBERX] or None
             clause_type = fields[COL_CLASS] or None
