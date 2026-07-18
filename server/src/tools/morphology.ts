@@ -49,7 +49,10 @@ export const MorphologyWordEntry = z.object({
   // SBL transliteration siblings — present-and-null when unpopulated, never omitted (AC-10).
   // text_translit: all levels. lemma_translit: syntax/full/lexical only (absent at basic — no join).
   text_translit: z.string().nullable().optional(),
-  lemma_translit: z.string().nullable().optional(),
+  lemma_translit: z.string().nullable().optional().describe(
+    'Hebrew (OT): derived — deterministic SBL rendering of the pointed lemma (decisions/0007). '
+    + 'Greek (NT): source-read from OpenGNT.'
+  ),
 });
 
 export const MorphologyOutputSchema = {
@@ -64,14 +67,18 @@ export const MorphologyOutputSchema = {
 };
 
 // ─── Column selection by fields level ─────────────────────────────────────────
-// All columns are qualified with `m.` — the table is aliased below because
-// lexicon_lsj (joined for lemma_translit) shares column names (transliteration,
-// gloss) with morphology, and an unqualified reference is ambiguous under the join.
+// All columns are qualified with `m.` — the table is aliased below because the
+// joined lemma_translit source shares column names with morphology, and an
+// unqualified reference would be ambiguous under the join. Both join targets are
+// aliased `lx`: NT joins lexicon_lsj (shares transliteration, gloss); OT joins
+// lemma_translit_he (shares lemma, transliteration).
 //
 // text_translit (m.transliteration) is basic-level — it needs no join, since it
-// lives on morphology itself. lemma_translit (lx.transliteration) derives from
-// strongs via lexicon_lsj, which is itself a syntax+ field, so it is only
-// selected — and only joined — at syntax/full/lexical.
+// lives on morphology itself. lemma_translit (lx.transliteration) is a syntax+
+// field, so it is only selected — and only joined — at syntax/full/lexical. Its
+// source is testament-conditional (see the lexiconJoin construction below):
+// NT reads it from lexicon_lsj by Strong's number; OT reads the derived Hebrew
+// rendering from lemma_translit_he by the pointed lemma.
 const BASIC_COLS = 'm.chapter, m.verse, m.word_position, m.text, m.normalized, m.lemma, m.pos, m.parsing, m.transliteration AS text_translit';
 const SYNTAX_COLS = `${BASIC_COLS}, m.clause_id, m.clause_type, m.strongs, lx.transliteration AS lemma_translit`;
 const FULL_COLS = `${SYNTAX_COLS}, m.gloss, m.semantic_frame, m.subject_ref, m.participant_ref, m.gloss_tbesg, m.louw_nida, m.louw_nida_domain`;
@@ -86,7 +93,9 @@ function selectColumns(fields: string | undefined): string {
   }
 }
 
-// lemma_translit requires the lexicon_lsj join at syntax/full/lexical.
+// lemma_translit requires a lexicon join at syntax/full/lexical. Which table is
+// joined is testament-conditional (see lexiconJoin below): lexicon_lsj for NT,
+// lemma_translit_he for OT. This predicate governs only *whether* to join.
 // NB: this predicate deliberately does NOT reuse `includesSyntax` further down
 // (fields === 'syntax' || fields === 'full') — that predicate excludes 'lexical',
 // and lemma_translit must reach 'lexical' too.
@@ -133,7 +142,9 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
   const fields = args.fields;
   const columns = selectColumns(fields);
   const lexiconJoin = needsLexiconJoin(fields)
-    ? 'LEFT JOIN lexicon_lsj lx ON m.strongs = lx.strongs_id'
+    ? (testament === 'ot'
+        ? 'LEFT JOIN lemma_translit_he lx ON m.lemma = lx.lemma'
+        : 'LEFT JOIN lexicon_lsj lx ON m.strongs = lx.strongs_id')
     : '';
 
   let sql = `
