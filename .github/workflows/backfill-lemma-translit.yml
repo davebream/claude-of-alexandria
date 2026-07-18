@@ -171,8 +171,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         # wrangler d1 execute --file takes exactly ONE file per invocation and does
-        # not glob-expand, so apply each explicitly. Each file is a self-contained
-        # BEGIN; DELETE; chunked INSERT; COMMIT; block. Pinned wrangler@4.112.0
+        # not glob-expand, so apply each explicitly. Each file is DELETE FROM <table>;
+        # followed by chunked INSERTs, with NO BEGIN/COMMIT wrapper (decisions/0006:
+        # the R2 bulk-import path wraps its own transaction). Pinned wrangler@4.112.0
         # (matches server/package.json ^4.112.0) — --file --remote atomicity is
         # version-dependent, so pinning removes that variable. NEVER interpolate
         # ${{ }} into this run: block; it is a script-injection sink.

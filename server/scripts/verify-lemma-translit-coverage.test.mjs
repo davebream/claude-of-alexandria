@@ -14,8 +14,9 @@ import {
 } from './verify-lemma-translit-coverage.mjs';
 
 // Migration 0021's CREATE statements, inlined so the scratch-DB builder is
-// exercised exactly as production runs it (BEGIN/DELETE/INSERT blocks loaded on
-// top of these tables).
+// exercised exactly as production runs it: the fixtures below emit the SAME shape
+// the generator produces — DELETE FROM …; + chunked INSERTs, NO BEGIN/COMMIT
+// wrapper (decisions/0006: the bulk importer wraps its own transaction).
 const MIGRATION_SQL = `
 CREATE TABLE IF NOT EXISTS lemma_translit_he (
   lemma TEXT PRIMARY KEY,
@@ -31,16 +32,26 @@ CREATE TABLE IF NOT EXISTS lemma_translit_he_strongs (
 const POINTED = 'בָּרָא';
 const UNPOINTED = 'ברא';
 
-// Two pointed lemmas that always get a lemma_translit_he row.
-const lemmaSql = (extra = []) =>
-  `BEGIN;\nDELETE FROM lemma_translit_he;\nINSERT INTO lemma_translit_he (lemma, transliteration) VALUES ` +
-  [`('${POINTED}', 'bārāʾ')`, `('רֵאשִׁית', 'rēʾšît')`, ...extra].join(',') +
-  `;\nCOMMIT;\n`;
+// Two pointed lemmas that always get a lemma_translit_he row. NO BEGIN/COMMIT.
+const lemmaSql = (extra = []) => {
+  const tuples = [`('${POINTED}', 'bārāʾ')`, `('רֵאשִׁית', 'rēʾšît')`, ...extra];
+  return (
+    `DELETE FROM lemma_translit_he;\n` +
+    (tuples.length > 0
+      ? `INSERT INTO lemma_translit_he (lemma, transliteration) VALUES ${tuples.join(',')};\n`
+      : '')
+  );
+};
 
+// An empty keys array emits ONLY the DELETE (a clean truncate) — the wholesale
+// -empty table shape the strongs-arm floor must catch.
 const strongsSql = (keys = ['H0001', 'H0430']) =>
-  `BEGIN;\nDELETE FROM lemma_translit_he_strongs;\nINSERT INTO lemma_translit_he_strongs (strongs, transliteration) VALUES ` +
-  keys.map((k) => `('${k}', 'x')`).join(',') +
-  `;\nCOMMIT;\n`;
+  `DELETE FROM lemma_translit_he_strongs;\n` +
+  (keys.length > 0
+    ? `INSERT INTO lemma_translit_he_strongs (strongs, transliteration) VALUES ` +
+      keys.map((k) => `('${k}', 'x')`).join(',') +
+      `;\n`
+    : '');
 
 // Baseline that matches the default 2-lemma / 2-strongs fixtures.
 const baseline = (over = {}) => ({
@@ -139,6 +150,41 @@ describe('coverage gate', () => {
     expect(result.c.ok).toBe(true);
   });
 
+  it('FLOOR (BLOCKS) — a wholly-empty strongs table with nonzero consumers fails part (b)', () => {
+    // The regression this guards: a wholesale-dropped strongs table. Without the
+    // floor, every consumer key falls into explained-absence and (b) would pass.
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql([]), // wholly empty (DELETE only, no INSERT)
+    });
+    const b = checkStrongsSpace(db, ['H0001', 'H0430', 'H1']);
+    db.close();
+    expect(b.ok).toBe(false);
+    expect(b.floorTripped).toBe(true);
+    expect(b.directlyResolved).toBe(0);
+    expect(b.wouldBeBug).toEqual([]); // floor, not a would-be-bug misclassification
+  });
+
+  it('floor does NOT trip when some keys resolve directly — a populated table with explained-absence still passes', () => {
+    // Many keys resolve directly; a handful are honest explained-absence (no
+    // spelling in the table). directlyResolved > 0, so the floor never fires.
+    const tableKeys = Array.from({ length: 50 }, (_, i) => `H${1000 + i}`);
+    const db = buildScratchDb(SQL, {
+      migrationSql: MIGRATION_SQL,
+      lemmaSql: lemmaSql(),
+      strongsSql: strongsSql(tableKeys),
+    });
+    const consumers = [...tableKeys, 'H9998', 'H9999']; // 50 resolve, 2 honest-null
+    const b = checkStrongsSpace(db, consumers);
+    db.close();
+    expect(b.ok).toBe(true);
+    expect(b.floorTripped).toBe(false);
+    expect(b.directlyResolved).toBe(50);
+    expect(b.wouldBeBug).toEqual([]);
+    expect(b.explainedAbsence).toEqual(['H9998', 'H9999']);
+  });
+
   it('would-be-bug (BLOCKS) — a consumer strongs whose padding-sibling IS a table key fails part (b)', () => {
     // Table has the UNPADDED spelling H430; the consumer asks for the PADDED
     // H0430. A pointed lemma clearly exists (H430 resolves), so the missing
@@ -174,15 +220,17 @@ describe('coverage gate', () => {
   it('a sense-suffix consumer key (H1004b) whose only sibling is a base form is explained-absence, not a bug', () => {
     // Table attests H1004a and its base H1004 (downward base). The consumer's
     // distinct sense H1004b must NOT be treated as derivable — base is not a
-    // resolving sibling. Honest null.
+    // resolving sibling. Honest null. (H1004a is included in the consumer set so
+    // one key resolves directly and the wholesale-empty floor does not fire.)
     const db = buildScratchDb(SQL, {
       migrationSql: MIGRATION_SQL,
       lemmaSql: lemmaSql(),
       strongsSql: strongsSql(['H1004a', 'H1004']),
     });
-    const b = checkStrongsSpace(db, ['H1004b']);
+    const b = checkStrongsSpace(db, ['H1004a', 'H1004b']);
     db.close();
     expect(b.ok).toBe(true);
+    expect(b.floorTripped).toBe(false);
     expect(b.explainedAbsence).toEqual(['H1004b']);
     expect(b.wouldBeBug).toEqual([]);
   });

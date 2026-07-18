@@ -136,9 +136,10 @@ function dedupe(values) {
 
 /**
  * Build a fresh in-memory scratch DB: apply the migration CREATE statements,
- * then load the generated table SQL (each a self-contained
- * BEGIN; DELETE; INSERT…; COMMIT; block). SQL args are strings so this is
- * directly unit-testable without touching the filesystem.
+ * then load the generated table SQL (each a DELETE FROM …; followed by chunked
+ * INSERTs, with NO BEGIN/COMMIT wrapper per decisions/0006 — the bulk importer
+ * wraps its own transaction). SQL args are strings so this is directly
+ * unit-testable without touching the filesystem.
  */
 export function buildScratchDb(SQL, { migrationSql, lemmaSql, strongsSql }) {
   const db = new SQL.Database();
@@ -199,13 +200,28 @@ export function checkSelfConsistency(db, baseline) {
  * as a resolving sibling: H1004b is a distinct sense the corpus does not attest,
  * and serving it the base family's transliteration would be a guess. Only exact
  * padding-siblings (same digits + same suffix) count.
+ *
+ * FLOOR: the attestation-aware classification above has a blind spot — if the
+ * strongs table ships WHOLLY EMPTY, every consumer key falls into
+ * explained-absence (no sibling present anywhere) and part (b) would pass with 0
+ * would-be-bug, while part (a) passes trivially (0===0 against a zeroed baseline)
+ * and part (c) only guards the lemma table. A regression that zeroes ONLY the
+ * strongs table would then ship all-null OT lemma_translit for query_vocabulary /
+ * query_themes / query_themes_for_lemmas straight past the gate. So: when there
+ * are consumer keys but ZERO of them resolve DIRECTLY, FAIL. On real data
+ * thousands resolve directly and the ~165 honest-null boundary never approaches
+ * the total, so this floor only ever trips on a wholesale-empty/dropped table.
  */
 export function checkStrongsSpace(db, consumerStrongsKeys) {
   const present = columnSet(db, 'SELECT strongs FROM lemma_translit_he_strongs');
   const wouldBeBug = [];
   const explainedAbsence = [];
+  let directlyResolved = 0;
   for (const k of consumerStrongsKeys) {
-    if (present.has(k)) continue; // resolves directly
+    if (present.has(k)) {
+      directlyResolved += 1;
+      continue; // resolves directly
+    }
     const siblings = [pad(k), unpad(k)].filter((s) => s !== k);
     if (siblings.some((s) => present.has(s))) {
       wouldBeBug.push(k);
@@ -213,10 +229,13 @@ export function checkStrongsSpace(db, consumerStrongsKeys) {
       explainedAbsence.push(k);
     }
   }
+  const floorTripped = consumerStrongsKeys.length > 0 && directlyResolved === 0;
   return {
-    ok: wouldBeBug.length === 0,
+    ok: wouldBeBug.length === 0 && !floorTripped,
     wouldBeBug,
     explainedAbsence,
+    directlyResolved,
+    floorTripped,
     consumerCount: consumerStrongsKeys.length,
   };
 }
@@ -273,7 +292,13 @@ export function formatReport(result) {
       `${b.consumerCount} consumer keys, ${b.wouldBeBug.length} would-be-bug (derivable but missing), ` +
       `${b.explainedAbsence.length} explained-absence (no pointed lemma — honest null)`,
   );
-  if (!b.ok) lines.push(`    would-be-bug strongs: ${JSON.stringify(sample(b.wouldBeBug))}`);
+  if (b.floorTripped)
+    lines.push(
+      `    FLOOR TRIPPED: ${b.consumerCount} consumer keys but 0 resolve directly — ` +
+        `the strongs table is empty/dropped (wholesale all-null).`,
+    );
+  if (!b.ok && b.wouldBeBug.length > 0)
+    lines.push(`    would-be-bug strongs: ${JSON.stringify(sample(b.wouldBeBug))}`);
   lines.push(
     `(c) lemma-space anti-join: ${c.ok ? 'PASS' : 'FAIL'} — ` +
       `${c.consumerCount} consumer keys, ${c.explained.length} explained (excluded), ` +

@@ -18,8 +18,10 @@ The only rows excluded are empty-lemma rows (a defensive guard; none exist in
 the current corpus). Exclusions are reported on stderr, never stdout.
 
 Strong's follows the extractor's exact derivation: `H{n}` for a numeric id
-(unpadded), the raw value for a non-numeric id, and "" when the source row has
-no Strong's number.
+(H-prefixed, spelled exactly as MACULA attests — i.e. the source's own
+zero-padded 4-digit form, byte-identical to morphology.strongs; the downstream
+generator's pad/unpad reconcile the padded↔unpadded consumer spellings), the raw
+value for a non-numeric id, and "" when the source row has no Strong's number.
 
 Usage:
     python3 server/scripts/emit-lemma-strongs.py <macula-source.tsv> <out.tsv>
