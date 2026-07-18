@@ -1,0 +1,184 @@
+name: Backfill Hebrew Lemma Transliteration
+
+# This workflow writes to PRODUCTION D1 (decision 0004: this repo autonomously
+# merges to main and writes production D1 with no human in the loop, by explicit
+# choice). It regenerates the derived Hebrew lemma_translit SQL in-runner from
+# the pinned MACULA corpus (decision 0005: nothing under server/d1-seed/ is ever
+# committed) and applies it directly to the two lookup tables migration 0021
+# creates: lemma_translit_he (pointed lemma -> SBL translit) and
+# lemma_translit_he_strongs (Strong's -> representative translit).
+#
+# The coverage gate (verify-lemma-translit-coverage.mjs) is the AUTHORITATIVE,
+# BLOCKING guard: it runs BEFORE the apply and hard-fails on any unexplained
+# coverage gap, because the consumers (query_vocabulary, query_themes_for_lemmas,
+# query_morphology) degrade a missing row silently to lemma_translit: null with
+# no error — an all-null ship is otherwise undetectable.
+
+on:
+  push:
+    branches: [main]
+    # EXACTLY the two generator scripts feed this backfill. These paths are
+    # DISJOINT from backfill-transliteration.yml (which triggers on
+    # extract-opengnt.py / extract-macula-hebrew.py) — a shared or globbed path
+    # would cross-fire the two production backfills on unrelated edits. No glob:
+    # server/scripts/extract-*.py matches eight unrelated ETL scripts.
+    paths:
+      - 'server/scripts/emit-lemma-strongs.py'
+      - 'server/scripts/generate-lemma-translit.ts'
+  workflow_dispatch:
+    # Manual re-run path — e.g. after a reseed silently drops the tables, or a
+    # transient failure (timeout, upstream blip). Safe to re-run: the generated
+    # SQL is DELETE-then-INSERT over exactly these two derived tables.
+
+permissions:
+  contents: read
+
+concurrency:
+  # OWN group, NOT shared with backfill-transliteration.yml's d1-backfill group.
+  # cancel-in-progress: false so a queued run waits rather than cancelling an
+  # in-flight apply (the generated SQL's per-table DELETE is idempotent only
+  # under serialized execution).
+  group: d1-backfill-lemma-translit
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    name: Backfill lemma_translit_he tables
+    runs-on: ubuntu-latest
+    # Defence-in-depth against an accidental workflow_dispatch from a non-main
+    # ref. branches:[main] constrains only the push trigger. This is the same
+    # trust boundary decision 0004 already accepts (a write-access holder can
+    # already write production D1 via merge-to-main); it does not widen it.
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 60 # a hung migration poll would otherwise burn the 6h default
+    defaults:
+      run:
+        working-directory: server
+    env:
+      CI: true
+      WRANGLER_SEND_METRICS: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Install server dependencies
+        # --ignore-scripts is safe and installs devDependencies (tsx, sql.js,
+        # hebrew-transliteration, wrangler) that the generate + gate steps need.
+        run: npm ci --ignore-scripts
+
+      - name: Fetch pinned MACULA Hebrew corpus
+        # Reuse the extractor's pinned, checksum-verified download (COMMIT_SHA +
+        # SHA-256 over the Git-LFS object) rather than re-implementing the fetch,
+        # so this backfill and the transliteration backfill share ONE verified
+        # source of the corpus. Importing the module does NOT run its main()
+        # (guarded by __name__ == "__main__"); download_tsv writes
+        # .cache/macula-hebrew.tsv and skips the download on a checksum match.
+        run: |
+          python3 - <<'PY'
+          import importlib.util, pathlib
+          spec = importlib.util.spec_from_file_location(
+              "extract_macula_hebrew", "scripts/extract-macula-hebrew.py"
+          )
+          mod = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          mod.download_tsv(pathlib.Path(".cache"))
+          PY
+
+      - name: Generate lemma_translit SQL in-runner
+        # emit derives (lemma, strongs, count) sharing the extractor's exact
+        # lemma+strongs parse; the generator writes lemma_translit_he.sql,
+        # lemma_translit_he_strongs.sql, and lemma-translit-baseline.json.
+        # Nothing is committed — outputs live in RUNNER_TEMP.
+        run: |
+          set -euo pipefail
+          python3 scripts/emit-lemma-strongs.py .cache/macula-hebrew.tsv "${RUNNER_TEMP}/emit.tsv"
+          npx tsx scripts/generate-lemma-translit.ts "${RUNNER_TEMP}/emit.tsv" "${RUNNER_TEMP}/out"
+
+      - name: Fetch consumer keys from production D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        # The gate anti-joins against a LOCAL scratch DB; these are the ONLY prod
+        # reads it needs, fetched here and handed in as files so the gate stays a
+        # pure function of its inputs. For OT, vocabulary.lemma and
+        # thematic_keywords.lemma hold Strong's numbers (strongs-space); morphology
+        # holds pointed lemmas (lemma-space). --json emits [{results:[{lemma:…}]}].
+        run: |
+          set -euo pipefail
+          npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+            --command "SELECT DISTINCT lemma FROM vocabulary WHERE testament='ot' UNION SELECT DISTINCT lemma FROM thematic_keywords WHERE testament='ot'" \
+            > "${RUNNER_TEMP}/strongs-keys.json"
+          npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+            --command "SELECT DISTINCT lemma FROM morphology WHERE testament='ot' AND lemma <> ''" \
+            > "${RUNNER_TEMP}/lemma-keys.json"
+
+      - name: Coverage gate (BLOCKING — refuses the apply on any unexplained gap)
+        # THE authoritative guard. Loads the generated SQL into a scratch sqlite
+        # (sql.js, no prod contact) and runs three checks: (a) self-consistency vs
+        # the baseline JSON, (b) every consumer strongs resolves in
+        # lemma_translit_he_strongs, (c) every non-excluded consumer lemma resolves
+        # in lemma_translit_he (unpointed/empty consumer lemmas are enumerated
+        # exclusions, not gaps). Non-zero exit stops the job before any prod write.
+        run: |
+          node scripts/verify-lemma-translit-coverage.mjs \
+            --sql-dir "${RUNNER_TEMP}/out" \
+            --baseline "${RUNNER_TEMP}/out/lemma-translit-baseline.json" \
+            --strongs-keys "${RUNNER_TEMP}/strongs-keys.json" \
+            --lemma-keys "${RUNNER_TEMP}/lemma-keys.json"
+
+      - name: Wait for migration 0021 to land (read-only schema poll)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        # deploy-worker.yml fires on this same merge (it filters
+        # server/migrations/**), applies migrations BEFORE deploying, and carries
+        # NO concurrency block — so it can run concurrently with this workflow.
+        # This poll is the ONLY thing sequencing the apply AFTER both tables
+        # exist. Poll PRAGMA table_info (direct schema state), NOT
+        # `wrangler d1 migrations list` (which prints UNAPPLIED migrations and
+        # would invert the predicate). 30 x 30s = ~15 min, sized to win the race.
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            echo "Poll attempt ${attempt}/30: checking for lemma_translit_he + lemma_translit_he_strongs..."
+            he=$(npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+              --command "PRAGMA table_info(lemma_translit_he)" 2>/dev/null || echo '[]')
+            strongs=$(npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+              --command "PRAGMA table_info(lemma_translit_he_strongs)" 2>/dev/null || echo '[]')
+            he_ok=$(echo "${he}" | jq -e '.[0].results | length > 0' >/dev/null 2>&1 && echo yes || echo no)
+            strongs_ok=$(echo "${strongs}" | jq -e '.[0].results | length > 0' >/dev/null 2>&1 && echo yes || echo no)
+            if [ "${he_ok}" = "yes" ] && [ "${strongs_ok}" = "yes" ]; then
+              echo "Both tables present — migration 0021 has landed."
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "ERROR: lemma_translit_he / lemma_translit_he_strongs never appeared after 30 attempts (~15 min)." >&2
+          echo "Migration 0021 did not land in time — stopping before touching production." >&2
+          echo "Fallback: wait for deploy-worker.yml to apply migration 0021, then re-run this" >&2
+          echo "workflow manually via the Actions tab (workflow_dispatch on main)." >&2
+          exit 1
+
+      - name: Apply generated SQL files to production D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        # wrangler d1 execute --file takes exactly ONE file per invocation and does
+        # not glob-expand, so apply each explicitly. Each file is a self-contained
+        # BEGIN; DELETE; chunked INSERT; COMMIT; block. Pinned wrangler@4.112.0
+        # (matches server/package.json ^4.112.0) — --file --remote atomicity is
+        # version-dependent, so pinning removes that variable. NEVER interpolate
+        # ${{ }} into this run: block; it is a script-injection sink.
+        run: |
+          set -euo pipefail
+          for f in lemma_translit_he.sql lemma_translit_he_strongs.sql; do
+            echo "Applying ${f}"
+            npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --file="${RUNNER_TEMP}/out/${f}"
+          done
