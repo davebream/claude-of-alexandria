@@ -109,6 +109,29 @@ export function baseStrongs(strongs: string): string {
   return strongs.replace(/[a-z]$/, '');
 }
 
+/**
+ * Unpadded strongs spelling: strip leading zeros from the numeric portion,
+ * preserving the `H` prefix and any single trailing lowercase suffix letter.
+ *
+ * This exists because the two OT consumers of lemma_translit_he_strongs disagree
+ * on strongs spelling: morphology.strongs (and therefore this generator's emit,
+ * which shares the extractor's derivation) is ZERO-PADDED to 4 digits (`H0001`,
+ * `H0871a`), but vocabulary.lemma / thematic_keywords.lemma are UNPADDED (`H1`,
+ * `H127`, `H1090a`). A 4-digit strongs already coincides; 1–3 digit strongs miss.
+ * Emitting the unpadded spelling as an extra key (same representative value)
+ * closes that gap.
+ *
+ * Examples: `H0001`->`H1`, `H0014`->`H14`, `H0871a`->`H871a`, `H0871`->`H871`,
+ * `H1090a`->`H1090a` (already unpadded), `H430`->`H430`. A non-numeric strongs
+ * (a raw upstream value) does not match and is returned unchanged.
+ */
+export function unpad(strongs: string): string {
+  const m = /^H(\d+)([a-z])?$/.exec(strongs);
+  if (!m) return strongs;
+  const num = m[1].replace(/^0+/, '') || '0';
+  return `H${num}${m[2] ?? ''}`;
+}
+
 /** Escape a SQL string literal (double single quotes) and wrap in quotes. */
 export function escapeSQL(val: string): string {
   return "'" + val.replace(/'/g, "''") + "'";
@@ -247,12 +270,36 @@ export function buildTables(rows: Row[]): Tables {
     .sort((a, b) => Buffer.compare(Buffer.from(a[0], 'utf8'), Buffer.from(b[0], 'utf8')))
     .map(([base, cands]) => ({ key: base, value: rep(pickRepresentative(cands)) }));
 
-  const strongsEntries = [...exactEntries, ...baseEntries];
+  // Unpadded key variants: for each padded/as-attested key already emitted above,
+  // ALSO emit its unpadded spelling pointing to the SAME representative value, so
+  // the UNPADDED consumer keys (vocabulary.lemma / thematic_keywords.lemma =
+  // 'H1', 'H127') resolve. First-writer-wins across the priority order
+  // exact > base > exact-unpadded > base-unpadded, so a variant never shadows an
+  // attested padded key or a higher-priority spelling. A key whose unpadded form
+  // equals itself (already unpadded, e.g. a 4-digit strongs) contributes nothing.
+  const emittedKeys = new Set<string>([...exactEntries, ...baseEntries].map((e) => e.key));
+  const exactUnpadded: Entry[] = [];
+  const baseUnpadded: Entry[] = [];
+  const addUnpaddedVariants = (source: Entry[], sink: Entry[]): void => {
+    for (const e of source) {
+      const uk = unpad(e.key);
+      if (uk === e.key || emittedKeys.has(uk)) continue;
+      emittedKeys.add(uk);
+      sink.push({ key: uk, value: e.value });
+    }
+  };
+  addUnpaddedVariants(exactEntries, exactUnpadded);
+  addUnpaddedVariants(baseEntries, baseUnpadded);
+
+  const strongsEntries = [...exactEntries, ...exactUnpadded, ...baseEntries, ...baseUnpadded];
 
   const baseline: Baseline = {
     lemma_rows: lemmaEntries.length,
-    strongs_rows_exact: exactEntries.length,
-    strongs_rows_base: baseEntries.length,
+    // Counts fold in the unpadded variants so their sum equals the emitted row
+    // count (the gate's self-consistency oracle). exact-derived (as-attested +
+    // its unpadded spellings) vs base-derived (base + its unpadded spellings).
+    strongs_rows_exact: exactEntries.length + exactUnpadded.length,
+    strongs_rows_base: baseEntries.length + baseUnpadded.length,
     excluded: {
       empty: emptyLemmas.size,
       unpointed: unpointedLemmas.size,

@@ -17,6 +17,7 @@ import {
   transliterateLemma,
   hasNiqqud,
   baseStrongs,
+  unpad,
   parseInput,
   buildTables,
   chunkInsertStatements,
@@ -108,6 +109,60 @@ describe('buildTables — dual-form strongs emission', () => {
     const v = transliterateLemma('רֵאשִׁית');
     expect(strongsEntries.find((e) => e.key === 'H7225a')!.value).toBe(v);
     expect(strongsEntries.find((e) => e.key === 'H7225')!.value).toBe(v);
+  });
+});
+
+// (c2) unpad() normalizer — strip leading zeros, preserve H + suffix.
+describe('unpad — padded -> unpadded strongs spelling', () => {
+  it('strips leading zeros and preserves the trailing suffix letter', () => {
+    expect(unpad('H0001')).toBe('H1');
+    expect(unpad('H0014')).toBe('H14');
+    expect(unpad('H0871a')).toBe('H871a');
+    expect(unpad('H0871')).toBe('H871');
+  });
+
+  it('leaves an already-unpadded strongs unchanged', () => {
+    expect(unpad('H1090a')).toBe('H1090a');
+    expect(unpad('H430')).toBe('H430');
+    expect(unpad('H7225')).toBe('H7225'); // 4-digit already coincides
+  });
+
+  it('returns a non-numeric raw strongs unchanged', () => {
+    expect(unpad('HXYZ')).toBe('HXYZ');
+  });
+});
+
+// (c3) Unpadded key-variant emission: padded corpus strongs also resolve unpadded.
+describe('buildTables — unpadded strongs key variants', () => {
+  it('a padded exact strongs H0001 yields BOTH H0001 and H1 with the same translit', () => {
+    const rows = parseInput('רֵאשִׁית\tH0001\t5\n');
+    const { strongsEntries } = buildTables(rows);
+    const v = transliterateLemma('רֵאשִׁית');
+    expect(strongsEntries.find((e) => e.key === 'H0001')!.value).toBe(v);
+    expect(strongsEntries.find((e) => e.key === 'H1')!.value).toBe(v);
+  });
+
+  it('a padded suffixed strongs H0871a yields H0871a, H871a, base H0871, and H871 (all same translit)', () => {
+    const rows = parseInput('רֵאשִׁית\tH0871a\t5\n');
+    const { strongsEntries } = buildTables(rows);
+    const keys = strongsEntries.map((e) => e.key);
+    for (const k of ['H0871a', 'H871a', 'H0871', 'H871']) {
+      expect(keys, `expected key ${k}`).toContain(k);
+    }
+    const v = transliterateLemma('רֵאשִׁית');
+    for (const k of ['H0871a', 'H871a', 'H0871', 'H871']) {
+      expect(strongsEntries.find((e) => e.key === k)!.value, `value for ${k}`).toBe(v);
+    }
+  });
+
+  it('a 4-digit strongs (H7225a) adds no redundant unpadded duplicate', () => {
+    const rows = parseInput('רֵאשִׁית\tH7225a\t5\n');
+    const { strongsEntries } = buildTables(rows);
+    const keys = strongsEntries.map((e) => e.key);
+    // unpad(H7225a)===H7225a and unpad(H7225)===H7225, so only the two dual-form
+    // keys exist — no extra rows.
+    expect(keys.filter((k) => k === 'H7225a' || k === 'H7225')).toHaveLength(2);
+    expect(keys).toHaveLength(2);
   });
 });
 
