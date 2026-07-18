@@ -220,6 +220,101 @@ export function censusNulls(input: CensusInput): CensusResult {
   };
 }
 
+// ─── Report renderer ──────────────────────────────────────────────────────────
+
+export interface CensusReportMeta {
+  /** ISO date the census was run, for the report header. */
+  generatedAt: string;
+}
+
+function renderCategorySection(title: string, entries: CategorizedKey[]): string {
+  const lines = [`### ${title} (${entries.length})`, ''];
+  if (entries.length === 0) {
+    lines.push('_None._');
+  } else {
+    lines.push('| Strong\'s key | Base | Evidence |', '|---|---|---|');
+    for (const { key, base } of entries) {
+      lines.push(`| ${key} | ${base} | ${title.toLowerCase()} |`);
+    }
+  }
+  lines.push('');
+  return lines.join('\n');
+}
+
+/**
+ * Render a `censusNulls` result to markdown (C3). Pure string builder — no
+ * I/O. See the module docblock for the Aramaic-label operational caveat this
+ * section states (RC-3).
+ */
+export function renderCensusReport(result: CensusResult, meta: CensusReportMeta): string {
+  const lines: string[] = [];
+
+  lines.push('# Hebrew lemma_translit null census');
+  lines.push('');
+  lines.push(`Generated: ${meta.generatedAt}`);
+  lines.push('');
+  lines.push(
+    `**Recovered:** ${result.recoveredCount} — **Residual null:** ${result.residualCount}` +
+      ' (supersedes the stale ~57/~92 estimate).',
+  );
+  if (result.floorTripped) {
+    lines.push('');
+    lines.push(
+      '**FLOOR TRIPPED:** the consumer-key set was empty or zero keys resolved directly ' +
+        'against the shipped strongs table — this census input is degenerate and MUST NOT be trusted.',
+    );
+  }
+  lines.push('');
+
+  lines.push(renderCategorySection('Homograph', result.homograph));
+  lines.push(renderCategorySection('Unpointed', result.unpointed));
+  lines.push(renderCategorySection('Unattested / Aramaic', result.unattestedAramaic));
+
+  lines.push('## AC-2: missed recoveries (safe-recoverable but not shipped)');
+  lines.push('');
+  if (result.missedRecoveries.length === 0) {
+    lines.push('_None — every safe-recoverable key was shipped._');
+  } else {
+    lines.push(
+      `${result.missedRecoveries.length} key(s) the generator would recover but production did not ship:`,
+    );
+    lines.push('');
+    for (const key of result.missedRecoveries) lines.push(`- ${key}`);
+  }
+  lines.push('');
+
+  lines.push('## Reverse cross-check: shipped but not regenerated');
+  lines.push('');
+  if (result.shippedNotRegenerated.length === 0) {
+    lines.push('_None — every shipped alias-shaped key is reproduced by the regenerated run._');
+  } else {
+    for (const key of result.shippedNotRegenerated) lines.push(`- ${key}`);
+  }
+  lines.push('');
+
+  lines.push('## Decision-0008 reconciliation');
+  lines.push('');
+  for (const [key, entry] of Object.entries(result.stale0008)) {
+    const label = entry.status === 'recovered' ? 'recovered' : `null (${entry.reason})`;
+    lines.push(`- ${key}: ${label}`);
+  }
+  lines.push('');
+
+  lines.push('## Aramaic-label operational caveat');
+  lines.push('');
+  lines.push(
+    'The "Unattested / Aramaic" bucket above is defined OPERATIONALLY as "base with ' +
+      'zero raw rows in the MACULA-Hebrew extract." If the extract includes pointed OT ' +
+      'Aramaic (Daniel/Ezra) with attested lemmas, those bases would instead classify as ' +
+      'homograph or singleton-recoverable, not land here — so this bucket is a superset ' +
+      'that may include genuinely-unattested non-Aramaic bases too. Spot-check a sample ' +
+      'before treating every entry as confirmed Aramaic.',
+  );
+  lines.push('');
+
+  return lines.join('\n');
+}
+
 // Re-exported for the runner (main(), added in a later task) and for callers
 // who want the generator's own pure input-parsing helpers without a second
 // import specifier.

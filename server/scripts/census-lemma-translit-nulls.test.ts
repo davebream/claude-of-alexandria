@@ -9,7 +9,7 @@
 
 import { describe, it, expect } from 'vitest';
 import { parseInput, buildTables } from './generate-lemma-translit.js';
-import { censusNulls } from './census-lemma-translit-nulls.js';
+import { censusNulls, renderCensusReport } from './census-lemma-translit-nulls.js';
 
 // (a) Homograph base -> residual null key lands in `homograph`.
 describe('censusNulls — homograph bucket', () => {
@@ -339,5 +339,53 @@ describe('censusNulls — recoveredCount / residualCount', () => {
     // H1121a resolves directly (shipped, recovered); H500a is the lone residual null.
     expect(result.residualCount).toBe(1);
     expect(result.unattestedAramaic).toEqual([{ key: 'H500a', base: 'H500' }]);
+  });
+});
+
+// Task 4 — renderCensusReport: pure markdown builder over a censusNulls result.
+describe('renderCensusReport', () => {
+  it('renders exact recovered/residual counts, category sections, AC-2, 0008 reconciliation, and the Aramaic caveat', () => {
+    const result = {
+      homograph: [{ key: 'H1004b', base: 'H1004' }],
+      unpointed: [{ key: 'H9a', base: 'H9' }],
+      unattestedAramaic: [{ key: 'H500a', base: 'H500' }],
+      missedRecoveries: [] as string[],
+      recoveredCount: 87,
+      residualCount: 3,
+      stale0008: {
+        H1121a: { status: 'recovered' as const },
+        H1004b: { status: 'null' as const, reason: 'homograph' as const },
+        H834a: { status: 'recovered' as const },
+      },
+      shippedNotRegenerated: [] as string[],
+      floorTripped: false,
+    };
+    const report = renderCensusReport(result, { generatedAt: '2026-07-18' });
+
+    expect(report).toContain('87');
+    expect(report).toContain('3');
+    expect(report).toMatch(/homograph/i);
+    expect(report).toMatch(/unpointed/i);
+    expect(report).toMatch(/unattested.*aramaic/i);
+    expect(report).toMatch(/AC-2/i);
+    expect(report).toContain('H1004b');
+    expect(report).toMatch(/aramaic.*caveat/i);
+    expect(report).toMatch(/zero raw rows/i);
+  });
+
+  it('reports missedRecoveries when non-empty (AC-2 section is not silently empty)', () => {
+    const result = {
+      homograph: [],
+      unpointed: [],
+      unattestedAramaic: [],
+      missedRecoveries: ['H1121a'],
+      recoveredCount: 1,
+      residualCount: 1,
+      stale0008: {},
+      shippedNotRegenerated: [],
+      floorTripped: false,
+    };
+    const report = renderCensusReport(result, { generatedAt: '2026-07-18' });
+    expect(report).toContain('H1121a');
   });
 });
