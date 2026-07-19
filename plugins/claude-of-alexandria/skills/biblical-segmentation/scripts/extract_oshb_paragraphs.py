@@ -21,6 +21,7 @@ import hashlib
 import json
 import sys
 import urllib.request
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 # ─── Version pinning ─────────────────────────────────────────────────────────
@@ -69,6 +70,25 @@ OT_BOOKS = {
     'Zechariah': 'Zech',
     'Malachi': 'Mal',
 }
+
+# ─── OSIS namespace handling ─────────────────────────────────────────────────
+# OSHB files declare xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace"
+# on the root element, so ElementTree returns namespace-qualified tags. Copied
+# verbatim from extract_ot_morphology.py:86 — an unqualified `elem.tag == 'seg'`
+# match yields 0 elements on real OSHB XML (verified: 269 on wlc/Ruth.xml with
+# the namespace-qualified form). This is the highest-risk detail in this
+# module: the naive form fails silently and completely, with no exception and
+# no partial result.
+OSIS_NS = {'osis': 'http://www.bibletechnologies.net/2003/OSIS/namespace'}
+
+# The known distinct @type values seen across the 39-book corpus. Anything
+# outside this set hard-fails — WLC encodes further special-layout phenomena
+# (inverted nuns at Num 10:35-36, large/small/suspended letters) and whether
+# OSHB renders any of them as <seg> variants is not established by this
+# module's evidence (Genesis and Ruth only), so an unknown type is a signal,
+# never silently dropped.
+KNOWN_SEG_TYPES = {"x-pe", "x-samekh", "x-maqqef", "x-paseq", "x-sof-pasuq"}
+MARKER_SEG_TYPES = {"x-pe": "petuchah", "x-samekh": "setumah"}
 
 RAW_BASE_URL = "https://raw.githubusercontent.com/openscriptures/morphhb"
 
@@ -247,6 +267,50 @@ def _write_checksums_for_all(cache_dir: Path) -> None:
         checksums[code] = digest.hexdigest()
     write_checksums(checksums_path(), checksums)
     print(f"Wrote {len(checksums)} entries to {checksums_path()}", file=sys.stderr)
+
+
+def _local_tag(elem: ET.Element) -> str:
+    """Strip the namespace URI wrapper ElementTree adds, e.g.
+    '{http://www.bibletechnologies.net/2003/OSIS/namespace}seg' -> 'seg'."""
+    tag = elem.tag
+    return tag.split("}", 1)[1] if "}" in tag else tag
+
+
+def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
+    """Walk an OSHB book XML in document order, emitting paragraph markers.
+
+    Returns (petuchot, setumot) as document-ordered "C:V" strings, anchored
+    to the most recently seen <verse osisID>. Arrays are document-order
+    lists — never materialized from a set, since PYTHONHASHSEED randomizes
+    list(set(...)) iteration order per process.
+
+    Task 4 scope only: namespace-qualified extraction and non-marker seg
+    types (x-maqqef/x-paseq/x-sof-pasuq) are silently skipped. Multi-verse
+    osisID span resolution, hard-fail guards (no-antecedent-verse,
+    unrecognized seg type), and placement warnings are Task 5.
+    """
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    petuchot: list[str] = []
+    setumot: list[str] = []
+    current_anchor: str | None = None
+
+    for elem in root.iter():
+        tag = _local_tag(elem)
+        if tag == "verse":
+            osis_id = elem.get("osisID")
+            if osis_id:
+                segments = osis_id.strip().split()[-1].split(".")
+                current_anchor = f"{int(segments[-2])}:{int(segments[-1])}"
+        elif tag == "seg":
+            seg_type = elem.get("type")
+            if seg_type in MARKER_SEG_TYPES:
+                if seg_type == "x-pe":
+                    petuchot.append(current_anchor)
+                else:
+                    setumot.append(current_anchor)
+    return petuchot, setumot
 
 
 def main() -> None:

@@ -114,5 +114,127 @@ class TestMissingLockfile(unittest.TestCase):
             self.assertIn("--write-checksums", str(ctx.exception))
 
 
+# ─── Extraction fixtures (Task 4 / Task 5) ───────────────────────────────────
+#
+# Every fixture MUST carry the OSIS namespace declaration on its root element.
+# A fixture without it would pass against a parser that is broken on the real
+# corpus (unqualified `elem.tag == 'seg'` matches 0 elements on real OSHB XML;
+# the namespace-qualified form matches 269 in Ruth alone).
+
+OSIS_XMLNS = "http://www.bibletechnologies.net/2003/OSIS/namespace"
+
+
+def _write_fixture(tmp_dir: str, xml_body: str, filename: str = "Fixture.xml") -> Path:
+    path = Path(tmp_dir) / filename
+    path.write_text(
+        f'<?xml version="1.0" encoding="utf-8"?>\n'
+        f'<osis xmlns="{OSIS_XMLNS}">\n'
+        f"<osisText>\n"
+        f'<div type="book" osisID="Fixture">\n'
+        f"{xml_body}\n"
+        f"</div>\n"
+        f"</osisText>\n"
+        f"</osis>\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+class TestExtractMarkersNamespaceFence(unittest.TestCase):
+    """The F-2 regression fence: a naive unqualified `elem.tag == 'seg'` match
+    yields 0 markers on real (namespaced) OSHB XML — see Task 4 Step 3 for the
+    RED demonstration against a throwaway naive implementation."""
+
+    def test_namespaced_fixture_yields_nonzero_markers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Ruth.4.17">'
+                '<w lemma="1">דָבָר</w><seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-pe">פ</seg>'
+                "</verse>",
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, ["4:17"])
+            self.assertEqual(setumot, [])
+
+
+class TestExtractMarkersLettersInWords(unittest.TestCase):
+    def test_ordinary_letters_pe_samekh_in_words_produce_no_marker(self):
+        # פרי (fruit), נפש (soul), פרו (be fruitful) each contain פ or ס as an
+        # ordinary Hebrew letter inside a word, not a marker element. This is
+        # the diagnosed original bug: letter-matching instead of marker-matching.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.1.1">'
+                '<w lemma="1">פְּרִי</w>'
+                '<w lemma="2">נֶפֶשׁ</w>'
+                '<w lemma="3">פְּרוּ</w>'
+                "</verse>",
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, [])
+            self.assertEqual(setumot, [])
+
+
+class TestExtractMarkersFinalForms(unittest.TestCase):
+    def test_final_forms_pe_tsade_never_affect_parsing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.1.1">'
+                '<w lemma="1">כָּתַף</w>'
+                '<w lemma="2">אֶרֶץ</w>'
+                "</verse>",
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, [])
+            self.assertEqual(setumot, [])
+
+
+class TestExtractMarkersNonMarkerSegTypes(unittest.TestCase):
+    def test_maqqef_paseq_sof_pasuq_produce_no_marker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.1.1">'
+                '<w lemma="1">a</w><seg type="x-maqqef">־</seg>'
+                '<w lemma="2">b</w><seg type="x-paseq">׀</seg>'
+                '<w lemma="3">c</w><seg type="x-sof-pasuq">׃</seg>'
+                "</verse>",
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, [])
+            self.assertEqual(setumot, [])
+
+    def test_setumah_marker_extracted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.2.3">'
+                '<w lemma="1">a</w><seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-samekh">ס</seg>'
+                "</verse>",
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, [])
+            self.assertEqual(setumot, ["2:3"])
+
+
+class TestExtractMarkersDocumentOrder(unittest.TestCase):
+    def test_markers_returned_in_document_order(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.1.5"><w lemma="1">a</w><seg type="x-pe">פ</seg></verse>'
+                '<verse osisID="Gen.1.8"><w lemma="1">a</w><seg type="x-pe">פ</seg></verse>'
+                '<verse osisID="Gen.1.13"><w lemma="1">a</w><seg type="x-pe">פ</seg></verse>',
+            )
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, ["1:5", "1:8", "1:13"])
+            self.assertEqual(setumot, [])
+
+
 if __name__ == "__main__":
     unittest.main()
