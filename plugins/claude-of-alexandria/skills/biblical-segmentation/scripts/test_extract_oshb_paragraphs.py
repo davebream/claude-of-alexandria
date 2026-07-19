@@ -224,6 +224,62 @@ class TestExtractMarkersNonMarkerSegTypes(unittest.TestCase):
             self.assertEqual(setumot, ["2:3"])
 
 
+class TestSegTypeSetsArePinned(unittest.TestCase):
+    """Pin both sets against a one-character edit.
+
+    Nothing else in this suite catches a change that promotes a layout
+    annotation (x-large, x-small, x-suspended, x-reversednun) into a paragraph
+    marker: such an edit still parses, still validates, and would silently
+    inject spurious paragraph divisions into the emitted corpus.
+    """
+
+    def test_marker_seg_types_are_exactly_pe_and_samekh(self):
+        self.assertEqual(set(oshb.MARKER_SEG_TYPES), {"x-pe", "x-samekh"})
+
+    def test_known_seg_types_is_the_nine_from_the_corpus_census(self):
+        # Established by a full 39-book census, not inferred from two books.
+        self.assertEqual(
+            oshb.KNOWN_SEG_TYPES,
+            {
+                "x-pe",
+                "x-samekh",
+                "x-maqqef",
+                "x-sof-pasuq",
+                "x-paseq",
+                "x-reversednun",
+                "x-large",
+                "x-suspended",
+                "x-small",
+            },
+        )
+        self.assertEqual(len(oshb.KNOWN_SEG_TYPES), 9)
+
+
+class TestLayoutSegTypesRecognizedButNotMarkers(unittest.TestCase):
+    """The four types the Phase-2 census added: recognized, never emitted.
+
+    These hard-failed 9 of 39 books (Lev, Num, Deut, Judg, Job, Ps, Prov, Isa,
+    Jer) under the original five-type allowlist. They are scribal-layout
+    annotations, not paragraph divisions.
+    """
+
+    def test_all_four_layout_types_parse_clean_and_emit_no_marker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Num.10.35">'
+                '<w lemma="1">a</w><seg type="x-reversednun">׆</seg>'
+                '<w lemma="2">b</w><seg type="x-large">ב</seg>'
+                '<w lemma="3">c</w><seg type="x-suspended">ע</seg>'
+                '<w lemma="4">d</w><seg type="x-small">ק</seg>'
+                "</verse>",
+            )
+            # Must not raise, and must emit nothing.
+            petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, [])
+            self.assertEqual(setumot, [])
+
+
 class TestExtractMarkersDocumentOrder(unittest.TestCase):
     def test_markers_returned_in_document_order(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -262,6 +318,11 @@ class TestExtractMarkersNoAntecedentVerse(unittest.TestCase):
 
 class TestExtractMarkersUnrecognizedSegType(unittest.TestCase):
     def test_unrecognized_seg_type_hard_fails_naming_type_and_book(self):
+        # `x-nun-hafucha` is DELIBERATELY FICTIONAL — it is not an OSHB seg
+        # type. That matters: the real inverted-nun type is `x-reversednun`,
+        # which the Phase-2 census added to KNOWN_SEG_TYPES. Had this fixture
+        # used the real name, widening the allowlist from five to nine types
+        # would have silently turned this test into a no-op. Keep it fictional.
         with tempfile.TemporaryDirectory() as tmp:
             path = _write_fixture(
                 tmp,

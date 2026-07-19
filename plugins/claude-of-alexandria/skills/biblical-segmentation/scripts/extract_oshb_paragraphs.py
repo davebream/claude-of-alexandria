@@ -81,13 +81,35 @@ OT_BOOKS = {
 # no partial result.
 OSIS_NS = {'osis': 'http://www.bibletechnologies.net/2003/OSIS/namespace'}
 
-# The known distinct @type values seen across the 39-book corpus. Anything
-# outside this set hard-fails — WLC encodes further special-layout phenomena
-# (inverted nuns at Num 10:35-36, large/small/suspended letters) and whether
-# OSHB renders any of them as <seg> variants is not established by this
-# module's evidence (Genesis and Ruth only), so an unknown type is a signal,
+# The nine distinct @type values OSHB uses across the 39-book corpus, with
+# their observed counts. This is a full census, not an inference from two
+# books:
+#
+#   markers      x-pe 1181, x-samekh 1981
+#   punctuation  x-maqqef 42577, x-sof-pasuq 23192, x-paseq 2278
+#   layout       x-reversednun 9, x-large 4, x-suspended 4, x-small 3
+#
+# The four layout types were NOT in the original five-type allowlist. The
+# design had flagged them as an open unknown — "whether OSHB renders any of
+# them as <seg> variants is not established" — and said the hard-fail would
+# convert that unknown into a signal. It did exactly that: a full-corpus run
+# hard-failed on 9 of 39 books (Lev, Num, Deut, Judg, Job, Ps, Prov, Isa,
+# Jer). They are scribal-layout annotations, not paragraph divisions, so they
+# are recognized and ignored here, never emitted as markers.
+#
+# Anything outside these nine still hard-fails: an unknown type is a signal,
 # never silently dropped.
-KNOWN_SEG_TYPES = {"x-pe", "x-samekh", "x-maqqef", "x-paseq", "x-sof-pasuq"}
+KNOWN_SEG_TYPES = {
+    "x-pe",
+    "x-samekh",
+    "x-maqqef",
+    "x-sof-pasuq",
+    "x-paseq",
+    "x-reversednun",
+    "x-large",
+    "x-suspended",
+    "x-small",
+}
 MARKER_SEG_TYPES = {"x-pe": "petuchah", "x-samekh": "setumah"}
 
 RAW_BASE_URL = "https://raw.githubusercontent.com/openscriptures/morphhb"
