@@ -17,6 +17,8 @@ Source:
 """
 
 import argparse
+import hashlib
+import json
 import sys
 import urllib.request
 from pathlib import Path
@@ -75,6 +77,49 @@ RAW_BASE_URL = "https://raw.githubusercontent.com/openscriptures/morphhb"
 FETCH_TIMEOUT_SECONDS = 30
 FETCH_MAX_ATTEMPTS = 3
 
+# The checksum lockfile lives beside this script. This is a fixed sibling
+# path, not a provenance string stamped into output — the emitted JSONs never
+# reference it.
+CHECKSUMS_FILENAME = "oshb-checksums.json"
+
+
+def checksums_path() -> Path:
+    return Path(__file__).resolve().parent / CHECKSUMS_FILENAME
+
+
+def verify_checksum(path: Path, expected: str) -> None:
+    """Raise if path's SHA-256 does not match expected (lowercase hex)."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            digest.update(chunk)
+    actual = digest.hexdigest()
+    if actual != expected:
+        raise ValueError(
+            f"checksum mismatch for {path.name}: expected {expected}, got {actual}"
+        )
+
+
+def load_checksums(path: Path) -> dict:
+    """Load the committed checksum lockfile.
+
+    A missing lockfile is a hard failure that names --write-checksums rather
+    than silently bootstrapping one — only --write-checksums may write it.
+    """
+    if not path.exists():
+        raise RuntimeError(
+            f"checksum lockfile not found at {path}. "
+            "Run with --write-checksums to generate it."
+        )
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def write_checksums(path: Path, checksums: dict) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(checksums, f, indent=2, sort_keys=True)
+        f.write("\n")
+
 
 def repo_root() -> Path:
     """Walk up from this file's location to the directory containing `.git`.
@@ -110,16 +155,17 @@ def cache_dir_for(root: Path) -> Path:
     return root / ".cache" / "oshb"
 
 
-def fetch_book(code: str, cache_dir: Path) -> Path:
+def fetch_book(code: str, cache_dir: Path, force: bool = False) -> Path:
     """Fetch a single book's OSHB XML into cache_dir, reusing a cache hit.
 
     Up to FETCH_MAX_ATTEMPTS attempts with exponential backoff; exhaustion
     raises naming the book. TLS verification stays on by default via
-    urlopen's default SSL context.
+    urlopen's default SSL context. Pass force=True to bypass a cache hit and
+    re-download (used by fetch_and_verify's re-download-once recovery).
     """
     cache_dir.mkdir(parents=True, exist_ok=True)
     dest = cache_dir / f"{code}.xml"
-    if dest.exists():
+    if dest.exists() and not force:
         return dest
 
     url = book_url(code)
@@ -143,10 +189,64 @@ def fetch_book(code: str, cache_dir: Path) -> Path:
     )
 
 
+def fetch_and_verify(code: str, cache_dir: Path, checksums: dict) -> Path:
+    """Fetch (or reuse the cache for) a book, then verify its checksum.
+
+    Verification runs on every call, including cache hits — this catches
+    local cache corruption, which the SHA pin alone cannot. If a cache-hit
+    file fails verification, it is re-downloaded exactly once; if the fresh
+    copy still fails, this raises naming the book.
+    """
+    if code not in checksums:
+        raise RuntimeError(
+            f"no checksum entry for book code {code!r} in {CHECKSUMS_FILENAME}. "
+            "Run with --write-checksums to (re)generate it."
+        )
+    expected = checksums[code]
+
+    path = fetch_book(code, cache_dir)
+    try:
+        verify_checksum(path, expected)
+    except ValueError:
+        print(
+            f"WARNING: checksum mismatch for {code}, re-downloading once...",
+            file=sys.stderr,
+        )
+        path = fetch_book(code, cache_dir, force=True)
+        try:
+            verify_checksum(path, expected)
+        except ValueError as exc:
+            raise RuntimeError(
+                f"checksum verification failed for book {code!r} even after "
+                f"re-download: {exc}"
+            ) from exc
+    return path
+
+
 def _fetch_all(cache_dir: Path) -> None:
     for name, code in OT_BOOKS.items():
         print(f"Fetching {name} ({code})...", file=sys.stderr)
         fetch_book(code, cache_dir)
+
+
+def _fetch_verify_all(cache_dir: Path, checksums: dict) -> None:
+    for name, code in OT_BOOKS.items():
+        print(f"Fetching and verifying {name} ({code})...", file=sys.stderr)
+        fetch_and_verify(code, cache_dir, checksums)
+
+
+def _write_checksums_for_all(cache_dir: Path) -> None:
+    checksums: dict = {}
+    for name, code in OT_BOOKS.items():
+        print(f"Fetching {name} ({code}) for checksum lockfile...", file=sys.stderr)
+        path = fetch_book(code, cache_dir)
+        digest = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                digest.update(chunk)
+        checksums[code] = digest.hexdigest()
+    write_checksums(checksums_path(), checksums)
+    print(f"Wrote {len(checksums)} entries to {checksums_path()}", file=sys.stderr)
 
 
 def main() -> None:
@@ -158,17 +258,28 @@ def main() -> None:
         action="store_true",
         help="Fetch and cache all 39 book XMLs, then exit without extracting.",
     )
+    parser.add_argument(
+        "--write-checksums",
+        action="store_true",
+        help="Regenerate the checksum lockfile from freshly fetched books. "
+        "This is the only path that writes oshb-checksums.json.",
+    )
     args = parser.parse_args()
 
     root = repo_root()
     cache_dir = cache_dir_for(root)
 
+    if args.write_checksums:
+        _write_checksums_for_all(cache_dir)
+        return
+
     if args.fetch_only:
         _fetch_all(cache_dir)
         return
 
+    checksums = load_checksums(checksums_path())
+    _fetch_verify_all(cache_dir, checksums)
     # Later tasks (extraction, validation, emission) attach here.
-    _fetch_all(cache_dir)
 
 
 if __name__ == "__main__":

@@ -18,8 +18,10 @@ Usage:
     python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py --corpus
 """
 
+import hashlib
 import importlib.util
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -81,6 +83,35 @@ class TestOTBooksMap(unittest.TestCase):
 
     def test_ot_books_includes_song_of_songs(self):
         self.assertEqual(oshb.OT_BOOKS["Song of Songs"], "Song")
+
+
+class TestVerifyChecksum(unittest.TestCase):
+    def test_verify_checksum_passes_on_matching_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "book.xml"
+            path.write_bytes(b"hello world")
+            expected = hashlib.sha256(b"hello world").hexdigest()
+            # Should not raise.
+            oshb.verify_checksum(path, expected)
+
+    def test_verify_checksum_raises_on_mismatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "book.xml"
+            path.write_bytes(b"hello world")
+            wrong = hashlib.sha256(b"goodbye world").hexdigest()
+            with self.assertRaises(Exception):
+                oshb.verify_checksum(path, wrong)
+
+
+class TestMissingLockfile(unittest.TestCase):
+    def test_missing_lockfile_names_write_checksums_flag(self):
+        # load_checksums() on a nonexistent lockfile path must raise an error
+        # that names --write-checksums rather than silently bootstrapping one.
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "does-not-exist.json"
+            with self.assertRaises(Exception) as ctx:
+                oshb.load_checksums(missing)
+            self.assertIn("--write-checksums", str(ctx.exception))
 
 
 if __name__ == "__main__":
