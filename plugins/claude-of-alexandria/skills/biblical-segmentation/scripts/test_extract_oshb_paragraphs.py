@@ -18,8 +18,10 @@ Usage:
     python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py --corpus
 """
 
+import contextlib
 import hashlib
 import importlib.util
+import io
 import sys
 import tempfile
 import unittest
@@ -233,6 +235,62 @@ class TestExtractMarkersDocumentOrder(unittest.TestCase):
             )
             petuchot, setumot = oshb.extract_markers(path)
             self.assertEqual(petuchot, ["1:5", "1:8", "1:13"])
+            self.assertEqual(setumot, [])
+
+
+# ─── Task 5: anchor resolution and structural guards ─────────────────────────
+
+
+class TestParseOsisId(unittest.TestCase):
+    def test_single_verse(self):
+        self.assertEqual(oshb.parse_osis_id("Ruth.4.17"), (4, 17))
+
+    def test_multi_verse_span_anchors_to_final_verse(self):
+        # A first-verse implementation must be SEEN to fail this case (Task 5
+        # Step 3) — both C3 validators are blind to the off-by-one.
+        self.assertEqual(oshb.parse_osis_id("Ps.3.1 Ps.3.2"), (3, 2))
+
+
+class TestExtractMarkersNoAntecedentVerse(unittest.TestCase):
+    def test_marker_before_any_verse_hard_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(tmp, '<seg type="x-pe">פ</seg>')
+            with self.assertRaises(Exception) as ctx:
+                oshb.extract_markers(path)
+            self.assertIn("Fixture", str(ctx.exception))
+
+
+class TestExtractMarkersUnrecognizedSegType(unittest.TestCase):
+    def test_unrecognized_seg_type_hard_fails_naming_type_and_book(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Gen.1.1">'
+                '<w lemma="1">a</w><seg type="x-nun-hafucha">נ</seg>'
+                "</verse>",
+            )
+            with self.assertRaises(Exception) as ctx:
+                oshb.extract_markers(path)
+            self.assertIn("x-nun-hafucha", str(ctx.exception))
+            self.assertIn("Fixture", str(ctx.exception))
+
+
+class TestExtractMarkersUnexpectedPlacementWarns(unittest.TestCase):
+    def test_marker_outside_verse_element_warns_not_raises(self):
+        # A marker element that is a sibling of <verse> rather than nested
+        # inside one is unexpected placement (n=1 evidence in the real
+        # corpus) — warn to stderr, never raise.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Ruth.4.17"><w lemma="1">a</w></verse>'
+                '<seg type="x-pe">פ</seg>'
+                '<verse osisID="Ruth.4.18"><w lemma="1">b</w></verse>',
+            )
+            captured = io.StringIO()
+            with contextlib.redirect_stderr(captured):
+                petuchot, setumot = oshb.extract_markers(path)
+            self.assertEqual(petuchot, ["4:17"])
             self.assertEqual(setumot, [])
 
 

@@ -276,6 +276,32 @@ def _local_tag(elem: ET.Element) -> str:
     return tag.split("}", 1)[1] if "}" in tag else tag
 
 
+def parse_osis_id(osis_id: str) -> tuple[int, int]:
+    """Parse an osisID into (chapter, verse).
+
+    A space-separated span (e.g. "Ps.3.1 Ps.3.2") anchors to the FINAL verse
+    of the span: under position:"after" semantics the break follows the whole
+    span, so first-vs-last would be a silent off-by-one. Both C3 validators
+    are blind to getting this wrong (either verse exists in the source, and
+    count parity is unaffected), so this is the only gate on it.
+    """
+    parts = osis_id.strip().split()
+    if not parts:
+        raise ValueError(f"empty osisID")
+    final = parts[-1]
+    segments = final.split(".")
+    if len(segments) < 3:
+        raise ValueError(
+            f"cannot parse osisID {osis_id!r}: expected Book.Chapter.Verse"
+        )
+    try:
+        chapter = int(segments[-2])
+        verse = int(segments[-1])
+    except ValueError as exc:
+        raise ValueError(f"cannot parse osisID {osis_id!r}: {exc}") from exc
+    return chapter, verse
+
+
 def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
     """Walk an OSHB book XML in document order, emitting paragraph markers.
 
@@ -284,28 +310,56 @@ def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
     lists — never materialized from a set, since PYTHONHASHSEED randomizes
     list(set(...)) iteration order per process.
 
-    Task 4 scope only: namespace-qualified extraction and non-marker seg
-    types (x-maqqef/x-paseq/x-sof-pasuq) are silently skipped. Multi-verse
-    osisID span resolution, hard-fail guards (no-antecedent-verse,
-    unrecognized seg type), and placement warnings are Task 5.
+    Hard-fails (raises) on:
+    - a marker element (x-pe/x-samekh) with no antecedent verse
+    - an unrecognized <seg type=...> value
+
+    Warns (stderr, does not raise) on unexpected marker placement — a marker
+    that is not the last child of the verse it anchors to. This is n=1
+    evidence in the real corpus (Ruth), so a hard-fail here would be a
+    false-positive generator against correct upstream data.
     """
+    book_label = xml_path.stem
     tree = ET.parse(xml_path)
     root = tree.getroot()
 
     petuchot: list[str] = []
     setumot: list[str] = []
     current_anchor: str | None = None
+    current_verse_elem: ET.Element | None = None
 
     for elem in root.iter():
         tag = _local_tag(elem)
         if tag == "verse":
             osis_id = elem.get("osisID")
             if osis_id:
-                segments = osis_id.strip().split()[-1].split(".")
-                current_anchor = f"{int(segments[-2])}:{int(segments[-1])}"
+                chapter, verse = parse_osis_id(osis_id)
+                current_anchor = f"{chapter}:{verse}"
+                current_verse_elem = elem
         elif tag == "seg":
             seg_type = elem.get("type")
+            if seg_type not in KNOWN_SEG_TYPES:
+                raise ValueError(
+                    f"unrecognized <seg type={seg_type!r}> in book {book_label!r}"
+                )
             if seg_type in MARKER_SEG_TYPES:
+                if current_anchor is None:
+                    raise ValueError(
+                        f"marker element ({seg_type}) with no antecedent verse "
+                        f"in book {book_label!r}"
+                    )
+                # Placement check: expected shape is the marker as the last
+                # child of the verse it anchors to. Anything else is
+                # unexpected placement — warn only (n=1 evidence).
+                if current_verse_elem is None or (
+                    len(current_verse_elem) == 0
+                    or current_verse_elem[-1] is not elem
+                ):
+                    print(
+                        f"WARNING: unexpected placement for {seg_type} marker "
+                        f"anchored at {current_anchor} in book {book_label!r}",
+                        file=sys.stderr,
+                    )
                 if seg_type == "x-pe":
                     petuchot.append(current_anchor)
                 else:
