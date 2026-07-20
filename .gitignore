@@ -11,6 +11,10 @@ docs/
 .claude/settings.local.json
 !.claude/settings.json
 
+# Session handoff notes — machine-local, may reference local paths and
+# in-flight state. Never committed to this public repo.
+.claude/session.md
+
 # macOS
 .DS_Store
 .AppleDouble
