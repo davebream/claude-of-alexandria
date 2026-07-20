@@ -17,7 +17,7 @@ export default class SdkGraderProvider extends SdkProvider {
       ...options,
       id: options.id || "sdk-grader",
       config: {
-        model: "sonnet",
+        model: "claude-sonnet-5",
         working_dir: "/tmp",
         ...options.config,
       },
@@ -26,7 +26,7 @@ export default class SdkGraderProvider extends SdkProvider {
 
   buildOptions(_cwd) {
     return {
-      model: this.config.model || "sonnet",
+      model: this.config.model || "claude-sonnet-5",
       tools: [],          // No tools needed for grading
       mcpServers: {},
       plugins: [],

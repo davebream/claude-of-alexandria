@@ -21,7 +21,7 @@ export default class SdkBareProvider extends SdkProvider {
       ...options,
       id: options.id || "sdk-bare",
       config: {
-        model: "sonnet",
+        model: "claude-sonnet-5",
         working_dir: "/tmp",
         ...options.config,
       },
@@ -30,7 +30,7 @@ export default class SdkBareProvider extends SdkProvider {
 
   buildOptions(_cwd) {
     return {
-      model: this.config.model || "sonnet",
+      model: this.config.model || "claude-sonnet-5",
       tools: [],              // No built-in tools
       mcpServers: {},         // No MCP servers
       plugins: [],            // No plugins

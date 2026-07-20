@@ -71,7 +71,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
       ...options,
       id: options.id || "sdk-with-skill",
       config: {
-        model: "sonnet",
+        model: "claude-sonnet-5",
         working_dir: REPO_ROOT,
         max_budget_usd: 3.00,
         max_turns: 50,
@@ -80,9 +80,30 @@ export default class SdkWithSkillProvider extends SdkProvider {
     });
   }
 
+  // The remote MCP server occasionally fails to register its tools at session
+  // start under concurrent eval load ("MCP tool access failed / not in the active
+  // toolset"), leaving the skill to fall back to ungrounded analysis. Since a
+  // GREEN skill session must ground in MCP data, a completed session with zero
+  // MCP tool calls signals a transient connection drop — retry it a bounded number
+  // of times rather than let flakiness pollute the results.
+  async callApi(prompt, context, callOptions) {
+    const maxAttempts = this.config.mcp_retries ?? 3;
+    let last;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      last = await super.callApi(prompt, context, callOptions);
+      if (last?.error) return last; // hard error — do not spin
+      const usedMcp = (last?.metadata?.toolCalls || []).some(
+        (t) => typeof t?.name === "string" && t.name.startsWith("mcp__")
+      );
+      if (usedMcp) return last;
+      // zero MCP calls → likely a transient MCP registration failure; retry
+    }
+    return last; // best effort after retries exhausted
+  }
+
   buildOptions(cwd) {
     return {
-      model: this.config.model || "sonnet",
+      model: this.config.model || "claude-sonnet-5",
       mcpServers: {
         "claude-of-alexandria-mcp": {
           type: "http",

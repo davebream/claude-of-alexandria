@@ -39,7 +39,8 @@ defaultTest:
       value: |
         const lower = output.toLowerCase();
         const expected = ['query_discourse_features', 'query_morphology'];
-        const found = expected.filter(n => lower.includes(n));
+        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
+        const found = expected.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
         return {
           pass: found.length >= 1,
           score: found.length / expected.length,

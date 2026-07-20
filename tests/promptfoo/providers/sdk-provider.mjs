@@ -113,9 +113,29 @@ export default class SdkProvider {
     try {
       const res = await sdk.query({ prompt, options });
 
+      // Accumulate the trajectory (tool calls, skill loads, subagent dispatches)
+      // as the SDK streams assistant messages, so assertions can check what the
+      // agent ACTUALLY did rather than grepping the final prose for tool names.
+      const toolCalls = [];
+      const skillsLoaded = [];
+      const subagents = [];
+
       for await (const msg of res) {
+        if (msg.type === "assistant" && msg.message?.content) {
+          for (const block of msg.message.content) {
+            if (block?.type !== "tool_use") continue;
+            toolCalls.push({ name: block.name, input: block.input });
+            if (block.name === "Skill") {
+              skillsLoaded.push(block.input?.command ?? block.input?.skill ?? "");
+            } else if (block.name === "Task") {
+              subagents.push(block.input?.subagent_type ?? block.input?.description ?? "");
+            }
+          }
+        }
         if (msg.type === "result") {
-          return this.buildResponse(msg);
+          const response = this.buildResponse(msg);
+          response.metadata = { toolCalls, skillsLoaded, subagents };
+          return response;
         }
       }
 

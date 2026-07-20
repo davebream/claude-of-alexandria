@@ -43,7 +43,8 @@ defaultTest:
       value: |
         const lower = output.toLowerCase();
         const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup', 'query_controversies'];
-        const found = expected.filter(n => lower.includes(n));
+        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
+        const found = expected.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
         return {
           pass: found.length >= 1,
           score: found.length / expected.length,
@@ -241,10 +242,11 @@ tests:
       - type: javascript
         value: |
           const lower = output.toLowerCase();
+          const ctrl = lower.includes('query_controversies') || (context.providerResponse?.metadata?.toolCalls || []).some(t => (t.name || '').toLowerCase().includes('query_controversies'));
           return {
-            pass: lower.includes('query_controversies'),
-            score: lower.includes('query_controversies') ? 1 : 0,
-            reason: lower.includes('query_controversies')
+            pass: ctrl,
+            score: ctrl ? 1 : 0,
+            reason: ctrl
               ? 'query_controversies referenced in output'
               : 'No mention of query_controversies — controversy check may have been skipped'
           };
