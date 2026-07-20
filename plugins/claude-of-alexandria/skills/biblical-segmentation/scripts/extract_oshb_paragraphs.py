@@ -737,6 +737,72 @@ def validate_corpus(total_markers: int) -> None:
         )
 
 
+# ─── Density reporting (C3) — an observable, never a gate ────────────────────
+#
+# The 0.15 ceiling / 0.02 floor were RETIRED. Genuine densities span 0.0 (Ps,
+# Obad) to 0.578 (Lam, 89/154), so genuine Lamentations sits inside the band
+# issue #118 called diagnostic of corruption and no threshold discriminates.
+# These functions therefore report and never raise. `above_retired_ceiling` is
+# reported as context for a human reader — 16 of 39 books exceed 0.15 and every
+# one of them is genuine — not as a signal that anything is wrong.
+
+RETIRED_DENSITY_CEILING = 0.15  # reporting reference point ONLY, never a gate
+
+
+def book_density_row(book: str, marker_count: int, verse_count: int) -> dict:
+    """One row of the per-book density table. Never raises."""
+    density = (marker_count / verse_count) if verse_count else 0.0
+    return {
+        "book": book,
+        "markers": marker_count,
+        "verses": verse_count,
+        "density": density,
+    }
+
+
+def density_summary(rows: list) -> dict:
+    """Observed maximum, minimum, and corpus total across the density table."""
+    if not rows:
+        return {"total_markers": 0, "max": None, "min": None, "above_retired_ceiling": 0}
+    ordered = sorted(rows, key=lambda r: r["density"])
+    return {
+        "total_markers": sum(r["markers"] for r in rows),
+        "total_verses": sum(r["verses"] for r in rows),
+        "max": ordered[-1],
+        "min": ordered[0],
+        "above_retired_ceiling": sum(
+            1 for r in rows if r["density"] > RETIRED_DENSITY_CEILING
+        ),
+    }
+
+
+def print_density_report(rows: list) -> None:
+    """Print the per-book table and summary to stderr. Diagnostic output only."""
+    print("\nPer-book marker density (reported, never gated):", file=sys.stderr)
+    for r in sorted(rows, key=lambda r: -r["density"]):
+        print(
+            f"  {r['book']:<6} {r['markers']:>5} markers / {r['verses']:>5} verses"
+            f" = {r['density']:.3f}",
+            file=sys.stderr,
+        )
+    s = density_summary(rows)
+    print(
+        f"\n  corpus total : {s['total_markers']} markers over {s['total_verses']} verses",
+        file=sys.stderr,
+    )
+    if s["max"] and s["min"]:
+        print(
+            f"  observed max : {s['max']['book']} {s['max']['density']:.3f}\n"
+            f"  observed min : {s['min']['book']} {s['min']['density']:.3f}",
+            file=sys.stderr,
+        )
+    print(
+        f"  {s['above_retired_ceiling']} book(s) above the RETIRED 0.15 ceiling — "
+        f"all genuine; density does not gate.",
+        file=sys.stderr,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Extract Masoretic paragraph markers from pinned OSHB XML."

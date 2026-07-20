@@ -884,6 +884,37 @@ class TestSourceOutputBijection(unittest.TestCase):
         self.assertIn("Neh", str(ctx.exception))
 
 
+class TestDensityReporting(unittest.TestCase):
+    """Density is a REPORTED OBSERVABLE. It never warns and never fails."""
+
+    def test_report_returns_density_and_never_raises_at_any_value(self):
+        # 0.578 (Lamentations) and 0.0 (Psalms) are both genuine. A report
+        # function that raised on either would be the retired gate returning
+        # under a different name.
+        for markers, verses in ((89, 154), (0, 2527), (1, 85)):
+            with self.subTest(markers=markers):
+                row = oshb.book_density_row("X", markers, verses)
+                self.assertAlmostEqual(row["density"], markers / verses, places=6)
+
+    def test_summary_reports_max_min_and_total(self):
+        rows = [
+            oshb.book_density_row("Lam", 89, 154),
+            oshb.book_density_row("Ps", 0, 2527),
+            oshb.book_density_row("Gen", 92, 1533),
+        ]
+        s = oshb.density_summary(rows)
+        self.assertEqual(s["total_markers"], 181)
+        self.assertEqual(s["max"]["book"], "Lam")
+        self.assertEqual(s["min"]["book"], "Ps")
+
+    def test_summary_counts_books_above_the_retired_ceiling_without_failing(self):
+        # Reported as context for a reader, NOT as a gate: 16 of 39 books
+        # exceed 0.15 and all are genuine.
+        rows = [oshb.book_density_row("Lam", 89, 154), oshb.book_density_row("Job", 38, 1070)]
+        s = oshb.density_summary(rows)
+        self.assertEqual(s["above_retired_ceiling"], 1)
+
+
 class TestSemanticBoundaryFixtures(unittest.TestCase):
     """Semantic fixtures, not extraction-count fixtures.
 
