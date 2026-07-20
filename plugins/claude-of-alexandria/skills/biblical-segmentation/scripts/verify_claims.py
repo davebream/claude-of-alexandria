@@ -736,9 +736,34 @@ def verify_masoretic_marker(claim: Dict) -> Dict:
     }
     expected_type = type_map.get(marker_type, marker_type)
 
+    # Parse "chapter:verse" into ints. The parser regex that produces `ref`
+    # (extract_masoretic_claims, `\d+:\d+`) can never emit a malformed
+    # reference, so this branch is intentionally-unreachable defensive depth
+    # for direct callers — never certify PASS on an unparseable reference.
+    try:
+        claim_chapter_str, claim_verse_str = ref.split(':', 1)
+        claim_chapter, claim_verse = int(claim_chapter_str), int(claim_verse_str)
+    except (ValueError, AttributeError):
+        return {**claim, 'status': 'UNVERIFIABLE', 'note': f"Unparseable reference '{ref}'"}
+
+    within_verse_match = False
     for b in breaks:
-        if ref in b.get('reference', '') and b.get('type', '') == expected_type:
-            return {**claim, 'status': 'PASS', 'note': f"Marker confirmed at {b['reference']}"}
+        if b.get('chapter') == claim_chapter and b.get('verse') == claim_verse \
+                and b.get('type', '') == expected_type:
+            if b.get('position') == 'verse_end':
+                return {**claim, 'status': 'PASS', 'note': f"Marker confirmed at {b['reference']} (verse_end)"}
+            if b.get('position') == 'within_verse':
+                within_verse_match = True
+
+    if within_verse_match:
+        return {
+            **claim,
+            'status': 'FAIL',
+            'note': (
+                f"Only an internal within-verse {expected_type} break exists at "
+                f"{book_full} {ref} — not a verse-boundary marker"
+            ),
+        }
 
     return {**claim, 'status': 'FAIL', 'note': f"{expected_type} not found at {book_full} {ref}"}
 
