@@ -1351,5 +1351,89 @@ class TestCorpusGlobalInvariants(unittest.TestCase):
         )
 
 
+# ─── Task 12: corpus layer (opt-in, --corpus) ────────────────────────────────
+#
+# Reads the COMMITTED JSONs, not an in-memory regeneration, so AC-2 is enforced
+# directly rather than only transitively through the drift check.
+#
+# What this layer does and does not prove: per-seg-type parity here is checking
+# a check — the extractor already hard-fails on it — so it can only fire if
+# that validator is itself broken. Legitimate defence in depth, but it means
+# the only INDEPENDENT ground truth here is Genesis 42+50, the six Genesis-1
+# positions, and Ruth 1@4:17. Do not mistake 39-book parity for 39-book
+# verification.
+
+
+@unittest.skipUnless(CORPUS_ENABLED, "corpus layer requires --corpus")
+class TestCorpusGoldens(unittest.TestCase):
+    REF = (
+        Path(__file__).resolve().parent.parent / "reference" / "masoretic"
+    )
+
+    @classmethod
+    def setUpClass(cls):
+        cls.data = {
+            p.name: json.loads(p.read_text()) for p in sorted(cls.REF.glob("*.json"))
+        }
+
+    def test_exactly_39_committed_files(self):
+        self.assertEqual(len(self.data), 39)
+
+    def test_genesis_totals_are_42_and_50(self):
+        # Literal expectations — never a value read from the file under test.
+        idx = self.data["genesis.json"]["legacyIndexes"]
+        self.assertEqual(len(idx["petuchot"]), 42)
+        self.assertEqual(len(idx["setumot"]), 50)
+
+    def test_genesis_chapter_1_break_positions(self):
+        idx = self.data["genesis.json"]["legacyIndexes"]
+        got = sorted(
+            m for m in idx["petuchot"] + idx["setumot"] if m.startswith("1:")
+        )
+        self.assertEqual(got, ["1:13", "1:19", "1:23", "1:31", "1:5", "1:8"])
+
+    def test_ruth_single_petuchah_at_4_17(self):
+        d = self.data["ruth.json"]
+        self.assertEqual(d["legacyIndexes"]["petuchot"], ["4:17"])
+        self.assertEqual(d["legacyIndexes"]["setumot"], [])
+        self.assertEqual(d["markers"][0]["position"], "verse_end")
+
+    def test_lamentations_tracks_the_acrostic(self):
+        # Predictable from the text's FORM, not from the extraction: chapters
+        # 1-4 are 22-letter acrostics, chapter 5 is not. A miscount cannot
+        # produce this shape, which makes it stronger evidence than a total.
+        per = collections.Counter(
+            m["chapter"] for m in self.data["lamentations.json"]["markers"]
+        )
+        self.assertEqual(dict(per), {1: 22, 2: 22, 3: 22, 4: 22, 5: 1})
+
+    def test_psalms_has_no_marker_layer_but_a_real_parse(self):
+        d = self.data["psalms.json"]
+        self.assertEqual(d["markers"], [])
+        self.assertIn("marker_layer_absent", d["_metadata"])
+        # The anti-vacuity point, asserted on shipped data: zero markers is
+        # only acceptable alongside evidence the book really was parsed.
+        self.assertGreater(d["_metadata"]["verse_count"], 2000)
+
+    def test_corpus_total_is_exactly_3162(self):
+        self.assertEqual(sum(len(d["markers"]) for d in self.data.values()), 3162)
+
+    def test_per_seg_type_parity_across_all_39_books(self):
+        cache = oshb.repo_root() / ".cache" / "oshb"
+        if not (cache / "Gen.xml").exists():
+            self.skipTest("OSHB cache absent")
+        for name, code in oshb.OT_BOOKS.items():
+            with self.subTest(book=code):
+                fname = oshb.book_output_path(self.REF, name).name
+                markers = self.data[fname]["markers"]
+                raw = oshb.count_marker_segs_raw(cache / f"{code}.xml")
+                self.assertEqual(
+                    sum(1 for m in markers if m["type"] == "petuchah"), raw["x-pe"]
+                )
+                self.assertEqual(
+                    sum(1 for m in markers if m["type"] == "setumah"), raw["x-samekh"]
+                )
+
+
 if __name__ == "__main__":
     unittest.main()
