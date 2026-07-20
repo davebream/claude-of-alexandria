@@ -5,7 +5,7 @@ description: "Regression smoke — cheap checks across all deployed tools (no ll
 # Run between every phase gate to catch regressions without burning $33-40 on full suite.
 
 providers:
-  - file://../providers/with-skill.agent-sdk.yaml
+  - file://../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"

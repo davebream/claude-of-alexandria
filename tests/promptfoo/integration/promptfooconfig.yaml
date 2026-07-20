@@ -12,7 +12,7 @@
 description: "Integration — multi-skill pipeline composition"
 
 providers:
-  - id: file://../providers/with-skill.agent-sdk.yaml
+  - id: file://../providers/sdk-with-skill.mjs
     config:
       max_budget_usd: 5.00
 
@@ -21,10 +21,7 @@ prompts:
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"

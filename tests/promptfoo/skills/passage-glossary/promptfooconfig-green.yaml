@@ -12,17 +12,14 @@
 description: "Passage Glossary — GREEN phase (failure-mode corrections)"
 
 providers:
-  - file://../../providers/with-skill.agent-sdk.yaml
+  - file://../../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -67,7 +64,7 @@ tests:
           // Find the ## Glossary section
           const glossaryMatch = output.match(/##\s+Glossary([\s\S]*?)(?:\n##\s|\n---|\n#\s|$)/i);
           if (!glossaryMatch) {
-            return { pass: false, reason: '## Glossary section not found in output' };
+            return { pass: false, score: 0, reason: '## Glossary section not found in output' };
           }
           const glossaryBody = glossaryMatch[1];
 
@@ -78,7 +75,7 @@ tests:
 
           if (allKeys.length === 0) {
             return {
-              pass: false,
+              pass: false, score: 0,
               reason: 'No per-row key tokens ([G####] or (no-strongs)) found in ## Glossary — skill output format not followed'
             };
           }
@@ -93,13 +90,13 @@ tests:
           const duplicates = Object.entries(counts).filter(([, count]) => count > 1);
           if (duplicates.length > 0) {
             return {
-              pass: false,
+              pass: false, score: 0,
               reason: `Duplicate headword key tokens found: ${JSON.stringify(duplicates)}`
             };
           }
 
           return {
-            pass: true,
+            pass: true, score: 1,
             reason: `${allKeys.length} distinct key tokens, no duplicates: ${JSON.stringify(Object.keys(counts).slice(0, 5))}...`
           };
       # Core failure mode: duplicate rows for repeated lemmas (θεός, λόγος)
@@ -125,7 +122,7 @@ tests:
         value: |
           const glossaryMatch = output.match(/##\s+Glossary([\s\S]*?)(?:\n##\s|\n---|\n#\s|$)/i);
           if (!glossaryMatch) {
-            return { pass: false, reason: '## Glossary section not found in output' };
+            return { pass: false, score: 0, reason: '## Glossary section not found in output' };
           }
           const glossaryBody = glossaryMatch[1];
 
@@ -134,7 +131,7 @@ tests:
 
           if (allKeys.length === 0) {
             return {
-              pass: false,
+              pass: false, score: 0,
               reason: 'No per-row key tokens ([G####] or (no-strongs)) found in ## Glossary'
             };
           }
@@ -148,7 +145,7 @@ tests:
           const duplicates = Object.entries(counts).filter(([, count]) => count > 1);
           if (duplicates.length > 0) {
             return {
-              pass: false,
+              pass: false, score: 0,
               reason: `Duplicate headword key tokens found: ${JSON.stringify(duplicates)}`
             };
           }
@@ -156,13 +153,13 @@ tests:
           // John 1:1-18 (the Prologue) has well over 20 distinct lemmas; expect at least 20
           if (allKeys.length < 20) {
             return {
-              pass: false,
+              pass: false, score: 0,
               reason: `Only ${allKeys.length} glossary entries found for John 1:1-18 — expected ≥20 distinct headwords`
             };
           }
 
           return {
-            pass: true,
+            pass: true, score: 1,
             reason: `${allKeys.length} distinct key tokens found, no duplicates`
           };
       # Core failure mode: completeness — bare model omits lemmas for long spans

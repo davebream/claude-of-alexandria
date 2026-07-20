@@ -71,7 +71,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
       ...options,
       id: options.id || "sdk-with-skill",
       config: {
-        model: "claude-sonnet-4-6-20250514",
+        model: "sonnet",
         working_dir: REPO_ROOT,
         max_budget_usd: 3.00,
         max_turns: 50,
@@ -82,7 +82,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
 
   buildOptions(cwd) {
     return {
-      model: this.config.model || "claude-sonnet-4-6-20250514",
+      model: this.config.model || "sonnet",
       mcpServers: {
         "claude-of-alexandria-mcp": {
           type: "http",

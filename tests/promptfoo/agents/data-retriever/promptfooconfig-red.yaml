@@ -4,7 +4,7 @@
 #
 # NOTE: No GREEN config exists for this agent. The reason is a promptfoo limitation:
 # there is no supported way to invoke a subagent (data-retriever) directly as the
-# subject under test. The with-skill.yaml provider wraps the invocation in an
+# subject under test. The sdk-with-skill.mjs provider wraps the invocation in an
 # orchestrating agent that reformats the output, breaking all contract-level assertions
 # (TOOL_RESULTS:, TESTAMENT:, SKIPPED_NT, etc.). The same limitation applies to
 # biblical-scholar and study-evaluator. Data-retriever's contract correctness is covered
@@ -16,18 +16,14 @@
 description: "data-retriever — RED phase (bare model, no agent, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"

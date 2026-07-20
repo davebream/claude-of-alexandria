@@ -29,18 +29,14 @@
 description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"

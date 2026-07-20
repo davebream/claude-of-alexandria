@@ -19,17 +19,14 @@
 description: "Argument Flow — GREEN phase (failure-mode corrections)"
 
 providers:
-  - file://../../providers/with-skill.agent-sdk.yaml
+  - file://../../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
