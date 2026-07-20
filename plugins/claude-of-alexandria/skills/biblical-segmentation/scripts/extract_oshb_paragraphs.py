@@ -19,6 +19,7 @@ Source:
 import argparse
 import hashlib
 import json
+import re
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -387,6 +388,240 @@ def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
                 else:
                     setumot.append(current_anchor)
     return petuchot, setumot
+
+
+# ─── Validation (C3) ─────────────────────────────────────────────────────────
+
+# Books that genuinely carry zero x-pe/x-samekh markers, keyed by OSIS
+# abbreviation.
+#
+# KEYED BY OSIS CODE, NOT ENGLISH NAME — this is load-bearing. Every book in
+# this module is identified by its OT_BOOKS *value* ("Ps", "Obad"), never its
+# key ("Psalms", "Obadiah"). An English-named allowlist would never match, so
+# both books would hard-fail exactly as if no allowlist existed, and the
+# failure would present as a data problem rather than a spelling one.
+#
+# Psalms carries no marker layer for a STRUCTURAL reason, not a genre one:
+# it is the one book whose canonical chapter division *is* the manuscript
+# paragraph division, so the scribal marker layer is unused — its 150
+# <chapter osisID="Ps.N"> elements are themselves the division mechanism.
+# The genre argument ("poetry is not paragraph-divided prose") is false and
+# must not be used: Job, Proverbs, Song and Lamentations are all poetry and
+# all carry markers. Lamentations carries 89.
+ZERO_MARKER_ALLOWLIST = {"Ps", "Obad"}
+
+# Corpus-total sanity band. Observed: 3,162 markers over 23,213 verses.
+CORPUS_TOTAL_MIN = 1500
+CORPUS_TOTAL_MAX = 4000
+
+# Stalled-cursor net: a book with at least this many markers, ALL collapsed to
+# one anchor, is degenerate. Loose on purpose — Ruth legitimately carries a
+# single marker, so the check must not fire on sparse books. Secondary net
+# only; per-seg-type parity is the primary oracle.
+STALLED_CURSOR_MIN_MARKERS = 5
+
+# Deliberately absent: any density threshold. The 0.15/0.02 band was RETIRED,
+# not re-tuned. Genuine per-book densities span 0.0 (Ps, Obad) to 0.578
+# (Lamentations, 89 markers / 154 verses), so genuine Lamentations sits inside
+# the range issue #118 called diagnostic of corruption and NO threshold
+# separates genuine from corrupt. Density is reported as an observable only.
+# Per-seg-type parity is the strong oracle and catches the classes the density
+# heuristic reached for, exactly rather than statistically.
+
+_RAW_SEG_TYPE_RE = re.compile(rb'<seg\b[^>]*\btype="(x-[a-z-]+)"')
+
+
+def count_seg_types(xml_path: Path) -> dict:
+    """Count <seg> elements by @type via the PARSED tree (ElementTree).
+
+    This is the *parse-side* count. It shares the namespace-qualified walk with
+    extract_markers, which is exactly why it is the correct input to the
+    anti-vacuity arm: if the parse breaks, this goes to zero and the arm fires.
+    Do NOT substitute the raw counter here — a raw count would survive a
+    broken parse and make the arm vacuous.
+    """
+    counts: dict = {}
+    root = ET.parse(xml_path).getroot()
+    for elem in root.iter():
+        if _local_tag(elem) == "seg":
+            seg_type = elem.get("type")
+            if seg_type:
+                counts[seg_type] = counts.get(seg_type, 0) + 1
+    return counts
+
+
+def count_marker_segs_raw(xml_path: Path) -> dict:
+    """Count marker <seg> elements by regex over RAW BYTES.
+
+    Deliberately INDEPENDENT of ElementTree: it never parses, so it does not
+    share the namespace handling that extract_markers depends on. That
+    independence is the whole point. If the source-side count for parity came
+    from the same walk that produced the output, a namespace regression would
+    zero BOTH sides and parity would pass vacuously — reintroducing the
+    original bug at the precise spot claimed to close it.
+    """
+    data = xml_path.read_bytes()
+    counts = {"x-pe": 0, "x-samekh": 0}
+    for match in _RAW_SEG_TYPE_RE.finditer(data):
+        seg_type = match.group(1).decode("ascii")
+        if seg_type in counts:
+            counts[seg_type] += 1
+    return counts
+
+
+def validate_book(
+    book: str,
+    petuchot: list,
+    setumot: list,
+    verse_ids: set,
+    seg_type_counts: dict,
+) -> None:
+    """Contradiction and absence tier. Raises naming the book.
+
+    `book` is an OSIS code. `seg_type_counts` must come from count_seg_types
+    (the parse-side path) — see the anti-vacuity arm below.
+    """
+    # Double-typing: WARN, never raise.
+    #
+    # The design called a verse carrying both a petuchah and a setumah
+    # "structurally impossible". The corpus refutes that: three genuine cases
+    # carry an x-samekh AND an x-pe as direct children of one <verse> —
+    # 2Sam 16:13, 2Chr 5:1, Jer 38:28. A hard-fail rejects correct upstream
+    # data, so this is a reported observable. (The pre-rebuild committed
+    # corpus also carries 4,102 double-typed verses, so the shape is already
+    # familiar to every downstream consumer.)
+    both = set(petuchot) & set(setumot)
+    if both:
+        print(
+            f"NOTE: book {book!r}: {len(both)} verse(s) carry both a petuchah "
+            f"and a setumah: {sorted(both)[:5]}. Genuine in OSHB (3 corpus "
+            f"cases); reported, not an error.",
+            file=sys.stderr,
+        )
+
+    for anchor in list(petuchot) + list(setumot):
+        if anchor not in verse_ids:
+            raise ValueError(
+                f"book {book!r}: marker anchored at {anchor!r}, which is not a "
+                f"verse in this book's own <verse osisID> inventory"
+            )
+
+    if petuchot or setumot:
+        return
+
+    # Zero markers from here down.
+    if book not in ZERO_MARKER_ALLOWLIST:
+        raise ValueError(
+            f"book {book!r}: zero paragraph markers. Only {sorted(ZERO_MARKER_ALLOWLIST)} "
+            f"legitimately carry none; for any other book this indicates a parse failure"
+        )
+
+    # ANTI-VACUITY ARM. An allowlisted book is exempt from the zero-marker
+    # floor ONLY on positive evidence that the parse actually worked. Without
+    # this, the allowlist is a channel through which a Psalms-scoped parse
+    # failure passes silently — the "validator vacuously satisfied by empty
+    # output" class this design exists to prevent.
+    #
+    # The exemption must mean "parsed thousands of segs, none were markers",
+    # never "found nothing, fine". Psalms has 5,461 non-marker segs; Obadiah 65.
+    non_marker_segs = sum(
+        n for t, n in seg_type_counts.items() if t not in MARKER_SEG_TYPES
+    )
+    if non_marker_segs == 0:
+        raise ValueError(
+            f"book {book!r} is zero-marker allowlisted, but the parse found no "
+            f"<seg> elements of ANY type. That is an empty parse, not a "
+            f"legitimate absence of markers: {book!r} should still carry "
+            f"maqqef/sof-pasuq/paseq segs (Ps 5461, Obad 65). Refusing to "
+            f"treat an empty parse as a validated zero."
+        )
+
+
+def validate_parity(
+    book: str, petuchot: list, setumot: list, raw_counts: dict
+) -> None:
+    """Per-seg-type parity against the INDEPENDENT raw source count.
+
+    The primary oracle. Catches localized type conflation (total right, split
+    wrong) which every corpus-wide floor passes, and catches a namespace
+    regression (output zero, source non-zero) which a shared-walk count could
+    not.
+    """
+    for arr, seg_type, label in (
+        (petuchot, "x-pe", "petuchot"),
+        (setumot, "x-samekh", "setumot"),
+    ):
+        expected = raw_counts.get(seg_type, 0)
+        if len(arr) != expected:
+            raise ValueError(
+                f"book {book!r}: per-type parity failure for {seg_type} — "
+                f"source has {expected} element(s), output {label} has "
+                f"{len(arr)}. A correct total does not make correct content."
+            )
+
+
+def validate_degeneracy(
+    book: str, petuchot: list, setumot: list, chapter_count: int
+) -> None:
+    """Degeneracy tier: anchor distinctness and the distribution floor.
+
+    The allowlist short-circuits this ENTIRE tier, not merely the zero-marker
+    check. The distribution floor ("markers must span more than one chapter in
+    a multi-chapter book") is trivially violated by zero markers, since zero
+    markers span zero chapters — so without this short-circuit, Psalms would
+    clear the zero-marker floor and then hard-fail here instead, for a reason
+    nothing in the design or plan documents.
+    """
+    if book in ZERO_MARKER_ALLOWLIST:
+        return
+
+    anchors = list(petuchot) + list(setumot)
+
+    # Stalled-cursor detection.
+    #
+    # This REPLACES a naive "any repeated anchor within an array" check, which
+    # the corpus refuted: 29 genuine repeats across 7 books (Neh 3:2/3:23/3:29
+    # in the wall-builders list, Ezra 3:1, Deut 5:21, 1Chr, 2Chr, 2Sam, Ezek),
+    # each two x-samekh elements under one <verse>. In a list passage,
+    # multiple section breaks inside one verse is the expected shape.
+    #
+    # What that check was reaching for is a stalled verse cursor, which emits
+    # the correct COUNT with every anchor collapsed to a single value. Parity
+    # is blind to it (the count is right), so this net is load-bearing —
+    # stated precisely instead of by proxy.
+    #
+    # The threshold is a heuristic and is deliberately loose: a book may
+    # legitimately carry very few markers (Ruth carries one), so only a book
+    # with several markers ALL on one verse is implausible as a manuscript
+    # shape. This is a secondary net; per-seg-type parity is the primary
+    # oracle, and this one is tuned to avoid false positives rather than to
+    # catch every case.
+    if len(anchors) >= STALLED_CURSOR_MIN_MARKERS and len(set(anchors)) == 1:
+        raise ValueError(
+            f"book {book!r}: all {len(anchors)} markers collapse to the single "
+            f"anchor {anchors[0]!r}. A stalled verse cursor produces exactly "
+            f"this, and per-type parity cannot see it because the count is correct."
+        )
+
+    # DELIBERATELY ABSENT: the multi-chapter distribution floor ("markers must
+    # span more than one chapter in a multi-chapter book"). It was DROPPED, not
+    # re-tuned, because the corpus refuted it outright: it hard-fails Ruth,
+    # whose single petuchah at 4:17 in a 4-chapter book is AC-2 GROUND TRUTH.
+    # A check whose only corpus effect is a false positive on the best-verified
+    # book in the dataset is not a check. Per-seg-type parity against the
+    # independent raw count already covers the corruption class it reached for.
+
+
+def validate_corpus(total_markers: int) -> None:
+    """Corpus-wide sanity band. Observed: 3,162."""
+    if not CORPUS_TOTAL_MIN <= total_markers <= CORPUS_TOTAL_MAX:
+        raise ValueError(
+            f"corpus total {total_markers} outside the sanity band "
+            f"[{CORPUS_TOTAL_MIN}, {CORPUS_TOTAL_MAX}]. Do NOT widen this band "
+            f"to get past the failure — it is calibrated against a real 39-book "
+            f"census (observed 3162), so a miss means the data or the "
+            f"extraction changed."
+        )
 
 
 def main() -> None:
