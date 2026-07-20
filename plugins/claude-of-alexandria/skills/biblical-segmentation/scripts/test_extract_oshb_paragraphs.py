@@ -974,6 +974,187 @@ class TestRenderBook(unittest.TestCase):
         self.assertNotIn(str(Path.cwd()), s)
 
 
+class TestLoaderMigration(unittest.TestCase):
+    """sefaria_paragraphs.get_paragraph_breaks against schema v2.
+
+    These live here deliberately (see module docstring) — do not relocate them
+    as misplaced.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.sp = _load_module("sefaria_paragraphs", "sefaria_paragraphs.py")
+
+    def test_ruth_loads_and_carries_the_additive_position_key(self):
+        breaks = self.sp.get_paragraph_breaks("Ruth")
+        self.assertTrue(breaks, "loader returned nothing for Ruth")
+        b = breaks[0]
+        for k in ("reference", "chapter", "verse", "type"):
+            self.assertIn(k, b, "pre-existing key dropped")
+        self.assertEqual(b["position"], "verse_end")
+        self.assertEqual((b["chapter"], b["verse"], b["type"]), (4, 17, "petuchah"))
+
+    def test_absent_schema_version_degrades_to_empty_not_raise(self):
+        # verify_claims.py calls this with no try/except and converts a falsy
+        # result into a correct UNVERIFIABLE verdict. Raising would crash a
+        # file issue #120 owns and this task must not touch.
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "x.json"
+            p.write_text(json.dumps({"book": "Ruth", "petuchot": ["4:17"], "setumot": []}))
+            orig = self.sp.load_book_data
+            self.sp.load_book_data = lambda book: json.loads(p.read_text())
+            try:
+                captured = io.StringIO()
+                with contextlib.redirect_stderr(captured):
+                    self.assertEqual(self.sp.get_paragraph_breaks("Ruth"), [])
+                self.assertIn("schema", captured.getvalue().lower())
+            finally:
+                self.sp.load_book_data = orig
+
+    def test_multiple_markers_in_one_verse_yield_multiple_records(self):
+        breaks = self.sp.get_paragraph_breaks("Nehemiah")
+        at_3_2 = [b for b in breaks if (b["chapter"], b["verse"]) == (3, 2)]
+        self.assertEqual(len(at_3_2), 2, "multiplicity must survive the loader")
+        self.assertEqual(
+            [b["position"] for b in at_3_2], ["within_verse", "verse_end"]
+        )
+
+    def test_consumer_can_distinguish_a_real_verse_boundary(self):
+        # The point of the whole positional change, at the consumer surface.
+        breaks = self.sp.get_paragraph_breaks("2 Samuel")
+        at = [b for b in breaks if (b["chapter"], b["verse"]) == (16, 13)]
+        self.assertEqual(len(at), 2)
+        usable = [b for b in at if b["position"] == "verse_end"]
+        self.assertEqual(len(usable), 1)
+        self.assertEqual(usable[0]["type"], "petuchah")
+
+    def test_psalms_reports_an_absent_marker_layer_not_an_empty_result(self):
+        breaks = self.sp.get_paragraph_breaks("Psalms")
+        self.assertEqual(breaks, [])
+        # The distinction a consumer needs: no instrument vs no finding.
+        self.assertTrue(self.sp.marker_layer_absent("Psalms"))
+        self.assertFalse(self.sp.marker_layer_absent("Ruth"))
+
+    def test_archived_notice_citing_a_nonexistent_path_is_gone(self):
+        src = (SCRIPTS_DIR / "sefaria_paragraphs.py").read_text()
+        self.assertNotIn("build-db.ts", src)
+
+
+class TestBookOutputPath(unittest.TestCase):
+    """Filenames must match the COMMITTED set exactly.
+
+    A mismatch does not overwrite anything — it writes a parallel set beside
+    the originals and orphans them, so the loader keeps reading stale data
+    while the regeneration reports success. A `.replace(" ", "")` variant
+    produced 46 files instead of 39 before this test existed.
+    """
+
+    def test_multiword_and_numbered_books_use_kebab_case(self):
+        cases = {
+            "Genesis": "genesis.json",
+            "1 Chronicles": "1-chronicles.json",
+            "2 Kings": "2-kings.json",
+            "1 Samuel": "1-samuel.json",
+            "Song of Songs": "song-of-songs.json",
+        }
+        for name, expected in cases.items():
+            with self.subTest(book=name):
+                self.assertEqual(oshb.book_output_path(Path("/x"), name).name, expected)
+
+    def test_every_book_maps_to_a_distinct_filename(self):
+        names = [oshb.book_output_path(Path("/x"), n).name for n in oshb.OT_BOOKS]
+        self.assertEqual(len(set(names)), 39)
+
+    def test_generated_names_match_the_committed_files(self):
+        # The decisive check: compare against what is actually on disk, so a
+        # convention drift shows up as a mismatch rather than as extra files.
+        ref = (
+            oshb.repo_root()
+            / "plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic"
+        )
+        if not ref.exists():
+            self.skipTest("reference directory absent")
+        on_disk = {p.name for p in ref.glob("*.json")}
+        generated = {oshb.book_output_path(ref, n).name for n in oshb.OT_BOOKS}
+        self.assertEqual(
+            generated,
+            on_disk,
+            "generated filenames must match the committed set exactly; "
+            "extras mean orphaned stale files the loader may still read",
+        )
+
+
+class TestValidateAllThenWriteAll(unittest.TestCase):
+    """A validation failure on ANY book must leave ZERO files written.
+
+    Otherwise a mid-run failure ships a tree that is part new, part old — and
+    since an absent schema_version is treated as v1, that intermediate state
+    silently degrades every Masoretic claim to UNVERIFIABLE.
+    """
+
+    def _book(self, code, events, verses, segs):
+        return {
+            "code": code,
+            "name": code,
+            "events": events,
+            "verse_ids": verses,
+            "seg_type_counts": segs,
+            "raw_counts": {
+                "x-pe": sum(1 for e in events if e["type"] == "petuchah"),
+                "x-samekh": sum(1 for e in events if e["type"] == "setumah"),
+            },
+            "chapter_count": 5,
+        }
+
+    def _event(self, ch, v, typ="petuchah", ordinal=1):
+        return {
+            "id": f"id-{ch}-{v}-{ordinal}-{typ}", "book": "X", "chapter": ch,
+            "verse": v, "type": typ, "ordinal_in_verse": ordinal,
+            "position": "verse_end", "preceding_word_id": "w",
+            "following_word_id": None, "after_sof_pasuq": True,
+            "source_child_index": 1,
+        }
+
+    def test_no_files_written_when_a_later_book_fails_validation(self):
+        good = self._book("Gen", [self._event(1, 5), self._event(2, 3)],
+                          {"1:5", "2:3"}, {"x-sof-pasuq": 9})
+        # Anchor 9:99 is not in the verse inventory -> validate_book raises.
+        bad = self._book("Exod", [self._event(9, 99)], {"1:1"}, {"x-sof-pasuq": 9})
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            with self.assertRaises(Exception):
+                oshb.validate_all_then_write_all([good, bad], out)
+            self.assertEqual(
+                sorted(p.name for p in out.glob("*.json")), [],
+                "a validation failure must leave the output tree untouched",
+            )
+
+    def test_all_files_written_when_every_book_validates(self):
+        books = [
+            self._book("Gen", [self._event(1, 5), self._event(2, 3)],
+                       {"1:5", "2:3"}, {"x-sof-pasuq": 9}),
+            self._book("Exod", [self._event(1, 1, "setumah")],
+                       {"1:1"}, {"x-sof-pasuq": 9}),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            oshb.validate_all_then_write_all(books, out)
+            self.assertEqual(sorted(p.name for p in out.glob("*.json")),
+                             ["exod.json", "gen.json"])
+
+    def test_corpus_total_failure_also_writes_nothing(self):
+        # The corpus band is checked across ALL books, so it can only fire
+        # after every book individually passed — the last chance to abort
+        # before writing.
+        books = [self._book("Gen", [self._event(1, 5)], {"1:5"}, {"x-sof-pasuq": 9})]
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            with self.assertRaises(Exception) as ctx:
+                oshb.validate_all_then_write_all(books, out, enforce_corpus_band=True)
+            self.assertIn("corpus total", str(ctx.exception))
+            self.assertEqual(list(out.glob("*.json")), [])
+
+
 class TestDensityReporting(unittest.TestCase):
     """Density is a REPORTED OBSERVABLE. It never warns and never fails."""
 

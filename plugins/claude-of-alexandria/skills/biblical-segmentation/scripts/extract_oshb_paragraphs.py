@@ -19,6 +19,7 @@ Source:
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 import urllib.request
@@ -815,6 +816,72 @@ def render_book(book: str, events: list, verse_count: int) -> str:
     return json.dumps(payload, indent=2, ensure_ascii=False)
 
 
+def book_output_path(output_dir: Path, name: str) -> Path:
+    """Output filename derived ONLY from the hardcoded OT_BOOKS name.
+
+    Never from parsed XML content: deriving an output path from a parsed
+    osisID would open a traversal vector.
+
+    The convention is kebab-case, matching the committed filenames exactly:
+    "1 Chronicles" -> 1-chronicles.json, "Song of Songs" -> song-of-songs.json.
+    Getting this wrong does not overwrite the existing files — it creates a
+    parallel set beside them and orphans the originals, leaving the loader
+    reading stale data while the regeneration looks successful. (Observed:
+    a `.replace(" ", "")` variant produced 46 files instead of 39.) This is
+    why the drift check uses `git status --porcelain` rather than
+    `git diff --exit-code`, which is blind to newly created files.
+    """
+    return output_dir / f"{name.lower().replace(' ', '-')}.json"
+
+
+def validate_all_then_write_all(
+    books: list, output_dir: Path, enforce_corpus_band: bool = False
+) -> None:
+    """Validate every book, then write every book. Strictly in that order.
+
+    A validation failure on ANY book must leave ZERO files written. Writing as
+    we go would ship a tree that is part new and part old on a mid-run failure,
+    and because an absent `schema_version` is treated as v1, that intermediate
+    state silently degrades every Masoretic claim to UNVERIFIABLE — the exact
+    failure the single-commit rule exists to prevent.
+
+    Each individual write is temp-file-then-os.replace, so a crash during the
+    write phase cannot leave a half-written JSON either.
+    """
+    # ---- Phase 1: validate everything. No side effects. ----
+    for b in books:
+        validate_book(
+            b["code"], *_legacy_arrays(b["events"]), b["verse_ids"], b["seg_type_counts"]
+        )
+        validate_bijection(b["code"], b["events"], b["raw_counts"])
+        validate_parity(b["code"], *_legacy_arrays(b["events"]), b["raw_counts"])
+        validate_degeneracy(
+            b["code"], *_legacy_arrays(b["events"]), b["chapter_count"]
+        )
+
+    if enforce_corpus_band:
+        validate_corpus(sum(len(b["events"]) for b in books))
+
+    # ---- Phase 2: only now write. ----
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for b in books:
+        dest = book_output_path(output_dir, b["name"])
+        tmp = dest.with_suffix(".json.tmp")
+        tmp.write_text(
+            render_book(b["name"], b["events"], verse_count=len(b["verse_ids"])),
+            encoding="utf-8",
+        )
+        os.replace(tmp, dest)
+
+
+def _legacy_arrays(events: list) -> tuple:
+    """(petuchot, setumot) projection used by the array-shaped validators."""
+    return (
+        [f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "petuchah"],
+        [f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "setumah"],
+    )
+
+
 # ─── Density reporting (C3) — an observable, never a gate ────────────────────
 #
 # The 0.15 ceiling / 0.02 floor were RETIRED. Genuine densities span 0.0 (Ps,
@@ -911,7 +978,66 @@ def main() -> None:
 
     checksums = load_checksums(checksums_path())
     _fetch_verify_all(cache_dir, checksums)
-    # Later tasks (extraction, validation, emission) attach here.
+
+    output_dir = (
+        root
+        / "plugins"
+        / "claude-of-alexandria"
+        / "skills"
+        / "biblical-segmentation"
+        / "reference"
+        / "masoretic"
+    )
+
+    books = []
+    density_rows = []
+    for name, code in OT_BOOKS.items():
+        xml_path = cache_dir / f"{code}.xml"
+        events = extract_marker_events(xml_path)
+        verse_ids, chapters = _verse_inventory(xml_path)
+        books.append(
+            {
+                "code": code,
+                "name": name,
+                "events": events,
+                "verse_ids": verse_ids,
+                "seg_type_counts": count_seg_types(xml_path),
+                "raw_counts": count_marker_segs_raw(xml_path),
+                "chapter_count": len(chapters),
+            }
+        )
+        density_rows.append(book_density_row(code, len(events), len(verse_ids)))
+
+    print_density_report(density_rows)
+
+    # Validate everything, then write everything. A failure here writes nothing.
+    validate_all_then_write_all(books, output_dir, enforce_corpus_band=True)
+    total = sum(len(b["events"]) for b in books)
+    print(
+        f"\nWrote {len(books)} book files ({total} marker events) to {output_dir.name}/",
+        file=sys.stderr,
+    )
+
+
+def _verse_inventory(xml_path: Path) -> tuple:
+    """Collect this book's own (verse_ids, chapters) during a single parse.
+
+    The book's own <verse osisID> set is the only correct oracle for anchor
+    existence: an external versification table would fail spuriously wherever
+    OSHB's numbering legitimately differs from an English Bible's.
+    """
+    root_elem = ET.parse(xml_path).getroot()
+    verse_ids = set()
+    chapters = set()
+    for elem in root_elem.iter():
+        tag = _local_tag(elem)
+        if tag == "verse" and elem.get("osisID"):
+            chapter, verse = parse_osis_id(elem.get("osisID"))
+            verse_ids.add(f"{chapter}:{verse}")
+            chapters.add(chapter)
+        elif tag == "chapter" and elem.get("osisID"):
+            chapters.add(elem.get("osisID"))
+    return verse_ids, chapters
 
 
 if __name__ == "__main__":

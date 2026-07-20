@@ -1,37 +1,137 @@
 {
+  "schema_version": 2,
   "book": "Haggai",
-  "petuchot": [
-    "1:1",
-    "1:2",
-    "1:4",
-    "1:6",
-    "1:9",
-    "1:11",
-    "1:12",
-    "1:14",
-    "2:2",
-    "2:5",
-    "2:9",
-    "2:12",
-    "2:13",
-    "2:14",
-    "2:16",
-    "2:17",
-    "2:19",
-    "2:21",
-    "2:22"
-  ],
-  "setumot": [
-    "1:4",
-    "2:8",
-    "2:18",
-    "2:22"
-  ],
   "_metadata": {
-    "source": "Sefaria-Export (github.com/Sefaria/Sefaria-Export)",
-    "text": "Leningrad Codex",
-    "extracted": "2026-01-18",
-    "license": "CC0",
-    "total_markers": 23
+    "witness": "WLC/OSHB@3d15126fb1ef74867fc1434be1942e837932691f",
+    "source": "OpenScriptures Hebrew Bible (morphhb), wlc/",
+    "marker_count": 7,
+    "verse_count": 38,
+    "licenses": {
+      "biblical_text": "Public domain (Westminster Leningrad Codex)",
+      "source_markup": "CC BY 4.0 (OpenScriptures Hebrew Bible)",
+      "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
+      "extraction_code": "GPL-3.0-or-later"
+    }
+  },
+  "markers": [
+    {
+      "id": "WLC@3d15126fb1ef:Hag.1.2#1:petuchah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 1,
+      "verse": 2,
+      "type": "petuchah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37wrL",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 18
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.1.6#1:petuchah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 1,
+      "verse": 6,
+      "type": "petuchah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37AYg",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 24
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.1.11#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 1,
+      "verse": 11,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37zpy",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 33
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.1.14#1:petuchah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 1,
+      "verse": 14,
+      "type": "petuchah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37dAC",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 35
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.2.5#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 2,
+      "verse": 5,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37HSQ",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 16
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.2.9#1:petuchah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 2,
+      "verse": 9,
+      "type": "petuchah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37zkA",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 20
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Hag.2.19#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Hag",
+      "chapter": 2,
+      "verse": 19,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "position": "verse_end",
+      "preceding_word_id": "37BFZ",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 18
+    }
+  ],
+  "legacyIndexes": {
+    "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",
+    "petuchot": [
+      "1:2",
+      "1:6",
+      "1:14",
+      "2:9"
+    ],
+    "setumot": [
+      "1:11",
+      "2:5",
+      "2:19"
+    ]
   }
 }

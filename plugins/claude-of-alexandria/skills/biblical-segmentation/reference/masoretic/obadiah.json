@@ -1,26 +1,23 @@
 {
+  "schema_version": 2,
   "book": "Obadiah",
-  "petuchot": [
-    "1:6",
-    "1:12",
-    "1:14",
-    "1:17",
-    "1:19",
-    "1:20",
-    "1:21"
-  ],
-  "setumot": [
-    "1:3",
-    "1:10",
-    "1:14",
-    "1:18",
-    "1:20"
-  ],
   "_metadata": {
-    "source": "Sefaria-Export (github.com/Sefaria/Sefaria-Export)",
-    "text": "Leningrad Codex",
-    "extracted": "2026-01-18",
-    "license": "CC0",
-    "total_markers": 12
+    "witness": "WLC/OSHB@3d15126fb1ef74867fc1434be1942e837932691f",
+    "source": "OpenScriptures Hebrew Bible (morphhb), wlc/",
+    "marker_count": 0,
+    "verse_count": 21,
+    "licenses": {
+      "biblical_text": "Public domain (Westminster Leningrad Codex)",
+      "source_markup": "CC BY 4.0 (OpenScriptures Hebrew Bible)",
+      "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
+      "extraction_code": "GPL-3.0-or-later"
+    },
+    "marker_layer_absent": "Obadiah carries no paragraph-marker layer in this witness. This is an absence of the instrument, not evidence against any proposed boundary: a consumer must report 'this book has no marker layer', never 'no marker found at X'."
+  },
+  "markers": [],
+  "legacyIndexes": {
+    "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",
+    "petuchot": [],
+    "setumot": []
   }
 }
