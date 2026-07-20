@@ -325,40 +325,81 @@ def parse_osis_id(osis_id: str) -> tuple[int, int]:
     return chapter, verse
 
 
-def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
-    """Walk an OSHB book XML in document order, emitting paragraph markers.
+def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> list:
+    """Build the marker events carried by one <verse> element, in document order.
 
-    Returns (petuchot, setumot) as document-ordered "C:V" strings, anchored
-    to the most recently seen <verse osisID>. Arrays are document-order
-    lists — never materialized from a set, since PYTHONHASHSEED randomizes
-    list(set(...)) iteration order per process.
+    Position is DERIVED from token context, never assumed from the verse
+    reference. A marker with no <w> after it inside the verse sits at the verse
+    boundary; one with words on both sides sits inside the verse.
 
-    Hard-fails (raises) on:
-    - a marker element (x-pe/x-samekh) with no antecedent verse
-    - an unrecognized <seg type=...> value
+    This distinction is the load-bearing one. Nehemiah 3:2 carries two setumot:
+    one mid-verse and one after the sof-pasuq. 2 Samuel 16:13 carries a setumah
+    mid-verse and a petuchah at the verse end. Collapsing either to a bare
+    "3:2" / "16:13" reference reports the multiplicity but loses which textual
+    boundary each marker actually marks — and only a verse_end marker can
+    support a claim that a pericope ends after that verse.
+    """
+    events = []
+    children = list(verse_elem)
+    word_ids = [
+        (i, c.get("id")) for i, c in enumerate(children) if _local_tag(c) == "w"
+    ]
+    ordinal = 0
+    for idx, child in enumerate(children):
+        if _local_tag(child) != "seg":
+            continue
+        seg_type = child.get("type")
+        if seg_type not in MARKER_SEG_TYPES:
+            continue
+        ordinal += 1
+        preceding = next((wid for i, wid in reversed(word_ids) if i < idx), None)
+        following = next((wid for i, wid in word_ids if i > idx), None)
+        if following is None:
+            position = "verse_end"
+        elif preceding is None:
+            position = "verse_start"
+        else:
+            position = "within_verse"
+        events.append(
+            {
+                # Stable identity: witness + version + reference + ordinal +
+                # type. The ordinal is what keeps two same-type markers in one
+                # verse distinguishable.
+                "id": f"WLC@{COMMIT_SHA[:12]}:{book}.{chapter}.{verse}#{ordinal}:{MARKER_SEG_TYPES[seg_type]}",
+                "book": book,
+                "chapter": chapter,
+                "verse": verse,
+                "type": MARKER_SEG_TYPES[seg_type],
+                "ordinal_in_verse": ordinal,
+                "position": position,
+                "preceding_word_id": preceding,
+                "following_word_id": following,
+            }
+        )
+    return events
 
-    Warns (stderr, does not raise) on unexpected marker placement — a marker
-    that is not the last child of the verse it anchors to. This is n=1
-    evidence in the real corpus (Ruth), so a hard-fail here would be a
-    false-positive generator against correct upstream data.
+
+def extract_marker_events(xml_path: Path) -> list:
+    """Walk an OSHB book in document order, emitting one event per marker node.
+
+    This is the PRIMARY extraction. `extract_markers` is a projection of it.
+
+    The invariant this exists to support is a bijection: every qualifying
+    <seg type="x-pe"|"x-samekh"> node in the source maps to exactly one event
+    here, and every event maps back to one node. That is strictly stronger than
+    any count or distribution heuristic — two implementations can agree on a
+    total while disagreeing on every location.
     """
     book_label = xml_path.stem
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
-
-    petuchot: list[str] = []
-    setumot: list[str] = []
-    current_anchor: str | None = None
-    current_verse_elem: ET.Element | None = None
+    root = ET.parse(xml_path).getroot()
+    events = []
+    seen_marker_outside_verse = False
 
     for elem in root.iter():
         tag = _local_tag(elem)
-        if tag == "verse":
-            osis_id = elem.get("osisID")
-            if osis_id:
-                chapter, verse = parse_osis_id(osis_id)
-                current_anchor = f"{chapter}:{verse}"
-                current_verse_elem = elem
+        if tag == "verse" and elem.get("osisID"):
+            chapter, verse = parse_osis_id(elem.get("osisID"))
+            events.extend(_marker_events_in_verse(elem, chapter, verse, book_label))
         elif tag == "seg":
             seg_type = elem.get("type")
             if seg_type not in KNOWN_SEG_TYPES:
@@ -366,27 +407,47 @@ def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
                     f"unrecognized <seg type={seg_type!r}> in book {book_label!r}"
                 )
             if seg_type in MARKER_SEG_TYPES:
-                if current_anchor is None:
-                    raise ValueError(
-                        f"marker element ({seg_type}) with no antecedent verse "
-                        f"in book {book_label!r}"
-                    )
-                # Placement check: expected shape is the marker as the last
-                # child of the verse it anchors to. Anything else is
-                # unexpected placement — warn only (n=1 evidence).
-                if current_verse_elem is None or (
-                    len(current_verse_elem) == 0
-                    or current_verse_elem[-1] is not elem
-                ):
-                    print(
-                        f"WARNING: unexpected placement for {seg_type} marker "
-                        f"anchored at {current_anchor} in book {book_label!r}",
-                        file=sys.stderr,
-                    )
-                if seg_type == "x-pe":
-                    petuchot.append(current_anchor)
-                else:
-                    setumot.append(current_anchor)
+                seen_marker_outside_verse = True
+
+    if seen_marker_outside_verse:
+        # A marker that is not a child of any <verse>. Ruth was long believed
+        # to have this shape; it does not (its x-pe is the last child of verse
+        # Ruth.4.17). Measured corpus-wide, all 3,162 marker nodes sit inside a
+        # <verse> and zero sit outside, so this path is unreachable on the
+        # pinned data.
+        #
+        # It warns rather than raising because raising here would duplicate a
+        # responsibility that validate_bijection already owns, and owns better:
+        # a dropped marker shows up there as a source/output count mismatch,
+        # which is the same signal for every way a marker can go missing rather
+        # than a special case for one of them.
+        print(
+            f"WARNING: book {book_label!r}: marker element(s) outside any <verse>; "
+            f"cannot be positioned, so not represented as events. The "
+            f"source-to-event bijection check will fail on the resulting gap.",
+            file=sys.stderr,
+        )
+    return events
+
+
+def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
+    """Legacy two-array projection of extract_marker_events.
+
+    Returns (petuchot, setumot) as document-ordered "C:V" strings. Retained for
+    the existing loader contract, and DERIVED from the events rather than
+    re-parsing, so the two can never disagree.
+
+    Note what this shape cannot express, and why it is not the primary form:
+    it preserves how MANY markers a verse carries but not WHERE they sit. Two
+    setumot in Nehemiah 3:2 both render as "3:2"; a mid-verse setumah and a
+    verse-end petuchah in 2 Samuel 16:13 render as "16:13" in both arrays,
+    which reads as one boundary bearing two types. Consumers making exact
+    boundary claims must use extract_marker_events and filter on
+    position == "verse_end".
+    """
+    events = extract_marker_events(xml_path)
+    petuchot = [f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "petuchah"]
+    setumot = [f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "setumah"]
     return petuchot, setumot
 
 
@@ -534,6 +595,38 @@ def validate_book(
             f"legitimate absence of markers: {book!r} should still carry "
             f"maqqef/sof-pasuq/paseq segs (Ps 5461, Obad 65). Refusing to "
             f"treat an empty parse as a validated zero."
+        )
+
+
+def validate_bijection(book: str, events: list, raw_counts: dict) -> None:
+    """The central invariant: source marker nodes ⟷ output marker events.
+
+    Each qualifying <seg type="x-pe"|"x-samekh"> node in the source maps to
+    exactly one event, and each event maps back to one node. This replaces the
+    distribution heuristics the corpus refuted, and is strictly stronger than a
+    count check on its own because it also demands INJECTIVITY: two events
+    sharing an id means a source node lost its distinct identity, which is
+    precisely the deduplication failure — caught structurally rather than by
+    inspection.
+
+    The source side is counted by the INDEPENDENT raw-byte path, so a namespace
+    regression cannot zero both sides at once.
+    """
+    expected = raw_counts.get("x-pe", 0) + raw_counts.get("x-samekh", 0)
+    if len(events) != expected:
+        raise ValueError(
+            f"book {book!r}: bijection failure — source has {expected} marker "
+            f"node(s), extraction produced {len(events)} event(s). Every source "
+            f"marker must yield exactly one event."
+        )
+    ids = [e["id"] for e in events]
+    if len(set(ids)) != len(ids):
+        dupes = sorted({i for i in ids if ids.count(i) > 1})
+        raise ValueError(
+            f"book {book!r}: bijection failure — {len(ids) - len(set(ids))} event(s) "
+            f"share an identity: {dupes[:3]}. Two source markers collapsed into "
+            f"one identity, which is the deduplication failure this invariant exists "
+            f"to prevent."
         )
 
 

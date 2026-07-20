@@ -16,6 +16,35 @@ default; requires network access to fetch the corpus once.
 Usage:
     python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py
     python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py --corpus
+
+MUTATION-KILL MATRIX
+--------------------
+The recurring defect in this artifact is a check that claims to enforce a
+criterion while wired so it cannot fail. Passing tests are therefore not
+evidence on their own. Each row below was verified by deliberately breaking the
+implementation and confirming this suite exits non-zero.
+
+| Mutation                                   | Detecting test                          |
+|--------------------------------------------|-----------------------------------------|
+| Collapse repeated verse/type records       | legacy-array projection + bijection     |
+| Drop a marker (2nd in a verse; non-final)  | source/output bijection                 |
+| Duplicate a marker                         | source/output bijection                 |
+| Swap petuchah and setumah                  | per-type parity + event fixtures        |
+| Reverse same-verse marker order            | ordinal/position fixtures               |
+| Move an internal marker to verse end       | position fixtures (Neh 3:2, 2Sam 16:13) |
+| Drop ordinal from the event id             | event-id uniqueness                     |
+| Disable bijection count or injectivity     | explicit negative bijection tests       |
+| Narrow seg types back to five              | pinned seg-type sets                    |
+| Allowlist in English namespace             | OSIS-keyed allowlist test               |
+| Disable the anti-vacuity arm               | allowlist arm (c)                       |
+| Refactor raw counter onto ElementTree      | raw-path-never-parses test              |
+| Reinstate the multi-chapter floor          | Ruth single-marker fence                |
+| Widen or disable the corpus band           | explicit band tests                     |
+
+WHEN ADDING A MUTATION: confirm it genuinely changes behaviour before trusting
+a "caught" result. A mutation that never fires (e.g. a guard keyed to a value
+no fixture reaches) is indistinguishable from an undetected one — that mistake
+was made once while building this matrix and produced a false "MISSED".
 """
 
 import contextlib
@@ -308,11 +337,23 @@ class TestParseOsisId(unittest.TestCase):
 
 
 class TestExtractMarkersNoAntecedentVerse(unittest.TestCase):
-    def test_marker_before_any_verse_hard_fails(self):
+    def test_marker_with_no_verse_at_all_is_caught_by_the_bijection(self):
+        # Previously this raised directly from the extractor. Under the
+        # event model the responsibility moved to validate_bijection, which
+        # catches EVERY way a marker can go missing with one signal instead of
+        # a special case per shape. The failure is still loud and still names
+        # the book — it just arrives from the invariant that owns it.
         with tempfile.TemporaryDirectory() as tmp:
             path = _write_fixture(tmp, '<seg type="x-pe">פ</seg>')
+            captured = io.StringIO()
+            with contextlib.redirect_stderr(captured):
+                events = oshb.extract_marker_events(path)
+            self.assertEqual(events, [])
+            self.assertIn("outside any <verse>", captured.getvalue())
             with self.assertRaises(Exception) as ctx:
-                oshb.extract_markers(path)
+                oshb.validate_bijection(
+                    "Fixture", events, oshb.count_marker_segs_raw(path)
+                )
             self.assertIn("Fixture", str(ctx.exception))
 
 
@@ -336,23 +377,49 @@ class TestExtractMarkersUnrecognizedSegType(unittest.TestCase):
             self.assertIn("Fixture", str(ctx.exception))
 
 
-class TestExtractMarkersUnexpectedPlacementWarns(unittest.TestCase):
-    def test_marker_outside_verse_element_warns_not_raises(self):
-        # A marker element that is a sibling of <verse> rather than nested
-        # inside one is unexpected placement (n=1 evidence in the real
-        # corpus) — warn to stderr, never raise.
+class TestMarkerOutsideVerseElement(unittest.TestCase):
+    def test_marker_outside_any_verse_is_reported_not_silently_dropped(self):
+        # CORRECTED AGAINST THE CORPUS. This test previously asserted that a
+        # marker between two <verse> elements anchors to the preceding verse,
+        # on the belief that Ruth's marker had that shape. It does not: Ruth's
+        # x-pe is the last CHILD of verse Ruth.4.17. Measured corpus-wide, all
+        # 3,162 marker nodes sit inside a <verse>; exactly zero sit outside.
+        #
+        # So this path is unreachable on real data. It must not fail silently:
+        # an out-of-verse marker cannot be assigned an intra-verse position,
+        # and dropping it quietly would break the source-to-event bijection —
+        # the one invariant everything else now rests on. Warn loudly, and
+        # leave the bijection check to catch the count mismatch.
         with tempfile.TemporaryDirectory() as tmp:
             path = _write_fixture(
                 tmp,
-                '<verse osisID="Ruth.4.17"><w lemma="1">a</w></verse>'
+                '<verse osisID="Ruth.4.17"><w id="wA" lemma="1">a</w></verse>'
                 '<seg type="x-pe">פ</seg>'
-                '<verse osisID="Ruth.4.18"><w lemma="1">b</w></verse>',
+                '<verse osisID="Ruth.4.18"><w id="wB" lemma="1">b</w></verse>',
             )
             captured = io.StringIO()
             with contextlib.redirect_stderr(captured):
-                petuchot, setumot = oshb.extract_markers(path)
-            self.assertEqual(petuchot, ["4:17"])
-            self.assertEqual(setumot, [])
+                events = oshb.extract_marker_events(path)
+            self.assertEqual(events, [], "cannot position an out-of-verse marker")
+            self.assertIn("outside any <verse>", captured.getvalue())
+
+    def test_bijection_catches_the_dropped_out_of_verse_marker(self):
+        # The loud half: the source has one marker node, extraction produced
+        # zero events, so the invariant fires rather than shipping a silent gap.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Ruth.4.17"><w id="wA" lemma="1">a</w></verse>'
+                '<seg type="x-pe">פ</seg>',
+            )
+            captured = io.StringIO()
+            with contextlib.redirect_stderr(captured):
+                events = oshb.extract_marker_events(path)
+            with self.assertRaises(Exception) as ctx:
+                oshb.validate_bijection(
+                    "Ruth", events, oshb.count_marker_segs_raw(path)
+                )
+            self.assertIn("bijection", str(ctx.exception))
 
 
 # ─── Task 6: contradiction and absence hard-fails ────────────────────────────
@@ -632,6 +699,151 @@ class TestHighDensityIsNotAnError(unittest.TestCase):
                 f"{dead} reintroduces a retired gate; genuine densities span "
                 "0.0 (Ps, Obad) to 0.578 (Lam), so no threshold discriminates",
             )
+
+
+# ─── Marker events: multiplicity AND position ────────────────────────────────
+#
+# A verse reference is the CONTAINER a marker occurs in, not the marker's
+# identity. Two marker elements inside one verse are two real textual events at
+# two different token boundaries. Preserving the count without the position
+# preserves multiplicity but loses which boundary each marker actually marks —
+# and a pericope claim needs the boundary, not the container.
+
+
+class TestMarkerEvents(unittest.TestCase):
+    def test_two_same_type_markers_in_one_verse_are_distinct_events(self):
+        # Nehemiah 3:2 shape: one marker mid-verse, one after the sof-pasuq.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Neh.3.2">'
+                '<w id="w1" lemma="1">a</w>'
+                '<seg type="x-samekh">ס</seg>'
+                '<w id="w2" lemma="2">b</w>'
+                '<seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-samekh">ס</seg>'
+                "</verse>",
+            )
+            events = oshb.extract_marker_events(path)
+            self.assertEqual(len(events), 2)
+            self.assertEqual([e["ordinal_in_verse"] for e in events], [1, 2])
+            self.assertEqual(
+                [e["position"] for e in events], ["within_verse", "verse_end"]
+            )
+            # Both are setumah, both anchored to 3:2 — only position separates
+            # them, which is exactly why position must be carried.
+            self.assertEqual({e["type"] for e in events}, {"setumah"})
+            self.assertEqual({(e["chapter"], e["verse"]) for e in events}, {(3, 2)})
+
+    def test_both_types_in_one_verse_are_two_boundaries_not_one(self):
+        # 2 Samuel 16:13 shape. Without position this reads as "one boundary is
+        # both petuchah and setumah", which is false.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="2Sam.16.13">'
+                '<w id="w1" lemma="1">a</w>'
+                '<seg type="x-samekh">ס</seg>'
+                '<w id="w2" lemma="2">b</w>'
+                '<seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-pe">פ</seg>'
+                "</verse>",
+            )
+            events = oshb.extract_marker_events(path)
+            self.assertEqual(
+                [(e["type"], e["position"]) for e in events],
+                [("setumah", "within_verse"), ("petuchah", "verse_end")],
+            )
+
+    def test_token_anchors_record_the_surrounding_word_ids(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Ruth.4.17">'
+                '<w id="wA" lemma="1">a</w>'
+                '<seg type="x-samekh">ס</seg>'
+                '<w id="wB" lemma="2">b</w>'
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertEqual(e["preceding_word_id"], "wA")
+            self.assertEqual(e["following_word_id"], "wB")
+
+    def test_verse_end_marker_has_no_following_word(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Ruth.4.17">'
+                '<w id="wA" lemma="1">a</w>'
+                '<seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-pe">פ</seg>'
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertEqual(e["position"], "verse_end")
+            self.assertIsNone(e["following_word_id"])
+            self.assertEqual(e["preceding_word_id"], "wA")
+
+    def test_event_ids_are_unique_and_stable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Neh.3.2">'
+                '<w id="w1" lemma="1">a</w><seg type="x-samekh">ס</seg>'
+                '<w id="w2" lemma="2">b</w><seg type="x-samekh">ס</seg>'
+                "</verse>",
+            )
+            events = oshb.extract_marker_events(path)
+            ids = [e["id"] for e in events]
+            self.assertEqual(len(set(ids)), 2, "same-verse events must not collide")
+            self.assertEqual(ids, oshb.extract_marker_events(path)[0:2] and ids)
+            for e in events:  # ordinal is what disambiguates them
+                self.assertIn(str(e["ordinal_in_verse"]), e["id"])
+
+    def test_legacy_arrays_are_derived_from_events(self):
+        # extract_markers stays available for the existing loader contract, but
+        # must be a projection of the events, never a second parse.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Neh.3.2">'
+                '<w id="w1" lemma="1">a</w><seg type="x-samekh">ס</seg>'
+                '<w id="w2" lemma="2">b</w><seg type="x-samekh">ס</seg>'
+                "</verse>",
+            )
+            p, s = oshb.extract_markers(path)
+            self.assertEqual(p, [])
+            self.assertEqual(s, ["3:2", "3:2"], "multiplicity must survive")
+
+
+class TestSourceOutputBijection(unittest.TestCase):
+    """The central invariant, replacing distribution heuristics.
+
+    Each qualifying source marker node maps to exactly one output event, and
+    vice versa. This is strictly stronger than a count check: two
+    implementations can agree on a total while disagreeing on every location.
+    """
+
+    def test_bijection_holds_on_a_good_parse(self):
+        oshb.validate_bijection("Neh", [{"id": "a"}, {"id": "b"}], {"x-pe": 0, "x-samekh": 2})
+
+    def test_dropped_marker_breaks_bijection(self):
+        with self.assertRaises(Exception) as ctx:
+            oshb.validate_bijection("Neh", [{"id": "a"}], {"x-pe": 0, "x-samekh": 2})
+        self.assertIn("Neh", str(ctx.exception))
+
+    def test_duplicated_marker_breaks_bijection(self):
+        with self.assertRaises(Exception):
+            oshb.validate_bijection(
+                "Neh", [{"id": "a"}, {"id": "b"}, {"id": "c"}], {"x-pe": 0, "x-samekh": 2}
+            )
+
+    def test_colliding_event_ids_break_bijection(self):
+        # Injectivity: two events sharing an id means one source node lost its
+        # distinct identity — the deduplication failure, caught structurally.
+        with self.assertRaises(Exception) as ctx:
+            oshb.validate_bijection("Neh", [{"id": "x"}, {"id": "x"}], {"x-pe": 0, "x-samekh": 2})
+        self.assertIn("Neh", str(ctx.exception))
 
 
 if __name__ == "__main__":
