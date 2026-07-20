@@ -14,14 +14,35 @@
     },
     "marker_layer_absent": "Obadiah has no explicit x-pe/x-samekh elements in this source. This is a statement about one feature layer of one electronic witness, NOT a claim that the manuscript tradition lacks graphic divisions here. A consumer must report 'no explicit P/S layer in this source', never 'no marker found at X'."
   },
-  "coverage": {
-    "feature": "explicit_petuchah_setumah_elements",
-    "witness": "OSHB_WLC",
+  "feature_coverage": {
+    "source": "OSHB",
+    "witness": "WLC",
     "source_revision": "3d15126fb1ef74867fc1434be1942e837932691f",
-    "source_event_count": 0,
-    "negative_boundary_evidence_permitted": false,
-    "reason": "No explicit x-pe/x-samekh elements exist for this book in this source. Other graphic conventions (lineation, blank lines, title layout) are not represented by these element types, so absence here is not evidence against a literary boundary."
+    "feature": "seg[type=x-pe|x-samekh]",
+    "extraction_status": "complete",
+    "source_event_count": 0
   },
+  "evidence_scope": {
+    "presence_directly_attests": [
+      "explicit_p_s_event_in_this_electronic_witness"
+    ],
+    "presence_may_support": [
+      "graphic_unit_boundary",
+      "literary_unit_boundary"
+    ],
+    "absence_directly_attests": [
+      "no_explicit_p_s_event_at_this_anchor"
+    ],
+    "absence_does_not_attest": [
+      "no_other_graphic_division",
+      "no_literary_unit_boundary",
+      "no_valid_teaching_boundary"
+    ]
+  },
+  "source_limitations": [
+    "This feature layer records only explicit x-pe/x-samekh elements in one WLC-derived electronic transcription; it does not exhaust the graphic structure of the underlying manuscript.",
+    "No explicit internal P/S event occurs in this book in this source; this does not determine literary segmentation."
+  ],
   "markers": [],
   "legacyIndexes": {
     "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",

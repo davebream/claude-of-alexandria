@@ -927,23 +927,53 @@ class TestRenderBook(unittest.TestCase):
         self.assertIn("insufficient", note)
         self.assertIn("position", note)
 
-    def test_coverage_metadata_permits_negative_evidence_when_markers_exist(self):
+    def test_feature_coverage_states_only_what_was_extracted(self):
         out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
-        cov = out["coverage"]
-        self.assertEqual(cov["feature"], "explicit_petuchah_setumah_elements")
-        self.assertEqual(cov["witness"], "OSHB_WLC")
-        self.assertEqual(cov["source_event_count"], 2)
-        self.assertTrue(cov["negative_boundary_evidence_permitted"])
+        fc = out["feature_coverage"]
+        self.assertEqual(fc["feature"], "seg[type=x-pe|x-samekh]")
+        self.assertEqual(fc["source"], "OSHB")
+        self.assertEqual(fc["witness"], "WLC")
+        self.assertEqual(fc["extraction_status"], "complete")
+        self.assertEqual(fc["source_event_count"], 2)
+        # Must NOT be called `coverage` — that implies exhaustive
+        # representation of the manuscript's graphic structure.
+        self.assertNotIn("coverage", out)
 
-    def test_coverage_metadata_FORBIDS_negative_evidence_when_layer_is_empty(self):
-        # The field that stops a consumer reading an empty array as "we checked
-        # a complete boundary system and found nothing". A source limitation
-        # must not become a literary judgment.
-        out = json.loads(oshb.render_book("Psalms", [], verse_count=2527))
-        cov = out["coverage"]
-        self.assertEqual(cov["source_event_count"], 0)
-        self.assertFalse(cov["negative_boundary_evidence_permitted"])
-        self.assertIn("not evidence against", cov["reason"])
+    def test_evidence_scope_is_IDENTICAL_regardless_of_marker_count(self):
+        # THE INVARIANT THAT MATTERS. A previous version keyed the inference
+        # policy to whether the book's layer was empty, which licensed
+        # absence-as-negative-evidence in every book that happened to have
+        # markers. The policy must not vary with the count.
+        populated = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        empty = json.loads(oshb.render_book("Psalms", [], verse_count=2527))
+        self.assertEqual(populated["evidence_scope"], empty["evidence_scope"])
+
+    def test_absence_never_attests_a_literary_boundary_in_any_book(self):
+        for book, events in (("2 Samuel", self._events()), ("Psalms", []), ("Genesis", self._events())):
+            with self.subTest(book=book):
+                es = json.loads(oshb.render_book(book, events, verse_count=10))["evidence_scope"]
+                self.assertIn("no_explicit_p_s_event_at_this_anchor", es["absence_directly_attests"])
+                self.assertIn("no_literary_unit_boundary", es["absence_does_not_attest"])
+                self.assertIn("no_other_graphic_division", es["absence_does_not_attest"])
+                # Presence is supporting evidence, never decisive on its own.
+                self.assertIn("literary_unit_boundary", es["presence_may_support"])
+
+    def test_no_negative_evidence_boolean_survives(self):
+        # The retired field. If reintroduced it re-creates the error.
+        s = oshb.render_book("Psalms", [], verse_count=2527)
+        self.assertNotIn("negative_boundary_evidence_permitted", s)
+
+    def test_source_limitations_explain_the_count_without_changing_policy(self):
+        ps = json.loads(oshb.render_book("Psalms", [], verse_count=2527))
+        gen = json.loads(oshb.render_book("Genesis", self._events(), verse_count=10))
+        obad = json.loads(oshb.render_book("Obadiah", [], verse_count=21))
+        # Psalms gets a poetic-layout note; Genesis does not.
+        self.assertTrue(any("poetic" in n for n in ps["source_limitations"]))
+        self.assertFalse(any("poetic" in n for n in gen["source_limitations"]))
+        # Obadiah is empty but NOT poetic — different explanation, same policy.
+        self.assertFalse(any("poetic" in n for n in obad["source_limitations"]))
+        self.assertEqual(ps["evidence_scope"], obad["evidence_scope"])
+        self.assertEqual(ps["evidence_scope"], gen["evidence_scope"])
 
     def test_absent_layer_note_claims_only_what_the_source_shows(self):
         # It must scope itself to this feature layer of this witness, and must

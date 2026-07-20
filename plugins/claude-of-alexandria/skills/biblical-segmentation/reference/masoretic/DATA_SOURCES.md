@@ -33,10 +33,12 @@ the Leningrad scribe: in the manuscript an open or closed section is marked by
 for representing that spacing. So this dataset records where one electronic
 transcription encodes open- and closed-section spacing.
 
-A marker also does not separately mark a beginning and an end. It represents
-**one boundary**, which is simultaneously the end of the preceding material and
-the start of the following material. That matters for the intra-verse cases
-below.
+A marker also does not separately mark a beginning and an end. Each marker
+event denotes **one graphic separation** in this electronic witness. In
+discourse terms the same separation may close preceding material and introduce
+following material, but that is one event, not two. It is a graphic event
+first; its literary function remains interpretive. That matters for the
+intra-verse cases below.
 
 ## Which witness this is, and why that must be stated
 
@@ -85,11 +87,18 @@ Collapsing them by verse reference would discard 29 genuine markers.
 ## Books with no marker layer
 
 At the pinned OSHB revision, `Ps.xml` and `Obad.xml` contain **no explicit
-`x-pe` or `x-samekh` elements**. Direct byte-level inspection of the source
-confirms this — the literal strings `type="x-pe"` and `type="x-samekh"` occur
-zero times in either file, while the same inspection finds exactly 42 and 50 in
-Genesis. So this is a property of the source, not an empty result produced by
-this extractor.
+`x-pe` or `x-samekh` elements**.
+
+The canonical extraction is namespace-aware XML parsing. As an *independent
+corroboration* — implemented differently, so it cannot share a defect with the
+parser — a raw-source scan confirms zero occurrences of segment elements whose
+`type` is `x-pe` or `x-samekh` in either file, while the same scan finds
+exactly 42 and 50 in Genesis. So this is a property of the source, not an empty
+result produced by this extractor.
+
+The raw scan is a cross-check only. The production extractor never depends on
+an exact serialization, which would be brittle against changes in attribute
+order, quote style, whitespace or namespace prefixes.
 
 **What that does and does not mean.** It is a statement about *one feature
 layer of one electronic witness*. It is **not** any of the following:
@@ -123,9 +132,43 @@ The two zeroes should not be read identically:
 | Psalms | 0 | No explicit P/S events in this source. Poetic-layout structure needs separate treatment; this layer is plainly not exhaustive here |
 | Obadiah | 0 | No explicit P/S events in this source. Do not infer the absence of literary subdivisions from it |
 
-Both files carry `_metadata.marker_layer_absent` and a `coverage` block with
-**`negative_boundary_evidence_permitted: false`**, which exists to stop a
-consumer converting a limitation of this layer into a literary judgment.
+Both files carry `_metadata.marker_layer_absent`, a `feature_coverage` block,
+and the same `evidence_scope` policy every other book carries — see below.
+
+## Evidence semantics
+
+This dataset exhaustively extracts the explicit `x-pe` and `x-samekh` elements
+present in the pinned OSHB source revision. It does **not** claim to exhaust
+all graphic structure in the underlying manuscript or in the wider Masoretic
+tradition.
+
+**Presence** of a marker directly attests an explicit P/S event in this
+electronic witness. It *may support* a literary-boundary judgment when it
+converges with linguistic, discourse, genre and contextual evidence. It does
+not establish one on its own.
+
+**Absence** of a marker establishes only that no explicit P/S event is encoded
+at that anchor in this source. It must **not** be used as evidence that no
+other graphic division, no literary boundary, or no suitable teaching boundary
+exists there.
+
+Three claims must stay distinct:
+
+| Claim | Extractable from this dataset? |
+| --- | --- |
+| A. No `x-pe`/`x-samekh` element here in this source | **Yes** |
+| B. No graphic division here in the witness | No |
+| C. No literary boundary here | No |
+
+Literary boundaries frequently occur with no corresponding P/S marker, **in
+every book**. This is why the machine-readable `evidence_scope` block is
+byte-identical in all 39 files and does not vary with a book's marker count. An
+earlier draft made the policy depend on whether a book's layer was empty, which
+would have licensed absence-as-negative-evidence in the 37 books that have
+markers — precisely the inference this section forbids.
+
+Per-book `source_limitations` explain *why* a count is what it is. They never
+change the inference policy.
 
 ## Marker density varies by genre — it is not a correctness signal
 
@@ -343,6 +386,20 @@ such as the Aleppo-based transcriptions.
 | Marker events | 3,162 |
 | Petuchot | 1,181 |
 | Setumot | 1,981 |
-| Verses covered | 23,213 |
+| Unique verse `osisID` values inspected | 23,213 |
 | Verses with more than one marker | 30 |
 | Books with no marker layer | 2 (Psalms, Obadiah) |
+
+**On the verse figure.** 23,213 is a count over a precisely defined XML
+structure, not a conventional Bible verse total, and should not be compared
+directly with totals from other versification systems. Specifically: it counts
+**unique `osisID` values on `<verse>` elements**; the corpus contains no
+milestone-style `sID`/`eID` verse nodes and no duplicate `osisID` values, so
+element count and unique count coincide. It follows OSHB's Hebrew/Masoretic
+versification, in which **Psalm superscriptions are numbered verses** — Psalm 3
+runs `Ps.3.1`–`Ps.3.9` where English numbering gives 8 verses plus an unnumbered
+superscription.
+
+Also worth recording: **no `osisID` in this corpus spans multiple verses.** The
+extractor handles a space-separated span by anchoring to its final verse, but
+that path is unexercised at this revision.

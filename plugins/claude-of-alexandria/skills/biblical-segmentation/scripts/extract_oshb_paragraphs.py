@@ -762,6 +762,60 @@ LICENSES = {
     "extraction_code": "GPL-3.0-or-later",
 }
 
+# Evidence semantics, emitted verbatim into every book. The uniformity is the
+# point: an inference policy that varied with a book's marker count would let
+# a source limitation masquerade as a literary judgment in exactly the books
+# where the layer happens to be populated.
+EVIDENCE_SCOPE = {
+    "presence_directly_attests": [
+        "explicit_p_s_event_in_this_electronic_witness",
+    ],
+    "presence_may_support": [
+        "graphic_unit_boundary",
+        "literary_unit_boundary",
+    ],
+    "absence_directly_attests": [
+        "no_explicit_p_s_event_at_this_anchor",
+    ],
+    "absence_does_not_attest": [
+        "no_other_graphic_division",
+        "no_literary_unit_boundary",
+        "no_valid_teaching_boundary",
+    ],
+}
+
+# The three poetic books, whose structure can be carried by conventions this
+# feature layer does not represent.
+_POETIC_LAYOUT_BOOKS = {"Psalms", "Proverbs", "Job"}
+
+
+def _source_limitations(book: str, events: list) -> list:
+    """Per-book notes on what this layer does not capture.
+
+    These EXPLAIN a count; they never change the inference policy above. Psalms
+    and Obadiah both carry zero events for different reasons, but the rule
+    "no explicit P/S event is not the absence of a literary boundary" is the
+    same for both, and for every other book.
+    """
+    notes = [
+        "This feature layer records only explicit x-pe/x-samekh elements in one "
+        "WLC-derived electronic transcription; it does not exhaust the graphic "
+        "structure of the underlying manuscript."
+    ]
+    if book in _POETIC_LAYOUT_BOOKS:
+        notes.append(
+            "This book belongs to the three poetic books. Poetic lineation, "
+            "blank space, superscription layout and cantillation structure lie "
+            "outside this feature layer."
+        )
+    if not events:
+        notes.append(
+            "No explicit internal P/S event occurs in this book in this source; "
+            "this does not determine literary segmentation."
+        )
+    return notes
+
+
 # Why the verse-reference arrays are nested rather than top-level siblings.
 LEGACY_INDEX_COMMENT = (
     "Verse-reference indexes of marker occurrences. INSUFFICIENT for "
@@ -804,35 +858,37 @@ def render_book(book: str, events: list, verse_count: int) -> str:
             # per-marker and lives on each event.
             "licenses": dict(LICENSES),
         },
-        # Coverage metadata. An empty `markers` array is ambiguous on its own:
-        # a consumer can read it as "we checked a complete boundary system and
-        # found no boundary", which converts a limitation of THIS FEATURE LAYER
-        # into a literary judgment. These fields say what was actually checked.
-        #
-        # `negative_boundary_evidence_permitted` is false wherever the layer
-        # carries nothing for this book, so absence here can never be cited
-        # against a proposed boundary. Psalms is the clearest case: it belongs
-        # to the three poetic books, whose structure may be expressed through
-        # lineation, blank lines and title layout that these two element types
-        # do not represent at all.
-        "coverage": {
-            "feature": "explicit_petuchah_setumah_elements",
-            "witness": "OSHB_WLC",
+        # What was extracted, stated narrowly. NOT named `coverage`: that word
+        # implies this dataset comprehensively represents the manuscript's
+        # graphic structure, which is stronger than can be established. The
+        # claim here is only that every explicit x-pe/x-samekh element in the
+        # pinned source was examined.
+        "feature_coverage": {
+            "source": "OSHB",
+            "witness": "WLC",
             "source_revision": COMMIT_SHA,
+            "feature": "seg[type=x-pe|x-samekh]",
+            "extraction_status": "complete",
             "source_event_count": len(events),
-            "negative_boundary_evidence_permitted": bool(events),
-            "reason": (
-                "This layer records only explicit x-pe/x-samekh elements in one "
-                "WLC-derived electronic transcription. It does not exhaust the "
-                "graphic structure of every book."
-                if events
-                else
-                "No explicit x-pe/x-samekh elements exist for this book in this "
-                "source. Other graphic conventions (lineation, blank lines, "
-                "title layout) are not represented by these element types, so "
-                "absence here is not evidence against a literary boundary."
-            ),
         },
+        # Evidence semantics. IDENTICAL IN EVERY BOOK, deliberately.
+        #
+        # A previous version made this policy depend on whether the book's
+        # marker layer was empty, via a `negative_boundary_evidence_permitted`
+        # boolean that was true wherever markers existed. That was wrong in
+        # both directions. It implied absence could count as negative evidence
+        # in Genesis or Jeremiah — the very inference this project lists as
+        # unestablished — while implying that in Psalms one could not even
+        # truthfully report "no explicit element is encoded at this anchor".
+        #
+        # Three distinct claims have to stay separate:
+        #   A. no x-pe/x-samekh element here in this source   <- extractable
+        #   B. no graphic division here in the witness        <- NOT extractable
+        #   C. no literary boundary here                      <- NOT extractable
+        # The extractor establishes A only. Literary boundaries frequently
+        # occur with no corresponding P/S marker, in every book.
+        "evidence_scope": dict(EVIDENCE_SCOPE),
+        "source_limitations": _source_limitations(book, events),
         "markers": events,
         "legacyIndexes": {
             "_comment": LEGACY_INDEX_COMMENT,
