@@ -4,9 +4,10 @@ Test cases for verify_claims.py — Masoretic paragraph marker verification.
 
 Unlike the sibling test_*.py files in this directory, which drive their
 target scripts via subprocess/importlib, this file imports verify_claims.py
-directly in-process so that verify_masoretic_marker() can be unit-tested
-and (where needed) sefaria_paragraphs.get_paragraph_breaks can be
-monkeypatched.
+directly in-process so that verify_masoretic_marker() can be unit-tested.
+All assertions run against the real bundled schema-v2 corpus under
+reference/masoretic/ — no fixtures or monkeypatching — which is what makes
+the RED/GREEN evidence trustworthy.
 
 RED Phase (#120): `test_gen1_2_not_pass` and `test_deut2_8_not_pass` fail
 against the unfixed verify_masoretic_marker() — both are true false
@@ -98,7 +99,10 @@ def test_deut2_8_not_pass():
     unfixed code the position-blind match loop wrongly returns PASS.
     """
     result = _verify("ס at Deut 2:8")
-    assert result["status"] != "PASS", result
+    # Assert the specific within_verse FAIL branch fires (not merely "not PASS",
+    # which an incidental ERROR/UNVERIFIABLE would also satisfy).
+    assert result["status"] == "FAIL", result
+    assert "within-verse" in result["note"], result
 
 
 # --- Positive setumah accept (proves the gate accepts setumah, not only petuchah) ---
