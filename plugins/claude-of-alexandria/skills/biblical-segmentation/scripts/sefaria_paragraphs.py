@@ -56,9 +56,12 @@ def load_book_data(book: str) -> Optional[dict]:
 def marker_layer_absent(book: str) -> bool:
     """True if this book carries no paragraph-marker layer in this witness.
 
-    Psalms and Obadiah carry zero markers. For Psalms this is structural: its
-    canonical chapter division IS the manuscript paragraph division, so the
-    scribal marker layer is unused.
+    Psalms and Obadiah have no explicit x-pe/x-samekh elements at the pinned
+    source revision. That is a fact about this feature layer of this
+    electronic witness — not a claim that the manuscript tradition lacks
+    graphic divisions in those books. Psalms is one of the three poetic
+    books, whose structure may be carried by lineation, blank lines and
+    title layout that these element types do not represent.
 
     Consumers must distinguish this from "no marker found here". An absent
     layer means the instrument does not apply to this book; reporting it as a

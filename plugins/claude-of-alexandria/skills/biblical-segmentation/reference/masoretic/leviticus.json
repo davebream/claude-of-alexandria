@@ -13,6 +13,14 @@
       "extraction_code": "GPL-3.0-or-later"
     }
   },
+  "coverage": {
+    "feature": "explicit_petuchah_setumah_elements",
+    "witness": "OSHB_WLC",
+    "source_revision": "3d15126fb1ef74867fc1434be1942e837932691f",
+    "source_event_count": 104,
+    "negative_boundary_evidence_permitted": true,
+    "reason": "This layer records only explicit x-pe/x-samekh elements in one WLC-derived electronic transcription. It does not exhaust the graphic structure of every book."
+  },
   "markers": [
     {
       "id": "WLC@3d15126fb1ef:Lev.1.9#1:setumah",

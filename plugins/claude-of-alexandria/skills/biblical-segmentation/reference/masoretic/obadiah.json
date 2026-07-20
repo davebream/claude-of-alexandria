@@ -12,7 +12,15 @@
       "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
       "extraction_code": "GPL-3.0-or-later"
     },
-    "marker_layer_absent": "Obadiah carries no paragraph-marker layer in this witness. This is an absence of the instrument, not evidence against any proposed boundary: a consumer must report 'this book has no marker layer', never 'no marker found at X'."
+    "marker_layer_absent": "Obadiah has no explicit x-pe/x-samekh elements in this source. This is a statement about one feature layer of one electronic witness, NOT a claim that the manuscript tradition lacks graphic divisions here. A consumer must report 'no explicit P/S layer in this source', never 'no marker found at X'."
+  },
+  "coverage": {
+    "feature": "explicit_petuchah_setumah_elements",
+    "witness": "OSHB_WLC",
+    "source_revision": "3d15126fb1ef74867fc1434be1942e837932691f",
+    "source_event_count": 0,
+    "negative_boundary_evidence_permitted": false,
+    "reason": "No explicit x-pe/x-samekh elements exist for this book in this source. Other graphic conventions (lineation, blank lines, title layout) are not represented by these element types, so absence here is not evidence against a literary boundary."
   },
   "markers": [],
   "legacyIndexes": {

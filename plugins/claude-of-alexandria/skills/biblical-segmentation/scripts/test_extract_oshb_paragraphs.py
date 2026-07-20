@@ -927,6 +927,33 @@ class TestRenderBook(unittest.TestCase):
         self.assertIn("insufficient", note)
         self.assertIn("position", note)
 
+    def test_coverage_metadata_permits_negative_evidence_when_markers_exist(self):
+        out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        cov = out["coverage"]
+        self.assertEqual(cov["feature"], "explicit_petuchah_setumah_elements")
+        self.assertEqual(cov["witness"], "OSHB_WLC")
+        self.assertEqual(cov["source_event_count"], 2)
+        self.assertTrue(cov["negative_boundary_evidence_permitted"])
+
+    def test_coverage_metadata_FORBIDS_negative_evidence_when_layer_is_empty(self):
+        # The field that stops a consumer reading an empty array as "we checked
+        # a complete boundary system and found nothing". A source limitation
+        # must not become a literary judgment.
+        out = json.loads(oshb.render_book("Psalms", [], verse_count=2527))
+        cov = out["coverage"]
+        self.assertEqual(cov["source_event_count"], 0)
+        self.assertFalse(cov["negative_boundary_evidence_permitted"])
+        self.assertIn("not evidence against", cov["reason"])
+
+    def test_absent_layer_note_claims_only_what_the_source_shows(self):
+        # It must scope itself to this feature layer of this witness, and must
+        # NOT assert anything about the manuscript tradition.
+        out = json.loads(oshb.render_book("Psalms", [], verse_count=2527))
+        note = out["_metadata"]["marker_layer_absent"]
+        self.assertIn("this source", note)
+        self.assertNotIn("chapter division", note)
+        self.assertNotIn("unused", note)
+
     def test_no_book_level_position_key(self):
         # The refuted flat model must not reappear in _metadata.
         out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))

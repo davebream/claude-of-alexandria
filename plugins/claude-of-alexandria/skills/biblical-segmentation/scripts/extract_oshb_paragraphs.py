@@ -483,13 +483,24 @@ def extract_markers(xml_path: Path) -> tuple[list[str], list[str]]:
 # both books would hard-fail exactly as if no allowlist existed, and the
 # failure would present as a data problem rather than a spelling one.
 #
-# Psalms carries no marker layer for a STRUCTURAL reason, not a genre one:
-# it is the one book whose canonical chapter division *is* the manuscript
-# paragraph division, so the scribal marker layer is unused — its 150
-# <chapter osisID="Ps.N"> elements are themselves the division mechanism.
-# The genre argument ("poetry is not paragraph-divided prose") is false and
-# must not be used: Job, Proverbs, Song and Lamentations are all poetry and
-# all carry markers. Lamentations carries 89.
+# What is established about Psalms and Obadiah is narrow, and the comment
+# says only that: at this pinned revision neither book has any explicit
+# x-pe/x-samekh element. Direct byte-level inspection of the source confirms
+# it (zero occurrences of the literal type strings), so this is a fact about
+# the source, not an artifact of this parser.
+#
+# It is NOT established that the manuscript tradition lacks graphic divisions
+# in these books. Psalms belongs to the three poetic books, whose structure
+# may be carried by lineation, blank lines and title layout that these two
+# element types do not represent. An earlier version of this comment asserted
+# that Psalms' chapter division IS its paragraph division; that was an
+# inference from 150 chapter elements, not a verified fact, and it is
+# withdrawn. (A still earlier genre argument — "poetry is not
+# paragraph-divided prose" — is separately false: Job, Proverbs, Song and
+# Lamentations are all poetry and all carry markers, Lamentations 89 of them.)
+#
+# Consequence for consumers: absence here must never be cited against a
+# proposed boundary. See the `coverage` block in the emitted JSON.
 ZERO_MARKER_ALLOWLIST = {"Ps", "Obad"}
 
 # Corpus-total sanity band. Observed: 3,162 markers over 23,213 verses.
@@ -793,6 +804,35 @@ def render_book(book: str, events: list, verse_count: int) -> str:
             # per-marker and lives on each event.
             "licenses": dict(LICENSES),
         },
+        # Coverage metadata. An empty `markers` array is ambiguous on its own:
+        # a consumer can read it as "we checked a complete boundary system and
+        # found no boundary", which converts a limitation of THIS FEATURE LAYER
+        # into a literary judgment. These fields say what was actually checked.
+        #
+        # `negative_boundary_evidence_permitted` is false wherever the layer
+        # carries nothing for this book, so absence here can never be cited
+        # against a proposed boundary. Psalms is the clearest case: it belongs
+        # to the three poetic books, whose structure may be expressed through
+        # lineation, blank lines and title layout that these two element types
+        # do not represent at all.
+        "coverage": {
+            "feature": "explicit_petuchah_setumah_elements",
+            "witness": "OSHB_WLC",
+            "source_revision": COMMIT_SHA,
+            "source_event_count": len(events),
+            "negative_boundary_evidence_permitted": bool(events),
+            "reason": (
+                "This layer records only explicit x-pe/x-samekh elements in one "
+                "WLC-derived electronic transcription. It does not exhaust the "
+                "graphic structure of every book."
+                if events
+                else
+                "No explicit x-pe/x-samekh elements exist for this book in this "
+                "source. Other graphic conventions (lineation, blank lines, "
+                "title layout) are not represented by these element types, so "
+                "absence here is not evidence against a literary boundary."
+            ),
+        },
         "markers": events,
         "legacyIndexes": {
             "_comment": LEGACY_INDEX_COMMENT,
@@ -806,10 +846,11 @@ def render_book(book: str, events: list, verse_count: int) -> str:
     }
     if not events:
         payload["_metadata"]["marker_layer_absent"] = (
-            f"{book} carries no paragraph-marker layer in this witness. This is "
-            f"an absence of the instrument, not evidence against any proposed "
-            f"boundary: a consumer must report 'this book has no marker layer', "
-            f"never 'no marker found at X'."
+            f"{book} has no explicit x-pe/x-samekh elements in this source. "
+            f"This is a statement about one feature layer of one electronic "
+            f"witness, NOT a claim that the manuscript tradition lacks graphic "
+            f"divisions here. A consumer must report 'no explicit P/S layer in "
+            f"this source', never 'no marker found at X'."
         )
     # No trailing newline — pinned against the pre-existing files, so a later
     # print(json.dumps(...)) variant cannot silently rewrite all 39.

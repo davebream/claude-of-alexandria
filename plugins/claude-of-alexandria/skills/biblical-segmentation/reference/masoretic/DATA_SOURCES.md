@@ -26,6 +26,18 @@ Markers are read from explicit XML markup — `<seg type="x-pe">` for a petuchah
 and `<seg type="x-samekh">` for a setumah — not by matching Hebrew letters in
 running text.
 
+**What these elements are.** They are *digital encoding elements* in a
+WLC-derived transcription. They are not literal פ and ס characters written by
+the Leningrad scribe: in the manuscript an open or closed section is marked by
+**blank space**, and the printed P/S notation is a later editorial convention
+for representing that spacing. So this dataset records where one electronic
+transcription encodes open- and closed-section spacing.
+
+A marker also does not separately mark a beginning and an end. It represents
+**one boundary**, which is simultaneously the end of the preceding material and
+the start of the following material. That matters for the intra-verse cases
+below.
+
 ## Which witness this is, and why that must be stated
 
 Manuscript traditions genuinely disagree about paragraph divisions. This
@@ -72,23 +84,48 @@ Collapsing them by verse reference would discard 29 genuine markers.
 
 ## Books with no marker layer
 
-**Psalms and Obadiah carry zero paragraph markers.** This is a real property of
-the witness, not a gap in extraction.
+At the pinned OSHB revision, `Ps.xml` and `Obad.xml` contain **no explicit
+`x-pe` or `x-samekh` elements**. Direct byte-level inspection of the source
+confirms this — the literal strings `type="x-pe"` and `type="x-samekh"` occur
+zero times in either file, while the same inspection finds exactly 42 and 50 in
+Genesis. So this is a property of the source, not an empty result produced by
+this extractor.
 
-For Psalms the reason is structural: its canonical chapter division *is* the
-manuscript's paragraph division, so the scribal marker layer is unused — the
-150 `<chapter osisID="Ps.N">` elements are themselves the division mechanism.
-The explanation is **not** that poetry lacks paragraph division: Job, Proverbs,
-Song of Songs and Lamentations are all poetry and all carry markers, with
-Lamentations carrying 89.
+**What that does and does not mean.** It is a statement about *one feature
+layer of one electronic witness*. It is **not** any of the following:
 
-Verified as a genuine absence rather than a parse failure: `Ps.xml` contains
-5,461 `<seg>` elements, none of them markers. A parse failure would drop every
-seg type, not exactly the two marker types.
+- that the Leningrad Codex contains no graphic divisions in these books;
+- that the Masoretic tradition contains no parashah divisions in them;
+- that individual psalms are not graphically separated;
+- that there is no graphic evidence for boundaries within Psalm 119;
+- that absence here is evidence against a proposed boundary.
 
-Both files carry `_metadata.marker_layer_absent`. A consumer must report **"this
-book has no marker layer"**, never "no marker found at X" — the latter reads as
-evidence *against* a proposed boundary when it is the absence of the instrument.
+Psalms belongs to the **three poetic books** (with Proverbs and most of Job),
+which use a scribal layout distinct from the prose books. In that layout,
+structure can be carried by blank lines, lineation and title formatting —
+conventions these two element types do not represent at all. Descriptions of
+the Aleppo tradition, for instance, identify blank-line divisions between
+psalms and between the alphabetic units of Psalm 119. That is a different
+witness, but it is enough to show that "no `x-pe` elements in this source"
+cannot be generalised to "no Masoretic graphic divisions in Psalms".
+
+An earlier version of this file asserted that Psalms' canonical chapter
+division *is* its paragraph division, so the marker layer was unused. **That
+was an inference from the 150 chapter elements, not a verified fact, and it is
+withdrawn.** (A still earlier claim — that poetry is not paragraph-divided
+prose — is separately false: Job, Proverbs, Song and Lamentations all carry
+markers, Lamentations 89 of them.)
+
+The two zeroes should not be read identically:
+
+| Book | Explicit P/S events | Reading |
+| --- | ---: | --- |
+| Psalms | 0 | No explicit P/S events in this source. Poetic-layout structure needs separate treatment; this layer is plainly not exhaustive here |
+| Obadiah | 0 | No explicit P/S events in this source. Do not infer the absence of literary subdivisions from it |
+
+Both files carry `_metadata.marker_layer_absent` and a `coverage` block with
+**`negative_boundary_evidence_permitted: false`**, which exists to stop a
+consumer converting a limitation of this layer into a literary judgment.
 
 ## Marker density varies by genre — it is not a correctness signal
 
@@ -107,10 +144,13 @@ books exceed 0.15**. Corpus mean is 0.136.
 
 Density is reported by the extractor but never gates it. No threshold separates
 genuine data from corrupt: genuine Lamentations sits inside the range that a
-previous analysis treated as diagnostic of corruption. Lamentations is in fact
-the strongest validation evidence available — its marker count tracks the
-22-letter acrostic (chapters 1–4 carry 22 each, chapter 5 carries 1), a shape a
-miscount cannot produce.
+previous analysis treated as diagnostic of corruption. Lamentations is a
+valuable structural check — its marker count tracks the 22-letter acrostic
+(chapters 1–4 carry 22 each, chapter 5 carries 1), which makes accidental
+correctness very unlikely. It is supporting evidence rather than the final
+oracle: a defective transformation could preserve per-chapter counts while
+misplacing or mistyping individual events. The strongest guarantee is the
+source-node-to-output-event bijection described under Verifying.
 
 The practical consequence for interpretation: in a high-density book a nearby
 marker carries little information, while in a sparse book it carries a lot.
@@ -244,6 +284,56 @@ any proposed passage division.
 - Extractor: `../../scripts/extract_oshb_paragraphs.py`
 - Loader: `../../scripts/sefaria_paragraphs.py` (loads only; does not extract)
 - Usage in skill: `../../SKILL.md`
+
+## What this dataset does and does not claim
+
+Three different kinds of statement appear in this file, and they carry
+different weight. Keeping them apart stops corrected data acquiring more
+authority than it has.
+
+**Direct source observations** — raw facts about OSHB commit `3d15126f`, checkable
+by inspecting the XML:
+
+- 3,162 matching elements; 1,181 `x-pe`; 1,981 `x-samekh`
+- per-book and per-chapter element counts
+- 30 verses containing more than one matching element
+
+**Deterministic derivations** — defensible, but produced by an operational rule
+rather than read off the source:
+
+- 3,072 `verse_end` and 90 `within_verse` markers
+
+  The rule: *a later `<w>` descendant exists inside the verse → `within_verse`;
+  none exists → `verse_end`.* `verse_end` is **not** encoded by OSHB; it is
+  derived from document order. It is stated here so no reader assumes otherwise.
+
+**Scholarly interpretations** — none of these are established by the extractor,
+and this dataset does not settle them:
+
+- that a marker begins a major literary unit
+- that a petuchah is a stronger division than a setumah
+- that the absence of a marker weakens a proposed boundary
+- that a marker reflects an authorial rather than a scribal division
+- that this source exhaustively represents every relevant graphic division
+
+The summary formulation:
+
+> This dataset records explicit P/S-type boundary events in one pinned
+> WLC-derived electronic witness. It does not exhaust the graphic structure of
+> every biblical book, and it does not by itself determine literary or
+> teaching-unit boundaries.
+
+## A note on "independent" verification
+
+OSHB, WLC and UXLC are genealogically related electronic texts — UXLC is a fork
+of WLC 4.20, and OSHB uses the same WLC textual base. Agreement among them is
+therefore **not** independent manuscript evidence.
+
+This matters for how the verification in this repository is described. A second
+parser over the same OSHB XML is *independent implementation verification*, and
+that is what the test suite provides. It is not *independent witness
+verification*, which would require a genuinely different manuscript tradition
+such as the Aleppo-based transcriptions.
 
 ## Corpus summary
 
