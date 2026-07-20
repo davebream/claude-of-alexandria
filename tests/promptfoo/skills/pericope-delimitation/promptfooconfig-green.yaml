@@ -80,7 +80,9 @@ tests:
   # =========================================================================
   # Scenario 4: OT Narrative Pericope — Gen 37:2-11 (VALID)
   # Core failure: no Masoretic data or toledot identification
-  # Manual TDD verification: data-correct (Masoretic markers confirmed)
+  # Re-verified 2026-07-20 vs corrected OSHB/WLC (Leningrad Codex): Gen 37 has
+  # one petuchah at 37:36 (verse_end); none within 37:2-11; toledot at 37:2
+  # opens the unit. Rubric requires query_paragraph_breaks attribution.
   # =========================================================================
   - description: "S4 GREEN: Gen 37:2-11 — VALID with Masoretic markers"
     vars:
@@ -92,12 +94,24 @@ tests:
           PASS if the response identifies the toledot formula (אֵלֶּה תּוֹלְדוֹת)
           at Gen 37:2 as a structural boundary marker.
           FAIL if the toledot formula is not mentioned.
-      # Core failure mode: no Masoretic data cited
+      # Core failure mode: no Masoretic paragraph-break data engagement
       - type: llm-rubric
         value: |
-          PASS if Masoretic paragraph markers (פ or ס) are cited with specific
-          verse references, attributed to MCP tool data like [query_paragraph_breaks].
-          FAIL if no Masoretic markers are cited.
+          PASS requires BOTH: (i) the response attributes its paragraph-break
+          claim to query_paragraph_breaks (names the tool, cites it as a
+          [query_paragraph_breaks] source, or lists it in Data Sources) in
+          the Masoretic marker reasoning for Genesis 37; AND (ii) EITHER
+          branch (a) — cites the genuine petuchah at 37:36 (verse_end) as
+          the nearest real marker, which closes the wider Joseph-introduction
+          unit and does NOT delimit the analyzed pericope 37:2-11 — OR
+          branch (b) — explicitly reports that query_paragraph_breaks
+          returned no petuchah/setumah within 37:2-11, resting the boundary
+          on the toledot formula at 37:2 instead.
+          FAIL if the response invents a marker inside 37:2-11, asserts any
+          marker with no query_paragraph_breaks attribution (a memory-only
+          claim), omits Masoretic paragraph-break reasoning entirely, or
+          mislabels the 37:36 petuchah as bounding 37:2-11 rather than the
+          wider unit it actually closes.
 
   # =========================================================================
   # Scenario 7: Single Verse — John 3:16 (EXTEND)
