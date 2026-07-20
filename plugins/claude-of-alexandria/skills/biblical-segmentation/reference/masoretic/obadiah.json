@@ -1,26 +1,53 @@
 {
+  "schema_version": 2,
   "book": "Obadiah",
-  "petuchot": [
-    "1:6",
-    "1:12",
-    "1:14",
-    "1:17",
-    "1:19",
-    "1:20",
-    "1:21"
-  ],
-  "setumot": [
-    "1:3",
-    "1:10",
-    "1:14",
-    "1:18",
-    "1:20"
-  ],
   "_metadata": {
-    "source": "Sefaria-Export (github.com/Sefaria/Sefaria-Export)",
-    "text": "Leningrad Codex",
-    "extracted": "2026-01-18",
-    "license": "CC0",
-    "total_markers": 12
+    "witness": "WLC/OSHB@3d15126fb1ef74867fc1434be1942e837932691f",
+    "source": "OpenScriptures Hebrew Bible (morphhb), wlc/",
+    "marker_count": 0,
+    "verse_count": 21,
+    "licenses": {
+      "biblical_text": "Public domain (Westminster Leningrad Codex)",
+      "source_markup": "CC BY 4.0 (OpenScriptures Hebrew Bible)",
+      "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
+      "extraction_code": "GPL-3.0-or-later"
+    },
+    "marker_layer_absent": "Obadiah has no explicit x-pe/x-samekh elements in this source. This is a statement about one feature layer of one electronic witness, NOT a claim that the manuscript tradition lacks graphic divisions here. A consumer must report 'no explicit P/S layer in this source', never 'no marker found at X'."
+  },
+  "feature_coverage": {
+    "source": "OSHB",
+    "witness": "WLC",
+    "source_revision": "3d15126fb1ef74867fc1434be1942e837932691f",
+    "feature": "seg[type=x-pe|x-samekh]",
+    "extraction_status": "complete",
+    "source_event_count": 0
+  },
+  "evidence_scope": {
+    "presence_directly_attests": [
+      "explicit_p_s_event_in_this_electronic_witness"
+    ],
+    "presence_may_support": [
+      "graphic_unit_boundary",
+      "literary_unit_boundary"
+    ],
+    "absence_directly_attests": [
+      "no_explicit_p_s_event_at_this_anchor"
+    ],
+    "absence_does_not_attest": [
+      "no_other_graphic_division",
+      "no_literary_unit_boundary",
+      "no_valid_teaching_boundary"
+    ]
+  },
+  "source_limitations": [
+    "This feature layer records only explicit x-pe/x-samekh elements in one WLC-derived electronic transcription; it does not exhaust the graphic structure of the underlying manuscript.",
+    "No explicit internal P/S event occurs in this book in this source; this does not determine literary segmentation."
+  ],
+  "markers": [],
+  "graphic_signs": [],
+  "legacyIndexes": {
+    "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",
+    "petuchot": [],
+    "setumot": []
   }
 }

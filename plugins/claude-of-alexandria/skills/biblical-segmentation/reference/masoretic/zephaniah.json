@@ -1,12 +1,138 @@
 {
+  "schema_version": 2,
   "book": "Zephaniah",
-  "petuchot": [],
-  "setumot": [],
   "_metadata": {
-    "source": "Sefaria-Export (github.com/Sefaria/Sefaria-Export)",
-    "text": "Leningrad Codex",
-    "extracted": "2026-01-18",
-    "license": "CC0",
-    "total_markers": 0
+    "witness": "WLC/OSHB@3d15126fb1ef74867fc1434be1942e837932691f",
+    "source": "OpenScriptures Hebrew Bible (morphhb), wlc/",
+    "marker_count": 5,
+    "verse_count": 53,
+    "licenses": {
+      "biblical_text": "Public domain (Westminster Leningrad Codex)",
+      "source_markup": "CC BY 4.0 (OpenScriptures Hebrew Bible)",
+      "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
+      "extraction_code": "GPL-3.0-or-later"
+    }
+  },
+  "feature_coverage": {
+    "source": "OSHB",
+    "witness": "WLC",
+    "source_revision": "3d15126fb1ef74867fc1434be1942e837932691f",
+    "feature": "seg[type=x-pe|x-samekh]",
+    "extraction_status": "complete",
+    "source_event_count": 5
+  },
+  "evidence_scope": {
+    "presence_directly_attests": [
+      "explicit_p_s_event_in_this_electronic_witness"
+    ],
+    "presence_may_support": [
+      "graphic_unit_boundary",
+      "literary_unit_boundary"
+    ],
+    "absence_directly_attests": [
+      "no_explicit_p_s_event_at_this_anchor"
+    ],
+    "absence_does_not_attest": [
+      "no_other_graphic_division",
+      "no_literary_unit_boundary",
+      "no_valid_teaching_boundary"
+    ]
+  },
+  "source_limitations": [
+    "This feature layer records only explicit x-pe/x-samekh elements in one WLC-derived electronic transcription; it does not exhaust the graphic structure of the underlying manuscript."
+  ],
+  "markers": [
+    {
+      "id": "WLC@3d15126fb1ef:Zeph.1.9#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Zeph",
+      "chapter": 1,
+      "verse": 9,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
+      "position": "verse_end",
+      "preceding_word_id": "36G83",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 16
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Zeph.1.18#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Zeph",
+      "chapter": 1,
+      "verse": 18,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
+      "position": "verse_end",
+      "preceding_word_id": "36WPn",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 32
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Zeph.2.4#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Zeph",
+      "chapter": 2,
+      "verse": 4,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
+      "position": "verse_end",
+      "preceding_word_id": "36HSQ",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 12
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Zeph.2.15#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Zeph",
+      "chapter": 2,
+      "verse": 15,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
+      "position": "verse_end",
+      "preceding_word_id": "36brh",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 25
+    },
+    {
+      "id": "WLC@3d15126fb1ef:Zeph.3.13#1:setumah",
+      "witness": "OSHB_WLC",
+      "source_version": "3d15126fb1ef74867fc1434be1942e837932691f",
+      "book": "Zeph",
+      "chapter": 3,
+      "verse": 13,
+      "type": "setumah",
+      "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
+      "position": "verse_end",
+      "preceding_word_id": "36CVM",
+      "following_word_id": null,
+      "after_sof_pasuq": true,
+      "source_child_index": 24
+    }
+  ],
+  "graphic_signs": [],
+  "legacyIndexes": {
+    "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",
+    "petuchot": [],
+    "setumot": [
+      "1:9",
+      "1:18",
+      "2:4",
+      "2:15",
+      "3:13"
+    ]
   }
 }
