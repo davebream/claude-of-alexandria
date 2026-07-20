@@ -2,8 +2,8 @@
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.1.0
-changed: "2026-07-17"
+version: 1.1.1
+changed: "2026-07-20"
 ---
 
 # Biblical Text Segmentation
@@ -379,7 +379,7 @@ Rating: ★★★★★ Excellent → ★☆☆☆☆ Not Recommended (alternati
 **For OT:**
 ```markdown
 ## Data Sources
-**Hebrew Text:** Sefaria-Export (Masoretic Text, Leningrad Codex)
+**Hebrew Text:** OpenScriptures Hebrew Bible / Westminster Leningrad Codex (pinned commit)
 - Parashah divisions (פ petuchot / ס setumah) consulted for boundary validation
 **Methodology:** OT Narrative: Masoretic paragraphs + scene changes + toledot
 ```

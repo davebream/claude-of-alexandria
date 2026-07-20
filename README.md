@@ -225,7 +225,7 @@ Skills use historical-grammatical method with explicit theological guardrails:
 
 ## Acknowledgments
 
-**Linguistic foundations:** Stephen H. Levinsohn (Greek NT discourse analysis) and the Sefaria Project (Masoretic Text paragraph data).
+**Linguistic foundations:** Stephen H. Levinsohn (Greek NT discourse analysis) and the OpenScriptures Hebrew Bible (Masoretic Text paragraph data, Westminster Leningrad Codex).
 
 **Hermeneutical framework:** Historical-grammatical method. The Alexandrian school gave us systematic textual criticism. The Antiochene school insisted interpretation stay anchored to the historical sense. The Reformers inherited both. So do we.
 
