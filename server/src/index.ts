@@ -560,7 +560,7 @@ const CORS_HEADERS = {
 // and are left for the platform's TTL/LRU reaping. The 24h `max-age=86400`
 // TTL below is therefore also the upper bound on staleness: even without a
 // version bump, any entry self-expires within 24h of being written.
-const DEFAULT_CACHE_VERSION = 'v6';
+const DEFAULT_CACHE_VERSION = 'v7';
 
 // Per-request context: the ExecutionContext (used to schedule non-blocking
 // cache writes via waitUntil) and the resolved cache-version namespace.
