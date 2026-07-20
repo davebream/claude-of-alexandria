@@ -64,11 +64,15 @@ const DESC_PARAGRAPHS = `Query Masoretic paragraph markers (petuchah and setumah
 
 Petuchah (open) and setumah (closed) markers are ancient paragraph divisions in the Hebrew Masoretic text that indicate structural breaks in the narrative or discourse. OT books only.
 
+Anchor semantics: a marker with position "verse_end" means the paragraph break falls AFTER that verse. A marker with position "within_verse" sits between two words mid-verse and supports NO verse-level boundary claim — do not treat it as confirming a break after the verse. graphic_signs are scribal annotations (e.g. reversed nun, suspended/large/small letters), not paragraph divisions. An empty markers/graphic_signs result means only "no explicit event recorded at this anchor" (see evidence_scope) — it is not evidence that no boundary exists there.
+
+Chapter/verse anchors follow OSHB Hebrew/Masoretic versification, not English versification — some OT books run further in Hebrew numbering than in English (e.g. Joel and Malachi). Do not assume a returned chapter/verse aligns 1:1 with an English-numbered verses table.
+
 Args:
   - book (string, required): OT book name in any common form (e.g., "Genesis", "Gen", "Psalms", "Isa")
   - chapter_range (string, optional): "3" for single chapter, "3-7" for range, omit for entire book
 
-Returns: { book, chapter_range, markers: [{chapter, verse, type}], summary: {petuchot, setumot, total} }
+Returns: { book, chapter_range, markers: [{chapter, verse, type, ordinal_in_verse, position, lexical_position}], graphic_signs: [{id, chapter, verse, kind, subtype, interpretive_status, is_paragraph_separation}], evidence_scope: {...}, summary: {petuchot, setumot, total} }
 
 Examples:
   - All markers in Genesis 1-3: book="Genesis", chapter_range="1-3"
@@ -560,7 +564,7 @@ const CORS_HEADERS = {
 // and are left for the platform's TTL/LRU reaping. The 24h `max-age=86400`
 // TTL below is therefore also the upper bound on staleness: even without a
 // version bump, any entry self-expires within 24h of being written.
-const DEFAULT_CACHE_VERSION = 'v6';
+const DEFAULT_CACHE_VERSION = 'v7';
 
 // Per-request context: the ExecutionContext (used to schedule non-blocking
 // cache writes via waitUntil) and the resolved cache-version namespace.

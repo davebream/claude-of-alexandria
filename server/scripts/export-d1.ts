@@ -48,13 +48,16 @@ async function main() {
   // 2. Export small tables to data.sql
   const smallTables = [
     { name: 'discourse_features', cols: ['id', 'book', 'chapter', 'verse', 'feature', 'feature_description', 'word'] },
-    { name: 'paragraph_markers', cols: ['id', 'book', 'chapter', 'verse', 'marker_type'] },
     { name: 'vocabulary', cols: ['id', 'book', 'testament', 'chapter', 'lemma', 'frequency'] },
     { name: 'vocabulary_clusters', cols: ['id', 'book', 'testament', 'lemma', 'concentration', 'chapter_start', 'chapter_end', 'total_occurrences'] },
     { name: 'thematic_keywords', cols: ['theme', 'lemma', 'testament'] },
   ];
 
-  let dataSql = '-- Small tables (discourse_features, paragraph_markers, vocabulary, vocabulary_clusters, thematic_keywords)\n';
+  // The OT marker table (see server/migrations/0022 + 0023) is intentionally
+  // excluded from smallTables: it is migration-sourced, not reseed-sourced.
+  // Including it here would let a `seed-d1.sh` reseed silently revert the
+  // corrected corpus — see CLAUDE.md's "A reseed can silently wipe a backfill" note.
+  let dataSql = '-- Small tables (discourse_features, vocabulary, vocabulary_clusters, thematic_keywords)\n';
 
   for (const { name, cols } of smallTables) {
     const stmt = db.prepare(`SELECT ${cols.join(', ')} FROM ${name}`);

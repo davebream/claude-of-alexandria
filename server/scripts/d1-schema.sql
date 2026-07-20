@@ -10,6 +10,13 @@ CREATE TABLE IF NOT EXISTS discourse_features (
 CREATE INDEX IF NOT EXISTS idx_discourse_book ON discourse_features(book, chapter, verse);
 CREATE INDEX IF NOT EXISTS idx_discourse_feature ON discourse_features(feature);
 
+-- paragraph_markers below is a stale mirror kept for historical schema reference
+-- only. It predates the 5-column expansion (ordinal_in_verse, position,
+-- lexical_position, preceding_word_id, following_word_id) and the graphic_signs
+-- table added by migrations 0022/0023 — those migrations are the source of truth
+-- for the applied schema, not this file. Do not hand-edit this block to "fix" it;
+-- see server/migrations/0022_expand_paragraph_markers.sql and
+-- server/migrations/0023_repair_paragraph_markers_data.sql.
 CREATE TABLE IF NOT EXISTS paragraph_markers (
   id INTEGER PRIMARY KEY,
   book TEXT NOT NULL,
