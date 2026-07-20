@@ -737,6 +737,84 @@ def validate_corpus(total_markers: int) -> None:
         )
 
 
+# ─── Emission (C4) ───────────────────────────────────────────────────────────
+
+# Every provenance string below is built from module constants only — never
+# from __file__, os.getcwd(), or any environment introspection. This is a
+# public GPL-3.0 repository: a contributor's absolute path stamped into 39
+# committed files would put a private path into permanent history.
+LICENSES = {
+    "biblical_text": "Public domain (Westminster Leningrad Codex)",
+    "source_markup": "CC BY 4.0 (OpenScriptures Hebrew Bible)",
+    "derived_metadata": "CC BY 4.0 (inherits OSHB attribution)",
+    "extraction_code": "GPL-3.0-or-later",
+}
+
+# Why the verse-reference arrays are nested rather than top-level siblings.
+LEGACY_INDEX_COMMENT = (
+    "Verse-reference indexes of marker occurrences. INSUFFICIENT for "
+    "determining exact boundary position: two markers in one verse collapse to "
+    "one entry per type, and an intra-verse marker is indistinguishable from a "
+    "verse-final one. Must NOT be consumed by pericope or segmentation logic — "
+    "use `markers` and its `position` field. Derived from `markers`; retained "
+    "only for the pre-existing loader contract."
+)
+
+
+def render_book(book: str, events: list, verse_count: int) -> str:
+    """Render one book's marker dataset as schema-v2 JSON.
+
+    `markers` is the CANONICAL representation: an ordered list of positioned
+    events, one per source marker node. The verse-reference arrays are demoted
+    into `legacyIndexes`.
+
+    The nesting is the point, not decoration. As top-level siblings the arrays
+    read as co-equal to `markers`, so a new consumer reaches for the familiar
+    `petuchot` and silently gets the ambiguous view — a correct extractor
+    feeding an incorrect boundary model. Nesting makes the demotion visible at
+    the call site.
+
+    Arrays are document-order projections of `events`, never materialized from
+    a set: PYTHONHASHSEED randomizes list(set(...)) per process and would flap
+    the drift check. Repeats are preserved; deduping would discard 29 genuine
+    markers corpus-wide.
+    """
+    payload = {
+        "schema_version": 2,
+        "book": book,
+        "_metadata": {
+            "witness": f"WLC/OSHB@{COMMIT_SHA}",
+            "source": "OpenScriptures Hebrew Bible (morphhb), wlc/",
+            "marker_count": len(events),
+            "verse_count": verse_count,
+            # NO book-level `position` key. A single "after" claim is false for
+            # the 90 corpus markers that sit within a verse; position is
+            # per-marker and lives on each event.
+            "licenses": dict(LICENSES),
+        },
+        "markers": events,
+        "legacyIndexes": {
+            "_comment": LEGACY_INDEX_COMMENT,
+            "petuchot": [
+                f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "petuchah"
+            ],
+            "setumot": [
+                f"{e['chapter']}:{e['verse']}" for e in events if e["type"] == "setumah"
+            ],
+        },
+    }
+    if not events:
+        payload["_metadata"]["marker_layer_absent"] = (
+            f"{book} carries no paragraph-marker layer in this witness. This is "
+            f"an absence of the instrument, not evidence against any proposed "
+            f"boundary: a consumer must report 'this book has no marker layer', "
+            f"never 'no marker found at X'."
+        )
+    # No trailing newline — pinned against the pre-existing files, so a later
+    # print(json.dumps(...)) variant cannot silently rewrite all 39.
+    return json.dumps(payload, indent=2, ensure_ascii=False)
+
+
 # ─── Density reporting (C3) — an observable, never a gate ────────────────────
 #
 # The 0.15 ceiling / 0.02 floor were RETIRED. Genuine densities span 0.0 (Ps,

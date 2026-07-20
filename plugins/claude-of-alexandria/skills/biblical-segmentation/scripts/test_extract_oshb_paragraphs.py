@@ -40,6 +40,16 @@ implementation and confirming this suite exits non-zero.
 | Refactor raw counter onto ElementTree      | raw-path-never-parses test              |
 | Reinstate the multi-chapter floor          | Ruth single-marker fence                |
 | Widen or disable the corpus band           | explicit band tests                     |
+| Classify position from sof-pasuq           | constructed divergence fixture          |
+| Force all positions to verse_end           | semantic position fixtures              |
+| Erase every following_word_id              | position/anchor agreement               |
+| Sort markers by type not document order    | document-order invariant                |
+| Promote legacy arrays to top-level         | legacyIndexes nesting test              |
+| Reinstate book-level position:"after"      | no-book-level-position test             |
+| Dedupe the legacy arrays                   | faithful-repeat projection test         |
+| Add a trailing newline                     | byte-exact output test                  |
+| Stamp cwd into provenance                  | no-local-paths test                     |
+| Reintroduce a density gate                 | density-never-raises tests              |
 
 WHEN ADDING A MUTATION: confirm it genuinely changes behaviour before trusting
 a "caught" result. A mutation that never fires (e.g. a guard keyed to a value
@@ -52,6 +62,7 @@ import contextlib
 import hashlib
 import importlib.util
 import io
+import json
 import sys
 import tempfile
 import unittest
@@ -882,6 +893,85 @@ class TestSourceOutputBijection(unittest.TestCase):
         with self.assertRaises(Exception) as ctx:
             oshb.validate_bijection("Neh", [{"id": "x"}, {"id": "x"}], {"x-pe": 0, "x-samekh": 2})
         self.assertIn("Neh", str(ctx.exception))
+
+
+class TestRenderBook(unittest.TestCase):
+    """Emission: `markers` is canonical, the verse arrays are demoted."""
+
+    def _events(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="2Sam.16.13">'
+                '<w id="wA" lemma="1">a</w><seg type="x-samekh">ס</seg>'
+                '<w id="wB" lemma="2">b</w><seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-pe">פ</seg>'
+                "</verse>",
+            )
+            return oshb.extract_marker_events(path)
+
+    def test_markers_is_canonical_and_legacy_arrays_are_nested(self):
+        out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        self.assertIn("markers", out)
+        self.assertEqual(len(out["markers"]), 2)
+        # The demotion: NOT top-level siblings.
+        self.assertNotIn("petuchot", out)
+        self.assertNotIn("setumot", out)
+        self.assertIn("legacyIndexes", out)
+        self.assertEqual(out["legacyIndexes"]["petuchot"], ["16:13"])
+        self.assertEqual(out["legacyIndexes"]["setumot"], ["16:13"])
+
+    def test_legacy_indexes_carry_an_explicit_insufficiency_warning(self):
+        out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        note = out["legacyIndexes"]["_comment"].lower()
+        self.assertIn("insufficient", note)
+        self.assertIn("position", note)
+
+    def test_no_book_level_position_key(self):
+        # The refuted flat model must not reappear in _metadata.
+        out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        self.assertNotIn("position", out["_metadata"])
+
+    def test_metadata_witness_and_four_layer_licenses(self):
+        out = json.loads(oshb.render_book("2 Samuel", self._events(), verse_count=10))
+        self.assertTrue(out["_metadata"]["witness"].startswith("WLC/OSHB@"))
+        self.assertEqual(out["schema_version"], 2)
+        self.assertEqual(
+            set(out["_metadata"]["licenses"]),
+            {"biblical_text", "source_markup", "derived_metadata", "extraction_code"},
+        )
+
+    def test_no_trailing_newline(self):
+        s = oshb.render_book("2 Samuel", self._events(), verse_count=10)
+        self.assertFalse(s.endswith("\n"))
+
+    def test_document_order_not_lexicographic(self):
+        # A sorted() refactor would put "10:1" before "2:1".
+        evs = [
+            {"id": "a", "book": "X", "chapter": 2, "verse": 1, "type": "petuchah",
+             "ordinal_in_verse": 1, "position": "verse_end", "preceding_word_id": "w",
+             "following_word_id": None, "after_sof_pasuq": True, "source_child_index": 1},
+            {"id": "b", "book": "X", "chapter": 10, "verse": 1, "type": "petuchah",
+             "ordinal_in_verse": 1, "position": "verse_end", "preceding_word_id": "w",
+             "following_word_id": None, "after_sof_pasuq": True, "source_child_index": 1},
+        ]
+        out = json.loads(oshb.render_book("X", evs, verse_count=50))
+        self.assertEqual(out["legacyIndexes"]["petuchot"], ["2:1", "10:1"])
+
+    def test_round_trip_preserves_type_anchor_ordinal_and_position(self):
+        evs = self._events()
+        out = json.loads(oshb.render_book("2 Samuel", evs, verse_count=10))
+        for original, emitted in zip(evs, out["markers"]):
+            for k in ("type", "chapter", "verse", "ordinal_in_verse", "position"):
+                self.assertEqual(original[k], emitted[k])
+
+    def test_provenance_contains_no_local_paths(self):
+        # Public GPL-3.0 repo: a contributor's absolute path stamped into 39
+        # committed files would leak a private path into permanent history.
+        s = oshb.render_book("2 Samuel", self._events(), verse_count=10)
+        self.assertNotIn("/Users/", s)
+        self.assertNotIn("/home/", s)
+        self.assertNotIn(str(Path.cwd()), s)
 
 
 class TestDensityReporting(unittest.TestCase):
