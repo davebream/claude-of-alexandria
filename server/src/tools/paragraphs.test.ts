@@ -97,6 +97,17 @@ describe('query_paragraph_breaks — raw corpus counts (AC-1 non-vacuous)', () =
     expect(rawCountWhere('paragraph_markers', 'book = ?', ['ruth'])).toBe(1);
     expect(rawCount('graphic_signs')).toBe(20);
   });
+
+  it('the corpus-count guard fails under mutation (AC-1 anchor is non-vacuous)', () => {
+    try {
+      db.run(`DELETE FROM paragraph_markers WHERE book = 'genesis'`);
+      expect(rawCount('paragraph_markers')).not.toBe(3162);
+      expect(rawCountWhere('paragraph_markers', 'book = ?', ['genesis'])).not.toBe(92);
+    } finally {
+      // Re-apply 0023 (its own DELETE-then-INSERT restores both tables to the corrected corpus).
+      db.run(readFileSync(path.join(MIGRATIONS_DIR, '0023_repair_paragraph_markers_data.sql'), 'utf-8'));
+    }
+  });
 });
 
 describe('query_paragraph_breaks — Genesis chapter 1 (AC-2)', () => {
@@ -111,11 +122,14 @@ describe('query_paragraph_breaks — Genesis chapter 1 (AC-2)', () => {
   });
 
   it('fails under mutation of a marker verse', async () => {
-    db.run(`UPDATE paragraph_markers SET verse = 6 WHERE book = 'genesis' AND chapter = 1 AND verse = 5`);
-    const result = await queryParagraphBreaks({ book: 'Genesis', chapter_range: '1' } as any);
-    const body = JSON.parse(result.content[0].text as string);
-    expect(body.markers.map((m: any) => m.verse)).not.toEqual([5, 8, 13, 19, 23, 31]);
-    db.run(`UPDATE paragraph_markers SET verse = 5 WHERE book = 'genesis' AND chapter = 1 AND verse = 6`);
+    try {
+      db.run(`UPDATE paragraph_markers SET verse = 6 WHERE book = 'genesis' AND chapter = 1 AND verse = 5`);
+      const result = await queryParagraphBreaks({ book: 'Genesis', chapter_range: '1' } as any);
+      const body = JSON.parse(result.content[0].text as string);
+      expect(body.markers.map((m: any) => m.verse)).not.toEqual([5, 8, 13, 19, 23, 31]);
+    } finally {
+      db.run(`UPDATE paragraph_markers SET verse = 5 WHERE book = 'genesis' AND chapter = 1 AND verse = 6`);
+    }
   });
 });
 
@@ -129,11 +143,14 @@ describe('query_paragraph_breaks — Ruth (AC-2)', () => {
   });
 
   it('fails under mutation dropping the Ruth marker', async () => {
-    db.run(`UPDATE paragraph_markers SET book = 'ruth_mutated' WHERE book = 'ruth'`);
-    const result = await queryParagraphBreaks({ book: 'Ruth' } as any);
-    const body = JSON.parse(result.content[0].text as string);
-    expect(body.markers).toHaveLength(0);
-    db.run(`UPDATE paragraph_markers SET book = 'ruth' WHERE book = 'ruth_mutated'`);
+    try {
+      db.run(`UPDATE paragraph_markers SET book = 'ruth_mutated' WHERE book = 'ruth'`);
+      const result = await queryParagraphBreaks({ book: 'Ruth' } as any);
+      const body = JSON.parse(result.content[0].text as string);
+      expect(body.markers).toHaveLength(0);
+    } finally {
+      db.run(`UPDATE paragraph_markers SET book = 'ruth' WHERE book = 'ruth_mutated'`);
+    }
   });
 });
 
@@ -153,17 +170,20 @@ describe('query_paragraph_breaks — 2 Samuel 16:13 (AC-1 distinctness)', () => 
   });
 
   it('fails under mutation flipping the setumah position to verse_end', async () => {
-    db.run(
-      `UPDATE paragraph_markers SET position = 'verse_end' WHERE book = '2_samuel' AND chapter = 16 AND verse = 13 AND ordinal_in_verse = 1`
-    );
-    const result = await queryParagraphBreaks({ book: '2 Samuel', chapter_range: '16' } as any);
-    const body = JSON.parse(result.content[0].text as string);
-    const at13 = body.markers.filter((m: any) => m.verse === 13);
-    const positions = at13.map((m: any) => m.position).sort();
-    expect(positions).not.toEqual(['verse_end', 'within_verse'].sort());
-    db.run(
-      `UPDATE paragraph_markers SET position = 'within_verse' WHERE book = '2_samuel' AND chapter = 16 AND verse = 13 AND ordinal_in_verse = 1`
-    );
+    try {
+      db.run(
+        `UPDATE paragraph_markers SET position = 'verse_end' WHERE book = '2_samuel' AND chapter = 16 AND verse = 13 AND ordinal_in_verse = 1`
+      );
+      const result = await queryParagraphBreaks({ book: '2 Samuel', chapter_range: '16' } as any);
+      const body = JSON.parse(result.content[0].text as string);
+      const at13 = body.markers.filter((m: any) => m.verse === 13);
+      const positions = at13.map((m: any) => m.position).sort();
+      expect(positions).not.toEqual(['verse_end', 'within_verse'].sort());
+    } finally {
+      db.run(
+        `UPDATE paragraph_markers SET position = 'within_verse' WHERE book = '2_samuel' AND chapter = 16 AND verse = 13 AND ordinal_in_verse = 1`
+      );
+    }
   });
 });
 
@@ -174,6 +194,17 @@ describe('query_paragraph_breaks — Psalms (zero markers, non-zero graphic_sign
     expect(body.markers).toEqual([]);
     expect(body.graphic_signs.length).toBeGreaterThan(0);
     expect(body.evidence_scope).toBeDefined();
+  });
+
+  it('fails under mutation removing the Psalms graphic_signs', async () => {
+    try {
+      db.run(`UPDATE graphic_signs SET book = 'psalms_mutated' WHERE book = 'psalms'`);
+      const result = await queryParagraphBreaks({ book: 'Psalms' } as any);
+      const body = JSON.parse(result.content[0].text as string);
+      expect(body.graphic_signs.length).toBe(0);
+    } finally {
+      db.run(`UPDATE graphic_signs SET book = 'psalms' WHERE book = 'psalms_mutated'`);
+    }
   });
 });
 
@@ -205,6 +236,17 @@ describe('query_paragraph_breaks — versification namespace guard', () => {
     for (const m of body.markers) {
       expect(m.chapter).toBeGreaterThanOrEqual(1);
       expect(m.verse).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it('fails under mutation collapsing the Hebrew Joel chapter 4 anchors', async () => {
+    try {
+      db.run(`DELETE FROM paragraph_markers WHERE book = 'joel' AND chapter = 4`);
+      const result = await queryParagraphBreaks({ book: 'Joel' } as any);
+      const body = JSON.parse(result.content[0].text as string);
+      expect(body.markers.some((m: any) => m.chapter === 4)).toBe(false);
+    } finally {
+      db.run(readFileSync(path.join(MIGRATIONS_DIR, '0023_repair_paragraph_markers_data.sql'), 'utf-8'));
     }
   });
 });
