@@ -966,6 +966,68 @@ class TestPositionalWordSelection(unittest.TestCase):
             self.assertEqual(e["lexical_position"], pairs[e["position"]])
 
 
+class TestGraphicSignChannel(unittest.TestCase):
+    """Special scribal signs, kept off the P/S channel.
+
+    These exist because discarding them produced a real false negative:
+    Numbers 10:35-36 is bracketed by two reversed nuns in this witness, yet a
+    P/S-only dataset reported it as having "no manuscript support".
+    """
+
+    CACHE = None
+
+    @classmethod
+    def setUpClass(cls):
+        cls.CACHE = oshb.repo_root() / ".cache" / "oshb"
+        if not (cls.CACHE / "Num.xml").exists():
+            raise unittest.SkipTest("corpus cache absent")
+
+    def test_signs_are_never_paragraph_separations(self):
+        signs = oshb.extract_graphic_signs(self.CACHE / "Num.xml")
+        self.assertTrue(signs)
+        for s in signs:
+            self.assertFalse(s["is_paragraph_separation"])
+            self.assertNotIn(s["subtype"], ("petuchah", "setumah"))
+
+    def test_numbers_reversed_nuns_bracket_10_35_36(self):
+        nuns = [
+            s
+            for s in oshb.extract_graphic_signs(self.CACHE / "Num.xml")
+            if s["subtype"] == "reversed_nun"
+        ]
+        self.assertEqual([(s["chapter"], s["verse"]) for s in nuns], [(10, 34), (10, 36)])
+        for s in nuns:
+            self.assertEqual(s["interpretive_status"], "traditional_delimitation")
+
+    def test_psalm_107_nuns_are_marked_function_uncertain(self):
+        # Manuscripts disagree on their placement and no consensus explanation
+        # exists, so no boundary may be derived from them.
+        nuns = [
+            s
+            for s in oshb.extract_graphic_signs(self.CACHE / "Ps.xml")
+            if s["subtype"] == "reversed_nun"
+        ]
+        self.assertEqual(len(nuns), 7)
+        for s in nuns:
+            self.assertEqual(s["interpretive_status"], "function_uncertain")
+
+    def test_signs_do_not_enter_the_marker_channel(self):
+        # The invariant that keeps the two channels apart: Numbers has signs
+        # AND markers, and the counts must not contaminate each other.
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            markers = oshb.extract_marker_events(self.CACHE / "Num.xml")
+        raw = oshb.count_marker_segs_raw(self.CACHE / "Num.xml")
+        self.assertEqual(len(markers), raw["x-pe"] + raw["x-samekh"])
+
+    def test_corpus_sign_total_is_pinned(self):
+        total = sum(
+            len(oshb.extract_graphic_signs(self.CACHE / f"{c}.xml"))
+            for c in oshb.OT_BOOKS.values()
+        )
+        self.assertEqual(total, 20, "9 reversed-nun + 4 large + 4 suspended + 3 small")
+
+
 class TestSourceOutputBijection(unittest.TestCase):
     """The central invariant, replacing distribution heuristics.
 

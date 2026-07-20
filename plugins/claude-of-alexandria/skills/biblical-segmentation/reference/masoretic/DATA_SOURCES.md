@@ -45,9 +45,19 @@ intra-verse cases below.
 Manuscript traditions genuinely disagree about paragraph divisions. This
 dataset follows the **Leningrad Codex as encoded by OSHB**.
 
-Genesis is the standard illustration: **OSHB/Leningrad gives 42 petuchot and 50
-setumot (92 total), where the Maimonides/Aleppo tradition gives 43 and 48 (91
-total).** Both are correct for their own witness. A dataset that does not say
+Genesis is the standard illustration:
+
+- **OSHB/WLC revision `3d15126f`:** 42 petuchot + 50 setumot = **92** explicit
+  P/S events.
+- **Maimonides' list, traditionally associated with the Aleppo–Ben Asher
+  codex:** 43 open + 48 closed = **91**.
+
+Both are correct for their own witness. The second figure is confirmed directly
+in Maimonides (*Mishneh Torah*, Laws of Tefillin, Mezuzah and Torah Scrolls 8),
+who states he relied on the Ben Asher codex then in Egypt. It should be labelled
+a **Maimonidean / reconstructed Aleppo-tradition** figure rather than a count
+from extant Aleppo folios: almost all of the Aleppo Codex's Pentateuch is lost,
+so no direct Genesis count can be made from it today. A dataset that does not say
 which tradition it follows makes every downstream "confirmed by manuscript"
 claim unfalsifiable, because any count can be attributed to some other witness.
 
@@ -80,7 +90,7 @@ parser literally observed; `position` is the convenience interpretation of it.
 | `lexical_position` (observed) | `position` (derived) | Supports "the passage ends after this verse"? |
 | --- | --- | --- |
 | `after_final_word` | `verse_end` | **Yes** |
-| `between_words` | `within_verse` | **No** — it marks a subdivision inside the verse |
+| `between_words` | `within_verse` | **No** — it directly attests an internal P/S-type *graphic separation* at that token anchor |
 | `before_first_word` | `verse_start` | No |
 
 The distinction is small but real: `after_final_word` is exactly what was seen,
@@ -111,8 +121,21 @@ provenance, and is not the classifier.
 
 Consuming a `within_verse` marker as a verse boundary certifies a claim the
 manuscript does not make. 2 Samuel 16:13 is the clearest case: it carries a
-setumah mid-verse *and* a petuchah at the verse end — two boundaries at two
-positions, not one boundary bearing two types.
+setumah mid-verse *and* a petuchah at the verse end.
+
+These are **two distinct events of different graphic type at two token
+anchors** — not one boundary classified two ways. Note the limit of that
+statement: petuchah and setumah are different ways of realising blank-space
+division, and the difference is one of *graphic form*. It is not a numeric
+scale of literary strength, so this dataset does not describe them as carrying
+different "weight".
+
+Three verses show this shape (2 Sam 16:13, 2 Chr 5:1, Jer 38:28), and it is the
+recognised category **pisqa be-emtsa pasuq** — a section space in mid-verse.
+**Jer 38:28 needs a witness caveat:** presentations following the
+Aleppo-oriented tradition show the internal setumah but treat the verse-final
+position differently. That does not invalidate the OSHB/WLC record; it is
+precisely why every figure here is witness-scoped.
 
 ## Multiple markers in one verse
 
@@ -190,6 +213,51 @@ The two zeroes should not be read identically:
 Both files carry `_metadata.marker_layer_absent`, a `feature_coverage` block,
 and the same `evidence_scope` policy every other book carries — see below.
 
+## Special scribal signs — a separate channel
+
+Alongside `markers`, each file carries a **`graphic_signs`** array. These are
+source-attested graphic facts that are **not** paragraph separations, kept on
+their own channel so they can never be counted as P/S evidence. Twenty occur in
+the corpus.
+
+| `subtype` | Count | Notes |
+| --- | ---: | --- |
+| `reversed_nun` | 9 | Num 10:34 and 10:36; Ps 107:20–25 and 107:39 |
+| `large` | 4 | special letter form |
+| `suspended` | 4 | special letter form |
+| `small` | 3 | special letter form |
+
+Every event carries an `interpretive_status`, because the evidence is genuinely
+uneven:
+
+- **`traditional_delimitation`** — the Numbers pair. The reversed nuns at
+  Num 10:34 and 10:36 are a recognised matched pair (*simaniyyot*) bracketing
+  10:35–36. Rabbinic tradition reads them as delimiting the passage; modern
+  scholarship often connects them with ancient critical signs marking displaced
+  or parenthetical text. The signs' presence is not in dispute even where their
+  reason is.
+- **`function_uncertain`** — the Psalm 107 signs. Manuscripts agree much less
+  about their placement and no consensus explanation exists. They are emitted
+  with exact positions and **no** derived boundary.
+
+**Why this channel exists.** Discarding these signs produced a real false
+negative. Numbers 10:35–36 is bracketed by two scribal signs in this witness,
+yet a P/S-only dataset reported it as having *no manuscript support*. That
+phrasing is wrong: what the passage lacks is an explicit **P/S event**, not
+graphic evidence.
+
+A consumer must therefore say:
+
+> No explicit P/S event delimits this range; two reversed-nun scribal signs
+> bracket Numbers 10:35–36.
+
+and never:
+
+> No manuscript support.
+
+A tool that consults only the P/S channel must say so explicitly rather than
+generalising to the manuscript.
+
 ## Evidence semantics
 
 This dataset exhaustively extracts the explicit `x-pe` and `x-samekh` elements
@@ -225,7 +293,7 @@ markers — precisely the inference this section forbids.
 Per-book `source_limitations` explain *why* a count is what it is. They never
 change the inference policy.
 
-## Marker density varies by genre — it is not a correctness signal
+## Marker density varies by text form — it is not a correctness signal
 
 Observed density spans **0.000 to 0.578 markers per verse**, and **16 of 39
 books exceed 0.15**. Corpus mean is 0.136.
@@ -243,15 +311,35 @@ books exceed 0.15**. Corpus mean is 0.136.
 Density is reported by the extractor but never gates it. No threshold separates
 genuine data from corrupt: genuine Lamentations sits inside the range that a
 previous analysis treated as diagnostic of corruption. Lamentations is a
-valuable structural check — its marker count tracks the 22-letter acrostic
-(chapters 1–4 carry 22 each, chapter 5 carries 1), which makes accidental
-correctness very unlikely. It is supporting evidence rather than the final
-oracle: a defective transformation could preserve per-chapter counts while
-misplacing or mistyping individual events. The strongest guarantee is the
-source-node-to-output-event bijection described under Verifying.
+**structure-sensitive regression invariant for the pinned OSHB/WLC source** —
+its marker count tracks the 22-letter acrostic (chapters 1–4 carry 22 each,
+chapter 5, which is not alphabetically acrostic, carries 1). The
+correspondence is deliberate rather than accidental, and it guards strongly
+against indiscriminate or misplaced extraction.
+
+It is **not independent witness verification.** The expected pattern is derived
+from the same Leningrad tradition being tested, and other Masoretic traditions
+divide Lamentations 3 differently — the Aleppo reconstruction is commonly
+reported as placing a setumah between each of its 66 individual verses rather
+than each 3-verse letter group. A defective transformation could also preserve
+per-chapter counts while misplacing individual events. The strongest guarantee
+remains the source-node-to-output-event bijection.
+
+Density is **text-form-, layout-, discourse-function- and witness-dependent**.
+Broad genre contributes but does not explain it: the high-density books are not
+one genre. Lamentations is acrostic/strophic; Ezra and Nehemiah mix narrative
+with documents, registers and building assignments; 1 Chronicles is largely
+genealogy and catalogue. What they share is textual forms that divide naturally
+into many short graphic units — alphabetic strophes, genealogical entries,
+catalogues, administrative clauses, short formulaic records.
 
 The practical consequence for interpretation: in a high-density book a nearby
 marker carries little information, while in a sparse book it carries a lot.
+
+Density remains useful as an **anomaly signal against this pinned source** (the
+pre-rebuild Genesis figure of 1,034 against an expected 92 is an obvious one).
+It is not a correctness criterion — that role belongs to the source-to-output
+bijection.
 
 ## File format
 
@@ -413,6 +501,13 @@ and this dataset does not settle them:
 - that the absence of a marker weakens a proposed boundary
 - that a marker reflects an authorial rather than a scribal division
 - that this source exhaustively represents every relevant graphic division
+
+The one-sentence description of what this dataset is:
+
+> A complete, position-aware extraction of explicit `x-pe` and `x-samekh`
+> graphic-separation events from one pinned OSHB/WLC electronic witness —
+> suitable as witness-specific supporting evidence, not as a self-interpreting
+> map of literary units.
 
 The summary formulation:
 

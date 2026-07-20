@@ -18,10 +18,18 @@ Output:
 
 IMPORTANT for consumers — `position` is not decoration:
     Only `position == "verse_end"` supports a claim that a passage ends after
-    that verse. 90 of the 3,162 corpus markers sit WITHIN a verse; treating one
-    of those as a verse boundary certifies a claim the manuscript does not make.
-    A `within_verse` marker attests an internal subdivision — real evidence,
-    but for a different claim.
+    that verse. 90 of the 3,162 corpus markers sit WITHIN a verse.
+
+    A `within_verse` marker directly attests an internal P/S-type GRAPHIC
+    SEPARATION at that exact token anchor — the recognized Masoretic category
+    pisqa be-emtsa pasuq, a section space in mid-verse. It is real evidence,
+    for a different claim.
+
+    It must NEVER be snapped, rounded or transferred to the nearest verse
+    edge. An internal marker may be reported as contextually relevant ("the
+    witness contains an internal graphic break within this verse"), but the
+    verdict must still read "no explicit P/S event is aligned with the proposed
+    verse-level boundary".
 """
 
 

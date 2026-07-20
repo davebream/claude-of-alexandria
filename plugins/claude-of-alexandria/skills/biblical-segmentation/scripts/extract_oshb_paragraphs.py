@@ -438,6 +438,67 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
     return events
 
 
+# Special scribal signs and letter forms. NOT paragraph spacing, and emitted
+# on a separate channel so they can never be read as P/S boundary evidence.
+#
+# They exist because discarding them produced a real false negative: the
+# reversed nuns at Num.10.34 and Num.10.36 are a recognized pair of signs
+# (simaniyyot) bracketing 10:35-36, so reporting that passage as having "no
+# manuscript support" was false — what it lacks is a P/S event, not graphic
+# evidence.
+GRAPHIC_SIGN_TYPES = {
+    "x-reversednun": ("special_scribal_sign", "reversed_nun"),
+    "x-large": ("special_letter_form", "large"),
+    "x-small": ("special_letter_form", "small"),
+    "x-suspended": ("special_letter_form", "suspended"),
+}
+
+# Interpretive status per sign locus. Kept explicit because the evidence is
+# genuinely uneven: the Numbers pair is a traditional delimitation with a
+# well-attested bracketing function, while the Psalm 107 signs vary in
+# placement across manuscripts and have no consensus explanation.
+_REVERSED_NUN_STATUS = {
+    "Num": "traditional_delimitation",
+    "Ps": "function_uncertain",
+}
+
+
+def extract_graphic_signs(xml_path: Path) -> list:
+    """Special scribal signs and letter forms, as a channel of their own.
+
+    These are source-attested graphic facts. Their FUNCTION is not uniform and
+    is not asserted here: each event carries an `interpretive_status`, and none
+    of them is a paragraph-separation event.
+    """
+    book_label = xml_path.stem
+    root = ET.parse(xml_path).getroot()
+    signs = []
+    chapter = verse = None
+    for elem in root.iter():
+        tag = _local_tag(elem)
+        if tag == "verse" and elem.get("osisID"):
+            chapter, verse = parse_osis_id(elem.get("osisID"))
+        elif tag == "seg" and elem.get("type") in GRAPHIC_SIGN_TYPES:
+            kind, subtype = GRAPHIC_SIGN_TYPES[elem.get("type")]
+            status = (
+                _REVERSED_NUN_STATUS.get(book_label, "function_uncertain")
+                if subtype == "reversed_nun"
+                else "function_uncertain"
+            )
+            signs.append(
+                {
+                    "id": f"WLC@{COMMIT_SHA[:12]}:{book_label}.{chapter}.{verse}:{subtype}:{len(signs)}",
+                    "kind": kind,
+                    "subtype": subtype,
+                    "chapter": chapter,
+                    "verse": verse,
+                    "interpretive_status": status,
+                    "is_paragraph_separation": False,
+                }
+            )
+    return signs
+
+
 def extract_marker_events(xml_path: Path) -> list:
     """Walk an OSHB book in document order, emitting one event per marker node.
 
@@ -625,8 +686,11 @@ def validate_book(
     if both:
         print(
             f"NOTE: book {book!r}: {len(both)} verse(s) carry both a petuchah "
-            f"and a setumah: {sorted(both)[:5]}. Genuine in OSHB (3 corpus "
-            f"cases); reported, not an error.",
+            f"and a setumah: {sorted(both)[:5]}. These are TWO DISTINCT EVENTS "
+            f"OF DIFFERENT GRAPHIC TYPE at two token anchors — an internal "
+            f"setumah and a verse-final petuchah — not one boundary classified "
+            f"two ways, and not a claim about relative literary rank. Genuine "
+            f"in OSHB (3 corpus cases); reported, not an error.",
             file=sys.stderr,
         )
 
@@ -865,7 +929,7 @@ LEGACY_INDEX_COMMENT = (
 )
 
 
-def render_book(book: str, events: list, verse_count: int) -> str:
+def render_book(book: str, events: list, verse_count: int, graphic_signs: list = None) -> str:
     """Render one book's marker dataset as schema-v2 JSON.
 
     `markers` is the CANONICAL representation: an ordered list of positioned
@@ -928,6 +992,12 @@ def render_book(book: str, events: list, verse_count: int) -> str:
         "evidence_scope": dict(EVIDENCE_SCOPE),
         "source_limitations": _source_limitations(book, events),
         "markers": events,
+        # Separate channel. These are NOT paragraph separations and must never
+        # be counted as P/S evidence; each carries its own interpretive status.
+        # Their presence is why a consumer must say "no explicit P/S event"
+        # rather than "no manuscript support" — at Num 10:35-36 the latter
+        # would be false.
+        "graphic_signs": list(graphic_signs or []),
         "legacyIndexes": {
             "_comment": LEGACY_INDEX_COMMENT,
             "petuchot": [
@@ -1003,7 +1073,12 @@ def validate_all_then_write_all(
         dest = book_output_path(output_dir, b["name"])
         tmp = dest.with_suffix(".json.tmp")
         tmp.write_text(
-            render_book(b["name"], b["events"], verse_count=len(b["verse_ids"])),
+            render_book(
+                b["name"],
+                b["events"],
+                verse_count=len(b["verse_ids"]),
+                graphic_signs=b.get("graphic_signs"),
+            ),
             encoding="utf-8",
         )
         os.replace(tmp, dest)
@@ -1139,6 +1214,7 @@ def main() -> None:
                 "seg_type_counts": count_seg_types(xml_path),
                 "raw_counts": count_marker_segs_raw(xml_path),
                 "chapter_count": len(chapters),
+                "graphic_signs": extract_graphic_signs(xml_path),
             }
         )
         density_rows.append(book_density_row(code, len(events), len(verse_ids)))

@@ -1515,6 +1515,17 @@
       "source_child_index": 29
     }
   ],
+  "graphic_signs": [
+    {
+      "id": "WLC@3d15126fb1ef:Judg.18.30:suspended:0",
+      "kind": "special_letter_form",
+      "subtype": "suspended",
+      "chapter": 18,
+      "verse": 30,
+      "interpretive_status": "function_uncertain",
+      "is_paragraph_separation": false
+    }
+  ],
   "legacyIndexes": {
     "_comment": "Verse-reference indexes of marker occurrences. INSUFFICIENT for determining exact boundary position: two markers in one verse collapse to one entry per type, and an intra-verse marker is indistinguishable from a verse-final one. Must NOT be consumed by pericope or segmentation logic — use `markers` and its `position` field. Derived from `markers`; retained only for the pre-existing loader contract.",
     "petuchot": [
