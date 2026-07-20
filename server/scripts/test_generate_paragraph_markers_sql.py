@@ -88,13 +88,21 @@ class GeneratorTests(unittest.TestCase):
     # (b) never emit internal .book (OSIS) or top-level .book (display) —
     # only canonical-set values appear as the `book` column value.
     def test_b_every_emitted_book_is_in_canonical_ot_name_set(self):
-        for match in re.finditer(r"'([a-z0-9_]+)',\s*\d+,\s*\d+,\s*'", self.sql):
+        # Case-insensitive token class so a capitalized OSIS/display leak
+        # ('Gen', 'Song', '1Chr') is MATCHED and then caught by the canonical
+        # membership assertion — not silently skipped. Canonical names are
+        # lowercase, so any capitalized match fails assertIn.
+        match_count = 0
+        for match in re.finditer(r"'([A-Za-z0-9_]+)',\s*\d+,\s*\d+,\s*'", self.sql):
+            match_count += 1
             self.assertIn(
                 match.group(1),
                 CANONICAL_OT_NAMES,
                 f"emitted book '{match.group(1)}' is not a canonical OT name "
                 "(likely an internal OSIS or display-name leak)",
             )
+        # Guard against a vacuous pass: the corpus must yield book tokens.
+        self.assertGreater(match_count, 0, "no book tokens matched — regex or SQL shape changed")
         # explicit negative check for known internal/display leaks
         self.assertNotIn("'Gen',", self.sql, "leaked internal OSIS book code 'Gen'")
         self.assertNotIn("'Genesis',", self.sql, "leaked display book name 'Genesis'")
