@@ -156,7 +156,8 @@ tests:
 
   # =========================================================================
   # Scenario 6: OT Genre Detection — Genesis 22:1-4
-  # Narrative genre, not epistle logic; petuchah at v.5 confirms boundary
+  # Narrative genre, not epistle logic; Gen 22 paragraph markers (corrected OSHB/WLC,
+  # Leningrad Codex) are a petuchah at 22:19 and a setumah at 22:24 — none within 22:1-4
   # Manual TDD: baseline deferred; tests OT genre governance
   # =========================================================================
   - description: "S6 GREEN: Gen 22:1-4 — OT narrative genre detection"
