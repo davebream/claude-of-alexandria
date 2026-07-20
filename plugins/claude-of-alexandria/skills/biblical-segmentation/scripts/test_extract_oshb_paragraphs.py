@@ -47,6 +47,7 @@ no fixture reaches) is indistinguishable from an undetected one — that mistake
 was made once while building this matrix and produced a false "MISSED".
 """
 
+import collections
 import contextlib
 import hashlib
 import importlib.util
@@ -816,6 +817,43 @@ class TestMarkerEvents(unittest.TestCase):
             self.assertEqual(s, ["3:2", "3:2"], "multiplicity must survive")
 
 
+class TestPositionIsClassifiedByTokensNotPunctuation(unittest.TestCase):
+    """Pin the classifier against a case the real corpus does not exercise.
+
+    A mutation sweep found that classifying `position` from `after_sof_pasuq`
+    instead of token context passes every corpus-derived test. That is not a
+    gap in the corpus tests — the two rules are *extensionally equal* on the
+    pinned data: no OSHB marker follows a sof-pasuq while still having a word
+    after it, so nothing real distinguishes them.
+
+    They are not equal in principle. Punctuation and milestone placement can
+    vary; "no following <w>" cannot. This fixture constructs the divergent case
+    so the intended rule is pinned by construction rather than by an accident
+    of the current corpus.
+    """
+
+    def test_marker_after_sof_pasuq_but_with_a_following_word_is_within_verse(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Test.1.1">'
+                '<w id="wA" lemma="1">a</w>'
+                '<seg type="x-sof-pasuq">׃</seg>'
+                '<seg type="x-samekh">ס</seg>'
+                '<w id="wB" lemma="2">b</w>'  # a word AFTER the sof-pasuq
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertTrue(e["after_sof_pasuq"], "provenance should record it")
+            self.assertEqual(
+                e["position"],
+                "within_verse",
+                "position must follow token context, not punctuation: a word "
+                "follows this marker, so it is not a verse boundary",
+            )
+            self.assertEqual(e["following_word_id"], "wB")
+
+
 class TestSourceOutputBijection(unittest.TestCase):
     """The central invariant, replacing distribution heuristics.
 
@@ -844,6 +882,171 @@ class TestSourceOutputBijection(unittest.TestCase):
         with self.assertRaises(Exception) as ctx:
             oshb.validate_bijection("Neh", [{"id": "x"}, {"id": "x"}], {"x-pe": 0, "x-samekh": 2})
         self.assertIn("Neh", str(ctx.exception))
+
+
+class TestSemanticBoundaryFixtures(unittest.TestCase):
+    """Semantic fixtures, not extraction-count fixtures.
+
+    These pin what each marker MEANS for a boundary claim. A future
+    implementation can hold the perfect total of 3,162 while reintroducing
+    false boundary semantics; these are what catch that.
+
+    Requires the cached corpus. Skipped when it is absent so the default run
+    stays network-free.
+    """
+
+    CACHE = oshb.repo_root() / ".cache" / "oshb"
+
+    @classmethod
+    def setUpClass(cls):
+        if not (cls.CACHE / "Ruth.xml").exists():
+            raise unittest.SkipTest("corpus cache absent")
+
+    def _events(self, code, chapter=None, verse=None):
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            ev = oshb.extract_marker_events(self.CACHE / f"{code}.xml")
+        if chapter is not None:
+            ev = [e for e in ev if (e["chapter"], e["verse"]) == (chapter, verse)]
+        return ev
+
+    def test_nehemiah_3_2_two_setumot_at_different_positions(self):
+        ev = self._events("Neh", 3, 2)
+        self.assertEqual(len(ev), 2)
+        a, b = ev
+        self.assertEqual(a["type"], "setumah")
+        self.assertEqual(a["position"], "within_verse")
+        self.assertIsNotNone(a["following_word_id"])
+        self.assertEqual(a["ordinal_in_verse"], 1)
+        self.assertEqual(b["type"], "setumah")
+        self.assertEqual(b["position"], "verse_end")
+        self.assertIsNone(b["following_word_id"])
+        self.assertEqual(b["ordinal_in_verse"], 2)
+        self.assertNotEqual(a["id"], b["id"])
+
+    def test_2sam_16_13_is_two_boundaries_not_one_dual_typed_boundary(self):
+        ev = self._events("2Sam", 16, 13)
+        self.assertEqual(
+            [(e["type"], e["position"]) for e in ev],
+            [("setumah", "within_verse"), ("petuchah", "verse_end")],
+        )
+        # The claim this fixture exists to forbid: that verse 16:13 carries a
+        # single boundary which is both petuchah and setumah.
+        verse_end = [e for e in ev if e["position"] == "verse_end"]
+        self.assertEqual(len(verse_end), 1, "only ONE usable verse boundary here")
+        self.assertEqual(verse_end[0]["type"], "petuchah")
+
+    def test_remaining_dual_type_verses(self):
+        for code, ch, v in (("2Chr", 5, 1), ("Jer", 38, 28)):
+            with self.subTest(book=code):
+                ev = self._events(code, ch, v)
+                types = {e["type"] for e in ev}
+                self.assertEqual(types, {"petuchah", "setumah"})
+                positions = [e["position"] for e in ev]
+                self.assertIn("within_verse", positions)
+                self.assertEqual(
+                    sum(1 for p in positions if p == "verse_end"),
+                    1,
+                    "exactly one verse-level boundary",
+                )
+
+    def test_ruth_4_17_ground_truth(self):
+        ev = self._events("Ruth")
+        self.assertEqual(len(ev), 1)
+        (e,) = ev
+        self.assertEqual(
+            (e["chapter"], e["verse"], e["type"], e["position"]),
+            (4, 17, "petuchah", "verse_end"),
+        )
+        self.assertIsNone(e["following_word_id"])
+
+
+class TestCorpusGlobalInvariants(unittest.TestCase):
+    CACHE = oshb.repo_root() / ".cache" / "oshb"
+
+    @classmethod
+    def setUpClass(cls):
+        if not (cls.CACHE / "Gen.xml").exists():
+            raise unittest.SkipTest("corpus cache absent")
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            cls.by_book = {
+                code: oshb.extract_marker_events(cls.CACHE / f"{code}.xml")
+                for code in oshb.OT_BOOKS.values()
+            }
+        cls.all = [e for evs in cls.by_book.values() for e in evs]
+
+    def test_totals(self):
+        self.assertEqual(len(self.all), 3162)
+        self.assertEqual(sum(1 for e in self.all if e["type"] == "petuchah"), 1181)
+        self.assertEqual(sum(1 for e in self.all if e["type"] == "setumah"), 1981)
+
+    def test_bijection_every_book(self):
+        for code, evs in self.by_book.items():
+            with self.subTest(book=code):
+                oshb.validate_bijection(
+                    code, evs, oshb.count_marker_segs_raw(self.CACHE / f"{code}.xml")
+                )
+
+    def test_no_event_deduplicated_by_verse_or_type(self):
+        # 30 verses carry more than one marker; a dedupe would drop them.
+        multi = collections.Counter(
+            (e["book"], e["chapter"], e["verse"]) for e in self.all
+        )
+        self.assertEqual(sum(1 for v in multi.values() if v > 1), 30)
+
+    def test_ordinals_are_contiguous_within_each_verse(self):
+        groups = collections.defaultdict(list)
+        for e in self.all:
+            groups[(e["book"], e["chapter"], e["verse"])].append(e["ordinal_in_verse"])
+        for key, ords in groups.items():
+            with self.subTest(ref=key):
+                self.assertEqual(ords, list(range(1, len(ords) + 1)))
+
+    def test_event_order_matches_source_document_order(self):
+        for code, evs in self.by_book.items():
+            with self.subTest(book=code):
+                keys = [(e["chapter"], e["verse"], e["source_child_index"]) for e in evs]
+                self.assertEqual(keys, sorted(keys), "events must follow document order")
+
+    def test_every_event_has_at_least_one_word_anchor(self):
+        for e in self.all:
+            self.assertTrue(
+                e["preceding_word_id"] or e["following_word_id"],
+                f"event {e['id']} has no token anchor",
+            )
+
+    def test_position_agrees_with_surrounding_word_anchors(self):
+        for e in self.all:
+            with self.subTest(id=e["id"]):
+                if e["position"] == "verse_end":
+                    self.assertIsNone(e["following_word_id"])
+                elif e["position"] == "verse_start":
+                    self.assertIsNone(e["preceding_word_id"])
+                else:
+                    self.assertIsNotNone(e["preceding_word_id"])
+                    self.assertIsNotNone(e["following_word_id"])
+
+    def test_event_ids_are_globally_unique(self):
+        ids = [e["id"] for e in self.all]
+        self.assertEqual(len(set(ids)), 3162)
+
+    def test_position_distribution_is_pinned(self):
+        pos = collections.Counter(e["position"] for e in self.all)
+        self.assertEqual(pos["verse_end"], 3072)
+        self.assertEqual(pos["within_verse"], 90)
+
+    def test_after_sof_pasuq_is_evidence_not_the_classifier(self):
+        # They correlate strongly but are NOT the same predicate. If they were
+        # identical, `after_sof_pasuq` would be redundant and `position` would
+        # be silently coupled to punctuation placement.
+        mismatched = [
+            e for e in self.all if (e["position"] == "verse_end") != e["after_sof_pasuq"]
+        ]
+        self.assertTrue(
+            mismatched,
+            "position must not be a pure restatement of after_sof_pasuq",
+        )
 
 
 if __name__ == "__main__":

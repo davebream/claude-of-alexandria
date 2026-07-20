@@ -344,6 +344,11 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
     word_ids = [
         (i, c.get("id")) for i, c in enumerate(children) if _local_tag(c) == "w"
     ]
+    sof_pasuq_indices = [
+        i
+        for i, c in enumerate(children)
+        if _local_tag(c) == "seg" and c.get("type") == "x-sof-pasuq"
+    ]
     ordinal = 0
     for idx, child in enumerate(children):
         if _local_tag(child) != "seg":
@@ -354,18 +359,25 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
         ordinal += 1
         preceding = next((wid for i, wid in reversed(word_ids) if i < idx), None)
         following = next((wid for i, wid in word_ids if i > idx), None)
+
+        # Position is classified by TOKEN context, never by punctuation.
+        # "No following <w>" is the robust rule: it stays correct even if
+        # punctuation or milestone elements vary around the final word.
         if following is None:
             position = "verse_end"
         elif preceding is None:
             position = "verse_start"
         else:
             position = "within_verse"
+
         events.append(
             {
                 # Stable identity: witness + version + reference + ordinal +
                 # type. The ordinal is what keeps two same-type markers in one
                 # verse distinguishable.
                 "id": f"WLC@{COMMIT_SHA[:12]}:{book}.{chapter}.{verse}#{ordinal}:{MARKER_SEG_TYPES[seg_type]}",
+                "witness": "OSHB_WLC",
+                "source_version": COMMIT_SHA,
                 "book": book,
                 "chapter": chapter,
                 "verse": verse,
@@ -374,6 +386,14 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
                 "position": position,
                 "preceding_word_id": preceding,
                 "following_word_id": following,
+                # Source-layout EVIDENCE, deliberately separate from `position`.
+                # Useful provenance, but not the classifier: making it the rule
+                # would couple the semantic classification to punctuation
+                # placement, which varies.
+                "after_sof_pasuq": any(i < idx for i in sof_pasuq_indices),
+                # Exact position in the source document, for reproducibility
+                # and to pin document order independently of the event list.
+                "source_child_index": idx,
             }
         )
     return events
