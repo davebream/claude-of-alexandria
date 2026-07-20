@@ -51,17 +51,56 @@ total).** Both are correct for their own witness. A dataset that does not say
 which tradition it follows makes every downstream "confirmed by manuscript"
 claim unfalsifiable, because any count can be attributed to some other witness.
 
+## Dataset scope
+
+This dataset extracts only `<seg>` elements whose `type` is exactly `x-pe` or
+`x-samekh`. Four further `x-` type values occur in the source on other element
+classes and are intentionally excluded:
+
+| Value | Element | Nature |
+| --- | --- | --- |
+| `x-ketiv` | `<w>` | textual annotation |
+| `x-qere` | `<rdg>` | textual annotation (alternate reading) |
+| `x-accent` | `<rdg>` | textual annotation |
+| `x-BY` | `<rights>` | document/licensing metadata, not a feature of the text |
+
+That they occur on non-`<seg>` elements is a source observation. That they are
+out of scope is a schema decision, recorded here rather than presented as a
+fact about the manuscript.
+
 ## Anchor convention — per marker, not per file
 
 Each marker records the verse it occurs in **and where inside that verse it
 occurs**. There is deliberately no single file-level "markers fall after the
 verse" claim, because that is false for part of the corpus.
 
-| `position` | Meaning | Supports "the passage ends after this verse"? |
+Each marker carries two positional fields. `lexical_position` is what the
+parser literally observed; `position` is the convenience interpretation of it.
+
+| `lexical_position` (observed) | `position` (derived) | Supports "the passage ends after this verse"? |
 | --- | --- | --- |
-| `verse_end` | No word follows the marker in its verse | **Yes** |
-| `within_verse` | Words on both sides of the marker | **No** — it marks a subdivision inside the verse |
-| `verse_start` | No word precedes the marker in its verse | No |
+| `after_final_word` | `verse_end` | **Yes** |
+| `between_words` | `within_verse` | **No** — it marks a subdivision inside the verse |
+| `before_first_word` | `verse_start` | No |
+
+The distinction is small but real: `after_final_word` is exactly what was seen,
+whereas "verse end" says slightly more, since non-word nodes (punctuation,
+notes, apparatus) may still follow the marker. Keeping both makes that step
+visible.
+
+**`before_first_word` / `verse_start` is schema capability, not corpus
+knowledge.** No marker in OSHB `3d15126f` exercises it — observed count 0. It
+is retained for defensive parsing and forward compatibility, and its behaviour
+is covered by a synthetic fixture rather than by a real-corpus example.
+
+**Which words count.** A positional word is a `<w>` element that is a *direct
+child* of the `<verse>` container, in document order. Words nested inside
+`<note>` do not count — there are 1,278 such words in the corpus, 195 of them
+in verses that also carry a marker, and counting them would change those
+markers' classification. Ketiv words *do* count: 1,268 `<w type="x-ketiv">`
+elements are direct children and are part of the running text. Qere readings
+sit on `<rdg>` inside `<note>` and are therefore excluded, which is consistent
+— an alternate reading is not the text being divided.
 
 **Corpus counts: 3,072 markers are `verse_end`, 90 are `within_verse`.**
 
@@ -82,7 +121,19 @@ of wall-builders — is the clearest example, where several section breaks fall
 inside single verses.
 
 These are preserved as distinct events with a 1-based `ordinal_in_verse`.
-Collapsing them by verse reference would discard 29 genuine markers.
+
+Three related figures appear in discussions of this dataset and are easy to
+mistake for one another. They are all correct and they measure different things:
+
+| Measure | Value | Definition |
+| --- | ---: | --- |
+| Verses containing two or more marker elements of any type | 30 | count of `(book, chapter, verse)` groups with ≥2 events |
+| Verses containing both `x-pe` and `x-samekh` | 3 | 2Sam 16:13, 2Chr 5:1, Jer 38:28 |
+| Marker events lost by deduplicating on `(book, chapter, verse, type)` | 29 | `3,162 − 3,133` = total events − distinct tuples |
+
+The third is **not** "29 duplicated verses". It is the number of events that a
+naive dedup would silently discard, which is why the arrays are emitted with
+repeats intact.
 
 ## Books with no marker layer
 
@@ -91,12 +142,16 @@ At the pinned OSHB revision, `Ps.xml` and `Obad.xml` contain **no explicit
 
 The canonical extraction is namespace-aware XML parsing. As an *independent
 corroboration* — implemented differently, so it cannot share a defect with the
-parser — a raw-source scan confirms zero occurrences of segment elements whose
-`type` is `x-pe` or `x-samekh` in either file, while the same scan finds
+parser — an independent literal-source scan of the pinned XML confirms zero
+occurrences of `<seg …>` elements whose `type` is `x-pe` or `x-samekh` in
+either file, while the same scan finds
 exactly 42 and 50 in Genesis. So this is a property of the source, not an empty
 result produced by this extractor.
 
-The raw scan is a cross-check only. The production extractor never depends on
+The literal-source scan is a cross-check only, and matches element and
+attribute together (`<seg … type="x-pe|x-samekh">`) rather than a bare
+attribute substring, so it cannot count a match on another element class, a
+comment, or embedded documentation. The production extractor never depends on
 an exact serialization, which would be brittle against changes in attribute
 order, quote style, whitespace or namespace prefixes.
 

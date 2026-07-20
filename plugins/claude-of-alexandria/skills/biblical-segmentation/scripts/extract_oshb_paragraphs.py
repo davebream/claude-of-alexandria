@@ -326,6 +326,33 @@ def parse_osis_id(osis_id: str) -> tuple[int, int]:
     return chapter, verse
 
 
+def _positional_words(children: list) -> list:
+    """The <w> elements that count as textual anchors, with their child index.
+
+    THE RULE, stated deliberately because the behaviour is otherwise an
+    accident of using list() rather than iter():
+
+        A positional word is a <w> element that is a DIRECT CHILD of the
+        <verse> container, in document order. Words nested inside <note> or
+        any other wrapper do NOT count.
+
+    Why it matters: 1,278 <w> elements in this corpus sit inside <note>
+    elements, 195 of them in verses that also carry a marker. Counting them
+    would change a marker's classification — 1Chr.1.51 has 11 direct words and
+    12 including its note — so a refactor from list() to iter() would silently
+    reclassify markers with no test failing. This function and its tests exist
+    to make that refactor fail loudly.
+
+    Ketiv words DO count: 1,268 <w type="x-ketiv"> elements are direct children
+    of their verse and are part of the running text for positional purposes.
+    Qere readings live on <rdg> inside <note> and are therefore excluded, which
+    is consistent — an alternate reading is not the text being divided.
+    """
+    return [
+        (i, c.get("id")) for i, c in enumerate(children) if _local_tag(c) == "w"
+    ]
+
+
 def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> list:
     """Build the marker events carried by one <verse> element, in document order.
 
@@ -342,9 +369,7 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
     """
     events = []
     children = list(verse_elem)
-    word_ids = [
-        (i, c.get("id")) for i, c in enumerate(children) if _local_tag(c) == "w"
-    ]
+    word_ids = _positional_words(children)
     sof_pasuq_indices = [
         i
         for i, c in enumerate(children)
@@ -361,14 +386,24 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
         preceding = next((wid for i, wid in reversed(word_ids) if i < idx), None)
         following = next((wid for i, wid in word_ids if i > idx), None)
 
-        # Position is classified by TOKEN context, never by punctuation.
-        # "No following <w>" is the robust rule: it stays correct even if
-        # punctuation or milestone elements vary around the final word.
+        # TWO LAYERS, deliberately separate.
+        #
+        # `lexical_position` is what the parser literally observed: where this
+        # marker sits relative to the word nodes of its verse. Nothing more.
+        #
+        # `position` is the convenience interpretation downstream consumers
+        # use. Calling the last case "verse_end" already says slightly more
+        # than was observed — other non-<w> nodes (punctuation, notes,
+        # apparatus) may follow the marker even when no word does. Keeping the
+        # literal layer means that extra step is visible rather than buried.
         if following is None:
+            lexical_position = "after_final_word"
             position = "verse_end"
         elif preceding is None:
+            lexical_position = "before_first_word"
             position = "verse_start"
         else:
+            lexical_position = "between_words"
             position = "within_verse"
 
         events.append(
@@ -384,6 +419,9 @@ def _marker_events_in_verse(verse_elem, chapter: int, verse: int, book: str) -> 
                 "verse": verse,
                 "type": MARKER_SEG_TYPES[seg_type],
                 "ordinal_in_verse": ordinal,
+                # Literally observed.
+                "lexical_position": lexical_position,
+                # Derived interpretation of the above, for consumers.
                 "position": position,
                 "preceding_word_id": preceding,
                 "following_word_id": following,

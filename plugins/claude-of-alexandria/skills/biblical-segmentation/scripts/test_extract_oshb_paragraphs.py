@@ -865,6 +865,107 @@ class TestPositionIsClassifiedByTokensNotPunctuation(unittest.TestCase):
             self.assertEqual(e["following_word_id"], "wB")
 
 
+class TestVerseStartIsSchemaCapabilityNotCorpusKnowledge(unittest.TestCase):
+    """`verse_start` is a reachable branch that the corpus never exercises.
+
+    Observed count in OSHB `3d15126f`: 0. That makes it schema capability and
+    forward compatibility, NOT corpus knowledge — so it gets a synthetic
+    fixture and no real-data statistic beyond "observed count = 0".
+
+    Before this test the branch had no coverage at all: the only occurrence of
+    the string `verse_start` in this suite was inside a corpus-invariant
+    conditional that never fired.
+    """
+
+    def test_marker_before_the_first_word_is_verse_start(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Test.1.1">'
+                '<seg type="x-pe">פ</seg>'
+                '<w id="test01" lemma="1">a</w>'
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertEqual(e["position"], "verse_start")
+            self.assertEqual(e["lexical_position"], "before_first_word")
+            self.assertIsNone(e["preceding_word_id"])
+            self.assertEqual(e["following_word_id"], "test01")
+
+    def test_verse_start_is_unobserved_in_the_pinned_corpus(self):
+        cache = oshb.repo_root() / ".cache" / "oshb"
+        if not (cache / "Gen.xml").exists():
+            self.skipTest("corpus cache absent")
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            n = sum(
+                1
+                for code in oshb.OT_BOOKS.values()
+                for e in oshb.extract_marker_events(cache / f"{code}.xml")
+                if e["position"] == "verse_start"
+            )
+        self.assertEqual(n, 0, "if this fires, verse_start is no longer unobserved")
+
+
+class TestPositionalWordSelection(unittest.TestCase):
+    """Which <w> elements count as positional anchors.
+
+    Correct behaviour here was previously an accident of using list() rather
+    than iter(). These tests make a refactor to iter() fail loudly.
+    """
+
+    def test_words_inside_note_do_not_count_as_anchors(self):
+        # Mirrors 1Chr.1.51: a note-wrapped word sits between the last textual
+        # word and the marker. Counting it would make this within_verse.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Test.1.1">'
+                '<w id="w1" lemma="1">a</w>'
+                '<note type="variant"><w id="noteword" lemma="9">x</w></note>'
+                '<seg type="x-pe">פ</seg>'
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertEqual(e["position"], "verse_end")
+            self.assertEqual(e["lexical_position"], "after_final_word")
+            self.assertIsNone(e["following_word_id"])
+            self.assertEqual(
+                e["preceding_word_id"], "w1", "note word must not become the anchor"
+            )
+
+    def test_ketiv_words_DO_count_as_anchors(self):
+        # 1,268 ketiv <w> elements are direct children of their verse and are
+        # part of the running text for positional purposes.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = _write_fixture(
+                tmp,
+                '<verse osisID="Test.1.1">'
+                '<w id="w1" lemma="1">a</w>'
+                '<seg type="x-samekh">ס</seg>'
+                '<w id="k1" type="x-ketiv" lemma="2">b</w>'
+                "</verse>",
+            )
+            (e,) = oshb.extract_marker_events(path)
+            self.assertEqual(e["position"], "within_verse")
+            self.assertEqual(e["following_word_id"], "k1")
+
+    def test_lexical_position_is_reported_alongside_position(self):
+        pairs = {
+            "verse_end": "after_final_word",
+            "within_verse": "between_words",
+            "verse_start": "before_first_word",
+        }
+        cache = oshb.repo_root() / ".cache" / "oshb"
+        if not (cache / "Ruth.xml").exists():
+            self.skipTest("corpus cache absent")
+        captured = io.StringIO()
+        with contextlib.redirect_stderr(captured):
+            evs = oshb.extract_marker_events(cache / "Neh.xml")
+        for e in evs:
+            self.assertEqual(e["lexical_position"], pairs[e["position"]])
+
+
 class TestSourceOutputBijection(unittest.TestCase):
     """The central invariant, replacing distribution heuristics.
 

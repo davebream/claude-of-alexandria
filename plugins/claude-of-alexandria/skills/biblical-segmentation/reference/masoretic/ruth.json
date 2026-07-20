@@ -51,6 +51,7 @@
       "verse": 17,
       "type": "petuchah",
       "ordinal_in_verse": 1,
+      "lexical_position": "after_final_word",
       "position": "verse_end",
       "preceding_word_id": "08KGK",
       "following_word_id": null,
