@@ -1,0 +1,79 @@
+name: Re-pin Masoretic Corpus
+
+# workflow_dispatch ONLY, with no other trigger. Re-pinning is a deliberate
+# maintainer action: it changes which upstream commit the dataset is derived
+# from, which is exactly the decision that should never happen automatically.
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: >-
+          OSHB (openscriptures/morphhb) commit SHA to re-pin to. Required:
+          re-pinning against the SHA already hardcoded in the extractor would
+          just recompute identical hashes and produce an empty diff.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  repin:
+    name: Regenerate checksum lockfile at a new pin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Repoint the extractor at the requested commit
+        env:
+          COMMIT_SHA: ${{ inputs.commit_sha }}
+        run: |
+          set -euo pipefail
+          case "$COMMIT_SHA" in
+            *[!0-9a-fA-F]* | "") echo "ERROR: commit_sha must be hex"; exit 1 ;;
+          esac
+          F=plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py
+          python3 - "$F" "$COMMIT_SHA" <<'PY'
+          import re, sys, pathlib
+          path, sha = sys.argv[1], sys.argv[2]
+          p = pathlib.Path(path)
+          t = p.read_text()
+          t2, n = re.subn(r'^COMMIT_SHA = "[0-9a-fA-F]+"$',
+                          f'COMMIT_SHA = "{sha}"', t, count=1, flags=re.M)
+          if n != 1:
+              sys.exit("ERROR: could not locate COMMIT_SHA assignment")
+          p.write_text(t2)
+          print(f"Repinned to {sha}")
+          PY
+
+      - name: Regenerate the checksum lockfile
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py --write-checksums
+
+      - name: Regenerate the datasets at the new pin
+        # Surfaces immediately whether the new upstream commit still validates.
+        # A hard failure here is the useful outcome, not an obstacle: it means
+        # the new pin changes the data in a way that needs review.
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py
+
+      - name: Show what changed
+        run: git --no-pager diff --stat
+
+      # The upload is load-bearing. Without it the regenerated lockfile is
+      # written into an ephemeral runner checkout and discarded, so the
+      # maintainer could never obtain it — and the whole re-pin-reviewability
+      # argument depends on that diff reaching a PR.
+      - name: Upload regenerated lockfile and datasets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: masoretic-repin-${{ inputs.commit_sha }}
+          path: |
+            plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/oshb-checksums.json
+            plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py
+            plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/
+          if-no-files-found: error

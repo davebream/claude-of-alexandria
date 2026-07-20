@@ -137,6 +137,81 @@ jobs:
         # shared-source pin). No network, no corpus download.
         run: python3 server/scripts/test_emit_lemma_strongs.py -v
 
+      - name: Run Masoretic extractor structural tests
+        # Structural suite only — fixture-driven, network-free. Runs on EVERY
+        # PR: this job carries no paths-filter, deliberately.
+        #
+        # Why this one DOES get a corpus job in CI while the translit corpus
+        # suite above says "never in CI": the two are not comparable. The
+        # translit corpus needs a ~101 MB download; the Masoretic corpus is
+        # 25-30 MB, read-only, needs no secrets, and performs no D1 write. It
+        # runs in the verify-masoretic-corpus job below. Without this note the
+        # two adjacent steps read as contradicting each other.
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py -v
+
+  verify-masoretic-corpus:
+    name: Verify Masoretic Corpus
+    runs-on: ubuntu-latest
+    # NOTE: this job ALWAYS runs and always reports. The path filter is a STEP,
+    # not a workflow-level `paths:`. A workflow-level filter SKIPS the job, and
+    # a skipped required check sits permanently pending — with six required
+    # checks on main that would hang every unrelated PR. This exact mistake has
+    # already been made twice in this feature's history.
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Check for Masoretic changes
+        id: filter
+        uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4.0.2
+        with:
+          filters: |
+            masoretic:
+              # The DATA path is listed first and is the load-bearing one: it
+              # catches a hand-edited JSON with no generator change, which is
+              # the root cause the drift check exists to prevent. Filtering
+              # only on the scripts would miss exactly that case.
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/**'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/oshb-checksums.json'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/sefaria_paragraphs.py'
+
+      - name: Run corpus goldens
+        # THIS STEP is what makes AC-2 and AC-7 enforceable at all. Without it
+        # the job would run only the drift check, which proves
+        # regenerated == committed and is satisfied identically whether Genesis
+        # holds 42+50 or 4+5.
+        if: steps.filter.outputs.masoretic == 'true' || github.event_name == 'push'
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py --corpus -v
+
+      - name: Drift check — the extractor is the sole regeneration path
+        # Regenerate IN PLACE and assert a clean tree with `git status
+        # --porcelain`, not `git diff --exit-code`. The latter sees only
+        # tracked MODIFIED files, so a newly created regenerated file or a
+        # deleted committed one is invisible to it. That is not hypothetical:
+        # a filename-convention bug during this feature's build wrote 7 extra
+        # files beside the originals and orphaned them, which `git diff` would
+        # have passed clean.
+        if: steps.filter.outputs.masoretic == 'true' || github.event_name == 'push'
+        run: |
+          python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py
+          DRIFT=$(git status --porcelain -- plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/)
+          if [ -n "$DRIFT" ]; then
+            echo "DRIFT DETECTED — committed data does not match a fresh regeneration:"
+            echo "$DRIFT"
+            echo ""
+            echo "Hand-editing files under reference/masoretic/ is never legitimate."
+            echo "Regenerate with extract_oshb_paragraphs.py and commit the result."
+            exit 1
+          fi
+          echo "No drift: committed data matches a fresh regeneration."
+
   audit:
     name: Dependency Audit
     runs-on: ubuntu-latest
