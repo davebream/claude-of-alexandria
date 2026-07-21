@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -10,36 +11,33 @@ const VALID_COMMENTARIES = [
 ] as const;
 
 const TYNDALE_ATTRIBUTION = 'Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers';
-const MAX_ENTRIES = 500;
 const LARGE_RANGE_THRESHOLD = 15;
-const CHARACTER_LIMIT = 25_000;
 
-export const CommentaryLookupInputSchema = {
+export const CommentaryLookupInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "1 Cor")'),
   range: z.string().describe('Verse range: "8:28-8:30", "8:28-30", or single verse "8:28"'),
   commentary: z.enum(VALID_COMMENTARIES).optional().describe(
     `Filter to a specific commentary. Omit for all available. Options: ${VALID_COMMENTARIES.join(', ')}`
   ),
-};
+});
 
-export type CommentaryLookupInput = z.output<z.ZodObject<typeof CommentaryLookupInputSchema>>;
+export type CommentaryLookupInput = z.output<typeof CommentaryLookupInputSchema>;
 
-export const CommentaryLookupOutputSchema = {
+export const CommentaryLookupOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
-  commentaries: z.array(z.object({
+  entries: z.array(z.strictObject({
     commentary: z.string(),
     attribution: z.string().nullable(),
-    entries: z.array(z.object({
-      verse_start: z.number(),
-      verse_end: z.number(),
-      text: z.string(),
-    })),
+    chapter: z.number().int().positive(),
+    verse_start: z.number().int().positive(),
+    verse_end: z.number().int().positive(),
+    text: z.string(),
   })),
   range_warning: z.string().optional(),
-  truncated: z.boolean().optional(),
-  truncation_message: z.string().optional(),
-};
+});
 
 export async function commentaryLookup(args: CommentaryLookupInput): Promise<CallToolResult> {
   const bookInfo = lookupBook(args.book);
@@ -76,8 +74,7 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
     params.push(args.commentary);
   }
 
-  sql += ' ORDER BY commentary, chapter, verse_start LIMIT ?';
-  params.push(MAX_ENTRIES);
+  sql += ' ORDER BY commentary, chapter, verse_start, verse_end, id';
 
   const rows = await query(sql, params);
 
@@ -85,7 +82,7 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
   const commentaryMap = new Map<string, {
     commentary: string;
     attribution: string | null;
-    entries: { verse_start: number; verse_end: number; text: string }[];
+    entries: { chapter: number; verse_start: number; verse_end: number; text: string }[];
   }>();
 
   for (const row of rows) {
@@ -98,6 +95,7 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
       });
     }
     commentaryMap.get(cid)!.entries.push({
+      chapter: row.chapter as number,
       verse_start: row.verse_start as number,
       verse_end: row.verse_end as number,
       text: row.text as string,
@@ -118,28 +116,6 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
 
   if (!args.commentary && verseSpan > LARGE_RANGE_THRESHOLD) {
     result.range_warning = `Large range (${verseSpan}+ verses) across all commentaries. Consider filtering to a specific commentary for focused results.`;
-  }
-
-  // Character limit guard — progressively remove commentaries with fewest entries
-  const serialized = JSON.stringify(result);
-  if (serialized.length > CHARACTER_LIMIT && commentaries.length > 1) {
-    // Sort by entry count ascending, remove shortest first
-    const sorted = [...commentaries].sort((a, b) => a.entries.length - b.entries.length);
-    let truncatedCommentaries = sorted;
-    while (JSON.stringify({ ...result, commentaries: truncatedCommentaries }).length > CHARACTER_LIMIT
-           && truncatedCommentaries.length > 1) {
-      truncatedCommentaries = truncatedCommentaries.slice(1);
-    }
-    const truncatedResult = {
-      ...result,
-      commentaries: truncatedCommentaries,
-      truncated: true,
-      truncation_message: `Response truncated from ${commentaries.length} to ${truncatedCommentaries.length} commentaries (character limit). Use the commentary parameter to focus on a specific commentary.`,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
   }
 
   return {

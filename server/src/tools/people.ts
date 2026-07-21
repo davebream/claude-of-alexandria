@@ -1,48 +1,51 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange, ENTITY_ATTRIBUTION } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
 const HIGH_FREQUENCY_THRESHOLD = 500;
 
-export const PeopleInputSchema = {
+export const PeopleInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "Acts")'),
   range: z.string().describe('Verse range (e.g., "16:1-16:16" or "1:1")'),
   testament: z.enum(['nt', 'ot']).optional().describe('Testament — auto-detected from book if omitted'),
-};
+});
 
-export type PeopleInput = z.output<z.ZodObject<typeof PeopleInputSchema>>;
+export type PeopleInput = z.output<typeof PeopleInputSchema>;
 
-export const PeopleOutputSchema = {
+export const PeopleOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
   text_basis: z.literal('KJV'),
-  people: z.array(z.object({
+  people: z.array(z.strictObject({
     name: z.string(),
     slug: z.string(),
     display_title: z.string().optional(),
-    gender: z.string().optional(),
+    gender: z.string().nullable().optional(),
     aliases: z.string().optional(),
     appearance_count: z.number(),
     appearances_by_book: z.record(z.string(), z.number()).optional(),
+    high_frequency_note: z.string().optional(),
     verses_in_range: z.array(z.string()),
     disputed: z.boolean(),
     dispute_note: z.string().optional(),
   })),
-  disputed_identifications: z.array(z.object({
+  disputed_identifications: z.array(z.strictObject({
     name: z.string(),
     slug: z.string(),
     dispute_note: z.string(),
   })),
   mention_type_caveat: z.string(),
-  summary: z.object({
+  summary: z.strictObject({
     total_people: z.number(),
     disputed_count: z.number(),
   }),
   attribution: z.string(),
-};
+});
 
 export async function queryPeople(args: PeopleInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -91,7 +94,7 @@ export async function queryPeople(args: PeopleInput): Promise<CallToolResult> {
     params.push(startChapter, startVerse, startChapter, endChapter, endChapter, endVerse);
   }
 
-  sql += ' ORDER BY p.appearance_count DESC';
+  sql += ' ORDER BY p.appearance_count DESC, p.id';
 
   const peopleRows = await query(sql, params);
 
@@ -220,28 +223,8 @@ export async function queryPeople(args: PeopleInput): Promise<CallToolResult> {
     attribution: ENTITY_ATTRIBUTION,
   };
 
-  // Character limit guard
-  let jsonStr = JSON.stringify(result);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    // Truncate people array, keep summary accurate
-    let truncatedPeople = [...people];
-    while (truncatedPeople.length > 1 && JSON.stringify({ ...result, people: truncatedPeople }).length > CHARACTER_LIMIT) {
-      truncatedPeople = truncatedPeople.slice(0, Math.floor(truncatedPeople.length * 0.8));
-    }
-    const truncatedResult = {
-      ...result,
-      people: truncatedPeople,
-      truncated: true,
-      total_available: people.length,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
-  }
-
   return {
-    content: [{ type: 'text', text: jsonStr }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

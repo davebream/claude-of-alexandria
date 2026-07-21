@@ -104,31 +104,51 @@ class MCPClient:
 
     def query_lexicon(self, *, strongs_ids: list[str] | None = None,
                       lemmas: list[str] | None = None,
+                      search: str | None = None,
                       compact: bool = False) -> dict:
+        selectors = [strongs_ids is not None, lemmas is not None, search is not None]
+        if sum(selectors) != 1:
+            raise ValueError("Provide exactly one of strongs_ids, lemmas, or search")
         args: dict = {"compact": compact}
         if strongs_ids is not None:
-            args["strongs_ids"] = json.dumps(strongs_ids)
-        if lemmas is not None:
-            args["lemmas"] = json.dumps(lemmas)
+            args.update({"mode": "strongs", "strongs_ids": strongs_ids})
+        elif lemmas is not None:
+            args.update({"mode": "lemmas", "lemmas": lemmas})
+        else:
+            args.update({"mode": "search", "search": search})
         return self.call_tool("query_lexicon", args)
 
     def query_vocabulary(self, book: str, testament: str,
                          theme: str | None = None,
-                         min_frequency: int = 1,
-                         limit: int = 200) -> dict:
-        args: dict = {"book": book, "testament": testament,
-                      "min_frequency": min_frequency, "limit": limit}
+                         min_frequency: int = 1) -> dict:
+        args: dict = {"mode": "theme" if theme else "frequency",
+                      "book": book, "testament": testament,
+                      "min_frequency": min_frequency}
         if theme:
             args["theme"] = theme
         return self.call_tool("query_vocabulary", args)
 
     def resolve_themes(self, lemmas: list[str], testament: str) -> dict:
-        args = {"lemmas": json.dumps(lemmas), "testament": testament}
+        args = {"lemmas": lemmas, "testament": testament}
         return self.call_tool("query_themes_for_lemmas", args)
 
-    def query_theme(self, theme: str, testament: str) -> dict:
-        """Query cross-book distribution for a theme. MCP tool: query_theme."""
-        return self.call_tool("query_theme", {"theme": theme, "testament": testament})
+    def query_theme_distribution(self, theme: str, testament: str) -> dict:
+        """Query the cross-book distribution for a theme."""
+        return self.call_tool(
+            "query_theme_distribution",
+            {"theme": theme, "testament": testament},
+        )
+
+    def iter_pages(self, tool_name: str, arguments: dict):
+        """Yield complete MCP pages, preserving filters across cursors."""
+        cursor = None
+        while True:
+            page_args = {**arguments, **({"cursor": cursor} if cursor else {})}
+            result = self.call_tool(tool_name, page_args)
+            yield result
+            cursor = result.get("page", {}).get("next_cursor")
+            if not cursor:
+                return
 
     def list_books(self, include_themes: bool = True) -> dict:
         return self.call_tool("list_books", {"include_themes": include_themes})

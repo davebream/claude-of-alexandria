@@ -1,11 +1,11 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { getAllBooks } from '../db/books.js';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const CHARACTER_LIMIT = 25_000;
 
 // ─── Canonical-to-display name map ────────────────────────────────────────────
 
@@ -22,34 +22,34 @@ function getDisplayMap(): Record<string, string> {
 
 // ─── Input / Output schemas ───────────────────────────────────────────────────
 
-export const ThemeDistributionInputSchema = {
+export const ThemeDistributionInputSchema = z.strictObject({
+  ...PaginationInputShape,
   theme: z.string().describe(
     'Theme name (e.g., "joy", "faith", "covenant", "deity"). Use list_books with include_themes=true to see all 81 available themes.'
   ),
   testament: z.enum(['nt', 'ot']).describe(
     '"nt" or "ot" — themes are testament-specific. NT themes use Greek lemmas; OT themes use Strong\'s numbers.'
   ),
-};
+});
 
-export type ThemeDistributionInput = z.output<z.ZodObject<typeof ThemeDistributionInputSchema>>;
+export type ThemeDistributionInput = z.output<typeof ThemeDistributionInputSchema>;
 
-const BookEntry = z.object({
+const BookEntry = z.strictObject({
   book: z.string(),
   total: z.number(),
   by_lemma: z.record(z.string(), z.record(z.string(), z.number())),
 });
 
-export const ThemeDistributionOutputSchema = {
+export const ThemeDistributionOutputSchema = z.strictObject({
+  page: PageSchema,
   theme: z.string(),
   testament: z.enum(['nt', 'ot']),
   theme_lemmas: z.array(z.string()),
   books: z.array(BookEntry),
-  summary: z.object({
+  summary: z.strictObject({
     total_occurrences: z.number(),
     books_count: z.number(),
   }),
-  truncated: z.boolean().optional(),
-  truncation_message: z.string().optional(),
   // Parallel lookup map — { lemma → transliteration|null } — keyed over the
   // SAME lemma that appears as a KEY in each book's `by_lemma` above (a Greek
   // surface form for NT, a Strong's number for OT). `by_lemma` cannot be
@@ -68,7 +68,7 @@ export const ThemeDistributionOutputSchema = {
     + "has no match. Null is a defined honest boundary, not an error, and does not "
     + "mean the word is absent from the text."
   ),
-};
+});
 
 // ─── Transliteration lookup ────────────────────────────────────────────────────
 // A theme-distribution call is single-testament, so the lookup source is a clean
@@ -210,11 +210,11 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
       }
     }
     return { book: displayName, total, by_lemma: byLemma };
-  }).sort((a, b) => b.total - a.total);
+  }).sort((a, b) => b.total - a.total || a.book.localeCompare(b.book));
 
   const totalOccurrences = books.reduce((sum, b) => sum + b.total, 0);
 
-  let result: Record<string, unknown> = {
+  const result = {
     theme,
     testament,
     theme_lemmas: themeLemmas,
@@ -226,37 +226,8 @@ export async function queryThemeDistribution(args: ThemeDistributionInput): Prom
     lemma_translit: lemmaTranslit,
   };
 
-  // Truncation: binary search for the largest book subset under the character limit.
-  // Books are already sorted heaviest-first so we keep the most relevant entries.
-  let serialized = JSON.stringify(result);
-  if (serialized.length > CHARACTER_LIMIT && books.length > 1) {
-    let lo = 1, hi = books.length;
-    while (lo < hi) {
-      const mid = Math.ceil((lo + hi) / 2);
-      const candidate = books.slice(0, mid);
-      const probe = JSON.stringify({ ...result, books: candidate });
-      if (probe.length <= CHARACTER_LIMIT) {
-        lo = mid;
-      } else {
-        hi = mid - 1;
-      }
-    }
-    const truncatedBooks = books.slice(0, lo);
-    result = {
-      theme,
-      testament,
-      theme_lemmas: themeLemmas,
-      books: truncatedBooks,
-      summary: { total_occurrences: totalOccurrences, books_count: books.length },
-      truncated: true,
-      truncation_message: `Response truncated from ${books.length} to ${truncatedBooks.length} books (character limit). Full coverage: ${books.length} books, ${totalOccurrences} total occurrences.`,
-      lemma_translit: lemmaTranslit,
-    };
-    serialized = JSON.stringify(result);
-  }
-
   return {
-    content: [{ type: 'text', text: serialized }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

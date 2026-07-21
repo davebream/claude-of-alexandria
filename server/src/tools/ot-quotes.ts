@@ -1,27 +1,28 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
 
-const DEFAULT_OT_QUOTES_LIMIT = 2000;
-
-export const OtQuotesInputSchema = {
+export const OtQuotesInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('NT book name (any common form, e.g., "Romans", "Matt", "Hebrews")'),
   range: z.string().optional().describe('Verse range: "8:28-8:39" or single verse "1:23". Omit for entire book.'),
   ot_book: z.string().optional().describe('Filter by OT source book (e.g., "Isaiah", "Isa", "Psalms")'),
-};
+});
 
-export type OtQuotesInput = z.output<z.ZodObject<typeof OtQuotesInputSchema>>;
+export type OtQuotesInput = z.output<typeof OtQuotesInputSchema>;
 
-export const OtQuotesOutputSchema = {
+export const OtQuotesOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string().optional(),
-  quotes: z.array(z.object({
+  quotes: z.array(z.strictObject({
     nt_ref: z.string(),
     greek_text: z.string(),
     quote_type: z.string(),
-    ot_sources: z.array(z.object({
+    ot_sources: z.array(z.strictObject({
       book: z.string(),
       chapter: z.number(),
       verse: z.number(),
@@ -29,12 +30,12 @@ export const OtQuotesOutputSchema = {
       ref: z.string(),
     })),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total: z.number(),
     nt_verses_with_quotes: z.number(),
     ot_books_referenced: z.array(z.string()),
   }),
-};
+});
 
 function formatOtRef(canonicalBook: string, chapter: number, verse: number, verseEnd: number | null): string {
   const bookInfo = lookupBook(canonicalBook);
@@ -106,8 +107,7 @@ export async function queryOtQuotes(args: OtQuotesInput): Promise<CallToolResult
     params.push(otBookInfo.canonical);
   }
 
-  sql += ' ORDER BY q.nt_chapter, q.nt_verse, q.id LIMIT ?';
-  params.push(DEFAULT_OT_QUOTES_LIMIT);
+  sql += ' ORDER BY q.nt_chapter, q.nt_verse, q.id, s.ot_book, s.ot_chapter, s.ot_verse';
 
   const rows = await query(sql, params);
 

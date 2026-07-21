@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -12,63 +13,58 @@ import {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const CHARACTER_LIMIT = 25_000;
-const DEFAULT_LIMIT = 50;
-const MAX_LIMIT = 200;
 
 // ─── Input Schema ─────────────────────────────────────────────────────────────
 
-export const LiturgicalLookupInputSchema = {
-  mode: z.enum(['season', 'passage', 'list'])
-    .describe(
-      'Query mode:\n' +
-      '  "season" — get readings and themes for a liturgical season (season required)\n' +
-      '  "passage" — find which season(s) feature a given Scripture passage (book + range required)\n' +
-      '  "list" — enumerate available seasons with metadata'
-    ),
-  season: z.string().optional()
-    .describe('Season name or slug (e.g., "Advent", "Holy Week"). Required for mode="season".'),
-  book: z.string().optional()
-    .describe('Bible book name in any common form (e.g., "Isaiah", "Luke"). Required for mode="passage".'),
-  range: z.string().optional()
-    .describe(
-      'Verse or chapter range. Accepts: "9:6" (single verse), "9:2-7" (same-chapter), ' +
-      '"9:2-11:9" (cross-chapter), "9" or "9-11" (chapter-only). Required for mode="passage".'
-    ),
-  tradition: z.string().optional()
-    .describe('Filter by liturgical tradition (e.g., "western", "reformed"). Case-insensitive.'),
-  limit: z.number().optional()
-    .describe('Maximum seasons returned (default: 50, max: 200).'),
-};
+export const LiturgicalLookupInputSchema = z.discriminatedUnion('mode', [
+  z.strictObject({ ...PaginationInputShape, mode: z.literal('season').describe('Find readings in one liturgical season.'), season: z.string().min(1).describe('Season name or slug.'), tradition: z.string().min(1).optional().describe('Restrict results to one liturgical tradition.') }),
+  z.strictObject({ ...PaginationInputShape, mode: z.literal('passage').describe('Find seasons containing a biblical passage.'), book: z.string().min(1).describe('Biblical book name.'), range: z.string().min(1).describe('Chapter or verse range within the book.'), tradition: z.string().min(1).optional().describe('Restrict results to one liturgical tradition.') }),
+  z.strictObject({ ...PaginationInputShape, mode: z.literal('list').describe('List available seasons.'), tradition: z.string().min(1).optional().describe('Restrict results to one liturgical tradition.') }),
+]);
 
-export type LiturgicalLookupInput = z.output<z.ZodObject<typeof LiturgicalLookupInputSchema>>;
+export type LiturgicalLookupInput = z.output<typeof LiturgicalLookupInputSchema>;
 
 // ─── Output Schema ────────────────────────────────────────────────────────────
 
-export const LiturgicalLookupOutputSchema = {
-  mode: z.string(),
-  query_info: z.object({
-    season: z.string().optional(),
-    book: z.string().optional(),
-    range: z.string().optional(),
-    tradition: z.string().optional(),
-  }),
-  seasons: z.array(z.object({
-    season: z.string(),
-    season_order: z.number(),
-    tradition: z.string(),
-    readings: z.array(z.object({
-      reference_display: z.string(),
-      book: z.string(),
-      themes: z.array(z.string()),
-      note: z.string().nullable(),
-    })),
-  })),
-  total_seasons: z.number(),
-  total_readings: z.number(),
-  truncated: z.boolean().optional(),
-  truncation_message: z.string().optional(),
+const LiturgicalReadingSchema = z.strictObject({
+  reference_display: z.string(),
+  book: z.string(),
+  start: z.strictObject({ chapter: z.number().int().positive(), verse: z.number().int().positive() }),
+  end: z.strictObject({ chapter: z.number().int().positive(), verse: z.number().int().positive() }),
+  themes: z.array(z.string()),
+  note: z.string().nullable(),
+  source: z.string(),
+});
+
+const LiturgicalSeasonSchema = z.strictObject({
+  season: z.string(),
+  season_slug: z.string(),
+  season_order: z.number().int().positive(),
+  tradition: z.string(),
+  themes: z.array(z.string()),
+  readings: z.array(LiturgicalReadingSchema),
+});
+
+const LiturgicalSeasonSummarySchema = LiturgicalSeasonSchema.omit({ readings: true });
+const LiturgicalReadingResultSchema = LiturgicalReadingSchema.extend({
+  season: z.string(),
+  season_slug: z.string(),
+  season_order: z.number().int().positive(),
+  tradition: z.string(),
+  season_themes: z.array(z.string()),
+});
+
+const LiturgicalOutputCommon = {
+  page: PageSchema,
+  total_seasons: z.number().int().nonnegative(),
+  total_readings: z.number().int().nonnegative(),
 };
+
+export const LiturgicalLookupOutputSchema = z.discriminatedUnion('mode', [
+  z.strictObject({ ...LiturgicalOutputCommon, mode: z.literal('season'), query_info: z.strictObject({ season: z.string(), tradition: z.string().optional() }), results: z.array(LiturgicalReadingResultSchema) }),
+  z.strictObject({ ...LiturgicalOutputCommon, mode: z.literal('passage'), query_info: z.strictObject({ book: z.string(), range: z.string(), tradition: z.string().optional() }), results: z.array(LiturgicalReadingResultSchema) }),
+  z.strictObject({ ...LiturgicalOutputCommon, mode: z.literal('list'), query_info: z.strictObject({ tradition: z.string().optional() }), results: z.array(LiturgicalSeasonSummarySchema) }),
+]);
 
 // ─── Helper: build error response ────────────────────────────────────────────
 
@@ -91,44 +87,24 @@ function parseThemes(raw: unknown): string[] {
   }
 }
 
-// ─── Helper: apply character-limit guard (liturgical variant) ─────────────────
-
-function applyCharacterLimit(
-  result: Record<string, unknown>,
-  seasons: Array<{ season: string; readings: unknown[] }>,
-): Record<string, unknown> {
-  const serialized = JSON.stringify(result);
-  if (serialized.length <= CHARACTER_LIMIT || seasons.length <= 1) return result;
-
-  const sorted = [...seasons].sort((a, b) => a.readings.length - b.readings.length);
-  let truncated = sorted;
-  while (
-    JSON.stringify({ ...result, seasons: truncated }).length > CHARACTER_LIMIT &&
-    truncated.length > 1
-  ) {
-    truncated = truncated.slice(1);
-  }
-  return {
-    ...result,
-    seasons: truncated,
-    truncated: true,
-    truncation_message: `Response truncated from ${seasons.length} to ${truncated.length} seasons (character limit). Use the tradition filter or the limit parameter to narrow results.`,
-  };
-}
-
 // ─── Helper: group flat SQL rows into season-grouped structure ─────────────────
 
 type SeasonRow = Record<string, unknown>;
 
 function groupRowsBySeasonSlug(rows: SeasonRow[]): Array<{
   season: string;
+  season_slug: string;
   season_order: number;
   tradition: string;
+  themes: string[];
   readings: Array<{
     reference_display: string;
     book: string;
+    start: { chapter: number; verse: number };
+    end: { chapter: number; verse: number };
     themes: string[];
     note: string | null;
+    source: string;
   }>;
 }> {
   const seasonMap = new Map<string, ReturnType<typeof groupRowsBySeasonSlug>[number]>();
@@ -138,16 +114,27 @@ function groupRowsBySeasonSlug(rows: SeasonRow[]): Array<{
     if (!seasonMap.has(slug)) {
       seasonMap.set(slug, {
         season: row.season as string,
+        season_slug: slug,
         season_order: row.season_order as number,
         tradition: row.tradition as string,
+        themes: [],
         readings: [],
       });
     }
-    seasonMap.get(slug)!.readings.push({
+    const season = seasonMap.get(slug)!;
+    const themes = parseThemes(row.themes);
+    for (const theme of themes) if (!season.themes.includes(theme)) season.themes.push(theme);
+    const start = row.start_enc as number;
+    const end = row.end_enc as number;
+    if (!Number.isInteger(start) || !Number.isInteger(end) || typeof row.book !== 'string') continue;
+    season.readings.push({
       reference_display: row.reference_display as string,
       book: row.book as string,
-      themes: parseThemes(row.themes),
+      start: { chapter: Math.floor(start / 1000), verse: start % 1000 },
+      end: { chapter: Math.floor(end / 1000), verse: end % 1000 },
+      themes,
       note: (row.note as string | null) ?? null,
+      source: row.source as string,
     });
   }
 
@@ -156,8 +143,9 @@ function groupRowsBySeasonSlug(rows: SeasonRow[]): Array<{
 
 // ─── Mode: list ───────────────────────────────────────────────────────────────
 
-async function handleList(args: LiturgicalLookupInput): Promise<CallToolResult> {
-  let sql = `SELECT DISTINCT season, season_slug, season_order, tradition
+async function handleList(args: Extract<LiturgicalLookupInput, { mode: 'list' }>): Promise<CallToolResult> {
+  let sql = `SELECT id, season, season_slug, season_order, tradition, book,
+                    start_enc, end_enc, reference_display, themes, note, source
              FROM liturgical_readings`;
   const params: unknown[] = [];
 
@@ -165,15 +153,10 @@ async function handleList(args: LiturgicalLookupInput): Promise<CallToolResult> 
     sql += ' WHERE tradition = ?';
     params.push(args.tradition.toLowerCase());
   }
-  sql += ' ORDER BY season_order';
+  sql += ' ORDER BY season_order, season_slug, book, start_enc, id';
 
   const rows = await query(sql, params);
-  const seasons = rows.map(row => ({
-    season: row.season as string,
-    season_order: row.season_order as number,
-    tradition: row.tradition as string,
-    readings: [] as never[],
-  }));
+  const seasons = groupRowsBySeasonSlug(rows);
 
   const result: Record<string, unknown> = {
     mode: 'list',
@@ -182,7 +165,7 @@ async function handleList(args: LiturgicalLookupInput): Promise<CallToolResult> 
     },
     seasons,
     total_seasons: seasons.length,
-    total_readings: 0,
+    total_readings: seasons.reduce((sum, season) => sum + season.readings.length, 0),
   };
 
   return {
@@ -193,16 +176,14 @@ async function handleList(args: LiturgicalLookupInput): Promise<CallToolResult> 
 
 // ─── Mode: season ─────────────────────────────────────────────────────────────
 
-async function handleSeason(args: LiturgicalLookupInput): Promise<CallToolResult> {
+async function handleSeason(args: Extract<LiturgicalLookupInput, { mode: 'season' }>): Promise<CallToolResult> {
   if (!args.season) {
     return errorResponse('MISSING_SEASON', 'season is required for mode="season". Use mode="list" to discover available seasons.');
   }
 
   const slug = slugifySeason(args.season);
-  const lim = Math.min(args.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
-
-  let sql = `SELECT season, season_slug, season_order, tradition, book,
-                    start_enc, end_enc, reference_display, themes, note
+  let sql = `SELECT id, season, season_slug, season_order, tradition, book,
+                    start_enc, end_enc, reference_display, themes, note, source
              FROM liturgical_readings
              WHERE season_slug = ?`;
   const params: unknown[] = [slug];
@@ -211,8 +192,7 @@ async function handleSeason(args: LiturgicalLookupInput): Promise<CallToolResult
     sql += ' AND tradition = ?';
     params.push(args.tradition.toLowerCase());
   }
-  sql += ' ORDER BY book, start_enc LIMIT ?';
-  params.push(lim);
+  sql += ' ORDER BY book, start_enc, id';
 
   const rows = await query(sql, params);
   const seasons = groupRowsBySeasonSlug(rows);
@@ -228,16 +208,15 @@ async function handleSeason(args: LiturgicalLookupInput): Promise<CallToolResult
     total_readings: seasons.reduce((s, season) => s + season.readings.length, 0),
   };
 
-  const finalResult = applyCharacterLimit(result, seasons);
   return {
-    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
-    structuredContent: finalResult,
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
 
 // ─── Mode: passage ────────────────────────────────────────────────────────────
 
-async function handlePassage(args: LiturgicalLookupInput): Promise<CallToolResult> {
+async function handlePassage(args: Extract<LiturgicalLookupInput, { mode: 'passage' }>): Promise<CallToolResult> {
   if (!args.book) {
     return errorResponse('MISSING_BOOK', 'book is required for mode="passage".');
   }
@@ -276,10 +255,8 @@ async function handlePassage(args: LiturgicalLookupInput): Promise<CallToolResul
     queryEnd = encodePosition(chParsed.max, CHAPTER_ONLY_MAX_VERSE);
   }
 
-  const lim = Math.min(args.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
-
-  let sql = `SELECT season, season_slug, season_order, tradition, book,
-                    start_enc, end_enc, reference_display, themes, note
+  let sql = `SELECT id, season, season_slug, season_order, tradition, book,
+                    start_enc, end_enc, reference_display, themes, note, source
              FROM liturgical_readings
              WHERE book = ? AND start_enc <= ? AND end_enc >= ?`;
   const params: unknown[] = [bookInfo.canonical, queryEnd, queryStart];
@@ -288,8 +265,7 @@ async function handlePassage(args: LiturgicalLookupInput): Promise<CallToolResul
     sql += ' AND tradition = ?';
     params.push(args.tradition.toLowerCase());
   }
-  sql += ' ORDER BY season_order, start_enc LIMIT ?';
-  params.push(lim);
+  sql += ' ORDER BY season_order, start_enc, id';
 
   const rows = await query(sql, params);
   const seasons = groupRowsBySeasonSlug(rows);
@@ -306,10 +282,9 @@ async function handlePassage(args: LiturgicalLookupInput): Promise<CallToolResul
     total_readings: seasons.reduce((s, season) => s + season.readings.length, 0),
   };
 
-  const finalResult = applyCharacterLimit(result, seasons);
   return {
-    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
-    structuredContent: finalResult,
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
 

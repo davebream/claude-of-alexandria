@@ -1,7 +1,7 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
-import { jsonArray } from './json-array.js';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -92,38 +92,50 @@ export function glossMatchesTerm(gloss: string, term: string): boolean {
 
 // ─── Schema ──────────────────────────────────────────────────────────────────
 
-export const LexiconInputSchema = {
-  strongs_ids: jsonArray(z.array(z.string()).min(1).max(20)).optional()
-    .describe("Array of Strong's numbers (e.g., [\"H1961\", \"G3056\"]). Max 20."),
-  lemmas: jsonArray(z.array(z.string()).min(1).max(20)).optional()
-    .describe('Array of Greek/Hebrew lemmas to look up. Max 20.'),
-  search: z.string().min(2).max(100).optional()
-    .describe('English meaning or concept to search for (e.g., "love", "redemption"). Searches gloss and full definitions across all lexicon sources. Returns up to 20 matches. Mutually exclusive with strongs_ids and lemmas.'),
-  compact: z.boolean().optional()
-    .describe('If true, return only strongs_id, gloss, transliteration (default: false)'),
+const LexiconCommonInput = {
+  ...PaginationInputShape,
+  compact: z.boolean().default(false).describe('Return compact entries without source definitions.'),
 };
 
-export type LexiconInput = z.output<z.ZodObject<typeof LexiconInputSchema>>;
+export const LexiconInputSchema = z.discriminatedUnion('mode', [
+  z.strictObject({ ...LexiconCommonInput, mode: z.literal('strongs').describe('Look up Strong numbers.'), strongs_ids: z.array(z.string()).min(1).max(20).describe('Native array of 1 to 20 Strong numbers.'), lemmas: z.never().optional(), search: z.never().optional() }),
+  z.strictObject({ ...LexiconCommonInput, mode: z.literal('lemmas').describe('Look up original-language lemmas.'), strongs_ids: z.never().optional(), lemmas: z.array(z.string()).min(1).max(20).describe('Native array of 1 to 20 Greek or Hebrew lemmas.'), search: z.never().optional() }),
+  z.strictObject({ ...LexiconCommonInput, mode: z.literal('search').describe('Search English glosses and definitions.'), strongs_ids: z.never().optional(), lemmas: z.never().optional(), search: z.string().min(2).max(100).describe('English search text, 2 to 100 characters.') }),
+]);
 
-export const LexiconOutputSchema = {
-  entries: z.array(z.object({
-    strongs_id: z.string(),
-    gloss: z.string(),
-    original_word: z.string().optional(),
-    transliteration: z.string().nullable().optional(),
-    lsj_definition: z.string().nullable().optional(),
-    abbott_smith_definition: z.string().nullable().optional(),
-    bdb_definition: z.string().nullable().optional(),
-    ubs_semantic_domains: z.array(z.object({
-      code: z.string(),
-      name: z.string(),
-    })).optional(),
-    sources: z.array(z.string()).optional(),
-  })),
-  not_found: z.array(z.string()),
-  results_capped: z.boolean().optional(),
+export type LexiconInput = z.output<typeof LexiconInputSchema>;
+
+const CompactLexiconEntrySchema = z.strictObject({
+  strongs_id: z.string(),
+  gloss: z.string(),
+  transliteration: z.string().nullable(),
+});
+const FullLexiconEntrySchema = z.strictObject({
+  strongs_id: z.string(),
+  gloss: z.string(),
+  original_word: z.string().optional(),
+  transliteration: z.string().nullable(),
+  lsj_definition: z.string().nullable(),
+  abbott_smith_definition: z.string().nullable(),
+  bdb_definition: z.string().nullable(),
+  ubs_semantic_domains: z.array(z.strictObject({ code: z.string(), name: z.string() })),
+  sources: z.array(z.string()),
+});
+
+const LexiconOutputCommon = {
+  page: PageSchema,
   errors: z.array(z.string()),
 };
+const notFound = { not_found: z.array(z.string()) };
+
+export const LexiconOutputSchema = z.discriminatedUnion('response_type', [
+  z.strictObject({ ...LexiconOutputCommon, ...notFound, response_type: z.literal('strongs_compact'), mode: z.literal('strongs'), detail_level: z.literal('compact'), entries: z.array(CompactLexiconEntrySchema) }),
+  z.strictObject({ ...LexiconOutputCommon, ...notFound, response_type: z.literal('strongs_full'), mode: z.literal('strongs'), detail_level: z.literal('full'), entries: z.array(FullLexiconEntrySchema) }),
+  z.strictObject({ ...LexiconOutputCommon, ...notFound, response_type: z.literal('lemmas_compact'), mode: z.literal('lemmas'), detail_level: z.literal('compact'), entries: z.array(CompactLexiconEntrySchema) }),
+  z.strictObject({ ...LexiconOutputCommon, ...notFound, response_type: z.literal('lemmas_full'), mode: z.literal('lemmas'), detail_level: z.literal('full'), entries: z.array(FullLexiconEntrySchema) }),
+  z.strictObject({ ...LexiconOutputCommon, response_type: z.literal('search_compact'), mode: z.literal('search'), detail_level: z.literal('compact'), entries: z.array(CompactLexiconEntrySchema) }),
+  z.strictObject({ ...LexiconOutputCommon, response_type: z.literal('search_full'), mode: z.literal('search'), detail_level: z.literal('full'), entries: z.array(FullLexiconEntrySchema) }),
+]);
 
 // ─── Internal types ───────────────────────────────────────────────────────────
 
@@ -304,7 +316,7 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     if (allFoundIds.length > 0) {
       const ph = allFoundIds.map(() => '?').join(', ');
       const ubsRows = await query(
-        `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph})`,
+        `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph}) ORDER BY strongs_id, domain_code`,
         allFoundIds
       );
       for (const row of ubsRows) {
@@ -322,7 +334,7 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
       }
     }
 
-    entries = [...entryMap.values()];
+    entries = [...entryMap.values()].sort((a, b) => a.strongs_id.localeCompare(b.strongs_id));
     notFound = normalized.filter(id => !entryMap.has(id));
 
   } else if (args.lemmas) {
@@ -412,7 +424,7 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
     if (allFoundIds.length > 0) {
       const ph = allFoundIds.map(() => '?').join(', ');
       const ubsRows = await query(
-        `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph})`,
+        `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph}) ORDER BY strongs_id, domain_code`,
         allFoundIds
       );
       for (const row of ubsRows) {
@@ -441,7 +453,7 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
       }
     }
     notFound = args.lemmas.filter(l => !foundLemmas.has(l));
-    entries = [...entryMap.values()];
+    entries = [...entryMap.values()].sort((a, b) => a.strongs_id.localeCompare(b.strongs_id));
 
   } else if (args.search) {
     // ─── Meaning search via LIKE queries ─────────────────────────────────
@@ -466,24 +478,21 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
         `SELECT strongs_id, gloss, original_word, transliteration, definition as lsj_definition
          FROM lexicon_lsj
          WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
-         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
-         LIMIT 40`,
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END, strongs_id`,
         [pattern, pattern, pattern, pattern]
       ),
       query(
         `SELECT strongs_id, gloss, original_word, transliteration, definition as abbott_smith_definition
          FROM lexicon_abbott_smith
          WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
-         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
-         LIMIT 40`,
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END, strongs_id`,
         [pattern, pattern, pattern, pattern]
       ),
       query(
         `SELECT strongs_id, gloss, original_word, transliteration, definition as bdb_definition
          FROM lexicon_bdb
          WHERE LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? OR LOWER(gloss) LIKE '%(-%'
-         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END
-         LIMIT 40`,
+         ORDER BY CASE WHEN LOWER(gloss) LIKE ? OR LOWER(definition) LIKE ? THEN 0 ELSE 1 END, strongs_id`,
         [pattern, pattern, pattern, pattern]
       ),
     ]);
@@ -584,24 +593,26 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
       return a.strongs_id.localeCompare(b.strongs_id);
     });
 
-    const resultsCapped = allEntries.length > 20;
-    entries = allEntries.slice(0, 20);
+    entries = allEntries;
 
     // Fetch UBS domains for matched entries
     if (entries.length > 0) {
-      const allFoundIds = entries.map(e => e.strongs_id);
-      const ph = allFoundIds.map(() => '?').join(', ');
       try {
-        const ubsRows = await query(
-          `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph})`,
-          allFoundIds
-        );
-        for (const row of ubsRows) {
-          const entry = entryMap.get(row.strongs_id as string);
-          if (entry) {
-            entry.ubs_semantic_domains!.push({ code: row.domain_code as string, name: row.domain_name as string });
-            const ubsSource = (row.strongs_id as string).startsWith('G') ? 'ubs-sdgnt' : 'ubs-sdbh';
-            if (!entry.sources!.includes(ubsSource)) entry.sources!.push(ubsSource);
+        const allFoundIds = entries.map(e => e.strongs_id);
+        for (let index = 0; index < allFoundIds.length; index += 90) {
+          const ids = allFoundIds.slice(index, index + 90);
+          const ph = ids.map(() => '?').join(', ');
+          const ubsRows = await query(
+            `SELECT strongs_id, domain_code, domain_name FROM lexicon_ubs_domains WHERE strongs_id IN (${ph}) ORDER BY strongs_id, domain_code`,
+            ids
+          );
+          for (const row of ubsRows) {
+            const entry = entryMap.get(row.strongs_id as string);
+            if (entry) {
+              entry.ubs_semantic_domains!.push({ code: row.domain_code as string, name: row.domain_name as string });
+              const ubsSource = (row.strongs_id as string).startsWith('G') ? 'ubs-sdgnt' : 'ubs-sdbh';
+              if (!entry.sources!.includes(ubsSource)) entry.sources!.push(ubsSource);
+            }
           }
         }
       } catch (e) {
@@ -611,8 +622,10 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
 
     // Build search-specific result (no not_found field)
     const searchResult = {
+      mode: 'search' as const,
+      detail_level: compact ? 'compact' as const : 'full' as const,
+      response_type: compact ? 'search_compact' as const : 'search_full' as const,
       entries: entries.map(e => formatEntry(e, compact)),
-      results_capped: resultsCapped,
       errors,
     };
 
@@ -623,6 +636,9 @@ export async function queryLexicon(args: LexiconInput): Promise<CallToolResult> 
   }
 
   const result = {
+    mode: args.mode,
+    detail_level: compact ? 'compact' as const : 'full' as const,
+    response_type: `${args.mode}_${compact ? 'compact' : 'full'}` as const,
     entries: entries.map(e => formatEntry(e, compact)),
     not_found: notFound,
     errors,

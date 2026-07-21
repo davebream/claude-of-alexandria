@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -6,32 +7,30 @@ import { parseVerseRange } from './utils.js';
 
 const VALID_TRANSLATIONS = ['BSB', 'WEB', 'KJV', 'ASV', 'YLT', 'DBY'] as const;
 const DEFAULT_TRANSLATION = 'BSB';
-const MAX_VERSES = 50;
-const CHARACTER_LIMIT = 25_000;
 
-export const BibleLookupInputSchema = {
+export const BibleLookupInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "1 Cor")'),
   range: z.string().describe('Verse range: "8:28-8:30", "8:28-30", or single verse "8:28"'),
-  translation: z.enum(VALID_TRANSLATIONS).optional().describe(
+  translation: z.enum(VALID_TRANSLATIONS).default(DEFAULT_TRANSLATION).describe(
     `Bible translation (default: ${DEFAULT_TRANSLATION}). Options: ${VALID_TRANSLATIONS.join(', ')}`
   ),
-};
+});
 
-export type BibleLookupInput = z.output<z.ZodObject<typeof BibleLookupInputSchema>>;
+export type BibleLookupInput = z.output<typeof BibleLookupInputSchema>;
 
-export const BibleLookupOutputSchema = {
+export const BibleLookupOutputSchema = z.strictObject({
+  page: PageSchema,
   translation: z.string(),
   book: z.string(),
   range: z.string(),
-  verses: z.array(z.object({
+  verses: z.array(z.strictObject({
     chapter: z.number(),
     verse: z.number(),
     text: z.string(),
   })),
   versification_note: z.string().optional(),
-  truncated: z.boolean().optional(),
-  truncation_message: z.string().optional(),
-};
+});
 
 export async function bibleLookup(args: BibleLookupInput): Promise<CallToolResult> {
   const bookInfo = lookupBook(args.book);
@@ -58,14 +57,12 @@ export async function bibleLookup(args: BibleLookupInput): Promise<CallToolResul
       AND (chapter > ? OR (chapter = ? AND verse >= ?))
       AND (chapter < ? OR (chapter = ? AND verse <= ?))
     ORDER BY chapter, verse
-    LIMIT ?
   `;
   const params = [
     translation,
     bookInfo.canonical,
     verseRange.startChapter, verseRange.startChapter, verseRange.startVerse,
     verseRange.endChapter, verseRange.endChapter, verseRange.endVerse,
-    MAX_VERSES,
   ];
 
   const rows = await query(sql, params);
@@ -86,22 +83,6 @@ export async function bibleLookup(args: BibleLookupInput): Promise<CallToolResul
   // Versification note for OT passages
   if (bookInfo.testament === 'ot') {
     result.versification_note = 'English Protestant versification (may differ from MT/LXX numbering)';
-  }
-
-  // Character limit guard (matches vocabulary.ts / lemmas.ts pattern)
-  const serialized = JSON.stringify(result);
-  if (serialized.length > CHARACTER_LIMIT && verses.length > 1) {
-    const truncatedVerses = verses.slice(0, Math.ceil(verses.length / 2));
-    const truncatedResult = {
-      ...result,
-      verses: truncatedVerses,
-      truncated: true,
-      truncation_message: `Response truncated from ${verses.length} to ${truncatedVerses.length} verses (character limit). Use a narrower range.`,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
   }
 
   return {

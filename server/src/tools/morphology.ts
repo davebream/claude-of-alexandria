@@ -1,17 +1,19 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { expandParsing } from '../db/parsing.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange, type VerseRange } from './utils.js';
 
-export const MorphologyInputSchema = {
+export const MorphologyInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name (any common form, e.g., "John", "Gen", "Hebrews")'),
   range: z.string().describe('Verse range: "1:1-1:11" (multi-verse) or "1:6" (single verse). Format: chapter:verse-chapter:verse'),
   testament: z.enum(['nt', 'ot']).optional().describe('Testament — auto-detected from book if omitted'),
   pos_filter: z.string().optional().describe('Filter by part of speech (e.g., "verb", "noun", "adjective", "preposition")'),
   word_filter: z.string().optional().describe('Filter by exact word form — matches against text, normalized form, or lemma'),
-  fields: z.enum(['basic', 'syntax', 'full', 'lexical']).optional()
+  fields: z.enum(['basic', 'syntax', 'full', 'lexical']).default('basic')
     .describe(
       'Level of detail: "basic" (default) = text, normalized, lemma, pos, parsing; '
       + '"syntax" adds clause_id, clause_type, strongs; '
@@ -21,11 +23,11 @@ export const MorphologyInputSchema = {
   strongs_filter: z.string().optional().describe(
     "Filter words by Strong's number within the verse range (e.g., 'H7225a' for OT, 'G2316' for NT)"
   ),
-};
+});
 
-export type MorphologyInput = z.output<z.ZodObject<typeof MorphologyInputSchema>>;
+export type MorphologyInput = z.output<typeof MorphologyInputSchema>;
 
-export const MorphologyWordEntry = z.object({
+export const MorphologyWordEntry = z.strictObject({
   verse: z.string(),
   position: z.number(),
   text: z.string(),
@@ -61,16 +63,61 @@ export const MorphologyWordEntry = z.object({
   ),
 });
 
-export const MorphologyOutputSchema = {
+const MorphologyOutputCommon = {
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
-  testament: z.string(),
-  words: z.array(MorphologyWordEntry),
-  summary: z.object({
+  testament: z.enum(['nt', 'ot']),
+  summary: z.strictObject({
     total_words: z.number(),
     by_pos: z.record(z.string(), z.number()),
   }),
+  note: z.string().optional(),
 };
+
+const MorphologyWordCommon = {
+  verse: z.string(),
+  position: z.number(),
+  text: z.string(),
+  text_translit: z.string().nullable(),
+};
+const BasicMorphologyWordSchema = z.strictObject({
+  ...MorphologyWordCommon,
+  normalized: z.string().nullable(),
+  lemma: z.string(),
+  pos: z.string(),
+  parsing: z.record(z.string(), z.string()).nullable(),
+});
+const SyntaxMorphologyWordSchema = BasicMorphologyWordSchema.extend({
+  clause_id: z.string().optional(),
+  clause_type: z.string().optional(),
+  strongs: z.string().optional(),
+  lemma_translit: z.string().nullable(),
+});
+const FullMorphologyWordSchema = SyntaxMorphologyWordSchema.extend({
+  gloss: z.string().optional(),
+  semantic_frame: z.string().optional(),
+  subject_ref: z.string().optional(),
+  participant_ref: z.string().optional(),
+  gloss_tbesg: z.string().optional(),
+  louw_nida: z.string().optional(),
+  louw_nida_domain: z.string().optional(),
+});
+const LexicalMorphologyWordSchema = z.strictObject({
+  ...MorphologyWordCommon,
+  lemma: z.string(),
+  strongs: z.string().nullable().optional(),
+  gloss: z.string().nullable().optional(),
+  louw_nida: z.string().optional(),
+  lemma_translit: z.string().nullable(),
+});
+
+export const MorphologyOutputSchema = z.discriminatedUnion('detail_level', [
+  z.strictObject({ ...MorphologyOutputCommon, detail_level: z.literal('basic'), words: z.array(BasicMorphologyWordSchema) }),
+  z.strictObject({ ...MorphologyOutputCommon, detail_level: z.literal('syntax'), words: z.array(SyntaxMorphologyWordSchema) }),
+  z.strictObject({ ...MorphologyOutputCommon, detail_level: z.literal('full'), words: z.array(FullMorphologyWordSchema) }),
+  z.strictObject({ ...MorphologyOutputCommon, detail_level: z.literal('lexical'), words: z.array(LexicalMorphologyWordSchema) }),
+]);
 
 // ─── Column selection by fields level ─────────────────────────────────────────
 // All columns are qualified with `m.` — the table is aliased below because the
@@ -108,9 +155,6 @@ function selectColumns(fields: string | undefined): string {
 function needsLexiconJoin(fields: string | undefined): boolean {
   return fields === 'syntax' || fields === 'full' || fields === 'lexical';
 }
-
-const DEFAULT_MORPHOLOGY_LIMIT = 5000;
-const CHARACTER_LIMIT = 25_000;
 
 export async function queryMorphology(args: MorphologyInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -190,8 +234,7 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     }
   }
 
-  sql += ' ORDER BY m.chapter, m.verse, m.word_position LIMIT ?';
-  params.push(DEFAULT_MORPHOLOGY_LIMIT);
+  sql += ' ORDER BY m.chapter, m.verse, m.word_position, m.id';
 
   const rows = await query(sql, params);
 
@@ -261,6 +304,7 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
     book: bookInfo.displayName,
     range: rangeInput,
     testament,
+    detail_level: fields ?? 'basic',
     words,
     summary: { total_words: words.length, by_pos: byPos },
   };
@@ -272,25 +316,8 @@ export async function queryMorphology(args: MorphologyInput): Promise<CallToolRe
       + 'OGNT glosses are single-scholar translations (Eliran Wong) — treat as Tier 3, not Tier 1-2 evidence.';
   }
 
-  // CHARACTER_LIMIT guard — truncate words if response too large
-  let json = JSON.stringify(result);
-  if (json.length > CHARACTER_LIMIT && words.length > 1) {
-    const truncatedWords = [];
-    let approxSize = json.length - JSON.stringify(words).length + 100; // overhead
-    for (const w of words) {
-      const wordJson = JSON.stringify(w);
-      if (approxSize + wordJson.length + 1 > CHARACTER_LIMIT) break;
-      approxSize += wordJson.length + 1;
-      truncatedWords.push(w);
-    }
-    result.words = truncatedWords;
-    (result.summary as Record<string, unknown>).truncated = true;
-    (result.summary as Record<string, unknown>).returned_words = truncatedWords.length;
-    json = JSON.stringify(result);
-  }
-
   return {
-    content: [{ type: 'text', text: json }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }
