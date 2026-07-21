@@ -33,6 +33,19 @@ License: SIL International Custom License
 
 -------------------------------------------------------------------------------
 
+KLINE TORAH LITERARY UNITS DATASET
+Source: https://chaver.com/torah-weave/data/
+Dataset: https://chaver.com/torah-weave/data/torah-units.json
+Version: 1.0
+Author: Moshe Kline
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+  The source-derived Torah boundary benchmark includes a small set of literary
+  units from this dataset, with attribution and an exact SHA-256 snapshot pin.
+  https://creativecommons.org/licenses/by/4.0/
+
+-------------------------------------------------------------------------------
+
 SEFARIA MASORETIC PARAGRAPH DATA (Petuchot/Setumot)
 Source: https://github.com/Sefaria/Sefaria-Export
 Underlying text: Westminster Leningrad Codex — Public Domain

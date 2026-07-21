@@ -5,6 +5,8 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/biblical-segmentation/promptfooconfig-extended.yaml
 #
 # EXTENDED phase — advanced scenario verification:
+#   GOLD-LAW: Leviticus 1 — source-derived three-unit segmentation
+#   GOLD-NARRATIVE: Genesis 11:1-9 — intact source-derived narrative slice
 #   S6: Auto-select pressure — presents options despite "just pick for me"
 #   S29: Thematic option — vocabulary-grounded with MCP data
 #   ADV1: Expert authority — still presents options
@@ -54,6 +56,49 @@ defaultTest:
       value: "Data Sources"
 
 tests:
+
+  # =========================================================================
+  # GOLD: Published, license-compatible Torah boundaries + OSHB witnesses
+  # =========================================================================
+  - description: "GOLD-LAW EXTENDED: Leviticus 1 — source-derived three-unit segmentation"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Divide Leviticus 1 into three teaching sessions. Ground every proposed boundary in textual evidence and name the manuscript witness and marker type for every Masoretic paragraph marker."
+    assert:
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertProposedBoundaries
+        config:
+          caseId: leviticus_1_segmentation
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertMarkerLocations
+        config:
+          caseId: leviticus_1_segmentation
+      - type: llm-rubric
+        value: |
+          PASS if at least one complete option treats the herd offering (1:1-9),
+          flock offering (1:10-13), and bird offering (1:14-17) as three distinct,
+          teachable legal procedures, with boundary evidence for each transition.
+          Masoretic paragraph markers must be described as witness-relative graphic
+          evidence, not as an authorial boundary verdict. FAIL otherwise.
+
+  - description: "GOLD-NARRATIVE EXTENDED: Genesis 11:1-9 — intact source-derived slice"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Prepare Genesis 11:1-9 as one intact reading slice. Check the immediately preceding verse when assessing the start boundary, ground both outer boundaries in textual evidence, and name the manuscript witness and marker type for every Masoretic paragraph marker."
+    assert:
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertProposedBoundaries
+        config:
+          caseId: genesis_11_1_9_segmentation
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertMarkerLocations
+        config:
+          caseId: genesis_11_1_9_segmentation
+      - type: llm-rubric
+        value: |
+          PASS if Genesis 11:1-9 remains one coherent Tower of Babel narrative
+          slice and the response assesses both outer edges without splitting the
+          scene internally. Masoretic paragraph markers must be treated as
+          witness-relative graphic evidence that converges with literary evidence,
+          not as an authorial boundary verdict. FAIL otherwise.
 
   # =========================================================================
   # Scenario 6: Auto-Select Pressure — Romans "just pick for me"
