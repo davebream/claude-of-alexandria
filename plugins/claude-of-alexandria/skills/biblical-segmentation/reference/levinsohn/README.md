@@ -19,9 +19,8 @@ Discourse analysis examines how Greek grammar signals paragraph boundaries, topi
 
 ## Data Content
 
-**34 JSON files** containing discourse features across the NT:
-- 27 canonical books (Matthew - Revelation)
-- Additional feature-specific files (Annotations, Ambiguous, etc.)
+**33 feature JSON files plus one index stub**, containing 52,257 discourse
+feature references across all 27 New Testament books.
 
 **Features Analyzed:**
 - Historical Present
@@ -31,7 +30,7 @@ Discourse analysis examines how Greek grammar signals paragraph boundaries, topi
 - Tail-Head Linkage
 - Focus constructions
 - Thematic prominence markers
-- ...and 28 additional discourse features
+- ...and 27 additional discourse features
 
 ## File Format
 
@@ -41,6 +40,7 @@ Discourse analysis examines how Greek grammar signals paragraph boundaries, topi
   "references": [
     {
       "verse": "Mark 1:12",
+      "word_index": 3,
       "word": "ἐκβάλλει",
       "type": "Historical Present"
     }
@@ -50,6 +50,7 @@ Discourse analysis examines how Greek grammar signals paragraph boundaries, topi
 
 **Fields:**
 - `verse` - Canonical reference (Book Chapter:Verse)
+- `word_index` - Upstream `osisRef` word position within the verse
 - `word` - Greek word exhibiting the discourse feature
 - `type` - Discourse feature type/label
 
@@ -66,13 +67,34 @@ The biblical-segmentation skill uses **6 primary features** to identify natural 
 | Reported Speech | `Reported_Speech.json` | Direct discourse boundaries |
 | Tail-Head Linkage | `Tail-Head_linkage.json` | Connects sections while marking transitions |
 
-**Additional 28 features** are available for reference but not used in primary segmentation logic.
+**Additional 27 features** are available for reference but not used in primary segmentation logic.
 
-## Extraction Tool
+## Generator and Runtime Loader
 
-**Script:** `../../scripts/levinsohn_parser.py`
+**Generator:** `../../scripts/extract_levinsohn_discourse.py`
 
-**Usage:**
+The generator fetches all 33 LGNTDF feature XML files plus the XInclude index
+from `biblicalhumanities/levinsohn` at commit
+`badd3a1043aebfa9907d0515069a4be1dd6eeb7a`. Every input is verified against
+the committed `levinsohn-checksums.json` lockfile before parsing. It validates
+the complete 52,257-reference corpus before writing any output.
+
+```bash
+# Regenerate the committed reference JSON from the pinned source
+python3 scripts/extract_levinsohn_discourse.py
+
+# Or generate into a separate comparison directory
+python3 scripts/extract_levinsohn_discourse.py --output-dir /tmp/levinsohn-json
+
+# Only after a deliberate upstream commit bump, rebuild the checksum lockfile
+python3 scripts/provenance.py --write-checksums levinsohn
+```
+
+**Runtime loader/filter:** `../../scripts/levinsohn_parser.py`
+
+The loader reads the generated JSON; it does not download XML or generate the
+reference files.
+
 ```bash
 # Get all segmentation features for Mark
 python3 scripts/levinsohn_parser.py Mark
@@ -99,7 +121,9 @@ Discourse features help:
 
 ## Data Provenance
 
-**Source Repository:** https://github.com/biblicalhumanities/levinsohn/tree/master/LGNTDF
+**Source Repository:** https://github.com/biblicalhumanities/levinsohn/tree/badd3a1043aebfa9907d0515069a4be1dd6eeb7a/LGNTDF
+
+**Pinned revision:** `badd3a1043aebfa9907d0515069a4be1dd6eeb7a`
 
 **Data Quality:**
 - Hand-annotated by trained linguists
@@ -111,22 +135,28 @@ Discourse features help:
 To verify data integrity:
 
 ```bash
-# Test extraction for a book
+# Test loading/filtering for a book
 python3 scripts/levinsohn_parser.py Mark --output json
 
 # Expected: JSON with discourse features and verse references
+
+# Test extraction and shared checksum handling without network access
+cd scripts
+python3 -m unittest test_extract_levinsohn_discourse test_provenance -v
 ```
 
 ## Last Updated
 
-**Date:** 2026-01-19
-**Books Covered:** 27 NT books + supplementary feature files
-**Total Files:** 34 JSON files
+**Date:** 2026-07-21
+**Books Covered:** All 27 NT books
+**Total Files:** 33 feature JSON files + 1 index stub
+**Total References:** 52,257
 
 ## Related Documentation
 
 - **OT paragraph markers:** See `../masoretic/DATA_SOURCES.md`
-- **Extraction script:** `../../scripts/levinsohn_parser.py`
+- **Extraction script:** `../../scripts/extract_levinsohn_discourse.py`
+- **Runtime loader/filter:** `../../scripts/levinsohn_parser.py`
 - **Usage in skill:** `../../SKILL.md` (NT segmentation methodology)
 
 ## Further Reading

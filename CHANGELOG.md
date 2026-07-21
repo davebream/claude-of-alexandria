@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The bundled Levinsohn Greek New Testament discourse-feature data can now be regenerated from its exact upstream revision with a committed extractor and SHA-256 lockfile. Each reference also preserves its upstream word-position index, so repeated forms in the same verse can be identified unambiguously while existing verse-level consumers remain compatible.
+
 ### Fixed
 
 - `NOTICE` now clarifies that the git commit which introduced the NT Levinsohn discourse-feature data attributed it to OpenText.org, which is incorrect. A full comparison of all 33 feature files (52,257 records) against the upstream `biblicalhumanities/levinsohn` repository at a pinned commit found an exact match in content, order, and count, confirming the source already stated in `NOTICE` (SIL International / biblicalhumanities LGNTDF) is the correct one.
