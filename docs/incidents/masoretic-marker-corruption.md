@@ -2,73 +2,128 @@
 
 ## Summary
 
-Before July 20, 2026, the committed Old Testament paragraph-marker data under `plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/` was substantially wrong. The extractor that produced it was not committed to the repository. It matched the bare Hebrew letters `פ` and `ס` inside running text instead of reading explicit paragraph-marker markup, so ordinary words containing those letters were emitted as manuscript breaks.
+The Old Testament Masoretic paragraph-marker corpus introduced in `56c1e80`
+was corrupted by a letter-matching extraction method. It treated any Hebrew
+letter pe (`פ`) as a petuchah marker and any samekh (`ס`) as a setumah marker,
+even when the letter occurred inside an ordinary word. The result was a dense
+false-positive layer: Genesis carried 1,034 marker entries where the corrected
+OSHB/WLC corpus carries 92, and Ruth carried 39 where OSHB/WLC carries one.
 
-This inflated the marker density enough that "is there a manuscript break near this boundary?" became close to vacuous in some books. Genesis carried `1034` listed markers where the corrected WLC/OSHB witness has `92`. Ruth carried `39` where the corrected witness has `1`.
+Production data has been repaired. This document records the incident and the
+offline audit added for issue #128:
+`server/scripts/reproduce-masoretic-corruption.py` and the quarantined fixture
+bundle under `server/scripts/fixtures/masoretic-corruption/`.
 
 ## Timeline
 
-- Before `2026-07-20`: corrupt Sefaria-attributed Masoretic JSONs were the committed live dataset.
-- `2026-07-20 16:13` UTC+2: commit `769737a` corrected the source and rebuilt the corpus from OSHB markup (`#118` / `#130`).
-- `2026-07-20 19:27` UTC+2: commit `3e77050` repaired production D1 seed data (`#119` / `#131`).
-- `2026-07-20 21:09` UTC+2: commit `1d5dca6` fixed exact verse-end verification in `verify_claims.py` (`#120` / `#132`).
-- `2026-07-20 22:13` UTC+2: commit `86e731e` revalidated GREEN tests against the corrected witness (`#121` / `#133`).
-- `2026-07-21 11:43` UTC+2: commit `b204fec` reframed the evidence semantics so markers remain graphic-witness evidence, not literary proof (`#122` / `#138`).
-- `2026-07-21`: issue `#128` added permanent forensic reproduction artifacts, archived corrupt fixtures, and this incident report.
+| Date / commit | Event |
+| --- | --- |
+| `56c1e80` | Added the original Masoretic JSON files under `plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/`. These are now archived as intentionally corrupt fixtures. |
+| `ed50f51` | Last pre-repair tree; the corrupt JSON files are byte-identical to `56c1e80`. |
+| `769737a` | Rebuilt the Masoretic marker corpus from explicit OSHB XML `<seg type="x-pe">` and `<seg type="x-samekh">` markup at `openscriptures/morphhb@3d15126fb1ef74867fc1434be1942e837932691f`. |
+| `3e77050` | Repaired production D1 paragraph-marker data. |
+| `1d5dca6` | Fixed `biblical-segmentation` verification so a claim is certified only by exact chapter:verse, marker type, and `verse_end` position. |
+| `b204fec` | Reframed Masoretic markers as witness-relative graphic evidence, not proof of authorial literary intent. |
+| Issue #128 audit | Added the reproducible corruption audit, historical fixtures, incident report, and provenance record. |
 
-## What Failed
+## Mechanism
 
-The historical bug was mechanically simple:
+The original extractor cannot be recovered from the repository. The archived
+outputs are reproducible, however, from byte-pinned Sefaria-Export sources at
+`bb791327`.
 
-1. Read verse text.
-2. Treat any occurrence of `פ` as a petuchah anchor.
-3. Treat any occurrence of `ס` as a setumah anchor.
-4. Emit the verse reference once per type.
+The reproducer proves two separate facts for Genesis and Ruth:
 
-That procedure confuses ordinary lexical content with explicit scribal markup. It also explains the characteristic shape of the bad data: high per-verse density, many double-listed verses, and counts that track the frequency of the letters themselves.
+- Scanning the Sefaria **Miqra according to the Masorah** JSON with a naive
+  per-verse `פ` / `ס` character test exactly reproduces the corrupt arrays.
+- Scanning Sefaria **Tanach with Text Only** gives the running-letter control
+  counts. For Genesis those controls are 624 petuchah-bearing verses and 333
+  setumah-bearing verses, proving the false positives are ordinary letters in
+  text, not just visible paragraph symbols.
 
-## Forensic Reproduction
+Correct headline counts:
 
-The original uncommitted generator cannot be rerun exactly because it was never archived in the repository. The committed forensic reproduction instead proves the mechanism against the same textual base now pinned for the corrected corpus:
+| Book | Corrupt petuchot | Corrupt setumot | Double-listed verses | Corrected OSHB/WLC markers |
+| --- | ---: | ---: | ---: | ---: |
+| Genesis | 655 | 379 | 208 | 42 petuchot + 50 setumot |
+| Ruth | 31 | 8 | 4 | 1 petuchah |
 
-- Witness bytes: OpenScriptures Hebrew Bible / Westminster Leningrad Codex, commit `3d15126fb1ef74867fc1434be1942e837932691f`
-- Canonical extractor: `plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py`
-- Forensic reproducer: `plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/reproduce_masoretic_corruption.py`
-- Archived corrupt fixtures: `plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/fixtures/masoretic-corruption/intentionally-corrupt-pre-fix/`
+The issue’s attempted reconciliation of `31+11=42` and mirrored `46+4=50`
+mixed the Sefaria/Maimonidean source with OSHB/WLC locations. It is not
+reproducible as a witness-scoped claim and is not retained.
 
-The reproducer measures, book by book:
+## Blast Radius
 
-`same-witness reconstruction := bare-letter verse matches ∪ genuine marker anchors`
+The corrupted layer affected the data served by `query_paragraph_breaks` and
+therefore any instruction path that asked agents to consult Masoretic paragraph
+markers. The seven direct repository consumers were:
 
-where the "genuine" anchors are recomputed directly from the pinned XML via the canonical extractor rather than read from the corrected committed JSONs.
+- `plugins/claude-of-alexandria/agents/data-retriever.md`
+- `plugins/claude-of-alexandria/agents/pericope-delimitation.md`
+- `plugins/claude-of-alexandria/agents/argument-flow.md`
+- `plugins/claude-of-alexandria/agents/biblical-scholar.md`
+- `plugins/claude-of-alexandria/skills/biblical-segmentation/SKILL.md`
+- `plugins/claude-of-alexandria/skills/exegetical-notes/SKILL.md`
+- `plugins/claude-of-alexandria/skills/consult-biblical-scholar/SKILL.md`
 
-This is not the same thing as replaying the original uncommitted generator byte for byte. In the current repository evidence, Ruth matches that reconstruction exactly, while many books do not. That tells us two things at once:
+The practical failure mode was over-certification. Because the corrupt marker
+layer was so dense, a proposed Old Testament boundary could look supported by
+Masoretic evidence almost anywhere.
 
-- the archived fixtures preserve a real bare-letter corruption signature, and
-- the historical source pipeline was not identical to "current OSHB WLC bytes plus a letter matcher."
+## Verification Failure
 
-The most plausible explanation is source-base drift between the historical Sefaria-derived text path and the current pinned OSHB witness.
+`verify_claims.py` had a separate self-certification bug: it matched cited
+references by substring. A claim at `1:2`, for example, could match a real
+marker at `1:23`. After `1d5dca6`, certification requires all of the following:
 
-## Load-Bearing Evidence
+- exact chapter and verse;
+- exact marker type;
+- `position == "verse_end"`.
 
-- Genesis: corrupt `655` petuchot and `379` setumot over `1533` verses (`0.67449` markers/verse). Against the current pinned OSHB witness, bare letters account for `624` `פ` anchors and `333` `ס` anchors; genuine markers account for `42` petuchot and `50` setumot. The same-witness reconstruction lands within single-digit extra/missing deltas per type, which is strong forensic evidence of the mechanism but not an exact replay.
-- Ruth: corrupt `31` petuchot and `8` setumot over `85` verses (`0.45882` markers/verse). Bare letters account for `30` `פ` anchors and `8` `ס` anchors. The sole genuine marker is a petuchah at `4:17`. Ruth matches the same-witness reconstruction exactly.
-- Corpus-wide corrected witness totals are `3162` explicit markers: `1181` `x-pe`, `1981` `x-samekh`.
-- The oft-repeated `0.46` to `0.94` density range is not a valid corpus-wide description. Corrected books range from `0.0` (Psalms, Obadiah) to `1.442` (Lamentations) when counted as marker events per verse, and the corrupt books also do not stay inside that narrower band.
+Within-verse markers are real graphic events, but they no longer certify a
+claim that a passage ends after that verse.
 
-## Impact
+## Repair And Validation
 
-- Boundary checks against the corrupt dataset could certify almost any proposed segmentation in dense books.
-- Exact verse-end verification was impossible because the old data recorded only verse references, not within-verse position.
-- The source attribution was inaccurate: the committed files claimed Sefaria provenance that did not match the actual corrected witness pipeline.
+The repaired corpus is generated from OSHB/WLC XML at
+`3d15126fb1ef74867fc1434be1942e837932691f` by
+`plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py`.
+It reads explicit XML marker elements, verifies every source file against
+`oshb-checksums.json`, and emits schema-versioned JSON with per-marker
+position semantics.
 
-## Corrective Actions
+The issue #128 audit is intentionally independent of production runtime APIs.
+It archives all 39 corrupt JSON files, verifies fixture SHA-256 values before
+analysis, reproduces Genesis/Ruth from historical Sefaria sources, checks
+witness-labelled OSHB/WLC goldens, and prints corrected density metrics.
 
-- Replaced the corrupt dataset with a committed OSHB-based extractor, pinned source revision, and SHA-256 lockfile.
-- Added per-marker position and stable event identity to the corrected dataset.
-- Added permanent forensic fixtures and a reproduction test path so the historical failure mode stays reproducible.
-- Added this incident report and a separate provenance note for the paragraph-marker corpus.
+The main branch also carries a skill-local forensic archive under
+`plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/fixtures/masoretic-corruption/`.
+That archive is useful incident evidence beside the canonical extractor; the
+server-side bundle documented here is the independently checkable issue #128
+audit artifact.
 
-## Remaining Boundary
+Run:
 
-What is reproduced here is a forensic measurement against the same WLC textual base, not a byte-for-byte rerun of the original uncommitted script. That boundary is explicit and intentional.
+```bash
+python3 server/scripts/reproduce-masoretic-corruption.py
+python3 server/scripts/test_reproduce_masoretic_corruption.py -v
+```
+
+Validation limits:
+
+- The original uncommitted extractor is not recoverable.
+- The historical Sefaria sources are a byte-pinned reconstruction that exactly
+  reproduces its committed outputs for Genesis and Ruth.
+- The current corpus is OSHB/WLC-specific; other witnesses can legitimately
+  disagree.
+
+## Prevention Lessons
+
+- Feature extraction must parse source structure, not inspect display text for
+  meaningful letters or symbols.
+- Every data source must name its witness and upstream revision.
+- Dense-reference data needs count and density checks that can fail loudly.
+- Verification code must match exact structured references, not substrings.
+- Historical corrupt data may be archived only in clearly quarantined fixture
+  locations with manifest hashes and explicit "intentionally wrong" labels.
