@@ -468,8 +468,11 @@ any proposed passage division.
 
 - New Testament discourse features: `../levinsohn/README.md`
 - Extractor: `../../scripts/extract_oshb_paragraphs.py`
+- Forensic reproduction: `../../scripts/reproduce_masoretic_corruption.py`
 - Loader: `../../scripts/sefaria_paragraphs.py` (loads only; does not extract)
 - Usage in skill: `../../SKILL.md`
+- Incident report: `../../../../../docs/incidents/masoretic-marker-corruption.md`
+- Provenance note: `../../../../../docs/data-provenance/paragraph-markers.md`
 
 ## What this dataset does and does not claim
 
