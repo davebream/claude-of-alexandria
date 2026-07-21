@@ -1,6 +1,6 @@
 # RED Scenario Coverage Matrix
 
-**Last updated:** 2026-06-15
+**Last updated:** 2026-07-21
 **Total RED scenarios:** 56 (skills) + 11 (agents) = 67 (includes 3 new passage-glossary RED scenarios)
 
 ## Genre Taxonomy
@@ -97,6 +97,20 @@
 | Gospel | 1 (John) | 0 | 1 (John) | 0 | 0 | 3 (John) ★ |
 
 _Cells showing 0 are coverage gaps. ★ = added by coverage audit._
+
+## Source-Derived Gold Coverage (EXTENDED)
+
+This separate table counts on-demand correctness scenarios backed by published,
+license-compatible boundary sources. It does not alter the RED failure-mode counts
+above. Each non-zero cell is exercised by deterministic range and witness-marker
+assertions plus one boundary-quality rubric.
+
+| Genre | biblical-segmentation | pericope-delimitation | Gold source status |
+|-------|----------------------|----------------------|--------------------|
+| Law | 1 (Lev 1) | 1 (Lev 1:1-17) | Kline Torah Literary Units v1.0 + WLC/OSHB |
+| Narrative | 1 (Gen 11:1-9) | 1 (Gen 11:1-9) | Kline Torah Literary Units v1.0 + WLC/OSHB |
+| Prophecy | 0 | 0 | deferred — no license-compatible source |
+| Poetry/Wisdom | 0 | 0 | deferred — no license-compatible source |
 
 ## MCP Tool Coverage
 
