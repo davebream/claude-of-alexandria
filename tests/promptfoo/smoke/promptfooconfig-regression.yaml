@@ -50,7 +50,7 @@ tests:
   - description: "R3: query_lexicon returns Hebrew entry (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["H7225"].
+        Use the query_lexicon tool with mode="strongs" and strongs_ids=["H7225"].
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -63,7 +63,7 @@ tests:
   - description: "R3a: query_lexicon returns Greek LSJ entry (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["G4561"].
+        Use the query_lexicon tool with mode="strongs" and strongs_ids=["G4561"].
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -76,7 +76,7 @@ tests:
   - description: "R3b: query_lexicon returns H1 entry — H1-H9 padding fix (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["H1"].
+        Use the query_lexicon tool with mode="strongs" and strongs_ids=["H1"].
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -96,7 +96,7 @@ tests:
   - description: "R3c: query_lexicon handles mixed Greek+Hebrew batch (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["G3056", "H7225"].
+        Use the query_lexicon tool with mode="strongs" and strongs_ids=["G3056", "H7225"].
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -111,7 +111,7 @@ tests:
   - description: "R3d: query_lexicon compact mode unchanged (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with strongs_ids=["G4561"] and compact=true.
+        Use the query_lexicon tool with mode="strongs" and strongs_ids=["G4561"] and compact=true.
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -125,7 +125,7 @@ tests:
   - description: "R3e: query_lexicon lemma lookup returns entry (Phase 2+)"
     vars:
       prompt: >
-        Use the query_lexicon tool with lemmas=["λόγος"].
+        Use the query_lexicon tool with mode="lemmas" and lemmas=["λόγος"].
         Return the raw tool output only.
     assert:
       - type: javascript
@@ -138,7 +138,7 @@ tests:
   - description: "R3f: query_lexicon search mode returns Greek result for 'love' (F3)"
     vars:
       prompt: >
-        Use the query_lexicon tool with search="love".
+        Use the query_lexicon tool with mode="search" and search="love".
         Return the raw tool output only, no analysis.
     assert:
       - type: javascript
@@ -149,12 +149,12 @@ tests:
           return lower.includes('g0026') || lower.includes('agape') || lower.includes('ἀγάπη') || lower.includes('agapē');
       - type: javascript
         value: |
-          // results_capped field must be present (boolean, not a key error)
           const out = context.vars?.output || output || '';
-          const match = out.match(/results_capped["\s:]+(\w+)/i);
-          if (!match) return false;
-          const val = match[1].toLowerCase();
-          return val === 'true' || val === 'false';
+          // V4 pagination replaces results_capped and always exposes page metadata.
+          return out.includes('page') &&
+            out.includes('returned') &&
+            out.includes('total') &&
+            !out.includes('results_capped');
 
   - description: "R4: query_cross_references returns results (Phase 2+)"
     vars:

@@ -250,8 +250,8 @@ describe('mode="keyword"', () => {
 
 // ─── character-limit guard ────────────────────────────────────────────────────
 
-describe('character-limit guard', () => {
-  it('truncates by removing documents with fewest sections when limit exceeded', async () => {
+describe('protocol pagination handoff', () => {
+  it('returns complete records to the shared protocol paginator', async () => {
     // Generate 60 rows with unique slugs — each becomes its own document (1 section each)
     // 60 docs × ~300 chars each = ~18k — may or may not exceed 25k depending on content size
     // Use longer content to ensure we exceed the limit
@@ -269,12 +269,8 @@ describe('character-limit guard', () => {
     const result = await confessionalLookup({ mode: 'keyword', keyword: 'election' });
 
     const body = JSON.parse((result.content[0] as { text: string }).text);
-    // The serialized result should be within the character limit (with margin for truncation_message)
-    expect(JSON.stringify(body).length).toBeLessThanOrEqual(25_000 + 600);
-    // If truncation occurred, truncated flag should be set
-    if (body.truncated) {
-      expect(body.truncation_message).toBeTruthy();
-      expect(body.documents.length).toBeLessThan(60);
-    }
+    expect(body.documents).toHaveLength(60);
+    expect(body.truncated).toBeUndefined();
+    expect(body.truncation_message).toBeUndefined();
   });
 });

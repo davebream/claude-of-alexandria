@@ -416,7 +416,8 @@ describe('traceCrossReferencePath — traversal', () => {
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
     expect(body.found).toBe(false);
-    expect(body.truncated).toBe(false);
+    expect(body.complete).toBe(true);
+    expect(body.termination_reason).toBe('exhausted');
     // path is empty
     expect(body.path).toHaveLength(0);
   });
@@ -433,7 +434,8 @@ describe('traceCrossReferencePath — traversal', () => {
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
     expect(body.found).toBe(false);
-    expect(body.truncated).toBe(true);
+    expect(body.complete).toBe(false);
+    expect(body.termination_reason).toBe('max_hops');
   });
 
   it('range-explode cap: to range wider than RANGE_EXPLODE_CAP sets truncated:true and non-start verses are NOT enqueued', async () => {
@@ -466,7 +468,8 @@ describe('traceCrossReferencePath — traversal', () => {
     );
 
     const body = JSON.parse(result.content[0].text);
-    expect(body.truncated).toBe(true);
+    expect(body.complete).toBe(false);
+    expect(body.termination_reason).toBe('response_budget');
     // Romans 8:3 is NOT found — only start verse (8:1) was enqueued
     expect(body.found).toBe(false);
   });
@@ -500,7 +503,8 @@ describe('traceCrossReferencePath — traversal', () => {
 
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
-    expect(body.truncated).toBe(true);
+    expect(body.complete).toBe(false);
+    expect(body.termination_reason).toBe('node_budget');
     expect(body.found).toBe(false);
   });
 
@@ -532,7 +536,8 @@ describe('traceCrossReferencePath — traversal', () => {
 
     expect(result.isError).toBeFalsy();
     const body = JSON.parse(result.content[0].text);
-    expect(body.truncated).toBe(true);
+    expect(body.complete).toBe(false);
+    expect(body.termination_reason).toBe('edge_budget');
   });
 
   it('character limit guard: truncated:true, path stays adjacency-intact, note field omitted', async () => {
@@ -569,7 +574,8 @@ describe('traceCrossReferencePath — traversal', () => {
 
     const body = JSON.parse(result.content[0].text);
     expect(body.found).toBe(true);
-    expect(body.truncated).toBe(true);
+    expect(body.complete).toBe(false);
+    expect(body.termination_reason).toBe('response_budget');
     // note field must be omitted (design C4 — dropped to save budget)
     expect('note' in body).toBe(false);
     // path must be adjacency-intact: all hops present, no interior gaps

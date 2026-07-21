@@ -100,8 +100,7 @@ describe('queryLexicon search — result shape', () => {
     expect(body.entries[0].abbott_smith_definition).toMatch(/love/i);
     // No not_found field in search responses
     expect(body.not_found).toBeUndefined();
-    // results_capped field present
-    expect(typeof body.results_capped).toBe('boolean');
+    expect(body.results_capped).toBeUndefined();
   });
 
   it('deduplicates when LSJ and Abbott-Smith match the same Strong ID', async () => {
@@ -136,8 +135,7 @@ describe('queryLexicon search — result shape', () => {
     expect(body.entries.some((e: any) => e.strongs_id === 'H1285')).toBe(true);
   });
 
-  it('sets results_capped=true when combined results reach 20', async () => {
-    // Simulate 20 LSJ results — cap should fire
+  it('returns the complete deduplicated search set before protocol pagination', async () => {
     const lsjRows = Array.from({ length: 20 }, (_, i) => ({
       strongs_id: `G${String(i + 1).padStart(4, '0')}`,
       gloss: `word${i}`,
@@ -154,8 +152,8 @@ describe('queryLexicon search — result shape', () => {
 
     const result = await queryLexicon({ search: 'word' } as any);
     const body = JSON.parse(result.content[0].text);
-    expect(body.results_capped).toBe(true);
-    expect(body.entries.length).toBeLessThanOrEqual(20);
+    expect(body.results_capped).toBeUndefined();
+    expect(body.entries).toHaveLength(21);
   });
 
   it('is compatible with compact=true', async () => {

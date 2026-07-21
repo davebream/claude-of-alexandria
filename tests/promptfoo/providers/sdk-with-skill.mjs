@@ -55,10 +55,11 @@ const MCP_TOOLS = [
   "query_ot_quotes",
   "query_lemmas",
   "query_themes_for_lemmas",
-  "query_theme",
+  "query_theme_distribution",
   "query_lexicon",
   "check_versification",
   "query_cross_references",
+  "trace_cross_reference_path",
   "query_people",
   "query_places",
   "query_events",
@@ -69,6 +70,9 @@ const MCP_TOOLS = [
   "bible_lookup",
   "commentary_lookup",
   "parallel_text",
+  "confessional_lookup",
+  "liturgical_lookup",
+  "query_controversies",
 ].map((name) => `mcp__${MCP_SERVER_KEY}__${name}`);
 
 export default class SdkWithSkillProvider extends SdkProvider {
