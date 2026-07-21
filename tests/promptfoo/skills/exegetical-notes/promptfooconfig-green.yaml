@@ -11,8 +11,7 @@
 #   S16-S17: F4 self-critique (indicative ground, redemptive-historical link)
 #
 # RED scenario coverage audit:
-#   S18: Wisdom genre — Job 38:1-11 (genre-graduated method)
-#   S19: Wisdom genre — Ecclesiastes 1:1-11 (hebel semantic range)
+#   S18: Wisdom genre — Job 38:1-11 (genre-graduated method; holds the wisdom-genre gate)
 #   S20: Sparse MCP data — Obadiah 1-4 (degraded-data fallback)
 #   S21: Law genre — Leviticus 16:1-10 (covenantal-fulfillment framework)
 #
@@ -45,7 +44,8 @@ defaultTest:
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
     # MCP tool citation check: output must reference expected MCP tools.
-    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    # metadata.toolCalls is populated by sdk-provider.mjs (it accumulates the SDK
+    # message stream); this checks tools ACTUALLY called, OR-ed with a prose fallback.
     - type: javascript
       value: |
         const lower = output.toLowerCase();
@@ -597,34 +597,10 @@ tests:
           FAIL if any criterion is violated — especially if a direct
           redemptive-historical arc is forced or the speech is moralized.
 
-  # =========================================================================
-  # Scenario 19: Wisdom Genre — Ecclesiastes 1:1-11
-  # Correction: genre-graduated method with canonical-literary framing
-  # =========================================================================
-  - description: "S19 GREEN: Ecclesiastes 1:1-11 — genre-graduated wisdom method"
-    vars:
-      prompt: "Generate exegetical notes for Ecclesiastes 1:1-11 --output print"
-    assert:
-      # hebel vocabulary addressed
-      - type: icontains
-        value: "hebel"
-      # Genre-graduated method
-      - type: llm-rubric
-        value: |
-          Evaluate whether the exegetical notes for Ecclesiastes 1:1-11:
-          1. Explore the semantic range of הֶבֶל (hebel) beyond a single flat
-             translation — discussing breath/vapor/transience/enigma options
-          2. Identify wisdom as the governing genre and explain how it constrains
-             the redemptive-historical methodology (indirect, creation-theology
-             mediated, not direct promise-fulfillment)
-          3. Place Qoheleth in canonical-literary context (the epilogue frame,
-             the wisdom tradition's role in Israel's theology)
-          4. Do NOT read Ecclesiastes as nihilistic OR as straightforwardly
-             optimistic — both are genre violations
-
-          PASS if all four criteria are met.
-          FAIL if hebel is translated flatly, a direct redemptive-historical
-          arc is forced, or canonical framing is absent.
+  # (Removed S19 Ecclesiastes wisdom — same contract branch as S18 Job wisdom
+  # genre governance, differing only in passage. Per ADR 0002, one scenario per
+  # contract branch: S18 holds the wisdom-genre gate; EXTENDED's STRESS2 keeps
+  # additional wisdom coverage. Passage variety is not failure-mode variety.)
 
   # =========================================================================
   # Scenario 20: Sparse MCP Data — Obadiah 1-4
