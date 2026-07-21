@@ -48,5 +48,5 @@ re-extraction at the pinned commit is byte-identical **except** for 1,160 words
 tagged MorphGNT code `RI`, whose `pos` label reads `interrogative_pronoun` in the
 committed files but `interrogative_indefinite_pronoun` in current output. The
 underlying morphology (lemma, parsing, counts) is unchanged. This label refresh
-is intentionally **not** applied here — it is tracked as a separate follow-up so
-the data change is reviewed on its own (issue #145, AC-2).
+is intentionally **not** applied here — it is tracked as issue #148 so the data
+change is reviewed on its own (surfaced by issue #145, AC-2).
