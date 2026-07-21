@@ -24,6 +24,13 @@ License: SIL International Custom License
   license as CC-BY-SA. The correct license is the SIL International Custom
   License described above.
 
+  NOTE: The git commit message that introduced this data (56c1e80) attributed
+  it to OpenText.org. That attribution is incorrect. A 2026-07-21 audit
+  (issue #125) compared all 33 feature files (52,257 records) against
+  github.com/biblicalhumanities/levinsohn at commit badd3a1043aebfa9907d0515069a4be1dd6eeb7a
+  and found an exact match in content, order, and record count. The source
+  above (SIL International / biblicalhumanities LGNTDF) is confirmed correct.
+
 -------------------------------------------------------------------------------
 
 SEFARIA MASORETIC PARAGRAPH DATA (Petuchot/Setumot)
