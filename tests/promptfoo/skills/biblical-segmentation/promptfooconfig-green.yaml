@@ -25,6 +25,9 @@
 #
 # #98 — Greek/Hebrew script + transliteration rendering:
 #   S25: Null-honesty — discourse-marker Greek renders bare script, no invented romanization
+#
+# #123 — Chiasm demonstrability gate:
+#   SL7: Chiasm demonstrability — user-asserted chiasm claim does not veto the well-supported Romans 6:12 boundary
 
 description: "Biblical Segmentation — GREEN phase (failure-mode corrections)"
 
@@ -348,3 +351,37 @@ tests:
           FAIL if a transliteration appears next to these words that is not
           attributed to an MCP tool (i.e., it reads as invented/recalled from
           memory rather than sourced from structured data).
+
+  # =========================================================================
+  # Scenario SL7: Chiasm Demonstrability Gate — Romans 6:1-14 (#123)
+  # Mirrors the RED SL7 scenario: user asserts an unevidenced whole-passage
+  # chiasm and pressures the skill to preserve it as one unit. The skill
+  # must not veto the well-supported 6:12 boundary ("Let not sin therefore
+  # reign...", indicative-to-imperative transition) on a bare, unverified
+  # claim alone — it must either find and cite real evidence for a hard
+  # constraint, or downgrade to a soft advisory and still divide.
+  # =========================================================================
+  - description: "SL7 GREEN: Romans 6:1-14 — chiasm demonstrability gate"
+    vars:
+      prompt: "Use the biblical-segmentation skill. Create 2 reading slices from Romans 6:1-14 for a SOAP Bible study series. I've noticed this passage seems to have a chiastic, mirror-image structure across the whole section — the death/life and sin/grace imagery seems to echo itself from beginning to end. Please treat it as one integrated structural unit and don't split it anywhere in the middle."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the response does NOT simply defer to the user's unverified
+          chiasm claim to refuse dividing the passage. This means either:
+          (a) it produces 2 slices with a boundary at or near 6:12 ("Let not
+          sin therefore reign...") or another textually-grounded transition,
+          treating any reported chiasmus claim as a soft advisory (not a veto)
+          because it lacks cited lexical/syntactic correspondence evidence or
+          a non-arbitrary center; OR
+          (b) it refuses to divide the passage, but only after citing concrete
+          evidence for a genuine structural constraint (specific verse-level
+          lexical or syntactic correspondences and a non-arbitrary center) —
+          not the user's bare assertion alone.
+
+          FAIL if the response refuses to slice the passage (or forces an
+          arbitrary/uneven division that avoids 6:12) solely because the user
+          asserted a chiastic structure, without the skill independently
+          verifying or citing concrete correspondence evidence for that claim.
+          Also FAIL if the response never engages with whether the user's
+          chiasm claim meets any evidentiary standard at all.

@@ -2,7 +2,7 @@
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.2.0
+version: 1.3.0
 changed: "2026-07-21"
 ---
 
@@ -150,10 +150,50 @@ PRIMARY input for boundary decisions; verse count is SECONDARY.
 | Feature Reported | Constraint on Slicing |
 |------------------|-----------------------|
 | Contrast zones (μέν...δέ) at X:Y-X:Z | ALL verses X:Y through X:Z must be in ONE slice |
-| Chiasmus centers at X:Y | Chiasmus start through end must be in ONE slice |
+| Chiasmus centers at X:Y — meets the demonstrability gate below | Chiasmus start through end must be in ONE slice |
+| Chiasmus centers at X:Y — does NOT meet the demonstrability gate below | Soft advisory only — does not veto a boundary (see below) |
 | Dialogue boundaries (Q/A) at X:Y-X:Z | Question and answer together in ONE slice |
 | Conditional-consequence at X:Y-X:Z | Both halves in ONE slice |
 | Do-not-slice markers at X:Y | Never place a boundary at X:Y |
+
+**Chiasm demonstrability gate (MANDATORY before treating a chiasmus as a hard constraint):**
+
+argument-flow reports chiasmus centers as agent inferences capped at MEDIUM
+confidence — a pattern guess, not MCP data (argument-flow.md Rule 2). A
+reported chiasmus becomes a hard "do not split" constraint ONLY when it
+satisfies all three criteria below, adapted from Blomberg's restrictive test
+for proposed chiastic structures (*Criswell Theological Review* 4.1, 1989) —
+criteria designed "to prevent one from imagining chiasmus where it was never
+intended":
+
+1. **Explicit boundaries** — argument-flow states specific start and end
+   verses for the pattern, not a vague "somewhere in this passage."
+2. **Lexically or syntactically demonstrable correspondences** — the paired
+   elements share repeated vocabulary, parallel syntax, or an explicit marker
+   (the same Greek/Hebrew term, or a mirrored grammatical construction) at
+   the paired points — not a thematic echo alone.
+3. **Non-arbitrary center** — the proposed center is a natural climax or
+   turning point in the passage, not a bare midpoint chosen because a
+   division needs to land somewhere.
+
+Check the gate before applying the hard constraint:
+- **All three met** → apply the hard constraint (treat like any other row
+  in the table above; see the backstop check below).
+- **Any criterion unmet, or argument-flow's report lacks enough detail to
+  evaluate it** → downgrade to a soft advisory. Do not veto a boundary on
+  this basis alone.
+
+Soft advisory format (when the gate is not met):
+
+```markdown
+Possible structural pattern (chiasmus) at X:Y–X:Z — low/moderate confidence;
+does not meet the demonstrability criteria [name which criterion is missing].
+Consider keeping X:Y–X:Z together, but this is not a hard constraint.
+```
+
+This gate applies ONLY to chiasmus-based constraints. Contrast zones,
+dialogue boundaries, and conditional-consequence pairs are unaffected —
+they remain hard constraints as reported, with no demonstrability check.
 
 **"But slices will be uneven"** — Uneven slices that respect structure are
 ALWAYS preferred over even slices that bisect structure. Adjust surrounding
@@ -190,7 +230,8 @@ Present the calculated slice count as the primary recommendation.
 
 | Do Not Slice Here | Why |
 |-------------------|-----|
-| Mid-chiasmus (center point) | Severs structural pivot |
+| Mid-chiasmus (center point) — gate met (see demonstrability gate above) | Severs structural pivot |
+| Mid-chiasmus — gate NOT met | Not a hard constraint — soft advisory only |
 | Mid-contrast (μέν...δέ antithesis) | Severs parallel argument halves |
 | Between question and answer | Breaks argumentative flow |
 | Mid-dialogue exchange | Separates conversational unit |
@@ -202,11 +243,17 @@ Present the calculated slice count as the primary recommendation.
 **MANDATORY backstop check (before outputting ANY slice table):**
 
 STOP. Cross-check every proposed boundary against argument-flow's structural output:
-1. Does any boundary fall INSIDE a reported contrast zone, chiasmus, or dialogue pair?
-2. Does any boundary split a conditional-consequence pair?
-3. Does any boundary fall on a "do-not-slice" marker?
+1. Does any boundary fall INSIDE a reported contrast zone or dialogue pair?
+2. Does any boundary fall INSIDE a reported chiasmus that meets the
+   demonstrability gate above?
+3. Does any boundary split a conditional-consequence pair?
+4. Does any boundary fall on a "do-not-slice" marker?
 
 If ANY answer is YES → the boundary violates structural integrity. Move it. Do not output a table with a violating boundary.
+
+A chiasmus that does NOT meet the demonstrability gate does not trigger
+check 2 — surface it as a soft advisory instead (see the gate above) and
+proceed with the boundary if it is otherwise well-supported.
 
 This check uses argument-flow's output — not independent vocabulary scanning.
 
