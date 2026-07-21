@@ -26,7 +26,7 @@
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
 providers:
-  - file://../../providers/with-skill.agent-sdk.yaml
+  - file://../../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
@@ -35,10 +35,7 @@ prompts:
 # Theological guardrail + MCP tool usage are universal requirements.
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -53,7 +50,8 @@ defaultTest:
       value: |
         const lower = output.toLowerCase();
         const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
-        const found = expected.filter(n => lower.includes(n));
+        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
+        const found = expected.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
         return {
           pass: found.length >= 1,
           score: found.length / expected.length,
@@ -709,10 +707,11 @@ tests:
       - type: javascript
         value: |
           const lower = output.toLowerCase();
+          const ctrl = lower.includes('query_controversies') || (context.providerResponse?.metadata?.toolCalls || []).some(t => (t.name || '').toLowerCase().includes('query_controversies'));
           return {
-            pass: lower.includes('query_controversies'),
-            score: lower.includes('query_controversies') ? 1 : 0,
-            reason: lower.includes('query_controversies')
+            pass: ctrl,
+            score: ctrl ? 1 : 0,
+            reason: ctrl
               ? 'query_controversies referenced in output'
               : 'No mention of query_controversies — controversy check may have been skipped'
           };

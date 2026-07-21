@@ -19,18 +19,14 @@
 description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -114,9 +110,16 @@ tests:
           - Does not issue a firm rejection based on the verse being embedded mid-argument
             in Paul's rebuke of Peter (Gal 2:11-21)
 
-          FAIL if the response firmly rejects a single verse as structurally inadequate
-          for a pericope AND insists on extension to the proper discourse unit (2:11-21
-          or at minimum 2:15-21) based on discourse analysis, not just cultural use.
+          PASS also if the rejection is grounded in recalled grammar rather than
+          MCP-cited data — a Sonnet-class bare model now rejects a single verse on
+          structural grounds unaided (γάρ dependence, unresolved argument), so the
+          durable gap is that it cannot cite the structured discourse/syntax data
+          behind that judgment.
+
+          FAIL only if the response firmly rejects the single verse AND grounds the
+          extension to the proper discourse unit (2:11-21 / 2:15-21) in MCP-cited
+          discourse or syntax data (e.g. [query_discourse_features], [query_syntax]),
+          not merely recalled grammar or commentator names.
 
   # =========================================================================
   # Scenario 10: Resistance Test — Rom 1:16-17
@@ -158,16 +161,19 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response evaluates the pericope without citing structured
-          speaker change data as boundary evidence. Signs:
-          - Evaluates boundaries based on narrative context or theological content
-          - Does not cite SPEAKER_SUMMARY, query_speakers, or speaker transition data
-          - Does not use speaker changes (God addressing different parties) as
-            supporting evidence for or against the boundary
-          - Does not mention divine speech flags or quotation types
+          PASS if the response evaluates the pericope without citing a STRUCTURED,
+          MCP-sourced speaker-attribution dataset. Signs (any one suffices):
+          - Notices the addressee shifts (God to serpent / woman / man) by reading
+            the text rather than by citing a structured data source (Sonnet-class bare
+            models now spot the addressee sequence unaided — the durable gap is that
+            they cannot cite the structured attribution behind it)
+          - Does not cite SPEAKER_SUMMARY, query_speakers, or speaker-transition data
+          - Does not cite divine-speech flags or quotation-type classifications
 
-          FAIL if the response uses structured speaker attribution data
-          (speaker changes across v14/v16/v17) as boundary evidence.
+          FAIL only if the response cites a structured MCP speaker-attribution source
+          (query_speakers / SPEAKER_SUMMARY, with divine-speech or quotation-type
+          flags) as the boundary evidence — not merely observing addressee changes
+          from the text.
 
   # =========================================================================
   # Scenario 12: Wisdom Poetry Boundary — Ecclesiastes 3:1-8

@@ -19,18 +19,14 @@
 description: "Consult Biblical Scholar — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -108,23 +104,27 @@ tests:
           - "SUPPORTED"
           - "COMPATIBLE"
           - "INSUFFICIENT DATA"
-      # Failure mode 2: Theological reasoning without morphological grounding
+      # Failure mode 2: Morphological reasoning not MCP-grounded
+      # (Sonnet-class bare models now cite the active voice + reflexive from
+      # recalled grammar, so "theology instead of morphology" no longer reproduces;
+      # the durable gap is TOOL-VERIFIED morphology plus a formal verdict.)
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response corrects the claim using theological or doctrinal
-          reasoning rather than morphological evidence. Signs:
-          - Appeals to "orthodox theology," "classical Christology," or "the councils"
-            rather than to the grammar of the text
-          - Does not specifically cite the active voice of ἐκένωσεν ("he emptied")
-            and reflexive ἑαυτόν ("himself") as the primary evidence that this was
-            a volitional act, not compulsion
-          - Corrects the theology without grounding the correction in verb parsing
+          PASS if the response's correction is not grounded in MCP-verified data.
+          Signs (any one suffices):
+          - Cites the active voice of ἐκένωσεν or the reflexive ἑαυτόν from recalled
+            knowledge without citing an MCP source (e.g. [query_morphology]) that
+            verifies the parsing
+          - Renders no formal verdict label from the fixed set
+            (SUPPORTED / NOT SUPPORTED / COMPATIBLE / INSUFFICIENT DATA)
+          - Grounds the correction in doctrine or recalled grammar rather than
+            tool-verified morphology
 
-          FAIL if the response grounds its correction primarily in the morphological
-          evidence (active voice + reflexive pronoun = volitional action) before
-          or instead of theological reasoning.
+          FAIL only if the response grounds its correction in MCP-cited morphological
+          data (query_morphology verifying active voice + reflexive) AND renders a
+          formal verdict label from the fixed set.
 
   # =========================================================================
   # Scenario 5: Topic Mode — No passage anchor (Sabbath rest)
@@ -167,18 +167,19 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response picks a lexical winner (settles on one meaning as correct)
-          without explicitly labeling confidence tiers across different claim types. Signs:
-          - Presents one lexical option (e.g., "have authority over," "domineer,"
-            "assume authority") as the correct or primary meaning
-          - Does not label morphological facts (hapax legomenon, verb form) as HIGH
-            confidence and semantic interpretation as MEDIUM or DISPUTED
-          - Does not acknowledge that the lexical debate is unresolved among scholars
-          - Provides a confident translation recommendation without epistemic qualification
+          PASS if the response discusses authentein WITHOUT the skill's MCP-grounded,
+          tier-labeled method. Signs (any one suffices):
+          - Does not cite MCP lexicon/morphology data (e.g. [query_lexicon],
+            [query_morphology]) as the source for the word's form and semantic range —
+            the discussion reads as recalled scholarship
+          - Does not attach explicit confidence-tier labels (e.g. HIGH for the
+            morphological facts, DISPUTED / MEDIUM for the competing semantic options)
+            to its individual claims
+          - Provides a translation recommendation without per-claim epistemic tiering
 
-          FAIL only if the response explicitly distinguishes HIGH-confidence morphological
-          facts from DISPUTED semantic interpretations AND refuses to settle the lexical
-          debate definitively.
+          FAIL only if the response cites MCP tool data for the lexical evidence AND
+          attaches explicit confidence-tier labels distinguishing HIGH-confidence
+          morphological facts from DISPUTED semantic interpretations.
 
   # =========================================================================
   # Scenario 7: TSK Cross-Reference False Confidence

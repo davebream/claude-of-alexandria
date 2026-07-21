@@ -1,6 +1,0 @@
-# DEPRECATED: Use anthropic:messages:claude-sonnet-4-6-20250514 inline in configs.
-# This file is retained for rollback reference only.
-id: anthropic:messages:claude-sonnet-4-6-20250514
-label: grader
-config:
-  temperature: 0

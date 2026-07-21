@@ -29,17 +29,14 @@
 description: "Biblical Segmentation — GREEN phase (failure-mode corrections)"
 
 providers:
-  - file://../../providers/with-skill.agent-sdk.yaml
+  - file://../../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -56,7 +53,8 @@ defaultTest:
         const mcpTools = ['query_vocabulary', 'query_discourse_features', 'query_paragraph_breaks'];
         const contractTerms = ['tool_results', 'discourse_summary', 'paragraph_markers', 'data-retriever'];
         const naturalEvidence = ['levinsohn', 'sefaria', 'masoretic', 'petuch', 'setum'];
-        const foundMcp = mcpTools.filter(n => lower.includes(n));
+        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
+        const foundMcp = mcpTools.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
         const foundContract = contractTerms.filter(n => lower.includes(n));
         const foundNatural = naturalEvidence.filter(n => lower.includes(n));
         const totalFound = foundMcp.length + foundContract.length + foundNatural.length;

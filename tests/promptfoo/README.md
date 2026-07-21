@@ -1,6 +1,6 @@
 # Promptfoo Skill Evaluation Tests
 
-Automated RED/GREEN testing for Claude of Alexandria skills using [promptfoo](https://promptfoo.dev) with the `anthropic:claude-agent-sdk` provider.
+Automated RED/GREEN testing for Claude of Alexandria skills using [promptfoo](https://promptfoo.dev) with the Claude Agent SDK. Evaluations run entirely on a Claude Code subscription (OAuth) via custom providers under `providers/sdk-*.mjs` — no paid API keys. See `.env.example` for the single required credential.
 
 ## What This Tests
 
@@ -8,8 +8,8 @@ Each skill has two test phases:
 
 | Phase | Purpose | Provider |
 |-------|---------|----------|
-| **RED** | Confirms the bare model (no skill, no MCP) exhibits the documented failure modes | `without-skill.yaml` |
-| **GREEN** | Confirms the skill + MCP tools correct those failures | `with-skill.yaml` |
+| **RED** | Confirms the bare model (no skill, no MCP) exhibits the documented failure modes | `providers/sdk-bare.mjs` |
+| **GREEN** | Confirms the skill + MCP tools correct those failures | `providers/sdk-with-skill.mjs` |
 
 A RED test that *passes* means the failure mode was successfully reproduced. A GREEN test that *passes* means the skill prevents the failure.
 
@@ -71,8 +71,10 @@ package.json                 # Delegates eval scripts to tests/promptfoo (run fr
 
 tests/promptfoo/
 ├── providers/
-│   ├── with-skill.yaml      # GREEN provider: skills + MCP enabled
-│   └── without-skill.yaml   # RED provider: bare model, no skills
+│   ├── sdk-provider.mjs     # Base: Agent SDK via OAuth (strips ANTHROPIC_API_KEY)
+│   ├── sdk-with-skill.mjs   # GREEN provider: plugin skills + MCP enabled
+│   ├── sdk-bare.mjs         # RED provider: bare model, no skills, no MCP
+│   └── sdk-grader.mjs       # llm-rubric judge (bare model inference)
 ├── skills/
 │   └── {skill-name}/
 │       ├── promptfooconfig-red.yaml    # RED phase tests
@@ -101,12 +103,12 @@ These failures are **genuine skill gaps** correctly documented by the tests — 
 
 ## Judge Calibration
 
-The project uses `llm-rubric` assertions graded by a separate judge model. The judge (grader) is intentionally distinct from the generator to reduce self-evaluation bias:
+The project uses `llm-rubric` assertions graded by a judge model. Evaluations run entirely on a Claude Code subscription (OAuth token) with no paid API keys, so both the generator and the grader are Claude via the Agent SDK. This is same-family grading (Claude judging Claude), which carries a self-enhancement bias risk; the calibration harness (`assertions/grader-calibration.yaml`, run with `npm run eval:calibration`) is the control — it feeds known-good and known-bad synthetic outputs through the grader to confirm it still discriminates correctly.
 
-| Role | Model | Config |
-|------|-------|--------|
-| **Generator** | `claude-sonnet-4-6-20250514` via Agent SDK | `providers/with-skill.agent-sdk.yaml` |
-| **Grader (judge)** | `openai:gpt-4o` | Inline in `defaultTest.options.provider` |
+| Role | Model | Provider |
+|------|-------|----------|
+| **Generator** | `sonnet` (alias) via Agent SDK, OAuth | `providers/sdk-with-skill.mjs` |
+| **Grader (judge)** | `sonnet` (alias) via Agent SDK, OAuth | `providers/sdk-grader.mjs` |
 
 ### Swap-Position Variants
 

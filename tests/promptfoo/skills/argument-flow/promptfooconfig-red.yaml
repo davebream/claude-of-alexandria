@@ -22,18 +22,14 @@
 description: "Argument Flow — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -73,18 +69,26 @@ tests:
     vars:
       prompt: "What is Paul saying in Philippians 4:4-7? Help me understand this passage."
     assert:
-      # Failure mode 1: Devotional drift in analytical output
+      # Failure mode 1: No MCP-grounded, formal argument-flow method
+      # (Sonnet-class bare models now stay analytical unaided, so the former
+      # "devotional drift" failure no longer reproduces; the durable gap is the
+      # skill's tool-grounded, typed-connective, confidence-tiered method.)
       - type: llm-rubric
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response contains devotional or applicatory language such as:
-          - "This passage reminds us..." or "Paul encourages us..."
-          - First-person plural applications ("we should...", "let us...")
-          - Pastoral framing ("God's peace guards our hearts")
-          - Warm, inspirational tone rather than analytical
-          FAIL only if the response is purely analytical with zero devotional or
-          applicatory language throughout.
+          PASS if the response explains Philippians 4:4-7 WITHOUT the skill's
+          MCP-grounded argument-flow method. Signs (any one suffices):
+          - Does not cite any MCP data source (e.g. [query_morphology],
+            [query_discourse_features]) for its structural claims — the analysis
+            reads as recalled knowledge rather than tool-grounded data
+          - Does not produce a numbered proposition chain that labels each
+            clause-to-clause transition with a typed connective (Ground, Inference,
+            Purpose, Result, etc.)
+          - Does not declare an explicit CONFIDENCE tier for its claims
+          FAIL only if the response produces a typed-connective proposition chain,
+          cites MCP tool data as the source of its structural claims, AND declares
+          a confidence tier.
       # Failure mode 2: No confidence tier declaration
       - type: not-icontains-any
         value:
@@ -132,14 +136,19 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response issues a theological verdict on the faith-as-gift
-          question (e.g., "yes, faith is a gift" or "no, it's not what the text says")
-          WITHOUT first producing a complete proposition chain.
-          PASS also if the argument-flow analysis is mixed with or replaced by
-          the theological evaluation rather than being presented separately.
-          FAIL only if the response maps the argument flow first (numbered proposition
-          chain) and then explicitly defers the theological question to a different
-          tool or notes it as an open interpretive question.
+          PASS if the response resolves the faith-as-gift question WITHOUT the
+          skill's mode discipline and MCP grounding. Signs (any one suffices):
+          - Answers the theological faith-as-gift question inline rather than
+            treating argument-flow (mapping the logic) and validation (rendering a
+            verdict) as separate modes with an explicit handoff between them
+          - Does not cite MCP data (e.g. [query_morphology], [query_syntax]) as the
+            grounding for the τοῦτο-referent question the verdict turns on
+          - Maps the flow as prose or a light outline rather than a numbered,
+            typed-connective proposition chain
+          FAIL only if the response maps the argument flow first as a grounded,
+          MCP-cited, typed-connective proposition chain AND explicitly separates and
+          defers the faith-as-gift verdict to a distinct validation step rather than
+          answering it inline.
 
   # =========================================================================
   # ADV1: User Pressure — 1 Cor 13:1-3

@@ -17,17 +17,14 @@
 description: "Pericope Delimitation — GREEN phase (failure-mode corrections)"
 
 providers:
-  - file://../../providers/with-skill.agent-sdk.yaml
+  - file://../../providers/sdk-with-skill.mjs
 
 prompts:
   - "{{prompt}}"
 
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -42,7 +39,8 @@ defaultTest:
       value: |
         const lower = output.toLowerCase();
         const expected = ['query_discourse_features', 'query_morphology'];
-        const found = expected.filter(n => lower.includes(n));
+        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
+        const found = expected.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
         return {
           pass: found.length >= 1,
           score: found.length / expected.length,

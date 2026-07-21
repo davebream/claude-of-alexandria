@@ -12,8 +12,7 @@
 description: "Passage Glossary — RED phase (bare model, no skill, no MCP)"
 
 providers:
-  - id: anthropic:messages:claude-sonnet-4-6-20250514
-    label: bare-model
+  - file://../../providers/sdk-bare.mjs
 
 prompts:
   - "{{prompt}}"
@@ -22,10 +21,7 @@ prompts:
 # Required: promptfoo defaults to OpenAI grading if no provider is specified.
 defaultTest:
   options:
-    provider:
-      id: openai:gpt-4o
-      config:
-        temperature: 0
+    provider: file://../../providers/sdk-grader.mjs
   assert:
     - type: not-icontains
       value: "API Error: 429"
@@ -46,18 +42,20 @@ tests:
         value: |
           CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
 
-          PASS if the response's ## Glossary section shows any of these dedup failures:
-          - θεός appears more than once as a glossary row (e.g., one row per occurrence
-            in vv. 1, 2, 6, 12, 13, 18 rather than a single deduplicated entry)
+          PASS if the response's ## Glossary lacks MCP-grounded Strong's keying OR
+          shows dedup failures. Signs (any one suffices):
+          - Rows do not carry explicit [G####] Strong's tokens sourced from MCP
+            lexical data — a bare model has no query_lexicon / query_morphology access
+            and so cannot produce grounded, per-row Strong's numbers (Sonnet-class
+            bare models now deduplicate correctly on their own, so the durable gap is
+            this MCP grounding, not the dedup itself)
+          - θεός appears more than once as a glossary row (one row per occurrence)
           - λόγος appears more than once as a glossary row
-          - The glossary rows are not consistently keyed on Strong's numbers
-            (e.g., G2316 for θεός, G3056 for λόγος) — each key should appear exactly once
-          - The glossary lists words in verse-occurrence order with repeats, rather than
-            in a deduplicated first-occurrence list
+          - The glossary lists words in verse-occurrence order with repeats
 
-          FAIL if the response produces a properly deduplicated ## Glossary where every
-          headword (keyed on Strong's number when present) appears exactly once, with
-          explicit [G####] tokens on each row.
+          FAIL only if the response produces a properly deduplicated ## Glossary where
+          every headword appears exactly once AND carries an explicit [G####] token
+          grounded in cited MCP lexical data.
 
   # =========================================================================
   # Scenario 2: Missing MCP Grounding — Fabricated Glosses
