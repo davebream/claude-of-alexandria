@@ -7,6 +7,8 @@ docs/*
 # ...but Architecture Decision Records are part of the repo — they are the public,
 # permanent rationale for decisions (see CLAUDE.md "Where to Put Things").
 !docs/adr/
+!docs/incidents/
+!docs/data-provenance/
 
 # Git worktrees
 .worktrees/
