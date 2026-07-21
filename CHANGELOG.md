@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - The bundled Levinsohn Greek New Testament discourse-feature data can now be regenerated from its exact upstream revision with a committed extractor and SHA-256 lockfile. Each reference also preserves its upstream word-position index, so repeated forms in the same verse can be identified unambiguously while existing verse-level consumers remain compatible.
-- Forensic reproduction artifacts for the July 2026 Masoretic marker corruption incident are now committed beside the canonical extractor: an archived copy of the pre-fix corrupt corpus, explicit Genesis/Ruth ground-truth goldens, a standalone reproduction script that proves the historical bug against the pinned OSHB witness bytes, offline unit tests, and permanent incident/provenance documentation.
+- A reproducible Masoretic paragraph-marker corruption audit now archives the 39 intentionally corrupt historical JSON files, byte-pinned Genesis/Ruth Sefaria sources, OSHB/WLC goldens, fixture hashes, incident notes, and current provenance records. The offline verifier proves the original letter-matching failure mode and prints corrected witness-scoped density metrics without changing production data.
 
 ### Fixed
 

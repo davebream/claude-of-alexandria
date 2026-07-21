@@ -1,0 +1,76 @@
+{
+  "genesis": {
+    "petuchot": 42,
+    "setumot": 50,
+    "total": 92,
+    "verse_end_petuchot_in_genesis_1_plus_2_3": [
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 5
+      },
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 8
+      },
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 13
+      },
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 19
+      },
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 23
+      },
+      {
+        "chapter": 1,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 31
+      },
+      {
+        "chapter": 2,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 3
+      }
+    ]
+  },
+  "ruth": {
+    "markers": [
+      {
+        "chapter": 4,
+        "ordinal_in_verse": 1,
+        "position": "verse_end",
+        "type": "petuchah",
+        "verse": 17
+      }
+    ],
+    "petuchot": 1,
+    "setumot": 0,
+    "total": 1
+  },
+  "schema_version": 1,
+  "source": "OpenScriptures Hebrew Bible / WLC",
+  "source_commit": "3d15126fb1ef74867fc1434be1942e837932691f",
+  "witness": "WLC/OSHB"
+}

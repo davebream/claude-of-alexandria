@@ -296,7 +296,7 @@ claude-of-alexandria/
 │       ├── agents/               # Per-agent RED/GREEN/EXTENDED configs
 │       ├── integration/          # Cross-skill pipeline scenarios
 │       └── smoke/                # Smoke + regression configs
-├── docs/                         # Plans, reviews, ADRs, PRDs, research
+├── docs/                         # Local plans/reviews plus committed ADRs, incidents, provenance
 ├── CLAUDE.md                     # You are here
 ├── CHANGELOG.md                  # Version history (Keep a Changelog format)
 ├── LICENSE                       # GPL-3.0
@@ -315,7 +315,7 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 | Code/architecture reviews | `docs/reviews/YYYY-MM-DD-descriptive-name.md` (local only, gitignored) |
 | Architecture decisions | `docs/adr/` |
 | Incident reports | `docs/incidents/` |
-| Durable provenance notes | `docs/data-provenance/` |
+| Data provenance records | `docs/data-provenance/` |
 | Skills | `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` |
 | Agents | `plugins/claude-of-alexandria/agents/agent-name.md` |
 | MCP tool handlers | `server/src/tools/` |
@@ -348,7 +348,7 @@ Always update `changed` to the current date on any modification.
 - Everything under `plugins/claude-of-alexandria/` — skills, agents, manifests
 - Everything under `server/` except build output and local state
 - Promptfoo configs in `tests/promptfoo/skills/`, `tests/promptfoo/agents/`, and `tests/promptfoo/integration/`
-- Permanent public documentation under `docs/adr/`, `docs/incidents/`, and `docs/data-provenance/`
+- Durable docs under `docs/adr/`, `docs/incidents/`, and `docs/data-provenance/`
 - `README.md`, `CLAUDE.md`, `CHANGELOG.md`, `LICENSE`, `NOTICE`
 
 **❌ Do not commit:**

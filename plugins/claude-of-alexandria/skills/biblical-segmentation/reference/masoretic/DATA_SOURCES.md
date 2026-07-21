@@ -6,6 +6,12 @@ This directory holds Masoretic paragraph markers (petuchot and setumot) for all
 39 Old Testament books, generated from the OpenScriptures Hebrew Bible (OSHB)
 at a pinned commit by a committed extractor.
 
+Durable records:
+
+- Incident report: `../../../../../../docs/incidents/masoretic-marker-corruption.md`
+- Provenance record: `../../../../../../docs/data-provenance/paragraph-markers.md`
+- Offline corruption audit: `../../../../../../server/scripts/reproduce-masoretic-corruption.py`
+
 **The extractor is the only legitimate way these files change.** Hand-editing a
 file here is never correct; a CI drift check regenerates the corpus and fails
 the build on any difference.
