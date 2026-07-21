@@ -58,7 +58,7 @@ Divides biblical books into coherent teaching units with integrity safeguards:
 - Validates against Masoretic paragraph markers and Levinsohn discourse features
 - Handles contested books with multiple frameworks
 
-24 core CI tests (12 RED + 12 GREEN) + 6 extended scenarios.
+24 maintainer-run eval scenarios (12 RED + 12 GREEN) + 6 extended scenarios.
 
 #### [pericope-delimitation](plugins/claude-of-alexandria/skills/pericope-delimitation/)
 
@@ -68,7 +68,7 @@ Validates whether a proposed passage holds together as a discourse unit:
 - Returns verdict: VALID, EXTEND, CONTRACT, or ADJUST
 - Recommends the smallest coherent unit if passage is too short
 
-12 core CI tests (6 RED + 6 GREEN) + 8 extended scenarios. Resists memory-based validation of famous passages.
+12 maintainer-run eval scenarios (6 RED + 6 GREEN) + 8 extended scenarios. Resists memory-based validation of famous passages.
 
 #### [exegetical-notes](plugins/claude-of-alexandria/skills/exegetical-notes/)
 
@@ -79,7 +79,7 @@ Produces exegetical notes for sermon or teaching preparation:
 - 4-tier interpretive labels: linguistic, discourse, scholarly, agent assessment
 - Genre-graduated redemptive-historical connections (epistles vs. wisdom literature vs. short letters)
 
-37 core CI tests (20 RED + 17 GREEN) + 12 extended scenarios (adversarial + stress tests for Philemon, Proverbs, 3 John).
+37 maintainer-run eval scenarios (20 RED + 17 GREEN) + 12 extended scenarios (adversarial + stress tests for Philemon, Proverbs, 3 John).
 
 #### [consult-biblical-scholar](plugins/claude-of-alexandria/skills/consult-biblical-scholar/)
 
@@ -89,7 +89,7 @@ Scholarly Q&A for biblical texts. Three auto-detected modes:
 - **VALIDATE** — checks analogies, illustrations, or claims against text; returns formal verdict
 - **CROSS-REFERENCE** — finds related passages with scholarly evidence
 
-14 core CI tests (7 RED + 7 GREEN) + 3 extended scenarios. Graduated confidence declared before every answer.
+14 maintainer-run eval scenarios (7 RED + 7 GREEN) + 3 extended scenarios. Graduated confidence declared before every answer.
 
 #### [argument-flow](plugins/claude-of-alexandria/skills/argument-flow/)
 
@@ -99,7 +99,7 @@ Maps the logical argument of a biblical passage using discourse markers:
 - Calls MCP tools for conjunction and discourse data before composing analysis
 - Grounds every interpretive claim in retrieved data
 
-16 core CI tests (8 RED + 8 GREEN) + 3 extended scenarios. For epistles and discourse-heavy passages.
+16 maintainer-run eval scenarios (8 RED + 8 GREEN) + 3 extended scenarios. For epistles and discourse-heavy passages.
 
 #### [passage-glossary](plugins/claude-of-alexandria/skills/passage-glossary/)
 
@@ -242,5 +242,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>6 skills, 6 sub-agents, 136 automated tests (103 core CI + 32 extended + 1 smoke). All 66 biblical books. 358 server unit tests.</sub>
+  <sub>6 skills, 6 sub-agents, 136 maintainer-run eval scenarios (103 GREEN gate + RED evidence, 32 extended, 1 smoke). All 66 biblical books. 358 server unit tests (these run in CI).</sub>
 </p>

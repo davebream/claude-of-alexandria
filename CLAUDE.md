@@ -32,6 +32,12 @@ Anyone may clone it, and they will not have your local setup. That has consequen
 
 The methodology exists because agents who trust their instincts produce moralistic, context-ignoring, therapeutically-flavored interpretive frameworks. You are not the exception. Read the cycle below before writing skill content — not after.
 
+> **Amended by [ADR 0002](docs/adr/0002-red-green-reframe-green-is-the-gate.md) — read it before running or changing evals.** The RED→GREEN cycle below is still how you *author* a skill. But as a standing test suite the two phases play different roles and must never be read as a matched before/after pair:
+> - **GREEN is the gate** — an *absolute* check that the skill's output honours its contract (the MCP tools were actually called, per `metadata.toolCalls`; required sections present; guardrails hold). It runs on a **pinned** model, `claude-sonnet-5`, and moves only when *our* code moves. This is what "the skill works" means.
+> - **RED is authoring evidence and a periodic audit**, not a per-change gate. It runs bare on the **cheapest supported model**, `claude-haiku-4-5`, where documented failures reliably reproduce. Re-run it on deliberate model bumps only. A RED scenario that stops failing is *expected* — it means the base model outgrew the need, a signal to re-scope the skill, not a build break.
+> - **Skill value is never computed as "GREEN minus RED."** They run on different models on purpose; GREEN's absolute assertions have no bare baseline to confound.
+> - **Contributors do not run the agentic suite.** They pass the fast, model-free checks (see `CONTRIBUTING.md` and `scripts/validate-eval-structure.sh`). The full sweep is maintainer-run at release and on model bumps.
+
 ### What Requires TDD
 
 All framework changes. Without exception:
@@ -111,8 +117,8 @@ tests/promptfoo/skills/{skill-name}/
 
 Agents follow the same structure under `tests/promptfoo/agents/{agent-name}/`.
 
-**RED** runs prompts against the bare model (no skills, no MCP). It documents what goes wrong.
-**GREEN** runs the same prompts with skills and MCP enabled. It proves the skill corrects each failure. Each scenario has one targeted assertion per failure mode — deterministic checks (icontains, javascript) plus one llm-rubric targeting that specific failure.
+**RED** runs prompts against the bare model (no skills, no MCP) on the cheapest supported model (`claude-haiku-4-5`). It documents what goes wrong — authoring evidence and a periodic audit, not a per-change gate (see ADR 0002).
+**GREEN** runs the skill with MCP enabled on the pinned gate model (`claude-sonnet-5`) and asserts, absolutely, that the output honours its contract. Each scenario has one targeted assertion per failure mode — deterministic checks (icontains, javascript on `metadata.toolCalls`) plus one llm-rubric targeting that specific failure. GREEN is the regression gate; it does not reference the RED baseline.
 **EXTENDED** runs quality, adversarial (ADV), and stress (STRESS) scenarios that have no corresponding RED failure. These run on-demand during skill development, not in CI.
 
 **Do not create additional test files** beyond these three canonical configs. No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. If it does not fit RED, GREEN, or EXTENDED, reconsider whether it belongs.
@@ -395,8 +401,8 @@ Verify every item. No exceptions.
 
 - [ ] `tests/promptfoo/skills/skill-name/promptfooconfig-red.yaml` exists with bare-model failure scenarios
 - [ ] `tests/promptfoo/skills/skill-name/promptfooconfig-green.yaml` exists with skill-corrected assertions
-- [ ] RED tests pass (bare model fails as expected)
-- [ ] GREEN tests pass (skill corrects documented failures)
+- [ ] GREEN tests pass on the pinned model (skill output honours its contract) — this is the gate
+- [ ] RED evidence recorded (bare model on the cheapest supported model exhibits the failure); re-run only on model bumps, drift is expected (ADR 0002)
 - [ ] `plugins/claude-of-alexandria/skills/skill-name/SKILL.md` exists with YAML frontmatter, `version`, and `changed`
 - [ ] `plugins/claude-of-alexandria/skills/skill-name/README.md` exists with development notes
 - [ ] Server changes pass `npm run typecheck` and `npm test` in `server/`

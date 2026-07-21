@@ -21,7 +21,12 @@ export default class SdkBareProvider extends SdkProvider {
       ...options,
       id: options.id || "sdk-bare",
       config: {
-        model: "claude-sonnet-5",
+        // RED runs on the CHEAPEST supported model, not the newest. RED asks
+        // "does a bare model still need this skill?" — answered most honestly on
+        // the weakest model a user might run, where documented failures reliably
+        // reproduce. This also insulates RED from frontier-model drift. See
+        // docs/adr/0002. (GREEN, the gate, is pinned to claude-sonnet-5.)
+        model: "claude-haiku-4-5",
         working_dir: "/tmp",
         ...options.config,
       },
@@ -30,7 +35,7 @@ export default class SdkBareProvider extends SdkProvider {
 
   buildOptions(_cwd) {
     return {
-      model: this.config.model || "claude-sonnet-5",
+      model: this.config.model || "claude-haiku-4-5",
       tools: [],              // No built-in tools
       mcpServers: {},         // No MCP servers
       plugins: [],            // No plugins

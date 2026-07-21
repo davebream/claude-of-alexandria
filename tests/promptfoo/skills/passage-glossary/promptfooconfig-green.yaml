@@ -100,14 +100,10 @@ tests:
             pass: true, score: 1,
             reason: `${allKeys.length} distinct key tokens, no duplicates: ${JSON.stringify(Object.keys(counts).slice(0, 5))}...`
           };
-      # Core failure mode: duplicate rows for repeated lemmas (θεός, λόγος)
-      - type: llm-rubric
-        value: |
-          Check the ## Glossary section for John 1:1-5.
-          PASS if θεός and λόγος each appear exactly once as a glossary row — the skill
-          deduplicates on the Strong's number (G2316 for θεός, G3056 for λόγος) and each
-          key appears only once regardless of how many times the word occurs in the passage.
-          FAIL if either θεός or λόγος appears more than once in the ## Glossary rows.
+      # (Removed: an llm-rubric re-asserting θεός/λόγος dedup — the deterministic
+      # regex check above already enforces it exactly, cheaper and without judge
+      # flakiness. Per ADR 0002: deterministic checks carry the load; reserve
+      # llm-rubrics for genuine judgment invariants.)
 
   # =========================================================================
   # Scenario 2: >20-Lemma Span — John 1:1-18

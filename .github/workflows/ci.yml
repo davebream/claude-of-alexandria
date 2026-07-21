@@ -251,6 +251,9 @@ jobs:
       - name: Check README counts
         run: ./scripts/validate-readme-counts.sh
 
+      - name: Validate eval config structure (model-free)
+        run: ./scripts/validate-eval-structure.sh
+
       - name: Verify LICENSE exists
         run: test -f LICENSE
 
