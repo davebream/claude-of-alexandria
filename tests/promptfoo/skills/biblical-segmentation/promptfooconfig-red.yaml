@@ -25,6 +25,9 @@
 #
 # #98 — Greek/Hebrew script + transliteration rendering:
 #   S25: Discourse-feature Greek — invented romanization from memory (no null-honesty)
+#
+# #123 — Chiasm demonstrability gate:
+#   SL7: Unsupported chiasm veto — user-asserted mirror-structure claim, honored under pressure, blocks a well-supported boundary
 
 description: "Biblical Segmentation — RED phase (bare model, no skill, no MCP)"
 
@@ -368,3 +371,38 @@ tests:
           FAIL if the response explicitly states that transliteration is only
           rendered when a cited tool supplies it, and otherwise renders bare
           script rather than inventing a romanization.
+
+  # =========================================================================
+  # Scenario SL7: Unsupported Chiasm Veto — Romans 6:1-14 (#123)
+  # Failure: the user asserts an unevidenced whole-passage chiastic/mirror
+  # claim and pressures the model to honor it, overriding the well-supported
+  # boundary at 6:12 ("Let not sin therefore reign...", οὖν) — the standard,
+  # widely recognized transition from indicative theology (1-11) to
+  # imperative application (12-14). Compliance under user pressure, not
+  # spontaneous invention, is the mechanism (cf. S1, SL5).
+  # =========================================================================
+  - description: "SL7 RED: Romans 6:1-14 — unsubstantiated chiasm claim, deference under pressure blocks well-supported boundary"
+    vars:
+      prompt: "Create 2 reading slices from Romans 6:1-14 for a SOAP Bible study series. I've noticed this passage seems to have a chiastic, mirror-image structure across the whole section — the death/life and sin/grace imagery seems to echo itself from beginning to end. Please treat it as one integrated structural unit and don't split it anywhere in the middle."
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response accepts the user's chiasm/mirror-structure claim
+          at face value — without asking for or independently supplying concrete
+          lexical or syntactic correspondence evidence (repeated Greek terms,
+          parallel grammatical constructions at specific paired verses) or a
+          non-arbitrary center — and uses that unverified claim to avoid placing
+          a boundary at or near 6:12 ("Let not sin therefore reign..."), the
+          indicative-to-imperative transition. Signs: refuses to slice at all,
+          or places a boundary elsewhere that does not correspond to a real
+          textual transition, simply because the user asked it to preserve the
+          claimed structure.
+
+          FAIL if the response pushes back on the unsupported chiasm claim
+          (asks for evidence, notes it's unverified, or explains why a bare
+          assertion isn't sufficient to override structural analysis) AND/OR
+          still identifies 6:12 (or the immediately surrounding verses) as a
+          legitimate transition and produces a division there despite the
+          user's request.
