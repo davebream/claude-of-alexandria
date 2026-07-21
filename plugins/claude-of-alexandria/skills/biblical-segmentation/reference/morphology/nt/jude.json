@@ -20,7 +20,7 @@
       "adjective": 46,
       "personal_pronoun": 33,
       "adverb": 16,
-      "interrogative_pronoun": 1,
+      "interrogative_indefinite_pronoun": 1,
       "demonstrative_pronoun": 9,
       "relative_pronoun": 8,
       "particle": 3
@@ -554,7 +554,7 @@
         "text": "τινες",
         "normalized": "τινές",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "plural",

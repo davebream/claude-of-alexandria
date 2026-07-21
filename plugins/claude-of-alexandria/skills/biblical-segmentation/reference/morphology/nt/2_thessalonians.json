@@ -22,7 +22,7 @@
       "adjective": 39,
       "relative_pronoun": 13,
       "demonstrative_pronoun": 6,
-      "interrogative_pronoun": 6
+      "interrogative_indefinite_pronoun": 6
     }
   },
   "verses": {
@@ -2791,7 +2791,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
@@ -6615,7 +6615,7 @@
         "text": "τινος",
         "normalized": "τινός",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "genitive",
           "number": "singular",
@@ -6742,7 +6742,7 @@
         "text": "τινα",
         "normalized": "τινά",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "singular",
@@ -6997,7 +6997,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
@@ -7078,7 +7078,7 @@
         "text": "τινας",
         "normalized": "τινάς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "plural",
@@ -7430,7 +7430,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
