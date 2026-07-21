@@ -21,7 +21,8 @@ echo ""
 
 # Extract tool names from MCP server registration
 echo "Scanning registered tools in ${SERVER_SRC}..."
-REGISTERED_TOOLS=$(grep -rh "server\.registerTool(" "$SERVER_SRC" --include='*.ts' --exclude='*.test.ts' | \
+REGISTERED_TOOLS=$(grep -rhE "(server\.registerTool|registerReadOnlyTool)\(" "$SERVER_SRC" --include='*.ts' --exclude='*.test.ts' | \
+  grep -oE "(server\.registerTool|registerReadOnlyTool)\([^']*'[a-z_]+'" | \
   grep -oE "'[a-z_]+'" | \
   tr -d "'" | \
   sort -u)
