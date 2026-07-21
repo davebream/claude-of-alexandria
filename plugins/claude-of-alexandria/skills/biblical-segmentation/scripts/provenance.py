@@ -2,13 +2,14 @@
 """
 Pinned-source provenance for the biblical-segmentation extractors.
 
-The four committed extractors — extract_nt_morphology, extract_ot_morphology,
-extract_nt_vocabulary, extract_ot_vocabulary — read their upstream corpora from
-MorphGNT/SBLGNT (Greek NT) and OpenScriptures/morphhb (Hebrew OT). Without a
-pinned commit, a re-extraction could silently diverge from what is committed
-with no way to tell why. This module pins each source to an exact upstream
-commit and verifies the SHA-256 of every downloaded input file against a
-committed checksum lockfile, so re-extraction is reproducible and tamper-evident.
+The committed morphology, vocabulary, and discourse-feature extractors read
+their upstream corpora from MorphGNT/SBLGNT (Greek NT), OpenScriptures/morphhb
+(Hebrew OT), and biblicalhumanities/levinsohn (Greek NT discourse features).
+Without a pinned commit, a re-extraction could silently diverge from what is
+committed with no way to tell why. This module pins each source to an exact
+upstream commit and verifies the SHA-256 of every downloaded input file against
+a committed checksum lockfile, so re-extraction is reproducible and
+tamper-evident.
 
 The pattern mirrors server/scripts/extract-macula-hebrew.py (COMMIT_SHA constant
 + hash verification) and the sibling extract_oshb_paragraphs.py, which already
@@ -51,6 +52,7 @@ from typing import Dict, Iterable, List, Optional
 # pins (both consume the same WLC files via oshb-checksums.json) — keep in sync.
 MORPHHB_COMMIT_SHA = "3d15126fb1ef74867fc1434be1942e837932691f"
 SBLGNT_COMMIT_SHA = "aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d"
+LEVINSOHN_COMMIT_SHA = "badd3a1043aebfa9907d0515069a4be1dd6eeb7a"
 
 SOURCES: Dict[str, Dict[str, str]] = {
     "morphhb": {
@@ -64,6 +66,12 @@ SOURCES: Dict[str, Dict[str, str]] = {
         "raw_base": "https://raw.githubusercontent.com/morphgnt/sblgnt",
         "path_template": "{code}.txt",
         "checksums": "sblgnt-checksums.json",
+    },
+    "levinsohn": {
+        "commit": LEVINSOHN_COMMIT_SHA,
+        "raw_base": "https://raw.githubusercontent.com/biblicalhumanities/levinsohn",
+        "path_template": "LGNTDF/{code}.xml",
+        "checksums": "levinsohn-checksums.json",
     },
 }
 
@@ -253,6 +261,10 @@ def _codes_for(source: str) -> List[str]:
         from extract_nt_vocabulary import NT_BOOKS
 
         return list(NT_BOOKS.values())
+    if source == "levinsohn":
+        from extract_levinsohn_discourse import XML_STEMS
+
+        return list(XML_STEMS)
     raise ValueError(f"unknown source {source!r}")
 
 

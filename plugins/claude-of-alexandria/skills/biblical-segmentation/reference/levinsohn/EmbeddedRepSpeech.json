@@ -4,2186 +4,2623 @@
   "references": [
     {
       "verse": "Matt 2:6",
+      "word_index": 24,
       "word": "καὶ σὺ βηθλέεμ γῆ ἰούδα οὐδαμῶς ἐλαχίστη εἶ ἐν τοῖς ἡγεμόσιν ἰούδα ἐκ σοῦ γὰρ ἐξελεύσεται ἡγούμενος ὅστις ποιμανεῖ τὸν λαόν μου τὸν ἰσραήλ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 3:3",
+      "word_index": 24,
       "word": "ἑτοιμάσατε τὴν ὁδὸν κυρίου εὐθείας ποιεῖτε τὰς τρίβους αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 3:9",
+      "word_index": 10,
       "word": "πατέρα ἔχομεν τὸν ἀβραάμ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 4:4",
+      "word_index": 20,
       "word": "οὐκ ἐπ’ ἄρτῳ μόνῳ ζήσεται ὁ ἄνθρωπος ἀλλ’ ἐπὶ παντὶ ῥήματι ἐκπορευομένῳ διὰ στόματος θεοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 4:6",
+      "word_index": 20,
       "word": "τοῖς ἀγγέλοις αὐτοῦ ἐντελεῖται περὶ σοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 4:6",
+      "word_index": 32,
       "word": "ἐπὶ χειρῶν ἀροῦσίν σε μήποτε προσκόψῃς πρὸς λίθον τὸν πόδα σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 4:7",
+      "word_index": 12,
       "word": "οὐκ ἐκπειράσεις κύριον τὸν θεόν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 4:10",
+      "word_index": 18,
       "word": "κύριον τὸν θεόν σου προσκυνήσεις καὶ αὐτῷ μόνῳ λατρεύσεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:21",
+      "word_index": 7,
       "word": "οὐ φονεύσεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:21",
+      "word_index": 15,
       "word": "ὃς δ’ ἂν φονεύσῃ ἔνοχος ἔσται τῇ κρίσει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:22",
+      "word_index": 23,
       "word": "ῥακά",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:22",
+      "word_index": 32,
       "word": "μωρέ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:27",
+      "word_index": 5,
       "word": "οὐ μοιχεύσεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:31",
+      "word_index": 11,
       "word": "ὃς ἂν ἀπολύσῃ τὴν γυναῖκα αὐτοῦ δότω αὐτῇ ἀποστάσιον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:33",
+      "word_index": 15,
       "word": "οὐκ ἐπιορκήσεις ἀποδώσεις δὲ τῷ κυρίῳ τοὺς ὅρκους σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:37",
+      "word_index": 7,
       "word": "ναὶ ναί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:37",
+      "word_index": 9,
       "word": "οὒ οὔ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:38",
+      "word_index": 10,
       "word": "ὀφθαλμὸν ἀντὶ ὀφθαλμοῦ καὶ ὀδόντα ἀντὶ ὀδόντος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:43",
+      "word_index": 7,
       "word": "ἀγαπήσεις τὸν πλησίον σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 5:43",
+      "word_index": 12,
       "word": "καὶ μισήσεις τὸν ἐχθρόν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 6:9 - 13",
+      "word_index": 61,
       "word": "πάτερ ἡμῶν ὁ ἐν τοῖς οὐρανοῖς ἁγιασθήτω τὸ ὄνομά σου ἐλθέτω ἡ βασιλεία σου γενηθήτω τὸ θέλημά σου ὡς ἐν οὐρανῷ καὶ ἐπὶ γῆς τὸν ἄρτον ἡμῶν τὸν ἐπιούσιον δὸς ἡμῖν σήμερον καὶ ἄφες ἡμῖν τὰ ὀφειλήματα ἡμῶν ὡς καὶ ἡμεῖς ἀφήκαμεν τοῖς ὀφειλέταις ἡμῶν καὶ μὴ εἰσενέγκῃς ἡμᾶς εἰς πειρασμόν ἀλλὰ ῥῦσαι ἡμᾶς ἀπὸ τοῦ πονηροῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 6:31",
+      "word_index": 6,
       "word": "τί φάγωμεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 6:31",
+      "word_index": 9,
       "word": "τί πίωμεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 6:31",
+      "word_index": 12,
       "word": "τί περιβαλώμεθα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 7:4",
+      "word_index": 14,
       "word": "ἄφες ἐκβάλω τὸ κάρφος ἐκ τοῦ ὀφθαλμοῦ σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 7:21",
+      "word_index": 7,
       "word": "κύριε κύριε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 7:22",
+      "word_index": 27,
       "word": "κύριε κύριε οὐ τῷ σῷ ὀνόματι ἐπροφητεύσαμεν καὶ τῷ σῷ ὀνόματι δαιμόνια ἐξεβάλομεν καὶ τῷ σῷ ὀνόματι δυνάμεις πολλὰς ἐποιήσαμεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 7:23",
+      "word_index": 15,
       "word": "οὐδέποτε ἔγνων ὑμᾶς ἀποχωρεῖτε ἀπ’ ἐμοῦ οἱ ἐργαζόμενοι τὴν ἀνομίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 8:9",
+      "word_index": 15,
       "word": "πορεύθητι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 8:9",
+      "word_index": 20,
       "word": "ἔρχου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 8:9",
+      "word_index": 28,
       "word": "ποίησον τοῦτο",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 9:5",
+      "word_index": 9,
       "word": "ἀφίενταί σου αἱ ἁμαρτίαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 9:5",
+      "word_index": 14,
       "word": "ἔγειρε καὶ περιπάτει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 9:13",
+      "word_index": 10,
       "word": "ἔλεος θέλω καὶ οὐ θυσίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 10:7",
+      "word_index": 10,
       "word": "ἤγγικεν ἡ βασιλεία τῶν οὐρανῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 10:25",
+      "word_index": 20,
       "word": "βεελζεβοὺλ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 11:10",
+      "word_index": 21,
       "word": "ἰδοὺ ἐγὼ ἀποστέλλω τὸν ἄγγελόν μου πρὸ προσώπου σου ὃς κατασκευάσει τὴν ὁδόν σου ἔμπροσθέν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 11:17",
+      "word_index": 10,
       "word": "ηὐλήσαμεν ὑμῖν καὶ οὐκ ὠρχήσασθε ἐθρηνήσαμεν καὶ οὐκ ἐκόψασθε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 11:18",
+      "word_index": 11,
       "word": "δαιμόνιον ἔχει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 11:19",
+      "word_index": 19,
       "word": "ἄνθρωπος φάγος καὶ οἰνοπότης τελωνῶν φίλος καὶ ἁμαρτωλῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 12:7",
+      "word_index": 10,
       "word": "ἔλεος θέλω καὶ οὐ θυσίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 12:44",
+      "word_index": 9,
       "word": "εἰς τὸν οἶκόν μου ἐπιστρέψω ὅθεν ἐξῆλθον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 13:14 - 5",
+      "word_index": 55,
       "word": "ἀκοῇ ἀκούσετε καὶ οὐ μὴ συνῆτε καὶ βλέποντες βλέψετε καὶ οὐ μὴ ἴδητε ἐπαχύνθη γὰρ ἡ καρδία τοῦ λαοῦ τούτου καὶ τοῖς ὠσὶν βαρέως ἤκουσαν καὶ τοὺς ὀφθαλμοὺς αὐτῶν ἐκάμμυσαν μήποτε ἴδωσιν τοῖς ὀφθαλμοῖς καὶ τοῖς ὠσὶν ἀκούσωσιν καὶ τῇ καρδίᾳ συνῶσιν καὶ ἐπιστρέψωσιν καὶ ἰάσομαι αὐτούς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 13:27",
+      "word_index": 21,
       "word": "κύριε οὐχὶ καλὸν σπέρμα ἔσπειρας ἐν τῷ σῷ ἀγρῷ πόθεν οὖν ἔχει ζιζάνια",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 13:28",
+      "word_index": 8,
       "word": "ἐχθρὸς ἄνθρωπος τοῦτο ἐποίησεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 13:28",
+      "word_index": 18,
       "word": "θέλεις οὖν ἀπελθόντες συλλέξωμεν αὐτά",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 13:29 - 30",
+      "word_index": 48,
       "word": "οὔ μήποτε συλλέγοντες τὰ ζιζάνια ἐκριζώσητε ἅμα αὐτοῖς τὸν σῖτον ἄφετε συναυξάνεσθαι ἀμφότερα ἕως τοῦ θερισμοῦ καὶ ἐν καιρῷ τοῦ θερισμοῦ ἐρῶ τοῖς θερισταῖς συλλέξατε πρῶτον τὰ ζιζάνια καὶ δήσατε αὐτὰ εἰς δέσμας πρὸς τὸ κατακαῦσαι αὐτά τὸν δὲ σῖτον συναγάγετε εἰς τὴν ἀποθήκην μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 15:4",
+      "word_index": 10,
       "word": "τίμα τὸν πατέρα καὶ τὴν μητέρα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 15:4",
+      "word_index": 18,
       "word": "ὁ κακολογῶν πατέρα ἢ μητέρα θανάτῳ τελευτάτω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 15:5 - 6",
+      "word_index": 23,
       "word": "ὃς ἂν εἴπῃ τῷ πατρὶ ἢ τῇ μητρί δῶρον ὃ ἐὰν ἐξ ἐμοῦ ὠφεληθῇς οὐ μὴ τιμήσει τὸν πατέρα αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 15:8 - 9",
+      "word_index": 23,
       "word": "ὁ λαὸς οὗτος τοῖς χείλεσίν με τιμᾷ ἡ δὲ καρδία αὐτῶν πόρρω ἀπέχει ἀπ’ ἐμοῦ μάτην δὲ σέβονταί με διδάσκοντες διδασκαλίας ἐντάλματα ἀνθρώπων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 16:2",
+      "word_index": 9,
       "word": "εὐδία",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 16:2",
+      "word_index": 13,
       "word": "πυρράζει γὰρ ὁ οὐρανός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 16:3",
+      "word_index": 9,
       "word": "σήμερον χειμών πυρράζει γὰρ στυγνάζων ὁ οὐρανός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 17:20",
+      "word_index": 25,
       "word": "μετάβα ἔνθεν ἐκεῖ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 18:26",
+      "word_index": 14,
       "word": "μακροθύμησον ἐπ’ ἐμοί καὶ πάντα ἀποδώσω σοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 18:28",
+      "word_index": 24,
       "word": "ἀπόδος εἴ τι ὀφείλεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 18:29",
+      "word_index": 14,
       "word": "μακροθύμησον ἐπ’ ἐμοί καὶ ἀποδώσω σοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 18:32 - 3",
+      "word_index": 31,
       "word": "δοῦλε πονηρέ πᾶσαν τὴν ὀφειλὴν ἐκείνην ἀφῆκά σοι ἐπεὶ παρεκάλεσάς με οὐκ ἔδει καὶ σὲ ἐλεῆσαι τὸν σύνδουλόν σου ὡς κἀγὼ σὲ ἠλέησα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:4",
+      "word_index": 16,
       "word": "ὑπάγετε καὶ ὑμεῖς εἰς τὸν ἀμπελῶνα καὶ ὃ ἐὰν ᾖ δίκαιον δώσω ὑμῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:6",
+      "word_index": 18,
       "word": "τί ὧδε ἑστήκατε ὅλην τὴν ἡμέραν ἀργοί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:7",
+      "word_index": 6,
       "word": "ὅτι οὐδεὶς ἡμᾶς ἐμισθώσατο",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:7",
+      "word_index": 14,
       "word": "ὑπάγετε καὶ ὑμεῖς εἰς τὸν ἀμπελῶνα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:8",
+      "word_index": 26,
       "word": "κάλεσον τοὺς ἐργάτας καὶ ἀπόδος αὐτοῖς τὸν μισθὸν ἀρξάμενος ἀπὸ τῶν ἐσχάτων ἕως τῶν πρώτων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:12",
+      "word_index": 21,
       "word": "οὗτοι οἱ ἔσχατοι μίαν ὥραν ἐποίησαν καὶ ἴσους ἡμῖν αὐτοὺς ἐποίησας τοῖς βαστάσασι τὸ βάρος τῆς ἡμέρας καὶ τὸν καύσωνα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 20:13 - 5",
+      "word_index": 48,
       "word": "ἑταῖρε οὐκ ἀδικῶ σε οὐχὶ δηναρίου συνεφώνησάς μοι ἆρον τὸ σὸν καὶ ὕπαγε θέλω δὲ τούτῳ τῷ ἐσχάτῳ δοῦναι ὡς καὶ σοί ἢ οὐκ ἔξεστίν μοι ὃ θέλω ποιῆσαι ἐν τοῖς ἐμοῖς ἢ ὁ ὀφθαλμός σου πονηρός ἐστιν ὅτι ἐγὼ ἀγαθός εἰμι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:3",
+      "word_index": 17,
       "word": "ὁ κύριος αὐτῶν χρείαν ἔχει εὐθὺς δὲ ἀποστελεῖ αὐτούς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:5",
+      "word_index": 20,
       "word": "ἰδοὺ ὁ βασιλεύς σου ἔρχεταί σοι πραῢς καὶ ἐπιβεβηκὼς ἐπὶ ὄνον καὶ ἐπὶ πῶλον υἱὸν ὑποζυγίου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:13",
+      "word_index": 10,
       "word": "ὁ οἶκός μου οἶκος προσευχῆς κληθήσεται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:16",
+      "word_index": 23,
       "word": "ἐκ στόματος νηπίων καὶ θηλαζόντων κατηρτίσω αἶνον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:21",
+      "word_index": 33,
       "word": "ἄρθητι καὶ βλήθητι εἰς τὴν θάλασσαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:25",
+      "word_index": 21,
       "word": "ἐξ οὐρανοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:25",
+      "word_index": 29,
       "word": "διὰ τί οὖν οὐκ ἐπιστεύσατε αὐτῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:26",
+      "word_index": 5,
       "word": "ἐξ ἀνθρώπων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:28",
+      "word_index": 20,
       "word": "τέκνον ὕπαγε σήμερον ἐργάζου ἐν τῷ ἀμπελῶνι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:29",
+      "word_index": 6,
       "word": "οὐ θέλω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:30",
+      "word_index": 12,
       "word": "ἐγώ κύριε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:37",
+      "word_index": 13,
       "word": "ἐντραπήσονται τὸν υἱόν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:38",
+      "word_index": 21,
       "word": "οὗτός ἐστιν ὁ κληρονόμος δεῦτε ἀποκτείνωμεν αὐτὸν καὶ σχῶμεν τὴν κληρονομίαν αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 21:42",
+      "word_index": 29,
       "word": "λίθον ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες οὗτος ἐγενήθη εἰς κεφαλὴν γωνίας παρὰ κυρίου ἐγένετο αὕτη καὶ ἔστιν θαυμαστὴ ἐν ὀφθαλμοῖς ἡμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:4",
+      "word_index": 27,
       "word": "εἴπατε τοῖς κεκλημένοις ἰδοὺ τὸ ἄριστόν μου ἡτοίμακα οἱ ταῦροί μου καὶ τὰ σιτιστὰ τεθυμένα καὶ πάντα ἕτοιμα δεῦτε εἰς τοὺς γάμους",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:8 - 9",
+      "word_index": 31,
       "word": "ὁ μὲν γάμος ἕτοιμός ἐστιν οἱ δὲ κεκλημένοι οὐκ ἦσαν ἄξιοι πορεύεσθε οὖν ἐπὶ τὰς διεξόδους τῶν ὁδῶν καὶ ὅσους ἐὰν εὕρητε καλέσατε εἰς τοὺς γάμους",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:12",
+      "word_index": 11,
       "word": "ἑταῖρε πῶς εἰσῆλθες ὧδε μὴ ἔχων ἔνδυμα γάμου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:13",
+      "word_index": 18,
       "word": "δήσαντες αὐτοῦ πόδας καὶ χεῖρας ἐκβάλετε αὐτὸν εἰς τὸ σκότος τὸ ἐξώτερον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:24",
+      "word_index": 23,
       "word": "ἐάν τις ἀποθάνῃ μὴ ἔχων τέκνα ἐπιγαμβρεύσει ὁ ἀδελφὸς αὐτοῦ τὴν γυναῖκα αὐτοῦ καὶ ἀναστήσει σπέρμα τῷ ἀδελφῷ αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:32",
+      "word_index": 13,
       "word": "ἐγώ εἰμι ὁ θεὸς ἀβραὰμ καὶ ὁ θεὸς ἰσαὰκ καὶ ὁ θεὸς ἰακώβ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 22:44",
+      "word_index": 19,
       "word": "εἶπεν κύριος τῷ κυρίῳ μου κάθου ἐκ δεξιῶν μου ἕως ἂν θῶ τοὺς ἐχθρούς σου ὑποκάτω τῶν ποδῶν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:7",
+      "word_index": 12,
       "word": "ῥαββί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:8",
+      "word_index": 5,
       "word": "ῥαββί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:16",
+      "word_index": 24,
       "word": "ὃς ἂν ὀμόσῃ ἐν τῷ ναῷ οὐδέν ἐστιν ὃς δ’ ἂν ὀμόσῃ ἐν τῷ χρυσῷ τοῦ ναοῦ ὀφείλει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:18",
+      "word_index": 20,
       "word": "ὃς ἂν ὀμόσῃ ἐν τῷ θυσιαστηρίῳ οὐδέν ἐστιν ὃς δ’ ἂν ὀμόσῃ ἐν τῷ δώρῳ τῷ ἐπάνω αὐτοῦ ὀφείλει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:30",
+      "word_index": 20,
       "word": "εἰ ἤμεθα ἐν ταῖς ἡμέραις τῶν πατέρων ἡμῶν οὐκ ἂν ἤμεθα αὐτῶν κοινωνοὶ ἐν τῷ αἵματι τῶν προφητῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 23:39",
+      "word_index": 18,
       "word": "εὐλογημένος ὁ ἐρχόμενος ἐν ὀνόματι κυρίου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:5",
+      "word_index": 12,
       "word": "ἐγώ εἰμι ὁ χριστός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:23",
+      "word_index": 9,
       "word": "ὧδε ὁ χριστός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:23",
+      "word_index": 11,
       "word": "ὧδε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:26",
+      "word_index": 9,
       "word": "ἐν τῇ ἐρήμῳ ἐστίν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:26",
+      "word_index": 15,
       "word": "ἐν τοῖς ταμείοις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 24:48",
+      "word_index": 15,
       "word": "χρονίζει μου ὁ κύριος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:6",
+      "word_index": 12,
       "word": "ἰδοὺ ὁ νυμφίος ἐξέρχεσθε εἰς ἀπάντησιν αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:8",
+      "word_index": 17,
       "word": "δότε ἡμῖν ἐκ τοῦ ἐλαίου ὑμῶν ὅτι αἱ λαμπάδες ἡμῶν σβέννυνται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:9",
+      "word_index": 20,
       "word": "μήποτε οὐ μὴ ἀρκέσῃ ἡμῖν καὶ ὑμῖν πορεύεσθε μᾶλλον πρὸς τοὺς πωλοῦντας καὶ ἀγοράσατε ἑαυταῖς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:11",
+      "word_index": 12,
       "word": "κύριε κύριε ἄνοιξον ἡμῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:12",
+      "word_index": 10,
       "word": "ἀμὴν λέγω ὑμῖν οὐκ οἶδα ὑμᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:20",
+      "word_index": 22,
       "word": "κύριε πέντε τάλαντά μοι παρέδωκας ἴδε ἄλλα πέντε τάλαντα ἐκέρδησα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:21",
+      "word_index": 25,
       "word": "εὖ δοῦλε ἀγαθὲ καὶ πιστέ ἐπὶ ὀλίγα ἦς πιστός ἐπὶ πολλῶν σε καταστήσω εἴσελθε εἰς τὴν χαρὰν τοῦ κυρίου σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:22",
+      "word_index": 18,
       "word": "κύριε δύο τάλαντά μοι παρέδωκας ἴδε ἄλλα δύο τάλαντα ἐκέρδησα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:23",
+      "word_index": 25,
       "word": "εὖ δοῦλε ἀγαθὲ καὶ πιστέ ἐπὶ ὀλίγα ἦς πιστός ἐπὶ πολλῶν σε καταστήσω εἴσελθε εἰς τὴν χαρὰν τοῦ κυρίου σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:24 - 5",
+      "word_index": 39,
       "word": "κύριε ἔγνων σε ὅτι σκληρὸς εἶ ἄνθρωπος θερίζων ὅπου οὐκ ἔσπειρας καὶ συνάγων ὅθεν οὐ διεσκόρπισας καὶ φοβηθεὶς ἀπελθὼν ἔκρυψα τὸ τάλαντόν σου ἐν τῇ γῇ ἴδε ἔχεις τὸ σόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:26 - 8",
+      "word_index": 53,
       "word": "πονηρὲ δοῦλε καὶ ὀκνηρέ ᾔδεις ὅτι θερίζω ὅπου οὐκ ἔσπειρα καὶ συνάγω ὅθεν οὐ διεσκόρπισα ἔδει σε οὖν βαλεῖν τὰ ἀργύριά μου τοῖς τραπεζίταις καὶ ἐλθὼν ἐγὼ ἐκομισάμην ἂν τὸ ἐμὸν σὺν τόκῳ ἄρατε οὖν ἀπ’ αὐτοῦ τὸ τάλαντον καὶ δότε τῷ ἔχοντι τὰ δέκα τάλαντα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:29 - 30",
+      "word_index": 36,
       "word": "τῷ γὰρ ἔχοντι παντὶ δοθήσεται καὶ περισσευθήσεται τοῦ δὲ μὴ ἔχοντος καὶ ὃ ἔχει ἀρθήσεται ἀπ’ αὐτοῦ καὶ τὸν ἀχρεῖον δοῦλον ἐκβάλετε εἰς τὸ σκότος τὸ ἐξώτερον ἐκεῖ ἔσται ὁ κλαυθμὸς καὶ ὁ βρυγμὸς τῶν ὀδόντων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:34 - 6",
+      "word_index": 52,
       "word": "δεῦτε οἱ εὐλογημένοι τοῦ πατρός μου κληρονομήσατε τὴν ἡτοιμασμένην ὑμῖν βασιλείαν ἀπὸ καταβολῆς κόσμου ἐπείνασα γὰρ καὶ ἐδώκατέ μοι φαγεῖν ἐδίψησα καὶ ἐποτίσατέ με ξένος ἤμην καὶ συνηγάγετέ με γυμνὸς καὶ περιεβάλετέ με ἠσθένησα καὶ ἐπεσκέψασθέ με ἐν φυλακῇ ἤμην καὶ ἤλθατε πρός με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:37 - 9",
+      "word_index": 40,
       "word": "κύριε πότε σε εἴδομεν πεινῶντα καὶ ἐθρέψαμεν ἢ διψῶντα καὶ ἐποτίσαμεν πότε δέ σε εἴδομεν ξένον καὶ συνηγάγομεν ἢ γυμνὸν καὶ περιεβάλομεν πότε δέ σε εἴδομεν ἀσθενοῦντα ἢ ἐν φυλακῇ καὶ ἤλθομεν πρός σε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:40",
+      "word_index": 21,
       "word": "ἀμὴν λέγω ὑμῖν ἐφ’ ὅσον ἐποιήσατε ἑνὶ τούτων τῶν ἀδελφῶν μου τῶν ἐλαχίστων ἐμοὶ ἐποιήσατε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:41 - 3",
+      "word_index": 55,
       "word": "πορεύεσθε ἀπ’ ἐμοῦ οἱ κατηραμένοι εἰς τὸ πῦρ τὸ αἰώνιον τὸ ἡτοιμασμένον τῷ διαβόλῳ καὶ τοῖς ἀγγέλοις αὐτοῦ ἐπείνασα γὰρ καὶ οὐκ ἐδώκατέ μοι φαγεῖν ἐδίψησα καὶ οὐκ ἐποτίσατέ με ξένος ἤμην καὶ οὐ συνηγάγετέ με γυμνὸς καὶ οὐ περιεβάλετέ με ἀσθενὴς καὶ ἐν φυλακῇ καὶ οὐκ ἐπεσκέψασθέ με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:44",
+      "word_index": 25,
       "word": "κύριε πότε σε εἴδομεν πεινῶντα ἢ διψῶντα ἢ ξένον ἢ γυμνὸν ἢ ἀσθενῆ ἢ ἐν φυλακῇ καὶ οὐ διηκονήσαμέν σοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 25:45",
+      "word_index": 18,
       "word": "ἀμὴν λέγω ὑμῖν ἐφ’ ὅσον οὐκ ἐποιήσατε ἑνὶ τούτων τῶν ἐλαχίστων οὐδὲ ἐμοὶ ἐποιήσατε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 26:18",
+      "word_index": 30,
       "word": "ὁ διδάσκαλος λέγει ὁ καιρός μου ἐγγύς ἐστιν πρὸς σὲ ποιῶ τὸ πάσχα μετὰ τῶν μαθητῶν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 26:61",
+      "word_index": 14,
       "word": "δύναμαι καταλῦσαι τὸν ναὸν τοῦ θεοῦ καὶ διὰ τριῶν ἡμερῶν οἰκοδομῆσαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 27:43",
+      "word_index": 15,
       "word": "θεοῦ εἰμι υἱός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 27:63",
+      "word_index": 14,
       "word": "μετὰ τρεῖς ἡμέρας ἐγείρομαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 27:64",
+      "word_index": 24,
       "word": "ἠγέρθη ἀπὸ τῶν νεκρῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 28:7",
+      "word_index": 22,
       "word": "ἠγέρθη ἀπὸ τῶν νεκρῶν καὶ ἰδοὺ προάγει ὑμᾶς εἰς τὴν γαλιλαίαν ἐκεῖ αὐτὸν ὄψεσθε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Matt 28:13",
+      "word_index": 12,
       "word": "οἱ μαθηταὶ αὐτοῦ νυκτὸς ἐλθόντες ἔκλεψαν αὐτὸν ἡμῶν κοιμωμένων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 1:3",
+      "word_index": 14,
       "word": "ἑτοιμάσατε τὴν ὁδὸν κυρίου εὐθείας ποιεῖτε τὰς τρίβους αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 2:9",
+      "word_index": 10,
       "word": "ἀφίενταί σου αἱ ἁμαρτίαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 2:9",
+      "word_index": 20,
       "word": "ἔγειρε καὶ ἆρον τὸν κράβαττόν σου καὶ περιπάτει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 5:31",
+      "word_index": 16,
       "word": "τίς μου ἥψατο",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 7:6 - 7",
+      "word_index": 37,
       "word": "οὗτος ὁ λαὸς τοῖς χείλεσίν με τιμᾷ ἡ δὲ καρδία αὐτῶν πόρρω ἀπέχει ἀπ’ ἐμοῦ μάτην δὲ σέβονταί με διδάσκοντες διδασκαλίας ἐντάλματα ἀνθρώπων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 7:10",
+      "word_index": 11,
       "word": "τίμα τὸν πατέρα σου καὶ τὴν μητέρα σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 7:10",
+      "word_index": 19,
       "word": "ὁ κακολογῶν πατέρα ἢ μητέρα θανάτῳ τελευτάτω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 7:11",
+      "word_index": 20,
       "word": "ἐὰν εἴπῃ ἄνθρωπος τῷ πατρὶ ἢ τῇ μητρί κορβᾶν ὅ ἐστιν δῶρον ὃ ἐὰν ἐξ ἐμοῦ ὠφεληθῇς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 8:28",
+      "word_index": 9,
       "word": "ἰωάννην τὸν βαπτιστήν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 8:28",
+      "word_index": 12,
       "word": "ἠλίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 8:28",
+      "word_index": 18,
       "word": "εἷς τῶν προφητῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 10:19",
+      "word_index": 20,
       "word": "μὴ φονεύσῃς μὴ μοιχεύσῃς μὴ κλέψῃς μὴ ψευδομαρτυρήσῃς μὴ ἀποστερήσῃς τίμα τὸν πατέρα σου καὶ τὴν μητέρα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:3",
+      "word_index": 8,
       "word": "τί ποιεῖτε τοῦτο",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:3",
+      "word_index": 20,
       "word": "ὁ κύριος αὐτοῦ χρείαν ἔχει καὶ εὐθὺς αὐτὸν ἀποστέλλει πάλιν ὧδε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:17",
+      "word_index": 17,
       "word": "ὁ οἶκός μου οἶκος προσευχῆς κληθήσεται πᾶσιν τοῖς ἔθνεσιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:23",
+      "word_index": 16,
       "word": "ἄρθητι καὶ βλήθητι εἰς τὴν θάλασσαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:31",
+      "word_index": 9,
       "word": "ἐξ οὐρανοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:31",
+      "word_index": 16,
       "word": "διὰ τί οὖν οὐκ ἐπιστεύσατε αὐτῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 11:32",
+      "word_index": 4,
       "word": "ἐξ ἀνθρώπων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:6",
+      "word_index": 16,
       "word": "ἐντραπήσονται τὸν υἱόν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:7",
+      "word_index": 20,
       "word": "οὗτός ἐστιν ὁ κληρονόμος δεῦτε ἀποκτείνωμεν αὐτόν καὶ ἡμῶν ἔσται ἡ κληρονομία",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:10 - 1",
+      "word_index": 25,
       "word": "λίθον ὃν ἀπεδοκίμασαν οἱ οἰκοδομοῦντες οὗτος ἐγενήθη εἰς κεφαλὴν γωνίας παρὰ κυρίου ἐγένετο αὕτη καὶ ἔστιν θαυμαστὴ ἐν ὀφθαλμοῖς ἡμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:26",
+      "word_index": 33,
       "word": "ἐγὼ ὁ θεὸς ἀβραὰμ καὶ ὁ θεὸς ἰσαὰκ καὶ ὁ θεὸς ἰακώβ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:29 - 30",
+      "word_index": 44,
       "word": "ἄκουε ἰσραήλ κύριος ὁ θεὸς ἡμῶν κύριος εἷς ἐστιν καὶ ἀγαπήσεις κύριον τὸν θεόν σου ἐξ ὅλης τῆς καρδίας σου καὶ ἐξ ὅλης τῆς ψυχῆς σου καὶ ἐξ ὅλης τῆς διανοίας σου καὶ ἐξ ὅλης τῆς ἰσχύος σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:31",
+      "word_index": 8,
       "word": "ἀγαπήσεις τὸν πλησίον σου ὡς σεαυτόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:32",
+      "word_index": 19,
       "word": "εἷς ἐστιν καὶ οὐκ ἔστιν ἄλλος πλὴν αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:33",
+      "word_index": 18,
       "word": "ἀγαπᾶν αὐτὸν ἐξ ὅλης τῆς καρδίας καὶ ἐξ ὅλης τῆς συνέσεως καὶ ἐξ ὅλης τῆς ἰσχύος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:33",
+      "word_index": 25,
       "word": "ἀγαπᾶν τὸν πλησίον ὡς ἑαυτὸν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:35",
+      "word_index": 19,
       "word": "ὁ χριστὸς υἱὸς δαυίδ ἐστιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 12:36",
+      "word_index": 27,
       "word": "εἶπεν κύριος τῷ κυρίῳ μου κάθου ἐκ δεξιῶν μου ἕως ἂν θῶ τοὺς ἐχθρούς σου ὑποκάτω τῶν ποδῶν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 13:6",
+      "word_index": 10,
       "word": "ἐγώ εἰμι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 13:21",
+      "word_index": 10,
       "word": "ἴδε ὧδε ὁ χριστός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 13:21",
+      "word_index": 12,
       "word": "ἴδε ἐκεῖ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 14:14",
+      "word_index": 24,
       "word": "ὁ διδάσκαλος λέγει ποῦ ἐστιν τὸ κατάλυμά μου ὅπου τὸ πάσχα μετὰ τῶν μαθητῶν μου φάγω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 14:27",
+      "word_index": 17,
       "word": "πατάξω τὸν ποιμένα καὶ τὰ πρόβατα διασκορπισθήσονται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 14:58",
+      "word_index": 20,
       "word": "ἐγὼ καταλύσω τὸν ναὸν τοῦτον τὸν χειροποίητον καὶ διὰ τριῶν ἡμερῶν ἄλλον ἀχειροποίητον οἰκοδομήσω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Mark 16:7",
+      "word_index": 15,
       "word": "προάγει ὑμᾶς εἰς τὴν γαλιλαίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 3:4",
+      "word_index": 22,
       "word": "ἑτοιμάσατε τὴν ὁδὸν κυρίου εὐθείας ποιεῖτε τὰς τρίβους αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 3:8",
+      "word_index": 16,
       "word": "πατέρα ἔχομεν τὸν ἀβραάμ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:4",
+      "word_index": 15,
       "word": "οὐκ ἐπ’ ἄρτῳ μόνῳ ζήσεται ὁ ἄνθρωπος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:8",
+      "word_index": 16,
       "word": "κύριον τὸν θεόν σου προσκυνήσεις καὶ αὐτῷ μόνῳ λατρεύσεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:10",
+      "word_index": 12,
       "word": "τοῖς ἀγγέλοις αὐτοῦ ἐντελεῖται περὶ σοῦ τοῦ διαφυλάξαι σε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:11",
+      "word_index": 13,
       "word": "ἐπὶ χειρῶν ἀροῦσίν σε μήποτε προσκόψῃς πρὸς λίθον τὸν πόδα σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:12",
+      "word_index": 14,
       "word": "οὐκ ἐκπειράσεις κύριον τὸν θεόν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 4:23",
+      "word_index": 26,
       "word": "ἰατρέ θεράπευσον σεαυτόν ὅσα ἠκούσαμεν γενόμενα εἰς τὴν καφαρναοὺμ ποίησον καὶ ὧδε ἐν τῇ πατρίδι σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 5:23",
+      "word_index": 9,
       "word": "ἀφέωνταί σοι αἱ ἁμαρτίαι σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 5:23",
+      "word_index": 14,
       "word": "ἔγειρε καὶ περιπάτει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 5:39",
+      "word_index": 12,
       "word": "ὁ παλαιὸς χρηστός ἐστιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 6:42",
+      "word_index": 16,
       "word": "ἀδελφέ ἄφες ἐκβάλω τὸ κάρφος τὸ ἐν τῷ ὀφθαλμῷ σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:8",
+      "word_index": 16,
       "word": "πορεύθητι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:8",
+      "word_index": 21,
       "word": "ἔρχου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:8",
+      "word_index": 29,
       "word": "ποίησον τοῦτο",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:20",
+      "word_index": 22,
       "word": "σὺ εἶ ὁ ἐρχόμενος ἢ ἄλλον προσδοκῶμεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:27",
+      "word_index": 20,
       "word": "ἰδοὺ ἀποστέλλω τὸν ἄγγελόν μου πρὸ προσώπου σου ὃς κατασκευάσει τὴν ὁδόν σου ἔμπροσθέν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:32",
+      "word_index": 21,
       "word": "ηὐλήσαμεν ὑμῖν καὶ οὐκ ὠρχήσασθε ἐθρηνήσαμεν καὶ οὐκ ἐκλαύσατε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:33",
+      "word_index": 15,
       "word": "δαιμόνιον ἔχει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 7:34",
+      "word_index": 19,
       "word": "ἰδοὺ ἄνθρωπος φάγος καὶ οἰνοπότης φίλος τελωνῶν καὶ ἁμαρτωλῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 9:19",
+      "word_index": 7,
       "word": "ἰωάννην τὸν βαπτιστήν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 9:19",
+      "word_index": 10,
       "word": "ἠλίαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 9:19",
+      "word_index": 18,
       "word": "προφήτης τις τῶν ἀρχαίων ἀνέστη",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 10:5",
+      "word_index": 12,
       "word": "εἰρήνη τῷ οἴκῳ τούτῳ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 10:9",
+      "word_index": 16,
       "word": "ἤγγικεν ἐφ’ ὑμᾶς ἡ βασιλεία τοῦ θεοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 10:11",
+      "word_index": 24,
       "word": "καὶ τὸν κονιορτὸν τὸν κολληθέντα ἡμῖν ἐκ τῆς πόλεως ὑμῶν εἰς τοὺς πόδας ἀπομασσόμεθα ὑμῖν πλὴν τοῦτο γινώσκετε ὅτι ἤγγικεν ἡ βασιλεία τοῦ θεοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 10:27",
+      "word_index": 38,
       "word": "ἀγαπήσεις κύριον τὸν θεόν σου ἐξ ὅλης τῆς καρδίας σου καὶ ἐν ὅλῃ τῇ ψυχῇ σου καὶ ἐν ὅλῃ τῇ ἰσχύϊ σου καὶ ἐν ὅλῃ τῇ διανοίᾳ σου καὶ τὸν πλησίον σου ὡς σεαυτόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 10:35",
+      "word_index": 26,
       "word": "ἐπιμελήθητι αὐτοῦ καὶ ὅ τι ἂν προσδαπανήσῃς ἐγὼ ἐν τῷ ἐπανέρχεσθαί με ἀποδώσω σοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:2 - 4",
+      "word_index": 44,
       "word": "πάτερ ἁγιασθήτω τὸ ὄνομά σου ἐλθέτω ἡ βασιλεία σου τὸν ἄρτον ἡμῶν τὸν ἐπιούσιον δίδου ἡμῖν τὸ καθ’ ἡμέραν καὶ ἄφες ἡμῖν τὰς ἁμαρτίας ἡμῶν καὶ γὰρ αὐτοὶ ἀφίομεν παντὶ ὀφείλοντι ἡμῖν καὶ μὴ εἰσενέγκῃς ἡμᾶς εἰς πειρασμόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:5 - 6",
+      "word_index": 36,
       "word": "φίλε χρῆσόν μοι τρεῖς ἄρτους ἐπειδὴ φίλος μου παρεγένετο ἐξ ὁδοῦ πρός με καὶ οὐκ ἔχω ὃ παραθήσω αὐτῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:7",
+      "word_index": 27,
       "word": "μή μοι κόπους πάρεχε ἤδη ἡ θύρα κέκλεισται καὶ τὰ παιδία μου μετ’ ἐμοῦ εἰς τὴν κοίτην εἰσίν οὐ δύναμαι ἀναστὰς δοῦναί σοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:18",
+      "word_index": 21,
       "word": "ἐν βεελζεβοὺλ ἐκβάλλειν με τὰ δαιμόνια",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:24",
+      "word_index": 26,
       "word": "ὑποστρέψω εἰς τὸν οἶκόν μου ὅθεν ἐξῆλθον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 11:49",
+      "word_index": 20,
       "word": "ἀποστελῶ εἰς αὐτοὺς προφήτας καὶ ἀποστόλους καὶ ἐξ αὐτῶν ἀποκτενοῦσιν καὶ διώξουσιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:17",
+      "word_index": 15,
       "word": "τί ποιήσω ὅτι οὐκ ἔχω ποῦ συνάξω τοὺς καρπούς μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:18 - 9",
+      "word_index": 38,
       "word": "τοῦτο ποιήσω καθελῶ μου τὰς ἀποθήκας καὶ μείζονας οἰκοδομήσω καὶ συνάξω ἐκεῖ πάντα τὸν σῖτον καὶ τὰ ἀγαθά μου καὶ ἐρῶ τῇ ψυχῇ μου ψυχή ἔχεις πολλὰ ἀγαθὰ κείμενα εἰς ἔτη πολλά ἀναπαύου φάγε πίε εὐφραίνου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:20",
+      "word_index": 20,
       "word": "ἄφρων ταύτῃ τῇ νυκτὶ τὴν ψυχήν σου ἀπαιτοῦσιν ἀπὸ σοῦ ἃ δὲ ἡτοίμασας τίνι ἔσται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:45",
+      "word_index": 15,
       "word": "χρονίζει ὁ κύριός μου ἔρχεσθαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:54",
+      "word_index": 17,
       "word": "ὄμβρος ἔρχεται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 12:55",
+      "word_index": 8,
       "word": "καύσων ἔσται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:7",
+      "word_index": 28,
       "word": "τρία ἔτη ἀφ’ οὗ ἔρχομαι ζητῶν καρπὸν ἐν τῇ συκῇ ταύτῃ καὶ οὐχ εὑρίσκω ἔκκοψον οὖν αὐτήν ἱνατί καὶ τὴν γῆν καταργεῖ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:8 - 9",
+      "word_index": 33,
       "word": "κύριε ἄφες αὐτὴν καὶ τοῦτο τὸ ἔτος ἕως ὅτου σκάψω περὶ αὐτὴν καὶ βάλω κόπρια κἂν μὲν ποιήσῃ καρπὸν εἰς τὸ μέλλον εἰ δὲ μή γε ἐκκόψεις αὐτήν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:25",
+      "word_index": 22,
       "word": "κύριε ἄνοιξον ἡμῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:25",
+      "word_index": 31,
       "word": "οὐκ οἶδα ὑμᾶς πόθεν ἐστέ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:26",
+      "word_index": 14,
       "word": "ἐφάγομεν ἐνώπιόν σου καὶ ἐπίομεν καὶ ἐν ταῖς πλατείαις ἡμῶν ἐδίδαξας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:27",
+      "word_index": 15,
       "word": "οὐκ οἶδα ὑμᾶς πόθεν ἐστέ ἀπόστητε ἀπ’ ἐμοῦ πάντες ἐργάται ἀδικίας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:32",
+      "word_index": 21,
       "word": "ἰδοὺ ἐκβάλλω δαιμόνια καὶ ἰάσεις ἀποτελῶ σήμερον καὶ αὔριον καὶ τῇ τρίτῃ τελειοῦμαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 13:35",
+      "word_index": 23,
       "word": "εὐλογημένος ὁ ἐρχόμενος ἐν ὀνόματι κυρίου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:9",
+      "word_index": 12,
       "word": "δὸς τούτῳ τόπον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:10",
+      "word_index": 20,
       "word": "φίλε προσανάβηθι ἀνώτερον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:17",
+      "word_index": 17,
       "word": "ἔρχεσθε ὅτι ἤδη ἕτοιμά ἐστιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:18",
+      "word_index": 23,
       "word": "ἀγρὸν ἠγόρασα καὶ ἔχω ἀνάγκην ἐξελθὼν ἰδεῖν αὐτόν ἐρωτῶ σε ἔχε με παρῃτημένον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:19",
+      "word_index": 16,
       "word": "ζεύγη βοῶν ἠγόρασα πέντε καὶ πορεύομαι δοκιμάσαι αὐτά ἐρωτῶ σε ἔχε με παρῃτημένον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:20",
+      "word_index": 11,
       "word": "γυναῖκα ἔγημα καὶ διὰ τοῦτο οὐ δύναμαι ἐλθεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:21",
+      "word_index": 37,
       "word": "ἔξελθε ταχέως εἰς τὰς πλατείας καὶ ῥύμας τῆς πόλεως καὶ τοὺς πτωχοὺς καὶ ἀναπείρους καὶ τυφλοὺς καὶ χωλοὺς εἰσάγαγε ὧδε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:22",
+      "word_index": 12,
       "word": "κύριε γέγονεν ὃ ἐπέταξας καὶ ἔτι τόπος ἐστίν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:23 - 4",
+      "word_index": 35,
       "word": "ἔξελθε εἰς τὰς ὁδοὺς καὶ φραγμοὺς καὶ ἀνάγκασον εἰσελθεῖν ἵνα γεμισθῇ μου ὁ οἶκος λέγω γὰρ ὑμῖν ὅτι οὐδεὶς τῶν ἀνδρῶν ἐκείνων τῶν κεκλημένων γεύσεταί μου τοῦ δείπνου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 14:30",
+      "word_index": 11,
       "word": "οὗτος ὁ ἄνθρωπος ἤρξατο οἰκοδομεῖν καὶ οὐκ ἴσχυσεν ἐκτελέσαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:6",
+      "word_index": 22,
       "word": "συγχάρητέ μοι ὅτι εὗρον τὸ πρόβατόν μου τὸ ἀπολωλός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:9",
+      "word_index": 16,
       "word": "συγχάρητέ μοι ὅτι εὗρον τὴν δραχμὴν ἣν ἀπώλεσα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:12",
+      "word_index": 15,
       "word": "πάτερ δός μοι τὸ ἐπιβάλλον μέρος τῆς οὐσίας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:17 - 9",
+      "word_index": 47,
       "word": "πόσοι μίσθιοι τοῦ πατρός μου περισσεύονται ἄρτων ἐγὼ δὲ λιμῷ ὧδε ἀπόλλυμαι ἀναστὰς πορεύσομαι πρὸς τὸν πατέρα μου καὶ ἐρῶ αὐτῷ πάτερ ἥμαρτον εἰς τὸν οὐρανὸν καὶ ἐνώπιόν σου οὐκέτι εἰμὶ ἄξιος κληθῆναι υἱός σου ποίησόν με ὡς ἕνα τῶν μισθίων σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:21",
+      "word_index": 19,
       "word": "πάτερ ἥμαρτον εἰς τὸν οὐρανὸν καὶ ἐνώπιόν σου οὐκέτι εἰμὶ ἄξιος κληθῆναι υἱός σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:22 - 4",
+      "word_index": 51,
       "word": "ταχὺ ἐξενέγκατε στολὴν τὴν πρώτην καὶ ἐνδύσατε αὐτόν καὶ δότε δακτύλιον εἰς τὴν χεῖρα αὐτοῦ καὶ ὑποδήματα εἰς τοὺς πόδας καὶ φέρετε τὸν μόσχον τὸν σιτευτόν θύσατε καὶ φαγόντες εὐφρανθῶμεν ὅτι οὗτος ὁ υἱός μου νεκρὸς ἦν καὶ ἀνέζησεν ἦν ἀπολωλὼς καὶ εὑρέθη",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:27",
+      "word_index": 22,
       "word": "ὁ ἀδελφός σου ἥκει καὶ ἔθυσεν ὁ πατήρ σου τὸν μόσχον τὸν σιτευτόν ὅτι ὑγιαίνοντα αὐτὸν ἀπέλαβεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:29 - 30",
+      "word_index": 47,
       "word": "τοσαῦτα ἔτη δουλεύω σοι καὶ οὐδέποτε ἐντολήν σου παρῆλθον καὶ ἐμοὶ οὐδέποτε ἔδωκας ἔριφον ἵνα μετὰ τῶν φίλων μου εὐφρανθῶ ὅτε δὲ ὁ υἱός σου οὗτος ὁ καταφαγών σου τὸν βίον μετὰ πορνῶν ἦλθεν ἔθυσας αὐτῷ τὸν σιτευτὸν μόσχον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 15:31 - 2",
+      "word_index": 34,
       "word": "τέκνον σὺ πάντοτε μετ’ ἐμοῦ εἶ καὶ πάντα τὰ ἐμὰ σά ἐστιν εὐφρανθῆναι δὲ καὶ χαρῆναι ἔδει ὅτι ὁ ἀδελφός σου οὗτος νεκρὸς ἦν καὶ ἔζησεν καὶ ἀπολωλὼς καὶ εὑρέθη",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:2",
+      "word_index": 21,
       "word": "τί τοῦτο ἀκούω περὶ σοῦ ἀπόδος τὸν λόγον τῆς οἰκονομίας σου οὐ γὰρ δύνῃ ἔτι οἰκονομεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:3 - 4",
+      "word_index": 37,
       "word": "τί ποιήσω ὅτι ὁ κύριός μου ἀφαιρεῖται τὴν οἰκονομίαν ἀπ’ ἐμοῦ σκάπτειν οὐκ ἰσχύω ἐπαιτεῖν αἰσχύνομαι ἔγνων τί ποιήσω ἵνα ὅταν μετασταθῶ ἐκ τῆς οἰκονομίας δέξωνταί με εἰς τοὺς οἴκους αὐτῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:5",
+      "word_index": 17,
       "word": "πόσον ὀφείλεις τῷ κυρίῳ μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:6",
+      "word_index": 6,
       "word": "ἑκατὸν βάτους ἐλαίου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:6",
+      "word_index": 19,
       "word": "δέξαι σου τὰ γράμματα καὶ καθίσας ταχέως γράψον πεντήκοντα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:7",
+      "word_index": 7,
       "word": "σὺ δὲ πόσον ὀφείλεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:7",
+      "word_index": 13,
       "word": "ἑκατὸν κόρους σίτου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:7",
+      "word_index": 22,
       "word": "δέξαι σου τὰ γράμματα καὶ γράψον ὀγδοήκοντα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:24",
+      "word_index": 30,
       "word": "πάτερ ἀβραάμ ἐλέησόν με καὶ πέμψον λάζαρον ἵνα βάψῃ τὸ ἄκρον τοῦ δακτύλου αὐτοῦ ὕδατος καὶ καταψύξῃ τὴν γλῶσσάν μου ὅτι ὀδυνῶμαι ἐν τῇ φλογὶ ταύτῃ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:25 - 6",
+      "word_index": 51,
       "word": "τέκνον μνήσθητι ὅτι ἀπέλαβες τὰ ἀγαθά σου ἐν τῇ ζωῇ σου καὶ λάζαρος ὁμοίως τὰ κακά νῦν δὲ ὧδε παρακαλεῖται σὺ δὲ ὀδυνᾶσαι καὶ ἐν πᾶσι τούτοις μεταξὺ ἡμῶν καὶ ὑμῶν χάσμα μέγα ἐστήρικται ὅπως οἱ θέλοντες διαβῆναι ἔνθεν πρὸς ὑμᾶς μὴ δύνωνται μηδὲ ἐκεῖθεν πρὸς ἡμᾶς διαπερῶσιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:27 - 8",
+      "word_index": 33,
       "word": "ἐρωτῶ σε οὖν πάτερ ἵνα πέμψῃς αὐτὸν εἰς τὸν οἶκον τοῦ πατρός μου ἔχω γὰρ πέντε ἀδελφούς ὅπως διαμαρτύρηται αὐτοῖς ἵνα μὴ καὶ αὐτοὶ ἔλθωσιν εἰς τὸν τόπον τοῦτον τῆς βασάνου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:29",
+      "word_index": 10,
       "word": "ἔχουσι μωϋσέα καὶ τοὺς προφήτας ἀκουσάτωσαν αὐτῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:30",
+      "word_index": 15,
       "word": "οὐχί πάτερ ἀβραάμ ἀλλ’ ἐάν τις ἀπὸ νεκρῶν πορευθῇ πρὸς αὐτοὺς μετανοήσουσιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 16:31",
+      "word_index": 17,
       "word": "εἰ μωϋσέως καὶ τῶν προφητῶν οὐκ ἀκούουσιν οὐδ’ ἐάν τις ἐκ νεκρῶν ἀναστῇ πεισθήσονται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:4",
+      "word_index": 15,
       "word": "μετανοῶ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:6",
+      "word_index": 21,
       "word": "ἐκριζώθητι καὶ φυτεύθητι ἐν τῇ θαλάσσῃ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:7",
+      "word_index": 19,
       "word": "εὐθέως παρελθὼν ἀνάπεσε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:8",
+      "word_index": 22,
       "word": "ἑτοίμασον τί δειπνήσω καὶ περιζωσάμενος διακόνει μοι ἕως φάγω καὶ πίω καὶ μετὰ ταῦτα φάγεσαι καὶ πίεσαι σύ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:10",
+      "word_index": 18,
       "word": "δοῦλοι ἀχρεῖοί ἐσμεν ὃ ὠφείλομεν ποιῆσαι πεποιήκαμεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:21",
+      "word_index": 4,
       "word": "ὧδε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:21",
+      "word_index": 6,
       "word": "ἐκεῖ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:23",
+      "word_index": 6,
       "word": "ἐκεῖ ἤ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 17:23",
+      "word_index": 8,
       "word": "ὧδε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 18:3",
+      "word_index": 18,
       "word": "ἐκδίκησόν με ἀπὸ τοῦ ἀντιδίκου μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 18:4 - 5",
+      "word_index": 38,
       "word": "εἰ καὶ τὸν θεὸν οὐ φοβοῦμαι οὐδὲ ἄνθρωπον ἐντρέπομαι διά γε τὸ παρέχειν μοι κόπον τὴν χήραν ταύτην ἐκδικήσω αὐτήν ἵνα μὴ εἰς τέλος ἐρχομένη ὑπωπιάζῃ με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 18:11 - 2",
+      "word_index": 36,
       "word": "ὁ θεός εὐχαριστῶ σοι ὅτι οὐκ εἰμὶ ὥσπερ οἱ λοιποὶ τῶν ἀνθρώπων ἅρπαγες ἄδικοι μοιχοί ἢ καὶ ὡς οὗτος ὁ τελώνης νηστεύω δὶς τοῦ σαββάτου ἀποδεκατῶ πάντα ὅσα κτῶμαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 18:13",
+      "word_index": 26,
       "word": "ὁ θεός ἱλάσθητί μοι τῷ ἁμαρτωλῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:13",
+      "word_index": 17,
       "word": "πραγματεύσασθε ἐν ᾧ ἔρχομαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:14",
+      "word_index": 18,
       "word": "οὐ θέλομεν τοῦτον βασιλεῦσαι ἐφ’ ἡμᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:16",
+      "word_index": 12,
       "word": "κύριε ἡ μνᾶ σου δέκα προσηργάσατο μνᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:17",
+      "word_index": 17,
       "word": "εὖγε ἀγαθὲ δοῦλε ὅτι ἐν ἐλαχίστῳ πιστὸς ἐγένου ἴσθι ἐξουσίαν ἔχων ἐπάνω δέκα πόλεων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:18",
+      "word_index": 12,
       "word": "ἡ μνᾶ σου κύριε ἐποίησεν πέντε μνᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:19",
+      "word_index": 10,
       "word": "καὶ σὺ ἐπάνω γίνου πέντε πόλεων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:20 - 1",
+      "word_index": 31,
       "word": "κύριε ἰδοὺ ἡ μνᾶ σου ἣν εἶχον ἀποκειμένην ἐν σουδαρίῳ ἐφοβούμην γάρ σε ὅτι ἄνθρωπος αὐστηρὸς εἶ αἴρεις ὃ οὐκ ἔθηκας καὶ θερίζεις ὃ οὐκ ἔσπειρας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:22 - 3",
+      "word_index": 42,
       "word": "ἐκ τοῦ στόματός σου κρινῶ σε πονηρὲ δοῦλε ᾔδεις ὅτι ἐγὼ ἄνθρωπος αὐστηρός εἰμι αἴρων ὃ οὐκ ἔθηκα καὶ θερίζων ὃ οὐκ ἔσπειρα καὶ διὰ τί οὐκ ἔδωκάς μου τὸ ἀργύριον ἐπὶ τράπεζαν κἀγὼ ἐλθὼν σὺν τόκῳ ἂν αὐτὸ ἔπραξα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:24",
+      "word_index": 16,
       "word": "ἄρατε ἀπ’ αὐτοῦ τὴν μνᾶν καὶ δότε τῷ τὰς δέκα μνᾶς ἔχοντι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:25",
+      "word_index": 7,
       "word": "κύριε ἔχει δέκα μνᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:26 - 7",
+      "word_index": 35,
       "word": "λέγω ὑμῖν ὅτι παντὶ τῷ ἔχοντι δοθήσεται ἀπὸ δὲ τοῦ μὴ ἔχοντος καὶ ὃ ἔχει ἀρθήσεται πλὴν τοὺς ἐχθρούς μου τούτους τοὺς μὴ θελήσαντάς με βασιλεῦσαι ἐπ’ αὐτοὺς ἀγάγετε ὧδε καὶ κατασφάξατε αὐτοὺς ἔμπροσθέν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:31",
+      "word_index": 8,
       "word": "διὰ τί λύετε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:31",
+      "word_index": 16,
       "word": "ὁ κύριος αὐτοῦ χρείαν ἔχει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 19:46",
+      "word_index": 10,
       "word": "καὶ ἔσται ὁ οἶκός μου οἶκος προσευχῆς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:5",
+      "word_index": 11,
       "word": "ἐξ οὐρανοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:5",
+      "word_index": 17,
       "word": "διὰ τί οὐκ ἐπιστεύσατε αὐτῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:6",
+      "word_index": 5,
       "word": "ἐξ ἀνθρώπων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:13",
+      "word_index": 17,
       "word": "τί ποιήσω πέμψω τὸν υἱόν μου τὸν ἀγαπητόν ἴσως τοῦτον ἐντραπήσονται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:14",
+      "word_index": 20,
       "word": "οὗτός ἐστιν ὁ κληρονόμος ἀποκτείνωμεν αὐτόν ἵνα ἡμῶν γένηται ἡ κληρονομία",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 20:42 - 3",
+      "word_index": 26,
       "word": "εἶπεν κύριος τῷ κυρίῳ μου κάθου ἐκ δεξιῶν μου ἕως ἂν θῶ τοὺς ἐχθρούς σου ὑποπόδιον τῶν ποδῶν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 21:8",
+      "word_index": 16,
       "word": "ἐγώ εἰμι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 21:8",
+      "word_index": 20,
       "word": "ὁ καιρὸς ἤγγικεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 22:11",
+      "word_index": 22,
       "word": "λέγει σοι ὁ διδάσκαλος ποῦ ἐστιν τὸ κατάλυμα ὅπου τὸ πάσχα μετὰ τῶν μαθητῶν μου φάγω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 23:29",
+      "word_index": 21,
       "word": "μακάριαι αἱ στεῖραι καὶ αἱ κοιλίαι αἳ οὐκ ἐγέννησαν καὶ μαστοὶ οἳ οὐκ ἔθρεψαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 23:30",
+      "word_index": 8,
       "word": "πέσετε ἐφ’ ἡμᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 23:30",
+      "word_index": 13,
       "word": "καλύψατε ἡμᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Luke 24:7",
+      "word_index": 19,
       "word": "τὸν υἱὸν τοῦ ἀνθρώπου ὅτι δεῖ παραδοθῆναι εἰς χεῖρας ἀνθρώπων ἁμαρτωλῶν καὶ σταυρωθῆναι καὶ τῇ τρίτῃ ἡμέρᾳ ἀναστῆναι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 1:15",
+      "word_index": 22,
       "word": "ὁ ὀπίσω μου ἐρχόμενος ἔμπροσθέν μου γέγονεν ὅτι πρῶτός μου ἦν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 1:23",
+      "word_index": 11,
       "word": "εὐθύνατε τὴν ὁδὸν κυρίου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 1:30",
+      "word_index": 18,
       "word": "ὀπίσω μου ἔρχεται ἀνὴρ ὃς ἔμπροσθέν μου γέγονεν ὅτι πρῶτός μου ἦν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 1:33",
+      "word_index": 32,
       "word": "ἐφ’ ὃν ἂν ἴδῃς τὸ πνεῦμα καταβαῖνον καὶ μένον ἐπ’ αὐτόν οὗτός ἐστιν ὁ βαπτίζων ἐν πνεύματι ἁγίῳ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 1:50",
+      "word_index": 14,
       "word": "εἶδόν σε ὑποκάτω τῆς συκῆς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 3:7",
+      "word_index": 9,
       "word": "δεῖ ὑμᾶς γεννηθῆναι ἄνωθεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 3:28",
+      "word_index": 13,
       "word": "οὐκ εἰμὶ ἐγὼ ὁ χριστός ἀλλ’",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 3:28",
+      "word_index": 18,
       "word": "ἀπεσταλμένος εἰμὶ ἔμπροσθεν ἐκείνου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 4:10",
+      "word_index": 20,
       "word": "δός μοι πεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 4:35",
+      "word_index": 11,
       "word": "ἔτι τετράμηνός ἐστιν καὶ ὁ θερισμὸς ἔρχεται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 5:11",
+      "word_index": 17,
       "word": "ἆρον τὸν κράβαττόν σου καὶ περιπάτει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 5:12",
+      "word_index": 12,
       "word": "ἆρον καὶ περιπάτει",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 6:31",
+      "word_index": 19,
       "word": "ἄρτον ἐκ τοῦ οὐρανοῦ ἔδωκεν αὐτοῖς φαγεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 6:36",
+      "word_index": 10,
       "word": "καὶ ἑωράκατέ με καὶ οὐ πιστεύετε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 6:42",
+      "word_index": 25,
       "word": "ἐκ τοῦ οὐρανοῦ καταβέβηκα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 6:45",
+      "word_index": 10,
       "word": "καὶ ἔσονται πάντες διδακτοὶ θεοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 7:36",
+      "word_index": 21,
       "word": "ζητήσετέ με καὶ οὐχ εὑρήσετέ με καὶ ὅπου εἰμὶ ἐγὼ ὑμεῖς οὐ δύνασθε ἐλθεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 7:42",
+      "word_index": 20,
       "word": "ἐκ τοῦ σπέρματος δαυὶδ καὶ ἀπὸ βηθλέεμ τῆς κώμης ὅπου ἦν δαυὶδ ἔρχεται ὁ χριστός",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 8:22",
+      "word_index": 16,
       "word": "ὅπου ἐγὼ ὑπάγω ὑμεῖς οὐ δύνασθε ἐλθεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 8:24",
+      "word_index": 9,
       "word": "ἀποθανεῖσθε ἐν ταῖς ἁμαρτίαις ὑμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 8:33",
+      "word_index": 16,
       "word": "ἐλεύθεροι γενήσεσθε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 8:52",
+      "word_index": 31,
       "word": "ἐάν τις τὸν λόγον μου τηρήσῃ οὐ μὴ γεύσηται θανάτου εἰς τὸν αἰῶνα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 8:54",
+      "word_index": 25,
       "word": "θεὸς ἡμῶν ἐστιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 9:11",
+      "word_index": 24,
       "word": "ὕπαγε εἰς τὸν σιλωὰμ καὶ νίψαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 9:41",
+      "word_index": 16,
       "word": "βλέπομεν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 10:34",
+      "word_index": 16,
       "word": "ἐγὼ εἶπα θεοί ἐστε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 10:36",
+      "word_index": 13,
       "word": "βλασφημεῖς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 10:36",
+      "word_index": 19,
       "word": "υἱὸς τοῦ θεοῦ εἰμι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 12:34",
+      "word_index": 28,
       "word": "δεῖ ὑψωθῆναι τὸν υἱὸν τοῦ ἀνθρώπου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 13:13",
+      "word_index": 5,
       "word": "ὁ διδάσκαλος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 13:13",
+      "word_index": 8,
       "word": "ὁ κύριος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 13:18",
+      "word_index": 25,
       "word": "ὁ τρώγων μου τὸν ἄρτον ἐπῆρεν ἐπ’ ἐμὲ τὴν πτέρναν αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 13:33",
+      "word_index": 21,
       "word": "ὅπου ἐγὼ ὑπάγω ὑμεῖς οὐ δύνασθε ἐλθεῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 14:9",
+      "word_index": 27,
       "word": "δεῖξον ἡμῖν τὸν πατέρα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 14:28",
+      "word_index": 10,
       "word": "ὑπάγω καὶ ἔρχομαι πρὸς ὑμᾶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 15:20",
+      "word_index": 14,
       "word": "οὐκ ἔστιν δοῦλος μείζων τοῦ κυρίου αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 15:25",
+      "word_index": 15,
       "word": "ἐμίσησάν με δωρεάν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:5",
+      "word_index": 15,
       "word": "ποῦ ὑπάγεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:17",
+      "word_index": 19,
       "word": "μικρὸν καὶ οὐ θεωρεῖτέ με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:17",
+      "word_index": 20,
       "word": "καὶ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:17",
+      "word_index": 25,
       "word": "πάλιν μικρὸν καὶ ὄψεσθέ με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:17",
+      "word_index": 31,
       "word": "ὅτι ὑπάγω πρὸς τὸν πατέρα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 16:19",
+      "word_index": 28,
       "word": "μικρὸν καὶ οὐ θεωρεῖτέ με καὶ πάλιν μικρὸν καὶ ὄψεσθέ με",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 19:21",
+      "word_index": 14,
       "word": "ὁ βασιλεὺς τῶν ἰουδαίων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 19:21",
+      "word_index": 22,
       "word": "βασιλεύς εἰμι τῶν ἰουδαίων",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 19:24",
+      "word_index": 31,
       "word": "διεμερίσαντο τὰ ἱμάτιά μου ἑαυτοῖς καὶ ἐπὶ τὸν ἱματισμόν μου ἔβαλον κλῆρον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "John 20:17",
+      "word_index": 35,
       "word": "ἀναβαίνω πρὸς τὸν πατέρα μου καὶ πατέρα ὑμῶν καὶ θεόν μου καὶ θεὸν ὑμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 1:20",
+      "word_index": 17,
       "word": "γενηθήτω ἡ ἔπαυλις αὐτοῦ ἔρημος καὶ μὴ ἔστω ὁ κατοικῶν ἐν αὐτῇ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 1:20",
+      "word_index": 23,
       "word": "τὴν ἐπισκοπὴν αὐτοῦ λαβέτω ἕτερος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 2:17 - 21",
+      "word_index": 107,
       "word": "καὶ ἔσται ἐν ταῖς ἐσχάταις ἡμέραις λέγει ὁ θεός ἐκχεῶ ἀπὸ τοῦ πνεύματός μου ἐπὶ πᾶσαν σάρκα καὶ προφητεύσουσιν οἱ υἱοὶ ὑμῶν καὶ αἱ θυγατέρες ὑμῶν καὶ οἱ νεανίσκοι ὑμῶν ὁράσεις ὄψονται καὶ οἱ πρεσβύτεροι ὑμῶν ἐνυπνίοις ἐνυπνιασθήσονται καί γε ἐπὶ τοὺς δούλους μου καὶ ἐπὶ τὰς δούλας μου ἐν ταῖς ἡμέραις ἐκείναις ἐκχεῶ ἀπὸ τοῦ πνεύματός μου καὶ προφητεύσουσιν καὶ δώσω τέρατα ἐν τῷ οὐρανῷ ἄνω καὶ σημεῖα ἐπὶ τῆς γῆς κάτω αἷμα καὶ πῦρ καὶ ἀτμίδα καπνοῦ ὁ ἥλιος μεταστραφήσεται εἰς σκότος καὶ ἡ σελήνη εἰς αἷμα πρὶν ἐλθεῖν ἡμέραν κυρίου τὴν μεγάλην καὶ ἐπιφανῆ καὶ ἔσται πᾶς ὃς ἂν ἐπικαλέσηται τὸ ὄνομα κυρίου σωθήσεται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 2:25 - 8",
+      "word_index": 66,
       "word": "προορώμην τὸν κύριον ἐνώπιόν μου διὰ παντός ὅτι ἐκ δεξιῶν μού ἐστιν ἵνα μὴ σαλευθῶ διὰ τοῦτο ηὐφράνθη ἡ καρδία μου καὶ ἠγαλλιάσατο ἡ γλῶσσά μου ἔτι δὲ καὶ ἡ σάρξ μου κατασκηνώσει ἐπ’ ἐλπίδι ὅτι οὐκ ἐγκαταλείψεις τὴν ψυχήν μου εἰς ᾅδην οὐδὲ δώσεις τὸν ὅσιόν σου ἰδεῖν διαφθοράν ἐγνώρισάς μοι ὁδοὺς ζωῆς πληρώσεις με εὐφροσύνης μετὰ τοῦ προσώπου σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 2:34 - 5",
+      "word_index": 30,
       "word": "εἶπεν ὁ κύριος τῷ κυρίῳ μου κάθου ἐκ δεξιῶν μου ἕως ἂν θῶ τοὺς ἐχθρούς σου ὑποπόδιον τῶν ποδῶν σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 3:22 - 3",
+      "word_index": 41,
       "word": "προφήτην ὑμῖν ἀναστήσει κύριος ὁ θεὸς ὑμῶν ἐκ τῶν ἀδελφῶν ὑμῶν ὡς ἐμέ αὐτοῦ ἀκούσεσθε κατὰ πάντα ὅσα ἂν λαλήσῃ πρὸς ὑμᾶς ἔσται δὲ πᾶσα ψυχὴ ἥτις ἐὰν μὴ ἀκούσῃ τοῦ προφήτου ἐκείνου ἐξολεθρευθήσεται ἐκ τοῦ λαοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 3:25",
+      "word_index": 31,
       "word": "καὶ ἐν τῷ σπέρματί σου [ἐν]ευλογηθήσονται πᾶσαι αἱ πατριαὶ τῆς γῆς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 4:25 - 6",
+      "word_index": 39,
       "word": "ἱνατί ἐφρύαξαν ἔθνη καὶ λαοὶ ἐμελέτησαν κενά παρέστησαν οἱ βασιλεῖς τῆς γῆς καὶ οἱ ἄρχοντες συνήχθησαν ἐπὶ τὸ αὐτὸ κατὰ τοῦ κυρίου καὶ κατὰ τοῦ χριστοῦ αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 6:14",
+      "word_index": 21,
       "word": "ἰησοῦς ὁ ναζωραῖος οὗτος καταλύσει τὸν τόπον τοῦτον καὶ ἀλλάξει τὰ ἔθη ἃ παρέδωκεν ἡμῖν μωϋσῆς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:3",
+      "word_index": 23,
       "word": "ἔξελθε ἐκ τῆς γῆς σου καὶ ἐκ τῆς συγγενείας σου καὶ δεῦρο εἰς τὴν γῆν ἣν ἄν σοι δείξω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:6 - 7",
+      "word_index": 29,
       "word": "ἔσται τὸ σπέρμα αὐτοῦ πάροικον ἐν γῇ ἀλλοτρίᾳ καὶ δουλώσουσιν αὐτὸ καὶ κακώσουσιν ἔτη τετρακόσια καὶ τὸ ἔθνος ᾧ ἐὰν δουλεύσουσιν κρινῶ ἐγώ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:7",
+      "word_index": 22,
       "word": "καὶ μετὰ ταῦτα ἐξελεύσονται καὶ λατρεύσουσίν μοι ἐν τῷ τόπῳ τούτῳ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:26",
+      "word_index": 19,
       "word": "ἄνδρες ἀδελφοί ἐστε ἱνατί ἀδικεῖτε ἀλλήλους",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:27 - 8",
+      "word_index": 27,
       "word": "τίς σε κατέστησεν ἄρχοντα καὶ δικαστὴν ἐφ’ ἡμῶν μὴ ἀνελεῖν με σὺ θέλεις ὃν τρόπον ἀνεῖλες ἐχθὲς τὸν αἰγύπτιον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:32",
+      "word_index": 13,
       "word": "ἐγὼ ὁ θεὸς τῶν πατέρων σου ὁ θεὸς ἀβραὰμ καὶ ἰσαὰκ καὶ ἰακώβ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:33 - 4",
+      "word_index": 46,
       "word": "λῦσον τὸ ὑπόδημα τῶν ποδῶν σου ὁ γὰρ τόπος ἐφ’ ᾧ ἕστηκας γῆ ἁγία ἐστίν ἰδὼν εἶδον τὴν κάκωσιν τοῦ λαοῦ μου τοῦ ἐν αἰγύπτῳ καὶ τοῦ στεναγμοῦ αὐτῶν ἤκουσα καὶ κατέβην ἐξελέσθαι αὐτούς καὶ νῦν δεῦρο ἀποστείλω σε εἰς αἴγυπτον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:35",
+      "word_index": 12,
       "word": "τίς σε κατέστησεν ἄρχοντα καὶ δικαστήν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:37",
+      "word_index": 20,
       "word": "προφήτην ὑμῖν ἀναστήσει ὁ θεὸς ἐκ τῶν ἀδελφῶν ὑμῶν ὡς ἐμέ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:40",
+      "word_index": 24,
       "word": "ποίησον ἡμῖν θεοὺς οἳ προπορεύσονται ἡμῶν ὁ γὰρ μωϋσῆς οὗτος ὃς ἐξήγαγεν ἡμᾶς ἐκ γῆς αἰγύπτου οὐκ οἴδαμεν τί ἐγένετο αὐτῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:42 - 3",
+      "word_index": 55,
       "word": "μὴ σφάγια καὶ θυσίας προσηνέγκατέ μοι ἔτη τεσσεράκοντα ἐν τῇ ἐρήμῳ οἶκος ἰσραήλ καὶ ἀνελάβετε τὴν σκηνὴν τοῦ μόλοχ καὶ τὸ ἄστρον τοῦ θεοῦ ὑμῶν ῥαιφάν τοὺς τύπους οὓς ἐποιήσατε προσκυνεῖν αὐτοῖς καὶ μετοικιῶ ὑμᾶς ἐπέκεινα βαβυλῶνος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 7:49 - 50",
+      "word_index": 30,
       "word": "ὁ οὐρανός μοι θρόνος ἡ δὲ γῆ ὑποπόδιον τῶν ποδῶν μου ποῖον οἶκον οἰκοδομήσετέ μοι λέγει κύριος ἢ τίς τόπος τῆς καταπαύσεώς μου οὐχὶ ἡ χείρ μου ἐποίησεν ταῦτα πάντα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 10:31 - 2",
+      "word_index": 33,
       "word": "κορνήλιε εἰσηκούσθη σου ἡ προσευχὴ καὶ αἱ ἐλεημοσύναι σου ἐμνήσθησαν ἐνώπιον τοῦ θεοῦ πέμψον οὖν εἰς ἰόππην καὶ μετακάλεσαι σίμωνα ὃς ἐπικαλεῖται πέτρος οὗτος ξενίζεται ἐν οἰκίᾳ σίμωνος βυρσέως παρὰ θάλασσαν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 11:7",
+      "word_index": 11,
       "word": "ἀναστάς πέτρε θῦσον καὶ φάγε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 11:8",
+      "word_index": 14,
       "word": "μηδαμῶς κύριε ὅτι κοινὸν ἢ ἀκάθαρτον οὐδέποτε εἰσῆλθεν εἰς τὸ στόμα μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 11:9",
+      "word_index": 15,
       "word": "ἃ ὁ θεὸς ἐκαθάρισεν σὺ μὴ κοίνου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 11:13 - 4",
+      "word_index": 37,
       "word": "ἀπόστειλον εἰς ἰόππην καὶ μετάπεμψαι σίμωνα τὸν ἐπικαλούμενον πέτρον ὃς λαλήσει ῥήματα πρὸς σὲ ἐν οἷς σωθήσῃ σὺ καὶ πᾶς ὁ οἶκός σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 11:16",
+      "word_index": 18,
       "word": "ἰωάννης μὲν ἐβάπτισεν ὕδατι ὑμεῖς δὲ βαπτισθήσεσθε ἐν πνεύματι ἁγίῳ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:22",
+      "word_index": 18,
       "word": "τὸν τοῦ ἰεσσαί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:22",
+      "word_index": 29,
       "word": "ὃς ποιήσει πάντα τὰ θελήματά μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:25",
+      "word_index": 15,
       "word": "τί ἐμὲ ὑπονοεῖτε εἶναι οὐκ εἰμὶ ἐγώ ἀλλ’",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:25",
+      "word_index": 28,
       "word": "ἔρχεται μετ’ ἐμὲ οὗ οὐκ εἰμὶ ἄξιος τὸ ὑπόδημα τῶν ποδῶν λῦσαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:33",
+      "word_index": 27,
       "word": "υἱός μου εἶ σύ ἐγὼ σήμερον γεγέννηκά σε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:34",
+      "word_index": 21,
       "word": "δώσω ὑμῖν τὰ ὅσια δαυὶδ τὰ πιστά",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:35",
+      "word_index": 12,
       "word": "οὐ δώσεις τὸν ὅσιόν σου ἰδεῖν διαφθοράν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 1,
       "word": "ἴδετε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 2,
       "word": "οἱ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 3,
       "word": "καταφρονηταί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 4,
       "word": "καὶ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 5,
       "word": "θαυμάσατε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 6,
       "word": "καὶ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 7,
       "word": "ἀφανίσθητε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 8,
       "word": "ὅτι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 9,
       "word": "ἔργον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 10,
       "word": "ἐργάζομαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 11,
       "word": "ἐγὼ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 12,
       "word": "ἐν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 13,
       "word": "ταῖς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 14,
       "word": "ἡμέραις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 15,
       "word": "ὑμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 16,
       "word": "ἔργον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 17,
       "word": "ὃ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 18,
       "word": "οὐ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 19,
       "word": "μὴ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 20,
       "word": "πιστεύσητε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 21,
       "word": "ἐάν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 22,
       "word": "τις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 23,
       "word": "ἐκδιηγῆται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:41",
+      "word_index": 24,
       "word": "ὑμῖν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 13:47",
+      "word_index": 20,
       "word": "τέθεικά σε εἰς φῶς ἐθνῶν τοῦ εἶναί σε εἰς σωτηρίαν ἕως ἐσχάτου τῆς γῆς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 15:16 - 8",
+      "word_index": 46,
       "word": "μετὰ ταῦτα ἀναστρέψω καὶ ἀνοικοδομήσω τὴν σκηνὴν δαυὶδ τὴν πεπτωκυῖαν καὶ τὰ κατεσκαμμένα αὐτῆς ἀνοικοδομήσω καὶ ἀνορθώσω αὐτήν ὅπως ἂν ἐκζητήσωσιν οἱ κατάλοιποι τῶν ἀνθρώπων τὸν κύριον καὶ πάντα τὰ ἔθνη ἐφ’ οὓς ἐπικέκληται τὸ ὄνομά μου ἐπ’ αὐτούς λέγει κύριος ποιῶν ταῦτα γνωστὰ ἀπ’ αἰῶνος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 17:23",
+      "word_index": 15,
       "word": "ἀγνώστῳ θεῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 17:28",
+      "word_index": 21,
       "word": "τοῦ γὰρ καὶ γένος ἐσμέν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 19:26",
+      "word_index": 29,
       "word": "οὐκ εἰσὶν θεοὶ οἱ διὰ χειρῶν γινόμενοι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 20:23",
+      "word_index": 17,
       "word": "δεσμὰ καὶ θλίψεις με μένουσιν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 20:35",
+      "word_index": 26,
       "word": "μακάριόν ἐστιν μᾶλλον διδόναι ἢ λαμβάνειν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 21:11",
+      "word_index": 42,
       "word": "τὸν ἄνδρα οὗ ἐστιν ἡ ζώνη αὕτη οὕτως δήσουσιν ἐν ἰερουσαλὴμ οἱ ἰουδαῖοι καὶ παραδώσουσιν εἰς χεῖρας ἐθνῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:7",
+      "word_index": 15,
       "word": "σαοὺλ σαούλ τί με διώκεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:8",
+      "word_index": 6,
       "word": "τίς εἶ κύριε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:8",
+      "word_index": 18,
       "word": "ἐγώ εἰμι ἰησοῦς ὁ ναζωραῖος ὃν σὺ διώκεις",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:10",
+      "word_index": 5,
       "word": "τί ποιήσω κύριε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:10",
+      "word_index": 24,
       "word": "ἀναστὰς πορεύου εἰς δαμασκὸν κἀκεῖ σοι λαληθήσεται περὶ πάντων ὧν τέτακταί σοι ποιῆσαι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:13",
+      "word_index": 10,
       "word": "σαοὺλ ἀδελφέ ἀνάβλεψον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:14 - 6",
+      "word_index": 51,
       "word": "ὁ θεὸς τῶν πατέρων ἡμῶν προεχειρίσατό σε γνῶναι τὸ θέλημα αὐτοῦ καὶ ἰδεῖν τὸν δίκαιον καὶ ἀκοῦσαι φωνὴν ἐκ τοῦ στόματος αὐτοῦ ὅτι ἔσῃ μάρτυς αὐτῷ πρὸς πάντας ἀνθρώπους ὧν ἑώρακας καὶ ἤκουσας καὶ νῦν τί μέλλεις ἀναστὰς βάπτισαι καὶ ἀπόλουσαι τὰς ἁμαρτίας σου ἐπικαλεσάμενος τὸ ὄνομα αὐτοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:18",
+      "word_index": 19,
       "word": "σπεῦσον καὶ ἔξελθε ἐν τάχει ἐξ ἰερουσαλήμ διότι οὐ παραδέξονταί σου μαρτυρίαν περὶ ἐμοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:19 - 20",
+      "word_index": 40,
       "word": "κύριε αὐτοὶ ἐπίστανται ὅτι ἐγὼ ἤμην φυλακίζων καὶ δέρων κατὰ τὰς συναγωγὰς τοὺς πιστεύοντας ἐπὶ σέ καὶ ὅτε ἐξεχύννετο τὸ αἷμα στεφάνου τοῦ μάρτυρός σου καὶ αὐτὸς ἤμην ἐφεστὼς καὶ συνευδοκῶν καὶ φυλάσσων τὰ ἱμάτια τῶν ἀναιρούντων αὐτόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 22:21",
+      "word_index": 12,
       "word": "πορεύου ὅτι ἐγὼ εἰς ἔθνη μακρὰν ἐξαποστελῶ σε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 23:5",
+      "word_index": 20,
       "word": "ἄρχοντα τοῦ λαοῦ σου οὐκ ἐρεῖς κακῶς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 24:21",
+      "word_index": 19,
       "word": "περὶ ἀναστάσεως νεκρῶν ἐγὼ κρίνομαι σήμερον ἐφ’ ὑμῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 25:16",
+      "word_index": 27,
       "word": "οὐκ ἔστιν ἔθος ῥωμαίοις χαρίζεσθαί τινα ἄνθρωπον πρὶν ἢ ὁ κατηγορούμενος κατὰ πρόσωπον ἔχοι τοὺς κατηγόρους τόπον τε ἀπολογίας λάβοι περὶ τοῦ ἐγκλήματος",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 26:14",
+      "word_index": 25,
       "word": "σαοὺλ σαούλ τί με διώκεις σκληρόν σοι πρὸς κέντρα λακτίζειν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 26:15",
+      "word_index": 6,
       "word": "τίς εἶ κύριε",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 26:15 - 8",
+      "word_index": 87,
       "word": "ἐγώ εἰμι ἰησοῦς ὃν σὺ διώκεις ἀλλὰ ἀνάστηθι καὶ στῆθι ἐπὶ τοὺς πόδας σου εἰς τοῦτο γὰρ ὤφθην σοι προχειρίσασθαί σε ὑπηρέτην καὶ μάρτυρα ὧν τε εἶδές με ὧν τε ὀφθήσομαί σοι ἐξαιρούμενός σε ἐκ τοῦ λαοῦ καὶ ἐκ τῶν ἐθνῶν εἰς οὓς ἐγὼ ἀποστέλλω σε ἀνοῖξαι ὀφθαλμοὺς αὐτῶν τοῦ ἐπιστρέψαι ἀπὸ σκότους εἰς φῶς καὶ τῆς ἐξουσίας τοῦ σατανᾶ ἐπὶ τὸν θεόν τοῦ λαβεῖν αὐτοὺς ἄφεσιν ἁμαρτιῶν καὶ κλῆρον ἐν τοῖς ἡγιασμένοις πίστει τῇ εἰς ἐμέ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 27:24",
+      "word_index": 9,
       "word": "μὴ φοβοῦ παῦλε καίσαρί σε δεῖ παραστῆναι καὶ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 27:24",
+      "word_index": 19,
       "word": "κεχάρισταί σοι ὁ θεὸς πάντας τοὺς πλέοντας μετὰ σοῦ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Acts 28:26 - 7",
+      "word_index": 55,
       "word": "πορεύθητι πρὸς τὸν λαὸν τοῦτον καὶ εἰπόν ἀκοῇ ἀκούσετε καὶ οὐ μὴ συνῆτε καὶ βλέποντες βλέψετε καὶ οὐ μὴ ἴδητε ἐπαχύνθη γὰρ ἡ καρδία τοῦ λαοῦ τούτου καὶ τοῖς ὠσὶν βαρέως ἤκουσαν καὶ τοὺς ὀφθαλμοὺς αὐτῶν ἐκάμμυσαν μήποτε ἴδωσιν τοῖς ὀφθαλμοῖς καὶ τοῖς ὠσὶν ἀκούσωσιν καὶ τῇ καρδίᾳ συνῶσιν καὶ ἐπιστρέψωσιν καὶ ἰάσομαι αὐτούς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 9:26",
+      "word_index": 12,
       "word": "οὐ λαός μου ὑμεῖς",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 10:6",
+      "word_index": 18,
       "word": "τίς ἀναβήσεται εἰς τὸν οὐρανόν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 10:7",
+      "word_index": 6,
       "word": "τίς καταβήσεται εἰς τὴν ἄβυσσον",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 12:19",
+      "word_index": 15,
       "word": "ἐμοὶ ἐκδίκησις ἐγὼ ἀνταποδώσω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 14:11",
+      "word_index": 4,
       "word": "ζῶ ἐγώ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rom 14:11",
+      "word_index": 17,
       "word": "ὅτι ἐμοὶ κάμψει πᾶν γόνυ καὶ πᾶσα γλῶσσα ἐξομολογήσεται τῷ θεῷ",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "1Cor 14:21",
+      "word_index": 20,
       "word": "ἐν ἑτερογλώσσοις καὶ ἐν χείλεσιν ἑτέρων λαλήσω τῷ λαῷ τούτῳ καὶ οὐδ’ οὕτως εἰσακούσονταί μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 3:10",
+      "word_index": 20,
       "word": "ἀεὶ πλανῶνται τῇ καρδίᾳ αὐτοὶ δὲ οὐκ ἔγνωσαν τὰς ὁδούς μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 3:11",
+      "word_index": 12,
       "word": "εἰ εἰσελεύσονται εἰς τὴν κατάπαυσίν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 4:3",
+      "word_index": 21,
       "word": "εἰ εἰσελεύσονται εἰς τὴν κατάπαυσίν μου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 7:21",
+      "word_index": 19,
       "word": "σὺ ἱερεὺς εἰς τὸν αἰῶνα",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 8:8",
+      "word_index": 7,
       "word": "ἰδοὺ ἡμέραι ἔρχονται",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 8:8 - 9",
+      "word_index": 54,
       "word": "καὶ συντελέσω ἐπὶ τὸν οἶκον ἰσραὴλ καὶ ἐπὶ τὸν οἶκον ἰούδα διαθήκην καινήν οὐ κατὰ τὴν διαθήκην ἣν ἐποίησα τοῖς πατράσιν αὐτῶν ἐν ἡμέρᾳ ἐπιλαβομένου μου τῆς χειρὸς αὐτῶν ἐξαγαγεῖν αὐτοὺς ἐκ γῆς αἰγύπτου ὅτι αὐτοὶ οὐκ ἐνέμειναν ἐν τῇ διαθήκῃ μου κἀγὼ ἠμέλησα αὐτῶν",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 8:10",
+      "word_index": 13,
       "word": "ὅτι αὕτη ἡ διαθήκη ἣν διαθήσομαι τῷ οἴκῳ ἰσραὴλ μετὰ τὰς ἡμέρας ἐκείνας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 8:10 - 2",
+      "word_index": 79,
       "word": "διδοὺς νόμους μου εἰς τὴν διάνοιαν αὐτῶν καὶ ἐπὶ καρδίας αὐτῶν ἐπιγράψω αὐτούς καὶ ἔσομαι αὐτοῖς εἰς θεόν καὶ αὐτοὶ ἔσονταί μοι εἰς λαόν καὶ οὐ μὴ διδάξωσιν ἕκαστος τὸν πολίτην αὐτοῦ καὶ ἕκαστος τὸν ἀδελφὸν αὐτοῦ λέγων γνῶθι τὸν κύριον ὅτι πάντες εἰδήσουσίν με ἀπὸ μικροῦ ἕως μεγάλου αὐτῶν ὅτι ἵλεως ἔσομαι ταῖς ἀδικίαις αὐτῶν καὶ τῶν ἁμαρτιῶν αὐτῶν οὐ μὴ μνησθῶ ἔτι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 10:7",
+      "word_index": 17,
       "word": "ἰδοὺ ἥκω ἐν κεφαλίδι βιβλίου γέγραπται περὶ ἐμοῦ τοῦ ποιῆσαι ὁ θεὸς τὸ θέλημά σου",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 10:16",
+      "word_index": 11,
       "word": "αὕτη ἡ διαθήκη ἣν διαθήσομαι πρὸς αὐτοὺς μετὰ τὰς ἡμέρας ἐκείνας",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Heb 10:16 - 7",
+      "word_index": 38,
       "word": "διδοὺς νόμους μου ἐπὶ καρδίας αὐτῶν καὶ ἐπὶ τὴν διάνοιαν αὐτῶν ἐπιγράψω αὐτούς καὶ τῶν ἁμαρτιῶν αὐτῶν καὶ τῶν ἀνομιῶν αὐτῶν οὐ μὴ μνησθήσομαι ἔτι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rev 3:17",
+      "word_index": 5,
       "word": "πλούσιός εἰμι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rev 14:13",
+      "word_index": 17,
       "word": "μακάριοι οἱ νεκροὶ οἱ ἐν κυρίῳ ἀποθνῄσκοντες ἀπ’ ἄρτι",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rev 14:13",
+      "word_index": 18,
       "word": "ναί",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rev 18:7",
+      "word_index": 29,
       "word": "κάθημαι βασίλισσα καὶ χήρα οὐκ εἰμὶ καὶ πένθος οὐ μὴ ἴδω",
       "type": "EmbeddedRepSpeech"
     },
     {
       "verse": "Rev 19:9",
+      "word_index": 14,
       "word": "μακάριοι οἱ εἰς τὸ δεῖπνον τοῦ γάμου τοῦ ἀρνίου κεκλημένοι",
       "type": "EmbeddedRepSpeech"
     }

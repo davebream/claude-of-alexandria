@@ -4,31 +4,37 @@
   "references": [
     {
       "verse": "John 1:15",
+      "word_index": 6,
       "word": "κέκραγεν",
       "type": "Historical Perfect"
     },
     {
       "verse": "2Cor 12:9",
+      "word_index": 2,
       "word": "εἴρηκέν",
       "type": "Historical Perfect"
     },
     {
       "verse": "Rev 5:7",
+      "word_index": 4,
       "word": "εἴληφεν",
       "type": "Historical Perfect"
     },
     {
       "verse": "Rev 7:14",
+      "word_index": 2,
       "word": "εἴρηκα",
       "type": "Historical Perfect"
     },
     {
       "verse": "Rev 8:5",
+      "word_index": 2,
       "word": "εἴληφεν",
       "type": "Historical Perfect"
     },
     {
       "verse": "Rev 19:13",
+      "word_index": 7,
       "word": "κέκληται",
       "type": "Historical Perfect"
     }
