@@ -18,7 +18,7 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes 27 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes 27 tools. Skills call these automatically. V4 requires native JSON arrays, explicit modes for variant tools, and cursor iteration through `page.next_cursor`.
 
 **Core linguistic tools:**
 
@@ -27,12 +27,11 @@ The reference server exposes 27 tools. Skills call these automatically; you do n
 | `query_morphology` | Word-level morphological parsing | Both |
 | `query_discourse_features` | Levinsohn NT discourse features | NT |
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
-| `query_ot_structure` | Verse-edge syntax, participant, and speech boundary context from Macula Hebrew lowfat XML | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both |
 | `query_lemmas` | Cross-book lemma distribution | Both |
-| `query_theme` | Cross-book distribution of a thematic keyword group | Both |
+| `query_theme_distribution` | Cross-book distribution of a thematic keyword group | Both |
 | `query_syntax` | OpenText clause-level semantic role annotations | NT |
 | `query_variants` | Textual variant edition comparison across 9 editions | NT |
 | `query_lexicon` | Strong's-based word definitions (TBESH/TBESG) | Both |
@@ -43,12 +42,14 @@ The reference server exposes 27 tools. Skills call these automatically; you do n
 | Tool | Queries | Coverage |
 | ---- | ------- | -------- |
 | `query_cross_references` | Editorial tradition cross-references between verses | Both |
+| `trace_cross_reference_path` | Bounded path search through the cross-reference graph | Both |
 | `query_places` | Geographic locations with coordinates | Both |
 | `query_people` | Named individuals with cross-canonical appearances | Both |
 | `query_events` | Timeline events with participants and locations | Both |
 | `query_person_network` | Family relationships and co-appearances | Both |
 | `query_speakers` | Speaker attribution with quotation type | Both |
 | `check_versification` | Hebrew-English verse numbering differences | OT |
+| `query_ot_structure` | Verse-edge syntax, participant, and speech boundary context | OT |
 
 **Bible text and commentary tools:**
 
@@ -59,6 +60,7 @@ The reference server exposes 27 tools. Skills call these automatically; you do n
 | `parallel_text` | Compare verse text across multiple translations | Both |
 | `confessional_lookup` | Creeds and confessions (4 query modes) | — |
 | `liturgical_lookup` | Church-year season → passages + themes, passage → season(s) lookup | — |
+| `query_controversies` | Contested topics by topic or passage | — |
 
 Tech stack: TypeScript, Cloudflare Workers, D1 (edge SQLite), MCP SDK (HTTP transport). No local runtime needed.
 

@@ -40,6 +40,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The four scripts that generate the `biblical-segmentation` skill's committed morphology and vocabulary reference data (for the NT from MorphGNT/SBLGNT, for the OT from OpenScriptures/morphhb) now pin their upstream source to an exact commit and verify the SHA-256 of every downloaded file against a committed checksum lockfile before parsing. Previously the scripts recorded no source revision, so anyone re-running them could silently produce data that diverged from what ships — with no way to tell why. Re-running now fetches the same pinned revision and refuses to proceed if any input fails verification, making the committed data reproducible from its recorded provenance. A re-extraction at the pinned revision confirmed the shipped morphology and vocabulary data is unchanged, and two long-standing documentation notes were corrected to match it: the count of אֱלֹהִים (Elohim) in Genesis is **219** word tokens, not the "217" a stale note claimed (the note never matched the extractor's actual output); and Matthew's **1,068**-verse total is the correct figure for the SBL Greek New Testament, which as a critical text omits three verses the King James tradition includes (17:21, 18:11, 23:14) — it is the source edition's versification, not missing data. None of this changes what any MCP tool returns.
 
+## [4.0.0] - 2026-07-21
+
+### Changed
+
+- Replaced the complete MCP tool contract in place on `/mcp`. All 26 tools now publish strict, complete input and output JSON Schemas; mode variants use discriminants; native arrays are required; and successful text content is guaranteed to match validated `structuredContent`.
+- Renamed `query_theme` to `query_theme_distribution` without a compatibility alias. Bundled skills, agents, examples, the Python client, and promptfoo fixtures now use the v4 name and explicit modes.
+- Added cursor pagination to the 21 tools that previously imposed silent row, verse, or character caps. Pages use deterministic ordering, opaque filter-bound cache-versioned cursors, and complete-record 25,000-character boundaries.
+- Flattened discourse, person-network, commentary, confessional, and liturgical result collections so every returned record can be continued reliably. Liturgical readings now expose season slugs, season and reading themes, and explicit start/end coordinates.
+- Replaced cross-reference path truncation flags with `complete` and typed termination reasons. Removed `list_books.available_tools`; MCP `tools/list` is authoritative.
+
+### Added
+
+- Added protocol-level `tools/list` and `tools/call` tests, AJV validation of emitted schemas, cursor integrity and reconstruction tests, description budgets, and a [v4 migration guide](docs/mcp-v4-migration.md).
+
 ## [3.5.0] - 2026-07-18
 
 ### Added

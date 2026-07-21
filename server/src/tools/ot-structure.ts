@@ -3,8 +3,8 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { encodePosition, parseVerseRange } from './utils.js';
+import { PageSchema, PaginationInputShape, toolError } from './contract.js';
 
-const CHARACTER_LIMIT = 25_000;
 const ATTRIBUTION = 'Macula Hebrew lowfat XML (Clear Bible, CC BY 4.0) and MACULA Quotation and Speaker Data (Clear Bible, CC BY 4.0).';
 const LIMITATIONS = [
   'Boundary features are derived signals, not a literary verdict.',
@@ -13,56 +13,58 @@ const LIMITATIONS = [
   'Location changes, temporal frame changes, and formula matches are not part of query_ot_structure v1; use query_places, query_events, query_lemmas, or query_vocabulary for those signals.',
 ];
 
-const BoundaryRefSchema = z.object({
-  chapter: z.number(),
-  verse: z.number(),
+const BoundaryRefSchema = z.strictObject({
+  chapter: z.number().int().positive(),
+  verse: z.number().int().positive(),
   ref: z.string(),
 });
 
-const ClauseSummarySchema = z.object({
+const ClauseSummarySchema = z.strictObject({
   class: z.string().nullable(),
   rule: z.string().nullable(),
   role: z.string().nullable(),
 });
 
-const QuotationEventSchema = z.object({
+const QuotationEventSchema = z.strictObject({
   speech_key: z.string(),
   speaker_id: z.string(),
   speaker_label: z.string().nullable(),
   quote_type: z.string().nullable(),
 });
 
-export const OtStructureInputSchema = {
+export const OtStructureInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('OT book name (any common form, e.g., "Genesis", "Gen", "Psalms")'),
   range: z.string().describe('Verse range, e.g. "1:1-1:10", "1:1-10", or a single verse "1:1"'),
-};
+});
 
-export type OtStructureInput = z.output<z.ZodObject<typeof OtStructureInputSchema>>;
+export type OtStructureInput = z.output<typeof OtStructureInputSchema>;
 
-export const OtStructureOutputSchema = {
+export const OtStructureOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
-  boundaries: z.array(z.object({
+  boundaries: z.array(z.strictObject({
     before: BoundaryRefSchema,
     after: BoundaryRefSchema,
     relation_to_range: z.enum(['start_edge', 'internal', 'end_edge']),
-    syntax: z.object({
+    syntax: z.strictObject({
       previous_sentence_ended: z.boolean(),
       new_sentence_begins: z.boolean(),
-      open_clause_depth: z.number(),
-      clause_end_count: z.number(),
-      clause_start_count: z.number(),
+      open_clause_depth: z.number().int().nonnegative(),
+      clause_end_count: z.number().int().nonnegative(),
+      clause_start_count: z.number().int().nonnegative(),
       clause_endings: z.array(ClauseSummarySchema),
       clause_beginnings: z.array(ClauseSummarySchema),
     }),
-    participants: z.object({
+    participants: z.strictObject({
       before: z.array(z.string()),
       after: z.array(z.string()),
       entered: z.array(z.string()),
       exited: z.array(z.string()),
       participant_set_changed: z.boolean(),
     }),
-    speech: z.object({
+    speech: z.strictObject({
       speakers_before: z.array(z.string()),
       speakers_after: z.array(z.string()),
       speaker_changed: z.boolean(),
@@ -72,16 +74,14 @@ export const OtStructureOutputSchema = {
       quotations_closed: z.array(QuotationEventSchema),
     }),
   })),
-  summary: z.object({
-    total: z.number(),
-    returned: z.number(),
-    truncated: z.boolean().optional(),
+  summary: z.strictObject({
+    total: z.number().int().nonnegative(),
     start_edge_available: z.boolean(),
     end_edge_available: z.boolean(),
   }),
   attribution: z.string(),
   limitations: z.array(z.string()),
-};
+});
 
 type JsonValue = string[] | Record<string, unknown>[];
 
@@ -112,25 +112,16 @@ function relationToRange(row: Record<string, unknown>, startEnc: number, endEnc:
 export async function queryOtStructure(args: OtStructureInput): Promise<CallToolResult> {
   const bookInfo = lookupBook(args.book);
   if (!bookInfo) {
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'BOOK_NOT_FOUND', message: `Book '${args.book}' not found.`, suggestions: suggestBooks(args.book) } }) }],
-      isError: true,
-    };
+    return toolError('BOOK_NOT_FOUND', `Book '${args.book}' not found.`, { suggestions: suggestBooks(args.book) });
   }
 
   if (bookInfo.testament !== 'ot') {
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'TESTAMENT_MISMATCH', message: `OT structure features are OT only. '${bookInfo.displayName}' is an NT book.` } }) }],
-      isError: true,
-    };
+    return toolError('TESTAMENT_MISMATCH', `OT structure features are OT only. '${bookInfo.displayName}' is an NT book.`);
   }
 
   const parsed = parseVerseRange(args.range);
   if ('error' in parsed) {
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: parsed.error } }) }],
-      isError: true,
-    };
+    return toolError('INVALID_RANGE', parsed.error);
   }
 
   const startEnc = encodePosition(parsed.startChapter, parsed.startVerse);
@@ -145,28 +136,21 @@ export async function queryOtStructure(args: OtStructureInput): Promise<CallTool
         OR (before_ref_enc >= ? AND after_ref_enc <= ?)
         OR before_ref_enc = ?
       )
-    ORDER BY before_ref_enc
-    LIMIT 2000
+    ORDER BY before_ref_enc, after_ref_enc, boundary_ordinal
   `;
 
   let rows: Record<string, unknown>[];
   try {
     rows = await query(sql, [bookInfo.canonical, startEnc, startEnc, endEnc, endEnc]);
   } catch (error) {
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ error: { code: 'DATA_NOT_LOADED', message: `OT structure data is not available yet. Apply migration 0024 and run the ot-structure backfill. Detail: ${error instanceof Error ? error.message : String(error)}` } }) }],
-      isError: true,
-    };
+    return toolError('DATA_NOT_LOADED', `OT structure data is not available yet. Apply migration 0024 and run the ot-structure backfill. Detail: ${error instanceof Error ? error.message : String(error)}`);
   }
 
   if (rows.length === 0) {
     const countRows = await query('SELECT COUNT(*) AS count FROM ot_structure_boundaries WHERE book = ?', [bookInfo.canonical]);
     const count = Number(countRows[0]?.count ?? 0);
     if (count === 0) {
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ error: { code: 'DATA_NOT_LOADED', message: `No OT structure rows are loaded for ${bookInfo.displayName}. Run the ot-structure backfill before using query_ot_structure.` } }) }],
-        isError: true,
-      };
+      return toolError('DATA_NOT_LOADED', `No OT structure rows are loaded for ${bookInfo.displayName}. Run the ot-structure backfill before using query_ot_structure.`);
     }
   }
 
@@ -207,7 +191,6 @@ export async function queryOtStructure(args: OtStructureInput): Promise<CallTool
     boundaries,
     summary: {
       total: boundaries.length,
-      returned: boundaries.length,
       start_edge_available: boundaries.some(b => b.relation_to_range === 'start_edge'),
       end_edge_available: boundaries.some(b => b.relation_to_range === 'end_edge'),
     },
@@ -215,27 +198,8 @@ export async function queryOtStructure(args: OtStructureInput): Promise<CallTool
     limitations: LIMITATIONS,
   };
 
-  let json = JSON.stringify(result);
-  if (json.length > CHARACTER_LIMIT && boundaries.length > 1) {
-    const truncated = [];
-    let approxSize = json.length - JSON.stringify(boundaries).length + 100;
-    for (const boundary of boundaries) {
-      const boundaryJson = JSON.stringify(boundary);
-      if (approxSize + boundaryJson.length + 1 > CHARACTER_LIMIT) break;
-      approxSize += boundaryJson.length + 1;
-      truncated.push(boundary);
-    }
-    result.boundaries = truncated;
-    result.summary = {
-      ...(result.summary as Record<string, unknown>),
-      returned: truncated.length,
-      truncated: true,
-    };
-    json = JSON.stringify(result);
-  }
-
   return {
-    content: [{ type: 'text', text: json }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

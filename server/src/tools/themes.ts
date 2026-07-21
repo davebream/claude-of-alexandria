@@ -1,23 +1,22 @@
 import { z } from 'zod';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
-import { jsonArray } from './json-array.js';
 
-export const ThemesInputSchema = {
-  lemmas: jsonArray(z.array(z.string()).min(1).max(100)).describe(
+export const ThemesInputSchema = z.strictObject({
+  lemmas: z.array(z.string()).min(1).max(100).describe(
     'Array of lemmas to resolve (Greek for NT, Strong\'s numbers for OT). Max 100.'
   ),
   testament: z.enum(['nt', 'ot']).describe(
     'Testament — must match the testament used in query_morphology'
   ),
-  include_unmatched: z.boolean().optional().describe(
+  include_unmatched: z.boolean().default(true).describe(
     'Include unmatched lemmas in response (default: true). Set false to reduce payload.'
   ),
-};
+});
 
-export type ThemesInput = z.output<z.ZodObject<typeof ThemesInputSchema>>;
+export type ThemesInput = z.output<typeof ThemesInputSchema>;
 
-export const ThemesOutputSchema = {
+export const ThemesOutputSchema = z.strictObject({
   testament: z.string(),
   themes: z.array(z.string()),
   matches: z.record(z.string(), z.array(z.string())),
@@ -25,6 +24,7 @@ export const ThemesOutputSchema = {
   total_lemmas: z.number(),
   matched_count: z.number(),
   unmatched_count: z.number(),
+  report_gap: z.string().optional(),
   // Parallel lookup map — { lemma → transliteration|null } — keyed over the
   // SAME lemma that appears as a KEY in `matches` above (a Greek surface form
   // for NT, a Strong's number for OT). `matches` cannot be restructured to
@@ -43,7 +43,7 @@ export const ThemesOutputSchema = {
     + "has no match. Null is a defined honest boundary, not an error, and does not "
     + "mean the word is absent from the text."
   ),
-};
+});
 
 // ─── Transliteration lookup ────────────────────────────────────────────────────
 // A themes call is single-testament, so the lookup source is a clean branch, not

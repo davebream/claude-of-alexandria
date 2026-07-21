@@ -218,7 +218,7 @@ def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
                 "Deuteronomy", "Ezekiel", "Daniel"]
     for book in ot_books[:sample_books]:
         try:
-            vocab = mcp.query_vocabulary(book, "ot", limit=500)
+            vocab = mcp.query_vocabulary(book, "ot")
             book_lemmas = {l["lemma"] for l in vocab.get("lemmas", [])}
             overlap = set(ot_lemmas) & book_lemmas
             if len(overlap) >= 2:
@@ -231,7 +231,7 @@ def validate_cooccurrence(mcp: MCPClient, ot_lemmas: list[str],
                 "Revelation", "Luke", "Acts"]
     for book in nt_books[:sample_books]:
         try:
-            vocab = mcp.query_vocabulary(book, "nt", limit=500)
+            vocab = mcp.query_vocabulary(book, "nt")
             book_lemmas = {l["lemma"] for l in vocab.get("lemmas", [])}
             overlap = set(nt_lemmas) & book_lemmas
             if len(overlap) >= 2:

@@ -77,9 +77,9 @@ Partition the distinct-headword list into two groups:
 
 Example arithmetic: 47 distinct Strong's IDs → 3 calls: 20 + 20 + 7.
 
-**For the strongs group:** call `query_lexicon` with `strongs_ids: [<chunk of ≤20 Strong's numbers>]`.
+**For the strongs group:** call `query_lexicon` with `mode: "strongs", strongs_ids: [<chunk of ≤20 Strong's numbers>]`.
 
-**For the null-strongs group:** call `query_lexicon` with `lemmas: [<chunk of ≤20 lemma strings>]`.
+**For the null-strongs group:** call `query_lexicon` with `mode: "lemmas", lemmas: [<chunk of ≤20 lemma strings>]`.
 
 **Associating results:**
 - Lexicon returns `entries` keyed by `strongs_id` and `not_found: string[]` listing unresolved inputs.
@@ -101,7 +101,7 @@ Example arithmetic: 47 distinct Strong's IDs → 3 calls: 20 + 20 + 7.
 
 ### Step 4: Render the Artifact
 
-**Passage text:** Call `bible_lookup` with `{ book, range }` for each reference. Surface any `truncation_message` or `versification_note` returned by the tool — append them as a note directly below the passage text.
+**Passage text:** Call `bible_lookup` with `{ book, range }` for each reference. Follow `page.next_cursor` until it is omitted, preserving the returned verse order. Surface any `versification_note` returned by the tool directly below the passage text.
 
 **Glossary:** Project the resolved glosses back onto the **ordered distinct-headword list from Step 2** (the authoritative, order-preserving spine). Do not render from lexicon merge order — use Step 2 order.
 

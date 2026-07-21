@@ -177,7 +177,7 @@ describe('query_ot_structure', () => {
     expect(body.error.code).toBe('DATA_NOT_LOADED');
   });
 
-  it('truncates large responses within the character limit', async () => {
+  it('returns complete boundary records and leaves pagination to the MCP wrapper', async () => {
     const largeRows = Array.from({ length: 300 }, (_, index) => ({
       ...SAMPLE_ROWS[index % SAMPLE_ROWS.length],
       boundary_ordinal: index + 1,
@@ -193,8 +193,9 @@ describe('query_ot_structure', () => {
     const result = await queryOtStructure({ book: 'Genesis', range: '1:1-1:300' } as any);
     const body = JSON.parse(result.content[0].text as string);
 
-    expect(body.summary.truncated).toBe(true);
-    expect(body.summary.returned).toBeLessThan(body.summary.total);
-    expect(result.content[0].text.length).toBeLessThanOrEqual(25_000);
+    expect(body.boundaries).toHaveLength(300);
+    expect(body.summary.total).toBe(300);
+    expect(body.summary).not.toHaveProperty('truncated');
+    expect(body.summary).not.toHaveProperty('returned');
   });
 });

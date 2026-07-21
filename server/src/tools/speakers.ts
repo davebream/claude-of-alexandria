@@ -1,33 +1,35 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
 const SPEAKER_ATTRIBUTION = 'MACULA Quotation and Speaker Data (CC BY 4.0), Clear Bible, Inc. Character data: Glyssen (MIT License, SIL LSDev / FCBH).';
 
-export const SpeakersInputSchema = {
+export const SpeakersInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Biblical book name (e.g., "Genesis", "Matthew")'),
   range: z.string().optional().describe('Verse range (e.g., "22:1-22:19")'),
   speaker_id: z.string().optional().describe('Filter to specific speaker'),
   divinity_only: z.boolean().default(false).describe('Only return divine speech'),
-};
+});
 
-export type SpeakersInput = z.output<z.ZodObject<typeof SpeakersInputSchema>>;
+export type SpeakersInput = z.output<typeof SpeakersInputSchema>;
 
-export const SpeakersOutputSchema = {
+export const SpeakersOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string().optional(),
   total_quotations: z.number(),
-  speakers: z.array(z.object({
+  speakers: z.array(z.strictObject({
     character_id: z.string(),
     name: z.string(),
     gender: z.string().optional(),
     divinity: z.string(),
     quotation_count: z.number(),
   })),
-  quotations: z.array(z.object({
+  quotations: z.array(z.strictObject({
     verse_range: z.string(),
     speaker_id: z.string(),
     speaker_label: z.string().optional(),
@@ -38,7 +40,7 @@ export const SpeakersOutputSchema = {
   prophetic_speech_caveat: z.string(),
   christophany_caveat: z.string(),
   attribution: z.string(),
-};
+});
 
 export async function speakersQuery(args: SpeakersInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -97,7 +99,7 @@ export async function speakersQuery(args: SpeakersInput): Promise<CallToolResult
     sql += " AND s.divinity = 'Y'";
   }
 
-  sql += ' ORDER BY q.chapter, q.verse_start';
+  sql += ' ORDER BY q.chapter, q.verse_start, q.verse_end, q.id';
 
   const rows = await query(sql, params);
 
@@ -158,27 +160,8 @@ export async function speakersQuery(args: SpeakersInput): Promise<CallToolResult
     attribution: SPEAKER_ATTRIBUTION,
   };
 
-  // Truncation: if response exceeds limit, truncate quotations (keep speakers summary)
-  let jsonStr = JSON.stringify(result);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    let truncatedQuotations = [...quotations];
-    while (truncatedQuotations.length > 1 && JSON.stringify({ ...result, quotations: truncatedQuotations }).length > CHARACTER_LIMIT) {
-      truncatedQuotations = truncatedQuotations.slice(0, Math.floor(truncatedQuotations.length * 0.8));
-    }
-    const truncatedResult = {
-      ...result,
-      quotations: truncatedQuotations,
-      truncated: true,
-      total_available: quotations.length,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
-  }
-
   return {
-    content: [{ type: 'text', text: jsonStr }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

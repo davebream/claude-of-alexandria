@@ -1,27 +1,29 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseChapterRange, ENTITY_ATTRIBUTION, encodePosition, CHAPTER_ONLY_MAX_VERSE } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
 
 const CHRONOLOGY_CAVEAT =
   'Dates follow Ussher/Masoretic-derived chronology. Alternative traditions (LXX, Samaritan Pentateuch, critical scholarship) yield different dates. Use as relative sequencing, not absolute dating.';
 
-export const EventsInputSchema = {
+export const EventsInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Genesis", "Acts", "Romans")'),
   chapter_range: z.string().optional().describe('Chapter range (e.g., "22" or "1-3"). Omit for entire book.'),
   testament: z.enum(['nt', 'ot']).optional().describe('Testament — auto-detected from book if omitted'),
-};
+});
 
-export type EventsInput = z.output<z.ZodObject<typeof EventsInputSchema>>;
+export type EventsInput = z.output<typeof EventsInputSchema>;
 
-export const EventsOutputSchema = {
+export const EventsOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   chapter_range: z.string().optional(),
   text_basis: z.literal('KJV'),
-  events: z.array(z.object({
+  events: z.array(z.strictObject({
     title: z.string(),
     start_date: z.string().nullable(),
     duration: z.string().nullable(),
@@ -30,18 +32,18 @@ export const EventsOutputSchema = {
     locations: z.array(z.string()).optional(),
     chapters: z.array(z.number()),
     chapter_contested: z.boolean().optional(),
-    controversies: z.array(z.object({
+    controversies: z.array(z.strictObject({
       topic: z.string(),
       slug: z.string(),
       rating: z.string(),
     })).optional(),
   })),
   chronology_caveat: z.string(),
-  summary: z.object({
+  summary: z.strictObject({
     total_events: z.number(),
   }),
   attribution: z.string(),
-};
+});
 
 export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -81,7 +83,7 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     params.push(chapterRange.min, chapterRange.max!);
   }
 
-  sql += ' ORDER BY e.sort_key ASC NULLS LAST';
+  sql += ' ORDER BY e.sort_key ASC NULLS LAST, e.id';
 
   const eventRows = await query(sql, params);
 
@@ -116,7 +118,7 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     chaptersParams.push(chapterRange.min, chapterRange.max!);
   }
 
-  chaptersSql += ' GROUP BY event_id, chapter ORDER BY chapter';
+  chaptersSql += ' GROUP BY event_id, chapter ORDER BY event_id, chapter';
 
   // Get participants and locations in parallel
   const participantsSql = `
@@ -124,7 +126,7 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     FROM event_participants ep
     JOIN people p ON p.id = ep.person_id
     WHERE ep.event_id IN (${placeholders})
-    ORDER BY p.appearance_count DESC
+    ORDER BY ep.event_id, p.appearance_count DESC, p.id
   `;
 
   const locationsSql = `
@@ -132,6 +134,7 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     FROM event_locations el
     JOIN places pl ON pl.id = el.place_id
     WHERE el.event_id IN (${placeholders})
+    ORDER BY el.event_id, pl.id
   `;
 
   // Build controversy-overlap query for the requested chapter span (chapter-only enc bounds)
@@ -273,27 +276,8 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
     attribution: ENTITY_ATTRIBUTION,
   };
 
-  // Character limit guard
-  const jsonStr = JSON.stringify(result);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    let truncatedEvents = [...events];
-    while (truncatedEvents.length > 1 && JSON.stringify({ ...result, events: truncatedEvents }).length > CHARACTER_LIMIT) {
-      truncatedEvents = truncatedEvents.slice(0, Math.floor(truncatedEvents.length * 0.8));
-    }
-    const truncatedResult = {
-      ...result,
-      events: truncatedEvents,
-      truncated: true,
-      total_available: events.length,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
-  }
-
   return {
-    content: [{ type: 'text', text: jsonStr }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

@@ -150,7 +150,7 @@ describe('query_theme_distribution — bounded lexicon statement count across mu
 
 describe('query_theme_distribution — schema shape', () => {
   it('ThemeDistributionOutputSchema declares lemma_translit', () => {
-    expect(Object.keys(ThemeDistributionOutputSchema)).toContain('lemma_translit');
+    expect(Object.keys(ThemeDistributionOutputSchema.shape)).toContain('lemma_translit');
   });
 });
 
@@ -346,8 +346,8 @@ describe('query_theme_distribution — by_lemma keeps its existing nested Record
 
 // ─── Truncation branch: key-set coverage must survive book truncation (Phase-5 review) ──
 
-describe('query_theme_distribution — truncated response still covers every surviving by_lemma key', () => {
-  it('truncates books past CHARACTER_LIMIT yet lemma_translit covers every retained by_lemma lemma', async () => {
+describe('query_theme_distribution — pagination handoff preserves transliteration coverage', () => {
+  it('returns all books and covers every by_lemma lemma before shared pagination', async () => {
     // Build a large fixture: many books × many lemmas × many chapters so the
     // serialized payload exceeds CHARACTER_LIMIT (25,000) and the truncation
     // branch fires. Every lemma is in theme_lemmas, so lemma_translit must key
@@ -372,9 +372,8 @@ describe('query_theme_distribution — truncated response still covers every sur
     const result = await queryThemeDistribution({ theme: 'love', testament: 'nt' } as any);
     const body = JSON.parse(result.content[0].text as string);
 
-    // (a) truncation actually fired
-    expect(body.truncated).toBe(true);
-    expect(body.books.length).toBeLessThan(70);
+    expect(body.truncated).toBeUndefined();
+    expect(body.books).toHaveLength(70);
 
     // (b) every by_lemma key in every SURVIVING book has a lemma_translit entry
     for (const book of body.books) {
@@ -391,7 +390,7 @@ describe('query_theme_distribution — truncated response still covers every sur
 // pointed lemma. A consumer must be able to learn from the schema alone that
 // null is a defined outcome (not an error), and why it occurs.
 describe('ThemeDistributionOutputSchema — lemma_translit documents null semantics', () => {
-  const d = (ThemeDistributionOutputSchema.lemma_translit.description ?? '').toLowerCase();
+  const d = (ThemeDistributionOutputSchema.shape.lemma_translit.description ?? '').toLowerCase();
 
   it('states values can be null', () => {
     expect(d).toContain('null');

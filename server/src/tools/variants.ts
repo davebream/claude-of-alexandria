@@ -1,21 +1,24 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
 
-export const VariantsInputSchema = {
+export const VariantsInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('NT book name (any common form, e.g., "John", "Romans", "1 Cor")'),
   range: z.string().optional().describe('Verse range: "7:53-8:11" or "1:1". Omit for entire book.'),
   edition: z.string().optional().describe('Filter by edition code: B=Byzantine, I=NIV Greek, M=NA28, N=NA27, R=Textus Receptus, S=SBLGNT, T=Tregelles, W=Westcott-Hort, H=Tyndale House GNT'),
-};
+});
 
-export type VariantsInput = z.output<z.ZodObject<typeof VariantsInputSchema>>;
+export type VariantsInput = z.output<typeof VariantsInputSchema>;
 
-export const VariantsOutputSchema = {
+export const VariantsOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
-  variants: z.array(z.object({
+  variants: z.array(z.strictObject({
     chapter: z.number(),
     verse: z.number(),
     word_position: z.number(),
@@ -24,14 +27,12 @@ export const VariantsOutputSchema = {
     variant_type: z.string().nullable(),
     variant_text: z.string().nullable(),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total: z.number(),
     by_variant_type: z.record(z.string(), z.number()),
   }),
   edition_key: z.record(z.string(), z.string()),
-};
-
-const CHARACTER_LIMIT = 25_000;
+});
 
 const EDITION_KEY: Record<string, string> = {
   B: 'Byzantine',
@@ -93,7 +94,7 @@ export async function queryVariants(args: VariantsInput): Promise<CallToolResult
     params.push(`%${code}%`);
   }
 
-  sql += ' ORDER BY chapter, verse, word_position LIMIT 5000';
+  sql += ' ORDER BY chapter, verse, word_position, id';
 
   const rows = await query(sql, params);
 
@@ -121,25 +122,8 @@ export async function queryVariants(args: VariantsInput): Promise<CallToolResult
     edition_key: EDITION_KEY,
   };
 
-  // CHARACTER_LIMIT guard
-  let json = JSON.stringify(result);
-  if (json.length > CHARACTER_LIMIT && variants.length > 1) {
-    const truncated = [];
-    let approxSize = json.length - JSON.stringify(variants).length + 100;
-    for (const v of variants) {
-      const vJson = JSON.stringify(v);
-      if (approxSize + vJson.length + 1 > CHARACTER_LIMIT) break;
-      approxSize += vJson.length + 1;
-      truncated.push(v);
-    }
-    result.variants = truncated;
-    (result.summary as Record<string, unknown>).truncated = true;
-    (result.summary as Record<string, unknown>).returned = truncated.length;
-    json = JSON.stringify(result);
-  }
-
   return {
-    content: [{ type: 'text', text: json }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

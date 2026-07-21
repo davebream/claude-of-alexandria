@@ -1,40 +1,57 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { ENTITY_ATTRIBUTION } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
 const HIGH_FREQUENCY_THRESHOLD = 500;
-const CO_APPEARANCE_LIMIT = 200;
 
-export const PersonNetworkInputSchema = {
+export const PersonNetworkInputSchema = z.strictObject({
+  ...PaginationInputShape,
   person: z.string().describe('Person slug (e.g., "abraham_2") or name (e.g., "Abraham"). Slug is preferred for disambiguation.'),
-  depth: z.number().min(1).max(3).optional().describe('Network depth: 1 = immediate family + co-appearances (default), 2-3 = expand network iteratively.'),
-};
+  depth: z.number().int().min(1).max(3).default(1).describe('Network depth: 1 = immediate family + co-appearances (default), 2-3 = expand network iteratively.'),
+});
 
-export type PersonNetworkInput = z.output<z.ZodObject<typeof PersonNetworkInputSchema>>;
+export type PersonNetworkInput = z.output<typeof PersonNetworkInputSchema>;
 
-export const PersonNetworkOutputSchema = {
-  person: z.object({
+export const PersonNetworkOutputSchema = z.strictObject({
+  page: PageSchema,
+  person: z.strictObject({
     name: z.string(),
     slug: z.string(),
     display_title: z.string().optional(),
-    gender: z.string().optional(),
+    gender: z.string().nullable().optional(),
     appearance_count: z.number(),
   }),
-  relationships: z.array(z.object({
-    name: z.string(),
-    slug: z.string(),
-    relationship_type: z.string(),
-  })),
-  co_appearances: z.array(z.object({
-    name: z.string(),
-    slug: z.string(),
-    shared_verses: z.number(),
-  })).optional(),
-  depth: z.number(),
+  connections: z.array(z.discriminatedUnion('connection_type', [
+    z.strictObject({
+      connection_type: z.literal('relationship'),
+      name: z.string(),
+      slug: z.string(),
+      relationship_type: z.string(),
+      depth_level: z.literal(1),
+    }),
+    z.strictObject({
+      connection_type: z.literal('co_appearance'),
+      name: z.string(),
+      slug: z.string(),
+      shared_verses: z.number().int().nonnegative(),
+      depth_level: z.literal(1),
+    }),
+    z.strictObject({
+      connection_type: z.literal('expanded_relationship'),
+      source_name: z.string(),
+      source_slug: z.string(),
+      name: z.string(),
+      slug: z.string(),
+      relationship_type: z.string(),
+      depth_level: z.union([z.literal(2), z.literal(3)]),
+    }),
+  ])),
+  depth: z.number().int().min(1).max(3),
+  high_frequency_note: z.string().optional(),
   attribution: z.string(),
-};
+});
 
 interface PersonRow {
   id: number;
@@ -119,7 +136,7 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
     FROM person_relationships pr
     JOIN people p ON p.id = pr.related_person_id
     WHERE pr.person_id = ?
-    ORDER BY pr.relationship_type, p.name
+    ORDER BY pr.relationship_type, p.name, p.slug
   `;
   const relationshipsRows = await query(relationshipsSql, [person.id]);
 
@@ -141,12 +158,11 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
       JOIN people p ON p.id = vp2.person_id
       WHERE vp1.person_id = ? AND vp2.person_id != ?
       GROUP BY vp2.person_id
-      ORDER BY shared_verses DESC
-      LIMIT ?
+      ORDER BY shared_verses DESC, p.slug
     `;
-    const coAppRows = await query(coAppSql, [person.id, person.id, CO_APPEARANCE_LIMIT]);
+    const coAppRows = await query(coAppSql, [person.id, person.id]);
 
-    coAppearances = coAppRows.slice(0, 30).map(r => ({
+    coAppearances = coAppRows.map(r => ({
       name: r.name as string,
       slug: r.slug as string,
       shared_verses: r.shared_verses as number,
@@ -161,7 +177,7 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
     const relatedSlugs = relationships.map(r => r.slug);
     const expansionResults: Record<string, unknown>[] = [];
 
-    for (const slug of relatedSlugs.slice(0, 10)) { // cap at 10 related people per depth
+    for (const slug of relatedSlugs) {
       const relPerson = await resolvePerson(slug);
       if ('content' in relPerson) continue;
 
@@ -170,7 +186,7 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
          FROM person_relationships pr
          JOIN people p ON p.id = pr.related_person_id
          WHERE pr.person_id = ? AND pr.related_person_id != ?
-         ORDER BY pr.relationship_type, p.name`,
+         ORDER BY pr.relationship_type, p.name, p.slug`,
         [relPerson.id, person.id]
       );
 
@@ -186,9 +202,9 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
 
     if (depth >= 3 && expansionResults.length > 0) {
       // One more level of expansion
-      for (const entry of expansionResults.slice(0, 5)) {
+      for (const entry of [...expansionResults]) {
         const rels = entry.relationships as { slug: string }[];
-        for (const rel of rels.slice(0, 5)) {
+        for (const rel of rels) {
           const d3Person = await resolvePerson(rel.slug);
           if ('content' in d3Person) continue;
 
@@ -197,8 +213,7 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
              FROM person_relationships pr
              JOIN people p ON p.id = pr.related_person_id
              WHERE pr.person_id = ?
-             ORDER BY pr.relationship_type, p.name
-             LIMIT 10`,
+             ORDER BY pr.relationship_type, p.name, p.slug`,
             [d3Person.id]
           );
 
@@ -241,26 +256,8 @@ export async function queryPersonNetwork(args: PersonNetworkInput): Promise<Call
     result.expanded_network = expandedNetwork;
   }
 
-  // Character limit guard
-  const jsonStr = JSON.stringify(result);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    // Trim co-appearances and expanded network
-    if (coAppearances && coAppearances.length > 10) {
-      result.co_appearances = coAppearances.slice(0, 10);
-    }
-    if (expandedNetwork) {
-      result.expanded_network = expandedNetwork.slice(0, 5);
-    }
-    result.truncated = true;
-
-    return {
-      content: [{ type: 'text', text: JSON.stringify(result) }],
-      structuredContent: result,
-    };
-  }
-
   return {
-    content: [{ type: 'text', text: jsonStr }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

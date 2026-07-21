@@ -31,6 +31,7 @@ const adventRow = {
   reference_display: 'Isaiah 9:2-7',
   themes: '["hope","expectation"]',
   note: null,
+  source: 'Revised Common Lectionary',
 };
 
 const christmasRow = {
@@ -44,6 +45,7 @@ const christmasRow = {
   reference_display: 'Luke 2:1-20',
   themes: '["incarnation"]',
   note: 'The nativity narrative',
+  source: 'Revised Common Lectionary',
 };
 
 beforeEach(() => {
@@ -136,6 +138,9 @@ describe('mode="season"', () => {
     expect(body.seasons[0].readings).toHaveLength(1);
     expect(body.seasons[0].readings[0].reference_display).toBe('Isaiah 9:2-7');
     expect(body.seasons[0].readings[0].themes).toEqual(['hope', 'expectation']);
+    expect(body.seasons[0].themes).toEqual(['hope', 'expectation']);
+    expect(body.seasons[0].readings[0].start).toEqual({ chapter: 9, verse: 2 });
+    expect(body.seasons[0].readings[0].end).toEqual({ chapter: 9, verse: 7 });
   });
 
   it('returns zero seasons (not an error) for unknown season slug', async () => {

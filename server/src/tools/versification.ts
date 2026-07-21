@@ -3,27 +3,27 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 
-export const VersificationInputSchema = {
+export const VersificationInputSchema = z.strictObject({
   book: z.string().describe('OT book name in any common form (e.g., "Genesis", "Gen", "Psalms")'),
-  chapter: z.number().optional().describe('Filter to a specific chapter'),
-  verse: z.number().optional().describe('Filter to a specific verse'),
-  verse_end: z.number().optional().describe('End verse for range queries'),
-};
+  chapter: z.number().int().positive().optional().describe('Filter to a specific chapter'),
+  verse: z.number().int().positive().optional().describe('Filter to a specific verse'),
+  verse_end: z.number().int().positive().optional().describe('End verse for range queries'),
+});
 
-export type VersificationInput = z.output<z.ZodObject<typeof VersificationInputSchema>>;
+export type VersificationInput = z.output<typeof VersificationInputSchema>;
 
-export const VersificationOutputSchema = {
+export const VersificationOutputSchema = z.strictObject({
   book: z.string(),
-  differences: z.array(z.object({
+  differences: z.array(z.strictObject({
     english: z.string(),
     hebrew: z.string(),
     mapping_type: z.string(),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total_differences: z.number(),
     mapping_types: z.record(z.string(), z.number()),
   }),
-};
+});
 
 export async function checkVersification(args: VersificationInput): Promise<CallToolResult> {
   const bookInput = args.book;

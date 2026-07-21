@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -6,81 +7,83 @@ import { parseVerseRange } from './utils.js';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const CHARACTER_LIMIT = 25_000;
-const DEFAULT_LIMIT = 50;
-const MAX_LIMIT = 200;
 const MIN_KEYWORD_LENGTH = 2;
 
 // ─── Input Schema ─────────────────────────────────────────────────────────────
 
-export const ConfessionalLookupInputSchema = {
-  mode: z.enum(['direct', 'scripture', 'keyword', 'list'])
-    .describe(
-      'Query mode:\n' +
-      '  "direct" — lookup by document slug + chapter/section or question number\n' +
-      '  "scripture" — which confessional statements cite a Bible passage (book + range required)\n' +
-      '  "keyword" — substring search on section content (keyword required)\n' +
-      '  "list" — enumerate available documents with metadata'
-    ),
-  document: z.string().optional()
-    .describe('Document slug (e.g., "westminster-confession-of-faith"). Required for mode="direct".'),
-  chapter: z.number().optional()
-    .describe('Chapter number. For confession sections in mode="direct".'),
-  section: z.number().optional()
-    .describe('Section number within chapter. For confession sections in mode="direct".'),
-  question: z.number().optional()
-    .describe('Question number. For catechism Q&A in mode="direct".'),
-  book: z.string().optional()
-    .describe('Bible book name in any common form (e.g., "Romans", "Gen"). Required for mode="scripture".'),
-  range: z.string().optional()
-    .describe('Verse range: "8:28-8:30", "8:28-30", or single verse "8:28". Required for mode="scripture".'),
-  keyword: z.string().optional()
-    .describe('Substring to search in section content. Required for mode="keyword". Case-insensitive LIKE match.'),
-  tradition: z.enum(['reformed', 'baptist', 'ancient', 'lutheran', 'anglican', 'methodist']).optional()
-    .describe('Filter by confessional tradition.'),
-  format: z.enum(['confession', 'catechism']).optional()
-    .describe('Filter by document format.'),
-  limit: z.number().optional()
-    .describe('Maximum sections returned per mode (default: 50, max: 200). Applies to scripture, keyword, and direct without a specific section/question.'),
-};
+const ConfessionalTraditionSchema = z.enum(['reformed', 'baptist', 'ancient', 'lutheran', 'anglican', 'methodist']);
+const ConfessionalFormatSchema = z.enum(['confession', 'catechism']);
 
-export type ConfessionalLookupInput = z.output<z.ZodObject<typeof ConfessionalLookupInputSchema>>;
+export const ConfessionalLookupInputSchema = z.discriminatedUnion('mode', [
+  z.strictObject({
+    ...PaginationInputShape,
+    mode: z.literal('direct').describe('Read sections from one document.'),
+    document: z.string().min(1).describe('Document slug.'),
+    chapter: z.number().int().positive().optional().describe('Optional positive chapter number.'),
+    section: z.number().int().positive().optional().describe('Optional positive section number.'),
+    question: z.number().int().positive().optional().describe('Optional positive catechism question number.'),
+    tradition: ConfessionalTraditionSchema.optional().describe('Restrict results to one tradition.'),
+    format: ConfessionalFormatSchema.optional().describe('Restrict results to confessions or catechisms.'),
+  }),
+  z.strictObject({
+    ...PaginationInputShape,
+    mode: z.literal('scripture').describe('Find sections citing a Scripture passage.'),
+    book: z.string().min(1).describe('Biblical book name.'),
+    range: z.string().min(1).describe('Chapter or verse range within the book.'),
+    tradition: ConfessionalTraditionSchema.optional().describe('Restrict results to one tradition.'),
+    format: ConfessionalFormatSchema.optional().describe('Restrict results to confessions or catechisms.'),
+  }),
+  z.strictObject({
+    ...PaginationInputShape,
+    mode: z.literal('keyword').describe('Search section text by keyword.'),
+    keyword: z.string().min(MIN_KEYWORD_LENGTH).max(200).describe('Keyword text, 2 to 200 characters.'),
+    tradition: ConfessionalTraditionSchema.optional().describe('Restrict results to one tradition.'),
+    format: ConfessionalFormatSchema.optional().describe('Restrict results to confessions or catechisms.'),
+  }),
+  z.strictObject({
+    ...PaginationInputShape,
+    mode: z.literal('list').describe('List available documents.'),
+    tradition: ConfessionalTraditionSchema.optional().describe('Restrict results to one tradition.'),
+    format: ConfessionalFormatSchema.optional().describe('Restrict results to confessions or catechisms.'),
+  }),
+]);
+
+export type ConfessionalLookupInput = z.output<typeof ConfessionalLookupInputSchema>;
 
 // ─── Output Schema ────────────────────────────────────────────────────────────
 
-export const ConfessionalLookupOutputSchema = {
-  mode: z.string(),
-  query_info: z.object({
-    document: z.string().optional(),
-    book: z.string().optional(),
-    range: z.string().optional(),
-    keyword: z.string().optional(),
-    tradition: z.string().optional(),
-    format: z.string().optional(),
-  }),
-  documents: z.array(z.object({
-    slug: z.string(),
-    title: z.string(),
-    year: z.number().nullable(),
-    tradition: z.string(),
-    format: z.string(),
-    sections: z.array(z.object({
-      chapter_number: z.number().nullable(),
-      chapter_title: z.string().nullable(),
-      section_number: z.number().nullable(),
-      content: z.string().nullable(),
-      content_with_proofs: z.string().nullable(),
-      question_number: z.number().nullable(),
-      question: z.string().nullable(),
-      answer: z.string().nullable(),
-      answer_with_proofs: z.string().nullable(),
-    })),
-  })),
-  total_documents: z.number(),
-  total_sections: z.number(),
-  truncated: z.boolean().optional(),
-  truncation_message: z.string().optional(),
+const ConfessionalDocumentSummarySchema = z.strictObject({
+  slug: z.string(),
+  title: z.string(),
+  year: z.number().int().nullable(),
+  tradition: z.string(),
+  format: z.string(),
+});
+
+const ConfessionalSectionSchema = ConfessionalDocumentSummarySchema.extend({
+  chapter_number: z.number().int().nullable(),
+  chapter_title: z.string().nullable(),
+  section_number: z.number().int().nullable(),
+  content: z.string().nullable(),
+  content_with_proofs: z.string().nullable(),
+  question_number: z.number().int().nullable(),
+  question: z.string().nullable(),
+  answer: z.string().nullable(),
+  answer_with_proofs: z.string().nullable(),
+});
+
+const ConfessionalOutputCommon = {
+  page: PageSchema,
+  total_documents: z.number().int().nonnegative(),
+  total_sections: z.number().int().nonnegative(),
 };
+
+export const ConfessionalLookupOutputSchema = z.discriminatedUnion('mode', [
+  z.strictObject({ ...ConfessionalOutputCommon, mode: z.literal('direct'), query_info: z.strictObject({ document: z.string(), tradition: z.string().optional(), format: z.string().optional() }), results: z.array(ConfessionalSectionSchema) }),
+  z.strictObject({ ...ConfessionalOutputCommon, mode: z.literal('scripture'), query_info: z.strictObject({ book: z.string(), range: z.string(), tradition: z.string().optional(), format: z.string().optional() }), results: z.array(ConfessionalSectionSchema) }),
+  z.strictObject({ ...ConfessionalOutputCommon, mode: z.literal('keyword'), query_info: z.strictObject({ keyword: z.string(), tradition: z.string().optional(), format: z.string().optional() }), results: z.array(ConfessionalSectionSchema) }),
+  z.strictObject({ ...ConfessionalOutputCommon, mode: z.literal('list'), query_info: z.strictObject({ tradition: z.string().optional(), format: z.string().optional() }), results: z.array(ConfessionalDocumentSummarySchema) }),
+]);
 
 // ─── Helper: build error response ────────────────────────────────────────────
 
@@ -88,31 +91,6 @@ function errorResponse(code: string, message: string, suggestions?: string[]): C
   const body: Record<string, unknown> = { error: { code, message } };
   if (suggestions) body.error = { ...body.error as object, suggestions };
   return { content: [{ type: 'text', text: JSON.stringify(body) }], isError: true };
-}
-
-// ─── Helper: apply character-limit guard ─────────────────────────────────────
-
-function applyCharacterLimit(
-  result: Record<string, unknown>,
-  documents: Array<{ slug: string; sections: unknown[] }>,
-): Record<string, unknown> {
-  const serialized = JSON.stringify(result);
-  if (serialized.length <= CHARACTER_LIMIT || documents.length <= 1) return result;
-
-  const sorted = [...documents].sort((a, b) => a.sections.length - b.sections.length);
-  let truncated = sorted;
-  while (
-    JSON.stringify({ ...result, documents: truncated }).length > CHARACTER_LIMIT &&
-    truncated.length > 1
-  ) {
-    truncated = truncated.slice(1);
-  }
-  return {
-    ...result,
-    documents: truncated,
-    truncated: true,
-    truncation_message: `Response truncated from ${documents.length} to ${truncated.length} documents (character limit). Use tradition/format filters or the limit parameter to narrow results.`,
-  };
 }
 
 // ─── Helper: group flat SQL rows into document-grouped structure ──────────────
@@ -166,7 +144,7 @@ function groupRowsByDocument(rows: DocRow[]): Array<{
 
 // ─── Mode: list ───────────────────────────────────────────────────────────────
 
-async function handleList(args: ConfessionalLookupInput): Promise<CallToolResult> {
+async function handleList(args: Extract<ConfessionalLookupInput, { mode: 'list' }>): Promise<CallToolResult> {
   let sql = `SELECT id, slug, title, year, tradition, format, authors, source
              FROM confessional_documents`;
   const params: unknown[] = [];
@@ -214,7 +192,7 @@ async function handleList(args: ConfessionalLookupInput): Promise<CallToolResult
 
 // ─── Mode: direct ─────────────────────────────────────────────────────────────
 
-async function handleDirect(args: ConfessionalLookupInput): Promise<CallToolResult> {
+async function handleDirect(args: Extract<ConfessionalLookupInput, { mode: 'direct' }>): Promise<CallToolResult> {
   if (!args.document) {
     return errorResponse('MISSING_DOCUMENT', 'document slug is required for mode="direct". Use mode="list" to discover available slugs.');
   }
@@ -254,9 +232,7 @@ async function handleDirect(args: ConfessionalLookupInput): Promise<CallToolResu
       secParams.push(args.section);
     }
   }
-  secSql += ' ORDER BY chapter_number, section_number, question_number LIMIT ?';
-  const lim = Math.min(args.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
-  secParams.push(lim);
+  secSql += ' ORDER BY chapter_number, section_number, question_number, id';
 
   const secRows = await query(secSql, secParams);
   const sections = secRows.map(r => ({
@@ -292,16 +268,15 @@ async function handleDirect(args: ConfessionalLookupInput): Promise<CallToolResu
     total_sections: sections.length,
   };
 
-  const finalResult = applyCharacterLimit(result, documents);
   return {
-    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
-    structuredContent: finalResult,
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
 
 // ─── Mode: scripture ──────────────────────────────────────────────────────────
 
-async function handleScripture(args: ConfessionalLookupInput): Promise<CallToolResult> {
+async function handleScripture(args: Extract<ConfessionalLookupInput, { mode: 'scripture' }>): Promise<CallToolResult> {
   if (!args.book) {
     return errorResponse('MISSING_BOOK', 'book is required for mode="scripture".');
   }
@@ -319,7 +294,6 @@ async function handleScripture(args: ConfessionalLookupInput): Promise<CallToolR
     return errorResponse('INVALID_RANGE', verseRange.error);
   }
 
-  const lim = Math.min(args.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
   const conditions: string[] = [
     'cpt.book = ?',
     '(cpt.chapter > ? OR (cpt.chapter = ? AND cpt.verse >= ?))',
@@ -344,10 +318,8 @@ async function handleScripture(args: ConfessionalLookupInput): Promise<CallToolR
     JOIN confessional_sections cs ON cs.id = cpt.section_id
     JOIN confessional_documents cd ON cd.id = cs.document_id
     WHERE ${conditions.join(' AND ')}
-    ORDER BY cd.tradition, cd.slug, cs.chapter_number, cs.section_number, cs.question_number
-    LIMIT ?
+    ORDER BY cd.tradition, cd.slug, cs.chapter_number, cs.section_number, cs.question_number, cs.id
   `;
-  params.push(lim);
 
   const rows = await query(sql, params);
   const documents = groupRowsByDocument(rows);
@@ -365,16 +337,15 @@ async function handleScripture(args: ConfessionalLookupInput): Promise<CallToolR
     total_sections: documents.reduce((s, d) => s + d.sections.length, 0),
   };
 
-  const finalResult = applyCharacterLimit(result, documents);
   return {
-    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
-    structuredContent: finalResult,
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
 
 // ─── Mode: keyword ────────────────────────────────────────────────────────────
 
-async function handleKeyword(args: ConfessionalLookupInput): Promise<CallToolResult> {
+async function handleKeyword(args: Extract<ConfessionalLookupInput, { mode: 'keyword' }>): Promise<CallToolResult> {
   if (!args.keyword) {
     return errorResponse('MISSING_KEYWORD', 'keyword is required for mode="keyword".');
   }
@@ -383,7 +354,6 @@ async function handleKeyword(args: ConfessionalLookupInput): Promise<CallToolRes
   }
 
   const pattern = `%${args.keyword}%`;
-  const lim = Math.min(args.limit ?? DEFAULT_LIMIT, MAX_LIMIT);
   const conditions: string[] = [
     '(cs.content LIKE ? OR cs.answer LIKE ? OR cs.question LIKE ?)',
   ];
@@ -401,10 +371,8 @@ async function handleKeyword(args: ConfessionalLookupInput): Promise<CallToolRes
     FROM confessional_sections cs
     JOIN confessional_documents cd ON cd.id = cs.document_id
     WHERE ${conditions.join(' AND ')}
-    ORDER BY cd.tradition, cd.slug, cs.chapter_number, cs.section_number, cs.question_number
-    LIMIT ?
+    ORDER BY cd.tradition, cd.slug, cs.chapter_number, cs.section_number, cs.question_number, cs.id
   `;
-  params.push(lim);
 
   const rows = await query(sql, params);
   const documents = groupRowsByDocument(rows);
@@ -421,10 +389,9 @@ async function handleKeyword(args: ConfessionalLookupInput): Promise<CallToolRes
     total_sections: documents.reduce((s, d) => s + d.sections.length, 0),
   };
 
-  const finalResult = applyCharacterLimit(result, documents);
   return {
-    content: [{ type: 'text', text: JSON.stringify(finalResult) }],
-    structuredContent: finalResult,
+    content: [{ type: 'text', text: JSON.stringify(result) }],
+    structuredContent: result,
   };
 }
 

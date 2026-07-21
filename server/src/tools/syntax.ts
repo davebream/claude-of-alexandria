@@ -1,21 +1,24 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseChapterRange } from './utils.js';
 
-export const SyntaxInputSchema = {
+export const SyntaxInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('NT book name (any common form, e.g., "Romans", "John", "1 Cor")'),
   chapter_range: z.string().optional().describe('Chapter range: "8" (single), "1-3" (range), or omit for entire book'),
   clause_type: z.string().optional().describe('Filter by clause type (e.g., "primary", "secondary")'),
-};
+});
 
-export type SyntaxInput = z.output<z.ZodObject<typeof SyntaxInputSchema>>;
+export type SyntaxInput = z.output<typeof SyntaxInputSchema>;
 
-export const SyntaxOutputSchema = {
+export const SyntaxOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   chapter_range: z.string(),
-  annotations: z.array(z.object({
+  annotations: z.array(z.strictObject({
     chapter: z.number(),
     verse: z.number(),
     clause_id: z.string().nullable(),
@@ -24,14 +27,12 @@ export const SyntaxOutputSchema = {
     clause_text: z.string().nullable(),
     parent_clause_id: z.string().nullable(),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total: z.number(),
     by_clause_type: z.record(z.string(), z.number()),
   }),
   framework_note: z.string(),
-};
-
-const CHARACTER_LIMIT = 25_000;
+});
 
 export async function querySyntax(args: SyntaxInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -72,7 +73,7 @@ export async function querySyntax(args: SyntaxInput): Promise<CallToolResult> {
     params.push(args.clause_type);
   }
 
-  sql += ' ORDER BY chapter, verse, clause_id LIMIT 2000';
+  sql += ' ORDER BY chapter, verse, clause_id, id';
 
   const rows = await query(sql, params);
 
@@ -99,25 +100,8 @@ export async function querySyntax(args: SyntaxInput): Promise<CallToolResult> {
     framework_note: 'OpenText follows Porter\'s Systemic Functional Linguistics framework. Levinsohn\'s discourse grammar (query_discourse_features) offers competing analyses. Disagreements are theoretically informative, not errors.',
   };
 
-  // CHARACTER_LIMIT guard
-  let json = JSON.stringify(result);
-  if (json.length > CHARACTER_LIMIT && annotations.length > 1) {
-    const truncated = [];
-    let approxSize = json.length - JSON.stringify(annotations).length + 100;
-    for (const a of annotations) {
-      const aJson = JSON.stringify(a);
-      if (approxSize + aJson.length + 1 > CHARACTER_LIMIT) break;
-      approxSize += aJson.length + 1;
-      truncated.push(a);
-    }
-    result.annotations = truncated;
-    (result.summary as Record<string, unknown>).truncated = true;
-    (result.summary as Record<string, unknown>).returned = truncated.length;
-    json = JSON.stringify(result);
-  }
-
   return {
-    content: [{ type: 'text', text: json }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

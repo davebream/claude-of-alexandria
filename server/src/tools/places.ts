@@ -1,25 +1,27 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange, ENTITY_ATTRIBUTION } from './utils.js';
 
-const CHARACTER_LIMIT = 25_000;
 const HIGH_FREQUENCY_THRESHOLD = 500;
 
-export const PlacesInputSchema = {
+export const PlacesInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Acts", "Gen", "Romans")'),
   range: z.string().describe('Verse range (e.g., "18:1-18:18" or "1:1")'),
   testament: z.enum(['nt', 'ot']).optional().describe('Testament — auto-detected from book if omitted'),
-};
+});
 
-export type PlacesInput = z.output<z.ZodObject<typeof PlacesInputSchema>>;
+export type PlacesInput = z.output<typeof PlacesInputSchema>;
 
-export const PlacesOutputSchema = {
+export const PlacesOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string(),
   text_basis: z.literal('KJV'),
-  places: z.array(z.object({
+  places: z.array(z.strictObject({
     name: z.string(),
     slug: z.string(),
     display_title: z.string().optional(),
@@ -30,13 +32,14 @@ export const PlacesOutputSchema = {
     aliases: z.string().optional(),
     appearance_count: z.number(),
     appearances_by_book: z.record(z.string(), z.number()).optional(),
+    high_frequency_note: z.string().optional(),
     verses_in_range: z.array(z.string()),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total_places: z.number(),
   }),
   attribution: z.string(),
-};
+});
 
 export async function queryPlaces(args: PlacesInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -85,7 +88,7 @@ export async function queryPlaces(args: PlacesInput): Promise<CallToolResult> {
     params.push(startChapter, startVerse, startChapter, endChapter, endChapter, endVerse);
   }
 
-  sql += ' ORDER BY p.appearance_count DESC';
+  sql += ' ORDER BY p.appearance_count DESC, p.id';
 
   const placesRows = await query(sql, params);
 
@@ -199,27 +202,8 @@ export async function queryPlaces(args: PlacesInput): Promise<CallToolResult> {
     attribution: ENTITY_ATTRIBUTION,
   };
 
-  // Character limit guard
-  let jsonStr = JSON.stringify(result);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    let truncatedPlaces = [...places];
-    while (truncatedPlaces.length > 1 && JSON.stringify({ ...result, places: truncatedPlaces }).length > CHARACTER_LIMIT) {
-      truncatedPlaces = truncatedPlaces.slice(0, Math.floor(truncatedPlaces.length * 0.8));
-    }
-    const truncatedResult = {
-      ...result,
-      places: truncatedPlaces,
-      truncated: true,
-      total_available: places.length,
-    };
-    return {
-      content: [{ type: 'text', text: JSON.stringify(truncatedResult) }],
-      structuredContent: truncatedResult,
-    };
-  }
-
   return {
-    content: [{ type: 'text', text: jsonStr }],
+    content: [{ type: 'text', text: JSON.stringify(result) }],
     structuredContent: result,
   };
 }

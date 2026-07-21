@@ -21,17 +21,17 @@ const EVIDENCE_SCOPE = {
   ],
 };
 
-export const ParagraphsInputSchema = {
+export const ParagraphsInputSchema = z.strictObject({
   book: z.string().describe('OT book name (any common form, e.g., "Genesis", "Gen", "Psalms")'),
   chapter_range: z.string().optional().describe('Chapter range: "3" (single), "3-7" (range), or omit for all chapters'),
-};
+});
 
-export type ParagraphsInput = z.output<z.ZodObject<typeof ParagraphsInputSchema>>;
+export type ParagraphsInput = z.output<typeof ParagraphsInputSchema>;
 
-export const ParagraphsOutputSchema = {
+export const ParagraphsOutputSchema = z.strictObject({
   book: z.string(),
   chapter_range: z.string(),
-  markers: z.array(z.object({
+  markers: z.array(z.strictObject({
     chapter: z.number(),
     verse: z.number(),
     type: z.string(),
@@ -43,7 +43,7 @@ export const ParagraphsOutputSchema = {
       'Where the marker sits relative to the verse text: after the final word, or between two words mid-verse.'
     ),
   })),
-  graphic_signs: z.array(z.object({
+  graphic_signs: z.array(z.strictObject({
     id: z.string(),
     chapter: z.number(),
     verse: z.number(),
@@ -54,7 +54,7 @@ export const ParagraphsOutputSchema = {
   })).describe(
     'Scribal annotations (e.g. reversed nun, suspended/large/small letters) — NOT paragraph divisions. Filtered by chapter_range identically to markers.'
   ),
-  evidence_scope: z.object({
+  evidence_scope: z.strictObject({
     presence_directly_attests: z.array(z.string()),
     presence_may_support: z.array(z.string()),
     absence_directly_attests: z.array(z.string()),
@@ -62,14 +62,14 @@ export const ParagraphsOutputSchema = {
   }).describe(
     'What an empty markers/graphic_signs result does and does not attest. An empty result means only "no explicit paragraph/section event recorded at this anchor" — it is not evidence of "no boundary here".'
   ),
-  summary: z.object({
+  summary: z.strictObject({
     petuchot: z.number(),
     setumot: z.number(),
     total: z.number(),
   }).describe(
     'Raw all-position row counts across every marker regardless of `position` — NOT a count of boundary-supporting markers. within_verse markers are counted here too, so summary.total must not be read as "confirmed paragraph boundaries".'
   ),
-};
+});
 
 export async function queryParagraphBreaks(args: ParagraphsInput): Promise<CallToolResult> {
   const bookInput = args.book;

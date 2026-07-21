@@ -24,7 +24,7 @@ Consult this lookup table. Do NOT reason about testament assignment — look it 
 
 When the caller requests "all relevant data", call all applicable tools for the testament. When the caller requests specific data types, call only those tools.
 
-**Book-only requests (no verse range):** When the caller provides a book name without a verse range (e.g., "Gather all relevant data for Philemon"), call book-level tools: `query_discourse_features` (NT) or `query_paragraph_breaks` (OT) with just the book parameter, `query_vocabulary` with the book, and omit `query_morphology` (requires a verse range). The PASSAGE line in the output contract should show just the book name with no range.
+**Book-only requests (no verse range):** When the caller provides a book name without a verse range (e.g., "Gather all relevant data for Philemon"), call book-level tools: `query_discourse_features` (NT) or `query_paragraph_breaks` (OT) with just the book parameter, `query_vocabulary` with `mode: "frequency"` and the book, and omit `query_morphology` (requires a verse range). The PASSAGE line in the output contract should show just the book name with no range.
 
 **`query_speakers`** — call for all passages with a verse range (speaker data spans both OT and NT). Skip for book-only requests.
 

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -8,67 +9,69 @@ export const CHARACTER_LIMIT = 25_000;
 
 // ─── trace_cross_reference_path schemas ──────────────────────────────────────
 
-export const TraceCrossReferencePathInputSchema = {
+export const TraceCrossReferencePathInputSchema = z.strictObject({
   from_book: z.string().describe('Source book name in any common form (e.g., "Genesis", "Gen")'),
   from_range: z.string().describe('Source verse as a single verse (e.g., "3:15"). Multi-verse ranges are rejected.'),
   to_book: z.string().describe('Target book name in any common form (e.g., "Revelation", "Rev")'),
   to_range: z.string().describe('Target verse as a single verse (e.g., "12:1"). Multi-verse ranges are rejected.'),
-  max_hops: z.number().optional().describe('Maximum number of hops to search (default: 4, clamped to 1–6)'),
-  min_votes: z.number().optional().describe('Minimum vote count for edges (default: 1). Raising this value may reduce connectivity.'),
-};
+  max_hops: z.number().int().min(1).max(6).default(4).describe('Maximum graph depth, from 1 to 6.'),
+  min_votes: z.number().int().nonnegative().default(1).describe('Minimum source vote count for traversed edges.'),
+});
 
-export type TraceCrossReferencePathInput = z.output<z.ZodObject<typeof TraceCrossReferencePathInputSchema>>;
+export type TraceCrossReferencePathInput = z.output<typeof TraceCrossReferencePathInputSchema>;
 
-const HopSchema = z.object({
+const HopSchema = z.strictObject({
   from_ref: z.string(),
   to_ref: z.string(),
   votes: z.number(),
   connecting_ref: z.string(),
 });
 
-export const TraceCrossReferencePathOutputSchema = {
+export const TraceCrossReferencePathOutputSchema = z.strictObject({
   from_ref: z.string(),
   to_ref: z.string(),
   found: z.boolean(),
-  truncated: z.boolean(),
+  complete: z.boolean(),
+  termination_reason: z.enum(['found', 'exhausted', 'max_hops', 'node_budget', 'edge_budget', 'response_budget']),
   hops: z.number(),
   max_hops: z.number(),
   path: z.array(HopSchema),
-  summary: z.object({
+  summary: z.strictObject({
     nodes_visited: z.number(),
     edges_examined: z.number(),
     min_votes: z.number(),
   }),
   attribution: z.string(),
   note: z.string().optional(),
-};
+});
 
-export const CrossReferencesInputSchema = {
+export const CrossReferencesInputSchema = z.strictObject({
+  ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "Psalms")'),
   range: z.string().optional().describe('Verse range: "8:28" (single verse) or "8:28-8:39" (range). Omit for entire book.'),
-  min_votes: z.number().optional().describe('Minimum vote count to include (default: 2)'),
-  limit: z.number().optional().describe('Maximum results returned (default: 100, max: 500)'),
-  direction: z.enum(['from', 'to', 'both']).optional().describe(
+  min_votes: z.number().int().nonnegative().default(2).describe('Minimum source vote count for returned references.'),
+  direction: z.enum(['from', 'to', 'both']).default('both').describe(
     '"from" = references FROM this passage, "to" = references TO this passage, "both" = bidirectional (default)'
   ),
-};
+});
 
-export type CrossReferencesInput = z.output<z.ZodObject<typeof CrossReferencesInputSchema>>;
+export type CrossReferencesInput = z.output<typeof CrossReferencesInputSchema>;
 
-export const CrossReferencesOutputSchema = {
+export const CrossReferencesOutputSchema = z.strictObject({
+  page: PageSchema,
   book: z.string(),
   range: z.string().optional(),
-  cross_references: z.array(z.object({
+  cross_references: z.array(z.strictObject({
     from_ref: z.string(),
     to_ref: z.string(),
     votes: z.number(),
     direction: z.string(),
   })),
-  summary: z.object({
+  summary: z.strictObject({
     total: z.number(),
     avg_votes: z.number().optional(),
   }),
-};
+});
 
 export async function queryCrossReferences(args: CrossReferencesInput): Promise<CallToolResult> {
   const bookInput = args.book;
@@ -84,7 +87,6 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
   }
 
   const minVotes = args.min_votes ?? 2;
-  const limit = Math.min(args.limit ?? 100, 500);
   const direction = args.direction ?? 'both';
   const bookName = bookInfo.displayName;
 
@@ -130,8 +132,7 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
       }
     }
 
-    sql += ' ORDER BY votes DESC LIMIT ?';
-    params.push(limit);
+    sql += ' ORDER BY votes DESC, from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, id';
 
     const rows = await query(sql, params);
     for (const r of rows) {
@@ -153,8 +154,7 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
       }
     }
 
-    sql += ' ORDER BY votes DESC LIMIT ?';
-    params.push(limit);
+    sql += ' ORDER BY votes DESC, from_book, from_chapter, from_verse, to_book, to_chapter, to_verse_start, id';
 
     const rows = await query(sql, params);
     for (const r of rows) {
@@ -173,12 +173,16 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
     }
   }
 
-  // Sort by votes descending, then cap at limit
-  deduped.sort((a, b) => b.votes - a.votes);
-  const capped = deduped.slice(0, limit);
+  deduped.sort((a, b) => b.votes - a.votes
+    || a.from_book.localeCompare(b.from_book)
+    || a.from_chapter - b.from_chapter
+    || a.from_verse - b.from_verse
+    || a.to_book.localeCompare(b.to_book)
+    || a.to_chapter - b.to_chapter
+    || a.to_verse_start - b.to_verse_start);
 
   // Format output
-  const crossRefs = capped.map(r => {
+  const crossRefs = deduped.map(r => {
     const toEnd = r.to_verse_end !== r.to_verse_start ? `-${r.to_verse_end}` : '';
     return {
       from_ref: `${r.from_book} ${r.from_chapter}:${r.from_verse}`,
@@ -188,26 +192,16 @@ export async function queryCrossReferences(args: CrossReferencesInput): Promise<
     };
   });
 
-  // Character limit guard
-  let finalRefs = crossRefs;
-  let jsonStr = JSON.stringify(crossRefs);
-  if (jsonStr.length > CHARACTER_LIMIT) {
-    // Truncate
-    while (finalRefs.length > 1 && JSON.stringify(finalRefs).length > CHARACTER_LIMIT) {
-      finalRefs = finalRefs.slice(0, Math.floor(finalRefs.length * 0.8));
-    }
-  }
-
-  const avgVotes = finalRefs.length > 0
-    ? Math.round(finalRefs.reduce((sum, r) => sum + r.votes, 0) / finalRefs.length)
+  const avgVotes = crossRefs.length > 0
+    ? Math.round(crossRefs.reduce((sum, r) => sum + r.votes, 0) / crossRefs.length)
     : undefined;
 
   const result = {
     book: bookName,
     range: args.range,
-    cross_references: finalRefs,
+    cross_references: crossRefs,
     summary: {
-      total: finalRefs.length,
+      total: crossRefs.length,
       avg_votes: avgVotes,
     },
   };
@@ -331,7 +325,8 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
       from_ref: fromRef,
       to_ref: toRef,
       found: true,
-      truncated: false,
+      complete: true,
+      termination_reason: 'found' as const,
       hops: 0,
       max_hops: maxHops,
       path: [],
@@ -352,7 +347,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
     const parents = new Map<NodeKey, ParentEntry>();
     let frontier = new Set<NodeKey>([sourceKey]);
 
-    let truncated = false;
+    let terminationReason: 'found' | 'exhausted' | 'max_hops' | 'node_budget' | 'edge_budget' | 'response_budget' = 'exhausted';
     let foundKey: NodeKey | null = null;
     let nodesVisited = 1; // source counts
     let edgesExamined = 0;
@@ -392,13 +387,13 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
         const fromRows = await query(fromSql, fromParams) as unknown as StoredEdge[];
         for (const row of fromRows) {
           edgesExamined++;
-          if (edgesExamined > edgeBudget) { truncated = true; break outer; }
+          if (edgesExamined > edgeBudget) { terminationReason = 'edge_budget'; break outer; }
 
           // Expand to-side range into per-verse nodes
           const rangeSize = row.to_verse_end - row.to_verse_start + 1;
           let versesToEnqueue: number[];
           if (rangeSize > rangeExplodeCap) {
-            truncated = true;
+            terminationReason = 'response_budget';
             versesToEnqueue = [row.to_verse_start]; // only start verse
           } else {
             versesToEnqueue = Array.from({ length: rangeSize }, (_, i) => row.to_verse_start + i);
@@ -410,7 +405,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
             if (!visited.has(neighbourKey)) {
               visited.add(neighbourKey);
               nodesVisited++;
-              if (nodesVisited > nodeBudget) { truncated = true; break outer; }
+              if (nodesVisited > nodeBudget) { terminationReason = 'node_budget'; break outer; }
               parents.set(neighbourKey, {
                 edge: row,
                 connectingVerse,
@@ -446,7 +441,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
         );
         for (const row of toRows) {
           edgesExamined++;
-          if (edgesExamined > edgeBudget) { truncated = true; break outer; }
+          if (edgesExamined > edgeBudget) { terminationReason = 'edge_budget'; break outer; }
 
           // from endpoint is always a single verse
           const neighbourKey = nodeKey(row.from_book, row.from_chapter, row.from_verse);
@@ -456,7 +451,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
           if (!visited.has(neighbourKey)) {
             visited.add(neighbourKey);
             nodesVisited++;
-            if (nodesVisited > nodeBudget) { truncated = true; break outer; }
+            if (nodesVisited > nodeBudget) { terminationReason = 'node_budget'; break outer; }
             parents.set(neighbourKey, {
               edge: row,
               connectingVerse,
@@ -476,10 +471,9 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
       frontier = nextFrontier;
     }
 
-    // If the loop completed normally (without break outer) with frontier non-empty,
-    // we hit the max_hops budget — mark truncated.
-    if (foundKey === null && frontier.size > 0) {
-      truncated = true;
+    // A non-empty frontier after the final iteration means the hop budget stopped the search.
+    if (foundKey === null && frontier.size > 0 && terminationReason === 'exhausted') {
+      terminationReason = 'max_hops';
     }
 
     // 5. Path reconstruction
@@ -489,6 +483,7 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
 
     if (foundKey !== null) {
       found = true;
+      terminationReason = 'found';
       // Walk back from target to source using parents map
       const hopChain: Array<{ edge: StoredEdge; connectingVerse: NodeKey }> = [];
       let current = foundKey;
@@ -529,7 +524,8 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
       from_ref: fromRef,
       to_ref: toRef,
       found,
-      truncated,
+      complete: terminationReason === 'found' || terminationReason === 'exhausted',
+      termination_reason: terminationReason,
       hops,
       max_hops: maxHops,
       path,
@@ -545,7 +541,8 @@ export async function traceCrossReferencePath(args: TraceCrossReferencePathInput
         from_ref: fromRef,
         to_ref: toRef,
         found,
-        truncated: true,
+        complete: false,
+        termination_reason: 'response_budget' as const,
         hops,
         max_hops: maxHops,
         path,

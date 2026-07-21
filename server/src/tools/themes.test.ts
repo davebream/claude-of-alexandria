@@ -137,7 +137,7 @@ describe('query_themes — bounded lexicon statement count across multiple lemma
 
 describe('query_themes — schema shape', () => {
   it('ThemesOutputSchema declares lemma_translit', () => {
-    expect(Object.keys(ThemesOutputSchema)).toContain('lemma_translit');
+    expect(Object.keys(ThemesOutputSchema.shape)).toContain('lemma_translit');
   });
 });
 
@@ -342,7 +342,7 @@ describe('query_themes — matches keeps its existing Record<lemma, theme[]> sha
 // pointed lemma. A consumer must be able to learn from the schema alone that
 // null is a defined outcome (not an error), and why it occurs.
 describe('ThemesOutputSchema — lemma_translit documents null semantics', () => {
-  const d = (ThemesOutputSchema.lemma_translit.description ?? '').toLowerCase();
+  const d = (ThemesOutputSchema.shape.lemma_translit.description ?? '').toLowerCase();
 
   it('states values can be null', () => {
     expect(d).toContain('null');

@@ -283,8 +283,7 @@ describe('robustness', () => {
     expect(body.topics[0].sources).toEqual([]);
   });
 
-  it('character-limit truncation: oversized response returns truncated:true', async () => {
-    // Build a result that exceeds 25_000 chars
+  it('does not add v3 truncation fields to oversized handler results', async () => {
     const bigSummary = 'x'.repeat(3000);
     const rows = Array.from({ length: 10 }, (_, i) => ({
       ...exodusTopicRow,
@@ -298,11 +297,8 @@ describe('robustness', () => {
 
     expect(result.isError).toBeFalsy();
     const body = JSON.parse((result.content[0] as { text: string }).text);
-    // Either truncated OR fits within the limit — what matters is no crash and valid JSON
-    if (body.truncated) {
-      expect(body.truncated).toBe(true);
-      expect(body.truncation_message).toBeTruthy();
-    }
+    expect(body.truncated).toBeUndefined();
+    expect(body.truncation_message).toBeUndefined();
     expect(body.topics.length).toBeGreaterThan(0);
   });
 

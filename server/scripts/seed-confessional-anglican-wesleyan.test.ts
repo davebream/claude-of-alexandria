@@ -381,7 +381,7 @@ describe('transcription integrity — Wesley Articles', () => {
 });
 
 describe('tradition enum', () => {
-  const schema = z.object(ConfessionalLookupInputSchema);
+  const schema = ConfessionalLookupInputSchema;
 
   it('accepts tradition "anglican"', () => {
     expect(schema.safeParse({ mode: 'list', tradition: 'anglican' }).success).toBe(true);
