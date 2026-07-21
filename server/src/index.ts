@@ -20,6 +20,7 @@ import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/even
 import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema } from './tools/person-network.js';
 import { speakersQuery, SpeakersInputSchema, SpeakersOutputSchema } from './tools/speakers.js';
 import { querySyntax, SyntaxInputSchema, SyntaxOutputSchema } from './tools/syntax.js';
+import { queryOtStructure, OtStructureInputSchema, OtStructureOutputSchema } from './tools/ot-structure.js';
 import { queryVariants, VariantsInputSchema, VariantsOutputSchema } from './tools/variants.js';
 import { bibleLookup, BibleLookupInputSchema, BibleLookupOutputSchema } from './tools/bible-lookup.js';
 import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSchema } from './tools/commentary-lookup.js';
@@ -384,6 +385,27 @@ Returns: { book, chapter_range, annotations: [{chapter, verse, clause_id, clause
 Examples:
   - Clause annotations in Romans 8: book="Romans", chapter_range="8"
   - All annotations in Philippians: book="Philippians"`;
+
+const DESC_OT_STRUCTURE = `Query compact Old Testament verse-edge structure features derived from Macula Hebrew lowfat XML and speaker-quotation spans.
+
+Returns boundary-context records around a verse range: the edge before the range start when available, internal verse edges, and the edge after the range end when available. This is boundary evidence, not a literary verdict.
+
+Args:
+  - book (string, required): OT book name in any common form (e.g., "Genesis", "Gen", "Psalms")
+  - range (string, required): Verse range "1:1-1:10", abbreviated "1:1-10", or a single verse "1:1"
+
+Returns: { book, range, boundaries: [{ before, after, relation_to_range, syntax, participants, speech }], summary, attribution, limitations }
+
+Features:
+  - syntax: sentence edge flags, open clause depth, and compact clause start/end summaries
+  - participants: source-level participant/subject refs before and after the edge
+  - speech: active speaker ids and quotation open/close flags
+
+Limitations: location changes, temporal frame changes, and formula matches are not part of v1. Use query_places, query_events, query_lemmas, or query_vocabulary for those signals.
+
+Examples:
+  - Genesis creation-day boundary context: book="Genesis", range="1:1-1:5"
+  - Speech transition context: book="Genesis", range="3:1-3:5"`;
 
 const DESC_VARIANTS = `Query textual variant edition comparison data for a New Testament book.
 
@@ -962,6 +984,21 @@ function createServer(reqCtx: RequestCtx): McpServer {
     },
   }, async (args, _extra) =>
     cachedToolCall('query_syntax', args as unknown as Record<string, unknown>, () => querySyntax(args))
+  );
+
+  server.registerTool('query_ot_structure', {
+    title: 'Query OT Structure',
+    description: DESC_OT_STRUCTURE,
+    inputSchema: OtStructureInputSchema,
+    outputSchema: OtStructureOutputSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  }, async (args, _extra) =>
+    cachedToolCall('query_ot_structure', args as unknown as Record<string, unknown>, () => queryOtStructure(args))
   );
 
   server.registerTool('query_variants', {
