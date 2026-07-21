@@ -36,7 +36,8 @@ defaultTest:
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
     # MCP tool citation check: output must reference expected MCP tools.
-    # NOTE: tool-call-f1 and metadata.toolCalls don't work with claude-agent-sdk.
+    # metadata.toolCalls is populated by sdk-provider.mjs (it accumulates the SDK
+    # message stream); this checks tools ACTUALLY called, OR-ed with a prose fallback.
     - type: javascript
       value: |
         const lower = output.toLowerCase();
