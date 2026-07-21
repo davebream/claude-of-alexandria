@@ -40,30 +40,36 @@ SUB-AGENT RULE: When asked to invoke a named agent (e.g., "data-retriever"), use
 the Task tool to delegate to that agent. Return the agent's output VERBATIM — do \
 not reformat, summarize, or wrap it in your own structure.`;
 
+// Prefix matches what a real plugin install exposes (mcp__plugin_<pluginName>_<serverName>__*),
+// not the bare mcp__<serverName>__* the SDK would otherwise use for a directly-declared server.
+// Subagent frontmatter (data-retriever.md, argument-flow.md) declares tools under this same
+// prefix; a mismatch here means those subagents see zero matching MCP tools and fail to spawn.
+const MCP_SERVER_KEY = "plugin_claude-of-alexandria_claude-of-alexandria-mcp";
+
 const MCP_TOOLS = [
-  "mcp__claude-of-alexandria-mcp__list_books",
-  "mcp__claude-of-alexandria-mcp__query_discourse_features",
-  "mcp__claude-of-alexandria-mcp__query_paragraph_breaks",
-  "mcp__claude-of-alexandria-mcp__query_vocabulary",
-  "mcp__claude-of-alexandria-mcp__query_morphology",
-  "mcp__claude-of-alexandria-mcp__query_ot_quotes",
-  "mcp__claude-of-alexandria-mcp__query_lemmas",
-  "mcp__claude-of-alexandria-mcp__query_themes_for_lemmas",
-  "mcp__claude-of-alexandria-mcp__query_theme",
-  "mcp__claude-of-alexandria-mcp__query_lexicon",
-  "mcp__claude-of-alexandria-mcp__check_versification",
-  "mcp__claude-of-alexandria-mcp__query_cross_references",
-  "mcp__claude-of-alexandria-mcp__query_people",
-  "mcp__claude-of-alexandria-mcp__query_places",
-  "mcp__claude-of-alexandria-mcp__query_events",
-  "mcp__claude-of-alexandria-mcp__query_person_network",
-  "mcp__claude-of-alexandria-mcp__query_speakers",
-  "mcp__claude-of-alexandria-mcp__query_syntax",
-  "mcp__claude-of-alexandria-mcp__query_variants",
-  "mcp__claude-of-alexandria-mcp__bible_lookup",
-  "mcp__claude-of-alexandria-mcp__commentary_lookup",
-  "mcp__claude-of-alexandria-mcp__parallel_text",
-];
+  "list_books",
+  "query_discourse_features",
+  "query_paragraph_breaks",
+  "query_vocabulary",
+  "query_morphology",
+  "query_ot_quotes",
+  "query_lemmas",
+  "query_themes_for_lemmas",
+  "query_theme",
+  "query_lexicon",
+  "check_versification",
+  "query_cross_references",
+  "query_people",
+  "query_places",
+  "query_events",
+  "query_person_network",
+  "query_speakers",
+  "query_syntax",
+  "query_variants",
+  "bible_lookup",
+  "commentary_lookup",
+  "parallel_text",
+].map((name) => `mcp__${MCP_SERVER_KEY}__${name}`);
 
 export default class SdkWithSkillProvider extends SdkProvider {
   constructor(options = {}) {
@@ -105,7 +111,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
     return {
       model: this.config.model || "claude-sonnet-5",
       mcpServers: {
-        "claude-of-alexandria-mcp": {
+        [MCP_SERVER_KEY]: {
           type: "http",
           url: "https://coa.davebream.com/mcp",
         },
