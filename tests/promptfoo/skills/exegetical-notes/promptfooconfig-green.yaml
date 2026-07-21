@@ -21,6 +21,16 @@
 # #98 — Greek/Hebrew script + transliteration rendering:
 #   S23: Convention — script (translit) rendering (Eph 6:23, ἀγάπη → agapē)
 #   S24: Provenance probe (lemma οὗτος → ohutos) + NT lemma-null handling (αὐτός/ἀγαθός)
+#
+# #136 — ADR 0002 consolidation review (maintainer-decided, none merged further):
+#   S9 vs S10  — kept separate: same narrative genre, but different MCP tools
+#     (query_people vs query_speakers) and different corrective behaviors (entity
+#     continuity across books vs. speaker/divine-speech attribution).
+#   S11 vs S7+S13 — kept separate: OT vs NT is a testament fork per ADR 0002's own
+#     branch types, and the gloss data paths differ (Cherith/Andi Wu vs OpenGNT/TBESG).
+#   S23 vs S24 — kept separate: S24's null-handling case (lemma_translit null,
+#     text_translit populated) cannot be reached from S23's passage; each needs its
+#     own passage to hit its live data condition.
 
 description: "Exegetical Notes — GREEN phase (failure-mode corrections)"
 
@@ -303,6 +313,8 @@ tests:
   # =========================================================================
   # Scenario 9: Entity Data in Narrative (Phase 4)
   # Core failure: characters discussed purely from training knowledge
+  # #136: kept separate from S10 — different MCP tool (query_people) and a
+  # distinct failure mode (entity continuity), not the same contract branch.
   # =========================================================================
   - description: "S9 GREEN: Entity data — narrative characters grounded in entity data"
     vars:
@@ -323,6 +335,8 @@ tests:
   # =========================================================================
   # Scenario 10: Speaker Attribution in Dialogue (Phase 4)
   # Core failure: speakers identified from narrative context without structured data
+  # #136: kept separate from S9 — different MCP tool (query_speakers) and a
+  # distinct failure mode (divine-speech marking), not the same contract branch.
   # =========================================================================
   - description: "S10 GREEN: Speaker data — dialogue with divine speech markers"
     vars:
@@ -343,6 +357,9 @@ tests:
   # =========================================================================
   # Scenario 11: Cherith Gloss Tier Awareness (Phase 4)
   # Core failure: all glosses at uniform authority without tier distinction
+  # #136: kept separate from S7+S13 — OT vs NT is a testament fork (ADR 0002's
+  # own branch type), and the gloss data path (Cherith/Andi Wu) differs from
+  # S7+S13's NT path (OpenGNT/TBESG).
   # =========================================================================
   - description: "S11 GREEN: Cherith glosses — OT glosses with tier distinction"
     vars:
@@ -719,6 +736,8 @@ tests:
   # Scenario 23: Transliteration Convention — Ephesians 6:23 (#98)
   # AC-2: script (translit) rendering, first occurrence + translit alone thereafter
   # Verified live: Eph 6:23 ἀγάπη text_translit = "agapē"
+  # #136: kept separate from S24 — S24's null-handling condition is not
+  # reachable from this passage; each needs its own passage/live data.
   # =========================================================================
   - description: "S23 GREEN: Transliteration convention — ἀγάπη (agapē) at Eph 6:23"
     vars:

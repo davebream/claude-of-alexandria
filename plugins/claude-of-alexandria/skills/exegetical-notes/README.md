@@ -26,29 +26,38 @@ This skill uses the claude-of-alexandria MCP server for all data access:
 
 ## TDD Status
 
-- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-red.yaml` — 6 RED phase tests
-- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml` — 14 GREEN phase tests
+- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-red.yaml` — RED phase tests (bare-model failure evidence)
+- ✅ `tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml` — 20 GREEN phase tests (one per contract branch, per ADR 0002)
 
 ### Promptfoo Automated Tests
 
-`tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml` — 14 tests:
+`tests/promptfoo/skills/exegetical-notes/promptfooconfig-green.yaml` — 20 tests:
 
 | Test | Passage | What It Checks |
 |------|---------|---------------|
-| S1 | Phil 1:1-11 | All 10 sections present |
-| S2 | Phil 1:1-11 | Lexical data-grounding (MCP, not memory) |
-| S3 | Phil 1:1-11 | Tier 1-4 labeling correct |
+| S1-S3+S6 | Phil 1:1-11 | Sections, lexical data-grounding, Tier 1-4 labeling, verification |
 | S4 | Phil 1:3-8 | Pericope truncation warning |
 | S5 | Gen 37:2-11 | OT Hebrew morphology + Strong's |
-| S6 | Phil 1:1-11 | Verification section cross-checks |
-| S7 | Rom 3:21-26 | Tier 3 named scholarly citations |
-| ADV1 | Phil 2:5-11 | Resist memory-based morphology |
-| ADV2 | Phil 4:4-7 | Verification not skipped under "brief" |
-| ADV3 | Phil 1:1-11 | Discourse data despite "obvious" framing |
-| ADV4 | Rom 3:21-26 | Debates tier-labeled, not just noted |
-| STRESS1 | Philemon 8-16 | Short letter — no forced OT connections |
-| STRESS2 | Prov 10:1-7 | Wisdom genre — no forced narrative arc |
-| STRESS3 | 3 John 1-8 | Minimal density — honest about limits |
+| S7+S13 | Rom 3:21-26 | Tier 3 named scholarly citations + NT gloss tiering |
+| S8 | Rom 8:28-30 | Cross-reference epistemic labeling (4-tier hierarchy) |
+| S9 | Gen 22:1-4 | Entity data grounding (query_people) |
+| S10 | Gen 3:1-7 | Speaker attribution + divine-speech marking (query_speakers) |
+| S11 | Gen 1:1-5 | OT gloss tier awareness (Cherith/Andi Wu) |
+| S12 | John 7:53-8:11 | Textual variants — edition comparison |
+| S14 | Rev 1:9-20 | Apocalyptic genre governance |
+| S15 | Gal 3:10-14 | Citation grounding via commentary_lookup |
+| S16 | Col 3:1-11 | Self-critique — indicative ground for imperatives |
+| S17 | Eph 2:1-10 | Self-critique — redemptive-historical link |
+| S18 | Job 38:1-11 | Wisdom genre governance |
+| S20 | Obadiah 1-4 | Sparse MCP data — degraded-data fallback |
+| S21 | Lev 16:1-10 | Law genre — covenantal-fulfillment framework |
+| S22 | Dan 7:13-14 | Contested authorship — both positions surfaced |
+| S23 | Eph 6:23 | Transliteration rendering convention (#98) |
+| S24 | Phil 1:6 | Transliteration provenance + NT lemma-null handling (#98) |
+| S26 | Phil 1:6 | Adversarial — refuse to "correct" server transliteration (#98) |
+
+Quality/adversarial/stress scenarios (ADV, STRESS) live in `promptfooconfig-extended.yaml`
+and run on-demand, not as part of the GREEN gate (see ADR 0002).
 
 ## Development History
 
