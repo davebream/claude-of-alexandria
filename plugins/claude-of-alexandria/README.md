@@ -18,7 +18,7 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes 26 tools. Skills call these automatically. V4 requires native JSON arrays, explicit modes for variant tools, and cursor iteration through `page.next_cursor`.
+The reference server exposes 27 tools. Skills call these automatically. V4 requires native JSON arrays, explicit modes for variant tools, and cursor iteration through `page.next_cursor`.
 
 **Core linguistic tools:**
 
@@ -49,6 +49,7 @@ The reference server exposes 26 tools. Skills call these automatically. V4 requi
 | `query_person_network` | Family relationships and co-appearances | Both |
 | `query_speakers` | Speaker attribution with quotation type | Both |
 | `check_versification` | Hebrew-English verse numbering differences | OT |
+| `query_ot_structure` | Verse-edge syntax, participant, and speech boundary context | OT |
 
 **Bible text and commentary tools:**
 

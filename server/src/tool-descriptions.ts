@@ -19,6 +19,7 @@ export const DESC_EVENTS = 'Find pageable biblical events by book, passage, pers
 export const DESC_PERSON_NETWORK = 'Return pageable relationship, co-appearance, or expanded-network connection records for a biblical person.';
 export const DESC_SPEAKERS = 'Return pageable speech spans and speaker metadata for a biblical book or passage.';
 export const DESC_SYNTAX = 'Return pageable clause and syntax records for a biblical range, with optional clause-type filtering.';
+export const DESC_OT_STRUCTURE = 'Return pageable Old Testament verse-edge syntax, participant, and speech boundary records derived from Macula Hebrew data.';
 export const DESC_VARIANTS = 'Return pageable textual-variant records for a biblical book or range.';
 export const DESC_BIBLE_LOOKUP = 'Return pageable verse text for one translation and biblical range. Use parallel_text to compare translations.';
 export const DESC_COMMENTARY_LOOKUP = 'Return pageable commentary entry records for a biblical range, optionally restricted to named commentaries.';
@@ -33,7 +34,7 @@ export const TOOL_DESCRIPTIONS = [
   DESC_THEME_DISTRIBUTION, DESC_LEXICON, DESC_VERSIFICATION,
   DESC_CROSS_REFERENCES, DESC_TRACE_CROSS_REFERENCE_PATH, DESC_PLACES,
   DESC_PEOPLE, DESC_EVENTS, DESC_PERSON_NETWORK, DESC_SPEAKERS, DESC_SYNTAX,
-  DESC_VARIANTS, DESC_BIBLE_LOOKUP, DESC_COMMENTARY_LOOKUP,
+  DESC_OT_STRUCTURE, DESC_VARIANTS, DESC_BIBLE_LOOKUP, DESC_COMMENTARY_LOOKUP,
   DESC_PARALLEL_TEXT, DESC_CONFESSIONAL_LOOKUP, DESC_LITURGICAL_LOOKUP,
   DESC_QUERY_CONTROVERSIES,
 ] as const;

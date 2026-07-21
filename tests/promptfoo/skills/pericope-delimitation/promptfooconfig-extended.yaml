@@ -5,6 +5,8 @@
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c skills/pericope-delimitation/promptfooconfig-extended.yaml
 #
 # EXTENDED phase — advanced scenario verification:
+#   GOLD-LAW: Leviticus 1:1-17 — source-derived CONTRACT into three subunits
+#   GOLD-NARRATIVE: Genesis 11:1-9 — source-derived VALID narrative unit
 #   S2: Valid/composite pericope (VALID or CONTRACT) — confirmed boundaries
 #   S3: Over-extended passage (CONTRACT) — split point identification
 #   ADV1: Evidence quality — discourse features named specifically
@@ -52,6 +54,48 @@ defaultTest:
       value: "Data Sources"
 
 tests:
+  # =========================================================================
+  # GOLD: Published, license-compatible Torah boundaries + OSHB witnesses
+  # =========================================================================
+  - description: "GOLD-LAW EXTENDED: Leviticus 1:1-17 — three source-derived subunits"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Leviticus 1:1-17. Name the manuscript witness and marker type for every Masoretic paragraph marker."
+    assert:
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertProposedBoundaries
+        config:
+          caseId: leviticus_1_pericope
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertMarkerLocations
+        config:
+          caseId: leviticus_1_pericope
+      - type: llm-rubric
+        value: |
+          PASS if the verdict is CONTRACT and the recommendation identifies the
+          herd offering (1:1-9), flock offering (1:10-13), and bird offering
+          (1:14-17) as three distinct legal procedures with independently supported
+          boundaries. Masoretic markers must remain witness-relative graphic
+          evidence rather than authorial verdicts. FAIL otherwise.
+
+  - description: "GOLD-NARRATIVE EXTENDED: Genesis 11:1-9 — intact source-derived pericope"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Genesis 11:1-9. Check the immediately preceding verse when assessing the start boundary, and name the manuscript witness and marker type for every Masoretic paragraph marker."
+    assert:
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertProposedBoundaries
+        config:
+          caseId: genesis_11_1_9_pericope
+      - type: javascript
+        value: file://../../assertions/gold-pericope-benchmark.js:assertMarkerLocations
+        config:
+          caseId: genesis_11_1_9_pericope
+      - type: llm-rubric
+        value: |
+          PASS if the verdict is VALID, Genesis 11:1-9 is treated as one coherent
+          Tower of Babel narrative, and both outer edges receive literary evidence.
+          Masoretic paragraph markers may corroborate those edges only as
+          witness-relative graphic evidence, not as an authorial verdict. FAIL otherwise.
+
   # =========================================================================
   # Scenario 2: Valid NT Pericope — Phil 1:1-11 (VALID)
   # Manual TDD verification: PASS (6/6) — both boundaries confirmed

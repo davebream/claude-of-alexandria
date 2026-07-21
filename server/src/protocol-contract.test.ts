@@ -11,9 +11,9 @@ const PAGEABLE_TOOLS = [
   'query_discourse_features', 'query_vocabulary', 'query_morphology',
   'query_ot_quotes', 'query_lemmas', 'query_theme_distribution', 'query_lexicon',
   'query_cross_references', 'query_people', 'query_places', 'query_events',
-  'query_person_network', 'query_speakers', 'query_syntax', 'query_variants',
-  'bible_lookup', 'commentary_lookup', 'parallel_text', 'confessional_lookup',
-  'liturgical_lookup', 'query_controversies',
+  'query_person_network', 'query_speakers', 'query_syntax', 'query_ot_structure',
+  'query_variants', 'bible_lookup', 'commentary_lookup', 'parallel_text',
+  'confessional_lookup', 'liturgical_lookup', 'query_controversies',
 ] as const;
 
 function expectOwnedObjectsStrict(schema: unknown, path = 'schema'): void {
@@ -68,8 +68,9 @@ describe('MCP v4 protocol contract', () => {
 
   it('emits the hard-cutover catalog and server instructions', async () => {
     const { tools } = await client.listTools();
-    expect(tools).toHaveLength(26);
+    expect(tools).toHaveLength(27);
     expect(tools.map(tool => tool.name)).toContain('query_theme_distribution');
+    expect(tools.map(tool => tool.name)).toContain('query_ot_structure');
     expect(tools.map(tool => tool.name)).not.toContain('query_theme');
     expect(client.getServerVersion()?.version).toBe('4.0.0');
     expect(client.getInstructions()).toContain('native JSON arrays');
@@ -185,6 +186,55 @@ describe('MCP v4 protocol contract', () => {
       themes: ['hope', 'expectation'], start: { chapter: 9, verse: 2 },
       end: { chapter: 9, verse: 7 }, source: 'Revised Common Lectionary',
     });
+  });
+
+  it('paginates OT structure boundary records without truncation fields', async () => {
+    useRows([
+      {
+        book: 'genesis', boundary_ordinal: 1,
+        before_chapter: 1, before_verse: 1, after_chapter: 1, after_verse: 2,
+        before_ref_enc: 1001, after_ref_enc: 1002,
+        previous_sentence_ended: 1, new_sentence_begins: 1,
+        open_clause_depth: 0, clause_end_count: 1, clause_start_count: 1,
+        clause_endings_json: '[{"class":"cl","rule":"S-V","role":null}]',
+        clause_beginnings_json: '[{"class":"cl","rule":"V-S","role":null}]',
+        participants_before_json: '[]', participants_after_json: '["God"]',
+        participants_entered_json: '["God"]', participants_exited_json: '[]',
+        participant_set_changed: 1,
+        speakers_before_json: '[]', speakers_after_json: '["God"]',
+        speaker_changed: 1, quotation_opened: 1, quotation_closed: 0,
+        quotations_opened_json: '[{"speech_key":"GEN 1:2|GEN 1:2|God","speaker_id":"God","speaker_label":"God","quote_type":"Normal"}]',
+        quotations_closed_json: '[]',
+      },
+      {
+        book: 'genesis', boundary_ordinal: 2,
+        before_chapter: 1, before_verse: 2, after_chapter: 1, after_verse: 3,
+        before_ref_enc: 1002, after_ref_enc: 1003,
+        previous_sentence_ended: 1, new_sentence_begins: 1,
+        open_clause_depth: 0, clause_end_count: 1, clause_start_count: 1,
+        clause_endings_json: '[]', clause_beginnings_json: '[]',
+        participants_before_json: '["God"]', participants_after_json: '[]',
+        participants_entered_json: '[]', participants_exited_json: '["God"]',
+        participant_set_changed: 1,
+        speakers_before_json: '["God"]', speakers_after_json: '[]',
+        speaker_changed: 1, quotation_opened: 0, quotation_closed: 1,
+        quotations_opened_json: '[]',
+        quotations_closed_json: '[{"speech_key":"GEN 1:2|GEN 1:2|God","speaker_id":"God","speaker_label":"God","quote_type":"Normal"}]',
+      },
+    ]);
+    const result = await client.callTool({
+      name: 'query_ot_structure',
+      arguments: { book: 'Genesis', range: '1:1-1:2', page_size: 1 },
+    });
+    const data = result.structuredContent as Record<string, any>;
+
+    expect(result.isError).toBeFalsy();
+    expect(data.boundaries).toHaveLength(1);
+    expect(data.page.returned).toBe(1);
+    expect(data.page.total).toBe(2);
+    expect(data.page.next_cursor).toBeTypeOf('string');
+    expect(data.summary).not.toHaveProperty('truncated');
+    expect(data.summary).not.toHaveProperty('returned');
   });
 
   it('keeps descriptions within the per-tool and aggregate budgets', () => {

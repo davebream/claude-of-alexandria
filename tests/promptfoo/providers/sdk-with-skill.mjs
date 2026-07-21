@@ -66,6 +66,7 @@ const MCP_TOOLS = [
   "query_person_network",
   "query_speakers",
   "query_syntax",
+  "query_ot_structure",
   "query_variants",
   "bible_lookup",
   "commentary_lookup",

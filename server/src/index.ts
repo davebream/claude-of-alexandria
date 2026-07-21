@@ -22,6 +22,7 @@ import { queryEvents, EventsInputSchema, EventsOutputSchema } from './tools/even
 import { queryPersonNetwork, PersonNetworkInputSchema, PersonNetworkOutputSchema } from './tools/person-network.js';
 import { speakersQuery, SpeakersInputSchema, SpeakersOutputSchema } from './tools/speakers.js';
 import { querySyntax, SyntaxInputSchema, SyntaxOutputSchema } from './tools/syntax.js';
+import { queryOtStructure, OtStructureInputSchema, OtStructureOutputSchema } from './tools/ot-structure.js';
 import { queryVariants, VariantsInputSchema, VariantsOutputSchema } from './tools/variants.js';
 import { bibleLookup, BibleLookupInputSchema, BibleLookupOutputSchema } from './tools/bible-lookup.js';
 import { commentaryLookup, CommentaryLookupInputSchema, CommentaryLookupOutputSchema } from './tools/commentary-lookup.js';
@@ -37,7 +38,7 @@ import {
   DESC_THEME_DISTRIBUTION, DESC_LEXICON, DESC_VERSIFICATION,
   DESC_CROSS_REFERENCES, DESC_TRACE_CROSS_REFERENCE_PATH, DESC_PLACES,
   DESC_PEOPLE, DESC_EVENTS, DESC_PERSON_NETWORK, DESC_SPEAKERS, DESC_SYNTAX,
-  DESC_VARIANTS, DESC_BIBLE_LOOKUP, DESC_COMMENTARY_LOOKUP,
+  DESC_OT_STRUCTURE, DESC_VARIANTS, DESC_BIBLE_LOOKUP, DESC_COMMENTARY_LOOKUP,
   DESC_PARALLEL_TEXT, DESC_CONFESSIONAL_LOOKUP, DESC_LITURGICAL_LOOKUP,
   DESC_QUERY_CONTROVERSIES,
 } from './tool-descriptions.js';
@@ -203,6 +204,7 @@ const PAGEABLE_COLLECTIONS: Record<string, PageableCollection> = {
   },
   query_speakers: collection('quotations'),
   query_syntax: collection('annotations'),
+  query_ot_structure: collection('boundaries'),
   query_variants: collection('variants'),
   bible_lookup: collection('verses'),
   commentary_lookup: {
@@ -295,6 +297,7 @@ const OUTPUT_SCHEMAS: Record<string, ZodType> = {
   query_person_network: PersonNetworkOutputSchema,
   query_speakers: SpeakersOutputSchema,
   query_syntax: SyntaxOutputSchema,
+  query_ot_structure: OtStructureOutputSchema,
   query_variants: VariantsOutputSchema,
   bible_lookup: BibleLookupOutputSchema,
   commentary_lookup: CommentaryLookupOutputSchema,
@@ -324,6 +327,7 @@ const INPUT_SCHEMAS: Record<string, ZodType> = {
   query_person_network: PersonNetworkInputSchema,
   query_speakers: SpeakersInputSchema,
   query_syntax: SyntaxInputSchema,
+  query_ot_structure: OtStructureInputSchema,
   query_variants: VariantsInputSchema,
   bible_lookup: BibleLookupInputSchema,
   commentary_lookup: CommentaryLookupInputSchema,
@@ -622,6 +626,15 @@ export function createServer(reqCtx: RequestCtx): McpServer {
     outputSchema: SyntaxOutputSchema,
   }, async (args, _extra) =>
     cachedToolCall('query_syntax', { ...args }, () => querySyntax(args))
+  );
+
+  registerReadOnlyTool(server, 'query_ot_structure', {
+    title: 'Query OT Structure',
+    description: DESC_OT_STRUCTURE,
+    inputSchema: OtStructureInputSchema,
+    outputSchema: OtStructureOutputSchema,
+  }, async (args, _extra) =>
+    cachedToolCall('query_ot_structure', { ...args }, () => queryOtStructure(args))
   );
 
   registerReadOnlyTool(server, 'query_variants', {
