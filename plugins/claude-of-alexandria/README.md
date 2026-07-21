@@ -146,7 +146,7 @@ Sub-agents are spawned by skills automatically. They are not invoked directly.
 
 ## Development
 
-This plugin is built using Test-Driven Development. 104 automated promptfoo tests (53 RED + 50 GREEN + 1 smoke) verify skill correctness against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
+This plugin is built using Test-Driven Development. 104 core-CI promptfoo tests (53 RED + 50 GREEN + 1 smoke) verify that skills prevent documented failures, run against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
 
 See [CLAUDE.md](CLAUDE.md) for development guidelines and the Librarian's instructions.
 

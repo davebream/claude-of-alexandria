@@ -242,5 +242,5 @@ See [CLAUDE.md](CLAUDE.md) for development guidelines. The head librarian is str
 ---
 
 <p align="center">
-  <sub>6 skills, 6 sub-agents, 136 maintainer-run eval scenarios (103 GREEN gate + RED evidence, 32 extended, 1 smoke). All 66 biblical books. 358 server unit tests (these run in CI).</sub>
+  <sub>6 skills, 6 sub-agents, 136 maintainer-run eval scenarios total — 104 core-CI (53 RED + 50 GREEN + 1 smoke) plus 32 on-demand extended. All 66 biblical books. 358 server unit tests (these run in CI).</sub>
 </p>
