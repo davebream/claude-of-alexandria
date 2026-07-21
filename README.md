@@ -194,6 +194,8 @@ Requires Node.js. Restart Claude Desktop after saving.
 
 The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite). No local installation required.
 
+The v4 contract requires native JSON arrays and explicit modes for variant tools. Pageable tools return `page.next_cursor`; repeat the same filters until it is absent. See the [MCP v4 migration guide](docs/mcp-v4-migration.md).
+
 | Tool | What It Queries | Coverage |
 |------|-----------------|----------|
 | `list_books` | Available biblical books and thematic keyword groups | Both testaments |
@@ -204,7 +206,21 @@ The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both testaments |
 | `query_lemmas` | Cross-book lemma distribution | Both testaments |
-| `query_theme` | Cross-book distribution of a thematic keyword group | Both testaments |
+| `query_theme_distribution` | Cross-book distribution of a thematic keyword group | Both testaments |
+| `query_lexicon` | Strong's, lemma, or definition search across bundled lexica | Both testaments |
+| `check_versification` | Hebrew-English verse-numbering differences | OT |
+| `query_cross_references` | Pageable verse adjacency in the cross-reference graph | Both testaments |
+| `trace_cross_reference_path` | Bounded path traversal through cross-references | Both testaments |
+| `query_people` | People named in a passage | Both testaments |
+| `query_places` | Places named in a passage | Both testaments |
+| `query_events` | Events associated with a book or chapter range | Both testaments |
+| `query_person_network` | Relationships and co-appearances for a person | Both testaments |
+| `query_speakers` | Speaker-attributed quotation spans | Both testaments |
+| `query_syntax` | Clause-level syntax annotations | NT |
+| `query_variants` | Textual variant edition comparisons | NT |
+| `bible_lookup` | Verse text in a selected translation | Both testaments |
+| `commentary_lookup` | Public-domain commentary entries | Both testaments |
+| `parallel_text` | Verse-aligned translation comparison | Both testaments |
 | `confessional_lookup` | Confessional and catechetical documents from Reformed, Baptist, Lutheran, and ancient traditions — lookup by slug, scripture citation, keyword, or list | Non-biblical |
 | `liturgical_lookup` | Church-year season → recommended passages + themes, and reverse passage → season(s) lookup (curated, Protestant-oriented) | Non-biblical |
 | `query_controversies` | Look up academically contested topics (historicity/dating/authorship) by topic or passage → rating + balanced both-sides positions with sources. Also surfaces a `chapter_contested` discovery flag via `query_events` when a queried chapter overlaps known controversial passages. | Non-biblical |
