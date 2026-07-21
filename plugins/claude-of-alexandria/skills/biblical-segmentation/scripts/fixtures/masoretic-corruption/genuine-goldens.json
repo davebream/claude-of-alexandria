@@ -1,0 +1,31 @@
+{
+  "witness": "WLC/OSHB@3d15126fb1ef74867fc1434be1942e837932691f",
+  "note": "Independent literal goldens for the corrected witness data. The Genesis sequence intentionally runs through 2:3, not only chapter 1.",
+  "books": {
+    "Genesis": {
+      "counts": {
+        "petuchot": 42,
+        "setumot": 50
+      },
+      "creation_sequence_petuchot": [
+        "1:5",
+        "1:8",
+        "1:13",
+        "1:19",
+        "1:23",
+        "1:31",
+        "2:3"
+      ]
+    },
+    "Ruth": {
+      "counts": {
+        "petuchot": 1,
+        "setumot": 0
+      },
+      "petuchot": [
+        "4:17"
+      ],
+      "setumot": []
+    }
+  }
+}

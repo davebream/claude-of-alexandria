@@ -149,6 +149,12 @@ jobs:
         # two adjacent steps read as contradicting each other.
         run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py -v
 
+      - name: Run Masoretic corruption reproduction unit tests
+        # Fixture-driven forensic regression for the historical bare-letter
+        # corruption mechanism. No network and no dependency on the live
+        # corpus JSONs.
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_reproduce_masoretic_corruption.py -v
+
   verify-masoretic-corpus:
     name: Verify Masoretic Corpus
     runs-on: ubuntu-latest
@@ -178,9 +184,12 @@ jobs:
               # only on the scripts would miss exactly that case.
               - 'plugins/claude-of-alexandria/skills/biblical-segmentation/reference/masoretic/**'
               - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/extract_oshb_paragraphs.py'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/reproduce_masoretic_corruption.py'
               - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_extract_oshb_paragraphs.py'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_reproduce_masoretic_corruption.py'
               - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/oshb-checksums.json'
               - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/sefaria_paragraphs.py'
+              - 'plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/fixtures/masoretic-corruption/**'
 
       - name: Run corpus goldens
         # THIS STEP is what makes AC-2 and AC-7 enforceable at all. Without it
@@ -211,6 +220,13 @@ jobs:
             exit 1
           fi
           echo "No drift: committed data matches a fresh regeneration."
+
+      - name: Forensic reproduction of the historical corruption
+        # Runs AFTER the drift check so the verified OSHB cache is already
+        # present. This proves the archived pre-fix fixtures are exactly the
+        # historical bare-letter bug, not merely "different from current".
+        if: steps.filter.outputs.masoretic == 'true' || github.event_name == 'push'
+        run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/reproduce_masoretic_corruption.py
 
   audit:
     name: Dependency Audit
