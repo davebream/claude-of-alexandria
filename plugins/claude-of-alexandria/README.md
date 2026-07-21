@@ -18,7 +18,7 @@ The `data-retriever` agent (Haiku) handles all MCP data gathering and compressio
 
 ## MCP Server
 
-The reference server exposes 24 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
+The reference server exposes 27 tools. Skills call these automatically; you do not need to invoke them directly — though you may, if you are the sort of scholar who enjoys browsing the stacks.
 
 **Core linguistic tools:**
 
@@ -27,6 +27,7 @@ The reference server exposes 24 tools. Skills call these automatically; you do n
 | `query_morphology` | Word-level morphological parsing | Both |
 | `query_discourse_features` | Levinsohn NT discourse features | NT |
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
+| `query_ot_structure` | Verse-edge syntax, participant, and speech boundary context from Macula Hebrew lowfat XML | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both |
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
 | `query_themes_for_lemmas` | Resolve morphology lemmas to vocabulary theme names | Both |

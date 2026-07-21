@@ -199,6 +199,7 @@ The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite
 | `list_books` | Available biblical books and thematic keyword groups | Both testaments |
 | `query_discourse_features` | Levinsohn NT discourse features | NT |
 | `query_paragraph_breaks` | Masoretic petuchah/setumah markers | OT |
+| `query_ot_structure` | Verse-edge syntax, participant, and speech boundary context from Macula Hebrew lowfat XML | OT |
 | `query_vocabulary` | Lemma frequencies, thematic keywords, clustering | Both testaments |
 | `query_morphology` | Word-level morphological parsing | Both testaments |
 | `query_ot_quotes` | OT quotations and allusions in the NT | NT |
