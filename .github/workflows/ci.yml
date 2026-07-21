@@ -137,6 +137,12 @@ jobs:
         # shared-source pin). No network, no corpus download.
         run: python3 server/scripts/test_emit_lemma_strongs.py -v
 
+      - name: Run OT structure extractor structural tests
+        # Fixture-driven, network-free tests for the boundary-context ETL.
+        # Corpus-scale checks run in the dedicated production backfill
+        # workflow before generated SQL is applied to D1.
+        run: python3 server/scripts/test_extract_ot_structure.py -v
+
       - name: Run Masoretic extractor structural tests
         # Structural suite only — fixture-driven, network-free. Runs on EVERY
         # PR: this job carries no paths-filter, deliberately.

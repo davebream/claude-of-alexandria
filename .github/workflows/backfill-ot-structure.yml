@@ -1,0 +1,106 @@
+name: Backfill OT Structure
+
+# Writes generated OT structure rows to production D1. The SQL is produced
+# in-runner from pinned, checksum-verified upstream corpora and is never
+# committed under server/d1-seed/.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/scripts/extract-ot-structure.py'
+      - 'server/scripts/ot-structure-checksums.json'
+      - '.github/workflows/backfill-ot-structure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: d1-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    name: Backfill ot_structure_boundaries
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: server
+    env:
+      CI: true
+      WRANGLER_SEND_METRICS: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Install server dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Generate OT structure SQL in-runner
+        run: python3 scripts/extract-ot-structure.py
+
+      - name: Wait for migration 0024 to land
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 30); do
+            echo "Poll attempt ${attempt}/30: checking for ot_structure_boundaries table..."
+            result=$(npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+              --command "PRAGMA table_info(ot_structure_boundaries)" 2>/dev/null || echo '[]')
+            if echo "${result}" | jq -e '.[0].results[]? | select(.name == "boundary_ordinal")' >/dev/null 2>&1; then
+              echo "Table present — migration 0024 has landed."
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "ERROR: ot_structure_boundaries never appeared after 30 attempts (~15 min)." >&2
+          exit 1
+
+      - name: Run corpus assertions before applying anything
+        run: python3 scripts/test_extract_ot_structure.py --corpus -v
+
+      - name: Apply generated SQL files
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(d1-seed/ot-structure-*.sql)
+          [ ${#files[@]} -gt 0 ] || { echo "ERROR: no generated OT structure SQL files matched" >&2; exit 1; }
+          for f in "${files[@]}"; do
+            echo "Applying ${f}"
+            npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --file="${f}"
+          done
+
+      - name: Verify production row count
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          expected=$(jq -r '.total_boundaries' d1-seed/ot-structure-counts.json)
+          if [ "${expected}" != "23174" ]; then
+            echo "ERROR: generated count ${expected} does not match the pinned absolute count 23174." >&2
+            exit 1
+          fi
+          result=$(npx wrangler@4.112.0 d1 execute claude-of-alexandria --remote --json \
+            --command "SELECT COUNT(*) AS n FROM ot_structure_boundaries" 2>/dev/null)
+          actual=$(echo "${result}" | jq -r '.[0].results[0].n // 0')
+          echo "Production ot_structure_boundaries=${actual} expected=${expected}"
+          if [ "${actual}" != "${expected}" ]; then
+            echo "ERROR: production OT structure row count mismatch." >&2
+            exit 1
+          fi
