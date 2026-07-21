@@ -13,6 +13,10 @@
 #
 # RED scenario coverage audit:
 #   S12: Wisdom poetry boundary — Ecclesiastes 3:1-8 (poem + prose commentary frame)
+#
+# Issue #122 — marker epistemology:
+#   S13: Masoretic marker authority — witness-relative graphic evidence, graded
+#        literary assessment, discrete confidence labels (not a fixed פ/ס hierarchy)
 
 description: "Pericope Delimitation — GREEN phase (failure-mode corrections)"
 
@@ -213,3 +217,49 @@ tests:
           FAIL if 3:1-8 is validated as a complete pericope, or if the
           recommendation to extend is based only on thematic reasoning
           without textual markers.
+
+  # =========================================================================
+  # Scenario 13: Masoretic Marker Authority — Genesis 1:1-5
+  # Core failure: single-witness marker treated as authorial/literary
+  # confirmation; פ asserted stronger than ס as a fixed hierarchy
+  # Real data: query_paragraph_breaks returns a petuchah at Gen 1:5 (verse_end)
+  # — one of six creation-day petuchot (after 1:5, 1:8, 1:13, 1:19, 1:23, 1:31).
+  # =========================================================================
+  - description: "S13 GREEN: Gen 1:1-5 — witness-relative marker evidence, graded literary assessment"
+    vars:
+      prompt: "Use the pericope-delimitation skill for Genesis 1:1-5. Note that Genesis 1:1-5 ends with a petuchah in the Leningrad Codex — is that a stronger signal than a setumah would be?"
+    assert:
+      # Core failure mode: marker treated as authorial/literary confirmation
+      - type: llm-rubric
+        value: |
+          PASS if the response separates the graphic-witness claim (a named
+          manuscript witness, e.g. the Leningrad Codex, preserves a petuchah at/after
+          1:5) from the literary/discourse-boundary assessment, and does NOT state
+          that the marker by itself confirms the biblical author's or a final
+          editor's literary intent.
+          FAIL if the response says the marker "confirms" the boundary was intended
+          by the author/editor without distinguishing witness-attested graphic
+          evidence from literary assessment.
+      # Core failure mode: fixed פ (strong) / ס (moderate) hierarchy asserted as fact
+      - type: llm-rubric
+        value: |
+          PASS if the response does NOT assert, as settled fact, that a petuchah is
+          inherently a stronger boundary signal than a setumah — e.g. it notes the
+          petuchah/setumah distinction is witness-relative, or that which type appears
+          can vary across manuscript witnesses, rather than presenting a fixed
+          strong/moderate hierarchy.
+          FAIL if the response states or implies a fixed rule that petuchah always
+          outranks setumah in boundary strength, with no witness-relative qualification.
+      # Core failure mode: discrete confidence labels not used; marker alone treated
+      # as unconditionally "Confirmed"
+      - type: llm-rubric
+        value: |
+          PASS if the boundary assessment uses one of the discrete evidence-convergence
+          labels (DIRECTLY ATTESTED, STRONG CONVERGENCE, MODERATE, TENTATIVE, or
+          INSUFFICIENT EVIDENCE) for the start boundary, rather than marking it flatly
+          "Confirmed" on the strength of the marker alone with no grading language.
+          A numerical probability (e.g. "78% confidence") is also a FAIL — grades must
+          be discrete labels, not numbers.
+          FAIL if the response calls the boundary "Confirmed" purely because a marker
+          is present, without any convergence grading language, or if it reports a
+          numerical probability instead of a discrete label.

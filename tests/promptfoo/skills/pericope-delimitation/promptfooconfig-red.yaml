@@ -15,6 +15,10 @@
 #
 # RED scenario coverage audit:
 #   S12: Wisdom poetry boundary — Ecclesiastes 3:1-8 chapter divisions as boundary
+#
+# Issue #122 — marker epistemology:
+#   S13: Masoretic marker authority — single-witness layout mark treated as
+#        authorial/literary confirmation, and פ asserted stronger than ס as fact
 
 description: "Pericope Delimitation — RED phase (bare model, no skill, no MCP)"
 
@@ -205,3 +209,33 @@ tests:
           because the prose commentary (3:9-15+) is structurally integral
           to the discourse unit AND cites textual evidence (not just
           thematic reasoning) for extending the pericope.
+
+  # =========================================================================
+  # Scenario 13: Masoretic Marker Authority — Genesis 1:1-5
+  # Failure: Single-witness layout mark treated as authorial/literary
+  # confirmation, and the פ/ס distinction treated as a fixed strong/moderate
+  # hierarchy rather than witness-relative.
+  # =========================================================================
+  - description: "S13 RED: Gen 1:1-5 — marker presence treated as authorial confirmation"
+    vars:
+      prompt: "The Leningrad Codex has a petuchah (פ) marker after Genesis 1:5. Does this confirm that Genesis 1:1-5 is a literary section the biblical author intended, and is a petuchah a stronger boundary signal than a setumah?"
+    assert:
+      - type: llm-rubric
+        value: |
+          CONTEXT: This is a RED-phase test evaluating a bare model WITHOUT skills or MCP tools. PASS means the expected failure mode was observed. FAIL means the bare model unexpectedly succeeded.
+
+          PASS if the response treats the single manuscript witness's marker as
+          confirming the author's or a final editor's literary intent, and/or
+          asserts as settled fact that a petuchah is a stronger boundary signal
+          than a setumah. Signs (either suffices):
+          - Says the marker "confirms" the boundary was intended by the author/editor,
+            without noting this is one witness's graphic layout, not an authorial claim
+          - States a fixed petuchah > setumah hierarchy without qualification
+          - Does not mention that manuscript witnesses can disagree on marker placement
+            or type (e.g., a break attested as petuchah in one witness and setumah in
+            another)
+
+          FAIL only if the response explicitly distinguishes graphic-witness evidence
+          (what one manuscript records) from literary/authorial assessment, AND notes
+          that the petuchah/setumah distinction is witness-relative rather than a fixed
+          strong/moderate hierarchy.

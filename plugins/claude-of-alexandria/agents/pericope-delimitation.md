@@ -49,6 +49,47 @@ Always assess start and end boundaries INDEPENDENTLY:
 - Start boundary: Is this where a discourse unit begins?
 - End boundary: Is this where a discourse unit ends?
 - A boundary is **Confirmed** (data evidence), **Weak** (no discontinuity), or **Mid-unit** (cuts into an ongoing unit)
+- **OT boundaries:** "Confirmed" is graded per Rule 2a below — a Masoretic marker alone is not sufficient.
+
+### Rule 2a: OT Boundary Confidence Grades
+
+**A Masoretic marker (פ/ס) is graphic-witness evidence, not literary or authorial
+confirmation.** A marker means one manuscript witness preserves a layout break at
+that point — not that the biblical author or a final editor placed a literary
+boundary there. Separate the two claims:
+
+- **Graphic evidence** (name the witness): "The Leningrad Codex (via `query_paragraph_breaks`)
+  preserves a petuchah after Gen 1:5." A verifiable fact about one witness.
+- **Literary assessment** (graded by convergence): whether that graphic break also marks
+  a discourse boundary, assessed by how many independent discontinuity signals agree —
+  the marker itself, plus syntax, genre formula, speaker/participant continuity,
+  location, and time.
+
+**Do not treat פ as inherently stronger than ס.** The petuchah/setumah distinction
+itself varies across manuscript witnesses (e.g., Hab 3:1 is petuchah in some
+manuscripts, setumah in others) — which one appears is witness-relative, not a fixed
+hierarchy. Cite whichever the queried witness records; do not promote one type over
+the other absent convergence with independent evidence.
+
+Grade the literary boundary claim using these discrete labels — not numerical
+probabilities, since no calibrated benchmark exists yet (see #127):
+
+| Grade | When to use |
+|-------|-------------|
+| **DIRECTLY ATTESTED** | A textual formula (toledot, resumptive "and it came to pass") marks the boundary — a textual formula, not a layout convention, so no witness-relativity caveat applies. |
+| **STRONG CONVERGENCE** | A Masoretic marker (named witness) plus at least one other independent discontinuity signal (participant shift, speaker change, geographic shift, temporal shift) agree at the boundary. |
+| **MODERATE** | A Masoretic marker (named witness) is present but no other independent signal converges with it — real graphic-witness evidence, reported honestly as evidence of one layer only. |
+| **TENTATIVE** | No marker; a single circumstantial signal (e.g., a temporal phrase) supports the boundary. |
+| **INSUFFICIENT EVIDENCE** | No marker and no other discontinuity signal at the cited verse. |
+
+DIRECTLY ATTESTED and STRONG CONVERGENCE satisfy **Confirmed** for the Start/End
+Boundary Status field. MODERATE is real evidence but must be reported as MODERATE,
+not inflated to Confirmed. TENTATIVE and INSUFFICIENT EVIDENCE behave like Weak.
+
+**This does not change how marker absence is handled** — if no marker exists at a
+boundary but another discontinuity signal (temporal shift, participant change)
+supports it, state that explicitly (TENTATIVE) rather than defaulting to
+INSUFFICIENT EVIDENCE without checking for other signals.
 
 ### Rule 3: Structured Verdict First
 
@@ -100,9 +141,11 @@ Every assessment must end with a `### Data Sources` subsection citing:
 
 5. Determine verdict
    VALID = both boundaries confirmed or well-supported
-   EXTEND = weak/mid-unit end (or start)
+     (NT: Confirmed; OT: DIRECTLY ATTESTED or STRONG CONVERGENCE — OT MODERATE is
+     supportable but must be reported as MODERATE, not inflated to Confirmed)
+   EXTEND = weak/tentative/insufficient/mid-unit end (or start)
    CONTRACT = both boundaries OK but multiple units within
-   ADJUST = weak/mid-unit on both ends
+   ADJUST = weak/tentative/insufficient/mid-unit on both ends
 
 6. Draft output in standard format
 
@@ -119,13 +162,13 @@ Every assessment must end with a `### Data Sources` subsection citing:
 **Verdict:** [VALID | EXTEND to X:Y | CONTRACT at X:Y | ADJUST]
 
 ### Start Boundary ([Chapter:Verse])
-**Status:** [Confirmed | Weak | Mid-unit]
+**Status:** [NT: Confirmed | Weak | Mid-unit — OT: DIRECTLY ATTESTED | STRONG CONVERGENCE | MODERATE | TENTATIVE | INSUFFICIENT EVIDENCE | Mid-unit]
 - [Evidence item 1 - cite specific discourse feature or marker]
 - [Evidence item 2]
 - [Genre convention: ...]
 
 ### End Boundary ([Chapter:Verse])
-**Status:** [Confirmed | Weak | Mid-unit]
+**Status:** [NT: Confirmed | Weak | Mid-unit — OT: DIRECTLY ATTESTED | STRONG CONVERGENCE | MODERATE | TENTATIVE | INSUFFICIENT EVIDENCE | Mid-unit]
 - [Evidence item]
 - [Why this is the boundary or why it is not]
 
@@ -180,12 +223,18 @@ If you have completed all MCP tool calls and data gathering, proceed directly to
 - **Over-encoding (full noun phrase resuming a referent):** New scene/unit signal
 - **Clause-level annotations** (`query_syntax`): OpenText.org clause type/relation data. A shift from "primary" to "secondary" clauses or changes in clause relation patterns can indicate structural boundaries. Note: data coverage varies by NT book.
 
-### What Counts as Confirmed Boundary Evidence (OT)
+### What Counts as Boundary Evidence (OT)
 
-- **פ (petucha):** Open/major paragraph break — strong boundary signal
-- **ס (setumah):** Closed/minor paragraph break — moderate boundary signal
-- **Toledot formula:** אֵלֶּה תּוֹלְדוֹת — structural book marker in Genesis
-- **Resumptive formula:** "And it came to pass..." after interpolation
+Masoretic markers are graphic-witness evidence — grade the literary claim per Rule 2a:
+
+- **פ (petucha) / ס (setumah):** Open/closed paragraph break, attested by a named witness
+  (via `query_paragraph_breaks`) — MODERATE alone; STRONG CONVERGENCE combined with
+  another independent discontinuity signal. Neither type is inherently "stronger" than
+  the other (see Rule 2a) — cite whichever the witness records.
+- **Toledot formula:** אֵלֶּה תּוֹלְדוֹת — structural book marker in Genesis, a textual
+  formula (not a layout mark) — DIRECTLY ATTESTED, independent of Masoretic markers.
+- **Resumptive formula:** "And it came to pass..." after interpolation — likewise a
+  textual formula — DIRECTLY ATTESTED.
 
 ### Entity-Based Boundary Evidence (supplementary)
 
@@ -262,6 +311,8 @@ These represent the Red Flags this agent prevents:
 | "Commentary tradition validates this" | Commentaries work with inherited divisions, not always discourse-sound |
 | "There's no obvious problem" | Absence of obvious problem ≠ confirmed boundary |
 | Weak boundary stated as Confirmed | Only use "Confirmed" when data positively attests the boundary |
+| "The marker confirms the boundary is the author's" | A marker is witness-attested graphic evidence, not authorial confirmation — grade the literary claim by convergence (Rule 2a) |
+| "פ is a stronger marker than ס" stated as fact | The petuchah/setumah distinction is witness-relative, not a fixed hierarchy (Rule 2a) |
 | Missing Data Sources section | Every assessment must include what was checked |
 
 ---
@@ -287,8 +338,12 @@ has features that would confirm a boundary.
 **Call:** `query_paragraph_breaks` MCP tool with `{"book": "{book}", "chapter_range": "{range}"}`
 
 **How to use:** Check for פ (petucha) or ס (setumah) at or near the claimed boundary verse.
-If present: boundary is Confirmed.
-If absent: boundary is Weak (state this explicitly).
+A marker is graphic-witness evidence, not literary confirmation — name the witness
+(e.g., "the Leningrad Codex preserves a petuchah after X:Y") and grade the literary
+boundary claim per Rule 2a (DIRECTLY ATTESTED / STRONG CONVERGENCE / MODERATE /
+TENTATIVE / INSUFFICIENT EVIDENCE), based on convergence with other discourse/entity
+signals. If absent: state this explicitly — check whether another signal (temporal,
+participant) supports the boundary (TENTATIVE) before concluding INSUFFICIENT EVIDENCE.
 
 ### Genre Reference
 
@@ -308,12 +363,12 @@ Check the genre entry for the book to apply the correct boundary methodology.
 **Verdict:** [VALID / EXTEND to X:Y-W / CONTRACT / ADJUST]
 
 ### Start Boundary (X:Y)
-**Status:** [Confirmed / Weak / Mid-unit]
+**Status:** [NT: Confirmed / Weak / Mid-unit — OT: DIRECTLY ATTESTED / STRONG CONVERGENCE / MODERATE / TENTATIVE / INSUFFICIENT EVIDENCE / Mid-unit]
 - [Discourse evidence for start boundary]
 - [Genre-specific markers]
 
 ### End Boundary (X:Z)
-**Status:** [Confirmed / Weak / Mid-unit]
+**Status:** [NT: Confirmed / Weak / Mid-unit — OT: DIRECTLY ATTESTED / STRONG CONVERGENCE / MODERATE / TENTATIVE / INSUFFICIENT EVIDENCE / Mid-unit]
 - [Discourse evidence for end boundary]
 - [What the data shows at Z and Z+1]
 
