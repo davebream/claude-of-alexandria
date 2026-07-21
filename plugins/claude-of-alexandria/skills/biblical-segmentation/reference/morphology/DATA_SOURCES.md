@@ -42,11 +42,26 @@ parsing. See `scripts/provenance.py`, `scripts/oshb-checksums.json` (morphhb WLC
 and `scripts/sblgnt-checksums.json` (MorphGNT). Extraction logic lives in
 `scripts/extract_nt_morphology.py` and `scripts/extract_ot_morphology.py`.
 
-**Known stale data — NT part-of-speech label for the `RI` code.** The committed
-`nt/*.json` were generated before a later edit to the extractor's POS map. A
-re-extraction at the pinned commit is byte-identical **except** for 1,160 words
-tagged MorphGNT code `RI`, whose `pos` label reads `interrogative_pronoun` in the
-committed files but `interrogative_indefinite_pronoun` in current output. The
-underlying morphology (lemma, parsing, counts) is unchanged. This label refresh
-is intentionally **not** applied here — it is tracked as issue #148 so the data
-change is reviewed on its own (surfaced by issue #145, AC-2).
+### NT part-of-speech label for the `RI` code — resolved (issue #148)
+
+MorphGNT tags interrogative and enclitic-indefinite pronouns (e.g. τίς "who?"
+and enclitic τις "someone") with a single part-of-speech code, `RI`. The
+canonical label for that code in this dataset is
+**`interrogative_indefinite_pronoun`**, matching the `POS_MAP` in
+`scripts/extract_nt_morphology.py`. This name is preferred over the narrower
+`interrogative_pronoun` because the `RI` class covers *both* the interrogative
+and the indefinite pronoun; the broader label avoids mislabelling the
+enclitic-indefinite members.
+
+The committed `nt/*.json` originally carried the older `interrogative_pronoun`
+label for these words — they were generated before `POS_MAP` was edited, and the
+gap was surfaced by the pinned-commit re-extraction in issue #145 (AC-2). Issue
+#148 refreshed all 27 NT book files to the canonical label: **1,160 word-level
+`pos` values** plus the 27 derived `by_pos` summary keys (one per book). Lemma,
+parsing, and every count are unchanged, and no other field was touched.
+
+No consumer matched on the old string. The server's morphology tools (e.g.
+`query_morphology`) are seeded from a separate MACULA-based source
+(`server/scripts/extract-macula-hebrew.py`), not from these skill-bundled
+reference JSONs, so the relabel is a reference-data consistency fix with no
+runtime effect.

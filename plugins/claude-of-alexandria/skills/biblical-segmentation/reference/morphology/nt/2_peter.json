@@ -22,7 +22,7 @@
       "relative_pronoun": 21,
       "demonstrative_pronoun": 24,
       "adverb": 54,
-      "interrogative_pronoun": 5,
+      "interrogative_indefinite_pronoun": 5,
       "particle": 1
     }
   },
@@ -7122,7 +7122,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
@@ -9380,7 +9380,7 @@
         "text": "τινες",
         "normalized": "τινές",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "plural",
@@ -9470,7 +9470,7 @@
         "text": "τινας",
         "normalized": "τινάς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "plural",
@@ -9818,7 +9818,7 @@
         "text": "ποταποὺς",
         "normalized": "ποταπούς",
         "lemma": "ποταπός",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "plural",
@@ -10754,7 +10754,7 @@
         "text": "τινα",
         "normalized": "τινά",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "plural",

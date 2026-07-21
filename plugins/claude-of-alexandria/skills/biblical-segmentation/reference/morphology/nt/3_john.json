@@ -23,7 +23,7 @@
       "adverb": 12,
       "demonstrative_pronoun": 5,
       "particle": 1,
-      "interrogative_pronoun": 1
+      "interrogative_indefinite_pronoun": 1
     }
   },
   "verses": {
@@ -1072,7 +1072,7 @@
         "text": "⸀τι",
         "normalized": "τὶ",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "singular",

@@ -21,7 +21,7 @@
       "verb": 114,
       "personal_pronoun": 39,
       "demonstrative_pronoun": 7,
-      "interrogative_pronoun": 2,
+      "interrogative_indefinite_pronoun": 2,
       "adverb": 31
     }
   },
@@ -887,7 +887,7 @@
         "text": "τίς",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
@@ -1805,7 +1805,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",

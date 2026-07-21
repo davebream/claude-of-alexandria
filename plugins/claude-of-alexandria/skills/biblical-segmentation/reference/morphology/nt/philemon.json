@@ -23,7 +23,7 @@
       "relative_pronoun": 5,
       "demonstrative_pronoun": 4,
       "particle": 2,
-      "interrogative_pronoun": 2
+      "interrogative_indefinite_pronoun": 2
     }
   },
   "verses": {
@@ -2216,7 +2216,7 @@
         "text": "πόσῳ",
         "normalized": "πόσῳ",
         "lemma": "πόσος",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "dative",
           "number": "singular",
@@ -2397,7 +2397,7 @@
         "text": "τι",
         "normalized": "τὶ",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "accusative",
           "number": "singular",

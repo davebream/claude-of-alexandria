@@ -22,7 +22,7 @@
       "preposition": 25,
       "adverb": 15,
       "demonstrative_pronoun": 5,
-      "interrogative_pronoun": 1
+      "interrogative_indefinite_pronoun": 1
     }
   },
   "verses": {
@@ -1816,7 +1816,7 @@
         "text": "τις",
         "normalized": "τὶς",
         "lemma": "τις",
-        "pos": "interrogative_pronoun",
+        "pos": "interrogative_indefinite_pronoun",
         "parsing": {
           "case": "nominative",
           "number": "singular",
