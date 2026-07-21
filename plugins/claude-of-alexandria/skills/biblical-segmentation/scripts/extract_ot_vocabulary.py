@@ -23,6 +23,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional
 
+import provenance
+
 # OT book order and file mapping (OSIS abbreviations used by morphhb)
 OT_BOOKS = {
     'Genesis': 'Gen',
@@ -259,12 +261,16 @@ def verify_known_values(genesis_data: Dict, exodus_data: Dict) -> None:
     # Genesis vocabulary
     gen_lemmas = genesis_data.get('lemmas', {})
 
-    # H430 = אֱלֹהִים (Elohim/God) - expected ~217 in Genesis
+    # H430 = אֱלֹהִים (Elohim/God) = 219 in Genesis WLC. This is every word token
+    # tagged Strong's H430 (bare plus legitimate Hebrew prefixes ה/ו/ל/כ/ב); it is
+    # reproducible against the pinned morphhb commit. An earlier DATA_SOURCES.md
+    # note of "217" was a stale a-priori figure that never matched this script's
+    # output — corrected to 219. See issue #145.
     if 'H430' in gen_lemmas:
         actual = gen_lemmas['H430']['total']
-        expected_min, expected_max = 200, 230  # Allow some variance
-        status = "PASS" if expected_min <= actual <= expected_max else "CHECK"
-        print(f"  Genesis H430 (אֱלֹהִים): {actual} (expected: ~217) [{status}]")
+        expected = 219
+        status = "PASS" if actual == expected else "CHECK"
+        print(f"  Genesis H430 (אֱלֹהִים): {actual} (expected: {expected}) [{status}]")
     else:
         print("  Genesis H430 (אֱלֹהִים): NOT FOUND [FAIL]")
 
@@ -318,19 +324,6 @@ def main():
     )
 
     args = parser.parse_args()
-    morphhb_path = Path(args.morphhb_path)
-
-    if not morphhb_path.exists():
-        print(f"Error: morphhb path not found: {morphhb_path}", file=sys.stderr)
-        print("Clone with: git clone https://github.com/openscriptures/morphhb.git", file=sys.stderr)
-        sys.exit(1)
-
-    # Verify wlc directory exists
-    wlc_path = morphhb_path / 'wlc'
-    if not wlc_path.exists():
-        print(f"Error: wlc directory not found in {morphhb_path}", file=sys.stderr)
-        print("Ensure the morphhb repository is properly cloned.", file=sys.stderr)
-        sys.exit(1)
 
     # Create output directory
     output_dir = Path(args.output)
@@ -344,6 +337,26 @@ def main():
             print(f"Available books: {', '.join(OT_BOOKS.keys())}", file=sys.stderr)
             sys.exit(1)
         books_to_process = {args.book: OT_BOOKS[args.book]}
+
+    # A caller-supplied clone is used as-is (offline/dev); otherwise fetch the
+    # pinned morphhb commit and verify every WLC file against oshb-checksums.json
+    # (the same lockfile extract_oshb_paragraphs.py uses — one source of truth).
+    morphhb_path = Path(args.morphhb_path)
+    if morphhb_path.exists():
+        wlc_path = morphhb_path / 'wlc'
+        if not wlc_path.exists():
+            print(f"Error: wlc directory not found in {morphhb_path}", file=sys.stderr)
+            print("Ensure the morphhb repository is properly cloned.", file=sys.stderr)
+            sys.exit(1)
+    else:
+        print(
+            f"No local morphhb clone at {morphhb_path}; fetching pinned commit "
+            f"{provenance.MORPHHB_COMMIT_SHA[:12]} and verifying checksums...",
+            file=sys.stderr,
+        )
+        morphhb_path = provenance.ensure_source_root(
+            "morphhb", list(books_to_process.values())
+        )
 
     genesis_data = None
     exodus_data = None
@@ -365,6 +378,7 @@ def main():
                 'repository': 'https://github.com/openscriptures/morphhb',
                 'license': 'CC BY 4.0',
                 'text_base': 'Westminster Leningrad Codex',
+                'commit': provenance.MORPHHB_COMMIT_SHA,
                 'extraction_date': '2026-01-21',
                 'min_occurrences': args.min_occurrences,
                 'format': 'verse-level (duplicates preserved in verses array)'

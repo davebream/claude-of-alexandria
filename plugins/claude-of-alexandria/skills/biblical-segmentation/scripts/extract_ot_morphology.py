@@ -40,6 +40,8 @@ from datetime import date
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
+import provenance
+
 # OT book order and OSIS file mapping
 OT_BOOKS = {
     'Genesis': 'Gen',
@@ -596,23 +598,9 @@ def main():
     )
 
     args = parser.parse_args()
-    morphhb_path = Path(args.morphhb_path)
-
-    if not morphhb_path.exists():
-        print(f"Error: morphhb path not found: {morphhb_path}", file=sys.stderr)
-        print("Clone with: git clone https://github.com/openscriptures/morphhb.git", file=sys.stderr)
-        sys.exit(1)
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    metadata = {
-        'source': 'OpenScriptures morphhb / OSHB',
-        'repository': 'https://github.com/openscriptures/morphhb',
-        'license': 'CC BY 4.0',
-        'extraction_date': date.today().isoformat(),
-        'note': 'Verse-level morphological data. Morph codes follow OSHB tagging system.'
-    }
 
     books_to_process = OT_BOOKS
     if args.book:
@@ -621,6 +609,29 @@ def main():
             print(f"Available: {', '.join(OT_BOOKS.keys())}", file=sys.stderr)
             sys.exit(1)
         books_to_process = {args.book: OT_BOOKS[args.book]}
+
+    # A caller-supplied clone is used as-is (offline/dev); otherwise fetch the
+    # pinned morphhb commit and verify every WLC file against oshb-checksums.json
+    # (the same lockfile extract_oshb_paragraphs.py uses — one source of truth).
+    morphhb_path = Path(args.morphhb_path)
+    if not morphhb_path.exists():
+        print(
+            f"No local morphhb clone at {morphhb_path}; fetching pinned commit "
+            f"{provenance.MORPHHB_COMMIT_SHA[:12]} and verifying checksums...",
+            file=sys.stderr,
+        )
+        morphhb_path = provenance.ensure_source_root(
+            "morphhb", list(books_to_process.values())
+        )
+
+    metadata = {
+        'source': 'OpenScriptures morphhb / OSHB',
+        'repository': 'https://github.com/openscriptures/morphhb',
+        'license': 'CC BY 4.0',
+        'commit': provenance.MORPHHB_COMMIT_SHA,
+        'extraction_date': date.today().isoformat(),
+        'note': 'Verse-level morphological data. Morph codes follow OSHB tagging system.'
+    }
 
     for book_name, book_code in books_to_process.items():
         print(f"Processing {book_name}...")

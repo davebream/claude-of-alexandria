@@ -21,6 +21,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional
 
+import provenance
+
 # NT book order and file mapping
 # MorphGNT uses format: ##-XXX-morphgnt.txt
 NT_BOOKS = {
@@ -274,25 +276,10 @@ def main():
     )
 
     args = parser.parse_args()
-    morphgnt_path = Path(args.morphgnt_path)
-
-    if not morphgnt_path.exists():
-        print(f"Error: MorphGNT path not found: {morphgnt_path}", file=sys.stderr)
-        print("Clone with: git clone https://github.com/morphgnt/sblgnt.git", file=sys.stderr)
-        sys.exit(1)
 
     # Create output directory
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    metadata = {
-        'source': 'MorphGNT/SBLGNT',
-        'repository': 'https://github.com/morphgnt/sblgnt',
-        'license': 'CC BY-SA 3.0',
-        'extraction_date': '2026-01-21',
-        'min_occurrences': args.min_occurrences,
-        'format': 'verse-level (duplicates preserved in verses array)'
-    }
 
     # Determine which books to process
     books_to_process = NT_BOOKS
@@ -302,6 +289,29 @@ def main():
             print(f"Available books: {', '.join(NT_BOOKS.keys())}", file=sys.stderr)
             sys.exit(1)
         books_to_process = {args.book: NT_BOOKS[args.book]}
+
+    # A caller-supplied clone is used as-is (offline/dev); otherwise fetch the
+    # pinned MorphGNT commit and verify every file against sblgnt-checksums.json.
+    morphgnt_path = Path(args.morphgnt_path)
+    if not morphgnt_path.exists():
+        print(
+            f"No local MorphGNT clone at {morphgnt_path}; fetching pinned commit "
+            f"{provenance.SBLGNT_COMMIT_SHA[:12]} and verifying checksums...",
+            file=sys.stderr,
+        )
+        morphgnt_path = provenance.ensure_source_root(
+            "sblgnt", list(books_to_process.values())
+        )
+
+    metadata = {
+        'source': 'MorphGNT/SBLGNT',
+        'repository': 'https://github.com/morphgnt/sblgnt',
+        'license': 'CC BY-SA 3.0',
+        'commit': provenance.SBLGNT_COMMIT_SHA,
+        'extraction_date': '2026-01-21',
+        'min_occurrences': args.min_occurrences,
+        'format': 'verse-level (duplicates preserved in verses array)'
+    }
 
     for book_name, book_code in books_to_process.items():
         print(f"Processing {book_name}...")
