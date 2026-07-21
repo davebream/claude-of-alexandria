@@ -155,6 +155,12 @@ jobs:
         # corpus JSONs.
         run: python3 plugins/claude-of-alexandria/skills/biblical-segmentation/scripts/test_reproduce_masoretic_corruption.py -v
 
+      - name: Run Masoretic corruption reproduction audit tests
+        # Fixture-driven, network-free archival audit for issue #128. This
+        # proves the intentionally corrupt historical files stay quarantined
+        # and reproducible without touching production data.
+        run: python3 server/scripts/test_reproduce_masoretic_corruption.py -v
+
   verify-masoretic-corpus:
     name: Verify Masoretic Corpus
     runs-on: ubuntu-latest
