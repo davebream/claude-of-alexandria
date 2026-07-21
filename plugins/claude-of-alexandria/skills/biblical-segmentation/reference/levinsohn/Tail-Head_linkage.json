@@ -4,581 +4,697 @@
   "references": [
     {
       "verse": "Matt 2:13",
+      "word_index": 3,
       "word": "ἀναχωρησάντων δὲ αὐτῶν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 6:7",
+      "word_index": 1,
       "word": "προσευχόμενοι",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 7:28",
+      "word_index": 9,
       "word": "ὅτε ἐτέλεσεν ὁ ἰησοῦς τοὺς λόγους τούτους",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 9:18",
+      "word_index": 4,
       "word": "ταῦτα αὐτοῦ λαλοῦντος αὐτοῖς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 10:19",
+      "word_index": 1,
       "word": "ὅταν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 10:19",
+      "word_index": 4,
       "word": "παραδῶσιν ὑμᾶς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 11:1",
+      "word_index": 11,
       "word": "ὅτε ἐτέλεσεν ὁ ἰησοῦς διατάσσων τοῖς δώδεκα μαθηταῖς αὐτοῦ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 12:46",
+      "word_index": 5,
       "word": "ἔτι αὐτοῦ λαλοῦντος τοῖς ὄχλοις",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 13:4",
+      "word_index": 5,
       "word": "ἐν τῷ σπείρειν αὐτὸν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 13:53",
+      "word_index": 9,
       "word": "ὅτε ἐτέλεσεν ὁ ἰησοῦς τὰς παραβολὰς ταύτας",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 17:5",
+      "word_index": 3,
       "word": "ἔτι αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 19:1",
+      "word_index": 9,
       "word": "ὅτε ἐτέλεσεν ὁ ἰησοῦς τοὺς λόγους τούτους",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 26:1",
+      "word_index": 10,
       "word": "ὅτε ἐτέλεσεν ὁ ἰησοῦς πάντας τοὺς λόγους τούτους",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 26:47",
+      "word_index": 4,
       "word": "ἔτι αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Matt 27:31",
+      "word_index": 4,
       "word": "ὅτε ἐνέπαιξαν αὐτῷ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Mark 2:19",
+      "word_index": 26,
       "word": "ὅσον χρόνον ἔχουσιν τὸν νυμφίον μετ’ αὐτῶν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Mark 4:4",
+      "word_index": 5,
       "word": "ἐν τῷ σπείρειν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Mark 14:43",
+      "word_index": 5,
       "word": "ἔτι αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Mark 16:19",
+      "word_index": 9,
       "word": "μετὰ τὸ λαλῆσαι αὐτοῖς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 8:5",
+      "word_index": 13,
       "word": "ἐν τῷ σπείρειν αὐτὸν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 8:8",
+      "word_index": 15,
       "word": "ταῦτα λέγων",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 8:49",
+      "word_index": 3,
       "word": "ἔτι αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 9:34",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 9:34",
+      "word_index": 4,
       "word": "αὐτοῦ λέγοντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 11:27",
+      "word_index": 7,
       "word": "ἐν τῷ λέγειν αὐτὸν ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 13:17",
+      "word_index": 4,
       "word": "ταῦτα λέγοντος αὐτοῦ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 19:28",
+      "word_index": 3,
       "word": "εἰπὼν ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 22:47",
+      "word_index": 3,
       "word": "ἔτι αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 22:60",
+      "word_index": 14,
       "word": "ἔτι λαλοῦντος αὐτοῦ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 22:67",
+      "word_index": 14,
       "word": "ἐὰν ὑμῖν εἴπω",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 23:46",
+      "word_index": 16,
       "word": "τοῦτο",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 23:46",
+      "word_index": 18,
       "word": "εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 24:15",
+      "word_index": 6,
       "word": "ἐν τῷ ὁμιλεῖν αὐτοὺς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 24:36",
+      "word_index": 4,
       "word": "ταῦτα δὲ αὐτῶν λαλούντων",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 24:40",
+      "word_index": 3,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Luke 24:51",
+      "word_index": 7,
       "word": "ἐν τῷ εὐλογεῖν αὐτὸν αὐτοὺς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 7:9",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 7:9",
+      "word_index": 3,
       "word": "εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 8:30",
+      "word_index": 3,
       "word": "ταῦτα αὐτοῦ λαλοῦντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 9:6",
+      "word_index": 2,
       "word": "ταῦτα εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 11:12",
+      "word_index": 8,
       "word": "εἰ κεκοίμηται",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 11:28",
+      "word_index": 3,
       "word": "τοῦτο εἰποῦσα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 11:43",
+      "word_index": 3,
       "word": "ταῦτα εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 13:8",
+      "word_index": 19,
       "word": "ἐὰν μὴ νίψω σε",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 13:21",
+      "word_index": 4,
       "word": "ταῦτα εἰπὼν ὁ ἰησοῦς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 13:31",
+      "word_index": 1,
       "word": "ὅτε",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 13:31",
+      "word_index": 3,
       "word": "ἐξῆλθεν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 13:32",
+      "word_index": 6,
       "word": "εἰ ὁ θεὸς ἐδοξάσθη ἐν αὐτῷ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 14:3",
+      "word_index": 7,
       "word": "ἐὰν πορευθῶ καὶ ἑτοιμάσω τόπον ὑμῖν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:1",
+      "word_index": 3,
       "word": "ταῦτα εἰπὼν ἰησοῦς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:6",
+      "word_index": 1,
       "word": "ὡς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:6",
+      "word_index": 6,
       "word": "εἶπεν αὐτοῖς ἐγώ εἰμι",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:22",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:22",
+      "word_index": 4,
       "word": "αὐτοῦ εἰπόντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 18:38",
+      "word_index": 10,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 20:11",
+      "word_index": 9,
       "word": "ὡς",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 20:11",
+      "word_index": 11,
       "word": "ἔκλαιεν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 20:14",
+      "word_index": 2,
       "word": "ταῦτα εἰποῦσα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 20:20",
+      "word_index": 3,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 20:22",
+      "word_index": 3,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 21:19",
+      "word_index": 12,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 21:21",
+      "word_index": 1,
       "word": "τοῦτον",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "John 21:21",
+      "word_index": 5,
       "word": "ἰδὼν ὁ πέτρος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 1:9",
+      "word_index": 3,
       "word": "ταῦτα εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 4:1",
+      "word_index": 1,
       "word": "λαλούντων",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 4:1",
+      "word_index": 6,
       "word": "αὐτῶν πρὸς τὸν λαὸν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 4:23",
+      "word_index": 1,
       "word": "ἀπολυθέντες",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 7:60",
+      "word_index": 17,
       "word": "τοῦτο εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 14:18",
+      "word_index": 3,
       "word": "ταῦτα λέγοντες",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 17:29",
+      "word_index": 1,
       "word": "γένος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 17:29",
+      "word_index": 5,
       "word": "ὑπάρχοντες τοῦ θεοῦ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 19:40",
+      "word_index": 24,
       "word": "ταῦτα εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 20:36",
+      "word_index": 3,
       "word": "ταῦτα εἰπὼν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 23:7",
+      "word_index": 1,
       "word": "τοῦτο",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 23:7",
+      "word_index": 4,
       "word": "αὐτοῦ εἰπόντος",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 26:24",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 26:24",
+      "word_index": 4,
       "word": "αὐτοῦ ἀπολογουμένου",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 27:35",
+      "word_index": 1,
       "word": "εἴπας",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Acts 27:35",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 5:10",
+      "word_index": 16,
       "word": "καταλλαγέντες",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 7:16",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 7:16",
+      "word_index": 7,
       "word": "ὃ οὐ θέλω τοῦτο ποιῶ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 7:20",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 7:20",
+      "word_index": 8,
       "word": "ὃ οὐ θέλω ἐγὼ τοῦτο ποιῶ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 8:17",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 8:17",
+      "word_index": 3,
       "word": "τέκνα",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 12:20",
+      "word_index": 13,
       "word": "τοῦτο",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rom 12:20",
+      "word_index": 15,
       "word": "ποιῶν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:13",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:13",
+      "word_index": 6,
       "word": "ἀνάστασις νεκρῶν οὐκ ἔστιν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:14",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:14",
+      "word_index": 5,
       "word": "χριστὸς οὐκ ἐγήγερται",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:17",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:17",
+      "word_index": 5,
       "word": "χριστὸς οὐκ ἐγήγερται",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:54",
+      "word_index": 1,
       "word": "ὅταν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Cor 15:54",
+      "word_index": 13,
       "word": "τὸ φθαρτὸν τοῦτο ἐνδύσηται ἀφθαρσίαν καὶ τὸ θνητὸν τοῦτο ἐνδύσηται ἀθανασίαν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Gal 1:10",
+      "word_index": 15,
       "word": "εἰ ἔτι ἀνθρώποις ἤρεσκον",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Gal 3:29",
+      "word_index": 1,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Gal 3:29",
+      "word_index": 4,
       "word": "ὑμεῖς χριστοῦ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Gal 4:7",
+      "word_index": 7,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Gal 4:7",
+      "word_index": 9,
       "word": "υἱός",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1Thess 5:8",
+      "word_index": 4,
       "word": "ἡμέρας ὄντες",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Jas 4:11",
+      "word_index": 18,
       "word": "εἰ",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Jas 4:11",
+      "word_index": 21,
       "word": "νόμον κρίνεις",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "2Pet 3:11",
+      "word_index": 4,
       "word": "τούτων οὕτως πάντων λυομένων",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "2Pet 3:14",
+      "word_index": 4,
       "word": "ταῦτα προσδοκῶντες",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1John 2:24",
+      "word_index": 16,
       "word": "ἐὰν ἐν ὑμῖν μείνῃ ὃ ἀπ’ ἀρχῆς ἠκούσατε",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "1John 4:12",
+      "word_index": 7,
       "word": "ἐὰν ἀγαπῶμεν ἀλλήλους",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 1:12",
+      "word_index": 11,
       "word": "ἐπιστρέψας",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 1:17",
+      "word_index": 4,
       "word": "ὅτε εἶδον αὐτόν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 4:9",
+      "word_index": 22,
       "word": "ὅταν δώσουσιν τὰ ζῷα δόξαν καὶ τιμὴν καὶ εὐχαριστίαν τῷ καθημένῳ ἐπὶ τῷ θρόνῳ τῷ ζῶντι εἰς τοὺς αἰῶνας τῶν αἰώνων",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 10:3",
+      "word_index": 10,
       "word": "ὅτε ἔκραξεν",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 10:4",
+      "word_index": 6,
       "word": "ὅτε ἐλάλησαν αἱ ἑπτὰ βρονταί",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 10:10",
+      "word_index": 25,
       "word": "ὅτε ἔφαγον αὐτό",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 20:7",
+      "word_index": 6,
       "word": "ὅταν τελεσθῇ τὰ χίλια ἔτη",
       "type": "Tail-Head linkage"
     },
     {
       "verse": "Rev 22:8",
+      "word_index": 12,
       "word": "ὅτε ἤκουσα καὶ ἔβλεψα",
       "type": "Tail-Head linkage"
     }

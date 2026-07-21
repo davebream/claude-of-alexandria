@@ -4,1026 +4,1231 @@
   "references": [
     {
       "verse": "Matt 2:2",
+      "word_index": 11,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 3:4",
+      "word_index": 23,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 5:16",
+      "word_index": 11,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 5:20",
+      "word_index": 8,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 6:4",
+      "word_index": 3,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 6:17",
+      "word_index": 5,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 7:24",
+      "word_index": 5,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 7:24",
+      "word_index": 17,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 7:26",
+      "word_index": 5,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 7:26",
+      "word_index": 18,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 8:3",
+      "word_index": 13,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 8:8",
+      "word_index": 11,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 9:2",
+      "word_index": 22,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 9:5",
+      "word_index": 7,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 9:6",
+      "word_index": 22,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 9:30",
+      "word_index": 3,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 10:30",
+      "word_index": 1,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 10:37",
+      "word_index": 10,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 10:37",
+      "word_index": 22,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 10:38",
+      "word_index": 14,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 12:13",
+      "word_index": 6,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 13:25",
+      "word_index": 8,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 15:28",
+      "word_index": 10,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 17:15",
+      "word_index": 5,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 19:21",
+      "word_index": 11,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 20:26",
+      "word_index": 15,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 20:27",
+      "word_index": 10,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 21:8",
+      "word_index": 6,
       "word": "ἑαυτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 22:13",
+      "word_index": 8,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 23:8",
+      "word_index": 9,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 23:9",
+      "word_index": 12,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 23:11",
+      "word_index": 6,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 23:30",
+      "word_index": 14,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 24:48",
+      "word_index": 13,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 26:43",
+      "word_index": 9,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 26:51",
+      "word_index": 21,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Matt 28:9",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 2:5",
+      "word_index": 13,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 2:9",
+      "word_index": 8,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 5:30",
+      "word_index": 19,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 6:52",
+      "word_index": 9,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 7:19",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 7:35",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 9:24",
+      "word_index": 10,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 10:37",
+      "word_index": 9,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 10:43",
+      "word_index": 16,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 12:15",
+      "word_index": 4,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 14:3",
+      "word_index": 26,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 14:40",
+      "word_index": 9,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 14:47",
+      "word_index": 16,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 14:65",
+      "word_index": 8,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Mark 15:19",
+      "word_index": 3,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 6:29",
+      "word_index": 15,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 6:47",
+      "word_index": 8,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 7:44",
+      "word_index": 14,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 7:44",
+      "word_index": 29,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 7:45",
+      "word_index": 13,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 7:48",
+      "word_index": 5,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 10:29",
+      "word_index": 13,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 11:17",
+      "word_index": 4,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 12:18",
+      "word_index": 6,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 12:35",
+      "word_index": 2,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:23",
+      "word_index": 19,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:24",
+      "word_index": 12,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:26",
+      "word_index": 36,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:27",
+      "word_index": 14,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:29",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 14:33",
+      "word_index": 16,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 15:30",
+      "word_index": 9,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 16:6",
+      "word_index": 12,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 16:7",
+      "word_index": 17,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 19:23",
+      "word_index": 6,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 19:35",
+      "word_index": 9,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 20:20",
+      "word_index": 11,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 20:23",
+      "word_index": 3,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 20:26",
+      "word_index": 5,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 21:34",
+      "word_index": 6,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 22:53",
+      "word_index": 19,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Luke 24:45",
+      "word_index": 3,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 1:27",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 2:23",
+      "word_index": 20,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 3:19",
+      "word_index": 25,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 3:21",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 3:33",
+      "word_index": 3,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 4:18",
+      "word_index": 11,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 4:34",
+      "word_index": 17,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 4:47",
+      "word_index": 21,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 6:53",
+      "word_index": 21,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 6:54",
+      "word_index": 3,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 6:54",
+      "word_index": 8,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 6:56",
+      "word_index": 3,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 6:56",
+      "word_index": 8,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 7:3",
+      "word_index": 21,
       "word": "σοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:6",
+      "word_index": 13,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:10",
+      "word_index": 7,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:11",
+      "word_index": 12,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:14",
+      "word_index": 14,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:15",
+      "word_index": 16,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:17",
+      "word_index": 13,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:21",
+      "word_index": 10,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:26",
+      "word_index": 9,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 9:30",
+      "word_index": 21,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 11:32",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 11:32",
+      "word_index": 24,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 11:48",
+      "word_index": 15,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 12:16",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 12:28",
+      "word_index": 3,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 12:40",
+      "word_index": 2,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 12:40",
+      "word_index": 7,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 13:1",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 13:8",
+      "word_index": 7,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 13:14",
+      "word_index": 5,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 13:18",
+      "word_index": 17,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 14:1",
+      "word_index": 3,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 14:27",
+      "word_index": 19,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 15:10",
+      "word_index": 21,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 15:15",
+      "word_index": 12,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 16:6",
+      "word_index": 9,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 16:22",
+      "word_index": 14,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 17:1",
+      "word_index": 18,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 17:6",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 18:10",
+      "word_index": 16,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 18:37",
+      "word_index": 40,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 19:2",
+      "word_index": 9,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 19:29",
+      "word_index": 13,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 19:31",
+      "word_index": 31,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 19:33",
+      "word_index": 13,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 19:34",
+      "word_index": 6,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "John 20:25",
+      "word_index": 37,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 1:8",
+      "word_index": 12,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 3:19",
+      "word_index": 8,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 4:5",
+      "word_index": 7,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 8:20",
+      "word_index": 8,
       "word": "τὸ ἀργύριόν σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 9:18",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 10:31",
+      "word_index": 5,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 12:7",
+      "word_index": 26,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 12:20",
+      "word_index": 26,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 16:20",
+      "word_index": 11,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 16:22",
+      "word_index": 11,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 16:24",
+      "word_index": 15,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 21:11",
+      "word_index": 12,
       "word": "ἑαυτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 21:13",
+      "word_index": 10,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 22:1",
+      "word_index": 6,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 22:18",
+      "word_index": 16,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Acts 23:2",
+      "word_index": 10,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 2:15",
+      "word_index": 13,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 3:24",
+      "word_index": 4,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 3:25",
+      "word_index": 11,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 11:14",
+      "word_index": 4,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 13:11",
+      "word_index": 16,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rom 14:16",
+      "word_index": 4,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Cor 4:17",
+      "word_index": 8,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Cor 8:12",
+      "word_index": 9,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Cor 9:27",
+      "word_index": 3,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Cor 15:55",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Cor 15:55",
+      "word_index": 7,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Cor 1:6",
+      "word_index": 6,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Cor 1:6",
+      "word_index": 14,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Cor 1:24",
+      "word_index": 4,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Cor 6:16",
+      "word_index": 31,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Gal 2:13",
+      "word_index": 12,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phil 1:7",
+      "word_index": 32,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phil 2:2",
+      "word_index": 2,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phil 3:20",
+      "word_index": 1,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phil 4:14",
+      "word_index": 5,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Col 2:5",
+      "word_index": 16,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Col 4:18",
+      "word_index": 8,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 1:3",
+      "word_index": 2,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 2:16",
+      "word_index": 11,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 2:19",
+      "word_index": 3,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 2:19",
+      "word_index": 21,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 3:7",
+      "word_index": 16,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 3:10",
+      "word_index": 9,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Thess 3:13",
+      "word_index": 4,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Thess 2:17",
+      "word_index": 2,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Thess 3:5",
+      "word_index": 5,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Tim 4:12",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Tim 4:15",
+      "word_index": 7,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Tim 1:4",
+      "word_index": 5,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Tim 3:10",
+      "word_index": 4,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Titus 1:15",
+      "word_index": 14,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phlm 1:5",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Phlm 1:20",
+      "word_index": 9,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Heb 13:11",
+      "word_index": 4,
       "word": "ζῴων",
       "type": "Topical Genitive"
     },
     {
       "verse": "Jas 1:3",
+      "word_index": 5,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "Jas 5:12",
+      "word_index": 20,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Pet 1:7",
+      "word_index": 4,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1Pet 3:16",
+      "word_index": 16,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Pet 1:10",
+      "word_index": 6,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Pet 2:2",
+      "word_index": 4,
       "word": "αὐτῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "2Pet 3:1",
+      "word_index": 11,
       "word": "ὑμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "1John 2:5",
+      "word_index": 5,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "1John 3:20",
+      "word_index": 4,
       "word": "ἡμῶν",
       "type": "Topical Genitive"
     },
     {
       "verse": "3John 1:2",
+      "word_index": 11,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "3John 1:10",
+      "word_index": 6,
       "word": "αὐτοῦ",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 2:9",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 2:19",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 3:1",
+      "word_index": 23,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 3:2",
+      "word_index": 13,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 3:8",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 3:8",
+      "word_index": 22,
       "word": "μου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 3:15",
+      "word_index": 2,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 10:9",
+      "word_index": 21,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 14:18",
+      "word_index": 26,
       "word": "σου",
       "type": "Topical Genitive"
     },
     {
       "verse": "Rev 18:5",
+      "word_index": 3,
       "word": "αὐτῆς",
       "type": "Topical Genitive"
     }

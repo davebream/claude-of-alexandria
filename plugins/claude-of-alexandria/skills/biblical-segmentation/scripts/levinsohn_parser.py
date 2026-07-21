@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Levinsohn GNT Discourse Features Parser
+Levinsohn GNT Discourse Features Loader
 
-Extracts verse references for discourse features from Levinsohn JSON files.
+Loads and filters verse references from generated Levinsohn JSON files.
 Used to identify Greek discourse markers for NT segmentation.
 
 Usage:
@@ -13,8 +13,9 @@ Usage:
 Output:
     JSON with verse references for each discourse feature type.
 """
-# ARCHIVED: This script has been superseded by the claude-of-alexandria-mcp MCP server.
-# Retained as reference for data format and ETL validation baseline.
+# ARCHIVED: This runtime loader has been superseded by the claude-of-alexandria-mcp MCP server.
+# Retained as a reference reader and ETL validation baseline. It does not
+# generate the bundled JSON; see extract_levinsohn_discourse.py for that.
 # See: plugins/claude-of-alexandria/servers/claude-of-alexandria-mcp/scripts/build-db.ts
 
 
@@ -80,12 +81,12 @@ ALL_FEATURES = {
 }
 
 
-def parse_feature_json(json_path: Path) -> List[Dict[str, str]]:
+def parse_feature_json(json_path: Path) -> List[Dict[str, object]]:
     """
     Parse a Levinsohn JSON file and extract verse references.
 
     Returns:
-        List of dicts with keys: verse, word, type
+        List of dicts with keys: verse, word_index, word, type
     """
     data = load_json_file(json_path)
     if data is None:
@@ -176,7 +177,12 @@ def format_output(data: Dict, output_format: str) -> str:
 
         lines.append(f"{feature_name.replace('_', ' ').title()}:")
         for ref in refs[:10]:  # Show first 10
-            lines.append(f"  {ref['verse']}: {ref['word']} ({ref['type']})")
+            word_position = (
+                f"; word {ref['word_index']}" if "word_index" in ref else ""
+            )
+            lines.append(
+                f"  {ref['verse']}: {ref['word']} ({ref['type']}{word_position})"
+            )
 
         if len(refs) > 10:
             lines.append(f"  ... and {len(refs) - 10} more")
@@ -187,7 +193,7 @@ def format_output(data: Dict, output_format: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Extract Levinsohn discourse features for NT books'
+        description='Load Levinsohn discourse features for NT books'
     )
     parser.add_argument(
         'book',

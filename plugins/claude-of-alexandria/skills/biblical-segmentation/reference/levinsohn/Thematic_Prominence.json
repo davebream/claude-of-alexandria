@@ -4,4031 +4,4837 @@
   "references": [
     {
       "verse": "Matt 5:19",
+      "word_index": 10,
       "word": "τῶν ἐντολῶν τούτων τῶν ἐλαχίστων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 5:33",
+      "word_index": 15,
       "word": "τοὺς ὅρκους σου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 6:25",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 6:29",
+      "word_index": 15,
       "word": "ὡς ἓν τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 6:32",
+      "word_index": 17,
       "word": "τούτων ἁπάντων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 7:24",
+      "word_index": 8,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 7:26",
+      "word_index": 8,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 7:28",
+      "word_index": 9,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 8:27",
+      "word_index": 8,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 9:8",
+      "word_index": 13,
       "word": "ἐξουσίαν τοιαύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 9:26",
+      "word_index": 5,
       "word": "ἡ φήμη αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 9:28",
+      "word_index": 18,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 11:16",
+      "word_index": 6,
       "word": "τὴν γενεὰν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 11:25",
+      "word_index": 20,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:11",
+      "word_index": 17,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:20",
+      "word_index": 16,
       "word": "τὴν κρίσιν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:27",
+      "word_index": 16,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:31",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:41",
+      "word_index": 10,
       "word": "μετὰ τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:42",
+      "word_index": 10,
       "word": "μετὰ τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 12:45",
+      "word_index": 33,
       "word": "τῇ γενεᾷ ταύτῃ τῇ πονηρᾷ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:15",
+      "word_index": 7,
       "word": "τοῦ λαοῦ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:28",
+      "word_index": 7,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:51",
+      "word_index": 3,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:52",
+      "word_index": 6,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:53",
+      "word_index": 9,
       "word": "τὰς παραβολὰς ταύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:54",
+      "word_index": 19,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:54",
+      "word_index": 25,
       "word": "ἡ σοφία αὕτη καὶ αἱ δυνάμεις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:56",
+      "word_index": 12,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 13:56",
+      "word_index": 14,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 15:15",
+      "word_index": 11,
       "word": "τὴν παραβολὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 16:22",
+      "word_index": 17,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 18:5",
+      "word_index": 7,
       "word": "ἓν παιδίον τοιοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 18:23",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 19:1",
+      "word_index": 9,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 19:5",
+      "word_index": 4,
       "word": "ἕνεκα τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 19:11",
+      "word_index": 10,
       "word": "τὸν λόγον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 19:20",
+      "word_index": 6,
       "word": "πάντα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 20:23",
+      "word_index": 20,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:10",
+      "word_index": 13,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:12",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:16",
+      "word_index": 6,
       "word": "οὗτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:23",
+      "word_index": 21,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:23",
+      "word_index": 29,
       "word": "τὴν ἐξουσίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:24",
+      "word_index": 22,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:27",
+      "word_index": 19,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:42",
+      "word_index": 23,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:43",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 21:44",
+      "word_index": 7,
       "word": "ἐπὶ τὸν λίθον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 22:20",
+      "word_index": 7,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 22:40",
+      "word_index": 5,
       "word": "ἐν ταύταις ταῖς δυσὶν ἐντολαῖς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 23:34",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 23:36",
+      "word_index": 6,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 23:36",
+      "word_index": 10,
       "word": "ἐπὶ τὴν γενεὰν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 24:3",
+      "word_index": 19,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 24:14",
+      "word_index": 7,
       "word": "τοῦτο τὸ εὐαγγέλιον τῆς βασιλείας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 24:33",
+      "word_index": 7,
       "word": "πάντα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 24:34",
+      "word_index": 10,
       "word": "ἡ γενεὰ αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 24:44",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 25:40",
+      "word_index": 19,
       "word": "ἑνὶ τούτων τῶν ἀδελφῶν μου τῶν ἐλαχίστων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 25:45",
+      "word_index": 15,
       "word": "ἑνὶ τούτων τῶν ἐλαχίστων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 25:46",
+      "word_index": 3,
       "word": "οὗτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:1",
+      "word_index": 10,
       "word": "πάντας τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:8",
+      "word_index": 11,
       "word": "ἡ ἀπώλεια αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:9",
+      "word_index": 3,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:12",
+      "word_index": 3,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:12",
+      "word_index": 6,
       "word": "τὸ μύρον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:13",
+      "word_index": 9,
       "word": "τὸ εὐαγγέλιον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:13",
+      "word_index": 18,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:22",
+      "word_index": 8,
       "word": "εἷς ἕκαστος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:29",
+      "word_index": 14,
       "word": "ἐκ τούτου τοῦ γενήματος τῆς ἀμπέλου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:39",
+      "word_index": 21,
       "word": "τὸ ποτήριον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 26:42",
+      "word_index": 12,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 27:6",
+      "word_index": 11,
       "word": "αὐτὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 27:19",
+      "word_index": 27,
       "word": "δι’ αὐτόν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 27:22",
+      "word_index": 13,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 27:47",
+      "word_index": 11,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 27:54",
+      "word_index": 24,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 28:14",
+      "word_index": 4,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Matt 28:15",
+      "word_index": 13,
       "word": "ὁ λόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 1:27",
+      "word_index": 11,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 2:8",
+      "word_index": 17,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 4:13",
+      "word_index": 8,
       "word": "τὴν παραβολὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 4:41",
+      "word_index": 11,
       "word": "οὗτός",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 5:32",
+      "word_index": 5,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 5:43",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 6:2",
+      "word_index": 15,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 6:2",
+      "word_index": 16,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 6:2",
+      "word_index": 23,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 6:2",
+      "word_index": 27,
       "word": "αἱ δυνάμεις τοιαῦται",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 6:33",
+      "word_index": 7,
       "word": "πολλοὶ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 7:29",
+      "word_index": 7,
       "word": "διὰ τοῦτον τὸν λόγον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 8:4",
+      "word_index": 9,
       "word": "τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 8:12",
+      "word_index": 20,
       "word": "τῇ γενεᾷ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 8:38",
+      "word_index": 17,
       "word": "ἐν τῇ γενεᾷ ταύτῃ τῇ μοιχαλίδι καὶ ἁμαρτωλῷ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 10:5",
+      "word_index": 14,
       "word": "τὴν ἐντολὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 10:7",
+      "word_index": 2,
       "word": "ἕνεκεν τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 10:28",
+      "word_index": 4,
       "word": "ὁ πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:3",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:24",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:28",
+      "word_index": 7,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:28",
+      "word_index": 15,
       "word": "τὴν ἐξουσίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:28",
+      "word_index": 17,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:29",
+      "word_index": 19,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 11:33",
+      "word_index": 20,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 12:11",
+      "word_index": 4,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 12:16",
+      "word_index": 10,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:4",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:4",
+      "word_index": 12,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:8",
+      "word_index": 18,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:19",
+      "word_index": 10,
       "word": "τοιαύτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:29",
+      "word_index": 6,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 13:30",
+      "word_index": 10,
       "word": "ἡ γενεὰ αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:4",
+      "word_index": 13,
       "word": "ἡ ἀπώλεια αὕτη τοῦ μύρου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:5",
+      "word_index": 5,
       "word": "τοῦτο τὸ μύρον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:9",
+      "word_index": 17,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:36",
+      "word_index": 12,
       "word": "τὸ ποτήριον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:50",
+      "word_index": 5,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 14:71",
+      "word_index": 12,
       "word": "τὸν ἄνθρωπον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 16:8",
+      "word_index": 29,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 16:8",
+      "word_index": 31,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 16:12",
+      "word_index": 1,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Mark 16:12",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:13",
+      "word_index": 22,
       "word": "σοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:18",
+      "word_index": 10,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:19",
+      "word_index": 23,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:20",
+      "word_index": 13,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:21",
+      "word_index": 16,
       "word": "αὐτόν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:24",
+      "word_index": 5,
       "word": "ταύτας τὰς ἡμέρας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:29",
+      "word_index": 13,
       "word": "ὁ ἀσπασμὸς οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:34",
+      "word_index": 9,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:39",
+      "word_index": 7,
       "word": "ἐν ταῖς ἡμέραις ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:61",
+      "word_index": 16,
       "word": "τῷ ὀνόματι τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:63",
+      "word_index": 12,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:65",
+      "word_index": 20,
       "word": "πάντα τὰ ῥήματα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 1:66",
+      "word_index": 15,
       "word": "τὸ παιδίον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 2:8",
+      "word_index": 8,
       "word": "ἐν τῇ χώρᾳ τῇ αὐτῇ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 2:15",
+      "word_index": 27,
       "word": "τὸ ῥῆμα τοῦτο τὸ γεγονὸς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 2:17",
+      "word_index": 13,
       "word": "περὶ τοῦ παιδίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:3",
+      "word_index": 14,
       "word": "τῷ λίθῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:6",
+      "word_index": 15,
       "word": "τὴν ἐξουσίαν ταύτην ἅπασαν καὶ τὴν δόξαν αὐτῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:21",
+      "word_index": 11,
       "word": "ἡ γραφὴ αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:22",
+      "word_index": 24,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:28",
+      "word_index": 9,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:36",
+      "word_index": 14,
       "word": "ὁ λόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 4:43",
+      "word_index": 20,
       "word": "ἐπὶ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 5:8",
+      "word_index": 8,
       "word": "ἰησοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 5:21",
+      "word_index": 12,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 5:27",
+      "word_index": 3,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 6:12",
+      "word_index": 6,
       "word": "ἐν ταῖς ἡμέραις ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:4",
+      "word_index": 16,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:9",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:10",
+      "word_index": 7,
       "word": "οἱ πεμφθέντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:17",
+      "word_index": 5,
       "word": "ὁ λόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:18",
+      "word_index": 3,
       "word": "ἰωάννῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:18",
+      "word_index": 9,
       "word": "περὶ πάντων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:24",
+      "word_index": 5,
       "word": "ἰωάννου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:24",
+      "word_index": 12,
       "word": "ἰωάννου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:29",
+      "word_index": 15,
       "word": "ἰωάννου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:31",
+      "word_index": 8,
       "word": "τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:39",
+      "word_index": 12,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:43",
+      "word_index": 2,
       "word": "σίμων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:44",
+      "word_index": 12,
       "word": "ταύτην τὴν γυναῖκα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 7:49",
+      "word_index": 9,
       "word": "οὗτός",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:9",
+      "word_index": 8,
       "word": "αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:9",
+      "word_index": 11,
       "word": "ἡ παραβολή",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:25",
+      "word_index": 16,
       "word": "οὗτός",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:40",
+      "word_index": 13,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:41",
+      "word_index": 9,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 8:52",
+      "word_index": 3,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:9",
+      "word_index": 10,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:9",
+      "word_index": 14,
       "word": "τοιαῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:13",
+      "word_index": 31,
       "word": "εἰς πάντα τὸν λαὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:17",
+      "word_index": 5,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:21",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:28",
+      "word_index": 6,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:43",
+      "word_index": 3,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:44",
+      "word_index": 9,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:45",
+      "word_index": 6,
       "word": "τὸ ῥῆμα τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:45",
+      "word_index": 23,
       "word": "περὶ τοῦ ῥήματος τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 9:48",
+      "word_index": 9,
       "word": "τοῦτο τὸ παιδίον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 10:1",
+      "word_index": 1,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 10:1",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 10:5",
+      "word_index": 12,
       "word": "τῷ οἴκῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 10:21",
+      "word_index": 24,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 10:36",
+      "word_index": 4,
       "word": "τούτων τῶν τριῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:19",
+      "word_index": 16,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:27",
+      "word_index": 7,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:30",
+      "word_index": 17,
       "word": "τῇ γενεᾷ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:31",
+      "word_index": 12,
       "word": "τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:32",
+      "word_index": 10,
       "word": "μετὰ τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:49",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:50",
+      "word_index": 16,
       "word": "ἀπὸ τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 11:51",
+      "word_index": 22,
       "word": "ἀπὸ τῆς γενεᾶς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:4",
+      "word_index": 16,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:20",
+      "word_index": 9,
       "word": "ταύτῃ τῇ νυκτὶ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:22",
+      "word_index": 8,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:27",
+      "word_index": 23,
       "word": "ὡς ἓν τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:30",
+      "word_index": 16,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 12:41",
+      "word_index": 10,
       "word": "τὴν παραβολὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 13:7",
+      "word_index": 17,
       "word": "ἐν τῇ συκῇ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 13:8",
+      "word_index": 12,
       "word": "τοῦτο τὸ ἔτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 13:16",
+      "word_index": 21,
       "word": "ἀπὸ τοῦ δεσμοῦ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 13:32",
+      "word_index": 8,
       "word": "τῇ ἀλώπεκι ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 14:6",
+      "word_index": 6,
       "word": "πρὸς ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 14:15",
+      "word_index": 6,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 14:20",
+      "word_index": 8,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 14:21",
+      "word_index": 9,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 15:26",
+      "word_index": 10,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:2",
+      "word_index": 7,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:8",
+      "word_index": 17,
       "word": "τοῦ αἰῶνος τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:14",
+      "word_index": 4,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:24",
+      "word_index": 30,
       "word": "ἐν τῇ φλογὶ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:26",
+      "word_index": 4,
       "word": "ἐν πᾶσι τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 16:28",
+      "word_index": 18,
       "word": "εἰς τὸν τόπον τοῦτον τῆς βασάνου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 17:6",
+      "word_index": 15,
       "word": "τῇ συκαμίνῳ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 17:18",
+      "word_index": 12,
       "word": "ὁ ἀλλογενὴς οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 17:34",
+      "word_index": 5,
       "word": "ταύτῃ τῇ νυκτὶ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:4",
+      "word_index": 6,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:4",
+      "word_index": 8,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:11",
+      "word_index": 28,
       "word": "οὗτος ὁ τελώνης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:14",
+      "word_index": 4,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:23",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:30",
+      "word_index": 9,
       "word": "ἐν τῷ καιρῷ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:34",
+      "word_index": 10,
       "word": "τὸ ῥῆμα τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 18:36",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:8",
+      "word_index": 3,
       "word": "ζακχαῖος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:9",
+      "word_index": 12,
       "word": "τῷ οἴκῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:11",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:14",
+      "word_index": 15,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:15",
+      "word_index": 16,
       "word": "τοὺς δούλους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:19",
+      "word_index": 4,
       "word": "καὶ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 19:42",
+      "word_index": 8,
       "word": "ἐν τῇ ἡμέρᾳ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 20:2",
+      "word_index": 11,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 20:2",
+      "word_index": 21,
       "word": "τὴν ἐξουσίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 20:8",
+      "word_index": 13,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 20:16",
+      "word_index": 6,
       "word": "τοὺς γεωργοὺς τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 20:19",
+      "word_index": 29,
       "word": "τὴν παραβολὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:6",
+      "word_index": 3,
       "word": "ταῦτα ἃ θεωρεῖτε",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:7",
+      "word_index": 8,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:7",
+      "word_index": 16,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:9",
+      "word_index": 11,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:12",
+      "word_index": 4,
       "word": "τούτων πάντων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:22",
+      "word_index": 4,
       "word": "αὗταί",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:23",
+      "word_index": 24,
       "word": "τῷ λαῷ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:28",
+      "word_index": 3,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:31",
+      "word_index": 6,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:32",
+      "word_index": 10,
       "word": "ἡ γενεὰ αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 21:36",
+      "word_index": 14,
       "word": "ταῦτα πάντα τὰ μέλλοντα γίνεσθαι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 22:23",
+      "word_index": 14,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 22:42",
+      "word_index": 8,
       "word": "τοῦτο τὸ ποτήριον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 22:51",
+      "word_index": 8,
       "word": "τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 22:52",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 22:59",
+      "word_index": 13,
       "word": "καὶ οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:4",
+      "word_index": 17,
       "word": "ἐν τῷ ἀνθρώπῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:7",
+      "word_index": 21,
       "word": "ἐν ταύταις ταῖς ἡμέραις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:12",
+      "word_index": 13,
       "word": "ἐν αὐτῇ τῇ ἡμέρᾳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:14",
+      "word_index": 8,
       "word": "τὸν ἄνθρωπον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:14",
+      "word_index": 24,
       "word": "ἐν τῷ ἀνθρώπῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:18",
+      "word_index": 6,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:22",
+      "word_index": 11,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:31",
+      "word_index": 7,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:38",
+      "word_index": 11,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:48",
+      "word_index": 9,
       "word": "ἐπὶ τὴν θεωρίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 23:49",
+      "word_index": 18,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:4",
+      "word_index": 8,
       "word": "περὶ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:9",
+      "word_index": 8,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:10",
+      "word_index": 21,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:14",
+      "word_index": 10,
       "word": "περὶ πάντων τῶν συμβεβηκότων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:17",
+      "word_index": 8,
       "word": "οἱ λόγοι οὗτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:18",
+      "word_index": 23,
       "word": "ἐν ταῖς ἡμέραις ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:21",
+      "word_index": 17,
       "word": "σὺν πᾶσιν τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:21",
+      "word_index": 24,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Luke 24:48",
+      "word_index": 3,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:32",
+      "word_index": 3,
       "word": "ἰωάννης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:41",
+      "word_index": 2,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:45",
+      "word_index": 2,
       "word": "φίλιππος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:46",
+      "word_index": 4,
       "word": "ναθαναήλ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:48",
+      "word_index": 3,
       "word": "ναθαναήλ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:48",
+      "word_index": 8,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:49",
+      "word_index": 3,
       "word": "ναθαναήλ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 1:50",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:12",
+      "word_index": 2,
       "word": "μετὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:16",
+      "word_index": 8,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:18",
+      "word_index": 13,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:19",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:19",
+      "word_index": 9,
       "word": "τὸν ναὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 2:20",
+      "word_index": 12,
       "word": "ὁ ναὸς οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:3",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:5",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:9",
+      "word_index": 2,
       "word": "νικόδημος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:9",
+      "word_index": 8,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:10",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:22",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 3:27",
+      "word_index": 2,
       "word": "ἰωάννης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:10",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:13",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:13",
+      "word_index": 12,
       "word": "τοῦ ὕδατος τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:15",
+      "word_index": 11,
       "word": "τοῦτο τὸ ὕδωρ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:27",
+      "word_index": 3,
       "word": "ἐπὶ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:37",
+      "word_index": 1,
       "word": "ἐν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 4:37",
+      "word_index": 3,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:1",
+      "word_index": 9,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:3",
+      "word_index": 2,
       "word": "ἐν ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:14",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:16",
+      "word_index": 3,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:28",
+      "word_index": 3,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:35",
+      "word_index": 18,
       "word": "ἐν τῷ φωτὶ αὐτοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 5:46",
+      "word_index": 4,
       "word": "μωϋσεῖ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:5",
+      "word_index": 23,
       "word": "οὗτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:34",
+      "word_index": 11,
       "word": "τὸν ἄρτον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:43",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:51",
+      "word_index": 18,
       "word": "ἐκ τούτου τοῦ ἄρτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:52",
+      "word_index": 10,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:58",
+      "word_index": 20,
       "word": "τοῦτον τὸν ἄρτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:60",
+      "word_index": 13,
       "word": "ὁ λόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:61",
+      "word_index": 10,
       "word": "περὶ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 6:66",
+      "word_index": 2,
       "word": "ἐκ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:1",
+      "word_index": 3,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:4",
+      "word_index": 9,
       "word": "αὐτὸς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:8",
+      "word_index": 12,
       "word": "εἰς τὴν ἑορτὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:14",
+      "word_index": 7,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:21",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:22",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:31",
+      "word_index": 20,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:32",
+      "word_index": 9,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:35",
+      "word_index": 8,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:36",
+      "word_index": 5,
       "word": "ὁ λόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 7:40",
+      "word_index": 8,
       "word": "τῶν λόγων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:5",
+      "word_index": 9,
       "word": "τὰς τοιαύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:14",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:19",
+      "word_index": 10,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:23",
+      "word_index": 26,
       "word": "ἐκ τοῦ κόσμου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:49",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:54",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 8:58",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:2",
+      "word_index": 11,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:3",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:16",
+      "word_index": 9,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:33",
+      "word_index": 4,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:35",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:39",
+      "word_index": 11,
       "word": "εἰς τὸν κόσμον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 9:40",
+      "word_index": 5,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 10:16",
+      "word_index": 11,
       "word": "ἐκ τῆς αὐλῆς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 10:19",
+      "word_index": 10,
       "word": "διὰ τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 10:41",
+      "word_index": 20,
       "word": "περὶ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:7",
+      "word_index": 3,
       "word": "μετὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:9",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:11",
+      "word_index": 5,
       "word": "μετὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:26",
+      "word_index": 16,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:37",
+      "word_index": 8,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:37",
+      "word_index": 18,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:43",
+      "word_index": 2,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 11:51",
+      "word_index": 1,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:3",
+      "word_index": 22,
       "word": "τοὺς πόδας αὐτοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:6",
+      "word_index": 3,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:16",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:27",
+      "word_index": 15,
       "word": "ἐκ τῆς ὥρας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:27",
+      "word_index": 18,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:27",
+      "word_index": 23,
       "word": "εἰς τὴν ὥραν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:30",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:30",
+      "word_index": 10,
       "word": "ἡ φωνὴ αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:34",
+      "word_index": 35,
       "word": "οὗτος ὁ υἱὸς τοῦ ἀνθρώπου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:36",
+      "word_index": 15,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:39",
+      "word_index": 9,
       "word": "ἠσαΐας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 12:41",
+      "word_index": 3,
       "word": "ἠσαΐας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:7",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:7",
+      "word_index": 16,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:8",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:8",
+      "word_index": 14,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:24",
+      "word_index": 3,
       "word": "τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:31",
+      "word_index": 5,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:35",
+      "word_index": 2,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:36",
+      "word_index": 10,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 13:38",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 14:2",
+      "word_index": 20,
       "word": "ὑμῖν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 14:3",
+      "word_index": 7,
       "word": "ὑμῖν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 14:13",
+      "word_index": 10,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 14:23",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 16:18",
+      "word_index": 9,
       "word": "τοῦτο ὃ λέγει τὸ μικρόν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 16:30",
+      "word_index": 15,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 16:31",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 17:1",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 17:20",
+      "word_index": 17,
       "word": "εἰς ἐμέ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:1",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:2",
+      "word_index": 13,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:8",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:8",
+      "word_index": 13,
       "word": "τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:14",
+      "word_index": 3,
       "word": "καϊάφας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:17",
+      "word_index": 18,
       "word": "τοῦ ἀνθρώπου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:20",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:23",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:26",
+      "word_index": 12,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:27",
+      "word_index": 4,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:29",
+      "word_index": 16,
       "word": "τοῦ ἀνθρώπου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:30",
+      "word_index": 8,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:34",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:34",
+      "word_index": 6,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:36",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:37",
+      "word_index": 20,
       "word": "εἰς τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:37",
+      "word_index": 24,
       "word": "εἰς τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 18:38",
+      "word_index": 9,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:8",
+      "word_index": 8,
       "word": "τοῦτον τὸν λόγον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:11",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:11",
+      "word_index": 17,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:12",
+      "word_index": 2,
       "word": "ἐκ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:13",
+      "word_index": 7,
       "word": "τῶν λόγων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:24",
+      "word_index": 36,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:28",
+      "word_index": 2,
       "word": "μετὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:36",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:38",
+      "word_index": 1,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 19:38",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:15",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:16",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:17",
+      "word_index": 3,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:24",
+      "word_index": 16,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:28",
+      "word_index": 2,
       "word": "θωμᾶς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 20:30",
+      "word_index": 21,
       "word": "ἐν τῷ βιβλίῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:4",
+      "word_index": 6,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:6",
+      "word_index": 13,
       "word": "τὸ δίκτυον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:13",
+      "word_index": 2,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:14",
+      "word_index": 5,
       "word": "ἰησοῦς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:24",
+      "word_index": 8,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "John 21:24",
+      "word_index": 12,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:5",
+      "word_index": 16,
       "word": "οὐ μετὰ πολλὰς ταύτας ἡμέρας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:15",
+      "word_index": 5,
       "word": "ἐν ταῖς ἡμέραις ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:15",
+      "word_index": 7,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:17",
+      "word_index": 12,
       "word": "τῆς διακονίας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:22",
+      "word_index": 21,
       "word": "ἕνα τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 1:25",
+      "word_index": 8,
       "word": "τῆς διακονίας ταύτης καὶ ἀποστολῆς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:1",
+      "word_index": 10,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:4",
+      "word_index": 3,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:6",
+      "word_index": 5,
       "word": "τῆς φωνῆς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:12",
+      "word_index": 3,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:12",
+      "word_index": 12,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:26",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:33",
+      "word_index": 25,
       "word": "τοῦτο ὃ ὑμεῖς καὶ βλέπετε καὶ ἀκούετε",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:36",
+      "word_index": 21,
       "word": "τοῦτον τὸν ἰησοῦν ὃν ὑμεῖς ἐσταυρώσατε",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 2:45",
+      "word_index": 10,
       "word": "αὐτὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:3",
+      "word_index": 5,
       "word": "πέτρον καὶ ἰωάννην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:4",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:6",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:12",
+      "word_index": 14,
       "word": "ἐπὶ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:16",
+      "word_index": 12,
       "word": "τοῦτον ὃν θεωρεῖτε καὶ οἴδατε",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:16",
+      "word_index": 27,
       "word": "τὴν ὁλοκληρίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 3:24",
+      "word_index": 17,
       "word": "τὰς ἡμέρας ταύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:7",
+      "word_index": 16,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:9",
+      "word_index": 11,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:10",
+      "word_index": 29,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:16",
+      "word_index": 6,
       "word": "τοῖς ἀνθρώποις τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:17",
+      "word_index": 17,
       "word": "ἐπὶ τῷ ὀνόματι τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 4:22",
+      "word_index": 15,
       "word": "τὸ σημεῖον τοῦτο τῆς ἰάσεως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:5",
+      "word_index": 7,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:8",
+      "word_index": 5,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:11",
+      "word_index": 14,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:24",
+      "word_index": 6,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:24",
+      "word_index": 21,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:28",
+      "word_index": 11,
       "word": "ἐπὶ τῷ ὀνόματι τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:28",
+      "word_index": 29,
       "word": "τοῦ ἀνθρώπου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:29",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:32",
+      "word_index": 7,
       "word": "τῶν ῥημάτων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:35",
+      "word_index": 12,
       "word": "ἐπὶ τοῖς ἀνθρώποις τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:36",
+      "word_index": 5,
       "word": "τούτων τῶν ἡμερῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:37",
+      "word_index": 2,
       "word": "μετὰ τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 5:38",
+      "word_index": 10,
       "word": "ἀπὸ τῶν ἀνθρώπων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 6:1",
+      "word_index": 5,
       "word": "ταῖς ἡμέραις ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 6:3",
+      "word_index": 18,
       "word": "ἐπὶ τῆς χρείας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:7",
+      "word_index": 8,
       "word": "ἐγώ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:7",
+      "word_index": 14,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:13",
+      "word_index": 6,
       "word": "ἰωσὴφ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:14",
+      "word_index": 3,
       "word": "ἰωσὴφ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:14",
+      "word_index": 8,
       "word": "τὸν πατέρα αὐτοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:22",
+      "word_index": 3,
       "word": "μωϋσῆς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:29",
+      "word_index": 3,
       "word": "μωϋσῆς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:29",
+      "word_index": 7,
       "word": "ἐν τῷ λόγῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:32",
+      "word_index": 17,
       "word": "μωϋσῆς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:35",
+      "word_index": 3,
       "word": "τοῦτον τὸν μωϋσῆν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:40",
+      "word_index": 10,
       "word": "ὁ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:40",
+      "word_index": 13,
       "word": "μωϋσῆς οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:50",
+      "word_index": 7,
       "word": "ταῦτα πάντα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:54",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 7:60",
+      "word_index": 14,
       "word": "ταύτην τὴν ἁμαρτίαν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:19",
+      "word_index": 6,
       "word": "τὴν ἐξουσίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:21",
+      "word_index": 10,
       "word": "ἐν τῷ λόγῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:22",
+      "word_index": 7,
       "word": "ἀπὸ τῆς κακίας σου ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:26",
+      "word_index": 6,
       "word": "πρὸς φίλιππον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:29",
+      "word_index": 12,
       "word": "τῷ ἅρματι τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:34",
+      "word_index": 15,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 8:35",
+      "word_index": 13,
       "word": "ἀπὸ τῆς γραφῆς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:8",
+      "word_index": 3,
       "word": "σαῦλος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:13",
+      "word_index": 3,
       "word": "ἁνανίας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:13",
+      "word_index": 11,
       "word": "περὶ τοῦ ἀνδρὸς τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:17",
+      "word_index": 3,
       "word": "ἁνανίας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:21",
+      "word_index": 19,
       "word": "τὸ ὄνομα τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 9:39",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:9",
+      "word_index": 11,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:21",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:34",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:44",
+      "word_index": 7,
       "word": "τὰ ῥήματα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:46",
+      "word_index": 12,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 10:47",
+      "word_index": 10,
       "word": "τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:2",
+      "word_index": 4,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:4",
+      "word_index": 3,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:9",
+      "word_index": 3,
       "word": "φωνὴ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:18",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:22",
+      "word_index": 15,
       "word": "περὶ αὐτῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:27",
+      "word_index": 2,
       "word": "ἐν ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 11:27",
+      "word_index": 5,
       "word": "ταῖς ἡμέραις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 12:5",
+      "word_index": 21,
       "word": "περὶ αὐτοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 12:17",
+      "word_index": 24,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:16",
+      "word_index": 3,
       "word": "παῦλος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:20",
+      "word_index": 8,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:24",
+      "word_index": 2,
       "word": "ἰωάννου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:25",
+      "word_index": 4,
       "word": "ἰωάννης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:26",
+      "word_index": 18,
       "word": "τῆς σωτηρίας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:27",
+      "word_index": 10,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:33",
+      "word_index": 11,
       "word": "ἰησοῦν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 13:42",
+      "word_index": 13,
       "word": "τὰ ῥήματα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 14:15",
+      "word_index": 5,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 14:17",
+      "word_index": 20,
       "word": "τὰς καρδίας ὑμῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:2",
+      "word_index": 35,
       "word": "περὶ τοῦ ζητήματος τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:6",
+      "word_index": 12,
       "word": "περὶ τοῦ λόγου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:7",
+      "word_index": 6,
       "word": "πέτρος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:12",
+      "word_index": 23,
       "word": "δι’ αὐτῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:13",
+      "word_index": 7,
       "word": "ἰάκωβος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:16",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:17",
+      "word_index": 25,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:32",
+      "word_index": 4,
       "word": "καὶ σιλᾶς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:36",
+      "word_index": 7,
       "word": "πρὸς βαρναβᾶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 15:38",
+      "word_index": 19,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 16:12",
+      "word_index": 17,
       "word": "ἐν ταύτῃ τῇ πόλει",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 16:18",
+      "word_index": 9,
       "word": "παῦλος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 16:36",
+      "word_index": 7,
       "word": "τοὺς λόγους τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 16:38",
+      "word_index": 9,
       "word": "τὰ ῥήματα ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:6",
+      "word_index": 6,
       "word": "ἰάσονα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:8",
+      "word_index": 9,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:11",
+      "word_index": 22,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:18",
+      "word_index": 19,
       "word": "ὁ σπερμολόγος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:19",
+      "word_index": 20,
       "word": "ἡ καινὴ αὕτη ἡ ὑπὸ σοῦ λαλουμένη διδαχή",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:20",
+      "word_index": 14,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 17:32",
+      "word_index": 14,
       "word": "περὶ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 18:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 18:10",
+      "word_index": 21,
       "word": "ἐν τῇ πόλει ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 18:17",
+      "word_index": 13,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 19:14",
+      "word_index": 9,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 19:21",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 19:25",
+      "word_index": 7,
       "word": "περὶ τὰ τοιαῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 19:36",
+      "word_index": 4,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 19:40",
+      "word_index": 21,
       "word": "περὶ τῆς συστροφῆς ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 20:34",
+      "word_index": 15,
       "word": "αἱ χεῖρες αὗται",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 21:12",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 21:15",
+      "word_index": 5,
       "word": "τὰς ἡμέρας ταύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 22:22",
+      "word_index": 7,
       "word": "ἄχρι τούτου τοῦ λόγου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 22:28",
+      "word_index": 10,
       "word": "τὴν πολιτείαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 23:9",
+      "word_index": 22,
       "word": "ἐν τῷ ἀνθρώπῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 23:13",
+      "word_index": 8,
       "word": "ταύτην τὴν συνωμοσίαν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 23:33",
+      "word_index": 16,
       "word": "αὐτῷ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 24:2",
+      "word_index": 19,
       "word": "τῷ ἔθνει τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 24:5",
+      "word_index": 5,
       "word": "τὸν ἄνδρα τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 24:8",
+      "word_index": 8,
       "word": "περὶ πάντων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 24:10",
+      "word_index": 18,
       "word": "τῷ ἔθνει τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 24:16",
+      "word_index": 2,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 25:9",
+      "word_index": 19,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 25:20",
+      "word_index": 6,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 25:20",
+      "word_index": 17,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:21",
+      "word_index": 2,
       "word": "ἕνεκα τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:26",
+      "word_index": 4,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:26",
+      "word_index": 16,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:26",
+      "word_index": 26,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:29",
+      "word_index": 25,
       "word": "τοιούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:31",
+      "word_index": 17,
       "word": "ὁ ἄνθρωπος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 26:32",
+      "word_index": 10,
       "word": "ὁ ἄνθρωπος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 27:21",
+      "word_index": 31,
       "word": "τε τὴν ὕβριν ταύτην καὶ τὴν ζημίαν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 27:35",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 28:4",
+      "word_index": 21,
       "word": "ὁ ἄνθρωπος οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 28:20",
+      "word_index": 19,
       "word": "τὴν ἅλυσιν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 28:26",
+      "word_index": 6,
       "word": "πρὸς τὸν λαὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 28:27",
+      "word_index": 7,
       "word": "τοῦ λαοῦ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Acts 28:28",
+      "word_index": 13,
       "word": "τοῦτο τὸ σωτήριον τοῦ θεοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 1:26",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 1:32",
+      "word_index": 10,
       "word": "τὰ τοιαῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 2:2",
+      "word_index": 14,
       "word": "τὰ τοιαῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 2:3",
+      "word_index": 10,
       "word": "τὰ τοιαῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 3:20",
+      "word_index": 11,
       "word": "διὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 3:20",
+      "word_index": 13,
       "word": "νόμου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 4:16",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:2",
+      "word_index": 12,
       "word": "εἰς τὴν χάριν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:8",
+      "word_index": 9,
       "word": "ὁ θεός",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:12",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:15",
+      "word_index": 6,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:18",
+      "word_index": 12,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:19",
+      "word_index": 13,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 5:21",
+      "word_index": 9,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 6:4",
+      "word_index": 21,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 6:11",
+      "word_index": 1,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 6:19",
+      "word_index": 24,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 8:31",
+      "word_index": 5,
       "word": "πρὸς ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 8:33",
+      "word_index": 6,
       "word": "θεὸς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 8:34",
+      "word_index": 4,
       "word": "χριστὸς",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 8:37",
+      "word_index": 4,
       "word": "ἐν τούτοις πᾶσιν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 9:9",
+      "word_index": 9,
       "word": "κατὰ τὸν καιρὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 11:25",
+      "word_index": 9,
       "word": "τὸ μυστήριον τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 13:6",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 15:9",
+      "word_index": 12,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 15:23",
+      "word_index": 9,
       "word": "ἐν τοῖς κλίμασι τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 15:28",
+      "word_index": 1,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rom 15:28",
+      "word_index": 9,
       "word": "τὸν καρπὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 1:10",
+      "word_index": 17,
       "word": "πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 2:2",
+      "word_index": 13,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 3:17",
+      "word_index": 9,
       "word": "τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 4:4",
+      "word_index": 8,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 4:14",
+      "word_index": 5,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 4:17",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 5:1",
+      "word_index": 8,
       "word": "τοιαύτη πορνεία",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 5:5",
+      "word_index": 3,
       "word": "τὸν τοιοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 5:11",
+      "word_index": 24,
       "word": "τῷ τοιούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 6:6",
+      "word_index": 7,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 6:8",
+      "word_index": 7,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 7:15",
+      "word_index": 16,
       "word": "ἐν τοῖς τοιούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 7:20",
+      "word_index": 8,
       "word": "ἐν ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 7:24",
+      "word_index": 7,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 7:28",
+      "word_index": 20,
       "word": "οἱ τοιοῦτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:8",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:8",
+      "word_index": 10,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:12",
+      "word_index": 15,
       "word": "τῇ ἐξουσίᾳ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:15",
+      "word_index": 6,
       "word": "οὐδενὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:15",
+      "word_index": 10,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 9:17",
+      "word_index": 4,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 11:10",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 11:16",
+      "word_index": 9,
       "word": "τοιαύτην συνήθειαν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 11:22",
+      "word_index": 28,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 11:26",
+      "word_index": 7,
       "word": "τὸν ἄρτον τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 11:30",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 14:21",
+      "word_index": 15,
       "word": "τῷ λαῷ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 15:48",
+      "word_index": 4,
       "word": "τοιοῦτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 15:48",
+      "word_index": 12,
       "word": "τοιοῦτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 15:53",
+      "word_index": 5,
       "word": "τὸ φθαρτὸν τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 15:53",
+      "word_index": 11,
       "word": "τὸ θνητὸν τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 16:16",
+      "word_index": 6,
       "word": "τοῖς τοιούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 16:17",
+      "word_index": 15,
       "word": "οὗτοι",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Cor 16:18",
+      "word_index": 12,
       "word": "τοὺς τοιούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 1:5",
+      "word_index": 10,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 1:7",
+      "word_index": 15,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 1:15",
+      "word_index": 4,
       "word": "ταύτῃ τῇ πεποιθήσει",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 2:3",
+      "word_index": 4,
       "word": "τοῦτο αὐτό",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 2:6",
+      "word_index": 3,
       "word": "τῷ τοιούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 2:6",
+      "word_index": 10,
       "word": "ἡ ἐπιτιμία αὕτη ἡ ὑπὸ τῶν πλειόνων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 2:7",
+      "word_index": 15,
       "word": "ὁ τοιοῦτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 3:10",
+      "word_index": 10,
       "word": "ἐν τούτῳ τῷ μέρει",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 3:12",
+      "word_index": 4,
       "word": "τοιαύτην ἐλπίδα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 4:1",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 4:1",
+      "word_index": 6,
       "word": "τὴν διακονίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 4:7",
+      "word_index": 5,
       "word": "τὸν θησαυρὸν τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 5:2",
+      "word_index": 4,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 5:5",
+      "word_index": 7,
       "word": "εἰς αὐτὸ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 6:13",
+      "word_index": 1,
       "word": "τὴν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 6:13",
+      "word_index": 4,
       "word": "αὐτὴν ἀντιμισθίαν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 8:6",
+      "word_index": 17,
       "word": "καὶ τὴν χάριν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 8:10",
+      "word_index": 4,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 8:19",
+      "word_index": 15,
       "word": "τῇ χάριτι ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 8:20",
+      "word_index": 14,
       "word": "ἐν τῇ ἁδρότητι ταύτῃ τῇ διακονουμένῃ ὑφ’ ἡμῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 9:3",
+      "word_index": 17,
       "word": "ἐν τῷ μέρει τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 9:4",
+      "word_index": 21,
       "word": "ἐν τῇ ὑποστάσει ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 9:12",
+      "word_index": 6,
       "word": "τῆς λειτουργίας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 9:13",
+      "word_index": 6,
       "word": "τῆς διακονίας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 10:11",
+      "word_index": 4,
       "word": "ὁ τοιοῦτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 11:17",
+      "word_index": 16,
       "word": "ἐν ταύτῃ τῇ ὑποστάσει τῆς καυχήσεως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 12:2",
+      "word_index": 24,
       "word": "τὸν τοιοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 12:3",
+      "word_index": 5,
       "word": "τὸν τοιοῦτον ἄνθρωπον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 12:8",
+      "word_index": 2,
       "word": "ὑπὲρ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 12:13",
+      "word_index": 22,
       "word": "τὴν ἀδικίαν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 12:14",
+      "word_index": 3,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 13:1",
+      "word_index": 2,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Cor 13:10",
+      "word_index": 3,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Gal 3:8",
+      "word_index": 12,
       "word": "ὁ θεός",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Gal 3:12",
+      "word_index": 11,
       "word": "αὐτὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Gal 5:21",
+      "word_index": 7,
       "word": "τὰ ὅμοια τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Gal 6:1",
+      "word_index": 14,
       "word": "τὸν τοιοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 1:15",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 3:1",
+      "word_index": 2,
       "word": "τούτου χάριν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 3:8",
+      "word_index": 9,
       "word": "ἡ χάρις αὕτη",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 3:10",
+      "word_index": 19,
       "word": "ἡ πολυποίκιλος σοφία τοῦ θεοῦ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 3:14",
+      "word_index": 2,
       "word": "τούτου χάριν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 5:6",
+      "word_index": 7,
       "word": "διὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 5:17",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 5:27",
+      "word_index": 16,
       "word": "τῶν τοιούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 5:31",
+      "word_index": 2,
       "word": "ἀντὶ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Eph 6:13",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Phil 1:18",
+      "word_index": 15,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 1:9",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 1:23",
+      "word_index": 31,
       "word": "ἐγὼ παῦλος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 1:27",
+      "word_index": 13,
       "word": "τοῦ μυστηρίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 3:7",
+      "word_index": 10,
       "word": "ἐν τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 3:14",
+      "word_index": 4,
       "word": "τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Col 4:8",
+      "word_index": 7,
       "word": "εἰς αὐτὸ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 2:4",
+      "word_index": 10,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 2:8",
+      "word_index": 1,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 3:3",
+      "word_index": 7,
       "word": "ἐν ταῖς θλίψεσιν ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 3:3",
+      "word_index": 13,
       "word": "εἰς τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 3:5",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 3:7",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 4:6",
+      "word_index": 17,
       "word": "περὶ πάντων τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 4:14",
+      "word_index": 9,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Thess 4:18",
+      "word_index": 7,
       "word": "ἐν τοῖς λόγοις τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Thess 1:11",
+      "word_index": 15,
       "word": "ὁ θεὸς ἡμῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Thess 2:5",
+      "word_index": 8,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Thess 2:11",
+      "word_index": 3,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 4:11",
+      "word_index": 2,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 4:15",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 4:15",
+      "word_index": 4,
       "word": "ἐν τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 4:16",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 6:8",
+      "word_index": 6,
       "word": "τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Tim 6:11",
+      "word_index": 6,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 2:10",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 2:14",
+      "word_index": 1,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 2:19",
+      "word_index": 26,
       "word": "πᾶς ὁ ὀνομάζων τὸ ὄνομα κυρίου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 2:21",
+      "word_index": 7,
       "word": "ἀπὸ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 3:5",
+      "word_index": 10,
       "word": "τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 3:6",
+      "word_index": 2,
       "word": "ἐκ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Tim 3:8",
+      "word_index": 9,
       "word": "οὕτως",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Titus 3:8",
+      "word_index": 6,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Titus 3:8",
+      "word_index": 17,
       "word": "οἱ πεπιστευκότες θεῷ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Titus 3:11",
+      "word_index": 5,
       "word": "ὁ τοιοῦτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 1:2",
+      "word_index": 5,
       "word": "ἐπ’ ἐσχάτου τῶν ἡμερῶν τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 1:9",
+      "word_index": 7,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 2:1",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 2:15",
+      "word_index": 3,
       "word": "τούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 3:3",
+      "word_index": 3,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 3:10",
+      "word_index": 7,
       "word": "τῇ γενεᾷ ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 4:8",
+      "word_index": 12,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 7:4",
+      "word_index": 4,
       "word": "οὗτος",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 7:13",
+      "word_index": 5,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 8:3",
+      "word_index": 17,
       "word": "καὶ τοῦτον",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 9:15",
+      "word_index": 3,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 9:23",
+      "word_index": 19,
       "word": "παρὰ ταύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 9:27",
+      "word_index": 9,
       "word": "μετὰ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 9:27",
+      "word_index": 11,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 10:18",
+      "word_index": 4,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 10:33",
+      "word_index": 1,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 10:33",
+      "word_index": 8,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 11:2",
+      "word_index": 2,
       "word": "ἐν ταύτῃ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 11:13",
+      "word_index": 5,
       "word": "οὗτοι πάντες",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 11:35",
+      "word_index": 7,
       "word": "τοὺς νεκροὺς αὐτῶν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 13:2",
+      "word_index": 6,
       "word": "διὰ ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 13:17",
+      "word_index": 20,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 13:17",
+      "word_index": 28,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Heb 13:19",
+      "word_index": 4,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Jas 3:15",
+      "word_index": 5,
       "word": "αὕτη ἡ σοφία",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Pet 1:11",
+      "word_index": 21,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Pet 2:21",
+      "word_index": 2,
       "word": "εἰς τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Pet 3:9",
+      "word_index": 15,
       "word": "εἰς τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1Pet 4:16",
+      "word_index": 14,
       "word": "ἐν τῷ ὀνόματι τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 1:4",
+      "word_index": 12,
       "word": "διὰ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 1:5",
+      "word_index": 3,
       "word": "αὐτὸ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 1:9",
+      "word_index": 5,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 1:12",
+      "word_index": 7,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 1:15",
+      "word_index": 12,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 2:20",
+      "word_index": 17,
       "word": "τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 3:11",
+      "word_index": 1,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2Pet 3:16",
+      "word_index": 10,
       "word": "περὶ τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1John 2:4",
+      "word_index": 16,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1John 3:3",
+      "word_index": 7,
       "word": "τὴν ἐλπίδα ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1John 3:19",
+      "word_index": 3,
       "word": "ἐν τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1John 4:5",
+      "word_index": 7,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "1John 4:6",
+      "word_index": 22,
       "word": "ἐκ τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "2John 1:10",
+      "word_index": 9,
       "word": "ταύτην τὴν διδαχὴν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "3John 1:5",
+      "word_index": 11,
       "word": "τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "3John 1:8",
+      "word_index": 6,
       "word": "τοὺς τοιούτους",
       "type": "Thematic Prominence"
     },
     {
       "verse": "3John 1:10",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "3John 1:10",
+      "word_index": 19,
       "word": "ἐπὶ τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Jude 1:4",
+      "word_index": 11,
       "word": "εἰς τοῦτο τὸ κρίμα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Jude 1:14",
+      "word_index": 4,
       "word": "καὶ τούτοις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 1:19",
+      "word_index": 13,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 2:24",
+      "word_index": 14,
       "word": "τὴν διδαχὴν ταύτην",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 4:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 4:1",
+      "word_index": 33,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 7:1",
+      "word_index": 2,
       "word": "μετὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 7:9",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 9:12",
+      "word_index": 12,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 9:18",
+      "word_index": 5,
       "word": "ἀπὸ τῶν τριῶν πληγῶν τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 9:20",
+      "word_index": 12,
       "word": "ἐν ταῖς πληγαῖς ταύταις",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 12:12",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 15:5",
+      "word_index": 3,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 16:5",
+      "word_index": 18,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 16:9",
+      "word_index": 20,
       "word": "ἐπὶ τὰς πληγὰς ταύτας",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 18:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 18:8",
+      "word_index": 2,
       "word": "διὰ τοῦτο",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 18:15",
+      "word_index": 3,
       "word": "τούτων",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 19:1",
+      "word_index": 2,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 20:3",
+      "word_index": 25,
       "word": "μετὰ ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 20:3",
+      "word_index": 28,
       "word": "αὐτὸν",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 21:7",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:7",
+      "word_index": 14,
       "word": "τοῦ βιβλίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:8",
+      "word_index": 7,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:8",
+      "word_index": 23,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:9",
+      "word_index": 22,
       "word": "τοῦ βιβλίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:10",
+      "word_index": 12,
       "word": "τοῦ βιβλίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:16",
+      "word_index": 9,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:18",
+      "word_index": 12,
       "word": "τοῦ βιβλίου τούτου",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:18",
+      "word_index": 30,
       "word": "ἐν τῷ βιβλίῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:19",
+      "word_index": 12,
       "word": "τῆς προφητείας ταύτης",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:19",
+      "word_index": 35,
       "word": "ἐν τῷ βιβλίῳ τούτῳ",
       "type": "Thematic Prominence"
     },
     {
       "verse": "Rev 22:20",
+      "word_index": 4,
       "word": "ταῦτα",
       "type": "Thematic Prominence"
     }

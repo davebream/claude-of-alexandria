@@ -84,10 +84,12 @@ skills/biblical-segmentation/
 │   ├── book-genres.yaml        # 66 books mapped to genres
 │   ├── genre-methodology.yaml  # Segmentation markers per genre
 │   ├── compositional-debates.yaml  # Partition theory notes (2 Cor, Philippians)
-│   ├── levinsohn/              # 34 NT books with discourse features (XML)
+│   ├── levinsohn/              # 33 generated discourse-feature JSONs + index
 │   └── masoretic/              # 39 OT books with פ/ס paragraph markers (JSON)
 ├── scripts/
-│   ├── levinsohn_parser.py     # Extract NT discourse features
+│   ├── extract_levinsohn_discourse.py  # Generate JSON from pinned LGNTDF XML
+│   ├── levinsohn-checksums.json        # SHA-256 lockfile for pinned LGNTDF XML
+│   ├── levinsohn_parser.py             # Load/filter committed JSON
 │   ├── extract_oshb_paragraphs.py      # Generate OT Masoretic markers from pinned OSHB XML
 │   ├── test_extract_oshb_paragraphs.py # Structural suite + --corpus goldens
 │   ├── oshb-checksums.json             # SHA-256 lockfile for the pinned corpus
@@ -110,6 +112,7 @@ skills/biblical-segmentation/
 - **Levinsohn GNT Discourse Features** (dataset 2016; book: Levinsohn 2000)
   - Citation: Levinsohn, Stephen H. (dataset 2016; book: Levinsohn 2000). *Levinsohn Greek New Testament Discourse Features*. SIL International.
   - Text basis: NA28/UBS5 critical text
+  - Generated from pinned commit `badd3a1043ae` by `scripts/extract_levinsohn_discourse.py`, with every XML input verified against a committed SHA-256 lockfile
   - Features analyzed: Historical Present, Point of Departure, Left-Dislocation, Reported Speech, Tail-Head Linkage
   - Used to identify paragraph and section boundaries from discourse grammar
 

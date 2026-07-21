@@ -4,206 +4,247 @@
   "references": [
     {
       "verse": "Matt 2:6",
+      "word_index": 24,
       "word": "καὶ σὺ βηθλέεμ γῆ ἰούδα οὐδαμῶς ἐλαχίστη εἶ ἐν τοῖς ἡγεμόσιν ἰούδα ἐκ σοῦ γὰρ ἐξελεύσεται ἡγούμενος ὅστις ποιμανεῖ τὸν λαόν μου τὸν ἰσραήλ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Mark 4:15",
+      "word_index": 26,
       "word": "καὶ ὅταν ἀκούσωσιν εὐθὺς ἔρχεται ὁ σατανᾶς καὶ αἴρει τὸν λόγον τὸν ἐσπαρμένον εἰς αὐτούς",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Mark 4:16 - 7",
+      "word_index": 27,
       "word": "οἳ ὅταν ἀκούσωσιν τὸν λόγον εὐθὺς μετὰ χαρᾶς λαμβάνουσιν αὐτόν καὶ οὐκ ἔχουσιν ῥίζαν ἐν ἑαυτοῖς ἀλλὰ πρόσκαιροί εἰσιν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Mark 4:20",
+      "word_index": 26,
       "word": "οἵτινες ἀκούουσιν τὸν λόγον καὶ παραδέχονται καὶ καρποφοροῦσιν ἓν τριάκοντα καὶ ἓν ἑξήκοντα καὶ ἓν ἑκατόν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Mark 12:24",
+      "word_index": 17,
       "word": "μὴ εἰδότες τὰς γραφὰς μηδὲ τὴν δύναμιν τοῦ θεοῦ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 2:12",
+      "word_index": 12,
       "word": "εὑρήσετε βρέφος ἐσπαργανωμένον καὶ κείμενον ἐν φάτνῃ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 3:20",
+      "word_index": 11,
       "word": "καὶ κατέκλεισεν τὸν ἰωάννην ἐν φυλακῇ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 4:23",
+      "word_index": 26,
       "word": "ἰατρέ θεράπευσον σεαυτόν ὅσα ἠκούσαμεν γενόμενα εἰς τὴν καφαρναοὺμ ποίησον καὶ ὧδε ἐν τῇ πατρίδι σου",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 6:4",
+      "word_index": 28,
       "word": "ὡς εἰσῆλθεν εἰς τὸν οἶκον τοῦ θεοῦ καὶ τοὺς ἄρτους τῆς προθέσεως λαβὼν ἔφαγεν καὶ ἔδωκεν τοῖς μετ’ αὐτοῦ οὓς οὐκ ἔξεστιν φαγεῖν εἰ μὴ μόνους τοὺς ἱερεῖς",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 8:21",
+      "word_index": 21,
       "word": "οἱ τὸν λόγον τοῦ θεοῦ ἀκούοντες καὶ ποιοῦντες",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 10:11",
+      "word_index": 24,
       "word": "ὅτι ἤγγικεν ἡ βασιλεία τοῦ θεοῦ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 10:20",
+      "word_index": 10,
       "word": "ὅτι τὰ πνεύματα ὑμῖν ὑποτάσσεται",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Luke 22:37",
+      "word_index": 16,
       "word": "τὸ καὶ μετὰ ἀνόμων ἐλογίσθη",
       "type": "Cataphoric referent"
     },
     {
       "verse": "John 1:20",
+      "word_index": 13,
       "word": "ὅτι ἐγὼ οὐκ εἰμὶ ὁ χριστός",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Acts 13:47",
+      "word_index": 20,
       "word": "τέθεικά σε εἰς φῶς ἐθνῶν τοῦ εἶναί σε εἰς σωτηρίαν ἕως ἐσχάτου τῆς γῆς",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Acts 15:29",
+      "word_index": 8,
       "word": "ἀπέχεσθαι εἰδωλοθύτων καὶ αἵματος καὶ πνικτῶν καὶ πορνείας",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Acts 26:16 - 8",
+      "word_index": 71,
       "word": "προχειρίσασθαί σε ὑπηρέτην καὶ μάρτυρα ὧν τε εἶδές με ὧν τε ὀφθήσομαί σοι ἐξαιρούμενός σε ἐκ τοῦ λαοῦ καὶ ἐκ τῶν ἐθνῶν εἰς οὓς ἐγὼ ἀποστέλλω σε ἀνοῖξαι ὀφθαλμοὺς αὐτῶν τοῦ ἐπιστρέψαι ἀπὸ σκότους εἰς φῶς καὶ τῆς ἐξουσίας τοῦ σατανᾶ ἐπὶ τὸν θεόν τοῦ λαβεῖν αὐτοὺς ἄφεσιν ἁμαρτιῶν καὶ κλῆρον ἐν τοῖς ἡγιασμένοις πίστει τῇ εἰς ἐμέ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Rom 11:27",
+      "word_index": 12,
       "word": "ὅταν ἀφέλωμαι τὰς ἁμαρτίας αὐτῶν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Cor 4:1",
+      "word_index": 11,
       "word": "ὡς ὑπηρέτας χριστοῦ καὶ οἰκονόμους μυστηρίων θεοῦ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Cor 7:37",
+      "word_index": 29,
       "word": "τηρεῖν τὴν ἑαυτοῦ παρθένον",
       "type": "Cataphoric referent"
     },
     {
       "verse": "2Cor 2:1",
+      "word_index": 12,
       "word": "τὸ μὴ πάλιν ἐν λύπῃ πρὸς ὑμᾶς ἐλθεῖν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "2Cor 8:20",
+      "word_index": 14,
       "word": "μή τις ἡμᾶς μωμήσηται ἐν τῇ ἁδρότητι ταύτῃ τῇ διακονουμένῃ ὑφ’ ἡμῶν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "2Cor 13:9",
+      "word_index": 15,
       "word": "τὴν ὑμῶν κατάρτισιν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Gal 3:2",
+      "word_index": 16,
       "word": "ἐξ ἔργων νόμου τὸ πνεῦμα ἐλάβετε ἢ ἐξ ἀκοῆς πίστεως",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Gal 3:17",
+      "word_index": 23,
       "word": "διαθήκην προκεκυρωμένην ὑπὸ τοῦ θεοῦ ὁ μετὰ τετρακόσια καὶ τριάκοντα ἔτη γεγονὼς νόμος οὐκ ἀκυροῖ εἰς τὸ καταργῆσαι τὴν ἐπαγγελίαν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Gal 5:14",
+      "word_index": 16,
       "word": "ἐν τῷ ἀγαπήσεις τὸν πλησίον σου ὡς σεαυτόν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Thess 4:3",
+      "word_index": 9,
       "word": "ὁ ἁγιασμὸς ὑμῶν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Tim 2:10",
+      "word_index": 9,
       "word": "δι’ ἔργων ἀγαθῶν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Tim 5:10",
+      "word_index": 20,
       "word": "εἰ ἐτεκνοτρόφησεν εἰ ἐξενοδόχησεν εἰ ἁγίων πόδας ἔνιψεν εἰ θλιβομένοις ἐπήρκεσεν εἰ παντὶ ἔργῳ ἀγαθῷ ἐπηκολούθησεν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "Jas 4:1",
+      "word_index": 19,
       "word": "ἐκ τῶν ἡδονῶν ὑμῶν τῶν στρατευομένων ἐν τοῖς μέλεσιν ὑμῶν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Pet 2:15",
+      "word_index": 14,
       "word": "ἀγαθοποιοῦντας φιμοῦν τὴν τῶν ἀφρόνων ἀνθρώπων ἀγνωσίαν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1Pet 2:19",
+      "word_index": 12,
       "word": "εἰ διὰ συνείδησιν θεοῦ ὑποφέρει τις λύπας πάσχων ἀδίκως",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 2:3",
+      "word_index": 12,
       "word": "ἐὰν τὰς ἐντολὰς αὐτοῦ τηρῶμεν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 2:6",
+      "word_index": 13,
       "word": "ὁ λέγων ἐν αὐτῷ μένειν ὀφείλει καθὼς ἐκεῖνος περιεπάτησεν καὶ αὐτὸς οὕτως περιπατεῖν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 2:25",
+      "word_index": 13,
       "word": "τὴν ζωὴν τὴν αἰώνιον",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 3:10",
+      "word_index": 30,
       "word": "πᾶς ὁ μὴ ποιῶν δικαιοσύνην οὐκ ἔστιν ἐκ τοῦ θεοῦ καὶ ὁ μὴ ἀγαπῶν τὸν ἀδελφὸν αὐτοῦ",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 3:24",
+      "word_index": 27,
       "word": "ἐκ τοῦ πνεύματος οὗ ἡμῖν ἔδωκεν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 4:2",
+      "word_index": 20,
       "word": "πᾶν πνεῦμα ὃ ὁμολογεῖ ἰησοῦν χριστὸν ἐν σαρκὶ ἐληλυθότα ἐκ τοῦ θεοῦ ἐστιν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 4:13",
+      "word_index": 18,
       "word": "ὅτι ἐκ τοῦ πνεύματος αὐτοῦ δέδωκεν ἡμῖν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 5:2",
+      "word_index": 18,
       "word": "ὅταν τὸν θεὸν ἀγαπῶμεν καὶ τὰς ἐντολὰς αὐτοῦ ποιῶμεν",
       "type": "Cataphoric referent"
     },
     {
       "verse": "1John 5:4",
+      "word_index": 22,
       "word": "ἡ πίστις ἡμῶν",
       "type": "Cataphoric referent"
     }

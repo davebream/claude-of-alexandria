@@ -4,1346 +4,1615 @@
   "references": [
     {
       "verse": "Matt 5:13",
+      "word_index": 16,
       "word": "εἰς οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 6:24",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 8:4",
+      "word_index": 7,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 8:10",
+      "word_index": 14,
       "word": "παρ’ οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 9:16",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 9:30",
+      "word_index": 13,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 10:26",
+      "word_index": 5,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 11:27",
+      "word_index": 9,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 13:34",
+      "word_index": 13,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 16:20",
+      "word_index": 6,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 17:8",
+      "word_index": 6,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 17:9",
+      "word_index": 12,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 17:20",
+      "word_index": 29,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 20:7",
+      "word_index": 4,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 21:19",
+      "word_index": 12,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 22:46",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 23:16",
+      "word_index": 13,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 23:18",
+      "word_index": 8,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 24:36",
+      "word_index": 8,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 26:62",
+      "word_index": 7,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 27:12",
+      "word_index": 11,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Matt 27:24",
+      "word_index": 6,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 1:44",
+      "word_index": 5,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 1:44",
+      "word_index": 6,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 2:21",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 2:22",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 5:3",
+      "word_index": 12,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 5:4",
+      "word_index": 20,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 5:26",
+      "word_index": 14,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 5:37",
+      "word_index": 4,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 5:43",
+      "word_index": 6,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 6:8",
+      "word_index": 5,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 7:12",
+      "word_index": 4,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 7:15",
+      "word_index": 1,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 7:15",
+      "word_index": 8,
       "word": "ἔξωθεν τοῦ ἀνθρώπου εἰσπορευόμενον εἰς αὐτὸν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 7:24",
+      "word_index": 13,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 7:36",
+      "word_index": 5,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 8:30",
+      "word_index": 5,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 9:8",
+      "word_index": 5,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 9:9",
+      "word_index": 10,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 9:29",
+      "word_index": 8,
       "word": "ἐν οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 9:39",
+      "word_index": 8,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 10:18",
+      "word_index": 10,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 10:29",
+      "word_index": 7,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 11:2",
+      "word_index": 21,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 11:2",
+      "word_index": 23,
       "word": "ἀνθρώπων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 11:13",
+      "word_index": 19,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 11:14",
+      "word_index": 11,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 12:34",
+      "word_index": 20,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 13:32",
+      "word_index": 9,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 15:5",
+      "word_index": 5,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 16:8",
+      "word_index": 14,
       "word": "οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Mark 16:8",
+      "word_index": 15,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 1:61",
+      "word_index": 6,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 3:14",
+      "word_index": 14,
       "word": "μηδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 4:24",
+      "word_index": 8,
       "word": "οὐδεὶς προφήτης",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 4:26",
+      "word_index": 4,
       "word": "πρὸς οὐδεμίαν αὐτῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 4:27",
+      "word_index": 14,
       "word": "οὐδεὶς αὐτῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 4:35",
+      "word_index": 23,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 5:5",
+      "word_index": 10,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 5:14",
+      "word_index": 5,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 5:36",
+      "word_index": 8,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 5:37",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 5:39",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 6:35",
+      "word_index": 10,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 7:28",
+      "word_index": 8,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 8:16",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 8:43",
+      "word_index": 19,
       "word": "ἀπ’ οὐδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 8:56",
+      "word_index": 10,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 9:3",
+      "word_index": 5,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 9:21",
+      "word_index": 6,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 9:36",
+      "word_index": 14,
       "word": "οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 9:62",
+      "word_index": 7,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 10:4",
+      "word_index": 9,
       "word": "μηδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 10:19",
+      "word_index": 20,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 10:22",
+      "word_index": 9,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 11:33",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 12:2",
+      "word_index": 1,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 12:2",
+      "word_index": 3,
       "word": "συγκεκαλυμμένον",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 14:24",
+      "word_index": 10,
       "word": "οὐδεὶς τῶν ἀνδρῶν ἐκείνων τῶν κεκλημένων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 15:16",
+      "word_index": 12,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 16:13",
+      "word_index": 2,
       "word": "οὐδεὶς οἰκέτης",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 18:19",
+      "word_index": 10,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 18:29",
+      "word_index": 9,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 18:34",
+      "word_index": 4,
       "word": "οὐδὲν τούτων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 19:30",
+      "word_index": 15,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 19:30",
+      "word_index": 17,
       "word": "ἀνθρώπων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:4",
+      "word_index": 11,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:4",
+      "word_index": 13,
       "word": "αἴτιον",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:9",
+      "word_index": 9,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:14",
+      "word_index": 19,
       "word": "οὐθὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:15",
+      "word_index": 13,
       "word": "οὐδὲν ἄξιον θανάτου",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:22",
+      "word_index": 14,
       "word": "οὐδὲν αἴτιον θανάτου",
       "type": "Constituent Negation"
     },
     {
       "verse": "Luke 23:41",
+      "word_index": 13,
       "word": "οὐδὲν ἄτοπον",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 1:18",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 3:2",
+      "word_index": 16,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 3:13",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 3:32",
+      "word_index": 11,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 4:27",
+      "word_index": 14,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 6:44",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 6:65",
+      "word_index": 8,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:4",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:13",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:19",
+      "word_index": 10,
       "word": "οὐδεὶς ἐξ ὑμῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:26",
+      "word_index": 6,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:27",
+      "word_index": 11,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:30",
+      "word_index": 6,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 7:44",
+      "word_index": 9,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 8:10",
+      "word_index": 10,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 8:20",
+      "word_index": 13,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 8:33",
+      "word_index": 8,
       "word": "οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 8:54",
+      "word_index": 10,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 9:4",
+      "word_index": 15,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 10:18",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 10:29",
+      "word_index": 11,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 13:28",
+      "word_index": 3,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 13:28",
+      "word_index": 6,
       "word": "τῶν ἀνακειμένων",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 14:6",
+      "word_index": 15,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 15:13",
+      "word_index": 4,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 15:24",
+      "word_index": 10,
       "word": "οὐδεὶς ἄλλος",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 16:5",
+      "word_index": 11,
       "word": "οὐδεὶς ἐξ ὑμῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 16:22",
+      "word_index": 21,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 16:29",
+      "word_index": 12,
       "word": "οὐδεμίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 17:12",
+      "word_index": 20,
       "word": "οὐδεὶς ἐξ αὐτῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 18:38",
+      "word_index": 20,
       "word": "οὐδεμίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 18:38",
+      "word_index": 24,
       "word": "αἰτίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 19:4",
+      "word_index": 19,
       "word": "οὐδεμίαν αἰτίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 19:41",
+      "word_index": 18,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 21:12",
+      "word_index": 7,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "John 21:12",
+      "word_index": 11,
       "word": "τῶν μαθητῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 4:14",
+      "word_index": 10,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 4:21",
+      "word_index": 6,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 5:13",
+      "word_index": 4,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 5:23",
+      "word_index": 20,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 8:24",
+      "word_index": 14,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 9:7",
+      "word_index": 13,
       "word": "μηδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 9:8",
+      "word_index": 12,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 10:20",
+      "word_index": 8,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 11:12",
+      "word_index": 8,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 11:19",
+      "word_index": 19,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 15:9",
+      "word_index": 2,
       "word": "οὐθὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 17:21",
+      "word_index": 10,
       "word": "εἰς οὐδὲν ἕτερον",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 18:10",
+      "word_index": 7,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 18:17",
+      "word_index": 13,
       "word": "οὐδὲν τούτων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 19:27",
+      "word_index": 21,
       "word": "εἰς οὐθὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 20:20",
+      "word_index": 2,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 20:20",
+      "word_index": 5,
       "word": "τῶν συμφερόντων",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 20:24",
+      "word_index": 3,
       "word": "οὐδενὸς λόγου",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 21:24",
+      "word_index": 22,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 23:9",
+      "word_index": 17,
       "word": "οὐδὲν κακὸν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 23:14",
+      "word_index": 12,
       "word": "μηδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 23:22",
+      "word_index": 9,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 25:10",
+      "word_index": 16,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 25:11",
+      "word_index": 21,
       "word": "ὧν οὗτοι κατηγοροῦσίν μου",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 25:11",
+      "word_index": 22,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 25:18",
+      "word_index": 7,
       "word": "οὐδεμίαν αἰτίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 26:22",
+      "word_index": 18,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 26:31",
+      "word_index": 13,
       "word": "οὐδὲν θανάτου ἢ δεσμῶν ἄξιόν τι",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 27:33",
+      "word_index": 20,
       "word": "μηθὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 27:34",
+      "word_index": 13,
       "word": "οὐδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 27:34",
+      "word_index": 15,
       "word": "ὑμῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Acts 28:17",
+      "word_index": 23,
       "word": "οὐδὲν ἐναντίον",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 8:1",
+      "word_index": 1,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 8:1",
+      "word_index": 4,
       "word": "κατάκριμα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 12:17",
+      "word_index": 1,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 13:8",
+      "word_index": 1,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 13:8",
+      "word_index": 2,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 14:7",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 14:7",
+      "word_index": 7,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rom 14:14",
+      "word_index": 8,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 1:14",
+      "word_index": 6,
       "word": "οὐδένα ὑμῶν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 2:8",
+      "word_index": 7,
       "word": "οὐδεὶς τῶν ἀρχόντων τοῦ αἰῶνος τούτου",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 2:11",
+      "word_index": 22,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 2:15",
+      "word_index": 10,
       "word": "ὑπ’ οὐδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 3:11",
+      "word_index": 4,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 3:18",
+      "word_index": 1,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 3:21",
+      "word_index": 2,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 4:4",
+      "word_index": 1,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 7:19",
+      "word_index": 3,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 7:19",
+      "word_index": 8,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 8:4",
+      "word_index": 9,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 8:4",
+      "word_index": 16,
       "word": "οὐδεὶς θεὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 9:15",
+      "word_index": 25,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 10:24",
+      "word_index": 1,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 10:25",
+      "word_index": 7,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 10:27",
+      "word_index": 15,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 12:3",
+      "word_index": 5,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 12:3",
+      "word_index": 14,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 13:2",
+      "word_index": 27,
       "word": "οὐθέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 13:3",
+      "word_index": 19,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 14:2",
+      "word_index": 10,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Cor 14:10",
+      "word_index": 10,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 5:16",
+      "word_index": 6,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 6:3",
+      "word_index": 1,
       "word": "μηδεμίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 6:3",
+      "word_index": 3,
       "word": "ἐν μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 6:10",
+      "word_index": 12,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:2",
+      "word_index": 3,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:2",
+      "word_index": 5,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:2",
+      "word_index": 7,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:5",
+      "word_index": 7,
       "word": "οὐδεμίαν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:5",
+      "word_index": 9,
       "word": "ἄνεσιν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 7:9",
+      "word_index": 17,
       "word": "ἐν μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 11:5",
+      "word_index": 3,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 12:11",
+      "word_index": 12,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Cor 12:11",
+      "word_index": 20,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 2:6",
+      "word_index": 10,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 2:6",
+      "word_index": 23,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 3:11",
+      "word_index": 5,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 3:15",
+      "word_index": 9,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 4:1",
+      "word_index": 10,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 4:12",
+      "word_index": 11,
       "word": "οὐδέν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 5:2",
+      "word_index": 11,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 5:10",
+      "word_index": 9,
       "word": "οὐδὲν ἄλλο",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 6:3",
+      "word_index": 7,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Gal 6:17",
+      "word_index": 5,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Eph 5:6",
+      "word_index": 1,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Eph 5:29",
+      "word_index": 1,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 1:20",
+      "word_index": 9,
       "word": "ἐν οὐδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 2:3",
+      "word_index": 1,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 2:20",
+      "word_index": 1,
       "word": "οὐδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 4:6",
+      "word_index": 1,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 4:15",
+      "word_index": 15,
       "word": "οὐδεμία",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phil 4:15",
+      "word_index": 17,
       "word": "ἐκκλησία",
       "type": "Constituent Negation"
     },
     {
       "verse": "Col 2:4",
+      "word_index": 4,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Col 2:18",
+      "word_index": 1,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Thess 3:3",
+      "word_index": 2,
       "word": "μηδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Thess 4:12",
+      "word_index": 8,
       "word": "μηδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Thess 3:11",
+      "word_index": 8,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 4:4",
+      "word_index": 7,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 4:12",
+      "word_index": 1,
       "word": "μηδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 5:21",
+      "word_index": 17,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 5:22",
+      "word_index": 3,
       "word": "μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 6:4",
+      "word_index": 2,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "1Tim 6:7",
+      "word_index": 1,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Tim 2:4",
+      "word_index": 2,
       "word": "οὐδεὶς στρατευόμενος",
       "type": "Constituent Negation"
     },
     {
       "verse": "2Tim 4:16",
+      "word_index": 6,
       "word": "οὐδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Titus 1:15",
+      "word_index": 10,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Titus 2:15",
+      "word_index": 10,
       "word": "μηδείς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Titus 3:2",
+      "word_index": 1,
       "word": "μηδένα",
       "type": "Constituent Negation"
     },
     {
       "verse": "Titus 3:13",
+      "word_index": 9,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Phlm 1:14",
+      "word_index": 6,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 2:8",
+      "word_index": 14,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 6:13",
+      "word_index": 9,
       "word": "κατ’ οὐδενὸς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 6:13",
+      "word_index": 11,
       "word": "μείζονος",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 7:13",
+      "word_index": 11,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 7:14",
+      "word_index": 15,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 7:19",
+      "word_index": 1,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Heb 12:14",
+      "word_index": 10,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Jas 1:4",
+      "word_index": 13,
       "word": "ἐν μηδενὶ",
       "type": "Constituent Negation"
     },
     {
       "verse": "Jas 1:6",
+      "word_index": 5,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Jas 1:13",
+      "word_index": 1,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Jas 3:8",
+      "word_index": 4,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1John 3:7",
+      "word_index": 2,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "1John 4:12",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "3John 1:7",
+      "word_index": 6,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 2:10",
+      "word_index": 1,
       "word": "μηδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 2:17",
+      "word_index": 32,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 3:7",
+      "word_index": 23,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 3:7",
+      "word_index": 28,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 3:8",
+      "word_index": 12,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 3:11",
+      "word_index": 7,
       "word": "μηδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 3:17",
+      "word_index": 9,
       "word": "οὐδὲν",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 5:3",
+      "word_index": 2,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 5:4",
+      "word_index": 5,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 7:9",
+      "word_index": 11,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 14:3",
+      "word_index": 18,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 15:8",
+      "word_index": 17,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 18:11",
+      "word_index": 15,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     },
     {
       "verse": "Rev 19:12",
+      "word_index": 19,
       "word": "οὐδεὶς",
       "type": "Constituent Negation"
     }
