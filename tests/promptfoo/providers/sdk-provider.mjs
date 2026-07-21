@@ -127,7 +127,7 @@ export default class SdkProvider {
             toolCalls.push({ name: block.name, input: block.input });
             if (block.name === "Skill") {
               skillsLoaded.push(block.input?.command ?? block.input?.skill ?? "");
-            } else if (block.name === "Task") {
+            } else if (block.name === "Task" || block.name === "Agent") {
               subagents.push(block.input?.subagent_type ?? block.input?.description ?? "");
             }
           }
