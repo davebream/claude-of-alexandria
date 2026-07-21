@@ -52,6 +52,7 @@ const AVAILABLE_TOOLS = [
   'query_person_network - family relationships and co-appearances for a named individual (OT + NT)',
   'query_speakers - who speaks in a passage, with divine speech filtering (OT + NT)',
   'query_syntax - OpenText clause-level semantic role annotations (NT only)',
+  'query_ot_structure - compact verse-edge syntax, participant, and speech boundary context from Macula Hebrew lowfat XML (OT only)',
   'query_variants - textual variant edition comparison across 9 editions (NT only)',
   'bible_lookup - look up verse text in 6 translations (OT + NT)',
   'commentary_lookup - look up commentary entries from 6 commentaries (OT + NT)',
