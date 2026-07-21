@@ -8,7 +8,9 @@ docs/*
 # permanent rationale for decisions (see CLAUDE.md "Where to Put Things").
 !docs/adr/
 !docs/incidents/
+!docs/incidents/**
 !docs/data-provenance/
+!docs/data-provenance/**
 
 # Git worktrees
 .worktrees/
