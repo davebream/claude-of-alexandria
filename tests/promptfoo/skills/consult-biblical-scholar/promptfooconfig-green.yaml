@@ -86,6 +86,22 @@ tests:
     vars:
       prompt: "Use the consult-biblical-scholar skill. Phil 1:6: What does 'epiteleo' mean here and how would I explain it to someone unfamiliar with Greek?"
     assert:
+      # Delegation contract: scholar must delegate MCP gathering to data-retriever.
+      - type: javascript
+        value: |
+          const required = [
+            'claude-of-alexandria:biblical-scholar',
+            'claude-of-alexandria:data-retriever',
+          ];
+          const actual = context.providerResponse?.metadata?.subagents || [];
+          const missing = required.filter(name => !actual.includes(name));
+          return {
+            pass: missing.length === 0,
+            score: (required.length - missing.length) / required.length,
+            reason: missing.length === 0
+              ? `Nested delegation observed: [${required}]`
+              : `Missing required subagent dispatches: [${missing}]. Observed: [${actual}]`,
+          };
       # Core failure mode: morphological analysis presented without tool attribution
       - type: llm-rubric
         value: |
