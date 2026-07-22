@@ -153,6 +153,27 @@ This runs secret scanning, TypeScript typecheck, and server tests before every c
 
 The MCP server is included and auto-configured.
 
+[Claude Code 2.1.217](https://github.com/anthropics/claude-code/releases/tag/v2.1.217)
+and later require an explicit opt-in for nested sub-agent delegation. Set the
+maximum spawn depth to `3`, which supports the deepest current chain
+(`main → study-evaluator → biblical-scholar → data-retriever`).
+
+POSIX shells (bash, zsh):
+
+```bash
+export CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=3
+```
+
+Fish:
+
+```fish
+set -x CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH 3
+```
+
+If the variable is unset, scholar agents keep working through their direct-MCP
+fallback, but they skip the data-retriever compression step and may report
+reduced confidence.
+
 ### Claude Code (Manual)
 
 ```bash
