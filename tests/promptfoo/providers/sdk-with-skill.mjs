@@ -37,7 +37,7 @@ OUTPUT RULE: Complete ALL tool calls and data gathering first. Then output the \
 ENTIRE analysis in your FINAL response — all sections in one message. \
 Never print partial output between tool calls. Never save to file.
 SUB-AGENT RULE: When asked to invoke a named agent (e.g., "data-retriever"), use \
-the Task tool to delegate to that agent. Return the agent's output VERBATIM — do \
+the Agent tool to delegate to that agent. Return the agent's output VERBATIM — do \
 not reformat, summarize, or wrap it in your own structure.`;
 
 // Prefix matches what a real plugin install exposes (mcp__plugin_<pluginName>_<serverName>__*),
@@ -91,6 +91,14 @@ export default class SdkWithSkillProvider extends SdkProvider {
     });
   }
 
+  buildEnv() {
+    const env = super.buildEnv();
+    // Claude Code 2.1.217 disables nested subagent spawning by default. The
+    // deepest supported plugin chain is main → evaluator → scholar → retriever.
+    env.CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH = "3";
+    return env;
+  }
+
   // The remote MCP server occasionally fails to register its tools at session
   // start under concurrent eval load ("MCP tool access failed / not in the active
   // toolset"), leaving the skill to fall back to ungrounded analysis. Since a
@@ -130,7 +138,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
         append: this.config.append_system_prompt || APPEND_SYSTEM_PROMPT,
       },
       allowedTools: [
-        "Task", "Skill", "Read", "Write", "Glob", "Grep",
+        "Agent", "Skill", "Read", "Write", "Glob", "Grep",
         ...MCP_TOOLS,
       ],
       permissionMode: "bypassPermissions",
