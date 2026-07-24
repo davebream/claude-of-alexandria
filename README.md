@@ -1,17 +1,21 @@
-<h1 align="center">Claude of Alexandria</h1>
-
 <p align="center">
-  <em>AI agent skills for rigorous biblical study, built on tested exegetical principles.</em>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/hero-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/hero-light.svg">
+    <img src=".github/assets/hero-light.svg" alt="Claude of Alexandria — rigorous biblical study for AI agents" width="100%">
+  </picture>
 </p>
 
 <p align="center">
-  <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-brightgreen" alt="Marketplace"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-blue" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-6%20%2B%206%20agents-orange" alt="Skills"></a>
-  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-96%20automated-yellow" alt="Tests"></a>
+  <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-1c6b68?style=flat-square" alt="Marketplace"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-5b4a33?style=flat-square" alt="License"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-6%20%2B%206%20agents-a9791f?style=flat-square" alt="Skills"></a>
+  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-136%20automated-a5312a?style=flat-square" alt="Tests"></a>
 </p>
 
----
+<p align="center">
+  <img src=".github/assets/divider.svg" alt="" width="100%">
+</p>
 
 Structured frameworks that prevent AI agents from committing exegetical malpractice. Every skill is built with Test-Driven Development: document the failure, build the fix, verify it works.
 

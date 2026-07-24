@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The README now opens with an illuminated-manuscript hero graphic that switches between GitHub's light and dark themes, alongside a reusable project mark and section divider. The artwork shows what the project does: Greek Scripture resolving into morphological tokens and a linked apparatus of lexicon, morphology, cross-reference, discourse and confessional data.
 - Bulk D1 corpus imports and derived-data backfills are now explicit local maintainer operations with validation and a typed production-write confirmation; GitHub Actions no longer runs them automatically. Worker deployment and schema migrations remain automated.
 - MCP server and marketplace versions bump to **5.0.0** (see `docs/mcp-v5-migration.md`). The edge cache namespace moves from `v8` to `v9` so stale v4 responses are not reused. SIL LGNTDF now returns its full prescribed attribution statement on every `query_discourse_features` and `query_ot_quotes` page; repository notices include the commercial-product and annual-reporting clauses.
 

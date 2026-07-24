@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="icon-title icon-desc">
+  <title id="icon-title">Claude of Alexandria</title>
+  <desc id="icon-desc">An illuminated gold initial alpha on parchment, with a knowledge graph woven through it.</desc>
+
+  <defs>
+    <linearGradient id="parchment" x1="0" y1="0" x2=".35" y2="1">
+      <stop offset="0" stop-color="#f8f2e1"/>
+      <stop offset=".55" stop-color="#f1e6cd"/>
+      <stop offset="1" stop-color="#e7d9b9"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dfba71"/>
+      <stop offset=".5" stop-color="#a9791f"/>
+      <stop offset="1" stop-color="#7f5a1c"/>
+    </linearGradient>
+    <clipPath id="field">
+      <rect x="38" y="38" width="436" height="436" rx="62"/>
+    </clipPath>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="url(#parchment)"/>
+
+  <g clip-path="url(#field)">
+    <!-- ruling -->
+    <path stroke="#2e2418" stroke-opacity=".05" d="M38 110h436M38 178h436M38 246h436M38 314h436M38 382h436"/>
+    <!-- knowledge graph -->
+    <g stroke="#1c6b68" stroke-opacity=".42" stroke-width="3" fill="none">
+      <path d="M150 150l106 90 106-98M136 368l120-128 120 132M150 150l-14 218M362 142l14 230"/>
+    </g>
+    <text x="256" y="361" font-family="Georgia, 'Times New Roman', serif" font-size="300" font-weight="600" text-anchor="middle" fill="#a9791f" fill-opacity=".15" stroke="url(#gold)" stroke-width="6">Α</text>
+    <g fill="#f8f2e1" stroke="#1c6b68" stroke-width="4">
+      <circle cx="150" cy="150" r="11"/>
+      <circle cx="362" cy="142" r="11"/>
+      <circle cx="136" cy="368" r="8"/>
+      <circle cx="376" cy="372" r="8"/>
+      <circle cx="256" cy="240" r="14"/>
+    </g>
+  </g>
+
+  <!-- Illuminated border -->
+  <rect x="24" y="24" width="464" height="464" rx="76" fill="none" stroke="url(#gold)" stroke-width="4"/>
+  <rect x="38" y="38" width="436" height="436" rx="62" fill="none" stroke="#a9791f" stroke-opacity=".35" stroke-width="1.5"/>
+
+  <!-- Corner flourishes terminating in nodes -->
+  <g stroke="#a9791f" stroke-opacity=".6" stroke-width="3" stroke-linecap="round" fill="none">
+    <path d="M78 118V96h22M434 118V96h-22M78 394v22h22M434 394v22h-22"/>
+  </g>
+  <g fill="#a9791f" fill-opacity=".6">
+    <circle cx="78" cy="96" r="4.5"/>
+    <circle cx="434" cy="96" r="4.5"/>
+    <circle cx="78" cy="416" r="4.5"/>
+    <circle cx="434" cy="416" r="4.5"/>
+  </g>
+</svg>
