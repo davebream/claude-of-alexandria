@@ -37,7 +37,6 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
       'May not be sold as a standalone product.',
       'Commercial works in which LGNTDF exceeds 25% of content require a separate SIL licensing agreement.',
       'Giving away LGNTDF for use with a commercial product, or selling a work containing more than 25% LGNTDF, requires a SIL license and annual reporting of units sold, distributed, and/or downloaded.',
-      'This MCP attribution repair does not constitute commercial permission from SIL.',
     ],
     project_surfaces: ['MCP', 'biblical-segmentation skill reference data'],
     mcp_published: true,

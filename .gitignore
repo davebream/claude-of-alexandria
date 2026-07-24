@@ -6,6 +6,7 @@
 docs/*
 !docs/mcp-v4-migration.md
 !docs/mcp-v5-migration.md
+!docs/project-architecture-and-distribution.md
 # ...but Architecture Decision Records are part of the repo — they are the public,
 # permanent rationale for decisions (see CLAUDE.md "Where to Put Things").
 !docs/adr/
