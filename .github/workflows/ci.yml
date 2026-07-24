@@ -143,6 +143,12 @@ jobs:
         # workflow before generated SQL is applied to D1.
         run: python3 server/scripts/test_extract_ot_structure.py -v
 
+      - name: Run Theographic place-canonicalization structural tests
+        # Fixture-driven, network-free tests for duplicate_of resolution and
+        # place-redirect SQL generation. Corpus-scale checks run in
+        # backfill-theographic-places.yml before production D1 is mutated.
+        run: python3 server/scripts/test_etl_theographic.py -v
+
       - name: Run Masoretic extractor structural tests
         # Structural suite only — fixture-driven, network-free. Runs on EVERY
         # PR: this job carries no paths-filter, deliberately.
