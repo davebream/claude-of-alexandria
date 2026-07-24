@@ -33,15 +33,15 @@ describe('cacheKeyUrl', () => {
 
 describe('resolveCacheVersion', () => {
   it('falls back to DEFAULT_CACHE_VERSION when env.CACHE_VERSION is absent', () => {
-    expect(resolveCacheVersion({})).toBe('v8');
+    expect(resolveCacheVersion({})).toBe('v9');
   });
 
   it('uses env.CACHE_VERSION when set', () => {
-    expect(resolveCacheVersion({ CACHE_VERSION: 'v9' })).toBe('v9');
+    expect(resolveCacheVersion({ CACHE_VERSION: 'v10' })).toBe('v10');
   });
 
   it('falls back to DEFAULT_CACHE_VERSION when env.CACHE_VERSION is an empty string', () => {
-    expect(resolveCacheVersion({ CACHE_VERSION: '' })).toBe('v8');
+    expect(resolveCacheVersion({ CACHE_VERSION: '' })).toBe('v9');
   });
 });
 

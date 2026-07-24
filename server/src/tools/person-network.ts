@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -15,6 +16,7 @@ export const PersonNetworkInputSchema = z.strictObject({
 export type PersonNetworkInput = z.output<typeof PersonNetworkInputSchema>;
 
 export const PersonNetworkOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   person: z.strictObject({
     name: z.string(),

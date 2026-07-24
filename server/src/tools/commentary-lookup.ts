@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -25,6 +26,7 @@ export const CommentaryLookupInputSchema = z.strictObject({
 export type CommentaryLookupInput = z.output<typeof CommentaryLookupInputSchema>;
 
 export const CommentaryLookupOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   book: z.string(),
   range: z.string(),
@@ -35,6 +37,7 @@ export const CommentaryLookupOutputSchema = z.strictObject({
     verse_start: z.number().int().positive(),
     verse_end: z.number().int().positive(),
     text: z.string(),
+    source_ids: z.array(z.string()).min(1),
   })),
   range_warning: z.string().optional(),
 });

@@ -3,74 +3,643 @@ Copyright 2026 davebream (https://github.com/davebream/claude-of-alexandria)
 
 This project incorporates data from third-party sources under separate licenses:
 
+MCP DATASETS
+
 -------------------------------------------------------------------------------
 
-LEVINSOHN GREEK NEW TESTAMENT DISCOURSE FEATURES (LGNTDF)
+ABBOTT-SMITH LEXICON
+Source: https://github.com/STEPBible/STEPBible-Data
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: G. Abbott-Smith (via STEP Bible packaging)
+  Creator URL: https://www.stepbible.org/
+  Attribution: Abbott-Smith Manual Greek Lexicon of the New Testament, public domain; distributed via STEP Bible data (CC BY 4.0 packaging).
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Extracted into lexicon_abbott_smith for Greek lexicon entries.
+  MCP tools: query_lexicon
+  NOTE: Underlying lexicon text is public domain; STEP packaging attribution applies where relevant.
+
+-------------------------------------------------------------------------------
+
+BROWN-DRIVER-BRIGGS HEBREW LEXICON (VIA TBESH)
+Source: https://github.com/STEPBible/STEPBible-Data
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Francis Brown, S. R. Driver, Charles A. Briggs (via STEP Bible TBESH)
+  Creator URL: https://www.stepbible.org/
+  Attribution: Hebrew definitions derived from Brown-Driver-Briggs via STEPBible TBESH, CC BY 4.0 packaging.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Loaded into lexicon_bdb for Hebrew lexicon entries.
+  MCP tools: query_lexicon
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+AMERICAN STANDARD VERSION (1901)
+Source: https://bible.helloao.org/docs/reference/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: American Revision Committee
+  Attribution: American Standard Version (1901), public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Ingested into bible_text for bible_lookup and parallel_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+
+-------------------------------------------------------------------------------
+
+BEREAN STANDARD BIBLE
+Source: https://berean.bible/licensing.htm
+License: Public Domain (BSB dedication)
+Version: not pinned at import (unversioned)
+
+  Creator: Bible Hub / Berean Bible
+  Creator URL: https://berean.bible/
+  Attribution: Berean Standard Bible text. The BSB has been dedicated to the public domain (see berean.bible/licensing.htm).
+  Rights URL: https://berean.bible/licensing.htm
+  Rights status: public-domain
+  Modifications: Ingested via HelloAO Bible API source metadata into bible_text for bible_lookup and parallel_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+  NOTE: Official public-domain dedication: https://berean.bible/licensing.htm
+
+-------------------------------------------------------------------------------
+
+DARBY BIBLE
+Source: https://bible.helloao.org/docs/reference/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: John Nelson Darby
+  Attribution: Darby Bible translation, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Ingested into bible_text (id DBY) for bible_lookup and parallel_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+
+-------------------------------------------------------------------------------
+
+KING JAMES VERSION (1769)
+Source: https://bible.helloao.org/docs/reference/
+License: Public Domain (US); UK jurisdiction caveat
+Version: not pinned at import (unversioned)
+
+  Creator: Public domain translators (1769 Blayney edition lineage)
+  Attribution: King James Version text. Public domain in the United States; Crown rights may still apply in the United Kingdom.
+  Rights status: public-domain
+  Modifications: Ingested from scrollmapper / HelloAO public-domain translation corpora into bible_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+  NOTE: Treated as public domain for US hosting. In the United Kingdom, Crown copyright / letterspatent considerations may still apply to the KJV text.
+
+-------------------------------------------------------------------------------
+
+WORLD ENGLISH BIBLE
+Source: https://worldenglish.bible/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Rainbow Missions / WEB publishers
+  Creator URL: https://worldenglish.bible/
+  Attribution: World English Bible text is in the public domain (see worldenglish.bible).
+  Rights URL: https://worldenglish.bible/
+  Rights status: public-domain
+  Modifications: Ingested via HelloAO Bible API source metadata into bible_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+  NOTE: Official public-domain statement: https://worldenglish.bible/
+
+-------------------------------------------------------------------------------
+
+YOUNG'S LITERAL TRANSLATION
+Source: https://bible.helloao.org/docs/reference/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Robert Young
+  Attribution: Young's Literal Translation, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Ingested into bible_text for bible_lookup and parallel_text.
+  MCP tools: bible_lookup, parallel_text, list_books
+
+-------------------------------------------------------------------------------
+
+CLEAR BIBLE / FCBH SPEAKER QUOTATIONS
+Source: https://github.com/Clear-Bible/speaker-quotations
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Clear Bible, Inc. / Faith Comes By Hearing
+  Creator URL: https://github.com/Clear-Bible
+  Attribution: MACULA Quotation and Speaker Data (CC BY 4.0), Clear Bible, Inc. Angel-of-the-LORD attributions to Jesus reflect FCBH Christophany interpretation, not settled exegesis.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Speaker metadata and quotation spans loaded for query_speakers and OT structure speech transitions.
+  MCP tools: query_speakers, query_ot_structure
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+CLAUDE OF ALEXANDRIA CANONICAL BOOK METADATA
+Source: https://github.com/davebream/claude-of-alexandria
+License: Project-owned curation
+Version: not pinned at import (unversioned)
+
+  Creator: Claude of Alexandria
+  Creator URL: https://github.com/davebream/claude-of-alexandria
+  Attribution: Canonical book list and display-name metadata curated by Claude of Alexandria.
+  Rights status: project-owned
+  Modifications: Original project metadata for book names, testament grouping, and tool catalogs.
+  MCP tools: list_books
+
+-------------------------------------------------------------------------------
+
+CLAUDE OF ALEXANDRIA CONTROVERSY SUMMARIES
+Source: https://github.com/davebream/claude-of-alexandria
+License: Project-owned curation
+Version: not pinned at import (unversioned)
+
+  Creator: Claude of Alexandria
+  Creator URL: https://github.com/davebream/claude-of-alexandria
+  Attribution: Controversy topic summaries curated from scholarship citations by Claude of Alexandria. Present as curated overview, not settled dogma.
+  Rights status: project-owned
+  Modifications: Original curated summaries with scholarly citations; may reference Theographic/TIPNR event identifiers.
+  MCP tools: query_controversies, query_events
+  NOTE: Neutrality caveat remains part of the tool response contract.
+
+-------------------------------------------------------------------------------
+
+CLAUDE OF ALEXANDRIA LITURGICAL CALENDAR CURATION
+Source: https://github.com/davebream/claude-of-alexandria
+License: Project-owned curation (RCL readings attributed per record)
+Version: not pinned at import (unversioned)
+
+  Creator: Claude of Alexandria
+  Creator URL: https://github.com/davebream/claude-of-alexandria
+  Attribution: Liturgical seasons and readings curated by Claude of Alexandria, with Revised Common Lectionary readings attributed per record.
+  Rights status: project-owned
+  Modifications: Curated liturgical migrations; individual readings retain source labels such as Revised Common Lectionary.
+  MCP tools: liturgical_lookup
+  NOTE: Methodology and source notes are project documentation rather than an external dataset license.
+
+-------------------------------------------------------------------------------
+
+CLAUDE OF ALEXANDRIA THEMATIC KEYWORD CURATION
+Source: https://github.com/davebream/claude-of-alexandria
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Claude of Alexandria
+  Creator URL: https://github.com/davebream/claude-of-alexandria
+  Attribution: Thematic keyword groups and lemma-to-theme mappings curated by Claude of Alexandria (CC BY-SA 4.0).
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Project-created thematic classifications over MorphGNT/MorphHB lemmas.
+  MCP tools: list_books, query_vocabulary, query_themes_for_lemmas, query_theme_distribution, query_lemmas
+
+-------------------------------------------------------------------------------
+
+ADAM CLARKE BIBLE COMMENTARY
+Source: https://www.sacred-texts.com/bib/cmt/clarke/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Adam Clarke
+  Attribution: Adam Clarke Bible Commentary, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Normalized into commentary_entries with commentary id adam-clarke.
+  MCP tools: commentary_lookup, list_books
+
+-------------------------------------------------------------------------------
+
+JAMIESON-FAUSSET-BROWN BIBLE COMMENTARY
+Source: https://www.sacred-texts.com/bib/cmt/jfb/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Robert Jamieson, A. R. Fausset, David Brown
+  Attribution: Jamieson-Fausset-Brown Bible Commentary, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Normalized into commentary_entries with commentary id jamieson-fausset-brown.
+  MCP tools: commentary_lookup, list_books
+
+-------------------------------------------------------------------------------
+
+JOHN GILL BIBLE COMMENTARY
+Source: https://www.sacred-texts.com/bib/cmt/gill/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: John Gill
+  Attribution: John Gill Exposition of the Bible, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Normalized into commentary_entries with commentary id john-gill.
+  MCP tools: commentary_lookup, list_books
+
+-------------------------------------------------------------------------------
+
+KEIL-DELITZSCH OLD TESTAMENT COMMENTARY
+Source: https://www.sacred-texts.com/bib/cmt/kad/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: C. F. Keil and Franz Delitzsch
+  Attribution: Keil-Delitzsch Commentary on the Old Testament, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Normalized into commentary_entries with commentary id keil-delitzsch.
+  MCP tools: commentary_lookup, list_books
+
+-------------------------------------------------------------------------------
+
+MATTHEW HENRY BIBLE COMMENTARY
+Source: https://www.sacred-texts.com/bib/cmt/mhc/
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Matthew Henry
+  Attribution: Matthew Henry Commentary on the Whole Bible, public domain.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Normalized into commentary_entries with commentary id matthew-henry.
+  MCP tools: commentary_lookup, list_books
+
+-------------------------------------------------------------------------------
+
+TYNDALE OPEN STUDY NOTES
+Source: https://github.com/TyndaleHousePublishers/tyndale-open-study-notes
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Tyndale House Publishers
+  Creator URL: https://www.tyndale.com/
+  Attribution: Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Normalized into commentary_entries with commentary id tyndale.
+  MCP tools: commentary_lookup, list_books
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+CREEDS.JSON CONFESSIONAL CORPUS
+Source: https://github.com/NonlinearFruit/Creeds.json
+License: Unlicense / public domain (selected documents)
+Version: not pinned at import (unversioned)
+
+  Creator: NonlinearFruit / Creeds.json contributors
+  Creator URL: https://github.com/NonlinearFruit/Creeds.json
+  Attribution: Confessional texts from Creeds.json (Unlicense / public-domain documents only). Copyrighted creeds listed upstream are excluded.
+  Rights URL: https://github.com/NonlinearFruit/Creeds.json
+  Rights status: public-domain
+  Modifications: Selected public-domain creeds, catechisms, and confessions ingested; explicitly copyrighted documents excluded from production.
+  MCP tools: confessional_lookup
+  NOTE: Upstream Creeds.json documents that require permission are not published.
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+GLYSSEN CHARACTER METADATA
+Source: https://github.com/sillsdev/glyssen
+License: MIT License
+Version: not pinned at import (unversioned)
+
+  Creator: SIL LSDev / FCBH
+  Creator URL: https://github.com/sillsdev/glyssen
+  Attribution: Glyssen character metadata, MIT License, SIL LSDev / FCBH.
+  Rights URL: https://opensource.org/licenses/MIT
+  Rights status: open-license
+  Modifications: Character gender/age/divinity metadata merged into speaker responses.
+  MCP tools: query_speakers
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+LEVINSOHN GREEK NEW TESTAMENT DISCOURSE FEATURES
 Source: https://github.com/biblicalhumanities/levinsohn
-License: SIL International Custom License
+License: SIL International LGNTDF EULA
+Version: badd3a1043aebfa9907d0515069a4be1dd6eeb7a
 
-  Copyright 2016 SIL International
+  Creator: SIL International
+  Creator URL: https://www.sil.org/
+  Attribution: LGNTDF references marked "LGNTDF" are from Levinsohn Greek New Testament Discourse Features, Copyright 2016 SIL International®. With online or electronic quotations, link "LGNTDF" to https://github.com/biblicalhumanities/levinsohn and "SIL International®" to http://sil.org. Greek text referenced is from the Greek New Testament NA27/UBS4
+  Rights URL: https://github.com/biblicalhumanities/levinsohn/blob/master/LICENSE.md
+  Rights status: custom-license
+  Modifications: Normalized into D1 tables discourse_features and ot_quotes; word-position indexes preserved. OT quotation Greek text merged with STEP Bible OT source references. OpenGNT Levinsohn boundary columns extracted into discourse_boundaries.
+  MCP tools: query_discourse_features, query_ot_quotes
+  NOTE: May not be sold as a standalone product.
+  NOTE: Commercial works in which LGNTDF exceeds 25% of content require a separate SIL licensing agreement.
+  NOTE: Giving away LGNTDF for use with a commercial product, or selling a work containing more than 25% LGNTDF, requires a SIL license and annual reporting of units sold, distributed, and/or downloaded.
+  NOTE: This MCP attribution repair does not constitute commercial permission from SIL.
 
-  Permission is granted to use, reproduce, and distribute this data provided
-  that:
-  - Attribution is given: "LGNTDF references marked 'LGNTDF' are from
-    Levinsohn Greek New Testament Discourse Features, Copyright 2016
-    SIL International"
-  - Commercial sale of the LGNTDF data as a standalone product is prohibited
-  - Commercial works in which LGNTDF data constitutes more than 25% of total
-    content require a separate licensing agreement with SIL International
+-------------------------------------------------------------------------------
 
-  NOTE: The file reference/levinsohn/README.md previously misidentified this
-  license as CC-BY-SA. The correct license is the SIL International Custom
-  License described above.
+MACULA HEBREW LINGUISTIC DATASETS
+Source: https://github.com/Clear-Bible/macula-hebrew
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
 
-  NOTE: The git commit message that introduced this data (56c1e80) attributed
-  it to OpenText.org. That attribution is incorrect. A 2026-07-21 audit
-  (issue #125) compared all 33 feature files (52,257 records) against
-  github.com/biblicalhumanities/levinsohn at commit badd3a1043aebfa9907d0515069a4be1dd6eeb7a
-  and found an exact match in content, order, and record count. The source
-  above (SIL International / biblicalhumanities LGNTDF) is confirmed correct.
+  Creator: Clear Bible, Inc. / Groves Center
+  Creator URL: https://github.com/Clear-Bible
+  Attribution: MACULA Hebrew linguistic datasets, CC BY 4.0, Clear Bible, Inc. and contributors.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: OT morphology enrichment, syntax/participant features for query_ot_structure, and related gloss/transliteration layers. SDBH columns excluded (permission-based, not open).
+  MCP tools: query_morphology, query_ot_structure, query_syntax
+  NOTE: SDBH material is not published.
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+MORPHGNT SBLGNT MORPHOLOGY
+Source: https://github.com/morphgnt/sblgnt
+License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+Version: not pinned at import (unversioned)
+
+  Creator: MorphGNT Project
+  Creator URL: https://github.com/morphgnt
+  Attribution: MorphGNT morphology and lemmatization, CC BY-SA 3.0, MorphGNT Project.
+  Rights URL: https://creativecommons.org/licenses/by-sa/3.0/
+  Rights status: open-license
+  Modifications: Normalized into vocabulary and lemma-distribution tables for NT tools.
+  MCP tools: query_vocabulary, query_lemmas, query_themes_for_lemmas, query_theme_distribution
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+OPEN SCRIPTURES HEBREW BIBLE (MORPHHB) / WESTMINSTER LENINGRAD CODEX
+Source: https://github.com/openscriptures/morphhb
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Open Scriptures
+  Creator URL: https://github.com/openscriptures
+  Attribution: Open Scriptures Hebrew Bible morphological markup, CC BY 4.0. Underlying Westminster Leningrad Codex text is public domain.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: OT morphology, vocabulary, lemma distribution, and Masoretic paragraph markers derived from MorphHB markup. Paragraph markers regenerated with checksum-verified extraction (see docs/data-provenance/paragraph-markers.md).
+  MCP tools: query_paragraph_breaks, query_vocabulary, query_lemmas, query_themes_for_lemmas, query_theme_distribution, query_morphology
+  NOTE: WLC base text is public domain; MorphHB morphological markup is CC BY 4.0.
+  NOTE: Source revision may be pinned per subsystem; unversioned entries disclose null version.
+
+-------------------------------------------------------------------------------
+
+OPENBIBLE.INFO CROSS-REFERENCES
+Source: https://www.openbible.info/labs/cross-references/
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: OpenBible.info
+  Creator URL: https://www.openbible.info/
+  Attribution: Cross-reference edges reflect the OpenBible.info editorial tradition with community vote weights; each hop is an attributed association, not an asserted theological dependence. CC BY 4.0.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Normalized into cross-reference edge tables for lookup and path tracing.
+  MCP tools: query_cross_references, trace_cross_reference_path
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+OPENGNT / OGNT
+Source: https://github.com/eliranwong/OpenGNT
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Eliran Wong
+  Creator URL: https://github.com/eliranwong
+  Attribution: OpenGNT / OGNT data © Eliran Wong, CC BY-SA 4.0. Levinsohn discourse boundary columns retained under SIL LGNTDF terms.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Selected columns ingested for morphology, syntax (OpenText annotations), variant flags, and Levinsohn discourse boundaries. Permission-only columns (e.g. Mounce, SDBH, Louw-Nida lexical material) are excluded from the published corpus.
+  MCP tools: query_morphology, query_syntax, query_variants, query_discourse_features
+  NOTE: Upstream OpenGNT mixes rights across columns; CoA publishes only columns treated as open or LGNTDF-derived.
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+OPENTEXT.ORG LINGUISTIC ANNOTATIONS
+Source: https://github.com/eliranwong/OpenGNT
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: OpenText.org
+  Creator URL: https://www.opentext.org/
+  Attribution: OpenText original linguistic annotations as packaged in OpenGNT, CC BY-SA 4.0 packaging lineage.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Syntax annotations exposed via query_syntax.
+  MCP tools: query_syntax
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+ROBINSON'S MORPHOLOGICAL ANALYSIS CODES (RMAC)
+Source: https://github.com/morphgnt/crosswire-morphgnt
+License: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+Version: not pinned at import (unversioned)
+
+  Creator: CrossWire Bible Society / MorphGNT
+  Creator URL: https://github.com/morphgnt
+  Attribution: Robinson's Morphological Analysis Codes (RMAC), CC BY-SA 3.0, CrossWire Bible Society / MorphGNT.
+  Rights URL: https://creativecommons.org/licenses/by-sa/3.0/
+  Rights status: open-license
+  Modifications: RMAC parsing codes exposed through OpenGNT-derived morphology responses.
+  MCP tools: query_morphology
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+SAVOY DECLARATION OF FAITH
+Source: https://reformedstandards.com/
+License: Apache License 2.0
+Version: not pinned at import (unversioned)
+
+  Creator: Savoy Conference (1658) / Reformed Standards packaging
+  Creator URL: https://reformedstandards.com/
+  Attribution: Savoy Declaration of Faith, Apache License 2.0 via Reformed Standards packaging where applicable.
+  Rights URL: https://www.apache.org/licenses/LICENSE-2.0
+  Rights status: open-license
+  Modifications: Published as confessional document slug savoy_declaration when present in the production corpus.
+  MCP tools: confessional_lookup
+  NOTE: Ensure production seed uses the Apache-2.0-cleared text, not a permission-only Creeds.json copy.
+
+-------------------------------------------------------------------------------
+
+SBL GREEK NEW TESTAMENT
+Source: https://www.sblgnt.com/license/
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Society of Biblical Literature / Logos Bible Software
+  Creator URL: https://www.sblgnt.com/
+  Attribution: SBL Greek New Testament text, CC BY 4.0, Society of Biblical Literature and Logos Bible Software.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Surface Greek text embedded in MorphGNT-derived morphology and vocabulary responses.
+  MCP tools: query_vocabulary, query_lemmas, query_themes_for_lemmas, query_theme_distribution, query_morphology
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+STEPBIBLE TFLSJ (LIDDELL-SCOTT-JONES)
+Source: https://github.com/STEPBible/STEPBible-Data
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Tyndale House / STEP Bible (from Perseus LSJ)
+  Creator URL: https://www.stepbible.org/
+  Attribution: Full Liddell-Scott-Jones Greek lexicon via STEPBible TFLSJ, CC BY 4.0.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Loaded into lexicon_lsj; used for full Greek lexicon entries and discourse word transliteration joins.
+  MCP tools: query_lexicon, query_discourse_features
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+STEP BIBLE DATA
+Source: https://github.com/STEPBible/STEPBible-Data
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Tyndale House / STEP Bible
+  Creator URL: https://www.stepbible.org/
+  Attribution: STEP Bible data, CC BY 4.0, Tyndale House Cambridge / STEP Bible.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: TBESH/TBESG lexicons, TFLSJ (LSJ), Abbott-Smith via STEP packaging, OT-in-NT quotation references, TANTT edition comparison for variants, and selected gloss/transliteration layers.
+  MCP tools: query_lexicon, query_ot_quotes, query_morphology, query_variants, query_discourse_features
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+THEOGRAPHIC BIBLE DATA
+Source: https://github.com/robertrouse/theographic-bible-data
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Theographic
+  Creator URL: https://github.com/robertrouse/theographic-bible-data
+  Attribution: Entity data: Theographic (CC BY-SA 4.0). Entity identifications may be contested — verify against critical commentaries.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: People, places, events, and relationship graphs ingested for entity tools.
+  MCP tools: query_people, query_places, query_events, query_person_network
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+THIRTY-NINE ARTICLES OF RELIGION
+Source: https://www.churchofengland.org/prayer-and-worship/worship-texts-and-resources/book-common-prayer/articles-religion
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: Church of England
+  Creator URL: https://www.churchofengland.org/
+  Attribution: Thirty-Nine Articles of Religion from The Book of Common Prayer (1662 lineage), public domain. Church of England.
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Seeded via seed-confessional-anglican-wesleyan.ts as slug thirty_nine_articles.
+  MCP tools: confessional_lookup
+
+-------------------------------------------------------------------------------
+
+TIPNR / OPENBIBLE GEOCODING
+Source: https://www.openbible.info/
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: Tyndale House / OpenBible.info
+  Creator URL: https://www.openbible.info/
+  Attribution: TIPNR by Tyndale House (CC BY 4.0) / OpenBible geocoding. Verify contested identifications against critical commentaries.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Place and person identification layers merged with Theographic entity records.
+  MCP tools: query_people, query_places, query_events, query_person_network
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+UBS SEMANTIC DOMAINS (SDGNT / SDBH EXCERPTS USED)
+Source: https://github.com/eliranwong/OpenGNT
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: United Bible Societies (via OpenGNT / STEP packaging where open)
+  Creator URL: https://www.unitedbiblesocieties.org/
+  Attribution: UBS semantic-domain classifications included only where the imported packaging permits republication.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Domain tags attached to lexicon entries as ubs-sdgnt / ubs-sdbh source tokens when present.
+  MCP tools: query_lexicon, query_morphology
+  NOTE: Full proprietary Louw-Nida / SDBH corpora are excluded where license requires permission.
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+UBS/PARATEXT VERSIFICATION JSON
+Source: https://github.com/ubsicap/versification_json
+License: MIT License
+Version: not pinned at import (unversioned)
+
+  Creator: United Bible Societies / Paratext
+  Creator URL: https://github.com/ubsicap
+  Attribution: UBS/Paratext versification mappings, MIT License.
+  Rights URL: https://opensource.org/licenses/MIT
+  Rights status: open-license
+  Modifications: Hebrew–English versification differences loaded for check_versification.
+  MCP tools: check_versification
+  NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+WESLEY'S TWENTY-FIVE ARTICLES OF RELIGION
+Source: https://www.ccel.org/ccel/schaff/creeds3
+License: Public Domain Mark
+Version: not pinned at import (unversioned)
+
+  Creator: John Wesley / Philip Schaff (Creeds of Christendom)
+  Creator URL: https://www.ccel.org/
+  Attribution: Wesley's Twenty-Five Articles of Religion via Philip Schaff, Creeds of Christendom vol. III (1877), public domain (CCEL).
+  Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
+  Rights status: public-domain
+  Modifications: Seeded via seed-confessional-anglican-wesleyan.ts as slug wesleys_25_articles.
+  MCP tools: confessional_lookup
+
+REPOSITORY-ONLY DATASETS (not published via MCP tools)
 
 -------------------------------------------------------------------------------
 
 KLINE TORAH LITERARY UNITS DATASET
-Source: https://chaver.com/torah-weave/data/
-Dataset: https://chaver.com/torah-weave/data/torah-units.json
+Source: https://chaver.com/torah-weave/data/torah-units.json
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 Version: 1.0
-Author: Moshe Kline
-License: Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-  The source-derived Torah boundary benchmark includes a small set of literary
-  units from this dataset, with attribution and an exact SHA-256 snapshot pin.
-  https://creativecommons.org/licenses/by/4.0/
+  Creator: Moshe Kline
+  Creator URL: https://chaver.com/torah-weave/data/
+  Attribution: Kline Torah literary units, CC BY 4.0, Moshe Kline.
+  Rights URL: https://creativecommons.org/licenses/by/4.0/
+  Rights status: open-license
+  Modifications: Used only for offline Torah boundary benchmarks; not published via MCP tools.
+  NOTE: Not part of the production MCP corpus.
 
 -------------------------------------------------------------------------------
 
-SEFARIA MASORETIC PARAGRAPH DATA (Petuchot/Setumot)
+SEFARIA MASORETIC PARAGRAPH METADATA
 Source: https://github.com/Sefaria/Sefaria-Export
-Underlying text: Westminster Leningrad Codex — Public Domain
-Sefaria metadata: Creative Commons Attribution-ShareAlike (CC BY-SA)
+License: Creative Commons Attribution-ShareAlike (CC BY-SA)
+Version: not pinned at import (unversioned)
 
-  The Westminster Leningrad Codex text is in the Public Domain.
-  Sefaria's metadata contributions (paragraph structure, connections) are
-  licensed under CC BY-SA. See https://www.sefaria.org/donate for details.
-
--------------------------------------------------------------------------------
-
-MORPHGNT / SBL GREEK NEW TESTAMENT VOCABULARY DATA
-Source: https://github.com/morphgnt/sblgnt
-License: Creative Commons Attribution-ShareAlike 3.0 (CC BY-SA 3.0)
-
-  Copyright MorphGNT Project
-  https://creativecommons.org/licenses/by-sa/3.0/
-
--------------------------------------------------------------------------------
-
-OPENSCHRIPTURES HEBREW BIBLE MORPHOLOGICAL DATABASE (morphhb)
-Source: https://github.com/openscriptures/morphhb
-License: Creative Commons Attribution 4.0 International (CC BY 4.0)
-
-  Copyright Open Scriptures
-  https://creativecommons.org/licenses/by/4.0/
-
--------------------------------------------------------------------------------
+  Creator: Sefaria
+  Creator URL: https://www.sefaria.org/
+  Attribution: Sefaria metadata contributions CC BY-SA; underlying Westminster Leningrad Codex text is public domain. Used for corruption audits and fixtures, not the production paragraph MCP corpus.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: Archived fixtures for Masoretic marker corruption audit; production markers come from MorphHB.
+  NOTE: Not part of the normal production MCP corpus.

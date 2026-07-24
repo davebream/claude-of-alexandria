@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -24,6 +25,7 @@ export const DiscourseFeatureRow = z.strictObject({
   // SBL transliteration sibling — present-and-null when unpopulated, never
   // omitted (AC-10).
   word_translit: z.string().nullable().optional(),
+  source_ids: z.array(z.string()).min(1),
 });
 
 const DiscourseRecordSchema = z.discriminatedUnion('record_type', [
@@ -37,10 +39,12 @@ const DiscourseRecordSchema = z.discriminatedUnion('record_type', [
     clause_id: z.string().nullable(),
     clause_marker: z.string().nullable(),
     note_text: z.string().nullable(),
+    source_ids: z.array(z.string()).min(1),
   }),
 ]);
 
 export const DiscourseOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   book: z.string(),
   chapter_range: z.string(),

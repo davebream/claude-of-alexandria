@@ -5,6 +5,7 @@
 # Use docs/* (not docs/) so git can traverse in and re-include docs/adr below.
 docs/*
 !docs/mcp-v4-migration.md
+!docs/mcp-v5-migration.md
 # ...but Architecture Decision Records are part of the repo — they are the public,
 # permanent rationale for decisions (see CLAUDE.md "Where to Put Things").
 !docs/adr/

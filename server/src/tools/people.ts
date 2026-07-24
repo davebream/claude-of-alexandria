@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -17,6 +18,7 @@ export const PeopleInputSchema = z.strictObject({
 export type PeopleInput = z.output<typeof PeopleInputSchema>;
 
 export const PeopleOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   book: z.string(),
   range: z.string(),

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -41,6 +42,7 @@ export const OtStructureInputSchema = z.strictObject({
 export type OtStructureInput = z.output<typeof OtStructureInputSchema>;
 
 export const OtStructureOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   book: z.string(),
   range: z.string(),
