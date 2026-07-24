@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -58,6 +59,7 @@ const ConfessionalDocumentSummarySchema = z.strictObject({
   year: z.number().int().nullable(),
   tradition: z.string(),
   format: z.string(),
+  source_ids: z.array(z.string()).min(1),
 });
 
 const ConfessionalSectionSchema = ConfessionalDocumentSummarySchema.extend({
@@ -73,6 +75,7 @@ const ConfessionalSectionSchema = ConfessionalDocumentSummarySchema.extend({
 });
 
 const ConfessionalOutputCommon = {
+  provenance: ProvenanceSchema,
   page: PageSchema,
   total_documents: z.number().int().nonnegative(),
   total_sections: z.number().int().nonnegative(),

@@ -17,7 +17,7 @@ async function page(
 ) {
   return paginateCallResult({
     tool: options.tool ?? 'fixture_tool',
-    cacheVersion: options.cacheVersion ?? 'v8',
+    cacheVersion: options.cacheVersion ?? 'v9',
     args,
     result: sourceResult(records),
     getRecords: data => data.records as unknown[],
@@ -74,7 +74,7 @@ describe('shared cursor pagination', () => {
       return page([{ id: 1 }, { id: 2 }], { cursor: first.page.next_cursor }, { tool: 'other_tool' });
     }, 'INVALID_CURSOR'],
     ['expired cache', async () => {
-      const first = body(await page([{ id: 1 }, { id: 2 }], { page_size: 1 }));
+      const first = body(await page([{ id: 1 }, { id: 2 }], { page_size: 1 }, { cacheVersion: 'v8' }));
       return page([{ id: 1 }, { id: 2 }], { cursor: first.page.next_cursor }, { cacheVersion: 'v9' });
     }, 'CURSOR_EXPIRED'],
   ])('rejects a %s cursor', async (_label, invoke, expectedCode) => {

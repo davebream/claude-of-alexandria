@@ -99,6 +99,19 @@ describe('strict mode contracts', () => {
 
 describe('morphology output variants', () => {
   const common = {
+    provenance: {
+      attribution_url: 'https://coa.davebream.com/legal/datasets',
+      datasets: [{
+        id: 'opengnt',
+        title: 'OpenGNT',
+        creator: 'Eliran Wong',
+        creator_url: null,
+        attribution: 'OpenGNT',
+        source_url: 'https://github.com/eliranwong/OpenGNT',
+        rights: { status: 'open-license' as const, name: 'CC BY-SA 4.0', url: null },
+        version: null,
+      }],
+    },
     page: { returned: 0, total: 0 },
     book: 'John', range: '1:1', testament: 'nt' as const,
     summary: { total_words: 0, by_pos: {} },
@@ -122,7 +135,23 @@ describe('morphology output variants', () => {
 });
 
 describe('lexicon output variants', () => {
-  const common = { page: { returned: 1, total: 1 }, errors: [] };
+  const common = {
+    provenance: {
+      attribution_url: 'https://coa.davebream.com/legal/datasets',
+      datasets: [{
+        id: 'step_tflsj',
+        title: 'TFLSJ',
+        creator: 'STEP Bible',
+        creator_url: null,
+        attribution: 'STEP',
+        source_url: 'https://github.com/STEPBible/STEPBible-Data',
+        rights: { status: 'open-license' as const, name: 'CC BY 4.0', url: null },
+        version: null,
+      }],
+    },
+    page: { returned: 1, total: 1 },
+    errors: [],
+  };
 
   it('accepts a compact entry only in a compact response', () => {
     const compact = {
@@ -141,7 +170,7 @@ describe('lexicon output variants', () => {
       not_found: [], entries: [{
         strongs_id: 'G0026', gloss: 'love', transliteration: 'agape',
         lsj_definition: 'love', abbott_smith_definition: null, bdb_definition: null,
-        ubs_semantic_domains: [], sources: ['lsj'],
+        ubs_semantic_domains: [], sources: ['lsj'], source_ids: ['step_tflsj'],
       }],
     }).success).toBe(true);
   });

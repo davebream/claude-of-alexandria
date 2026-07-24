@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- MCP responses now carry a required `provenance` object naming every dataset used on that page, with creator, rights, source URL, version, and attribution. Heterogeneous records also expose `source_ids` (discourse, OT quotations, lexicon, commentaries, confessions). Full dataset detail is published at `/legal/datasets`, and the MCP sections of `NOTICE` / `server/NOTICE.md` are generated from the shared registry (`npm run generate-notices` / `npm run check-notices`).
 - A small, offline, source-derived Torah boundary benchmark now checks Leviticus 1 and Genesis 11:1-9 in the biblical-segmentation and pericope-delimitation EXTENDED suites. Deterministic assertions require a complete gold-aligned proposal and witness-correct OSHB marker locations/types, while preserving published toledot hierarchy disagreements and leaving Prophecy/Poetry gold coverage explicitly deferred.
 - `query_ot_structure` MCP tool for Old Testament passages, returning compact verse-edge syntax, participant-continuity, and speech-transition features from pinned Macula Hebrew lowfat XML and Clear Bible speaker-quotation data. The new data is loaded by a dedicated generated-in-runner D1 backfill rather than committed bulk SQL.
 - The bundled Levinsohn Greek New Testament discourse-feature data can now be regenerated from its exact upstream revision with a committed extractor and SHA-256 lockfile. Each reference also preserves its upstream word-position index, so repeated forms in the same verse can be identified unambiguously while existing verse-level consumers remain compatible.
 - A reproducible Masoretic paragraph-marker corruption audit now archives the 39 intentionally corrupt historical JSON files, byte-pinned Genesis/Ruth Sefaria sources, OSHB/WLC goldens, fixture hashes, incident notes, and current provenance records. The offline verifier proves the original letter-matching failure mode and prints corrected witness-scoped density metrics without changing production data.
+
+### Changed
+
+- MCP server and marketplace versions bump to **5.0.0** (see `docs/mcp-v5-migration.md`). The edge cache namespace moves from `v8` to `v9` so stale v4 responses are not reused. SIL LGNTDF now returns its full prescribed attribution statement on every `query_discourse_features` and `query_ot_quotes` page; repository notices include the commercial-product and annual-reporting clauses. This release fixes attribution and does not grant SIL commercial permission.
 
 ### Fixed
 

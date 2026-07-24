@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -28,6 +29,7 @@ const HopSchema = z.strictObject({
 });
 
 export const TraceCrossReferencePathOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   from_ref: z.string(),
   to_ref: z.string(),
   found: z.boolean(),
@@ -58,6 +60,7 @@ export const CrossReferencesInputSchema = z.strictObject({
 export type CrossReferencesInput = z.output<typeof CrossReferencesInputSchema>;
 
 export const CrossReferencesOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   book: z.string(),
   range: z.string().optional(),
