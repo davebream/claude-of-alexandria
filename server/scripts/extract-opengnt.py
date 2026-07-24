@@ -1495,6 +1495,7 @@ def parse_args(argv=None):
             "touching the primary seed chunks."
         ),
     )
+    parser.add_argument("--out-dir", help="Directory for generated SQL (defaults to server/d1-seed)")
     return parser.parse_args(argv)
 
 
@@ -1504,7 +1505,7 @@ def main():
     script_dir = Path(__file__).parent
     server_dir = script_dir.parent
     cache_dir = server_dir / ".cache"
-    output_dir = server_dir / "d1-seed"
+    output_dir = Path(args.out_dir) if args.out_dir else server_dir / "d1-seed"
 
     cache_dir.mkdir(parents=True, exist_ok=True)
 
