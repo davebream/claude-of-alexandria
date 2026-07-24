@@ -41,7 +41,10 @@ SPEAKER_TSV_URL = (
 )
 
 ROWS_PER_INSERT = 100
-BYTE_LIMIT_PER_INSERT = 900_000
+# D1 rejected a 127,124-byte statement with SQLITE_TOOBIG. Keep a substantial
+# margin below the observed boundary rather than relying on an undocumented
+# service limit.
+BYTE_LIMIT_PER_INSERT = 80_000
 CHECKSUM_FILE = Path(__file__).resolve().parent / "ot-structure-checksums.json"
 
 BOOK_CODE_TO_CANONICAL = {
@@ -359,6 +362,10 @@ def render_sql(book: str, rows: Sequence[Tuple]) -> str:
     for row in rows:
         candidate = batch + [row]
         rendered = render_insert_batch(candidate)
+        if not batch and len(rendered.encode("utf-8")) > BYTE_LIMIT_PER_INSERT:
+            raise ValueError(
+                f"OT structure row for {book} exceeds the {BYTE_LIMIT_PER_INSERT}-byte D1 statement limit"
+            )
         if batch and (len(candidate) > ROWS_PER_INSERT or len(rendered.encode("utf-8")) > BYTE_LIMIT_PER_INSERT):
             parts.append(render_insert_batch(batch))
             batch = [row]

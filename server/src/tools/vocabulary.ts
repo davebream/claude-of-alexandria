@@ -94,7 +94,7 @@ export const VocabularyOutputSchema = z.discriminatedUnion('response_type', [
 // a clean branch, not a partition-and-merge.
 //   • OT — the "lemma" IS a Strong's number, so it keys directly into
 //     lemma_translit_he_strongs.strongs (PRIMARY KEY, so no tie-break needed).
-//     Values are derived (decisions/0007), shipped via backfill-lemma-translit.yml.
+//     Values are derived (decisions/0007), shipped via the guarded local backfill command.
 //   • NT — the lemma is a Greek surface form keyed against lexicon_lsj.original_word_nfc,
 //     which is NOT unique, hence the lowest-strongs_id ROW_NUMBER() tie-break.
 // Making the shared helper branch (rather than either call site) guarantees BOTH

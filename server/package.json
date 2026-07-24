@@ -12,6 +12,11 @@
     "test": "vitest run",
     "export-d1": "tsx scripts/export-d1.ts",
     "seed-d1": "bash scripts/seed-d1.sh",
+    "backfill:ot-structure": "bash scripts/backfill-ot-structure.sh",
+    "backfill:transliteration": "bash scripts/backfill-transliteration.sh",
+    "backfill:lemma-translit": "bash scripts/backfill-lemma-translit.sh",
+    "backfill:theographic-places": "bash scripts/backfill-theographic-places.sh",
+    "backfill:vocabulary": "bash scripts/regenerate-vocabulary.sh",
     "generate-cross-references": "tsx scripts/generate-cross-references.ts",
     "generate-notices": "tsx scripts/generate-notices.ts",
     "check-notices": "tsx scripts/generate-notices.ts --check"

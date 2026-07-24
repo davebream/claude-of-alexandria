@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Bulk D1 corpus imports and derived-data backfills are now explicit local maintainer operations with validation and a typed production-write confirmation; GitHub Actions no longer runs them automatically. Worker deployment and schema migrations remain automated.
 - MCP server and marketplace versions bump to **5.0.0** (see `docs/mcp-v5-migration.md`). The edge cache namespace moves from `v8` to `v9` so stale v4 responses are not reused. SIL LGNTDF now returns its full prescribed attribution statement on every `query_discourse_features` and `query_ot_quotes` page; repository notices include the commercial-product and annual-reporting clauses. This release fixes attribution and does not grant SIL commercial permission.
 
 ### Fixed

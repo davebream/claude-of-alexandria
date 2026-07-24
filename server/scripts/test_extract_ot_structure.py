@@ -122,6 +122,19 @@ class OtStructureExtractorTests(unittest.TestCase):
         self.assertNotIn("sensenumber", first)
         self.assertNotIn("skip", first)
 
+    def test_generated_sql_splits_before_d1_statement_limit(self):
+        structure = extractor.BookStructure(code="GEN", canonical="genesis")
+        extractor.parse_lowfat_xml(GENESIS_XML, structure)
+        rows = extractor.render_boundary_rows(structure)
+        # Amplify JSON fields to force byte-based, rather than row-count, batching.
+        rows = [tuple(list(row[:13]) + [["x" * 50_000]] + list(row[14:])) for row in rows]
+
+        sql = extractor.render_sql("genesis", rows)
+
+        inserts = [statement for statement in sql.split(";") if "INSERT INTO" in statement]
+        self.assertGreater(len(inserts), 1)
+        self.assertTrue(all(len(statement.encode("utf-8")) <= extractor.BYTE_LIMIT_PER_INSERT for statement in inserts))
+
     def test_write_outputs_counts_boundaries(self):
         structure = extractor.BookStructure(code="GEN", canonical="genesis")
         extractor.parse_lowfat_xml(GENESIS_XML, structure)
@@ -168,6 +181,13 @@ class OtStructureCorpusTests(unittest.TestCase):
         sql = extractor.render_sql("genesis", extractor.render_boundary_rows(self.structures["GEN"]))
         for forbidden in ("sdbh", "lexdomain", "coredomain", "sensenumber", "gloss"):
             self.assertNotIn(forbidden, sql)
+
+    def test_generated_sql_stays_under_d1_statement_limit_on_real_corpus(self):
+        for structure in self.structures.values():
+            sql = extractor.render_sql(structure.canonical, extractor.render_boundary_rows(structure))
+            for statement in sql.split(";"):
+                if "INSERT INTO" in statement:
+                    self.assertLessEqual(len(statement.encode("utf-8")), extractor.BYTE_LIMIT_PER_INSERT)
 
 
 if __name__ == "__main__":

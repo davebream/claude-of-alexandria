@@ -12,7 +12,7 @@ pinned upstream corpora and these scripts — nothing else.
 
 Delivery follows decisions/0005 (generate-in-runner, never committed) and 0006
 (per-book staging files to bound each D1 request). The output is applied to
-production D1 by .github/workflows/regenerate-vocabulary.yml.
+production D1 by scripts/regenerate-vocabulary.sh.
 
 The `vocabulary` table is a complete per-(book, chapter, lemma) frequency index:
   book       — canonical lowercase (filename stem, e.g. "1_corinthians")

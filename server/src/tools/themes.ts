@@ -54,7 +54,7 @@ export const ThemesOutputSchema = z.strictObject({
 // ceiling (same reasoning as lemmas.ts).
 //   • OT — the "lemma" IS a Strong's number, so it keys directly into
 //     lemma_translit_he_strongs.strongs (PRIMARY KEY, so no tie-break needed).
-//     Values are derived (decisions/0007), shipped via backfill-lemma-translit.yml.
+//     Values are derived (decisions/0007), shipped via the guarded local backfill command.
 //   • NT — the lemma is a Greek surface form keyed against lexicon_lsj.original_word_nfc,
 //     which is NOT unique, hence the lowest-strongs_id ROW_NUMBER() tie-break
 //     (see idx_lsj_original_word_nfc, migration 0011).
