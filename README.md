@@ -1,7 +1,5 @@
-<h1 align="center">Claude of Alexandria</h1>
-
 <p align="center">
-  <em>AI agent skills for rigorous biblical study, built on tested exegetical principles.</em>
+  <img src=".github/assets/claude-of-alexandria-hero.svg" alt="Claude of Alexandria — rigorous biblical study for AI agents" width="100%">
 </p>
 
 <p align="center">

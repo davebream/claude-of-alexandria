@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620" role="img" aria-labelledby="title description">
+  <title id="title">Claude of Alexandria</title>
+  <desc id="description">An illuminated open book connects ancient biblical texts to a precise knowledge graph, representing rigorous biblical study for AI agents.</desc>
+
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07131f"/>
+      <stop offset=".48" stop-color="#0b1b2b"/>
+      <stop offset="1" stop-color="#101c2a"/>
+    </linearGradient>
+    <radialGradient id="book-glow" cx=".5" cy=".64" r=".48">
+      <stop offset="0" stop-color="#f6c86f" stop-opacity=".32"/>
+      <stop offset=".48" stop-color="#d79a3f" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#d79a3f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6d58d"/>
+      <stop offset=".5" stop-color="#d9a64e"/>
+      <stop offset="1" stop-color="#a66b25"/>
+    </linearGradient>
+    <linearGradient id="papyrus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff4d3"/>
+      <stop offset="1" stop-color="#dcbf7a"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#63d6d0"/>
+      <stop offset="1" stop-color="#7ee7c2"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#8dded4" stroke-opacity=".035"/>
+    </pattern>
+    <filter id="soft-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="tiny-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <clipPath id="arch-window">
+      <path d="M542 398V249c0-142 116-203 258-203s258 61 258 203v149z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1600" height="620" rx="28" fill="url(#background)"/>
+  <rect x="1.5" y="1.5" width="1597" height="617" rx="26.5" fill="none" stroke="#d9a64e" stroke-opacity=".28" stroke-width="3"/>
+  <rect width="1600" height="620" rx="28" fill="url(#grid)"/>
+  <ellipse cx="800" cy="390" rx="460" ry="310" fill="url(#book-glow)"/>
+
+  <!-- Quiet constellation / data field -->
+  <g fill="#b7eee7">
+    <circle cx="112" cy="96" r="2" opacity=".55"/>
+    <circle cx="186" cy="142" r="1.5" opacity=".32"/>
+    <circle cx="278" cy="76" r="1.5" opacity=".4"/>
+    <circle cx="1375" cy="83" r="2" opacity=".45"/>
+    <circle cx="1483" cy="151" r="1.5" opacity=".35"/>
+    <circle cx="1268" cy="124" r="1.5" opacity=".38"/>
+    <circle cx="94" cy="490" r="1.5" opacity=".35"/>
+    <circle cx="1492" cy="456" r="2" opacity=".38"/>
+  </g>
+  <g stroke="#64d8d0" stroke-opacity=".13" fill="none">
+    <path d="M112 96l74 46 92-66"/>
+    <path d="M1268 124l107-41 108 68"/>
+    <path d="M94 490l92-44 71 56"/>
+    <path d="M1347 487l75-55 70 24"/>
+  </g>
+
+  <!-- Alexandrian arch -->
+  <g opacity=".74">
+    <path d="M516 411V249C516 91 643 24 800 24s284 67 284 225v162" fill="none" stroke="url(#gold)" stroke-opacity=".34" stroke-width="2"/>
+    <path d="M540 411V250C540 107 656 49 800 49s260 58 260 201v161" fill="none" stroke="#e2b962" stroke-opacity=".12" stroke-width="14"/>
+    <g clip-path="url(#arch-window)" opacity=".23">
+      <path d="M800 42v342M650 76l65 308M950 76l-65 308M552 206h496M542 286h516" fill="none" stroke="#67d8cf" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- Knowledge graph -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <g fill="none" stroke="#65d9d1" stroke-opacity=".38" stroke-width="1.5">
+      <path d="M659 348L485 276 332 318 202 240"/>
+      <path d="M666 371L465 410 309 388 181 455"/>
+      <path d="M940 348l175-72 152 42 131-78"/>
+      <path d="M933 371l202 39 156-22 128 67"/>
+    </g>
+    <g fill="#0b1b2b" stroke="#69ded4" stroke-width="2">
+      <circle cx="485" cy="276" r="7"/>
+      <circle cx="332" cy="318" r="5"/>
+      <circle cx="202" cy="240" r="8"/>
+      <circle cx="465" cy="410" r="7"/>
+      <circle cx="309" cy="388" r="5"/>
+      <circle cx="181" cy="455" r="8"/>
+      <circle cx="1115" cy="276" r="7"/>
+      <circle cx="1267" cy="318" r="5"/>
+      <circle cx="1398" cy="240" r="8"/>
+      <circle cx="1135" cy="410" r="7"/>
+      <circle cx="1291" cy="388" r="5"/>
+      <circle cx="1419" cy="455" r="8"/>
+    </g>
+    <g fill="#7de6dc" filter="url(#tiny-glow)" opacity=".5">
+      <circle cx="202" cy="240" r="5"/>
+      <circle cx="181" cy="455" r="5"/>
+      <circle cx="1398" cy="240" r="5"/>
+      <circle cx="1419" cy="455" r="5"/>
+    </g>
+  </g>
+
+  <!-- Data labels -->
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="600" letter-spacing="2.5" fill="#9ce5dc">
+    <text x="90" y="218">TEXT</text>
+    <text x="90" y="496">MORPHOLOGY</text>
+    <text x="1510" y="218" text-anchor="end">LEXICON</text>
+    <text x="1510" y="496" text-anchor="end">DISCOURSE</text>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="25" fill="#efd494" opacity=".62">
+    <text x="248" y="275">λόγος</text>
+    <text x="248" y="450">בְּרֵאשִׁית</text>
+    <text x="1352" y="275" text-anchor="end">ἀλήθεια</text>
+    <text x="1352" y="450" text-anchor="end">חֶסֶד</text>
+  </g>
+
+  <!-- Open book -->
+  <ellipse cx="800" cy="443" rx="220" ry="46" fill="#e6b75c" opacity=".18" filter="url(#soft-glow)"/>
+  <g stroke-linejoin="round">
+    <path d="M800 451c-46-37-104-52-183-47l-9-131c80-8 145 15 192 61z" fill="url(#papyrus)" stroke="#b47b2f" stroke-width="3"/>
+    <path d="M800 451c46-37 104-52 183-47l9-131c-80-8-145 15-192 61z" fill="url(#papyrus)" stroke="#b47b2f" stroke-width="3"/>
+    <path d="M800 334v117" fill="none" stroke="#9f6d2c" stroke-width="3"/>
+    <path d="M622 289c69-5 125 15 166 51M625 310c68-4 121 13 160 45M627 331c58-2 105 12 143 39M978 289c-69-5-125 15-166 51M975 310c-68-4-121 13-160 45M973 331c-58-2-105 12-143 39" fill="none" stroke="#7d5b2c" stroke-opacity=".42" stroke-width="2"/>
+    <path d="M608 273l-11 143c79-8 148 7 203 45 55-38 124-53 203-45l-11-143" fill="none" stroke="#d3a557" stroke-opacity=".66" stroke-width="4"/>
+  </g>
+
+  <!-- Lighthouse flame / verified signal -->
+  <g transform="translate(800 172)">
+    <path d="M0 105V22" stroke="url(#gold)" stroke-width="4" opacity=".72"/>
+    <path d="M-14 26L0 0l14 26-14 15z" fill="#f5c86d"/>
+    <path d="M0 5v29" stroke="#fff1b3" stroke-width="3" opacity=".75"/>
+    <g fill="none" stroke="#e7bb65" stroke-width="2" stroke-linecap="round" opacity=".48">
+      <path d="M-28 14h-39M28 14h39"/>
+      <path d="M-20-8l-25-23M20-8l25-23"/>
+      <path d="M0-17v-34"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <g text-anchor="middle">
+    <text x="800" y="516" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="600" letter-spacing="4" fill="#f6e7c2">CLAUDE</text>
+    <g transform="translate(800 553)">
+      <path d="M-394 0h212M182 0h212" stroke="url(#gold)" stroke-width="1.5"/>
+      <path d="M-172 0l8-5 8 5-8 5zM172 0l-8-5-8 5 8 5z" fill="#d9a64e"/>
+      <text y="6" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="19" font-weight="600" letter-spacing="8" fill="#d8b873">OF ALEXANDRIA</text>
+    </g>
+    <text x="800" y="591" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" letter-spacing="3.2" fill="#8bcac4">RIGOROUS BIBLICAL STUDY FOR AI AGENTS</text>
+  </g>
+</svg>
