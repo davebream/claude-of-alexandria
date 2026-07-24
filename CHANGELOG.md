@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bulk D1 corpus imports and derived-data backfills are now explicit local maintainer operations with validation and a typed production-write confirmation; GitHub Actions no longer runs them automatically. Worker deployment and schema migrations remain automated.
+
 ### Added
 
 - A small, offline, source-derived Torah boundary benchmark now checks Leviticus 1 and Genesis 11:1-9 in the biblical-segmentation and pericope-delimitation EXTENDED suites. Deterministic assertions require a complete gold-aligned proposal and witness-correct OSHB marker locations/types, while preserving published toledot hierarchy disagreements and leaving Prophecy/Poetry gold coverage explicitly deferred.

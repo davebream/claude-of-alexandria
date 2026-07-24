@@ -88,7 +88,7 @@ which writes gitignored runner artifacts under `server/d1-seed/`:
 - `theographic-place-redirect-tail.sql`
 - `theographic-place-redirect-manifest.json`
 
-The dedicated workflow `.github/workflows/backfill-theographic-places.yml`
-generates those artifacts in-runner, asserts the pinned corpus, applies them to
-production D1, and verifies zero remaining orphans. No migration file and no
-laptop-issued production write are used.
+The guarded local `server/scripts/backfill-theographic-places.sh` command
+generates those artifacts, asserts the pinned corpus, applies them only after
+explicit confirmation, and verifies zero remaining orphans. No migration file
+is used.

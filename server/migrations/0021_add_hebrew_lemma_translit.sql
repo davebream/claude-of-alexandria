@@ -1,6 +1,6 @@
 -- 0021_add_hebrew_lemma_translit.sql
 -- Derived SBL transliteration lookups for Hebrew dictionary forms (decisions/0007).
--- Schema only — data ships exclusively via backfill-lemma-translit.yml (two-tier rule).
+-- Schema only — derived data ships via the guarded local lemma-translit operator command.
 
 CREATE TABLE IF NOT EXISTS lemma_translit_he (
   lemma TEXT PRIMARY KEY,          -- pointed lemma, byte-identical to morphology.lemma

@@ -26,7 +26,7 @@ rejected-approaches:
   - runtime-transliterate-in-worker
 ---
 
-**Refines 0002 (which is now superseded).** Hebrew `lemma_translit` is no longer always null: it is DERIVED by rendering the stored pointed lemma to SBL Academic via `hebrew-transliteration@2.11.0` (schema `sblAcademicSpirantization`, MIT), NFC-normalized, precomputed in CI (`backfill-lemma-translit.yml`) into two D1 lookup tables (`lemma_translit_he` keyed by pointed lemma for `query_morphology`; `lemma_translit_he_strongs` keyed by Strong's number for the vocabulary/lemmas/theme tools).
+**Refines 0002 (which is now superseded).** Hebrew `lemma_translit` is no longer always null: it is DERIVED by rendering the stored pointed lemma to SBL Academic via `hebrew-transliteration@2.11.0` (schema `sblAcademicSpirantization`, MIT), NFC-normalized, then applied by the guarded local lemma-translit operator command into two D1 lookup tables (`lemma_translit_he` keyed by pointed lemma for `query_morphology`; `lemma_translit_he_strongs` keyed by Strong's number for the vocabulary/lemmas/theme tools).
 
 **Why this does not violate 0002's principle.** 0002 rejected romanization *by character mapping* — which genuinely cannot resolve vocal-vs-silent shewa, dagesh forte/lene (U+05BC), or qamets/qamets-qatan (U+05B8). `havarotjs` (the library's engine) does *syllabification-aware* rendering under Khan's Tiberian tradition — the same class of resolution 0002 credited to MACULA's linguists, not naive mapping. 0002's core guarantee is preserved: an **unpointed lemma is never guessed** — a niqqud-presence predicate (≥1 of U+05B0–U+05BC, U+05C7) excludes consonantal skeletons (201 lemmas on current data), which stay null.
 
