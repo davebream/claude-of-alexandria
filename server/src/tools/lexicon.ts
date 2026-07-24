@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -120,9 +121,11 @@ const FullLexiconEntrySchema = z.strictObject({
   bdb_definition: z.string().nullable(),
   ubs_semantic_domains: z.array(z.strictObject({ code: z.string(), name: z.string() })),
   sources: z.array(z.string()),
+  source_ids: z.array(z.string()).min(1),
 });
 
 const LexiconOutputCommon = {
+  provenance: ProvenanceSchema,
   page: PageSchema,
   errors: z.array(z.string()),
 };

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import { PageSchema, PaginationInputShape } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
@@ -67,6 +68,7 @@ export const DistributionEntry = z.strictObject({
 });
 
 export const LemmasOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   page: PageSchema,
   lemmas: z.array(DistributionEntry),
   not_found: z.array(z.string()),

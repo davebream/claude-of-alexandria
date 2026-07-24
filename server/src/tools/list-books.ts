@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { getAllBooks } from '../db/books.js';
 import { query } from '../db/query.js';
@@ -15,6 +16,7 @@ export const ListBooksInputSchema = z.strictObject({
 export type ListBooksInput = z.output<typeof ListBooksInputSchema>;
 
 export const ListBooksOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   total: z.number(),
   ot: z.array(z.string()).optional(),
   nt: z.array(z.string()).optional(),

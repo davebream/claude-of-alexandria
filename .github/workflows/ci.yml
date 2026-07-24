@@ -112,6 +112,10 @@ jobs:
         if: steps.filter.outputs.server == 'true' || github.event_name == 'push'
         run: cd server && npm test
 
+      - name: Check generated NOTICE files
+        if: steps.filter.outputs.server == 'true' || github.event_name == 'push'
+        run: cd server && npm run check-notices
+
   python-etl-tests:
     name: Python ETL Tests
     runs-on: ubuntu-latest

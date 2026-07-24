@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 
@@ -17,6 +18,7 @@ export const ThemesInputSchema = z.strictObject({
 export type ThemesInput = z.output<typeof ThemesInputSchema>;
 
 export const ThemesOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   testament: z.string(),
   themes: z.array(z.string()),
   matches: z.record(z.string(), z.array(z.string())),

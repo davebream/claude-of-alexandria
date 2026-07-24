@@ -4,5 +4,8 @@ pre-commit:
     - name: version-sync
       run: ./scripts/validate-versions.sh
 
+    - name: notice-sync
+      run: cd server && npm run check-notices
+
     - name: betterleaks
       run: ./scripts/betterleaks.sh pre-commit

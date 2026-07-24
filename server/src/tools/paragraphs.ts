@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -29,6 +30,7 @@ export const ParagraphsInputSchema = z.strictObject({
 export type ParagraphsInput = z.output<typeof ParagraphsInputSchema>;
 
 export const ParagraphsOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   book: z.string(),
   chapter_range: z.string(),
   markers: z.array(z.strictObject({

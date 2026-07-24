@@ -1,6 +1,6 @@
 {
   "name": "claude-of-alexandria-mcp-worker",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "engines": {
     "node": ">=22"
   },
@@ -17,7 +17,9 @@
     "backfill:lemma-translit": "bash scripts/backfill-lemma-translit.sh",
     "backfill:theographic-places": "bash scripts/backfill-theographic-places.sh",
     "backfill:vocabulary": "bash scripts/regenerate-vocabulary.sh",
-    "generate-cross-references": "tsx scripts/generate-cross-references.ts"
+    "generate-cross-references": "tsx scripts/generate-cross-references.ts",
+    "generate-notices": "tsx scripts/generate-notices.ts",
+    "check-notices": "tsx scripts/generate-notices.ts --check"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

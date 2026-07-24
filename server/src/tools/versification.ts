@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
@@ -13,6 +14,7 @@ export const VersificationInputSchema = z.strictObject({
 export type VersificationInput = z.output<typeof VersificationInputSchema>;
 
 export const VersificationOutputSchema = z.strictObject({
+  provenance: ProvenanceSchema,
   book: z.string(),
   differences: z.array(z.strictObject({
     english: z.string(),

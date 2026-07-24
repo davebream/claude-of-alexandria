@@ -215,7 +215,7 @@ Requires Node.js. Restart Claude Desktop after saving.
 
 The MCP server provides linguistic data via Cloudflare Workers + D1 (edge SQLite). No local installation required.
 
-The v4 contract requires native JSON arrays and explicit modes for variant tools. Pageable tools return `page.next_cursor`; repeat the same filters until it is absent. See the [MCP v4 migration guide](docs/mcp-v4-migration.md).
+Successful responses include a required `provenance` object identifying every dataset used on that page. Full license detail is at [coa.davebream.com/legal/datasets](https://coa.davebream.com/legal/datasets). The v5 contract also keeps native JSON arrays, explicit modes, and `page.next_cursor` pagination from v4. See the [MCP v5 migration guide](docs/mcp-v5-migration.md).
 
 | Tool | What It Queries | Coverage |
 |------|-----------------|----------|

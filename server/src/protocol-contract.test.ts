@@ -35,7 +35,7 @@ function expectOwnedObjectsStrict(schema: unknown, path = 'schema'): void {
   }
 }
 
-describe('MCP v4 protocol contract', () => {
+describe('MCP v5 protocol contract', () => {
   let client: Client;
   let server: ReturnType<typeof createServer>;
 
@@ -47,7 +47,7 @@ describe('MCP v4 protocol contract', () => {
       },
     });
     const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
-    server = createServer({ cacheVersion: 'v8' });
+    server = createServer({ cacheVersion: 'v9' });
     client = new Client({ name: 'contract-test', version: '1.0.0' });
     await server.connect(serverTransport);
     await client.connect(clientTransport);
@@ -72,9 +72,26 @@ describe('MCP v4 protocol contract', () => {
     expect(tools.map(tool => tool.name)).toContain('query_theme_distribution');
     expect(tools.map(tool => tool.name)).toContain('query_ot_structure');
     expect(tools.map(tool => tool.name)).not.toContain('query_theme');
-    expect(client.getServerVersion()?.version).toBe('4.0.0');
+    expect(client.getServerVersion()?.version).toBe('5.0.0');
     expect(client.getInstructions()).toContain('native JSON arrays');
     expect(client.getInstructions()).toContain('next_cursor');
+  });
+
+  it('requires provenance on every successful output schema', async () => {
+    const { tools } = await client.listTools();
+    for (const tool of tools) {
+      const schema = tool.outputSchema as Record<string, unknown>;
+      const properties = (schema.properties ?? {}) as Record<string, unknown>;
+      const oneOf = (schema.oneOf ?? schema.anyOf) as Array<Record<string, unknown>> | undefined;
+      if (oneOf) {
+        for (const variant of oneOf) {
+          const variantProperties = (variant.properties ?? {}) as Record<string, unknown>;
+          expect(variantProperties.provenance, `${tool.name} provenance`).toBeDefined();
+        }
+      } else {
+        expect(properties.provenance, `${tool.name} provenance`).toBeDefined();
+      }
+    }
   });
 
   it('emits compileable strict input and output JSON Schemas', async () => {

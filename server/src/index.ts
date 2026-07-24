@@ -31,6 +31,12 @@ import { confessionalLookup, ConfessionalLookupInputSchema, ConfessionalLookupOu
 import { liturgicalLookup, LiturgicalLookupInputSchema, LiturgicalLookupOutputSchema } from './tools/liturgical-lookup.js';
 import { queryControversies, ControversiesInputSchema, ControversiesOutputSchema } from './tools/controversies.js';
 import { mcpObjectSchema, paginateCallResult, successResult } from './tools/contract.js';
+import { attachProvenance, PROVENANCE_TOOLS } from './provenance/resolve.js';
+import {
+  LEGAL_DATASETS_CACHE_CONTROL,
+  LEGAL_DATASETS_CONTENT_TYPE,
+  renderLegalDatasetsHtml,
+} from './provenance/legal-page.js';
 import {
   SERVER_INSTRUCTIONS,
   DESC_LIST_BOOKS, DESC_DISCOURSE, DESC_PARAGRAPHS, DESC_VOCABULARY,
@@ -75,7 +81,7 @@ const CORS_HEADERS = {
 // and are left for the platform's TTL/LRU reaping. The 24h `max-age=86400`
 // TTL below is therefore also the upper bound on staleness: even without a
 // version bump, any entry self-expires within 24h of being written.
-const DEFAULT_CACHE_VERSION = 'v8';
+const DEFAULT_CACHE_VERSION = 'v9';
 
 // Per-request context: the ExecutionContext (used to schedule non-blocking
 // cache writes via waitUntil) and the resolved cache-version namespace.
@@ -307,6 +313,17 @@ const OUTPUT_SCHEMAS: Record<string, ZodType> = {
   query_controversies: ControversiesOutputSchema,
 };
 
+for (const tool of PROVENANCE_TOOLS) {
+  if (!OUTPUT_SCHEMAS[tool]) {
+    throw new Error(`Provenance tool ${tool} is missing an output schema registration`);
+  }
+}
+for (const tool of Object.keys(OUTPUT_SCHEMAS)) {
+  if (!(PROVENANCE_TOOLS as readonly string[]).includes(tool)) {
+    throw new Error(`Output schema for ${tool} has no provenance resolver`);
+  }
+}
+
 const INPUT_SCHEMAS: Record<string, ZodType> = {
   list_books: ListBooksInputSchema,
   query_discourse_features: DiscourseInputSchema,
@@ -408,16 +425,17 @@ export function createServer(reqCtx: RequestCtx): McpServer {
     const normalizedArgs = INPUT_SCHEMAS[name]!.parse(args) as Record<string, unknown>;
     return runCachedToolCall(name, normalizedArgs, async () => {
       const result = await handler();
+      const withProvenance = attachProvenance(name, normalizedArgs, result);
       const pageable = PAGEABLE_COLLECTIONS[name];
       const pagedResult = pageable
         ? await paginateCallResult({
             tool: name,
             args: normalizedArgs,
             cacheVersion: reqCtx.cacheVersion,
-            result,
+            result: withProvenance,
             ...pageable,
           })
-        : result;
+        : withProvenance;
       if (pagedResult.isError || !pagedResult.structuredContent) return pagedResult;
       return successResult(OUTPUT_SCHEMAS[name]!, pagedResult.structuredContent);
     }, reqCtx);
@@ -718,9 +736,10 @@ export function createServer(reqCtx: RequestCtx): McpServer {
 
 // ─── Worker entry point ───────────────────────────────────────────────────────
 
-// AUTH BOUNDARY: This server is intentionally unauthenticated. It serves read-only,
-// public-domain biblical reference data. If write operations, user-specific data,
-// or administrative endpoints are ever added, authentication becomes mandatory.
+// AUTH BOUNDARY: This server is intentionally unauthenticated. It serves read-only
+// biblical reference data under mixed third-party licenses (see /legal/datasets and
+// response provenance). If write operations, user-specific data, or administrative
+// endpoints are ever added, authentication becomes mandatory.
 
 interface Env {
   DB: D1Database;
@@ -750,6 +769,25 @@ export default {
           { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
         );
       }
+    }
+
+    // Dataset attribution page — generated from the shared provenance registry.
+    if (url.pathname === '/legal/datasets') {
+      if (request.method === 'GET' || request.method === 'HEAD') {
+        const html = renderLegalDatasetsHtml();
+        return new Response(request.method === 'HEAD' ? null : html, {
+          status: 200,
+          headers: {
+            'Content-Type': LEGAL_DATASETS_CONTENT_TYPE,
+            'Cache-Control': LEGAL_DATASETS_CACHE_CONTROL,
+            ...CORS_HEADERS,
+          },
+        });
+      }
+      return new Response('Method Not Allowed', {
+        status: 405,
+        headers: { Allow: 'GET, HEAD, OPTIONS', ...CORS_HEADERS },
+      });
     }
 
     // Only /mcp path is handled by MCP transport
