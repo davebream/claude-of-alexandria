@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="384" viewBox="0 0 1200 384" role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">Claude of Alexandria</title>
+  <desc id="hero-desc">An illuminated manuscript page. A gold initial holds a knowledge graph, Greek Scripture resolves into morphological tokens, and a linked apparatus connects lexicon, morphology, cross-references, discourse and confessions.</desc>
+
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2=".35" y2="1">
+      <stop offset="0" stop-color="#0f151c"/>
+      <stop offset=".55" stop-color="#131b24"/>
+      <stop offset="1" stop-color="#18212b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2d79f"/>
+      <stop offset=".5" stop-color="#e3b95f"/>
+      <stop offset="1" stop-color="#b78c3c"/>
+    </linearGradient>
+    <linearGradient id="rule" gradientUnits="userSpaceOnUse" x1="-148" y1="0" x2="148" y2="0">
+      <stop offset="0" stop-color="#e3b95f" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#e3b95f" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#e3b95f" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="initial-clip">
+      <rect x="104" y="96" width="124" height="124" rx="5"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="384" rx="20" fill="url(#ground)"/>
+
+  <!-- Scribal ruling and margin bounding line -->
+  <g stroke="#ece0c6" fill="none">
+    <path stroke-opacity=".06" d="M34 52H1166M34 80H1166M34 108H1166M34 136H1166M34 164H1166M34 192H1166M34 220H1166M34 248H1166M34 276H1166M34 304H1166M34 332H1166"/>
+    <path stroke-opacity=".11" d="M96 44V340"/>
+  </g>
+
+  <!-- Illuminated border -->
+  <g fill="none">
+    <rect x="10" y="10" width="1180" height="364" rx="14" stroke="url(#gold)" stroke-opacity=".6" stroke-width="2"/>
+    <rect x="18" y="18" width="1164" height="348" rx="8" stroke="#e3b95f" stroke-opacity=".3" stroke-width="1"/>
+  </g>
+  <g fill="#e3b95f" opacity=".6">
+    <path d="M18 11l7 7-7 7-7-7zM1182 11l7 7-7 7-7-7zM18 359l7 7-7 7-7-7zM1182 359l7 7-7 7-7-7z"/>
+  </g>
+
+  <!-- ============ LEFT: the folio ============ -->
+
+  <!-- Marginalia: Masoretic paragraph markers -->
+  <g fill="#e2705f" font-family="Georgia, 'Times New Roman', serif" font-size="19" text-anchor="middle" opacity=".92">
+    <text x="70" y="140">פ</text>
+    <text x="70" y="182">ס</text>
+  </g>
+
+  <!-- Marginalia: manicule pointing at the parsed tokens -->
+  <g transform="translate(78 257) scale(-1 1)">
+    <path d="M0 11c0-1.7 1.4-3 3-3h11V5.5C14 2.5 16.5 0 19.5 0h6.5C29.3 0 32 2.7 32 6v8c0 3.3-2.7 6-6 6h-7.5c-2.7 0-4.5-1.8-4.5-4.5V14H3c-1.6 0-3-1.3-3-3z" fill="#ece0c6" opacity=".6"/>
+    <path d="M19 5.4h9M19 10h9M19 14.6h9" stroke="#131b24" stroke-width="1.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Illuminated initial: alpha with a knowledge graph woven through -->
+  <rect x="104" y="96" width="124" height="124" rx="5" fill="#1a222c"/>
+  <g clip-path="url(#initial-clip)">
+    <g stroke="#63d2c7" fill="none" stroke-opacity=".45" stroke-width="1.2">
+      <path d="M126 120l40 30 40-34M118 196l48-46 44 48M126 120l-8 76M206 116l4 82"/>
+    </g>
+    <text x="166" y="193" font-family="Georgia, 'Times New Roman', serif" font-size="98" font-weight="600" text-anchor="middle" fill="#e3b95f" fill-opacity=".14" stroke="url(#gold)" stroke-width="2.4">Α</text>
+    <g fill="#1a222c" stroke="#63d2c7" stroke-width="1.6">
+      <circle cx="126" cy="120" r="4.5"/>
+      <circle cx="206" cy="116" r="4.5"/>
+      <circle cx="118" cy="196" r="3.5"/>
+      <circle cx="210" cy="198" r="3.5"/>
+      <circle cx="166" cy="150" r="5.5"/>
+    </g>
+  </g>
+  <rect x="104" y="96" width="124" height="124" rx="5" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+  <g stroke="#e3b95f" stroke-opacity=".65" fill="#e3b95f" fill-opacity=".65" stroke-width="1.2" stroke-linecap="round">
+    <path d="M112 118v-6h6M220 118v-6h-6M112 198v6h6M220 198v6h-6" fill="none"/>
+    <circle cx="112" cy="112" r="1.8" stroke="none"/>
+    <circle cx="220" cy="112" r="1.8" stroke="none"/>
+    <circle cx="112" cy="204" r="1.8" stroke="none"/>
+    <circle cx="220" cy="204" r="1.8" stroke="none"/>
+  </g>
+
+  <!-- Scripture column, first line rubricated -->
+  <text x="238" y="124" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#e3b95f">1</text>
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="19">
+    <text x="248" y="131" fill="#e2705f">Ἐν ἀρχῇ ἦν ὁ λόγος,</text>
+    <text x="248" y="159" fill="#ece0c6">καὶ ὁ λόγος ἦν πρὸς</text>
+    <text x="248" y="187" fill="#ece0c6">τὸν θεόν, καὶ θεὸς</text>
+  </g>
+
+  <!-- The same words, parsed -->
+  <g>
+    <g fill="#1a222c" stroke="#63d2c7" stroke-opacity=".4" stroke-width="1.2">
+      <rect x="104" y="250" width="96" height="36" rx="6"/>
+      <rect x="210" y="250" width="96" height="36" rx="6"/>
+      <rect x="316" y="250" width="96" height="36" rx="6"/>
+    </g>
+    <g font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#ece0c6" text-anchor="middle">
+      <text x="152" y="274">λόγος</text>
+      <text x="258" y="274">ἦν</text>
+      <text x="364" y="274">θεός</text>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" fill="#63d2c7" text-anchor="middle" letter-spacing=".4">
+      <text x="152" y="306">N-NSM</text>
+      <text x="258" y="306">V-IAI-3S</text>
+      <text x="364" y="306">N-NSM</text>
+    </g>
+  </g>
+
+  <!-- ============ RIGHT: the apparatus ============ -->
+  <g>
+    <circle cx="965" cy="180" r="104" fill="none" stroke="#e3b95f" stroke-opacity=".22" stroke-width="1" stroke-dasharray="3 7"/>
+    <g stroke="#63d2c7" stroke-opacity=".4" stroke-width="1.2" fill="none">
+      <path d="M965 180L965 76M965 180l99-32M965 180l61 84M965 180l-61 84M965 180l-99-32"/>
+    </g>
+    <g fill="#161e27" stroke="url(#gold)" stroke-width="2">
+      <circle cx="965" cy="76" r="8"/>
+      <circle cx="1064" cy="148" r="8"/>
+      <circle cx="1026" cy="264" r="8"/>
+      <circle cx="904" cy="264" r="8"/>
+      <circle cx="866" cy="148" r="8"/>
+    </g>
+    <circle cx="965" cy="180" r="30" fill="#1a222c" stroke="url(#gold)" stroke-width="2.5"/>
+    <text x="965" y="186" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#ece0c6" text-anchor="middle">λόγος</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#9a8d78" letter-spacing=".6">
+      <text x="965" y="58" text-anchor="middle">LEXICON</text>
+      <text x="1080" y="152" text-anchor="start">MORPHOLOGY</text>
+      <text x="1026" y="290" text-anchor="middle">CROSS-REF</text>
+      <text x="904" y="290" text-anchor="middle">DISCOURSE</text>
+      <text x="850" y="152" text-anchor="end">CONFESSIONS</text>
+    </g>
+  </g>
+
+  <!-- ============ CENTRE: the wordmark ============ -->
+  <g text-anchor="middle">
+    <text x="600" y="206" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="600" letter-spacing="3" fill="#f3ead6">CLAUDE</text>
+    <g transform="translate(600 232)">
+      <path d="M-148 0H-40M40 0h108" stroke="url(#rule)" stroke-width="1.5"/>
+      <path d="M0 0l9-6 9 6-9 6zM0 0l-9-6-9 6 9 6z" fill="#e3b95f" opacity=".9"/>
+      <path d="M-20 0h-8M20 0h8" stroke="#e3b95f" stroke-opacity=".7" stroke-width="1.5"/>
+    </g>
+    <text x="600" y="258" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="7" fill="#e3b95f">OF ALEXANDRIA</text>
+    <text x="600" y="346" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" letter-spacing="2.8" fill="#9a8d78">RIGOROUS BIBLICAL STUDY FOR AI AGENTS</text>
+  </g>
+</svg>
