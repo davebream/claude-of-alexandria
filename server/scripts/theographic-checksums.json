@@ -1,0 +1,10 @@
+{
+  "commit": "cfb1c485d4da6fb63a69cb3b7f5b0752792f46bc",
+  "files": {
+    "events.json": "59dc86b8ff124813488fa036ffb70ff83127e024aa6ccd326c905d5c5018b5a9",
+    "people.json": "76041eba0b6f36c36514802fcfa69a068cbf06ef7b57aaec82909f509e3b6fb4",
+    "peopleGroups.json": "1cedf112a81ab20dd4debd6ae58a3d55a25c37841b29aa608fa8e21d6efc71a7",
+    "places.json": "5a8e929baa4701602e461e66271a0fa6e9f6f6629635053f1a1e4bbcfce06c14",
+    "verses.json": "471b7d7648acd4cf5300437acd9d048514f6a5da1f34f4ce2e43ef9eeec0e858"
+  }
+}
