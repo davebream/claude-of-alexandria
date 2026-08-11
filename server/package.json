@@ -32,7 +32,7 @@
     "ajv-formats": "^3.0.1",
     "hebrew-transliteration": "2.11.0",
     "sql.js": "^1.14.1",
-    "tsx": "^4.23.1",
+    "tsx": "^4.23.11",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10",
     "wrangler": "^4.118.0"
