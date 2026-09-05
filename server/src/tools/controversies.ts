@@ -231,7 +231,7 @@ async function handlePassage(args: Extract<ControversiesInput, { mode: 'passage'
   const sql = `
     SELECT DISTINCT t.topic, t.slug, t.category, t.rating, t.summary, t.positions, t.sources, t.note
     FROM controversy_topics t
-    JOIN controversy_passages p ON p.topic_id = t.id
+    JOIN controversy_passages p ON p.controversy_id = t.id
     WHERE p.book = ? AND p.start_enc <= ? AND p.end_enc >= ?
     ORDER BY t.category, t.topic, t.slug
   `;

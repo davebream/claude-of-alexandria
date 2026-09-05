@@ -1,5 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import initSqlJs, { type Database } from 'sql.js';
 import { queryControversies } from './controversies.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const MIGRATIONS_DIR = path.join(__dirname, '..', '..', 'migrations');
 
 // Mock the database query module
 vi.mock('../db/query.js', () => ({
@@ -313,5 +320,59 @@ describe('robustness', () => {
     // Attribution must describe the controversies dataset specifically — not Theographic/TIPNR entity data
     expect(body.attribution.toLowerCase()).toContain('curated');
     expect(body.attribution.toLowerCase()).toContain('scholarship');
+  });
+});
+
+// ─── Real-schema execution (issue #188) ──────────────────────────────────────
+// Every test above mocks `query()`, so the SQL string in controversies.ts is
+// never executed and a column that does not exist in the schema cannot fail an
+// assertion. That is exactly how `p.topic_id` shipped in 0017's feature commit
+// and survived to v5.0.0: the table has always declared `controversy_id`.
+//
+// This block follows the migration-executed fixture pattern established by
+// paragraphs.test.ts — it runs the real 0017/0018 migration SQL in sql.js and
+// routes query() at it, so the handler's own SQL must prepare against the
+// shipped schema. A rename on either side fails here before it can reach D1.
+
+describe('mode="passage" against the real migration schema', () => {
+  let db: Database;
+
+  beforeAll(async () => {
+    const SQL = await initSqlJs();
+    db = new SQL.Database();
+    for (const file of ['0017_add_controversies.sql', '0018_seed_controversies.sql']) {
+      db.run(readFileSync(path.join(MIGRATIONS_DIR, file), 'utf-8'));
+    }
+  });
+
+  beforeEach(() => {
+    mockLookupBook.mockReturnValue({ canonical: 'exodus', displayName: 'Exodus', testament: 'ot', morphologyFile: 'exodus' });
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      const stmt = db.prepare(sql);
+      if (params.length > 0) stmt.bind(params as never);
+      const rows: Record<string, unknown>[] = [];
+      while (stmt.step()) rows.push(stmt.getAsObject());
+      stmt.free();
+      return rows;
+    });
+  });
+
+  it('prepares and executes its join against the shipped controversy_passages schema', async () => {
+    const result = await queryControversies({ mode: 'passage', book: 'Exodus', range: '12:1-51' });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse((result.content[0] as { text: string }).text);
+    expect(body.mode).toBe('passage');
+    expect(body.topics.map((t: { slug: string }) => t.slug)).toContain('date-of-the-exodus');
+  });
+
+  it('returns an empty topic list for a book with no seeded controversy passages', async () => {
+    mockLookupBook.mockReturnValue({ canonical: 'psalms', displayName: 'Psalms', testament: 'ot', morphologyFile: 'psalms' });
+
+    const result = await queryControversies({ mode: 'passage', book: 'Psalms', range: '134:1-3' });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse((result.content[0] as { text: string }).text);
+    expect(body.topics).toEqual([]);
   });
 });
