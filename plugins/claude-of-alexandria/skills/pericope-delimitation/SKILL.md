@@ -2,8 +2,8 @@
 name: pericope-delimitation
 description: Use when validating whether a biblical passage constitutes a coherent discourse unit. Use when user asks to check passage boundaries, evaluate if a text range is a natural pericope, or needs to know if their selected passage should be extended or contracted.
 allowed-tools: Agent
-version: 1.0.0
-changed: "2026-04-30"
+version: 1.1.0
+changed: "2026-09-05"
 ---
 
 # Pericope Delimitation
@@ -12,6 +12,7 @@ Invoke the **pericope-delimitation** agent via the Agent tool and return its out
 
 ```yaml
 subagent_type: "claude-of-alexandria:pericope-delimitation"
+run_in_background: false
 ```
 
 Forward the user's ENTIRE message as the Task prompt — do not strip, rephrase,

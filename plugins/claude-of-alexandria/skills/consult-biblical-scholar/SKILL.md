@@ -2,8 +2,8 @@
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
 allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.2.0
-changed: "2026-07-17"
+version: 1.3.0
+changed: "2026-09-05"
 ---
 
 # Consult Biblical Scholar
@@ -337,8 +337,32 @@ consult-biblical-scholar (skill, user's model)
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:biblical-scholar"
+  run_in_background: false
   prompt: "[MODE] [passage]. [question/claim]"
 ```
+
+**Every spawn in this chain is synchronous and unnamed.** Both hops — this skill to
+biblical-scholar, and biblical-scholar to data-retriever — carry the same two
+requirements, and each exists to stop a specific silent failure.
+
+| Requirement | Why | What breaks without it |
+|---|---|---|
+| `run_in_background: false` | An async spawn returns a launch acknowledgment, not the delegate's output | The caller receives a plausible status line ("data gathering is running") that is indistinguishable from a real answer. The delegate finishes after the caller has returned, so its work is discarded, not delayed. |
+| No `name:` | A named spawn can be routed to the harness's in-process teammate path | That path writes the subagent metadata sidecar with no `toolUseId` and with `agentType` set to the display name instead of the real agent type. Every MCP call the delegate made becomes unattributable. |
+
+**What downstream consumers can rely on.** Each agent in this chain is spawned through the
+ordinary subagent path, so the session's `subagents/*.meta.json` sidecar for every spawn
+carries a `toolUseId` linking it to the `tool_use` entry in its parent's transcript. Tools
+that reconstruct provenance by walking the subagent transcript family can assume that link
+exists for every agent this skill spawns, at every depth. The sidecar itself is written by
+the harness rather than by this plugin; what the plugin guarantees is that its spawns stay
+on the path where the harness writes a complete one.
+
+**A status line is not a result.** If biblical-scholar returns a line saying its delegate is
+running or that analysis will follow, treat that as a failed delegation, not an answer. Fall
+back to direct MCP tool calls per the Rule 2 table and note the fallback. This is a distinct
+failure from the agent returning CANNOT ANSWER — a status line reports no confidence tier at
+all, so it cannot be inherited.
 
 **Parsing agent output:**
 - `CONFIDENCE:` line → inherit as skill's confidence ceiling
@@ -346,7 +370,9 @@ Agent tool:
 - `## Scholarly Sources` → integrate into Data Sources
 - `## Limitations` → surface in evidence summary
 
-**Fallback:** If Agent tool fails or agent returns CANNOT ANSWER, fall back to direct MCP tool calls per Rule 2 table. Note the fallback in the response.
+**Fallback:** If Agent tool fails, the agent returns CANNOT ANSWER, or the agent returns a
+spawn status instead of an analysis, fall back to direct MCP tool calls per Rule 2 table.
+Note the fallback in the response.
 
 ---
 
@@ -483,6 +509,7 @@ Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph
 | **Speaker data as settled exegesis** | Angel-of-the-LORD attribution presented as theological fact | Speaker attributions from MACULA/FCBH are dataset interpretations. Flag Angel-of-the-LORD as "dataset attribution, not settled exegesis." |
 | **Silently picked one side of a flagged controversy** | `query_controversies` returned a record but only one position was presented, or the dispute was resolved without stating "the agent does not resolve this debate" | When a controversy record is returned, ALL major positions must be presented with named scholars and evidence. No winner. No synthesis that erases positions. |
 | **Skipping `query_controversies`** | Answered a historically or interpretively contested question without calling `query_controversies` first | At MEANING, VALIDATE, and CROSS-REFERENCE entry, call `query_controversies` with passage and/or topic. A `{topics:[]}` result permits normal response. A non-empty result requires both-sides presentation. |
+| **Spawn status returned as an answer** | biblical-scholar replies that its delegate is running and analysis will follow; the reply carries no confidence tier and no evidence, but reads like progress | A status line is a failed delegation. Fall back to direct MCP calls per Rule 2 and note it. Never pass a "still running" line through to the user as the response. |
 
 ---
 

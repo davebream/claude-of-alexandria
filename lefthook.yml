@@ -4,6 +4,9 @@ pre-commit:
     - name: version-sync
       run: ./scripts/validate-versions.sh
 
+    - name: agent-spawns
+      run: ./scripts/validate-agent-spawns.sh
+
     - name: notice-sync
       run: cd server && npm run check-notices
 
