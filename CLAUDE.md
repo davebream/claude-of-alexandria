@@ -222,12 +222,12 @@ Every PR runs `.github/workflows/ci.yml`:
 | `typecheck` | `server && npm run typecheck` |
 | `test` | `server && npm test` (vitest) |
 | `audit` | server production dependency audit |
-| `validate-plugin` | version consistency, skill-tool wiring, README counts, LICENSE and CHANGELOG present |
+| `validate-plugin` | version consistency, skill-tool wiring, agent spawn blocks, README counts, LICENSE and CHANGELOG present |
 | `secret-scan` | Betterleaks over the PR diff (full history on push) |
 
-Lefthook runs a subset before each commit (`lefthook.yml`): version sync and Betterleaks. If a gate fails, fix the cause. Do not bypass the hook.
+Lefthook runs a subset before each commit (`lefthook.yml`): version sync, agent spawn blocks, and Betterleaks. If a gate fails, fix the cause. Do not bypass the hook.
 
-The validation scripts live in `scripts/` and run standalone — `./scripts/validate-versions.sh`, `./scripts/validate-skill-tools.sh`, `./scripts/validate-readme-counts.sh`. Run them before you push rather than discovering the failure in CI.
+The validation scripts live in `scripts/` and run standalone — `./scripts/validate-versions.sh`, `./scripts/validate-skill-tools.sh`, `./scripts/validate-readme-counts.sh`, `./scripts/validate-agent-spawns.sh`. Run them before you push rather than discovering the failure in CI.
 
 ---
 

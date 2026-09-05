@@ -158,7 +158,7 @@ export async function queryEvents(args: EventsInput): Promise<CallToolResult> {
         t.slug,
         t.rating
       FROM controversy_passages p
-      JOIN controversy_topics t ON t.id = p.topic_id
+      JOIN controversy_topics t ON t.id = p.controversy_id
       WHERE p.book = ?
         AND p.start_enc <= ?
         AND p.end_enc >= ?

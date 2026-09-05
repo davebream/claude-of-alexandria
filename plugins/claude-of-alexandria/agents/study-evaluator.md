@@ -36,8 +36,15 @@ You are the study-evaluator — you assess bible study materials against exegeti
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:biblical-scholar"
+  run_in_background: false
   prompt: "ANALYZE [passage reference]. Provide a reference analysis for evaluating study materials."
 ```
+
+**Spawn synchronously and unnamed.** `run_in_background: false` is required — without it
+the Agent tool returns a launch acknowledgment rather than the delegate's output. Do not
+pass `name:`; a named spawn can be recorded without a `toolUseId`, which breaks provenance
+for consumers that walk the subagent transcript. Never return a spawn status in place of
+your own evaluation.
 
 Use the scholar's CONFIDENCE tier. If reference analysis confidence is LOW, mark all drift findings as PROVISIONAL.
 

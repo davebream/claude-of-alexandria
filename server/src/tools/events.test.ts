@@ -1,5 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import initSqlJs, { type Database } from 'sql.js';
 import { queryEvents } from './events.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const MIGRATIONS_DIR = path.join(__dirname, '..', '..', 'migrations');
 
 // Mock the database query module
 vi.mock('../db/query.js', () => ({
@@ -202,5 +209,56 @@ describe('chapter_contested flag', () => {
     expect(ev.controversies[1].rating).toBe('medium');
     // then low
     expect(ev.controversies[2].rating).toBe('low');
+  });
+});
+
+// ─── Real-schema execution of the controversy overlap query (issue #188) ─────
+// The `chapter_contested` tests above feed the controversy overlap query a
+// canned row, so they pass while the real query cannot prepare at all. In
+// production that query throws, events.ts catches it and substitutes `[]`, and
+// `chapter_contested` is therefore silently absent from every response rather
+// than erroring — which is why this went unnoticed from v3.4.0 to v5.0.0.
+//
+// This block routes only the controversy overlap SQL at the real 0017/0018
+// migration schema (other queries keep their fixtures), so the flag is proven
+// end to end against the columns the table actually declares.
+
+describe('chapter_contested against the real migration schema', () => {
+  let db: Database;
+
+  beforeAll(async () => {
+    const SQL = await initSqlJs();
+    db = new SQL.Database();
+    for (const file of ['0017_add_controversies.sql', '0018_seed_controversies.sql']) {
+      db.run(readFileSync(path.join(MIGRATIONS_DIR, file), 'utf-8'));
+    }
+  });
+
+  it('flags an Exodus 12 event from seeded controversy data', async () => {
+    // Non-controversy queries answer in call order: events, chapters, participants, locations.
+    const canned: Record<string, unknown>[][] = [
+      [eventRow1],
+      [chaptersForEvent1[0]],
+      [],
+      [],
+    ];
+    let next = 0;
+    mockQuery.mockImplementation(async (sql: string, params: unknown[] = []) => {
+      if (!sql.includes('controversy_passages')) return canned[next++] ?? [];
+      const stmt = db.prepare(sql);
+      if (params.length > 0) stmt.bind(params as never);
+      const rows: Record<string, unknown>[] = [];
+      while (stmt.step()) rows.push(stmt.getAsObject());
+      stmt.free();
+      return rows;
+    });
+
+    const result = await queryEvents({ book: 'exodus', chapter_range: '12' });
+
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse((result.content[0] as { text: string }).text);
+    const ev = body.events[0];
+    expect(ev.chapter_contested).toBe(true);
+    expect(ev.controversies.map((c: { slug: string }) => c.slug)).toContain('date-of-the-exodus');
   });
 });

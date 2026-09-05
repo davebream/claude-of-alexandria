@@ -2,8 +2,8 @@
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.3.0
-changed: "2026-07-17"
+version: 1.4.0
+changed: "2026-09-05"
 ---
 
 # Exegetical Notes
@@ -199,10 +199,17 @@ exegetical-notes (skill, user's model)
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
+  run_in_background: false
   prompt: "Gather all relevant data for [Book] [Range].
            Also call query_morphology with pos_filter: 'conjunction'"
 ```
 Include the pos_filter request for NT epistles. Omit it for OT and non-epistolary books.
+
+**Spawn synchronously and unnamed.** `run_in_background: false` is required — without it
+the Agent tool returns a launch acknowledgment rather than the delegate's output, and the
+notes get composed with no MCP data behind them. Do not pass `name:`; a named spawn can be
+recorded without a `toolUseId`, which breaks provenance for consumers that walk the
+subagent transcript. Never return a spawn status in place of the notes.
 
 **Parsing data-retriever output:**
 - `MORPHOLOGY_SUMMARY:` → data for Section 4 (Lexical Analysis)

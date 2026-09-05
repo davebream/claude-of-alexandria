@@ -2,8 +2,8 @@
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.3.0
-changed: "2026-07-21"
+version: 1.4.0
+changed: "2026-09-05"
 ---
 
 # Biblical Text Segmentation
@@ -21,8 +21,16 @@ Help users divide biblical books into coherent textual units for teaching, study
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
+  run_in_background: false
   prompt: "Gather all relevant data for [book] [range if applicable]."
 ```
+
+**Spawn synchronously and unnamed.** `run_in_background: false` is required — without it
+the Agent tool returns a launch acknowledgment rather than the delegate's output, and
+segmentation proceeds with no MCP data behind it. Do not pass `name:`; a named spawn can be
+recorded without a `toolUseId`, which breaks provenance for consumers that walk the
+subagent transcript. Never return a spawn status in place of the segmentation. This applies
+to the argument-flow spawn below as well.
 
 **Data-retriever is required even when:**
 - **Refusing** a micro-book request (Philemon in 4 → gather data, THEN refuse citing discourse evidence)
@@ -136,6 +144,7 @@ Before proposing any slice boundaries, spawn the **argument-flow** agent:
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:argument-flow"
+  run_in_background: false
   prompt: "Analyze structural features of [passage] for reading-slice
            boundary planning. Identify chiasmus centers, contrast zones,
            dialogue boundaries, conditional-consequence pairs, and any

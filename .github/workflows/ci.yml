@@ -289,6 +289,9 @@ jobs:
       - name: Check README counts
         run: ./scripts/validate-readme-counts.sh
 
+      - name: Validate agent spawn blocks
+        run: ./scripts/validate-agent-spawns.sh
+
       - name: Validate eval config structure (model-free)
         run: ./scripts/validate-eval-structure.sh
 

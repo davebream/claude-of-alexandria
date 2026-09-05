@@ -268,6 +268,7 @@ NT epistles:
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
+  run_in_background: false
   prompt: "Gather all relevant data for [Book] [Range].
            Also call query_morphology with pos_filter: 'conjunction'"
 ```
@@ -276,8 +277,15 @@ OT / NT narrative:
 ```
 Agent tool:
   subagent_type: "claude-of-alexandria:data-retriever"
+  run_in_background: false
   prompt: "Gather all relevant data for [Book] [Range]"
 ```
+
+**Spawn synchronously and unnamed.** `run_in_background: false` is required — without it
+the Agent tool returns a launch acknowledgment rather than the delegate's output. Do not
+pass `name:`; a named spawn can be recorded without a `toolUseId`, which breaks provenance
+for consumers that walk the subagent transcript. Never return a spawn status in place of
+your proposition chain.
 
 **Parsing data-retriever output:**
 - `CONJUNCTION_MORPHOLOGY:` → primary data for connective inventory (NT epistles)
