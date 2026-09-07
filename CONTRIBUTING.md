@@ -10,13 +10,16 @@ run in seconds and are what CI enforces on your PR.
 
 ```bash
 # from the repo root
-./scripts/validate-versions.sh          # version manifests agree
-./scripts/validate-skill-tools.sh       # skills only cite MCP tools that exist
-./scripts/validate-readme-counts.sh     # README/badge counts match reality
-./scripts/validate-eval-structure.sh    # eval configs are well-formed (see below)
+npm ci --ignore-scripts
+npm run validate:model-free             # definitions, native loading, workflow, eval wiring
 
 cd server && npm run typecheck && npm test   # the server has real unit tests
 ```
+
+The model-free command is the same plugin gate used by pre-commit and CI. It makes tool-wiring
+failures fatal, checks the independently discovered component inventory, and verifies that the
+committed workflow still matches its versioned schemas. It does not call a model or the hosted
+MCP server.
 
 If those pass, your change is ready for review. **You do not need to run the agentic
 eval suite.** Most valuable contributions — a data-gap fix, a lexicon correction, a

@@ -9,8 +9,8 @@
 <p align="center">
   <a href="#installation"><img src="https://img.shields.io/badge/install-marketplace-1c6b68?style=flat-square" alt="Marketplace"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--v3-5b4a33?style=flat-square" alt="License"></a>
-  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-6%20%2B%206%20agents-a9791f?style=flat-square" alt="Skills"></a>
-  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-136%20automated-a5312a?style=flat-square" alt="Tests"></a>
+  <a href="#current-collection"><img src="https://img.shields.io/badge/skills-7%20%2B%2013%20agents-a9791f?style=flat-square" alt="Skills"></a>
+  <a href="#the-evidence"><img src="https://img.shields.io/badge/tests-204%20automated-a5312a?style=flat-square" alt="Tests"></a>
 </p>
 
 <p align="center">
@@ -21,7 +21,7 @@ Structured frameworks that prevent AI agents from committing exegetical malpract
 
 ## The Problem
 
-Frontier models make predictable errors when handling Scripture. These are documented by 53 RED-phase tests that run the same prompts *without* skills and record what goes wrong:
+Frontier models make predictable errors when handling Scripture. These are documented by 87 RED-phase tests that run the same prompts *without* skills and record what goes wrong:
 
 - **Fabricating linguistic data from training memory** — inventing morphological parsings, frequency counts, and hapax claims without querying actual data
 - **Inventing arbitrary divisions** to satisfy session counts ("8 weeks on Philemon") without checking manuscript markers
@@ -36,20 +36,23 @@ Frontier models make predictable errors when handling Scripture. These are docum
 
 ## The Evidence
 
-**136 automated tests** verify that skills prevent documented failures. Tests run against `claude-agent-sdk` with live MCP data — not mocked responses.
+**204 automated behavioral tests** document failures and verify corrections. Maintainer-run GREEN tests use `claude-agent-sdk` with live MCP data; orchestration also has a separate deterministic, model-free suite in CI.
 
 | Phase | Tests | What it does |
 |-------|-------|-------------|
-| RED | 53 | Runs prompts against a bare model (no skills, no MCP). Documents what goes wrong. |
-| GREEN | 50 | Core failure-mode corrections. One targeted assertion per documented failure. CI-friendly. |
-| EXTENDED | 32 | Quality, adversarial, and stress scenarios — run on-demand during skill development. |
+| RED | 87 | Runs prompts against a bare model (no skills, no MCP). Documents what goes wrong. |
+| GREEN | 80 | Core failure-mode corrections, direct-agent checks, workflow checks, and isolated consumer installs. Maintainer-run. |
+| EXTENDED | 36 | Quality, adversarial, and stress scenarios — run on-demand during skill development. |
 | Smoke | 1 | Verifies the skill-to-agent pipeline works end-to-end. |
 
-GREEN assertions use an Opus grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). Each GREEN scenario targets one documented RED failure mode. If a skill cannot demonstrate that it prevents a documented failure, it does not ship.
+GREEN assertions use a pinned Sonnet grader for LLM-rubric evaluation plus structural checks (`icontains`, section presence). Each GREEN scenario targets one documented RED failure mode. If a component cannot demonstrate that it prevents a documented failure, it does not ship.
 
 ## Current Collection
 
-**6 skills + 6 sub-agents, all production.** Coverage: all 66 canonical books.
+**7 skills + 13 sub-agents.** Coverage: all 66 canonical books.
+
+The internal `smoke-test` utility is intentionally excluded from the seven-skill collection
+count but remains available for installation verification.
 
 ### Skills
 
@@ -115,6 +118,35 @@ Assembles a passage reader with a deduplicated lemma glossary:
 
 Composes existing morphology and lexicon tools into a graded-reader study artifact.
 
+#### [study-team](plugins/claude-of-alexandria/skills/study-team/)
+
+Runs an optional interactive challenge round over a completed `deep-study` report:
+
+- Coordinates exactly three perspectives: textual evidence, interpretation, and critique
+- Requires an attended Claude Code session with agent teams already enabled
+- Supports in-process teammates only; it never changes settings or substitutes ordinary sub-agents
+- Preserves unresolved disagreement and leaves the lead as the sole report writer
+
+### Scripted Workflow
+
+#### `deep-study`
+
+Runs a bounded, evidence-first exegetical study as a native Claude Code workflow:
+
+```text
+validate → retrieve → boundary → two parallel analyses → verify → optional one-time repair → synthesize
+```
+
+Invoke `/claude-of-alexandria:deep-study` with a passage, research question, output language,
+context, and explicit constraints. The workflow permits at most two simultaneous agent calls,
+eight calls total, and one repair cycle. Missing input produces a clarification; unavailable
+essential evidence or unresolved verification produces an explicitly incomplete report.
+Four dedicated leaf agent types enforce the stage boundaries: retrieval and verification expose
+only the plugin's read-only MCP tools, while analysis and synthesis expose no tools at all.
+
+The orchestration is repeatable, but model output is not deterministic. Relaunching within the
+same session can reuse eligible completed calls. Start a new run when fresh retrieval matters.
+
 ### Sub-Agents
 
 Skills delegate specialized work to sub-agents. You do not invoke these directly — skills spawn them automatically.
@@ -133,8 +165,15 @@ study-evaluator (Sonnet)
 | `pericope-delimitation` | Sonnet | Boundary validation with structured verdicts grounded in discourse markers |
 | `argument-flow` | Sonnet | Logical structure mapping with connective-anchored proposition chains |
 | `smoke-test` | Haiku | Pipeline verification (returns a known marker string) |
+| `deep-study-retrieval` | Inherit | Read-only MCP evidence retrieval with explicit outcomes and provenance |
+| `deep-study-analysis` | Inherit | Tool-free boundary, discourse, interpretation, and targeted-repair analysis |
+| `deep-study-verification` | Inherit | Independent read-only MCP verification of claim/evidence references |
+| `deep-study-synthesis` | Inherit | Tool-free report rendering that cannot introduce new evidence |
+| `study-team-textual-evidence` | Sonnet | Leaf teammate for passage structure and evidence-ID integrity |
+| `study-team-interpretation` | Sonnet | Leaf teammate for the evidence-to-interpretation chain |
+| `study-team-critique` | Sonnet | Leaf teammate for adversarial confidence and synthesis review |
 
-Agent correctness is tested indirectly through skill GREEN suites, plus 11 dedicated RED-phase tests that document bare-model failure modes.
+Agent correctness is covered by direct-agent GREEN configurations and matching RED authoring evidence.
 
 ## Development Setup
 
@@ -144,7 +183,8 @@ Agent correctness is tested indirectly through skill GREEN suites, plus 11 dedic
 ln -sf ../../scripts/pre-commit.sh .git/hooks/pre-commit
 ```
 
-This runs secret scanning, TypeScript typecheck, and server tests before every commit.
+This runs secret scanning, the model-free plugin gate, TypeScript typecheck, and server tests
+before every commit.
 
 ## Installation
 
@@ -157,7 +197,7 @@ This runs secret scanning, TypeScript typecheck, and server tests before every c
 
 The MCP server is included and auto-configured.
 
-[Claude Code 2.1.217](https://github.com/anthropics/claude-code/releases/tag/v2.1.217)
+[Claude Code 2.1.263](https://github.com/anthropics/claude-code/releases/tag/v2.1.263)
 and later require an explicit opt-in for nested sub-agent delegation. Set the
 maximum spawn depth to `3`, which supports the deepest current chain
 (`main → study-evaluator → biblical-scholar → data-retriever`).
@@ -177,6 +217,29 @@ set -x CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH 3
 If the variable is unset, scholar agents keep working through their direct-MCP
 fallback, but they skip the data-retriever compression step and may report
 reduced confidence.
+
+The `deep-study` command also requires Dynamic workflows to be available and enabled in Claude
+Code. It runs only when explicitly invoked.
+
+`study-team` is a separate experimental mode. Enable agent teams before launching the attended
+session, and pin this release's supported display mode to in-process:
+
+POSIX shells (bash, zsh):
+
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+claude --teammate-mode in-process
+```
+
+Fish:
+
+```fish
+set -x CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS 1
+claude --teammate-mode in-process
+```
+
+Then complete `/claude-of-alexandria:deep-study` and explicitly invoke
+`/claude-of-alexandria:study-team`. Split panes are not certified by this release.
 
 ### Claude Code (Manual)
 
@@ -212,7 +275,7 @@ Requires Node.js. Restart Claude Desktop after saving.
 
 ### Verify Installation
 
-- **Claude Code:** Run `/skills` and look for all five skills and `/agents` for sub-agents
+- **Claude Code:** Run `/skills` and look for the seven scholarly skills plus the `smoke-test` utility; plugin agents are discovered under their `claude-of-alexandria:` namespace
 - **Claude Desktop:** Ask Claude to use `query_vocabulary` for any biblical book
 
 ## Reference Server

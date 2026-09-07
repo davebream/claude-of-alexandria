@@ -6,7 +6,15 @@
 
 The MCP server runs on Cloudflare Workers + D1 (edge SQLite). Skills call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — with no local installation required.
 
-Skills delegate specialized work to sub-agents:
+COA uses separate execution paths for separate jobs:
+
+| Path | Use |
+|---|---|
+| Context-aware skills | Preserve the user's current request and await specialist results |
+| `deep-study` workflow | Repeatable, bounded orchestration with structured stage contracts |
+| `study-team` | Optional attended discussion between three in-process teammates |
+
+Some skills delegate specialized work to sub-agents:
 
 ```
 study-evaluator (Sonnet)
@@ -134,9 +142,42 @@ Divides biblical books into coherent teaching units with integrity safeguards.
 /claude-of-alexandria:biblical-segmentation Divide Romans into 12 sessions for a sermon series.
 ```
 
+### passage-glossary
+
+Builds a passage reader with a deduplicated, MCP-grounded lemma glossary.
+
+```text
+/claude-of-alexandria:passage-glossary Philippians 2:5-11
+```
+
+### study-team
+
+Runs an optional three-perspective review of a completed `deep-study` report. It requires an
+attended interactive session with agent teams already enabled and supports in-process teammates
+only. It does not change settings or fall back to ordinary sub-agents.
+
+```text
+/claude-of-alexandria:study-team
+```
+
+## Available Workflow
+
+### deep-study
+
+Runs the fixed evidence → boundary → parallel analysis → verification → optional one-time repair
+→ synthesis graph. Input must include the passage, research question, output language, context,
+and constraints. At most two calls run concurrently and eight run in total.
+The workflow binds each call to one of four leaf agent types. Retrieval and verification can use
+only the plugin's read-only MCP tools; analysis and synthesis are tool-free. None can spawn a
+descendant.
+
+```text
+/claude-of-alexandria:deep-study passage=Philippians 2:5-11; research question=How does the passage present Christ's humiliation and exaltation?; output language=English; context=Teaching outline; constraints=Distinguish evidence from interpretation
+```
+
 ## Available Agents
 
-Sub-agents are spawned by skills automatically. They are not invoked directly.
+Sub-agents are selected by skills or workflows automatically. They are not invoked directly.
 
 | Agent | Model | Role |
 |-------|-------|------|
@@ -146,10 +187,20 @@ Sub-agents are spawned by skills automatically. They are not invoked directly.
 | `pericope-delimitation` | Sonnet | Boundary validation with structured verdicts |
 | `argument-flow` | Sonnet | Logical structure mapping with proposition chains |
 | `smoke-test` | Haiku | Pipeline verification |
+| `deep-study-retrieval` | Inherit | Read-only MCP evidence retrieval and provenance capture |
+| `deep-study-analysis` | Inherit | Tool-free boundary, discourse, interpretation, and repair analysis |
+| `deep-study-verification` | Inherit | Read-only MCP claim and reference verification |
+| `deep-study-synthesis` | Inherit | Tool-free final report rendering |
+| `study-team-textual-evidence` | Sonnet | Leaf teammate for textual structure and evidence integrity |
+| `study-team-interpretation` | Sonnet | Leaf teammate for the evidence-to-interpretation chain |
+| `study-team-critique` | Sonnet | Leaf teammate for adversarial confidence and synthesis review |
 
 ## Development
 
-This plugin is built using Test-Driven Development. 104 core-CI promptfoo tests (53 RED + 50 GREEN + 1 smoke) verify that skills prevent documented failures, run against `claude-agent-sdk` with live MCP data. Every skill also has documented failure cases and verification evidence in the `tests/` directory at the repository root.
+This plugin is built using Test-Driven Development. Model-free CI validates every shipped
+definition, reference, generated workflow, and canonical RED/GREEN configuration. Maintainer-run
+promptfoo acceptance uses the Claude Agent SDK with live MCP data; paid model evaluations do not
+run in PR CI.
 
 See [CLAUDE.md](CLAUDE.md) for development guidelines and the Librarian's instructions.
 
