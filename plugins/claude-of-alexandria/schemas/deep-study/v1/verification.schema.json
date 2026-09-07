@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-of-alexandria.local/schemas/deep-study/v1/verification.schema.json",
+  "title": "Deep study verification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "findings", "repairTargets", "unresolvedClaims"],
+  "properties": {
+    "status": { "enum": ["verified", "needs_repair", "incomplete", "failed"] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claimId", "verdict", "evidenceIds", "explanation"],
+        "properties": {
+          "claimId": { "type": "string", "minLength": 1 },
+          "verdict": { "enum": ["supported", "unsupported", "unresolved"] },
+          "evidenceIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "explanation": { "type": "string" }
+        }
+      }
+    },
+    "repairTargets": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unresolvedClaims": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

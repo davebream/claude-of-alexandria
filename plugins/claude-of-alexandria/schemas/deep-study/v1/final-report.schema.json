@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-of-alexandria.local/schemas/deep-study/v1/final-report.schema.json",
+  "title": "Deep study final report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "title",
+    "requestedPassage",
+    "researchQuestion",
+    "claimReferences",
+    "evidenceReferences",
+    "unresolvedClaims",
+    "limitations",
+    "renderedReport"
+  ],
+  "properties": {
+    "status": { "enum": ["complete", "incomplete"] },
+    "title": { "type": "string", "minLength": 1 },
+    "requestedPassage": { "type": "string", "minLength": 1 },
+    "researchQuestion": { "type": "string", "minLength": 1 },
+    "claimReferences": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "evidenceReferences": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unresolvedClaims": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "renderedReport": { "type": "string", "minLength": 1 }
+  }
+}

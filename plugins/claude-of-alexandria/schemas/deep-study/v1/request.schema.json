@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-of-alexandria.local/schemas/deep-study/v1/request.schema.json",
+  "title": "Deep study request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "passage",
+    "researchQuestion",
+    "outputLanguage",
+    "context",
+    "constraints"
+  ],
+  "properties": {
+    "passage": { "type": "string", "minLength": 1 },
+    "researchQuestion": { "type": "string", "minLength": 1 },
+    "outputLanguage": { "type": "string", "minLength": 1 },
+    "context": { "type": "string", "minLength": 1 },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "fresh": { "type": "boolean", "default": false }
+  }
+}
