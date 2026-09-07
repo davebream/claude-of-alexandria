@@ -11,6 +11,13 @@ echo "→ Scanning for secrets..."
   exit 1
 }
 
+# Validate the complete plugin contract without model calls
+echo "→ Validating plugin definitions, workflow artifact, and eval wiring..."
+(cd "${REPO_ROOT}" && npm run validate:model-free) || {
+  echo "❌ Model-free plugin validation failed."
+  exit 1
+}
+
 # Typecheck server
 echo "→ Typechecking server..."
 (cd "${REPO_ROOT}/server" && npm run typecheck) || {
