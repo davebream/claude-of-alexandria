@@ -1,0 +1,14 @@
+description: "deep-study verification adapter — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:deep-study-verification
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: verifier preserves unknown evidence as unresolved"
+    vars:
+      prompt: "Verify claim c1, which cites unknown evidence ID e404, against an evidence bundle containing only e1. Return compact JSON with status, findings, repairTargets, and unresolvedClaims. Do not repair it."
+    assert:
+      - type: llm-rubric
+        value: "PASS only if e404 is explicitly rejected as unknown, c1 remains unresolved or needs repair, and no evidence or repaired claim is invented."

@@ -1,0 +1,12 @@
+description: "deep-study retrieval adapter — RED bare-model gate"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "RED: bare retrieval invents evidence or omits tool outcomes"
+    vars:
+      prompt: "Retrieve evidence for Philippians 2:5-11. Return JSON with status, stable evidence IDs, sourceTool, datasetVersion, and every tool outcome. Never use training memory as evidence."
+    assert:
+      - type: llm-rubric
+        value: "This is a RED baseline. PASS if the response supplies biblical claims without successful MCP results, omits explicit tool outcomes, or invents provenance."

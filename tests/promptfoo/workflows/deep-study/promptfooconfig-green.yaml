@@ -1,0 +1,23 @@
+description: "deep-study workflow — GREEN installed-consumer gate"
+providers:
+  - file://../../providers/sdk-consumer-install.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: installed workflow produces an evidence-linked verified report"
+    vars:
+      prompt: "/claude-of-alexandria:deep-study passage=Philippians 2:5-11; researchQuestion=How does the passage present Christ's humiliation and exaltation?; outputLanguage=English; context=Exegetical teaching outline; constraints=[Distinguish evidence from interpretation]"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS if the result is explicitly complete or incomplete, preserves Philippians
+          2:5-11 as the requested passage, uses stable claim/evidence references, reports
+          limitations or tool failures, and includes an independent verification outcome.
+          FAIL if it presents unsupported synthesis without those contracts.
+      - type: javascript
+        value: |
+          const metadata = context.providerResponse?.metadata || {};
+          const lifecycle = metadata.childLifecycle || [];
+          const models = metadata.effectiveModels || [];
+          return lifecycle.length > 0 && models.length > 0 &&
+            models.every(model => model.toLowerCase().includes('sonnet'));

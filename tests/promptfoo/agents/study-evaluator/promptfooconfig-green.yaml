@@ -1,0 +1,20 @@
+description: "study-evaluator agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:study-evaluator
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct evaluator returns a verdict after scholar review"
+    vars:
+      prompt: |
+        Evaluate this short study inline: "Philippians 2:5-11 says Jesus models
+        humility, so Christians should simply try harder to be humble."
+    assert:
+      - type: icontains
+        value: "VERDICT:"
+      - type: javascript
+        value: |
+          const meta = context.providerResponse?.metadata || {};
+          return (meta.subagents || []).some(name => name.includes('biblical-scholar'));

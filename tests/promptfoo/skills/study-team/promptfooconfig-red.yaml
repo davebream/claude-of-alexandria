@@ -1,0 +1,16 @@
+description: "study-team skill — RED bare-model gate"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "RED: bare model role-plays a panel without checking team prerequisites"
+    vars:
+      prompt: "Run an interactive study team review of a deep study of Philippians 2:5-11."
+    assert:
+      - type: llm-rubric
+        value: |
+          This is a RED baseline. PASS when the bare model invents multiple perspectives,
+          delegates ordinary subagents, or proceeds without requiring both a completed
+          deep-study report and an already-enabled in-process agent-team session. FAIL only
+          if it enforces every prerequisite and refuses role-play or subagent fallback.

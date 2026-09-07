@@ -1,0 +1,8 @@
+---
+name: lost
+description: A definition-like file whose extension Claude Code does not discover.
+model: haiku
+tools: Read
+---
+
+This file deliberately uses the wrong extension.

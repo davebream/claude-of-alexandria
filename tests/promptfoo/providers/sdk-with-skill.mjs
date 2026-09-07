@@ -99,25 +99,46 @@ export default class SdkWithSkillProvider extends SdkProvider {
     return env;
   }
 
-  // The remote MCP server occasionally fails to register its tools at session
-  // start under concurrent eval load ("MCP tool access failed / not in the active
-  // toolset"), leaving the skill to fall back to ungrounded analysis. Since a
-  // GREEN skill session must ground in MCP data, a completed session with zero
-  // MCP tool calls signals a transient connection drop — retry it a bounded number
-  // of times rather than let flakiness pollute the results.
+  // Retry only a positively classified transport/infrastructure failure. A
+  // successful response with zero MCP calls is a behavioral failure, not evidence
+  // that the server failed to register. Retain every attempt and its usage.
   async callApi(prompt, context, callOptions) {
-    const maxAttempts = this.config.mcp_retries ?? 3;
-    let last;
+    const maxAttempts = Math.min(this.config.infrastructure_retries ?? 1, 1) + 1;
+    const attempts = [];
+    let last = null;
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       last = await super.callApi(prompt, context, callOptions);
-      if (last?.error) return last; // hard error — do not spin
-      const usedMcp = (last?.metadata?.toolCalls || []).some(
-        (t) => typeof t?.name === "string" && t.name.startsWith("mcp__")
-      );
-      if (usedMcp) return last;
-      // zero MCP calls → likely a transient MCP registration failure; retry
+      attempts.push({
+        attempt,
+        error: last?.error ?? null,
+        tokenUsage: last?.tokenUsage ?? null,
+        cost: last?.cost ?? 0,
+        toolResults: last?.metadata?.toolResults ?? [],
+      });
+      const text = JSON.stringify({
+        error: last?.error ?? "",
+        failedTools: (last?.metadata?.toolResults ?? []).filter((result) => result.isError),
+      });
+      const infrastructureFailure =
+        /(?:ECONN|ETIMEDOUT|connection (?:closed|failed|refused)|failed to connect|transport error|MCP server.*(?:failed|disconnected)|rate.?limit|overloaded)/i.test(
+          text,
+        );
+      if (!infrastructureFailure || attempt === maxAttempts) break;
     }
-    return last; // best effort after retries exhausted
+
+    const sum = (field) =>
+      attempts.reduce(
+        (total, entry) => total + (Number(entry.tokenUsage?.[field]) || 0),
+        0,
+      );
+    last.metadata = { ...(last.metadata || {}), attempts };
+    last.cost = attempts.reduce((total, entry) => total + entry.cost, 0);
+    last.tokenUsage = {
+      prompt: sum("prompt") || undefined,
+      completion: sum("completion") || undefined,
+      total: sum("total") || undefined,
+    };
+    return last;
   }
 
   buildOptions(cwd) {

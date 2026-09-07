@@ -1,0 +1,18 @@
+description: "study-team interpretation agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:study-team-interpretation
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct adapter audits the evidence-to-claim chain"
+    vars:
+      prompt: "Review this supplied report only: claim c1 infers an ethical pattern from evidence e1 about Philippians 2:5-11. No historical evidence is supplied."
+    assert:
+      - type: icontains
+        value: "PERSPECTIVE:"
+      - type: icontains
+        value: "c1"
+      - type: llm-rubric
+        value: "PASS if the response distinguishes the supplied evidence from inference and treats missing historical context as a limitation, not a fact."

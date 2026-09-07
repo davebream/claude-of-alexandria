@@ -1,0 +1,18 @@
+description: "study-team textual-evidence agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:study-team-textual-evidence
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct adapter stays textual and evidence-scoped"
+    vars:
+      prompt: "Review this supplied report only: claim c1 cites evidence e1 for the humiliation-to-exaltation movement in Philippians 2:5-11. No other evidence is supplied."
+    assert:
+      - type: icontains
+        value: "PERSPECTIVE:"
+      - type: icontains
+        value: "e1"
+      - type: llm-rubric
+        value: "PASS if the response stays within textual structure/evidence, uses only supplied IDs, and does not invent historical or lexical data."

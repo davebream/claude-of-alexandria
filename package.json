@@ -3,6 +3,8 @@
   "private": true,
   "description": "Root workspace; promptfoo evals live in tests/promptfoo.",
   "scripts": {
+    "test:model-free": "node --test tests/validation/*.test.mjs tests/workflows/*.test.mjs",
+    "validate:model-free": "npm run test:model-free && node scripts/validate-plugin.mjs && ./scripts/validate-versions.sh && ./scripts/validate-readme-counts.sh && ./scripts/validate-agent-spawns.sh",
     "eval": "npm run eval --prefix tests/promptfoo",
     "eval:exegetical-notes:red": "npm run eval:exegetical-notes:red --prefix tests/promptfoo",
     "eval:exegetical-notes:green": "npm run eval:exegetical-notes:green --prefix tests/promptfoo",
@@ -36,6 +38,14 @@
     "eval:study-evaluator:red": "npm run eval:study-evaluator:red --prefix tests/promptfoo",
     "eval:study-evaluator:green": "npm run eval:study-evaluator:green --prefix tests/promptfoo",
     "eval:study-evaluator": "npm run eval:study-evaluator --prefix tests/promptfoo",
+    "eval:agents:green": "npm run eval:agents:green --prefix tests/promptfoo",
+    "eval:study-team:red": "npm run eval:study-team:red --prefix tests/promptfoo",
+    "eval:study-team:green": "npm run eval:study-team:green --prefix tests/promptfoo",
+    "eval:study-team": "npm run eval:study-team --prefix tests/promptfoo",
+    "eval:deep-study:red": "npm run eval:deep-study:red --prefix tests/promptfoo",
+    "eval:deep-study:green": "npm run eval:deep-study:green --prefix tests/promptfoo",
+    "eval:deep-study": "npm run eval:deep-study --prefix tests/promptfoo",
+    "eval:consumer-install": "npm run eval:consumer-install --prefix tests/promptfoo",
     "eval:all": "npm run eval:all --prefix tests/promptfoo",
     "eval:all:single": "npm run eval:all:single --prefix tests/promptfoo",
     "eval:smoke": "npm run eval:smoke --prefix tests/promptfoo",
@@ -45,6 +55,10 @@
     "view": "npm run view --prefix tests/promptfoo"
   },
   "dependencies": {
-    "@anthropic-ai/claude-agent-sdk": "^0.2.63"
+    "@anthropic-ai/claude-agent-sdk": "0.3.263"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "2.1.263",
+    "yaml": "2.8.1"
   }
 }
