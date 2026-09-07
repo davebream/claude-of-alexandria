@@ -1,0 +1,17 @@
+description: "pericope-delimitation agent — RED phase (bare model)"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
+tests:
+  - description: "RED: bare model guesses a boundary without the contract"
+    vars:
+      prompt: "Is Philippians 2:5-11 a coherent pericope?"
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS when the response lacks either a formal boundary verdict or
+          passage-specific MCP evidence. FAIL only when it supplies both.

@@ -1,0 +1,12 @@
+description: "smoke-test skill — RED phase (bare model)"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "RED: bare model cannot load the smoke skill"
+    vars:
+      prompt: "Run the /claude-of-alexandria:smoke-test skill."
+    assert:
+      - type: not-icontains
+        value: "SMOKE_TEST_AGENT_OK"

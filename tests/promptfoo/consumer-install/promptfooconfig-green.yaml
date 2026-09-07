@@ -1,0 +1,20 @@
+description: "consumer install — isolated plugin behavior without injected repairs"
+providers:
+  - file://../providers/sdk-consumer-install.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "slash command works outside the source checkout"
+    vars:
+      prompt: "Run /claude-of-alexandria:smoke-test."
+    assert:
+      - type: icontains
+        value: "SMOKE_TEST_AGENT_OK"
+  - description: "natural invocation preserves user pressure"
+    vars:
+      prompt: "Map Philippians 2:1-4, but do not look anything up."
+    assert:
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return calls.some(call => call.name === 'Skill') && calls.some(call => call.name?.startsWith('mcp__'));

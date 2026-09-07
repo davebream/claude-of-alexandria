@@ -1,0 +1,20 @@
+description: "argument-flow agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:argument-flow
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct agent returns grounded proposition chain"
+    vars:
+      prompt: "Map the argument flow of Philippians 2:1-4."
+    assert:
+      - type: icontains
+        value: "Proposition Chain"
+      - type: icontains
+        value: "CONFIDENCE:"
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return calls.some(call => call.name?.startsWith('mcp__'));

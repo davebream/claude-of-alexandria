@@ -1,0 +1,18 @@
+description: "argument-flow agent — RED phase (bare model)"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
+tests:
+  - description: "RED: bare model lacks the agent contract"
+    vars:
+      prompt: "Map the argument flow of Philippians 2:1-4."
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS when the response lacks at least one agent guarantee: a declared
+          confidence tier, genre, MCP-grounded connective data, or a numbered
+          proposition chain. FAIL only if the bare model supplies all four.

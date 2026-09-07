@@ -1,109 +1,78 @@
 #!/usr/bin/env node
-/**
- * Merges all RED and GREEN promptfooconfigs into a single config so one
- * promptfoo run executes every test with results in one report.
- * Each test keeps its provider (without-skill for RED, with-skill for GREEN).
- *
- * Run from tests/promptfoo: node scripts/merge-all-configs.js
- * Output: promptfooconfig-all.yaml
- */
+/** Merge canonical RED/GREEN configs without changing their actual providers. */
 
-const fs = require('fs');
-const path = require('path');
-const yaml = require('yaml');
+const fs = require("node:fs");
+const path = require("node:path");
+const yaml = require("yaml");
 
-const ROOT = path.resolve(__dirname, '..');
-const PROVIDER_WITHOUT = 'anthropic:messages:claude-sonnet-4-6';
-const PROVIDER_WITH = 'file://providers/with-skill.agent-sdk.yaml';
-const PROVIDER_GRADER = {
-  id: 'anthropic:messages:claude-sonnet-4-6',
-  config: { temperature: 0 },
-};
+const ROOT = path.resolve(__dirname, "..");
 
-function findConfigs(dir, basename) {
-  const out = [];
-  if (!fs.existsSync(path.join(ROOT, dir))) return out;
-  for (const sub of fs.readdirSync(path.join(ROOT, dir))) {
-    const p = path.join(dir, sub, basename);
-    if (fs.existsSync(path.join(ROOT, p))) out.push(p);
-  }
-  return out;
-}
-
-const RED_GLOB = [
-  ...findConfigs('skills', 'promptfooconfig-red.yaml'),
-  ...findConfigs('agents', 'promptfooconfig-red.yaml'),
-];
-const GREEN_GLOB = [
-  ...findConfigs('skills', 'promptfooconfig-green.yaml'),
-  ...findConfigs('agents', 'promptfooconfig-green.yaml'),
-];
-
-function loadConfig(relativePath) {
-  const fullPath = path.join(ROOT, relativePath);
-  const raw = fs.readFileSync(fullPath, 'utf8');
-  return yaml.parse(raw);
-}
-
-function suiteName(relativePath) {
-  const match = relativePath.match(/^(skills|agents)\/([^/]+)\//);
-  return match ? match[2] : path.dirname(relativePath);
-}
-
-function collectTests() {
-  const tests = [];
-
-  for (const rel of RED_GLOB) {
-    const config = loadConfig(rel);
-    const suite = suiteName(rel);
-    const testList = config.tests || [];
-    for (const t of testList) {
-      tests.push({
-        description: `${suite} / ${t.description || 'RED'}`,
-        provider: PROVIDER_WITHOUT,
-        vars: t.vars,
-        assert: t.assert || [],
-      });
+function findConfigs(kind) {
+  const root = path.join(ROOT, kind);
+  if (!fs.existsSync(root)) return [];
+  const configs = [];
+  for (const component of fs.readdirSync(root)) {
+    for (const phase of ["red", "green"]) {
+      const file = path.join(root, component, `promptfooconfig-${phase}.yaml`);
+      if (fs.existsSync(file)) configs.push(file);
     }
   }
-
-  for (const rel of GREEN_GLOB) {
-    const config = loadConfig(rel);
-    const suite = suiteName(rel);
-    const defaultAssert = (config.defaultTest && config.defaultTest.assert) || [];
-    const testList = config.tests || [];
-    for (const t of testList) {
-      const assert = [...defaultAssert, ...(t.assert || [])];
-      tests.push({
-        description: `${suite} / ${t.description || 'GREEN'}`,
-        provider: PROVIDER_WITH,
-        vars: t.vars,
-        assert,
-      });
-    }
-  }
-
-  return tests;
+  return configs;
 }
 
-// NOTE: No top-level providers array. Each test has its own `provider` field
-// (sdk-bare for RED, sdk-with-skill for GREEN). If we listed both providers
-// at the top level, promptfoo would run every test against every provider
-// (matrix mode), doubling the run and mixing RED/GREEN providers incorrectly.
-// Instead we use a single dummy entry so promptfoo doesn't complain, but it
-// is overridden by the per-test provider field on every test.
+function normalizeFileReference(value, sourceFile) {
+  if (typeof value !== "string" || !value.startsWith("file://")) return value;
+  const referenced = value.slice("file://".length);
+  const absolute = path.resolve(path.dirname(sourceFile), referenced);
+  return `file://${path.relative(ROOT, absolute).split(path.sep).join("/")}`;
+}
+
+function normalizeProvider(provider, sourceFile) {
+  if (typeof provider === "string") return normalizeFileReference(provider, sourceFile);
+  return {
+    ...provider,
+    id: normalizeFileReference(provider.id, sourceFile),
+  };
+}
+
+function loadConfig(file) {
+  return yaml.parse(fs.readFileSync(file, "utf8"));
+}
+
+const configs = [
+  ...findConfigs("skills"),
+  ...findConfigs("agents"),
+  ...findConfigs("workflows"),
+  path.join(ROOT, "consumer-install/promptfooconfig-green.yaml"),
+].filter((file) => fs.existsSync(file));
+
+const tests = [];
+for (const file of configs) {
+  const config = loadConfig(file);
+  const provider = normalizeProvider(config.providers[0], file);
+  const defaultOptions = { ...(config.defaultTest?.options ?? {}) };
+  if (defaultOptions.provider) {
+    defaultOptions.provider = normalizeProvider(defaultOptions.provider, file);
+  }
+  const suite = path.relative(ROOT, path.dirname(file)).split(path.sep).join("/");
+  for (const entry of config.tests ?? []) {
+    tests.push({
+      ...entry,
+      description: `${suite} / ${entry.description ?? "scenario"}`,
+      provider,
+      options: { ...defaultOptions, ...(entry.options ?? {}) },
+      assert: [...(config.defaultTest?.assert ?? []), ...(entry.assert ?? [])],
+    });
+  }
+}
+
 const merged = {
-  description: 'Claude of Alexandria — all skills RED + GREEN (single run, one report)',
-  providers: [PROVIDER_WITHOUT],  // overridden per-test; just needs one entry
-  prompts: ['{{prompt}}'],
-  defaultTest: {
-    options: {
-      provider: PROVIDER_GRADER,
-    },
-  },
-  tests: collectTests(),
+  description: "Claude of Alexandria — canonical RED and GREEN acceptance",
+  providers: ["file://providers/sdk-bare.mjs"],
+  prompts: ["{{prompt}}"],
+  tests,
 };
 
-const outPath = path.join(ROOT, 'promptfooconfig-all.yaml');
-fs.writeFileSync(outPath, yaml.stringify(merged), 'utf8');
-console.log(`Wrote ${outPath} with ${merged.tests.length} tests.`);
+const outputPath = path.join(ROOT, "promptfooconfig-all.yaml");
+fs.writeFileSync(outputPath, yaml.stringify(merged), "utf8");
+console.log(`Wrote ${outputPath} with ${tests.length} tests.`);

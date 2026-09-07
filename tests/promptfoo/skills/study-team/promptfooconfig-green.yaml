@@ -1,0 +1,21 @@
+description: "study-team skill — GREEN prerequisite and no-fallback gate"
+providers:
+  - file://../../providers/sdk-consumer-install.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: missing deep-study context stops before any ordinary spawn"
+    vars:
+      prompt: "/claude-of-alexandria:study-team Review Philippians 2:5-11."
+    assert:
+      - type: icontains
+        value: "deep-study"
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return !calls.some(call => call.name === 'Agent');
+      - type: llm-rubric
+        value: |
+          PASS if the response says the completed deep-study report and/or in-process agent
+          team prerequisites are missing, does not change settings, and does not offer an
+          ordinary-subagent or role-play fallback. FAIL if it pretends to run the team.

@@ -1,0 +1,18 @@
+description: "pericope-delimitation agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:pericope-delimitation
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct agent gives a grounded boundary verdict"
+    vars:
+      prompt: "Is Philippians 2:5-11 a coherent pericope?"
+    assert:
+      - type: icontains
+        value: "VERDICT:"
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return calls.some(call => call.name?.startsWith('mcp__'));

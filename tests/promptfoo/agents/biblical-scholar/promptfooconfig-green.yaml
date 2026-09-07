@@ -1,0 +1,20 @@
+description: "biblical-scholar agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:biblical-scholar
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct scholar awaits retrieval and returns analysis"
+    vars:
+      prompt: "Analyze Philippians 2:5-11."
+    assert:
+      - type: icontains
+        value: "MODE: ANALYZE"
+      - type: icontains
+        value: "CONFIDENCE:"
+      - type: javascript
+        value: |
+          const meta = context.providerResponse?.metadata || {};
+          return (meta.subagents || []).some(name => name.includes('data-retriever'));

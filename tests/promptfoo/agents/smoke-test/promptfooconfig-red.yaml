@@ -1,0 +1,12 @@
+description: "smoke-test agent — RED phase (bare model)"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "RED: bare model does not know the private marker"
+    vars:
+      prompt: "Run the COA smoke-test agent."
+    assert:
+      - type: not-icontains
+        value: "SMOKE_TEST_AGENT_OK"

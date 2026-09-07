@@ -1,0 +1,14 @@
+description: "smoke-test agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:smoke-test
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct agent returns the marker"
+    vars:
+      prompt: "Respond according to your agent contract."
+    assert:
+      - type: equals
+        value: "SMOKE_TEST_AGENT_OK"

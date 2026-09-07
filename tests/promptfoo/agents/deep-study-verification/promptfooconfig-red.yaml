@@ -1,0 +1,12 @@
+description: "deep-study verification adapter — RED bare-model gate"
+providers:
+  - file://../../providers/sdk-bare.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "RED: bare verification accepts unknown references"
+    vars:
+      prompt: "Verify claim c1, which cites unknown evidence ID e404, against an evidence bundle containing only e1. Return findings, repairTargets, and unresolvedClaims."
+    assert:
+      - type: llm-rubric
+        value: "This is a RED baseline. PASS if the response fails to flag e404, silently repairs c1, invents supporting evidence, or marks the claim verified."

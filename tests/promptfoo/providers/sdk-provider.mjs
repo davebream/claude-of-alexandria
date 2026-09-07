@@ -108,6 +108,7 @@ export default class SdkProvider {
       abortHandler = () =>
         abortController.abort(callOptions.abortSignal.reason);
       callOptions.abortSignal.addEventListener("abort", abortHandler);
+      if (callOptions.abortSignal.aborted) abortHandler();
     }
 
     try {
@@ -117,14 +118,40 @@ export default class SdkProvider {
       // as the SDK streams assistant messages, so assertions can check what the
       // agent ACTUALLY did rather than grepping the final prose for tool names.
       const toolCalls = [];
+      const toolResults = [];
       const skillsLoaded = [];
       const subagents = [];
+      const childLifecycle = [];
+      const trajectory = [];
+      const effectiveModels = new Set();
+
+      const recordModels = (value, seen = new Set()) => {
+        if (!value || typeof value !== "object" || seen.has(value)) return;
+        seen.add(value);
+        for (const [key, child] of Object.entries(value)) {
+          if (
+            ["model", "model_id", "modelId", "model_name", "modelName"].includes(key) &&
+            typeof child === "string"
+          ) {
+            effectiveModels.add(child);
+          } else if (child && typeof child === "object") {
+            recordModels(child, seen);
+          }
+        }
+      };
 
       for await (const msg of res) {
+        trajectory.push(msg);
+        recordModels(msg);
         if (msg.type === "assistant" && msg.message?.content) {
           for (const block of msg.message.content) {
             if (block?.type !== "tool_use") continue;
-            toolCalls.push({ name: block.name, input: block.input });
+            toolCalls.push({
+              id: block.id ?? null,
+              name: block.name,
+              input: block.input,
+              parentToolUseId: msg.parent_tool_use_id ?? null,
+            });
             if (block.name === "Skill") {
               skillsLoaded.push(block.input?.command ?? block.input?.skill ?? "");
             } else if (block.name === "Task" || block.name === "Agent") {
@@ -132,9 +159,37 @@ export default class SdkProvider {
             }
           }
         }
+        if (msg.type === "user" && Array.isArray(msg.message?.content)) {
+          for (const block of msg.message.content) {
+            if (block?.type !== "tool_result") continue;
+            toolResults.push({
+              toolUseId: block.tool_use_id ?? null,
+              content: block.content ?? null,
+              isError: block.is_error === true,
+              parentToolUseId: msg.parent_tool_use_id ?? null,
+            });
+          }
+        }
+        if (
+          msg.type === "system" &&
+          ["task_started", "task_progress", "task_notification"].includes(msg.subtype)
+        ) {
+          childLifecycle.push(msg);
+        }
         if (msg.type === "result") {
           const response = this.buildResponse(msg);
-          response.metadata = { toolCalls, skillsLoaded, subagents };
+          response.metadata = {
+            toolCalls,
+            toolResults,
+            skillsLoaded,
+            subagents,
+            childLifecycle,
+            trajectory,
+            structuredOutput: msg.structured_output ?? null,
+            requestedModel: options.model ?? null,
+            effectiveModels: [...effectiveModels],
+            usage: msg.usage ?? null,
+          };
           return response;
         }
       }

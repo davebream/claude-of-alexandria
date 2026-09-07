@@ -1,0 +1,18 @@
+description: "study-team critique agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:study-team-critique
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct adapter preserves unresolved disagreement"
+    vars:
+      prompt: "Critique this supplied report only: claim c1 cites e1, while claim c2 has no evidence ID and is explicitly unresolved."
+    assert:
+      - type: icontains
+        value: "PERSPECTIVE:"
+      - type: icontains
+        value: "UNRESOLVED:"
+      - type: llm-rubric
+        value: "PASS if the response challenges c2, preserves its unresolved status, and does not invent consensus or rewrite the report."

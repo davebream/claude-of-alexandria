@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-of-alexandria.local/schemas/deep-study/v1/evidence-bundle.schema.json",
+  "title": "Deep study evidence bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "genre",
+    "passageAnchors",
+    "evidence",
+    "toolOutcomes",
+    "limitations"
+  ],
+  "properties": {
+    "status": { "enum": ["complete", "partial", "unavailable"] },
+    "genre": { "type": ["string", "null"] },
+    "passageAnchors": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "passageAnchor",
+          "summary",
+          "sourceTool",
+          "datasetVersion"
+        ],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "minLength": 1 },
+          "passageAnchor": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string", "minLength": 1 },
+          "sourceTool": { "type": "string", "minLength": 1 },
+          "datasetVersion": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "toolOutcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tool", "status", "error"],
+        "properties": {
+          "tool": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["success", "empty", "failed", "skipped"] },
+          "error": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

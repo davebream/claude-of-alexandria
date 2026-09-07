@@ -1,0 +1,16 @@
+description: "smoke-test skill — GREEN consumer-install gate"
+providers:
+  - file://../../providers/sdk-consumer-install.mjs
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: installed skill reaches its agent"
+    vars:
+      prompt: "Run /claude-of-alexandria:smoke-test."
+    assert:
+      - type: icontains
+        value: "SMOKE_TEST_AGENT_OK"
+      - type: javascript
+        value: |
+          const meta = context.providerResponse?.metadata || {};
+          return (meta.skillsLoaded || []).length > 0 && (meta.subagents || []).length > 0;

@@ -1,0 +1,23 @@
+description: "data-retriever agent — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:data-retriever
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: direct retriever preserves its machine-readable contract"
+    vars:
+      prompt: "Gather morphology and discourse evidence for Philippians 2:5-11."
+    assert:
+      - type: icontains
+        value: "TOOL_RESULTS:"
+      - type: icontains
+        value: "TESTAMENT:"
+      - type: javascript
+        value: |
+          const meta = context.providerResponse?.metadata || {};
+          const mcpCalls = (meta.toolCalls || []).filter(call => call.name?.startsWith('mcp__'));
+          const errors = (meta.toolResults || []).filter(result => result.isError);
+          return { pass: mcpCalls.length > 0 && errors.length === 0,
+            reason: `${mcpCalls.length} MCP calls; ${errors.length} failed results` };

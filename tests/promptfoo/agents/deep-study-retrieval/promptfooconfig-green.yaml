@@ -1,0 +1,21 @@
+description: "deep-study retrieval adapter — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:deep-study-retrieval
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: retrieval uses MCP and records evidence provenance"
+    vars:
+      prompt: "Retrieve morphology and discourse evidence for Philippians 2:5-11. Return compact JSON with status, stable evidence IDs, passage anchors, sourceTool, nullable datasetVersion, tool outcomes, and limitations."
+    assert:
+      - type: javascript
+        value: |
+          const meta = context.providerResponse?.metadata || {};
+          const calls = (meta.toolCalls || []).filter(call => call.name?.startsWith('mcp__'));
+          const failures = (meta.toolResults || []).filter(result => result.isError);
+          return { pass: calls.length > 0 && failures.length === 0,
+            reason: `${calls.length} MCP calls; ${failures.length} failed results` };
+      - type: llm-rubric
+        value: "PASS only if the response records stable evidence IDs, passage anchors, actual source tools, tool outcomes, and honest nullable provenance without unsupported evidence."

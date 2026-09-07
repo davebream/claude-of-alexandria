@@ -1,0 +1,18 @@
+description: "deep-study synthesis adapter — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:deep-study-synthesis
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: tool-free synthesis keeps incomplete work incomplete"
+    vars:
+      prompt: "Render a compact JSON report for requested passage Philippians 2:5-11 and question 'What is the movement?'. Claim c1 cites e1; verification is incomplete and c2 is unresolved. Preserve exact IDs and expose limitations."
+    assert:
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return { pass: calls.length === 0, reason: `observed ${calls.length} tool calls` };
+      - type: llm-rubric
+        value: "PASS only if the result remains incomplete, preserves the exact passage and question, exposes c2, cites only c1/e1, and adds no substantive claims."

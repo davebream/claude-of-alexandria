@@ -1,0 +1,18 @@
+description: "deep-study analysis adapter — GREEN direct-agent gate"
+providers:
+  - id: file://../../providers/sdk-direct-agent.mjs
+    config:
+      agent_name: claude-of-alexandria:deep-study-analysis
+prompts:
+  - "{{prompt}}"
+tests:
+  - description: "GREEN: tool-free analysis stays inside supplied evidence"
+    vars:
+      prompt: "Analyze only this supplied record: requested passage Philippians 2:5-11; evidence e1 says clauses move from humiliation to exaltation. Return compact JSON with status, perspective, claims carrying stable IDs, passageAnchors, evidenceIds, and limitations."
+    assert:
+      - type: javascript
+        value: |
+          const calls = context.providerResponse?.metadata?.toolCalls || [];
+          return { pass: calls.length === 0, reason: `observed ${calls.length} tool calls` };
+      - type: llm-rubric
+        value: "PASS only if every substantive claim cites e1, preserves Philippians 2:5-11, distinguishes inference from evidence, and introduces no outside evidence."

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://claude-of-alexandria.local/schemas/deep-study/v1/analysis.schema.json",
+  "title": "Deep study analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status"],
+  "properties": {
+    "status": { "enum": ["complete", "partial", "skipped", "failed"] },
+    "perspective": { "type": "string" },
+    "requestedPassage": { "type": "string" },
+    "recommendation": { "enum": ["retain", "expand", "contract", "uncertain"] },
+    "rationale": { "type": "string" },
+    "evidenceIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "passageAnchors", "evidenceIds"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "text": { "type": "string", "minLength": 1 },
+          "passageAnchors": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
