@@ -58,7 +58,7 @@
     "@anthropic-ai/claude-agent-sdk": "0.3.263"
   },
   "devDependencies": {
-    "@anthropic-ai/claude-code": "2.1.263",
+    "@anthropic-ai/claude-code": "2.1.270",
     "yaml": "2.8.1"
   }
 }
