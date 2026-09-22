@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
-    "zod": "^4.6.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260919.1",
-    "@types/node": "^22.20.2",
+    "@types/node": "^22.20.4",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
     "hebrew-transliteration": "2.11.0",
