@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import path from "node:path";
+import fs from "node:fs/promises";
+import os from "node:os";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -10,6 +12,24 @@ import {
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const fixture = (name) => path.join(HERE, "fixtures", name);
+
+test("model policy rejects Haiku and inherited defaults but permits Sonnet and Opus", async (t) => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "coa-model-policy-"));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  await fs.mkdir(path.join(root, "agents"));
+  await fs.mkdir(path.join(root, "skills", "caller"), { recursive: true });
+  for (const model of ["haiku", "claude-haiku-4-5", "inherit", "sonnet", "opus", "claude-opus-5-5"]) {
+    await fs.writeFile(path.join(root, "agents", "reader.md"), `---\nname: reader\ndescription: Read evidence\nmodel: ${model}\n---\nRead evidence.\n`);
+    await fs.writeFile(path.join(root, "skills", "caller", "SKILL.md"), `---\nname: caller\ndescription: Read evidence\nmodel: ${model}\n---\nRead evidence.\n`);
+    const result = await inspectDefinitions(root, { pluginName: "fixture" });
+    if (["sonnet", "opus", "claude-opus-5-5"].includes(model)) {
+      assert.deepEqual(result.errors, [], model);
+    } else {
+      assert.ok(result.errors.some((error) => error.includes("agents/reader.md") && /model/i.test(error)), model);
+      assert.ok(result.errors.some((error) => error.includes("skills/caller/SKILL.md") && /model/i.test(error)), model);
+    }
+  }
+});
 
 test("rejects duplicate YAML frontmatter keys", async () => {
   const result = await inspectDefinitions(fixture("duplicate-key"), {

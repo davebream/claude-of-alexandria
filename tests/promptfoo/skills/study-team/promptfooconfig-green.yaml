@@ -3,6 +3,9 @@ providers:
   - file://../../providers/sdk-consumer-install.mjs
 prompts:
   - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
 tests:
   - description: "GREEN: missing deep-study context stops before any ordinary spawn"
     vars:

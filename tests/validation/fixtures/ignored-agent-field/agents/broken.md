@@ -1,7 +1,7 @@
 ---
 name: broken
 description: Agent with a field ignored for plugin-shipped agents.
-model: haiku
+model: sonnet
 tools: Read
 permissionMode: bypassPermissions
 ---

@@ -254,12 +254,12 @@ active interpretive debate. Evaluating that claim requires consult-biblical-scho
 
 ## Sub-Agent Delegation
 
-This agent delegates MCP data gathering to the **data-retriever** agent (Haiku) for cost-efficient retrieval. This agent retains connective analysis, proposition chain composition, and genre-specific structural interpretation.
+This agent delegates MCP data gathering to the **data-retriever** agent (Sonnet) for source-faithful retrieval. This agent retains connective analysis, proposition chain composition, and genre-specific structural interpretation.
 
 **Delegation chain:**
 ```
 argument-flow (agent, user's model)
-  └─→ data-retriever (Haiku) — MCP tool calls + compression
+  └─→ data-retriever (Sonnet) — MCP tool calls + compression
 ```
 
 **How to spawn:**

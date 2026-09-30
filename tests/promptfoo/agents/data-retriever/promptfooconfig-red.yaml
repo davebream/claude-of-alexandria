@@ -2,14 +2,7 @@
 # Agent is completely bare: no agent loaded, no MCP, no biblical tools.
 # These tests document failure modes that the agent must prevent.
 #
-# NOTE: No GREEN config exists for this agent. The reason is a promptfoo limitation:
-# there is no supported way to invoke a subagent (data-retriever) directly as the
-# subject under test. The sdk-with-skill.mjs provider wraps the invocation in an
-# orchestrating agent that reformats the output, breaking all contract-level assertions
-# (TOOL_RESULTS:, TESTAMENT:, SKIPPED_NT, etc.). The same limitation applies to
-# biblical-scholar and study-evaluator. Data-retriever's contract correctness is covered
-# indirectly by the skill GREEN suites (exegetical-notes, pericope-delimitation,
-# argument-flow, consult-biblical-scholar) which all depend on it.
+# Direct-agent GREEN coverage now uses sdk-direct-agent.mjs, including source-faithfulness.
 #
 # Run (from tests/promptfoo): npm run eval -- --no-cache -c agents/data-retriever/promptfooconfig-red.yaml
 
@@ -98,3 +91,18 @@ tests:
           - No MORPHOLOGY_SUMMARY/DISCOURSE_SUMMARY/VOCABULARY_SUMMARY sections
           - Data is prose-based or unstructured
           FAIL if the response produces compressed summaries in the exact contract format.
+
+  - description: "ACCURACY RED: ungrounded Ecclesiastes claims on the supported baseline"
+    vars:
+      prompt: |
+        Assess these draft claims for Ecclesiastes 4:7-12: חוט H2339 is an OT hapax;
+        משלש H8027 is the only Pual participle of that verb in the OT; Delitzsch
+        cites Proverbs 11:28 here; no marker at 4:7 proves literary continuity;
+        אי occurs at 10:10 and שכר at 9:1. Give source-grounded corrections.
+    assert:
+      - type: llm-rubric
+        value: |
+          This is a bare-model audit with no tools. PASS means the failure reproduced:
+          at least one unsupported draft claim is endorsed or a source inspection is
+          fabricated. FAIL means the model avoids these failures or clearly states the
+          evidence limitation. A FAIL is expected drift, not a regression gate failure.

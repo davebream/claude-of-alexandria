@@ -1,7 +1,7 @@
 ---
 name: lost
 description: A definition-like file whose extension Claude Code does not discover.
-model: haiku
+model: sonnet
 tools: Read
 ---
 

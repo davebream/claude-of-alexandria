@@ -73,14 +73,18 @@ enforcement boundary because the workflow `agent()` API has no per-call tool all
 
 | Agent type | Model | Available tools |
 |---|---|---|
-| Retrieval | Inherit session | The plugin's 27 read-only MCP tools |
-| Analysis | Inherit session | None |
-| Verification | Inherit session | The plugin's 27 read-only MCP tools |
-| Synthesis | Inherit session | None |
+| Retrieval | Sonnet; explicit Opus allowed | The plugin's 27 read-only MCP tools |
+| Analysis | Sonnet; explicit Opus allowed | None |
+| Verification | Sonnet; explicit Opus allowed | The plugin's 27 read-only MCP tools |
+| Synthesis | Sonnet; explicit Opus allowed | None |
 
 No leaf type exposes `Agent`, `Workflow`, or team coordination tools, so a prompt cannot turn a
-fixed workflow stage into an unbounded descendant tree. The leaf types inherit the session model;
-maintainer evaluation providers pin their own RED and GREEN model baselines independently.
+fixed workflow stage into an unbounded descendant tree.
+
+**2026-09-30 amendment:** the original inherited-model policy is superseded. The
+leaf types default to Sonnet. The optional request `model` selects `sonnet` or
+`opus` for every stage, including repair; invalid values stop before launch.
+Maintainer GREEN baselines remain pinned; RED follows default Sonnet (ADR 0002 amendment).
 
 The script caps itself at eight `agent()` calls and one repair cycle. It preserves `null`, tool
 failure, empty, skipped, and unavailable outcomes instead of collapsing them into an empty

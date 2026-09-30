@@ -58,6 +58,9 @@ export default class SdkProvider {
     delete env.CLAUDECODE;                   // Prevent nested session detection
     delete env.ENABLE_CLAUDEAI_MCP_SERVERS;  // No cloud-hosted MCP servers
     env.CLAUDE_CODE_DISABLE_AUTO_MEMORY = "1";
+    // Claude Code also uses its Haiku selector for background requests, even
+    // with no tools/plugins. Scope this remapping to the evaluation child only.
+    env.ANTHROPIC_DEFAULT_HAIKU_MODEL = "sonnet";
     return env;
   }
 
@@ -88,8 +91,9 @@ export default class SdkProvider {
   }
 
   async callApi(prompt, _context, callOptions) {
-    const sdk = await this._loadSdk();
-
+    if (/haiku/i.test(this.config.model || "")) {
+      return { error: "Haiku is not permitted in Claude of Alexandria evaluations" };
+    }
     const cwd = this.config.working_dir
       ? path.resolve(__dirname, this.config.working_dir)
       : "/tmp";
@@ -99,6 +103,9 @@ export default class SdkProvider {
       env: this.buildEnv(),
       cwd,
     };
+    if (/haiku/i.test(options.model || "")) {
+      return { error: "Haiku is not permitted in Claude of Alexandria evaluations" };
+    }
 
     const abortController = new AbortController();
     options.abortController = abortController;
@@ -111,8 +118,20 @@ export default class SdkProvider {
       if (callOptions.abortSignal.aborted) abortHandler();
     }
 
+    let releaseInput;
     try {
-      const res = await sdk.query({ prompt, options });
+      const sdk = await this._loadSdk();
+      // A string prompt closes SDK stdin after the first turn. Workflows are
+      // background tasks: keep the session alive until their final report.
+      const inputClosed = new Promise((resolve) => { releaseInput = resolve; });
+      const sdkPrompt = this.config.wait_for_background
+        ? (async function* () {
+            yield { type: "user", session_id: "", message: { role: "user", content: prompt }, parent_tool_use_id: null };
+            await inputClosed;
+          })()
+        : prompt;
+      const res = await sdk.query({ prompt: sdkPrompt, options });
+      let backgroundTasks = new Set();
 
       // Accumulate the trajectory (tool calls, skill loads, subagent dispatches)
       // as the SDK streams assistant messages, so assertions can check what the
@@ -129,6 +148,9 @@ export default class SdkProvider {
         if (!value || typeof value !== "object" || seen.has(value)) return;
         seen.add(value);
         for (const [key, child] of Object.entries(value)) {
+          if (key === "modelUsage" && child && typeof child === "object") {
+            for (const model of Object.keys(child)) effectiveModels.add(model);
+          }
           if (
             ["model", "model_id", "modelId", "model_name", "modelName"].includes(key) &&
             typeof child === "string"
@@ -143,6 +165,9 @@ export default class SdkProvider {
       for await (const msg of res) {
         trajectory.push(msg);
         recordModels(msg);
+        if (msg.type === "system" && msg.subtype === "background_tasks_changed") {
+          backgroundTasks = new Set(msg.tasks.filter((task) => !task.ambient).map((task) => task.task_id));
+        }
         if (msg.type === "assistant" && msg.message?.content) {
           for (const block of msg.message.content) {
             if (block?.type !== "tool_use") continue;
@@ -177,6 +202,7 @@ export default class SdkProvider {
           childLifecycle.push(msg);
         }
         if (msg.type === "result") {
+          if (this.config.wait_for_background && backgroundTasks.size > 0 && msg.subtype === "success") continue;
           const response = this.buildResponse(msg);
           response.metadata = {
             toolCalls,
@@ -190,6 +216,9 @@ export default class SdkProvider {
             effectiveModels: [...effectiveModels],
             usage: msg.usage ?? null,
           };
+          if ([...effectiveModels].some((model) => /haiku/i.test(model))) {
+            response.error = "Haiku execution is not permitted; see effectiveModels and trajectory";
+          }
           return response;
         }
       }
@@ -201,6 +230,7 @@ export default class SdkProvider {
       }
       return { error: `Error calling SDK: ${error}` };
     } finally {
+      releaseInput?.();
       if (callOptions?.abortSignal && abortHandler) {
         callOptions.abortSignal.removeEventListener("abort", abortHandler);
       }

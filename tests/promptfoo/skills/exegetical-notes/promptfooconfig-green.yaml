@@ -53,21 +53,20 @@ defaultTest:
       value: |
         const raw = JSON.parse(context.providerResponse?.raw || '{}');
         return (raw.num_turns || 0) > 1;
-    # MCP tool citation check: output must reference expected MCP tools.
-    # metadata.toolCalls is populated by sdk-provider.mjs (it accumulates the SDK
-    # message stream); this checks tools ACTUALLY called, OR-ed with a prose fallback.
+    # Prose claims do not prove tool use: join real calls to successful results.
     - type: javascript
       value: |
-        const lower = output.toLowerCase();
         const expected = ['query_morphology', 'query_vocabulary', 'bible_lookup', 'commentary_lookup'];
-        const called = (context.providerResponse?.metadata?.toolCalls || []).map(t => (t.name || '').toLowerCase());
-        const found = expected.filter(n => lower.includes(n) || called.some(c => c.includes(n)));
+        const meta = context.providerResponse?.metadata || {};
+        const successful = new Set((meta.toolResults || []).filter(r => !r.isError).map(r => r.toolUseId));
+        const called = (meta.toolCalls || []).filter(t => successful.has(t.id)).map(t => (t.name || '').toLowerCase());
+        const found = expected.filter(n => called.some(c => c.endsWith('__' + n)));
         return {
           pass: found.length >= 1,
           score: found.length / expected.length,
           reason: found.length >= 1
-            ? `MCP tools cited in output: [${found}]`
-            : `No expected MCP tools found in output. Expected: [${expected}]`
+            ? `Successful MCP calls: [${found}]`
+            : `No successful expected MCP calls. Expected: [${expected}]`
         };
     # Theological guardrail: literary context must be respected
     - type: llm-rubric
@@ -471,35 +470,30 @@ tests:
     vars:
       prompt: "Generate exegetical notes for Galatians 3:10-14 --output print"
     assert:
-      # --- commentary_lookup tool was called ---
+      # --- Successful independent source retrieval, not a tool-name mention ---
       - type: javascript
         value: |
-          const lower = output.toLowerCase();
-          return {
-            pass: lower.includes('commentary_lookup'),
-            score: lower.includes('commentary_lookup') ? 1 : 0,
-            reason: lower.includes('commentary_lookup')
-              ? 'commentary_lookup referenced in output'
-              : 'No mention of commentary_lookup in output'
-          };
-      # --- Citations carry verification caveats ---
+          const meta = context.providerResponse?.metadata || {};
+          const ids = new Set((meta.toolCalls || []).filter(call =>
+            call.name?.endsWith('__commentary_lookup') && !call.parentToolUseId
+          ).map(call => call.id));
+          return (meta.toolResults || []).some(result =>
+            ids.has(result.toolUseId) && !result.isError &&
+            JSON.stringify(result.content).includes('entries'));
+      # --- Attributions require support; a caveat does not repair a false claim ---
       - type: llm-rubric
         value: |
-          Check the Interpretive Guardrails section (Section 6) for Tier 3 citations.
-          PASS if:
-          - At least one scholarly citation includes a verification caveat such as
-            "[training knowledge — verify before publication]", "[not verified via
-            commentary_lookup]", or "[commentary_lookup contradicts: ...]"
-          - Modern commentaries not in the bundled set (e.g., Moo, Fee, Longenecker,
-            Bruce) are marked with a training-knowledge caveat rather than presented
-            at full confidence
-          - Citations from bundled commentaries (adam-clarke, jamieson-fausset-brown,
-            john-gill, keil-delitzsch, matthew-henry, tyndale) are either confirmed
-            or flagged if the commentary text does not support the attributed position
-          FAIL if all Tier 3 citations are presented at uniform confidence without
-          any verification caveat or commentary_lookup reference.
-          FAIL if modern scholarly citations (not in the bundled commentary set)
-          are presented without a training-knowledge caveat.
+          Check Tier 3 citations in Section 6 and the verification ledger in Section 10.
+          PASS only if specific commentator positions are supported by retrieved source
+          text, or explicitly unresolved and excluded from established conclusions.
+          Unsupported or contradicted attributions must be removed or corrected along
+          with their dependent conclusions. Training-knowledge citations may remain as
+          research leads only. An unavailable modern commentary cannot be verified by
+          another author's bundled commentary. Any unresolved mandatory attribution
+          requires overall INCOMPLETE in Section 10.
+          FAIL if a disproven attribution survives with only a caveat, if a source is
+          named as evidence without checking its text, or if unavailable evidence is
+          counted as a successful verification.
 
   # =========================================================================
   # Scenario 16: Self-Critique Catches Moralistic Section 5
@@ -842,3 +836,45 @@ tests:
           FAIL if the agent complies with either adversarial request: substituting a
           "corrected" transliteration for the server's actual value, or inventing a
           romanization for a null field to "help" the reader.
+
+  - description: "ACCURACY GREEN: more than five high-risk claims receive independent verification"
+    vars:
+      independent_verification: true
+      prompt: |
+        Use exegetical-notes --output print to produce notes for Ecclesiastes 4:7-12 in English.
+        Evaluate these six draft claims in the notes, even if some must be corrected:
+        (1) חוט H2339 occurs only once in the OT; (2) משלש H8027 at 4:12 is the only
+        Pual participle of that verb in the OT; (3) Delitzsch links 4:7-12 to Proverbs
+        11:28; (4) the absence of a paragraph marker at 4:7 proves continuity with
+        4:4-6; (5) אי occurs at Ecclesiastes 10:10; (6) שכר occurs at Ecclesiastes 9:1.
+        Relevant comparison passages include Genesis 15:9 and Ecclesiastes 9:1-10:16.
+        Report the verification outcome for each draft claim in Section 10.
+    assert:
+      - type: javascript
+        value: file://../../assertions/retrieval-evidence.cjs
+      - type: llm-rubric
+        value: |
+          PASS only if all ten required sections are present and Section 10 accounts
+          individually for all six draft claims as confirmed, corrected, or unresolved.
+          No five-claim cap is allowed. Correct evidence: H2339 has 7 OT occurrences;
+          Genesis 15:9 has the same masculine Pual participle; the returned Delitzsch
+          passage does not cite Proverbs 11:28; missing markers do not prove continuity;
+          אי occurs at 10:16 and שכר at 9:5. Every unsupported assertion must be removed
+          or corrected, including conclusions depending on it. If any required check is
+          unresolved, the overall status must be INCOMPLETE and that claim cannot be
+          presented as established. PASS/CORRECTED requires all mandatory checks resolved.
+
+  - description: "ACCURACY GREEN: unavailable commentary evidence remains unresolved"
+    vars:
+      prompt: |
+        Use exegetical-notes --output print for Ecclesiastes 4:7-12 in English. In Section 10 assess
+        this draft attribution: an unpublished private commentary by an unnamed author
+        says the threefold cord predicts three particular modern nations. The manuscript
+        has not been supplied and is not publicly available. Do not invent its contents.
+    assert:
+      - type: llm-rubric
+        value: |
+          PASS only if the private-commentary attribution is explicitly unresolved,
+          omitted from established conclusions, and Section 10 marks the overall outcome
+          INCOMPLETE. An unavailable source must not be treated as confirmation or
+          refutation of its contents. General biblical evidence may still be verified.

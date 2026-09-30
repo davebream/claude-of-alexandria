@@ -7,7 +7,7 @@ prompts:
   - "{{prompt}}"
 
 tests:
-  - description: "SMOKE: prompt triggers skill which invokes Haiku sub-agent"
+  - description: "SMOKE: prompt triggers skill which invokes Sonnet sub-agent"
     vars:
       prompt: "Run the /smoke-test skill."
     assert:

@@ -123,8 +123,24 @@ The project uses `llm-rubric` assertions graded by a judge model. Evaluations ru
 | Role | Model | Provider |
 |------|-------|----------|
 | **GREEN generator** | `claude-sonnet-5` via Agent SDK, OAuth | Skill, direct-agent, and consumer providers |
-| **RED generator** | `claude-haiku-4-5` via Agent SDK, OAuth | `providers/sdk-bare.mjs` |
+| **RED generator** | `sonnet` (default alias) via Agent SDK, OAuth | `providers/sdk-bare.mjs` |
 | **Grader (judge)** | `claude-sonnet-5` via Agent SDK, OAuth | `providers/sdk-grader.mjs` |
+
+RED follows default Sonnet; existing GREEN/grader pins remain unchanged. Explicit
+Opus overrides are supported. Haiku requests are rejected before SDK execution,
+and observed Haiku models make an evaluation fail even if its output passes.
+The evaluation child environment maps `ANTHROPIC_DEFAULT_HAIKU_MODEL` to `sonnet`
+so Claude Code background requests also use the supported tier. No machine-wide
+settings are changed. RED scenarios that stop reproducing failures are recorded as
+baseline drift.
+
+Consumer/direct-agent providers use the native Claude Code system prompt preset,
+without appended repair instructions. Under strict MCP isolation they explicitly
+forward the plugin manifest's own server declaration with its native namespace;
+otherwise the SDK excludes the server and evaluates a tool-free session.
+Workflow evaluations set `wait_for_background: true`: the SDK input remains open,
+and a result emitted while background work is active is only a launch acknowledgement.
+The runner grades the completed report and retains the full lifecycle trace.
 
 ### Swap-Position Variants
 

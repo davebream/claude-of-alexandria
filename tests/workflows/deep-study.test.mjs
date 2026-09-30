@@ -192,6 +192,7 @@ test("runs the fixed graph with at most two concurrent and eight total calls", a
   assert.ok(run.maxActive <= 2);
   assert.ok(run.labels.length <= 8);
   assert.ok(run.options.every((option) => option.schema));
+  assert.ok(run.options.every((option) => option.model === "sonnet"));
   assert.deepEqual(
     run.options.map(({ label, agentType }) => [label, agentType]),
     [
@@ -204,6 +205,27 @@ test("runs the fixed graph with at most two concurrent and eight total calls", a
     ],
   );
   assert.equal(run.result.status, "complete");
+});
+
+test("explicit Opus reaches every stage including repair and re-verification", async () => {
+  const run = await executeWorkflow({ ...request, model: "opus" }, fixtures({
+    verification: {
+      status: "needs_repair", findings: [],
+      repairTargets: ["claim-interpretation-1"],
+      unresolvedClaims: ["claim-interpretation-1"],
+    },
+  }));
+  assert.equal(run.options.length, 8);
+  assert.ok(run.options.every((option) => option.model === "opus"));
+});
+
+test("invalid models are rejected before any workflow stage launches", async () => {
+  for (const model of ["haiku", "claude-haiku-4-5", "inherit", "", null, 123]) {
+    const run = await executeWorkflow({ ...request, model }, fixtures());
+    assert.equal(run.labels.length, 0, String(model));
+    assert.equal(run.result.status, "needs_clarification");
+    assert.match(run.result.message, /model.*sonnet.*opus/i);
+  }
 });
 
 test("leaf agent types enforce workflow tool boundaries", async () => {

@@ -5,6 +5,9 @@ providers:
       agent_name: claude-of-alexandria:deep-study-verification
 prompts:
   - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
 tests:
   - description: "GREEN: verifier preserves unknown evidence as unresolved"
     vars:

@@ -1,7 +1,7 @@
 ---
 name: deep-study-synthesis
 description: Tool-free leaf workflow adapter that renders a verified deep-study report without adding claims.
-model: inherit
+model: sonnet
 tools: []
 ---
 

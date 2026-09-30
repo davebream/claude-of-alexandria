@@ -1,7 +1,7 @@
 ---
 name: smoke-test
 description: Minimal agent for pipeline smoke testing. Returns a known marker string.
-model: haiku
+model: sonnet
 tools: Read
 ---
 

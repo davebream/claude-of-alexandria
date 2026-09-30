@@ -2,6 +2,25 @@
 
 **Rigorous analytical skills for biblical study and teaching preparation.**
 
+## Model policy
+
+Sonnet is the default for retrieval, smoke checks, and deep-study stages. Haiku is
+not supported for any study or evaluation. A caller may explicitly select Opus
+when a study warrants stronger reasoning; existing Opus choices stay intact.
+Context-preserving skills retain a Sonnet or Opus caller. If the caller is on Haiku,
+switch to Sonnet or Opus before starting the study. Do not delegate to a built-in
+agent that would select Haiku.
+
+The deep-study request accepts optional `model: "sonnet" | "opus"`; omission means
+`sonnet`, and other values are rejected before any stage launches. The selected
+model applies to every stage, including repair and re-verification. For ordinary
+agent calls, use the explicit `model: opus` override when escalation is justified.
+
+This policy governs plugin-controlled selections. A host's forced model settings
+or organizational substitutions can override plugin defaults; the plugin does not
+rewrite them. Evaluation traces reject observed Haiku execution rather than
+certifying such a run. Installed copies receive changes through plugin updates.
+
 ## Architecture
 
 The MCP server runs on Cloudflare Workers + D1 (edge SQLite). Skills call MCP tools automatically to retrieve linguistic data — morphology, discourse features, vocabulary frequencies, paragraph markers — with no local installation required.
@@ -19,10 +38,10 @@ Some skills delegate specialized work to sub-agents:
 ```
 study-evaluator (Sonnet)
     └── biblical-scholar (Sonnet)
-            └── data-retriever (Haiku)
+            └── data-retriever (Sonnet)
 ```
 
-The `data-retriever` agent (Haiku) handles all MCP data gathering and compression. Higher-level agents and skills spawn it automatically, keeping token usage low and data handling centralized.
+The `data-retriever` agent (Sonnet) handles all MCP data gathering and compression. Higher-level agents and skills spawn it automatically, keeping token usage low and data handling centralized.
 
 ## MCP Server
 
@@ -181,16 +200,16 @@ Sub-agents are selected by skills or workflows automatically. They are not invok
 
 | Agent | Model | Role |
 |-------|-------|------|
-| `data-retriever` | Haiku | Fetches MCP data, compresses into structured summaries with testament-aware routing |
+| `data-retriever` | Sonnet | Fetches MCP data, compresses into structured summaries with testament-aware routing |
 | `biblical-scholar` | Sonnet | Scholarly analysis (ANALYZE, VALIDATE, TRACE modes) with confidence tiers |
 | `study-evaluator` | Sonnet | Evaluates study materials against exegetical standards with drift classification |
 | `pericope-delimitation` | Sonnet | Boundary validation with structured verdicts |
 | `argument-flow` | Sonnet | Logical structure mapping with proposition chains |
-| `smoke-test` | Haiku | Pipeline verification |
-| `deep-study-retrieval` | Inherit | Read-only MCP evidence retrieval and provenance capture |
-| `deep-study-analysis` | Inherit | Tool-free boundary, discourse, interpretation, and repair analysis |
-| `deep-study-verification` | Inherit | Read-only MCP claim and reference verification |
-| `deep-study-synthesis` | Inherit | Tool-free final report rendering |
+| `smoke-test` | Sonnet | Pipeline verification |
+| `deep-study-retrieval` | Sonnet | Read-only MCP evidence retrieval and provenance capture |
+| `deep-study-analysis` | Sonnet | Tool-free boundary, discourse, interpretation, and repair analysis |
+| `deep-study-verification` | Sonnet | Read-only MCP claim and reference verification |
+| `deep-study-synthesis` | Sonnet | Tool-free final report rendering |
 | `study-team-textual-evidence` | Sonnet | Leaf teammate for textual structure and evidence integrity |
 | `study-team-interpretation` | Sonnet | Leaf teammate for the evidence-to-interpretation chain |
 | `study-team-critique` | Sonnet | Leaf teammate for adversarial confidence and synthesis review |

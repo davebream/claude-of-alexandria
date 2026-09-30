@@ -2,7 +2,7 @@
 name: broken
 description: First description
 description: Duplicate description
-model: haiku
+model: sonnet
 tools: Read
 ---
 

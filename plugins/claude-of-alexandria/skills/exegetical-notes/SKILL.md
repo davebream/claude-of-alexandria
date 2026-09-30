@@ -2,11 +2,18 @@
 name: exegetical-notes
 description: Use when producing structured exegetical analysis of a biblical passage. Use when user asks for exegetical notes, verse analysis, passage study, word study with morphology, or detailed interpretive framework for a text. Always English output.
 allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__check_versification, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.4.0
-changed: "2026-09-05"
+version: 1.5.0
+changed: "2026-09-30"
 ---
 
 # Exegetical Notes
+
+## Model selection
+
+Use Sonnet by default for delegated work. Explicit `model: opus` escalation is allowed
+when the study warrants it; preserve an existing Opus selection. Never request Haiku,
+inherit it, or use a built-in delegate that selects it. If this context is running on
+Haiku, stop before study work and request a switch to Sonnet or Opus.
 
 ## Purpose
 
@@ -113,26 +120,51 @@ If only Tier C sources found, state: "[Tier C source, use with caution]"
 commentary from training knowledge using the standard citation format and mark it
 "[training knowledge — verify before publication]". For major NT/OT passages, the agent
 knows standard commentaries (e.g., O'Brien on Philippians, NIGTC; Fee, NICNT; Moo on
-Romans, NICNT). A training-knowledge citation with a verification caveat is always
-preferable to "No Tier A/B source located" with no named source at all.
+Romans, NICNT). Such a citation is only a research lead, not evidence of a specific
+author position. Any associated attribution remains unresolved under Rule 5 until
+source text is checked.
 
 If genuinely no source is known (rare for canonical passages), state:
 "No Tier A/B source located for this claim."
 
 ### Rule 5: Cross-Check Data Claims Before Delivering
 
-After generating the full notes, pick **up to 5** data claims to cross-check, prioritized by risk:
+Maintain a verification ledger while drafting. Independently cross-check **every
+high-risk claim**, with no five-claim cap:
 
-1. **At least 1 morphological parsing** (voice or mood — highest error risk)
-2. **At least 1 frequency count** (verify exact number and verse references)
-3. **Any hapax legomena claim** (if the notes assert a word appears only once)
-4. **Remaining slots:** highest-consequence claims for the interpretation
+1. Every uniqueness/hapax claim and frequency count, at the exact claimed scope
+2. Every cited occurrence reference and consequential morphological claim
+3. Every specific commentary attribution against the actual supporting text
+4. Every structural inference based on absent or missing data
 
-For each selected claim, re-query the relevant MCP tool to confirm the cited value matches.
-Report cross-check results in Section 10. If any mismatches: correct the claim before delivering.
+Call the relevant tools DIRECTLY; do not ask the original data-retriever to verify
+its own summary. A correct-looking retriever summary is still unverified: copying
+its numbers, parsing, or references into Section 10 is NOT an independent check.
+Build the verification ledger from your own direct tool results, not child results.
+Each confirmed/corrected row must identify the independent query and returned data.
+If you have not issued that query yourself, the row must remain unresolved; never
+count it as checked or corrected merely because the retriever supplied a correction.
+Use `query_lemmas` with OT Strong identifiers for OT lemma totals;
+use `query_morphology` with `fields: "full"` to check exact forms, parsing, and verse
+anchors. Lemma totals cannot establish surface-form or construction uniqueness.
+Preserve `evidence_scope` from paragraph results: no marker cannot prove continuity.
 
-Do NOT cross-check every data claim — this consumes tool-call budget needed for the full output.
-5 risk-prioritized checks catch the most consequential errors.
+Batch related claims into a query and reuse independently retrieved results, including
+citation checks from Step 4.5. Follow pagination before treating a list as exhaustive.
+Reserve tool budget for verification; routine low-risk prose need not be re-queried.
+Never reduce mandatory coverage simply because more than five claims need checking.
+
+For each high-risk claim, Section 10 must record the claim, query/source and scope,
+returned evidence, and outcome (confirmed, corrected, or unresolved). Correct or
+remove unsupported assertions and revise every conclusion depending on them. A known
+false attribution must be removed or corrected, not retained with a caveat.
+
+If evidence is failed, empty, unavailable, truncated, or the execution budget runs out,
+mark the affected check unresolved, explain why, and exclude it from established
+conclusions. Missing evidence does not refute a source's unseen contents. Keep all ten
+sections, but mark the overall verification INCOMPLETE while any mandatory check is
+unresolved. PASS requires all mandatory checks resolved without corrections; CORRECTED
+requires all resolved with corrections incorporated. Report coverage honestly.
 
 ### Rule 6: Exactly 10 Sections, Exactly These Names
 
@@ -187,12 +219,12 @@ Output the complete notes inline in your response. Do not save to file. Do not s
 
 ## Sub-Agent Delegation
 
-This skill delegates MCP data gathering to the **data-retriever** agent (Haiku) for cost-efficient bulk data retrieval. The skill retains scholarly interpretation, section composition, and cross-checking.
+This skill delegates MCP data gathering to the **data-retriever** agent (Sonnet) for source-faithful bulk data retrieval. The skill retains scholarly interpretation, section composition, and cross-checking.
 
 **Delegation chain:**
 ```
 exegetical-notes (skill, user's model)
-  └─→ data-retriever (Haiku) — MCP tool calls + compression
+  └─→ data-retriever (Sonnet) — MCP tool calls + compression
 ```
 
 **How to spawn:**
@@ -324,42 +356,33 @@ Step 4: Web search for Tier 3 scholarly sources
    → Prefer Tier A/B (NICNT, NIGTC, ICC, WBC, BECNT, Hermeneia, BDAG)
    → Note author, title, publisher
 
-Step 4.5: CITATION GROUNDING via commentary_lookup (MANDATORY for Tier A/B citations)
-   │
-   │  After drafting Tier 3 citations (Step 4 or during Section 6 composition):
-   │
-   │  For each Tier A/B citation that references a specific author's position:
-   │  1. Call commentary_lookup for the passage to check if the cited commentary
-   │     is available in the bundled dataset (adam-clarke, jamieson-fausset-brown,
-   │     john-gill, keil-delitzsch, matthew-henry, tyndale)
-   │  2. If the cited author IS in the bundled commentaries:
-   │     - Verify the commentary text supports the attributed position
-   │     - If CONFIRMED: retain the citation as-is
-   │     - If CONTRADICTED: flag the discrepancy in the citation:
-   │       "[commentary_lookup contradicts: commentary text says X, not Y — verify]"
-   │     - If NO RESULT for that passage range: retain citation but add caveat:
-   │       "[not verified via commentary_lookup — passage not covered]"
-   │  3. If the cited author is NOT in the bundled commentaries (e.g., modern
-   │     commentaries like Moo, Fee, O'Brien): the citation cannot be grounded
-   │     via this tool. Mark it:
-   │     "[training knowledge — verify before publication]"
-   │
-   │  This step prevents fabricated scholarly attributions from reaching the
-   │  final output. A citation that cannot be verified is not removed — it is
-   │  downgraded with an explicit caveat.
-   │
-   │  Available bundled commentaries: adam-clarke, jamieson-fausset-brown,
-   │  john-gill, keil-delitzsch, matthew-henry, tyndale
+Step 4.5: CITATION GROUNDING (MANDATORY for every specific commentary attribution)
+   → For bundled commentaries, call commentary_lookup for the exact passage and author.
+   → For other sources, inspect the available source text returned by web research.
+   → Verify the text supports the attributed position; record its anchor and scope.
+   → If CONFIRMED: retain the attribution with its supporting source.
+   → If UNSUPPORTED or CONTRADICTED by the retrieved text: remove or correct the
+     attribution and all conclusions that depended on it. A caveat is not a repair.
+   → If the source is unavailable, failed, or incomplete: mark the claim unresolved
+     in Section 10 and exclude it from established conclusions. Training knowledge
+     may identify a source to consult but cannot verify its specific position.
+   → Reuse these independent checks in Step 6's verification ledger.
 
 Step 5: Generate ALL 10 sections using EXACT template titles (Rule 6)
    Every section is mandatory. Never skip, rename, or merge sections.
    Use data-retriever compressed summaries as the data foundation.
 
 Step 6: Cross-check data claims against MCP tool output
-   → Call MCP tools DIRECTLY to verify specific claims from the notes
+   → Call MCP tools DIRECTLY to resolve every mandatory high-risk claim in Rule 5
    → This is a verification step — do not use data-retriever for cross-check
+   → Before composing Section 10, match each proposed confirmed/corrected row to
+     YOUR OWN direct tool results. For morphology/occurrence claims, lemma totals
+     alone are insufficient: retrieve the actual verse/form with query_morphology.
+   → Fetch missing independent evidence now, or mark that row unresolved and the
+     overall result INCOMPLETE. Never count the child's tool calls as your checks.
 
-Step 7: Fix any mismatches found in cross-check
+Step 7: Correct/remove mismatched claims and revise dependent conclusions.
+   → Record unresolved checks and mark overall INCOMPLETE if any remain.
 
 Step 8: SELF-CRITIQUE PASS (MANDATORY — DO NOT SKIP)
    │
@@ -386,6 +409,9 @@ Step 8: SELF-CRITIQUE PASS (MANDATORY — DO NOT SKIP)
    │  Does the Verification section (Section 10) show actual MCP
    │  re-query results with specific counts, not summaries?
    │  If Section 10 contains generic text without cross-check counts → FAIL
+   │  Does every confirmed/corrected row cite this skill's own independent source
+   │  result? A retriever-only row, or a lemma count used to verify an inflected
+   │  form/verse reference, must be unresolved until directly checked → FAIL
    │
    ├─ Check 5: SECTION COMPLETENESS
    │  Are all 10 sections present with the exact required titles?
@@ -609,8 +635,13 @@ See Section 8 for genre-specific exceptions (wisdom literature, short letters).]
 - Data claims checked: [N]
 - Claims confirmed (PASS): [N]
 - Claims corrected: [N — list each correction below if any]
-- Claims not cross-checkable: [N — e.g., Tier 3 citations, semantic notes]
-- Overall: [PASS | CORRECTED]
+- Mandatory high-risk claims: [N]
+- Claims unresolved: [N — identify each unavailable source, failed/partial query, or budget limit]
+- Overall: [PASS | CORRECTED | INCOMPLETE]
+
+| Claim | Independent query/source and scope | Returned evidence | Outcome |
+| --- | --- | --- | --- |
+| [Each mandatory claim] | [Exact query/source anchor] | [Supporting/conflicting data or limitation] | [confirmed/corrected/unresolved] |
 
 [If corrections made: list each original claim, the MCP query result, and the correction]
 ```
@@ -691,7 +722,7 @@ Key semantic families from `semantic_groups.yaml` (for Section 4 connections):
 | Mixing Tier 1 and Tier 4 | Label every tier claim explicitly |
 | Tier 3 name-drop without title/series | Every Tier 3 claim: Author (Title, Series, Year). Name alone is not a citation. |
 | Imperatives presented as freestanding moral instruction | When Section 2 shows imperative-dominated structure, Section 5 must identify the indicative ground (theological basis for the commands) within the discourse unit. Commands require their warrant. |
-| Skipping Section 10 cross-check | Pick up to 5 risk-prioritized claims (Rule 5) and re-query MCP tools before delivering |
+| Skipping Section 10 cross-check | Verify every mandatory high-risk claim (Rule 5); unresolved checks require INCOMPLETE |
 | No redemptive-historical note in Section 8 | Section 8 requires genre-graduated connection: epistles/narrative/prophecy → mandatory cross-testament link; wisdom → note if indirect; short letters → theological connection suffices |
 | `--output print` but saved to file | If `--output print` is in the invocation, print ALL 10 sections inline. Never save to file and return a summary. |
 | Renaming sections | Use the exact 10 section titles from the template. "Homiletical Trajectories" is not "Interpretive Guardrails." |
