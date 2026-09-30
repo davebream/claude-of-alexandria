@@ -1,7 +1,7 @@
 # ADR 0002: RED is authoring evidence, GREEN is the gate — pin the eval model
 
 **Date:** 2026-07-21
-**Status:** Accepted
+**Status:** Accepted; model-tier decision amended on 2026-09-30
 **Amends:** ADR 0001 (Adopt Promptfoo with Claude Agent SDK for Skill Testing)
 
 ## Context
@@ -119,3 +119,26 @@ CLAUDE.md previously stated RED+GREEN per skill is "non-negotiable" for every ch
 This ADR amends that: **GREEN (pinned, absolute) is the standard for a skill to be
 considered working; RED is the authoring record and periodic audit.** CLAUDE.md is
 updated to match.
+
+## Amendment — 2026-09-30: Sonnet is the supported baseline
+
+This amendment supersedes the original Haiku/cheapest-tier selection above. The
+retrieval incident exposed unsupported lexical, morphological, commentary, and
+boundary claims introduced during compression. Haiku is no longer supported for
+any plugin task, including RED audits and smoke checks.
+
+RED now uses the `sonnet` alias, following the default supported Sonnet version.
+Existing explicit GREEN and grader Sonnet pins remain unchanged. Opus remains an
+allowed explicit escalation. Record requested and effective models on every run;
+reject Haiku configuration before execution and flag Haiku in observed traces.
+A Sonnet RED scenario that no longer reproduces a failure is audit evidence, not
+an excuse to weaken the absolute GREEN contract or to rerun on Haiku.
+
+Every shipped agent explicitly defaults to Sonnet or Opus. Context skills require
+a supported caller, and workflow stages receive an explicit allowed model.
+Historical records above describe the old policy, not current execution guidance.
+
+Live validation also found background Haiku usage in a tool-free Sonnet session.
+Evaluation child environments therefore map `ANTHROPIC_DEFAULT_HAIKU_MODEL` to
+`sonnet`; both assistant-message models and aggregate `modelUsage` are checked.
+This does not change the host's persistent settings or its explicit Opus choices.

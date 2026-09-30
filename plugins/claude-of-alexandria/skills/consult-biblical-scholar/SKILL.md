@@ -2,11 +2,18 @@
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
 allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.3.0
-changed: "2026-09-05"
+version: 1.4.0
+changed: "2026-09-30"
 ---
 
 # Consult Biblical Scholar
+
+## Model selection
+
+Use Sonnet by default for delegated work. Explicit `model: opus` escalation is allowed
+when the study warrants it; preserve an existing Opus selection. Never request Haiku,
+inherit it, or use a built-in delegate that selects it. If this context is running on
+Haiku, stop before study work and request a switch to Sonnet or Opus.
 
 ## Purpose
 
@@ -316,13 +323,13 @@ MCP data cannot be verified without a passage. This answer draws on web search a
 
 ## Sub-Agent Delegation
 
-This skill delegates data gathering and scholarly interpretation to the **biblical-scholar** agent, which internally delegates MCP data retrieval to the **data-retriever** agent (Haiku).
+This skill delegates data gathering and scholarly interpretation to the **biblical-scholar** agent, which internally delegates MCP data retrieval to the **data-retriever** agent (Sonnet).
 
 **Delegation chain:**
 ```
 consult-biblical-scholar (skill, user's model)
   └─→ biblical-scholar (Sonnet) — scholarly analysis + source attribution
-       └─→ data-retriever (Haiku) — MCP tool calls + compression
+       └─→ data-retriever (Sonnet) — MCP tool calls + compression
 ```
 
 **Mode mapping:**

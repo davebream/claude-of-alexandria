@@ -9,8 +9,8 @@
 #
 # Enforces:
 #   1. Every skill has both a RED and a GREEN promptfoo config.
-#   2. GREEN configs run the skill provider; RED configs run the bare provider;
-#      both grade with the subscription grader.
+#   2. GREEN configs run the skill or installed-consumer provider; RED configs
+#      run the bare provider; model-graded assertions use the subscription grader.
 #   3. No paid-provider or dead-model references anywhere in the eval configs.
 set -euo pipefail
 
@@ -32,12 +32,16 @@ for dir in "$SKILLS_DIR"/*/; do
   [ -f "$red" ]   || err "$skill: missing promptfooconfig-red.yaml"
   [ -f "$green" ] || err "$skill: missing promptfooconfig-green.yaml"
   if [ -f "$green" ]; then
-    grep -q "providers/sdk-with-skill.mjs" "$green" || err "$skill GREEN: subject-under-test is not sdk-with-skill.mjs"
-    grep -q "providers/sdk-grader.mjs"     "$green" || err "$skill GREEN: grader is not sdk-grader.mjs"
+    grep -Eq "providers/sdk-(with-skill|consumer-install).mjs" "$green" || err "$skill GREEN: expected skill or installed-consumer provider"
+    if grep -q 'type: llm-rubric' "$green"; then
+      grep -q "providers/sdk-grader.mjs" "$green" || err "$skill GREEN: grader is not sdk-grader.mjs"
+    fi
   fi
   if [ -f "$red" ]; then
     grep -q "providers/sdk-bare.mjs"   "$red" || err "$skill RED: subject-under-test is not sdk-bare.mjs"
-    grep -q "providers/sdk-grader.mjs" "$red" || err "$skill RED: grader is not sdk-grader.mjs"
+    if grep -q 'type: llm-rubric' "$red"; then
+      grep -q "providers/sdk-grader.mjs" "$red" || err "$skill RED: grader is not sdk-grader.mjs"
+    fi
   fi
 done
 

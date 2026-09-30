@@ -13,7 +13,7 @@ Converted to thin wrapper (2026-02-28). Agent extracted from GREEN phase skill.
 ## What This Agent Does
 
 Maps the logical argument of a biblical passage by:
-1. Spawning data-retriever (Haiku) for MCP data gathering
+1. Spawning data-retriever (Sonnet) for MCP data gathering
 2. Extracting logical connectives from morphological data
 3. Producing a numbered proposition chain with labeled connective types
 
@@ -37,7 +37,7 @@ Baseline testing (see `tests/promptfoo/skills/argument-flow/promptfooconfig-red.
 ### Sub-Agent Architecture
 - **Skill** = thin wrapper (auto-discovery + Task delegation)
 - **Agent** = all analytical logic (sonnet model, MCP tools)
-- **data-retriever** = MCP data gathering (haiku model)
+- **data-retriever** = MCP data gathering (sonnet model)
 
 ### MCP-before-prose (Rule 1)
 The most critical rule. Without it, agents produce fluent analysis that cannot be distinguished from verified data.

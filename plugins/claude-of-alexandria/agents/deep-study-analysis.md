@@ -1,7 +1,7 @@
 ---
 name: deep-study-analysis
 description: Tool-free leaf workflow adapter for bounded passage, discourse, interpretation, and repair analysis.
-model: inherit
+model: sonnet
 tools: []
 ---
 

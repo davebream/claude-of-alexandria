@@ -151,8 +151,15 @@ function validateCommonIdentity(errors, rel, kind, metadata, expectedName) {
   }
 }
 
+function validateModel(errors, rel, model) {
+  if (typeof model !== "string" || !/^(?:sonnet|opus|claude-(?:sonnet|opus)-[\d.-]+)(?:\[1m\])?$/.test(model)) {
+    errors.push(`${rel}: model must explicitly select Sonnet or Opus; Haiku and inheritance are not permitted`);
+  }
+}
+
 function validateAgent(errors, rel, metadata, expectedName) {
   validateCommonIdentity(errors, rel, "agent", metadata, expectedName);
+  validateModel(errors, rel, metadata.model);
   for (const field of Object.keys(metadata)) {
     if (IGNORED_PLUGIN_AGENT_FIELDS.has(field)) {
       errors.push(
@@ -191,6 +198,7 @@ function validateAgent(errors, rel, metadata, expectedName) {
 
 function validateSkill(errors, rel, metadata, expectedName) {
   validateCommonIdentity(errors, rel, "skill", metadata, expectedName);
+  if ("model" in metadata) validateModel(errors, rel, metadata.model);
   for (const field of Object.keys(metadata)) {
     if (!SKILL_FIELDS.has(field)) {
       errors.push(`${rel}: unsupported skill field ${JSON.stringify(field)}`);

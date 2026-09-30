@@ -20,6 +20,7 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 }
     },
-    "fresh": { "type": "boolean", "default": false }
+    "fresh": { "type": "boolean", "default": false },
+    "model": { "type": "string", "enum": ["sonnet", "opus"], "default": "sonnet" }
   }
 }

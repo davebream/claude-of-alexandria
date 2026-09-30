@@ -1,7 +1,7 @@
 ---
 name: caller
 description: Agent that references a missing plugin agent.
-model: haiku
+model: sonnet
 tools: Agent
 ---
 

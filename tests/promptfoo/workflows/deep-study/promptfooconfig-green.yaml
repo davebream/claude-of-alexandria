@@ -1,12 +1,21 @@
 description: "deep-study workflow — GREEN installed-consumer gate"
 providers:
-  - file://../../providers/sdk-consumer-install.mjs
+  - id: file://../../providers/sdk-consumer-install.mjs
+    config:
+      wait_for_background: true
 prompts:
   - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
 tests:
   - description: "GREEN: installed workflow produces an evidence-linked verified report"
     vars:
-      prompt: "/claude-of-alexandria:deep-study passage=Philippians 2:5-11; researchQuestion=How does the passage present Christ's humiliation and exaltation?; outputLanguage=English; context=Exegetical teaching outline; constraints=[Distinguish evidence from interpretation]"
+      prompt: |
+        Run /claude-of-alexandria:deep-study with the following JSON object as its
+        inputs. Wait for the workflow to finish and return the actual final report,
+        including its verification outcome; a launch acknowledgement is not a report.
+        {"passage":"Philippians 2:5-11","researchQuestion":"How does the passage present Christ's humiliation and exaltation?","outputLanguage":"English","context":"Exegetical teaching outline","constraints":["Distinguish evidence from interpretation"]}
     assert:
       - type: llm-rubric
         value: |

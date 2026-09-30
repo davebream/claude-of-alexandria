@@ -5,17 +5,25 @@ import SdkConsumerInstallProvider from "../../tests/promptfoo/providers/sdk-cons
 import SdkDirectAgentProvider from "../../tests/promptfoo/providers/sdk-direct-agent.mjs";
 import SdkProvider from "../../tests/promptfoo/providers/sdk-provider.mjs";
 import SdkWithSkillProvider from "../../tests/promptfoo/providers/sdk-with-skill.mjs";
+import SdkBareProvider from "../../tests/promptfoo/providers/sdk-bare.mjs";
+import SdkGraderProvider from "../../tests/promptfoo/providers/sdk-grader.mjs";
 
 test("consumer install uses an external cwd and no injected repair prompt", () => {
   const provider = new SdkConsumerInstallProvider();
   const options = provider.buildOptions();
 
   assert.deepEqual(options.settingSources, []);
-  assert.equal(options.systemPrompt, undefined);
+  assert.deepEqual(options.systemPrompt, { type: "preset", preset: "claude_code" });
   assert.equal(options.plugins.length, 1);
   assert.equal(options.plugins[0].path.startsWith("/"), true);
   assert.ok(options.allowedTools.includes("Workflow"));
   assert.ok(options.allowedTools.some((tool) => tool.endsWith("__*")));
+  assert.equal(options.strictMcpConfig, true);
+  assert.deepEqual(options.mcpServers, {
+    "plugin_claude-of-alexandria_claude-of-alexandria-mcp": {
+      type: "http", url: "https://coa.davebream.com/mcp",
+    },
+  });
 });
 
 test("direct-agent provider selects the real definition and verifies its model family", () => {
@@ -24,7 +32,7 @@ test("direct-agent provider selects the real definition and verifies its model f
   });
 
   assert.equal(provider.buildOptions().agent, "claude-of-alexandria:smoke-test");
-  assert.equal(provider.expectedModelFamily(), "haiku");
+  assert.equal(provider.expectedModelFamily(), "sonnet");
 
   const inherited = new SdkDirectAgentProvider({
     config: {
@@ -33,6 +41,62 @@ test("direct-agent provider selects the real definition and verifies its model f
     },
   });
   assert.equal(inherited.expectedModelFamily(), "sonnet");
+});
+
+test("RED defaults to Sonnet and retains explicit Opus", () => {
+  assert.equal(new SdkBareProvider().buildOptions().model, "sonnet");
+  assert.equal(new SdkBareProvider({ config: { model: "" } }).buildOptions().model, "sonnet");
+  assert.equal(new SdkBareProvider({ config: { model: "opus" } }).buildOptions().model, "opus");
+});
+
+test("evaluation child processes route background Haiku work to default Sonnet", () => {
+  const before = process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL;
+  const env = new SdkBareProvider().buildEnv();
+  assert.equal(env.ANTHROPIC_DEFAULT_HAIKU_MODEL, "sonnet");
+  assert.equal(process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL, before);
+});
+
+test("every eval provider refuses Haiku before loading the SDK", async () => {
+  for (const Provider of [SdkBareProvider, SdkGraderProvider, SdkWithSkillProvider, SdkConsumerInstallProvider, SdkDirectAgentProvider]) {
+    for (const model of ["haiku", "claude-haiku-4-5", "Haiku"]) {
+      const provider = new Provider({ config: { model, agent_name: "claude-of-alexandria:smoke-test" } });
+      provider._loadSdk = async () => { throw new Error("SDK must not load"); };
+      const result = await provider.callApi("prompt");
+      assert.match(result.error, /haiku.*not permitted/i);
+    }
+  }
+});
+
+test("a hardcoded Haiku provider default is refused before SDK loading", async () => {
+  class UnsafeProvider extends SdkProvider {
+    buildOptions() { return { model: "claude-haiku-4-5" }; }
+  }
+  const provider = new UnsafeProvider();
+  provider._loadSdk = async () => { throw new Error("SDK must not load"); };
+  const result = await provider.callApi("prompt");
+  assert.match(result.error, /haiku.*not permitted/i);
+});
+
+test("Haiku in a child trace fails even when Sonnet also ran", async () => {
+  const provider = new SdkBareProvider();
+  provider._sdk = { query: async () => (async function* () {
+    yield { type: "assistant", message: { model: "claude-sonnet-5", content: [] } };
+    yield { type: "system", subtype: "task_started", model: "claude-haiku-4-5" };
+    yield { type: "result", subtype: "success", result: "done", usage: {} };
+  })() };
+  const result = await provider.callApi("prompt");
+  assert.match(result.error, /haiku.*not permitted/i);
+  assert.ok(result.metadata.effectiveModels.includes("claude-haiku-4-5"));
+});
+
+test("Haiku reported only in modelUsage cannot hide behind a Sonnet parent", async () => {
+  const provider = new SdkBareProvider();
+  provider._sdk = { query: async () => (async function* () {
+    yield { type: "result", subtype: "success", result: "done", usage: {},
+      modelUsage: { "claude-sonnet-5": {}, "claude-haiku-4-5": {} } };
+  })() };
+  const result = await provider.callApi("prompt");
+  assert.match(result.error, /haiku.*not permitted/i);
 });
 
 test("successful zero-MCP behavior is not retried", async () => {
@@ -167,4 +231,23 @@ test("provider propagates a signal that was already aborted", async () => {
   });
 
   assert.equal(response.error, "SDK call aborted");
+});
+
+test("workflow evaluation keeps input open and waits past launch acknowledgements", async () => {
+  const provider = new SdkConsumerInstallProvider({ config: { wait_for_background: true } });
+  provider._sdk = { query: async ({ prompt }) => {
+    assert.equal(typeof prompt[Symbol.asyncIterator], "function");
+    const input = prompt[Symbol.asyncIterator]();
+    assert.equal((await input.next()).value.message.content, "run workflow");
+    return (async function* () {
+      yield { type: "system", subtype: "background_tasks_changed", tasks: [{ task_id: "wf1" }] };
+      yield { type: "result", subtype: "success", result: "launched", usage: {} };
+      yield { type: "system", subtype: "background_tasks_changed", tasks: [] };
+      yield { type: "system", subtype: "task_notification", task_id: "wf1", status: "completed" };
+      yield { type: "result", subtype: "success", result: "final report", usage: {} };
+    })();
+  } };
+  const result = await provider.callApi("run workflow");
+  assert.equal(result.output, "final report");
+  assert.ok(result.metadata.childLifecycle.some((event) => event.status === "completed"));
 });

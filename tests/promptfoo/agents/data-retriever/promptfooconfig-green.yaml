@@ -5,6 +5,9 @@ providers:
       agent_name: claude-of-alexandria:data-retriever
 prompts:
   - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
 tests:
   - description: "GREEN: direct retriever preserves its machine-readable contract"
     vars:
@@ -20,4 +23,29 @@ tests:
           const mcpCalls = (meta.toolCalls || []).filter(call => call.name?.startsWith('mcp__'));
           const errors = (meta.toolResults || []).filter(result => result.isError);
           return { pass: mcpCalls.length > 0 && errors.length === 0,
+            score: mcpCalls.length > 0 && errors.length === 0 ? 1 : 0,
             reason: `${mcpCalls.length} MCP calls; ${errors.length} failed results` };
+  # Source expectations independently checked through live MCP on 2026-09-30.
+  # MorphHB: H2339 = 7 occurrences. MACULA: Gen 15:9 has the same masculine
+  # Pual participle as Eccl 4:12; אי at 10:16 and שכר at 9:5.
+  - description: "ACCURACY GREEN: Ecclesiastes compression preserves source scope and references"
+    vars:
+      prompt: |
+        Gather evidence for Ecclesiastes 4:7-12, including morphology, lexical counts,
+        paragraph markers and Keil-Delitzsch commentary. A draft says: (1) חוט H2339
+        is an OT hapax, (2) משלש H8027 at 4:12 is the only Pual participle of that
+        verb in the OT, (3) Delitzsch links this passage to Proverbs 11:28,
+        (4) no marker at 4:7 proves continuity with 4:4-6, (5) אי occurs at 10:10,
+        (6) שכר occurs at 9:1. Check the data behind these suggestions, including
+        Genesis 15:9 and Ecclesiastes 9:1-10:16. Return your normal retrieval contract.
+    assert:
+      - type: javascript
+        value: file://../../assertions/retrieval-evidence.cjs
+      - type: llm-rubric
+        value: |
+          PASS only if the retrieval reports H2339 as seven OT occurrences, preserves
+          the Genesis 15:9 Pual counterexample, locates אי at Ecclesiastes 10:16 and
+          שכר at 9:5, does not attribute Proverbs 11:28 to the returned Delitzsch text,
+          and says absent markers cannot prove literary continuity. It must distinguish
+          reported source data from inference and must not promote any draft error to fact.
+          Corrections must remain visible even if the draft errors are quoted for comparison.

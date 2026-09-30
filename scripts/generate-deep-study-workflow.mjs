@@ -77,7 +77,16 @@ const request = {
   context: args.context,
   constraints: args.constraints,
   fresh: args.fresh === true,
+  model: args.model === undefined ? requestSchema.properties.model.default : args.model,
 };
+
+if (!requestSchema.properties.model.enum.includes(request.model)) {
+  return {
+    status: "needs_clarification",
+    missingFields: ["model"],
+    message: "model must be sonnet or opus. No study stage was launched.",
+  };
+}
 
 if (!Array.isArray(request.constraints)) {
   return {
@@ -104,7 +113,7 @@ const adapterPrompt = (role, instructions, payload) => [
 ].join("\\n\\n");
 const invokeAgent = async (prompt, options) => {
   try {
-    return { result: await agent(prompt, options), failure: null };
+    return { result: await agent(prompt, { ...options, model: request.model }), failure: null };
   } catch (error) {
     return {
       result: null,

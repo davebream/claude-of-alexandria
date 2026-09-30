@@ -75,8 +75,10 @@ Fix: Section 8 now has a genre-graduated requirement:
 - Wisdom literature → encouraged but not mandatory; ground in wisdom theology
 - Short personal letters → broader apostolic theology suffices
 
-Also capped Rule 5 verification to 5 risk-prioritized claims (morphological parsings,
-frequency counts, hapax claims) to prevent turn exhaustion in the agent SDK.
+The original five-claim verification cap was superseded on 2026-09-30. Rule 5 now
+requires independent coverage of every high-risk claim, using batched queries and
+explicit unresolved/INCOMPLETE outcomes when the evidence or budget is insufficient.
+Unsupported attributions and their dependent conclusions must be corrected or removed.
 
 ## Invocation
 

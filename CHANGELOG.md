@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Sonnet replaces Haiku for retrieval, smoke checks, and bare-model audits. Deep-study stages default to Sonnet and accept an explicit Opus selection; unsupported model requests stop before research begins.
+- Retrieval summaries now preserve source scope, exact references, and evidence limitations. Exegetical notes verify every high-risk claim without a five-claim cap, correct unsupported attributions and dependent conclusions, and report unresolved verification as incomplete.
 - Claude Code validation is pinned to 2.1.263 and Claude Agent SDK evaluations to 0.3.263. `npm run validate:model-free` is now the single plugin gate used by contributors, pre-commit, and CI; it combines typed/duplicate-safe definition parsing, MCP tool and local reference checks, native strict loading, independent inventory assertions, eval coverage, and deterministic tests.
 - Evaluation providers now retain full tool-call/result provenance, parent relationships, child lifecycle, structured outputs, requested/effective models, and per-attempt usage. Named agents are exercised directly, consumer-install scenarios run outside the checkout without injected behavioral repairs, and a retry occurs only for a positively identified infrastructure failure, at most once.
 - Delegation validation is execution-mode aware. Context-dependent wrappers stay synchronous and unnamed, the self-contained smoke skill uses a native foreground fork, and only the guarded interactive team skill documents named teammates.

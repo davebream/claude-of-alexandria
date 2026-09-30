@@ -3,6 +3,9 @@ providers:
   - file://../../providers/sdk-bare.mjs
 prompts:
   - "{{prompt}}"
+defaultTest:
+  options:
+    provider: file://../../providers/sdk-grader.mjs
 tests:
   - description: "RED: bare model role-plays a panel without checking team prerequisites"
     vars:

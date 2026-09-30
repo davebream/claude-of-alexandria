@@ -3,11 +3,18 @@ name: study-team
 description: Use only when the user explicitly asks for an interactive three-perspective review of a completed deep-study report and Claude Code agent teams are already enabled in in-process mode.
 allowed-tools: Agent, Read, SendMessage, TaskCreate, TaskGet, TaskList, TaskUpdate
 disable-model-invocation: true
-version: 1.0.0
-changed: "2026-09-07"
+version: 1.1.0
+changed: "2026-09-30"
 ---
 
 # Study Team
+
+## Model selection
+
+Use Sonnet by default for delegated work. Explicit `model: opus` escalation is allowed
+when the study warrants it; preserve an existing Opus selection. Never request Haiku,
+inherit it, or use a built-in delegate that selects it. If this context is running on
+Haiku, stop before study work and request a switch to Sonnet or Opus.
 
 Run an optional, interactive challenge-and-reconciliation pass over an already completed
 `/deep-study` report. This skill is not part of the deterministic workflow and must never
