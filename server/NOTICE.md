@@ -176,11 +176,11 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_adam_clarke`
 - **Creator:** Adam Clarke
-- **Source:** https://www.sacred-texts.com/bib/cmt/clarke/
+- **Source:** https://bible.helloao.org/api/c/adam-clarke/books.json
 - **Rights:** public-domain — Public Domain Mark ([license](https://creativecommons.org/publicdomain/mark/1.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** Adam Clarke Bible Commentary, public domain.
-- **Modifications:** Normalized into commentary_entries with commentary id adam-clarke.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id adam-clarke.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - None
@@ -189,11 +189,11 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_jfb`
 - **Creator:** Robert Jamieson, A. R. Fausset, David Brown
-- **Source:** https://www.sacred-texts.com/bib/cmt/jfb/
+- **Source:** https://bible.helloao.org/api/c/jamieson-fausset-brown/books.json
 - **Rights:** public-domain — Public Domain Mark ([license](https://creativecommons.org/publicdomain/mark/1.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** Jamieson-Fausset-Brown Bible Commentary, public domain.
-- **Modifications:** Normalized into commentary_entries with commentary id jamieson-fausset-brown.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id jamieson-fausset-brown.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - None
@@ -202,11 +202,11 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_john_gill`
 - **Creator:** John Gill
-- **Source:** https://www.sacred-texts.com/bib/cmt/gill/
+- **Source:** https://bible.helloao.org/api/c/john-gill/books.json
 - **Rights:** public-domain — Public Domain Mark ([license](https://creativecommons.org/publicdomain/mark/1.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** John Gill Exposition of the Bible, public domain.
-- **Modifications:** Normalized into commentary_entries with commentary id john-gill.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id john-gill.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - None
@@ -215,11 +215,11 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_keil_delitzsch`
 - **Creator:** C. F. Keil and Franz Delitzsch
-- **Source:** https://www.sacred-texts.com/bib/cmt/kad/
+- **Source:** https://bible.helloao.org/api/c/keil-delitzsch/books.json
 - **Rights:** public-domain — Public Domain Mark ([license](https://creativecommons.org/publicdomain/mark/1.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** Keil-Delitzsch Commentary on the Old Testament, public domain.
-- **Modifications:** Normalized into commentary_entries with commentary id keil-delitzsch.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id keil-delitzsch.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - None
@@ -228,11 +228,11 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_matthew_henry`
 - **Creator:** Matthew Henry
-- **Source:** https://www.sacred-texts.com/bib/cmt/mhc/
+- **Source:** https://bible.helloao.org/api/c/matthew-henry/books.json
 - **Rights:** public-domain — Public Domain Mark ([license](https://creativecommons.org/publicdomain/mark/1.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** Matthew Henry Commentary on the Whole Bible, public domain.
-- **Modifications:** Normalized into commentary_entries with commentary id matthew-henry.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id matthew-henry.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - None
@@ -241,14 +241,27 @@ Do not edit the MCP section by hand — run `npx tsx scripts/generate-notices.ts
 
 - **ID:** `commentary_tyndale`
 - **Creator:** Tyndale House Publishers (https://www.tyndale.com/)
-- **Source:** https://github.com/TyndaleHousePublishers/tyndale-open-study-notes
+- **Source:** https://bible.helloao.org/api/c/tyndale/books.json
 - **Rights:** open-license — Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) ([license](https://creativecommons.org/licenses/by-sa/4.0/))
 - **Version:** _not pinned at import (unversioned)_
 - **Attribution:** Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers.
-- **Modifications:** Normalized into commentary_entries with commentary id tyndale.
+- **Modifications:** Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id tyndale.
 - **MCP tools:** commentary_lookup, list_books
 - **Special conditions:**
 - Source revision was not pinned at import; disclosed as unversioned.
+
+## Translation Notes (derived from unfoldingWord)
+
+- **ID:** `commentary_unfoldingword`
+- **Creator:** unfoldingWord (https://www.unfoldingword.org/)
+- **Source:** https://git.door43.org/unfoldingWord/en_tn
+- **Rights:** open-license — Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) ([license](https://creativecommons.org/licenses/by-sa/4.0/))
+- **Version:** _not pinned at import (unversioned)_
+- **Attribution:** The original work by unfoldingWord is available from https://www.unfoldingword.org/utn. Converted from TSV to passage-indexed notes; introductory rows omitted and escaped newlines decoded. CC BY-SA 4.0.
+- **Modifications:** TSV notes normalized into commentary_entries (unfoldingword); introductory rows omitted, escaped newlines decoded, Quote and SupportReference retained in storage.
+- **MCP tools:** commentary_lookup, list_books
+- **Special conditions:**
+- Derived notes remain CC BY-SA 4.0. The unfoldingWord trademark is not used as the name of this derivative work.
 
 ## Creeds.json Confessional Corpus
 

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { COMMENTARY_ID_TO_DATASET, requireDataset } from '../provenance/registry.js';
 import { ProvenanceSchema } from '../provenance/types.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { getAllBooks } from '../db/books.js';
@@ -45,14 +46,10 @@ const AVAILABLE_TRANSLATIONS = [
   { id: 'DBY', name: 'Darby Bible', license: 'Public Domain' },
 ] as const;
 
-const AVAILABLE_COMMENTARIES = [
-  { id: 'matthew-henry', name: 'Matthew Henry Bible Commentary', license: 'Public Domain' },
-  { id: 'jamieson-fausset-brown', name: 'Jamieson-Fausset-Brown Bible Commentary', license: 'Public Domain' },
-  { id: 'adam-clarke', name: 'Adam Clarke Bible Commentary', license: 'Public Domain' },
-  { id: 'john-gill', name: 'John Gill Bible Commentary', license: 'Public Domain' },
-  { id: 'keil-delitzsch', name: 'Keil-Delitzsch OT Commentary', license: 'Public Domain' },
-  { id: 'tyndale', name: 'Tyndale Open Study Notes', license: 'CC BY-SA 4.0' },
-] as const;
+const AVAILABLE_COMMENTARIES = Object.entries(COMMENTARY_ID_TO_DATASET).map(([id, datasetId]) => {
+  const dataset = requireDataset(datasetId);
+  return { id, name: dataset.title, license: dataset.rights.name };
+});
 
 export async function listBooks(args: ListBooksInput): Promise<CallToolResult> {
   const allBooks = getAllBooks();

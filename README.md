@@ -327,11 +327,21 @@ Successful responses include a required `provenance` object identifying every da
 | `query_syntax` | Clause-level syntax annotations | NT |
 | `query_variants` | Textual variant edition comparisons | NT |
 | `bible_lookup` | Verse text in a selected translation | Both testaments |
-| `commentary_lookup` | Public-domain commentary entries | Both testaments |
+| `commentary_lookup` | Verified commentary entries with provenance and explicit source gaps | Both testaments |
 | `parallel_text` | Verse-aligned translation comparison | Both testaments |
 | `confessional_lookup` | Confessional and catechetical documents from Reformed, Baptist, Lutheran, and ancient traditions — lookup by slug, scripture citation, keyword, or list | Non-biblical |
 | `liturgical_lookup` | Church-year season → recommended passages + themes, and reverse passage → season(s) lookup (curated, Protestant-oriented) | Non-biblical |
 | `query_controversies` | Look up academically contested topics (historicity/dating/authorship) by topic or passage → rating + balanced both-sides positions with sources. Also surfaces a `chapter_contested` discovery flag via `query_events` when a queried chapter overlaps known controversial passages. | Non-biblical |
+
+`commentary_lookup` returns entries only from sources with verified provenance and
+redistribution rights. `unavailable_sources` lists excluded matching sources, the
+reason, and the number of omitted entries; it repeats on every page. `page.total`
+counts publishable entries, so a completed page traversal does not imply that
+excluded sources contain no discussion. Named unresolved sources (or a passage
+whose matching entries are all unresolved) return `SOURCE_UNAVAILABLE`. A successful
+empty result means no matching rows were found in the queried corpus, not that no
+scholar has discussed the passage. The source audit and remaining edition gaps are
+recorded in [the commentary source audit](docs/data-provenance/commentary-source-audit.md).
 
 Skills call these automatically. You can invoke them directly if needed.
 
