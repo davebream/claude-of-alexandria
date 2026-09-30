@@ -1,6 +1,6 @@
 {
   "name": "claude-of-alexandria-mcp-worker",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "engines": {
     "node": ">=22"
   },

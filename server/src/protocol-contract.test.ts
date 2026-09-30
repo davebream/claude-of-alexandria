@@ -72,7 +72,7 @@ describe('MCP v5 protocol contract', () => {
     expect(tools.map(tool => tool.name)).toContain('query_theme_distribution');
     expect(tools.map(tool => tool.name)).toContain('query_ot_structure');
     expect(tools.map(tool => tool.name)).not.toContain('query_theme');
-    expect(client.getServerVersion()?.version).toBe('5.0.0');
+    expect(client.getServerVersion()?.version).toBe('5.1.0');
     expect(client.getInstructions()).toContain('native JSON arrays');
     expect(client.getInstructions()).toContain('next_cursor');
   });
