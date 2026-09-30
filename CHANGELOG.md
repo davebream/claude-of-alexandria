@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Commentary lookups without a named source now return verified entries instead of failing output validation when stored sources lack provenance. Translation Notes derived from unfoldingWord are available with attribution; unresolved patristic editions are reported explicitly. Each page includes provenance for its returned entries, and pagination totals distinguish available entries from reported omissions.
+
 ## [5.1.0] - 2026-09-30
 
 ### Added

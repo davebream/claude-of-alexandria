@@ -1,6 +1,8 @@
 import type { DatasetRegistryEntry } from './types.js';
 import { LGNTDF_ATTRIBUTION } from './types.js';
 
+export { COMMENTARY_ID_TO_DATASET } from './commentaries.js';
+
 const CC_BY_4 = 'Creative Commons Attribution 4.0 International (CC BY 4.0)';
 const CC_BY_SA_4 = 'Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)';
 const CC_BY_SA_3 = 'Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)';
@@ -466,10 +468,10 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'Adam Clarke',
     creator_url: null,
     attribution: 'Adam Clarke Bible Commentary, public domain.',
-    source_url: 'https://www.sacred-texts.com/bib/cmt/clarke/',
+    source_url: 'https://bible.helloao.org/api/c/adam-clarke/books.json',
     rights: { status: 'public-domain', name: PDM, url: PDM_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id adam-clarke.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id adam-clarke.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: [],
     project_surfaces: ['MCP'],
@@ -482,10 +484,10 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'Robert Jamieson, A. R. Fausset, David Brown',
     creator_url: null,
     attribution: 'Jamieson-Fausset-Brown Bible Commentary, public domain.',
-    source_url: 'https://www.sacred-texts.com/bib/cmt/jfb/',
+    source_url: 'https://bible.helloao.org/api/c/jamieson-fausset-brown/books.json',
     rights: { status: 'public-domain', name: PDM, url: PDM_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id jamieson-fausset-brown.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id jamieson-fausset-brown.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: [],
     project_surfaces: ['MCP'],
@@ -498,10 +500,10 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'John Gill',
     creator_url: null,
     attribution: 'John Gill Exposition of the Bible, public domain.',
-    source_url: 'https://www.sacred-texts.com/bib/cmt/gill/',
+    source_url: 'https://bible.helloao.org/api/c/john-gill/books.json',
     rights: { status: 'public-domain', name: PDM, url: PDM_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id john-gill.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id john-gill.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: [],
     project_surfaces: ['MCP'],
@@ -514,10 +516,10 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'C. F. Keil and Franz Delitzsch',
     creator_url: null,
     attribution: 'Keil-Delitzsch Commentary on the Old Testament, public domain.',
-    source_url: 'https://www.sacred-texts.com/bib/cmt/kad/',
+    source_url: 'https://bible.helloao.org/api/c/keil-delitzsch/books.json',
     rights: { status: 'public-domain', name: PDM, url: PDM_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id keil-delitzsch.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id keil-delitzsch.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: [],
     project_surfaces: ['MCP'],
@@ -530,10 +532,10 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'Matthew Henry',
     creator_url: null,
     attribution: 'Matthew Henry Commentary on the Whole Bible, public domain.',
-    source_url: 'https://www.sacred-texts.com/bib/cmt/mhc/',
+    source_url: 'https://bible.helloao.org/api/c/matthew-henry/books.json',
     rights: { status: 'public-domain', name: PDM, url: PDM_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id matthew-henry.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id matthew-henry.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: [],
     project_surfaces: ['MCP'],
@@ -546,12 +548,29 @@ export const DATASET_REGISTRY: Record<string, DatasetRegistryEntry> = {
     creator: 'Tyndale House Publishers',
     creator_url: 'https://www.tyndale.com/',
     attribution: 'Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers.',
-    source_url: 'https://github.com/TyndaleHousePublishers/tyndale-open-study-notes',
+    source_url: 'https://bible.helloao.org/api/c/tyndale/books.json',
     rights: { status: 'open-license', name: CC_BY_SA_4, url: CC_BY_SA_4_URL },
     version: null,
-    modifications: 'Normalized into commentary_entries with commentary id tyndale.',
+    modifications: 'Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id tyndale.',
     mcp_tools: ['commentary_lookup', 'list_books'],
     special_conditions: ['Source revision was not pinned at import; disclosed as unversioned.'],
+    project_surfaces: ['MCP'],
+    mcp_published: true,
+  },
+
+  commentary_unfoldingword: {
+    id: 'commentary_unfoldingword',
+    title: 'Translation Notes (derived from unfoldingWord)',
+    creator: 'unfoldingWord',
+    creator_url: 'https://www.unfoldingword.org/',
+    attribution: 'The original work by unfoldingWord is available from https://www.unfoldingword.org/utn. Converted from TSV to passage-indexed notes; introductory rows omitted and escaped newlines decoded. CC BY-SA 4.0.',
+    source_url: 'https://git.door43.org/unfoldingWord/en_tn',
+    rights: { status: 'open-license', name: CC_BY_SA_4, url: CC_BY_SA_4_URL },
+    // The comparison snapshot is evidence, not a known import revision.
+    version: null,
+    modifications: 'TSV notes normalized into commentary_entries (unfoldingword); introductory rows omitted, escaped newlines decoded, Quote and SupportReference retained in storage.',
+    mcp_tools: ['commentary_lookup', 'list_books'],
+    special_conditions: ['Derived notes remain CC BY-SA 4.0. The unfoldingWord trademark is not used as the name of this derivative work.'],
     project_surfaces: ['MCP'],
     mcp_published: true,
   },
@@ -737,15 +756,6 @@ export function requireDataset(id: string): DatasetRegistryEntry {
 export function mcpDatasets(): DatasetRegistryEntry[] {
   return Object.values(DATASET_REGISTRY).filter(entry => entry.mcp_published);
 }
-
-export const COMMENTARY_ID_TO_DATASET: Record<string, string> = {
-  'adam-clarke': 'commentary_adam_clarke',
-  'jamieson-fausset-brown': 'commentary_jfb',
-  'john-gill': 'commentary_john_gill',
-  'keil-delitzsch': 'commentary_keil_delitzsch',
-  'matthew-henry': 'commentary_matthew_henry',
-  tyndale: 'commentary_tyndale',
-};
 
 export const TRANSLATION_ID_TO_DATASET: Record<string, string> = {
   BSB: 'bible_bsb',

@@ -81,7 +81,7 @@ const CORS_HEADERS = {
 // and are left for the platform's TTL/LRU reaping. The 24h `max-age=86400`
 // TTL below is therefore also the upper bound on staleness: even without a
 // version bump, any entry self-expires within 24h of being written.
-const DEFAULT_CACHE_VERSION = 'v9';
+const DEFAULT_CACHE_VERSION = 'v10';
 
 // Per-request context: the ExecutionContext (used to schedule non-blocking
 // cache writes via waitUntil) and the resolved cache-version namespace.
@@ -228,7 +228,13 @@ const PAGEABLE_COLLECTIONS: Record<string, PageableCollection> = {
       : [],
     replaceRecords: (data, records) => {
       const { commentaries: _commentaries, ...rest } = data;
-      return { ...rest, entries: records };
+      const page = { ...rest, entries: records };
+      // Size probes must include only this page's datasets. Empty results retain
+      // the provenance of the verified sources queried (including named filters).
+      if (records.length === 0) return page;
+      return attachProvenance('commentary_lookup', {}, {
+        content: [], structuredContent: page,
+      }).structuredContent!;
     },
   },
   parallel_text: collection('verses'),

@@ -1,25 +1,21 @@
 import { z } from 'zod';
+import { COMMENTARY_IDS, commentarySource } from '../provenance/commentaries.js';
+import { requireDataset } from '../provenance/registry.js';
 import { ProvenanceSchema } from '../provenance/types.js';
-import { PageSchema, PaginationInputShape } from './contract.js';
+import { PageSchema, PaginationInputShape, toolError } from './contract.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { query } from '../db/query.js';
 import { lookupBook, suggestBooks } from '../db/books.js';
 import { parseVerseRange } from './utils.js';
 
-const VALID_COMMENTARIES = [
-  'adam-clarke', 'jamieson-fausset-brown', 'john-gill',
-  'keil-delitzsch', 'matthew-henry', 'tyndale',
-] as const;
-
-const TYNDALE_ATTRIBUTION = 'Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers';
 const LARGE_RANGE_THRESHOLD = 15;
 
 export const CommentaryLookupInputSchema = z.strictObject({
   ...PaginationInputShape,
   book: z.string().describe('Book name in any common form (e.g., "Romans", "Gen", "1 Cor")'),
   range: z.string().describe('Verse range: "8:28-8:30", "8:28-30", or single verse "8:28"'),
-  commentary: z.enum(VALID_COMMENTARIES).optional().describe(
-    `Filter to a specific commentary. Omit for all available. Options: ${VALID_COMMENTARIES.join(', ')}`
+  commentary: z.enum(COMMENTARY_IDS).optional().describe(
+    `Filter to a specific commentary. Known sources with unresolved provenance return SOURCE_UNAVAILABLE. Omit for verified sources; unavailable_sources reports excluded matching rows. Options: ${COMMENTARY_IDS.join(', ')}`
   ),
 });
 
@@ -39,6 +35,11 @@ export const CommentaryLookupOutputSchema = z.strictObject({
     text: z.string(),
     source_ids: z.array(z.string()).min(1),
   })),
+  unavailable_sources: z.array(z.strictObject({
+    commentary: z.string(),
+    reason: z.string(),
+    omitted_entries: z.number().int().positive(),
+  })),
   range_warning: z.string().optional(),
 });
 
@@ -57,6 +58,14 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
       content: [{ type: 'text', text: JSON.stringify({ error: { code: 'INVALID_RANGE', message: verseRange.error } }) }],
       isError: true,
     };
+  }
+
+  const requestedSource = args.commentary ? commentarySource(args.commentary) : undefined;
+  if (args.commentary && !requestedSource?.datasetId) {
+    return toolError('SOURCE_UNAVAILABLE', `Commentary '${args.commentary}' is unavailable.`, {
+      commentary: args.commentary,
+      reason: requestedSource?.unavailableReason ?? 'Source is not registered.',
+    });
   }
 
   let sql = `
@@ -88,12 +97,26 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
     entries: { chapter: number; verse_start: number; verse_end: number; text: string }[];
   }>();
 
+  const unavailable = new Map<string, { commentary: string; reason: string; omitted_entries: number }>();
+
   for (const row of rows) {
     const cid = row.commentary as string;
+    const source = commentarySource(cid);
+    if (!source?.datasetId) {
+      const excluded = unavailable.get(cid) ?? {
+        commentary: cid,
+        reason: source?.unavailableReason ?? 'Source is not registered; provenance is unavailable.',
+        omitted_entries: 0,
+      };
+      excluded.omitted_entries += 1;
+      unavailable.set(cid, excluded);
+      continue;
+    }
     if (!commentaryMap.has(cid)) {
+      const dataset = requireDataset(source.datasetId);
       commentaryMap.set(cid, {
         commentary: cid,
-        attribution: cid === 'tyndale' ? TYNDALE_ATTRIBUTION : null,
+        attribution: dataset.rights.status === 'public-domain' ? null : dataset.attribution,
         entries: [],
       });
     }
@@ -106,6 +129,10 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
   }
 
   const commentaries = [...commentaryMap.values()];
+  const unavailable_sources = [...unavailable.values()];
+  if (commentaries.length === 0 && unavailable_sources.length > 0) {
+    return toolError('SOURCE_UNAVAILABLE', 'All matching commentary entries have unavailable provenance.', { unavailable_sources });
+  }
 
   // Estimate verse count for range warning
   const verseSpan = (verseRange.endChapter - verseRange.startChapter) * 30
@@ -115,6 +142,7 @@ export async function commentaryLookup(args: CommentaryLookupInput): Promise<Cal
     book: bookInfo.displayName,
     range: args.range,
     commentaries,
+    unavailable_sources,
   };
 
   if (!args.commentary && verseSpan > LARGE_RANGE_THRESHOLD) {

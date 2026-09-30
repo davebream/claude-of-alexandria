@@ -203,7 +203,7 @@ Version: not pinned at import (unversioned)
 -------------------------------------------------------------------------------
 
 ADAM CLARKE BIBLE COMMENTARY
-Source: https://www.sacred-texts.com/bib/cmt/clarke/
+Source: https://bible.helloao.org/api/c/adam-clarke/books.json
 License: Public Domain Mark
 Version: not pinned at import (unversioned)
 
@@ -211,13 +211,13 @@ Version: not pinned at import (unversioned)
   Attribution: Adam Clarke Bible Commentary, public domain.
   Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
   Rights status: public-domain
-  Modifications: Normalized into commentary_entries with commentary id adam-clarke.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id adam-clarke.
   MCP tools: commentary_lookup, list_books
 
 -------------------------------------------------------------------------------
 
 JAMIESON-FAUSSET-BROWN BIBLE COMMENTARY
-Source: https://www.sacred-texts.com/bib/cmt/jfb/
+Source: https://bible.helloao.org/api/c/jamieson-fausset-brown/books.json
 License: Public Domain Mark
 Version: not pinned at import (unversioned)
 
@@ -225,13 +225,13 @@ Version: not pinned at import (unversioned)
   Attribution: Jamieson-Fausset-Brown Bible Commentary, public domain.
   Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
   Rights status: public-domain
-  Modifications: Normalized into commentary_entries with commentary id jamieson-fausset-brown.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id jamieson-fausset-brown.
   MCP tools: commentary_lookup, list_books
 
 -------------------------------------------------------------------------------
 
 JOHN GILL BIBLE COMMENTARY
-Source: https://www.sacred-texts.com/bib/cmt/gill/
+Source: https://bible.helloao.org/api/c/john-gill/books.json
 License: Public Domain Mark
 Version: not pinned at import (unversioned)
 
@@ -239,13 +239,13 @@ Version: not pinned at import (unversioned)
   Attribution: John Gill Exposition of the Bible, public domain.
   Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
   Rights status: public-domain
-  Modifications: Normalized into commentary_entries with commentary id john-gill.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id john-gill.
   MCP tools: commentary_lookup, list_books
 
 -------------------------------------------------------------------------------
 
 KEIL-DELITZSCH OLD TESTAMENT COMMENTARY
-Source: https://www.sacred-texts.com/bib/cmt/kad/
+Source: https://bible.helloao.org/api/c/keil-delitzsch/books.json
 License: Public Domain Mark
 Version: not pinned at import (unversioned)
 
@@ -253,13 +253,13 @@ Version: not pinned at import (unversioned)
   Attribution: Keil-Delitzsch Commentary on the Old Testament, public domain.
   Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
   Rights status: public-domain
-  Modifications: Normalized into commentary_entries with commentary id keil-delitzsch.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id keil-delitzsch.
   MCP tools: commentary_lookup, list_books
 
 -------------------------------------------------------------------------------
 
 MATTHEW HENRY BIBLE COMMENTARY
-Source: https://www.sacred-texts.com/bib/cmt/mhc/
+Source: https://bible.helloao.org/api/c/matthew-henry/books.json
 License: Public Domain Mark
 Version: not pinned at import (unversioned)
 
@@ -267,13 +267,13 @@ Version: not pinned at import (unversioned)
   Attribution: Matthew Henry Commentary on the Whole Bible, public domain.
   Rights URL: https://creativecommons.org/publicdomain/mark/1.0/
   Rights status: public-domain
-  Modifications: Normalized into commentary_entries with commentary id matthew-henry.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id matthew-henry.
   MCP tools: commentary_lookup, list_books
 
 -------------------------------------------------------------------------------
 
 TYNDALE OPEN STUDY NOTES
-Source: https://github.com/TyndaleHousePublishers/tyndale-open-study-notes
+Source: https://bible.helloao.org/api/c/tyndale/books.json
 License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 Version: not pinned at import (unversioned)
 
@@ -282,9 +282,25 @@ Version: not pinned at import (unversioned)
   Attribution: Tyndale Open Study Notes, CC BY-SA 4.0, Tyndale House Publishers.
   Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
   Rights status: open-license
-  Modifications: Normalized into commentary_entries with commentary id tyndale.
+  Modifications: Distributed by the Free Use Bible API (HelloAO); flattened into commentary_entries with commentary id tyndale.
   MCP tools: commentary_lookup, list_books
   NOTE: Source revision was not pinned at import; disclosed as unversioned.
+
+-------------------------------------------------------------------------------
+
+TRANSLATION NOTES (DERIVED FROM UNFOLDINGWORD)
+Source: https://git.door43.org/unfoldingWord/en_tn
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Version: not pinned at import (unversioned)
+
+  Creator: unfoldingWord
+  Creator URL: https://www.unfoldingword.org/
+  Attribution: The original work by unfoldingWord is available from https://www.unfoldingword.org/utn. Converted from TSV to passage-indexed notes; introductory rows omitted and escaped newlines decoded. CC BY-SA 4.0.
+  Rights URL: https://creativecommons.org/licenses/by-sa/4.0/
+  Rights status: open-license
+  Modifications: TSV notes normalized into commentary_entries (unfoldingword); introductory rows omitted, escaped newlines decoded, Quote and SupportReference retained in storage.
+  MCP tools: commentary_lookup, list_books
+  NOTE: Derived notes remain CC BY-SA 4.0. The unfoldingWord trademark is not used as the name of this derivative work.
 
 -------------------------------------------------------------------------------
 
