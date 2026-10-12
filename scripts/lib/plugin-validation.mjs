@@ -18,6 +18,7 @@ const AGENT_FIELDS = new Set([
   "color",
   "initialPrompt",
   "experimental",
+  "autoCompactWindow",
 ]);
 
 const IGNORED_PLUGIN_AGENT_FIELDS = new Set([
@@ -69,8 +70,23 @@ const BUILTIN_TOOLS = new Set([
   "Write",
 ]);
 
-const MCP_PREFIX =
-  "mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__";
+const LEGACY_IDENTIFIERS = [
+  /mcp__plugin_claude-of-alexandria_/,
+  /plugin_claude-of-alexandria_/,
+  /claude-of-alexandria:[a-z]/,
+  /claude-of-alexandria@claude-of-alexandria/,
+];
+
+// Historical records keep the identifiers that were current when they were written.
+const LEGACY_ALLOWED = [
+  /^CHANGELOG\.md$/,
+  /^docs\/adr\//,
+  /^docs\/incidents\//,
+  /^docs\/data-provenance\//,
+  /^decisions\//,
+  /^docs\/v6-rename-migration\.md$/,
+  /^docs\/mcp-v\d+-migration\.md$/,
+];
 
 function slash(filePath) {
   return filePath.split(path.sep).join("/");
@@ -88,6 +104,42 @@ async function filesUnder(root, predicate = () => true) {
     if (error?.code === "ENOENT") return [];
     throw error;
   }
+}
+
+async function readJson(filePath) {
+  try {
+    return JSON.parse(await fs.readFile(filePath, "utf8"));
+  } catch (error) {
+    if (error?.code === "ENOENT") return null;
+    throw new Error(`${filePath}: ${error.message}`);
+  }
+}
+
+export async function readPluginIdentity(pluginDir) {
+  const manifest = await readJson(path.join(pluginDir, ".claude-plugin", "plugin.json"));
+  if (!manifest || typeof manifest.name !== "string") return null;
+  const mcp = await readJson(path.join(pluginDir, ".mcp.json"));
+  const servers = {
+    ...(mcp?.mcpServers ?? {}),
+    ...(manifest.mcpServers && typeof manifest.mcpServers === "object" ? manifest.mcpServers : {}),
+  };
+  return {
+    name: manifest.name,
+    version: manifest.version,
+    mcpPrefixes: Object.keys(servers).map((key) => `mcp__plugin_${manifest.name}_${key}__`),
+  };
+}
+
+function checkNamespace(errors, rel, label, reference, pluginName) {
+  if (!reference.includes(":")) return null;
+  const [namespace, ...nameParts] = reference.split(":");
+  if (namespace !== pluginName) {
+    errors.push(
+      `${rel}: ${label} ${reference} uses namespace ${JSON.stringify(namespace)}, not this plugin's namespace ${JSON.stringify(pluginName)}`,
+    );
+    return null;
+  }
+  return nameParts.join(":");
 }
 
 function parseFrontmatterText(text, filePath) {
@@ -172,6 +224,12 @@ function validateAgent(errors, rel, metadata, expectedName) {
   for (const field of ["tools", "disallowedTools", "skills"]) {
     if (field in metadata) checkStringList(errors, rel, field, metadata[field]);
   }
+  if (
+    "autoCompactWindow" in metadata &&
+    !(Number.isInteger(metadata.autoCompactWindow) && metadata.autoCompactWindow > 0)
+  ) {
+    errors.push(`${rel}: autoCompactWindow must be a positive integer`);
+  }
   if ("maxTurns" in metadata && !Number.isInteger(metadata.maxTurns)) {
     addTypeError(errors, rel, "maxTurns", "an integer", metadata.maxTurns);
   }
@@ -226,17 +284,18 @@ function validateSkill(errors, rel, metadata, expectedName) {
   }
 }
 
-function validateToolDeclarations(errors, rel, metadata, registeredTools) {
+function validateToolDeclarations(errors, rel, metadata, registeredTools, mcpPrefixes) {
   for (const field of ["tools", "allowed-tools"]) {
     if (!(field in metadata)) continue;
     for (const declaration of stringList(metadata[field])) {
       const tool = declaration.replace(/\(.*/, "");
       if (tool.startsWith("mcp__")) {
-        if (!tool.startsWith(MCP_PREFIX)) {
+        const prefix = mcpPrefixes.find((candidate) => tool.startsWith(candidate));
+        if (!prefix) {
           errors.push(`${rel}: MCP tool uses unsupported plugin prefix: ${tool}`);
           continue;
         }
-        const registeredName = tool.slice(MCP_PREFIX.length);
+        const registeredName = tool.slice(prefix.length);
         if (registeredTools && !registeredTools.has(registeredName)) {
           errors.push(`${rel}: MCP tool is not registered by the server: ${tool}`);
         }
@@ -262,6 +321,12 @@ async function loadRegisteredTools(serverSourceDir) {
 
 export async function inspectDefinitions(pluginDir, options = {}) {
   const errors = [];
+  const identity = await readPluginIdentity(pluginDir);
+  if (!identity && !options.pluginName) {
+    errors.push(".claude-plugin/plugin.json: missing or has no string name; the plugin name is read from it");
+  }
+  const pluginName = options.pluginName ?? identity?.name ?? path.basename(pluginDir);
+  const mcpPrefixes = options.mcpPrefixes ?? identity?.mcpPrefixes ?? [];
   const agentsDir = path.join(pluginDir, "agents");
   const skillsDir = path.join(pluginDir, "skills");
   const allAgentFiles = await filesUnder(agentsDir);
@@ -300,7 +365,7 @@ export async function inspectDefinitions(pluginDir, options = {}) {
         .replace(/\.md$/, "")
         .replaceAll("/", ":");
       validateAgent(errors, rel, definition.frontmatter, expectedName);
-      validateToolDeclarations(errors, rel, definition.frontmatter, registeredTools);
+      validateToolDeclarations(errors, rel, definition.frontmatter, registeredTools, mcpPrefixes);
       if (agentNames.has(scopedName)) errors.push(`${rel}: duplicate agent identity ${scopedName}`);
       agentNames.add(scopedName);
       parsed.push({ kind: "agent", rel, ...definition });
@@ -315,7 +380,7 @@ export async function inspectDefinitions(pluginDir, options = {}) {
       const definition = parseFrontmatterText(await fs.readFile(file, "utf8"), rel);
       const expectedName = path.basename(path.dirname(file));
       validateSkill(errors, rel, definition.frontmatter, expectedName);
-      validateToolDeclarations(errors, rel, definition.frontmatter, registeredTools);
+      validateToolDeclarations(errors, rel, definition.frontmatter, registeredTools, mcpPrefixes);
       if (skillNames.has(expectedName)) errors.push(`${rel}: duplicate skill identity ${expectedName}`);
       skillNames.add(expectedName);
       parsed.push({ kind: "skill", rel, ...definition });
@@ -324,28 +389,26 @@ export async function inspectDefinitions(pluginDir, options = {}) {
     }
   }
 
-  const pluginName = options.pluginName ?? path.basename(pluginDir);
   for (const definition of parsed) {
     for (const match of definition.body.matchAll(/subagent_type\s*:\s*["']([^"']+)["']/g)) {
-      const [namespace, ...nameParts] = match[1].split(":");
-      const name = nameParts.join(":");
-      if (namespace === pluginName && !agentNames.has(name)) {
+      const name = checkNamespace(errors, definition.rel, "referenced agent", match[1], pluginName);
+      if (name !== null && !agentNames.has(name)) {
         errors.push(`${definition.rel}: referenced agent ${match[1]} does not exist`);
       }
     }
     const preloaded = stringList(definition.frontmatter.skills);
     for (const name of preloaded) {
-      const localName = name.startsWith(`${pluginName}:`)
-        ? name.slice(pluginName.length + 1)
+      const localName = name.includes(":")
+        ? checkNamespace(errors, definition.rel, "preloaded skill", name, pluginName)
         : name;
-      if (!skillNames.has(localName)) {
+      if (localName !== null && !skillNames.has(localName)) {
         errors.push(`${definition.rel}: preloaded skill ${name} does not exist`);
       }
     }
     const nativeAgent = definition.frontmatter.agent;
-    if (typeof nativeAgent === "string" && nativeAgent.startsWith(`${pluginName}:`)) {
-      const localName = nativeAgent.slice(pluginName.length + 1);
-      if (!agentNames.has(localName)) {
+    if (typeof nativeAgent === "string" && nativeAgent.includes(":")) {
+      const localName = checkNamespace(errors, definition.rel, "native agent", nativeAgent, pluginName);
+      if (localName !== null && !agentNames.has(localName)) {
         errors.push(`${definition.rel}: native agent ${nativeAgent} does not exist`);
       }
     }
@@ -363,6 +426,8 @@ export async function inspectDefinitions(pluginDir, options = {}) {
 
 export async function inspectWorkflows(pluginDir, options = {}) {
   const errors = [];
+  const pluginName =
+    options.pluginName ?? (await readPluginIdentity(pluginDir))?.name ?? path.basename(pluginDir);
   const workflowsDir = path.join(pluginDir, "workflows");
   const allWorkflowFiles = await filesUnder(
     workflowsDir,
@@ -417,15 +482,9 @@ export async function inspectWorkflows(pluginDir, options = {}) {
         errors.push(`${rel}: phase ${JSON.stringify(match[1])} is not listed in meta.phases`);
       }
     }
-    const pluginName = options.pluginName ?? path.basename(pluginDir);
     for (const match of source.matchAll(/\bagentType\s*:\s*["']([^"']+)["']/g)) {
-      const [namespace, ...nameParts] = match[1].split(":");
-      const localName = nameParts.join(":");
-      if (
-        namespace === pluginName &&
-        options.agentNames &&
-        !options.agentNames.has(localName)
-      ) {
+      const localName = checkNamespace(errors, rel, "workflow agent type", match[1], pluginName);
+      if (localName !== null && options.agentNames && !options.agentNames.has(localName)) {
         errors.push(`${rel}: workflow agent type ${match[1]} does not exist`);
       }
     }
@@ -456,4 +515,70 @@ export function runNativeValidation(pluginDir, options = {}) {
     const detail = error.stderr?.toString().trim() || error.message;
     return { ok: false, error: `native strict validation failed: ${detail}` };
   }
+}
+
+async function marketplaceEntries(root) {
+  const marketplace = await readJson(path.join(root, ".claude-plugin", "marketplace.json"));
+  if (!marketplace || !Array.isArray(marketplace.plugins)) {
+    throw new Error(".claude-plugin/marketplace.json: missing or has no plugins array");
+  }
+  return marketplace.plugins.map((entry) => ({
+    entry,
+    dir: typeof entry.source === "string" ? path.resolve(root, entry.source) : null,
+  }));
+}
+
+export async function nativeValidationTargets(root) {
+  const entries = await marketplaceEntries(root);
+  return [
+    path.join(root, ".claude-plugin", "marketplace.json"),
+    ...entries.filter(({ dir }) => dir).map(({ dir }) => dir),
+  ];
+}
+
+export async function checkMarketplaceEntries(root) {
+  const errors = [];
+  for (const { entry, dir } of await marketplaceEntries(root)) {
+    const label = `.claude-plugin/marketplace.json: plugin ${JSON.stringify(entry.name)}`;
+    if (!dir) {
+      errors.push(`${label} must use a relative string source`);
+      continue;
+    }
+    const manifest = await readJson(path.join(dir, ".claude-plugin", "plugin.json"));
+    if (!manifest) {
+      errors.push(`${label} has no .claude-plugin/plugin.json at ${slash(path.relative(root, dir))}`);
+      continue;
+    }
+    if (manifest.name !== entry.name) {
+      errors.push(`${label} name does not match plugin.json name ${JSON.stringify(manifest.name)}`);
+    }
+    if (manifest.version !== entry.version) {
+      errors.push(
+        `${label} version ${entry.version} does not match plugin.json version ${manifest.version}`,
+      );
+    }
+  }
+  return errors;
+}
+
+export async function findLegacyIdentifiers(root, files) {
+  const errors = [];
+  for (const rel of files) {
+    const posix = rel.split(path.sep).join("/");
+    if (LEGACY_ALLOWED.some((pattern) => pattern.test(posix))) continue;
+    let text;
+    try {
+      text = await fs.readFile(path.join(root, rel), "utf8");
+    } catch (error) {
+      if (error?.code === "ENOENT" || error?.code === "EISDIR") continue;
+      throw error;
+    }
+    const lines = text.split("\n");
+    lines.forEach((line, index) => {
+      if (LEGACY_IDENTIFIERS.some((pattern) => pattern.test(line))) {
+        errors.push(`${posix}:${index + 1}: uses a retired claude-of-alexandria identifier (ADR 0004)`);
+      }
+    });
+  }
+  return errors;
 }
