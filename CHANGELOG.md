@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-10-12
+
 ### Changed
 
 - **Breaking:** the plugin and its marketplace are now named `coa`, because Claude Code reserves plugin names that start with `claude-`. New installs use `claude plugin install coa --marketplace davebream/claude-of-alexandria`. Skills and agents are namespaced `coa:` (for example `/coa:deep-study`), and MCP tools are `mcp__plugin_coa_coa__<tool>`. The display name is still Claude of Alexandria. Existing installs need one reinstall, and permission rules or saved commands that name the old tools or `/claude-of-alexandria:` commands must be updated by hand; see [the v6 rename migration](docs/v6-rename-migration.md).

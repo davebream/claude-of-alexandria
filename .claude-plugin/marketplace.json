@@ -12,7 +12,7 @@
       "displayName": "Claude of Alexandria",
       "source": "./plugins/claude-of-alexandria",
       "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
-      "version": "5.1.0",
+      "version": "6.0.0",
       "author": {
         "name": "@davebream",
         "email": "dawid.leszczynski@hey.com"

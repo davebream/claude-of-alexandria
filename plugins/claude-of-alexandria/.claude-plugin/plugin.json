@@ -1,7 +1,7 @@
 {
   "name": "coa",
   "displayName": "Claude of Alexandria",
-  "version": "5.1.0",
+  "version": "6.0.0",
   "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
   "author": {
     "name": "@davebream",
