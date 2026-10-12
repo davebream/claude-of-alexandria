@@ -1,7 +1,7 @@
 # ADR 0005: Ship runtime guards and study views as an opt-in companion mod
 
 **Date:** 2026-10-12
-**Status:** Accepted
+**Status:** Accepted; amended by [ADR 0006](0006-model-guard-ships-in-coa.md), which moves the model guard into `coa`
 **Baseline:** Claude Code 2.1.296
 
 ## Context
