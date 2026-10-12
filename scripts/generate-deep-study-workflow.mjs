@@ -11,6 +11,10 @@ const WORKFLOW_PATH = path.join(
   ROOT,
   "plugins/claude-of-alexandria/workflows/deep-study.js",
 );
+const PLUGIN_MANIFEST = path.join(
+  ROOT,
+  "plugins/claude-of-alexandria/.claude-plugin/plugin.json",
+);
 
 const schemaFiles = {
   requestSchema: "request.schema.json",
@@ -32,6 +36,7 @@ async function readSchemas() {
 
 export async function generateDeepStudyWorkflow() {
   const schemas = await readSchemas();
+  const pluginName = JSON.parse(await fs.readFile(PLUGIN_MANIFEST, "utf8")).name;
   const schemaDeclarations = Object.entries(schemas)
     .map(([name, schema]) => `const ${name} = ${JSON.stringify(schema, null, 2)};`)
     .join("\n\n");
@@ -131,7 +136,7 @@ const retrievalAttempt = await invokeAgent(
   ),
   {
     label: "retrieval",
-    agentType: "claude-of-alexandria:deep-study-retrieval",
+    agentType: "${pluginName}:deep-study-retrieval",
     schema: evidenceSchema,
   },
 );
@@ -162,7 +167,7 @@ const boundaryAttempt = await invokeAgent(
   ),
   {
     label: "boundary",
-    agentType: "claude-of-alexandria:deep-study-analysis",
+    agentType: "${pluginName}:deep-study-analysis",
     schema: analysisSchema,
   },
 );
@@ -185,7 +190,7 @@ const [discourseAttempt, interpretationAttempt] = await parallel([
     ),
     {
       label: "discourse",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "${pluginName}:deep-study-analysis",
       schema: analysisSchema,
     },
   ),
@@ -197,7 +202,7 @@ const [discourseAttempt, interpretationAttempt] = await parallel([
     ),
     {
       label: "interpretation",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "${pluginName}:deep-study-analysis",
       schema: analysisSchema,
     },
   ),
@@ -224,7 +229,7 @@ let verificationAttempt = await invokeAgent(
   ),
   {
     label: "verification",
-    agentType: "claude-of-alexandria:deep-study-verification",
+    agentType: "${pluginName}:deep-study-verification",
     schema: verificationSchema,
   },
 );
@@ -250,7 +255,7 @@ if (verification.status === "needs_repair") {
     ),
     {
       label: "repair",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "${pluginName}:deep-study-analysis",
       schema: analysisSchema,
     },
   );
@@ -274,7 +279,7 @@ if (verification.status === "needs_repair") {
     ),
     {
       label: "reverify",
-      agentType: "claude-of-alexandria:deep-study-verification",
+      agentType: "${pluginName}:deep-study-verification",
       schema: verificationSchema,
     },
   );
@@ -297,7 +302,7 @@ const synthesisAttempt = await invokeAgent(
   ),
   {
     label: "synthesis",
-    agentType: "claude-of-alexandria:deep-study-synthesis",
+    agentType: "${pluginName}:deep-study-synthesis",
     schema: finalReportSchema,
   },
 );

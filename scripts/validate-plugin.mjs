@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -6,6 +7,7 @@ import { parseDocument } from "yaml";
 
 import {
   checkMarketplaceEntries,
+  findLegacyIdentifiers,
   inspectDefinitions,
   inspectWorkflows,
   nativeValidationTargets,
@@ -185,6 +187,10 @@ for (const target of await nativeValidationTargets(ROOT)) {
   summary.push({ name: identity?.name ?? relative(target), definitions, workflows });
 }
 errors.push(...(await validateEvalReferences()));
+const trackedFiles = execFileSync("git", ["ls-files", "-z"], { cwd: ROOT, encoding: "utf8" })
+  .split("\0")
+  .filter(Boolean);
+errors.push(...(await findLegacyIdentifiers(ROOT, trackedFiles)));
 
 console.log("=== COA Plugin Validation ===");
 for (const { name, definitions, workflows } of summary) {

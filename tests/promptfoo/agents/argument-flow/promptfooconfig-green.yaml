@@ -2,7 +2,7 @@ description: "argument-flow agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:argument-flow
+      agent_name: coa:argument-flow
 prompts:
   - "{{prompt}}"
 tests:

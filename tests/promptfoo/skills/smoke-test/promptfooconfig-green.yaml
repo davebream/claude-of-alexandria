@@ -6,7 +6,7 @@ prompts:
 tests:
   - description: "GREEN: installed skill reaches its agent"
     vars:
-      prompt: "Run /claude-of-alexandria:smoke-test."
+      prompt: "Run /coa:smoke-test."
     assert:
       - type: icontains
         value: "SMOKE_TEST_AGENT_OK"

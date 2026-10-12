@@ -15,6 +15,7 @@
  *   providers:
  *     - file://../../providers/sdk-with-skill.mjs
  */
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import SdkProvider from "./sdk-provider.mjs";
@@ -44,7 +45,12 @@ not reformat, summarize, or wrap it in your own structure.`;
 // not the bare mcp__<serverName>__* the SDK would otherwise use for a directly-declared server.
 // Subagent frontmatter (data-retriever.md, argument-flow.md) declares tools under this same
 // prefix; a mismatch here means those subagents see zero matching MCP tools and fail to spawn.
-const MCP_SERVER_KEY = "plugin_claude-of-alexandria_claude-of-alexandria-mcp";
+const PLUGIN_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../plugins/claude-of-alexandria");
+const PLUGIN_NAME = JSON.parse(fs.readFileSync(path.join(PLUGIN_DIR, ".claude-plugin/plugin.json"), "utf8")).name;
+const [[SERVER_NAME, SERVER_CONFIG]] = Object.entries(
+  JSON.parse(fs.readFileSync(path.join(PLUGIN_DIR, ".mcp.json"), "utf8")).mcpServers,
+);
+const MCP_SERVER_KEY = `plugin_${PLUGIN_NAME}_${SERVER_NAME}`;
 
 const MCP_TOOLS = [
   "list_books",
@@ -144,12 +150,7 @@ export default class SdkWithSkillProvider extends SdkProvider {
   buildOptions(cwd) {
     return {
       model: this.config.model || "claude-sonnet-5",
-      mcpServers: {
-        [MCP_SERVER_KEY]: {
-          type: "http",
-          url: "https://coa.davebream.com/mcp",
-        },
-      },
+      mcpServers: { [MCP_SERVER_KEY]: SERVER_CONFIG },
       strictMcpConfig: true,
       plugins: [{ type: "local", path: "plugins/claude-of-alexandria" }],
       settingSources: ["project"],

@@ -51,7 +51,7 @@ export default class SdkConsumerInstallProvider extends SdkProvider {
         "Read",
         "WebSearch",
         "WebFetch",
-        "mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__*",
+        ...Object.keys(MCP_SERVERS).map((key) => `mcp__${key}__*`),
       ],
       permissionMode: "bypassPermissions",
       allowDangerouslySkipPermissions: true,

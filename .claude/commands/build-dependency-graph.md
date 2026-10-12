@@ -25,7 +25,7 @@ Produce a **refreshed dependency graph report** from the **physical plugin struc
   - From body: extract MCP tool names (direct calls or fallback), and any references to other skills or agents by name.
 
 - **MCP tools** (canonical list from CoA MCP server)
-  - Use the MCP tool descriptors under the project’s MCP files (e.g. `mcps/plugin-claude-of-alexandria-claude-of-alexandria-mcp/tools/*.json`) to get the definitive list of tool names. If that path is not available, infer from skill/agent content: `list_books`, `query_morphology`, `query_vocabulary`, `query_discourse_features`, `query_paragraph_breaks`, `query_ot_quotes`, `query_theme`, `query_lemmas`, `query_themes_for_lemmas`.
+  - Use the MCP tool descriptors under the project’s MCP files (e.g. `mcps/plugin-coa-coa/tools/*.json`) to get the definitive list of tool names. If that path is not available, infer from skill/agent content: `list_books`, `query_morphology`, `query_vocabulary`, `query_discourse_features`, `query_paragraph_breaks`, `query_ot_quotes`, `query_theme`, `query_lemmas`, `query_themes_for_lemmas`.
 
 - **Commands** (optional, only if present on disk)
   - If `.claude/commands/*.md` or plugin `commands/*.md` exist, read their content only; add command → skill/agent edges only where the command file text explicitly references a skill or agent name.

@@ -9,7 +9,7 @@ defaultTest:
 tests:
   - description: "GREEN: missing deep-study context stops before any ordinary spawn"
     vars:
-      prompt: "/claude-of-alexandria:study-team Review Philippians 2:5-11."
+      prompt: "/coa:study-team Review Philippians 2:5-11."
     assert:
       - type: icontains
         value: "deep-study"

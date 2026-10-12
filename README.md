@@ -156,7 +156,7 @@ Runs a bounded, evidence-first exegetical study as a native Claude Code workflow
 validate → retrieve → boundary → two parallel analyses → verify → optional one-time repair → synthesize
 ```
 
-Invoke `/claude-of-alexandria:deep-study` with a passage, research question, output language,
+Invoke `/coa:deep-study` with a passage, research question, output language,
 context, and explicit constraints. The workflow permits at most two simultaneous agent calls,
 eight calls total, and one repair cycle. Missing input produces a clarification; unavailable
 essential evidence or unresolved verification produces an explicitly incomplete report.
@@ -211,7 +211,7 @@ before every commit.
 
 ```
 /plugin marketplace add davebream/claude-of-alexandria
-/plugin install claude-of-alexandria@claude-of-alexandria
+/plugin install coa@coa
 ```
 
 The MCP server is included and auto-configured.
@@ -257,8 +257,8 @@ set -x CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS 1
 claude --teammate-mode in-process
 ```
 
-Then complete `/claude-of-alexandria:deep-study` and explicitly invoke
-`/claude-of-alexandria:study-team`. Split panes are not certified by this release.
+Then complete `/coa:deep-study` and explicitly invoke
+`/coa:study-team`. Split panes are not certified by this release.
 
 ### Claude Code (Manual)
 

@@ -2,7 +2,7 @@ description: "biblical-scholar agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:biblical-scholar
+      agent_name: coa:biblical-scholar
 prompts:
   - "{{prompt}}"
 tests:

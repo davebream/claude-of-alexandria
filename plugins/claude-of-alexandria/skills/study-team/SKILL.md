@@ -3,8 +3,8 @@ name: study-team
 description: Use only when the user explicitly asks for an interactive three-perspective review of a completed deep-study report and Claude Code agent teams are already enabled in in-process mode.
 allowed-tools: Agent, Read, SendMessage, TaskCreate, TaskGet, TaskList, TaskUpdate
 disable-model-invocation: true
-version: 1.1.0
-changed: "2026-09-30"
+version: 1.1.1
+changed: "2026-10-12"
 ---
 
 # Study Team
@@ -44,7 +44,7 @@ other descendants.
 Create one task per role and launch these named teammates:
 
 ```yaml
-subagent_type: "claude-of-alexandria:study-team-textual-evidence"
+subagent_type: "coa:study-team-textual-evidence"
 name: "textual-evidence"
 ```
 
@@ -53,7 +53,7 @@ claims follow the requested text. Identify the strongest claim, the weakest clai
 boundary decision that materially affects interpretation.
 
 ```yaml
-subagent_type: "claude-of-alexandria:study-team-interpretation"
+subagent_type: "coa:study-team-interpretation"
 name: "interpretation"
 ```
 
@@ -62,7 +62,7 @@ claim, source quality, and anachronism risk. Separate evidence found in the repo
 knowledge; outside knowledge may be proposed for follow-up but may not be promoted to evidence.
 
 ```yaml
-subagent_type: "claude-of-alexandria:study-team-critique"
+subagent_type: "coa:study-team-critique"
 name: "critique"
 ```
 

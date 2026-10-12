@@ -2,7 +2,7 @@ description: "deep-study synthesis adapter — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:deep-study-synthesis
+      agent_name: coa:deep-study-synthesis
 prompts:
   - "{{prompt}}"
 tests:

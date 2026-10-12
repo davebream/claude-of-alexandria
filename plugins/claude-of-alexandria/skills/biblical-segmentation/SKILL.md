@@ -1,9 +1,9 @@
 ---
 name: biblical-segmentation
 description: Use when helping users divide biblical books into sessions for sermon series, Bible study, or devotional reading. Use when user asks to segment, divide, or outline any biblical book. Use when user provides a verse range and asks for reading slices, reading portions, or SOAP/devotional divisions within a pericope.
-allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_events, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.5.0
-changed: "2026-09-30"
+allowed-tools: Agent, Read, Write, WebSearch, mcp__plugin_coa_coa__query_discourse_features, mcp__plugin_coa_coa__query_paragraph_breaks, mcp__plugin_coa_coa__query_vocabulary, mcp__plugin_coa_coa__query_morphology, mcp__plugin_coa_coa__query_themes_for_lemmas, mcp__plugin_coa_coa__query_theme_distribution, mcp__plugin_coa_coa__query_people, mcp__plugin_coa_coa__query_places, mcp__plugin_coa_coa__query_events, mcp__plugin_coa_coa__query_speakers, mcp__plugin_coa_coa__bible_lookup
+version: 1.5.1
+changed: "2026-10-12"
 ---
 
 # Biblical Text Segmentation
@@ -27,7 +27,7 @@ Help users divide biblical books into coherent textual units for teaching, study
 
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:data-retriever"
+  subagent_type: "coa:data-retriever"
   run_in_background: false
   prompt: "Gather all relevant data for [book] [range if applicable]."
 ```
@@ -150,7 +150,7 @@ Before proposing any slice boundaries, spawn the **argument-flow** agent:
 
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:argument-flow"
+  subagent_type: "coa:argument-flow"
   run_in_background: false
   prompt: "Analyze structural features of [passage] for reading-slice
            boundary planning. Identify chiasmus centers, contrast zones,

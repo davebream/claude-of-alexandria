@@ -86,6 +86,9 @@ const LEGACY_ALLOWED = [
   /^decisions\//,
   /^docs\/v6-rename-migration\.md$/,
   /^docs\/mcp-v\d+-migration\.md$/,
+  // The guard's own patterns and its test fixtures.
+  /^scripts\/lib\/plugin-validation\.mjs$/,
+  /^tests\/validation\/validate-plugin\.test\.mjs$/,
 ];
 
 function slash(filePath) {

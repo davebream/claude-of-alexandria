@@ -2,7 +2,7 @@ description: "deep-study verification adapter — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:deep-study-verification
+      agent_name: coa:deep-study-verification
 prompts:
   - "{{prompt}}"
 defaultTest:

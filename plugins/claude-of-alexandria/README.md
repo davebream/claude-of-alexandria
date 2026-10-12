@@ -103,7 +103,7 @@ Produces structured, context-neutral exegetical analysis of a biblical passage. 
 
 **Usage:**
 ```
-/claude-of-alexandria:exegetical-notes Romans 8:1-11
+/coa:exegetical-notes Romans 8:1-11
 ```
 
 ### consult-biblical-scholar
@@ -116,7 +116,7 @@ Answers questions about a biblical passage's meaning, validates analogies or ide
 
 **Usage:**
 ```
-/claude-of-alexandria:consult-biblical-scholar Is "rest" in Hebrews 4 about salvation or sanctification?
+/coa:consult-biblical-scholar Is "rest" in Hebrews 4 about salvation or sanctification?
 ```
 
 ### argument-flow
@@ -129,7 +129,7 @@ Maps the logical argument of a biblical passage using discourse markers and morp
 
 **Usage:**
 ```
-/claude-of-alexandria:argument-flow Phil 2:1-4
+/coa:argument-flow Phil 2:1-4
 ```
 
 ### pericope-delimitation
@@ -142,7 +142,7 @@ Validates whether a biblical passage constitutes a coherent discourse unit. Reco
 
 **Usage:**
 ```
-/claude-of-alexandria:pericope-delimitation Romans 8:1-17
+/coa:pericope-delimitation Romans 8:1-17
 ```
 
 ### biblical-segmentation
@@ -158,7 +158,7 @@ Divides biblical books into coherent teaching units with integrity safeguards.
 
 **Usage:**
 ```
-/claude-of-alexandria:biblical-segmentation Divide Romans into 12 sessions for a sermon series.
+/coa:biblical-segmentation Divide Romans into 12 sessions for a sermon series.
 ```
 
 ### passage-glossary
@@ -166,7 +166,7 @@ Divides biblical books into coherent teaching units with integrity safeguards.
 Builds a passage reader with a deduplicated, MCP-grounded lemma glossary.
 
 ```text
-/claude-of-alexandria:passage-glossary Philippians 2:5-11
+/coa:passage-glossary Philippians 2:5-11
 ```
 
 ### study-team
@@ -176,7 +176,7 @@ attended interactive session with agent teams already enabled and supports in-pr
 only. It does not change settings or fall back to ordinary sub-agents.
 
 ```text
-/claude-of-alexandria:study-team
+/coa:study-team
 ```
 
 ## Available Workflow
@@ -191,7 +191,7 @@ only the plugin's read-only MCP tools; analysis and synthesis are tool-free. Non
 descendant.
 
 ```text
-/claude-of-alexandria:deep-study passage=Philippians 2:5-11; research question=How does the passage present Christ's humiliation and exaltation?; output language=English; context=Teaching outline; constraints=Distinguish evidence from interpretation
+/coa:deep-study passage=Philippians 2:5-11; research question=How does the passage present Christ's humiliation and exaltation?; output language=English; context=Teaching outline; constraints=Distinguish evidence from interpretation
 ```
 
 ## Available Agents

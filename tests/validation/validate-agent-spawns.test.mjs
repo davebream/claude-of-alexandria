@@ -30,7 +30,7 @@ async function validate(files) {
 test("accepts synchronous context wrappers and named team spawns", async () => {
   const result = await validate({
     "skills/wrapper/SKILL.md": `\`\`\`yaml
-subagent_type: "claude-of-alexandria:worker"
+subagent_type: "coa:worker"
 run_in_background: false
 \`\`\`
 `,
@@ -49,7 +49,7 @@ name: "text-structure"
 test("rejects asynchronous context wrappers", async () => {
   const result = await validate({
     "skills/wrapper/SKILL.md": `\`\`\`yaml
-subagent_type: "claude-of-alexandria:worker"
+subagent_type: "coa:worker"
 \`\`\`
 `,
   });
@@ -61,7 +61,7 @@ subagent_type: "claude-of-alexandria:worker"
 test("rejects named spawns outside team mode", async () => {
   const result = await validate({
     "skills/wrapper/SKILL.md": `\`\`\`yaml
-subagent_type: "claude-of-alexandria:worker"
+subagent_type: "coa:worker"
 run_in_background: false
 name: "worker"
 \`\`\`

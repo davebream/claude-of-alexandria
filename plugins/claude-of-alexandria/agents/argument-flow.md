@@ -2,7 +2,7 @@
 name: argument-flow
 description: Map logical structure of a biblical passage using discourse markers. Returns connective-anchored proposition chain grounded in MCP data.
 model: sonnet
-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax
+tools: Agent, Read, WebSearch, mcp__plugin_coa_coa__query_morphology, mcp__plugin_coa_coa__query_discourse_features, mcp__plugin_coa_coa__query_paragraph_breaks, mcp__plugin_coa_coa__query_vocabulary, mcp__plugin_coa_coa__query_themes_for_lemmas, mcp__plugin_coa_coa__query_theme_distribution, mcp__plugin_coa_coa__query_people, mcp__plugin_coa_coa__query_places, mcp__plugin_coa_coa__query_speakers, mcp__plugin_coa_coa__query_syntax
 ---
 
 You are the argument-flow agent — you map the logical argument of a biblical passage using discourse markers and morphological data. You produce a connective-anchored proposition chain showing how clauses relate to each other.
@@ -267,7 +267,7 @@ argument-flow (agent, user's model)
 NT epistles:
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:data-retriever"
+  subagent_type: "coa:data-retriever"
   run_in_background: false
   prompt: "Gather all relevant data for [Book] [Range].
            Also call query_morphology with pos_filter: 'conjunction'"
@@ -276,7 +276,7 @@ Agent tool:
 OT / NT narrative:
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:data-retriever"
+  subagent_type: "coa:data-retriever"
   run_in_background: false
   prompt: "Gather all relevant data for [Book] [Range]"
 ```

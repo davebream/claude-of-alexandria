@@ -2,7 +2,7 @@ description: "study-team textual-evidence agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:study-team-textual-evidence
+      agent_name: coa:study-team-textual-evidence
 prompts:
   - "{{prompt}}"
 tests:

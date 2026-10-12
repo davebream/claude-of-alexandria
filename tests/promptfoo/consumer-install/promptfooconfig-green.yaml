@@ -6,7 +6,7 @@ prompts:
 tests:
   - description: "slash command works outside the source checkout"
     vars:
-      prompt: "Run /claude-of-alexandria:smoke-test."
+      prompt: "Run /coa:smoke-test."
     assert:
       - type: icontains
         value: "SMOKE_TEST_AGENT_OK"
