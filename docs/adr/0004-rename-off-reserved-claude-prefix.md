@@ -16,14 +16,18 @@ name: Plugin name "claude-of-alexandria" is reserved: it passes as one of
 Anthropic's own. A third party's plugin name cannot start with "claude-", ...
 ```
 
-The changelog does not mention the rule. Installs still worked on 2.1.296 when we
-tested them, but the gate already bites:
+The rule is not in the Claude Code changelog. We found it by running the
+validator. Installs still worked on 2.1.296 when we tested them, but as of
+2026-10-12 the rule already blocked us:
 
 - `npm run validate:model-free` runs native strict validation, and the CI check
   "Plugin Validation" is required on `main`.
-- CI pins Claude Code 2.1.285, which predates the rule. The Renovate pull request
-  that bumps it to 2.1.296 fails "Plugin Validation" on exactly this error.
-- A listing in Anthropic's plugin directory requires strict validation to pass.
+- CI pinned Claude Code 2.1.285, which predates the rule. Renovate pull request
+  #226, which bumped the pin to 2.1.296, failed "Plugin Validation" with exactly
+  this error.
+- Anthropic's publishing guide asks authors to run
+  `claude plugin validate --strict` before submitting to the plugin directory
+  (code.claude.com/docs/en/plugins/publish).
 
 Everything a user types or configures is derived from the plugin name:
 
@@ -51,18 +55,23 @@ Change the machine identifiers and keep the brand.
 (`coa.davebream.com`). A `displayName` is shown to people and is not checked
 against the reserved prefixes. We confirmed this with strict validation of
 scratch plugins on 2.1.296: `name: "coa"` with `displayName: "Claude of
-Alexandria"` passes for both the plugin and the marketplace. Had it failed, the
-fallback display name was "Clyde of Alexandria".
+Alexandria"` passes for both the plugin and the marketplace.
 
 The MCP server key also changes. The plugin name is part of every MCP tool name,
-so all 27 tool names change whatever the key is. Renaming the key at the same time
+so every tool name (27 as of 6.0.0) changes whatever the key is. Renaming the key at the same time
 costs nothing extra and removes the last `claude-` identifier.
 
 These stay unchanged:
 
-- the source directory `plugins/claude-of-alexandria/`, which a shipped migration
-  comment, incident and data-provenance records, `decisions/0009` and the
-  Masoretic CI job all reference. Claude Code does not read directory names.
+- the source directory `plugins/claude-of-alexandria/`. Many files reference that
+  path: a comment in the shipped (and therefore immutable) migration
+  `server/migrations/0023_repair_paragraph_markers_data.sql`,
+  `docs/incidents/masoretic-marker-corruption.md`,
+  `docs/data-provenance/paragraph-markers.md`, the data decision record
+  `decisions/0009-query-lemmas-nt-reads-morphology-not-thresholded-vocabulary.md`,
+  and the Masoretic corpus jobs in `.github/workflows/ci.yml` and
+  `.github/workflows/verify-masoretic-corpus.yml`. Claude Code does not read
+  directory names.
 - the GitHub repository, its URL, the Worker name, the MCP server's own
   `serverInfo` name, and dataset attribution.
 
@@ -103,13 +112,13 @@ silently. The validator now:
 
 1. **Wait for enforcement.** Rejected. The required CI check fails as soon as the
    pinned CLI moves past 2.1.285, and every later CLI bump is blocked until then.
-2. **A new brand everywhere** ("Clyde", "Claudio" or "Cedric of Alexandria").
-   Rejected while the display name is allowed. The project, server domain and
+2. **A new brand everywhere**, a different first name in "<name> of Alexandria"
+   that avoids the "Claude" spelling. Rejected while the display name is allowed. The project, server domain and
    documentation are known as Claude of Alexandria and CoA.
 3. **Names of real Alexandrians** (Clement, Claudius Ptolemy, Claudian). Rejected:
    the brand is a fictional scholar, not a historical person.
-4. **Rename the source directory too.** Deferred. It touches about 140 paths,
-   including an immutable shipped migration, for no user-visible gain.
+4. **Rename the source directory too.** Deferred. It touches more than a hundred
+   paths, including an immutable shipped migration, for no user-visible gain.
 5. **Keep the old MCP server key.** Rejected. Tool names change anyway, and the
    key would keep a `claude-` identifier in every tool name.
 
