@@ -130,6 +130,8 @@ Agents follow the same structure under `tests/promptfoo/agents/{agent-name}/`.
 
 **Do not create additional test files** beyond these three canonical configs. No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. If it does not fit RED, GREEN, or EXTENDED, reconsider whether it belongs.
 
+This rule governs promptfoo evals of skills and agents. Model-free code tests are a different kind of test and are allowed: `tests/validation/`, `tests/workflows/`, `tests/desk/` (Node), and `plugins/coa-desk/tests/*.test.ts`, which `claude plugin test` runs against the companion mod. A mod change that alters how an agent behaves still needs RED evidence first (see `docs/adr/0005-companion-mods-plugin.md`).
+
 **Rationale**: Consistency across all skills. A known structure. GREEN stays cheap enough for CI (one llm-rubric per failure mode). EXTENDED runs on-demand for advanced validation.
 
 ### Integration Tests
@@ -279,19 +281,23 @@ claude-of-alexandria/
 │   ├── ISSUE_TEMPLATE/           # bug, feature, data-gap, theological-feedback
 │   └── workflows/                # ci.yml, deploy-worker.yml, dependabot
 ├── plugins/
-│   └── claude-of-alexandria/     # The plugin (the distributed artifact)
-│       ├── .claude-plugin/
-│       │   └── plugin.json       # Plugin manifest
-│       ├── .mcp.json             # Points the plugin at the hosted MCP server (key: coa)
-│       ├── agents/               # Sub-agent collection
-│       │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
-│       ├── schemas/              # JSON schemas for the deep-study workflow
-│       ├── workflows/            # Generated workflow scripts (deep-study.js)
-│       ├── skills/               # The skill collection
-│       │   └── skill-name/
-│       │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)
-│       │       └── README.md     # Development notes and context
-│       └── README.md             # Plugin documentation
+│   ├── claude-of-alexandria/     # The plugin (the distributed artifact)
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json       # Plugin manifest
+│   │   ├── .mcp.json             # Points the plugin at the hosted MCP server (key: coa)
+│   │   ├── agents/               # Sub-agent collection
+│   │   │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
+│   │   ├── schemas/              # JSON schemas for the deep-study workflow
+│   │   ├── workflows/            # Generated workflow scripts (deep-study.js)
+│   │   ├── skills/               # The skill collection
+│   │   │   └── skill-name/
+│   │   │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)
+│   │   │       └── README.md     # Development notes and context
+│   │   └── README.md             # Plugin documentation
+│   └── coa-desk/                 # Optional companion mod (ADR 0005)
+│       ├── .claude-plugin/plugin.json
+│       ├── hooks/                # hooks.json, register.ts, leaf helper modules
+│       └── tests/                # *.test.ts for `claude plugin test`
 ├── server/                       # Cloudflare Worker MCP server
 │   ├── src/
 │   │   ├── index.ts              # Worker entry point + tool registration
@@ -335,6 +341,8 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 | Database migrations | `server/migrations/` (numbered, idempotent) |
 | Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
 | Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
+| Companion mod code and hook tests | `plugins/coa-desk/hooks/`, `plugins/coa-desk/tests/*.test.ts` |
+| Companion mod helper tests (Node) | `tests/desk/*.test.mjs` |
 
 ### Skill Versioning
 
@@ -359,6 +367,7 @@ Always update `changed` to the current date on any modification.
 **✅ Commit to Git:**
 
 - Everything under `plugins/claude-of-alexandria/` — skills, agents, manifests
+- Everything under `plugins/coa-desk/` — the companion mod, its tests and fixtures
 - Everything under `server/` except build output and local state
 - Promptfoo configs in `tests/promptfoo/skills/`, `tests/promptfoo/agents/`, and `tests/promptfoo/integration/`
 - Durable docs under `docs/adr/`, `docs/incidents/`, and `docs/data-provenance/`
@@ -369,7 +378,7 @@ Always update `changed` to the current date on any modification.
 - Secrets, `.env` files, API keys, database dumps with credentials
 - Temporary agent output files, eval result dumps
 - Personal exploration notes; `docs/plans/` and `docs/reviews/` are gitignored
-- Additional test files beyond the three-config structure (red/green/extended)
+- Additional promptfoo test files beyond the three-config structure (red/green/extended)
 - Anything you would not want a future scholar to find in the archive
 
 ### Commit Messages
