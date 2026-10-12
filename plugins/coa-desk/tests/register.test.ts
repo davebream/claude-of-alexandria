@@ -1,4 +1,4 @@
-import { describe, expect, mock, test } from 'claude-code/testing'
+import { describe, expect, test } from 'claude-code/testing'
 
 import { PARALLEL_TEXT_SSE } from './fixtures'
 
@@ -183,42 +183,5 @@ describe('book autocomplete', () => {
     stubSession(on, { 'prompt.autocomplete': () => ({ suggestions: [] }) })
     const answer = await $.prompt.autocomplete({ token: 'rom' })
     expect(answer.suggestions.map((row) => row.text)).toEqual(['Romans'])
-  })
-})
-
-describe('model policy guard', () => {
-  test('moves a coa agent asked to run on Haiku to Sonnet', async ($, on) => {
-    const spawned: any[] = []
-    const world = stubSession(on, {
-      'agent.spawn': ($, e) => {
-        spawned.push(e)
-        return { model: e.model ?? 'sonnet', agentId: 'a1' }
-      },
-    })
-    const result = await $.agent.spawn({ subagentType: 'coa:data-retriever', model: 'haiku', prompt: 'p', description: 'd', background: false, fork: false })
-    expect(spawned[0].model).toBe('sonnet')
-    expect(result.model).toBe('sonnet')
-    expect(world.logs.join('\n')).toContain('Sonnet')
-  })
-
-  test('refuses a coa workflow agent when the workflow model override names Haiku', async ($, on) => {
-    mock.env(on, { CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL: 'haiku' })
-    stubSession(on, { 'agent.spawn': () => ({ model: 'sonnet', agentId: 'a1' }) })
-    const result = await $.agent.spawn({ subagentType: 'coa:deep-study-retrieval', prompt: 'p', description: 'retrieval', background: false, fork: false, workflow: { runId: 'wf_1', agentIndex: 1 } })
-    expect(result.deny).toContain('CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL')
-  })
-
-  test('lets other agents and Sonnet workflows through untouched', async ($, on) => {
-    mock.env(on, {})
-    const spawned: any[] = []
-    stubSession(on, {
-      'agent.spawn': ($, e) => {
-        spawned.push(e)
-        return { model: e.model ?? 'sonnet', agentId: 'a1' }
-      },
-    })
-    await $.agent.spawn({ subagentType: 'Explore', model: 'haiku', prompt: 'p', description: 'd', background: false, fork: false })
-    await $.agent.spawn({ subagentType: 'coa:deep-study-retrieval', prompt: 'p', description: 'd', background: false, fork: false, workflow: { runId: 'wf_1', agentIndex: 1 } })
-    expect(spawned.map((e) => e.model)).toEqual(['haiku', undefined])
   })
 })

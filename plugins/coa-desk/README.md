@@ -16,11 +16,9 @@ skills work the same with or without it.
   parallel translations beside the conversation, with no model call. Example:
   `/passage Rom 8:1-4 BSB,KJV`. Translations: BSB, WEB, KJV, ASV, YLT, DBY.
 - **Book-name autocomplete** in the prompt (`1co` suggests 1 Corinthians).
-- **A model guard.** `coa` agents never run on Haiku, which the project does not
-  support:
-  - An agent spawned with `model: haiku` runs on Sonnet instead.
-  - `/coa:deep-study` refuses to start while `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL`
-    names Haiku.
+
+The guard that keeps `coa` agents off Haiku is part of `coa` itself, so every
+install has it ([ADR 0006](../../docs/adr/0006-model-guard-ships-in-coa.md)).
 
 ## Install
 
@@ -35,11 +33,11 @@ Installing `coa-desk` also installs `coa`.
 `coa-desk` is a Claude Code mod: code that runs inside Claude Code. It needs
 Claude Code 2.1.296 or later.
 
-| Where | Model guard | Grounding line, panes, autocomplete |
-|---|---|---|
-| `claude` in a terminal | yes | yes |
-| Claude Desktop, Code tab | yes | yes |
-| VS Code extension, `claude -p`, Agent SDK | yes | no; `/evidence` and `/passage` print their text instead |
+| Where | Grounding line, panes, autocomplete |
+|---|---|
+| `claude` in a terminal | yes |
+| Claude Desktop, Code tab | yes |
+| VS Code extension, `claude -p`, Agent SDK | no; `/evidence` and `/passage` print their text instead |
 
 Anthropic can switch mods off for an account or organisation. When that
 happens, `coa-desk` does nothing and `coa` keeps working.
@@ -50,11 +48,8 @@ Mods run with your permissions and are not sandboxed. `coa-desk`:
 
 - sends `/passage` requests to `https://coa.davebream.com/mcp`, the same public
   server the `coa` plugin uses, and nowhere else;
-- reads one environment variable, `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL`;
-- reads no files and starts no processes;
-- watches `coa` tool calls, `coa` skill text and `coa` agent spawns, and does not
-  change any of them except to move a Haiku agent to Sonnet or refuse a Haiku
-  workflow.
+- reads no files or environment variables and starts no processes;
+- watches `coa` tool calls and `coa` skill text, and changes neither.
 
 To check this yourself, run `claude plugin validate plugins/coa-desk` and read
 its `hooks:` and `calls:` lines.
