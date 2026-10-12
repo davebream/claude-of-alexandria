@@ -35,6 +35,27 @@
         "preaching"
       ],
       "category": "education"
+    },
+    {
+      "name": "coa-desk",
+      "displayName": "Claude of Alexandria Study Desk",
+      "source": "./plugins/coa-desk",
+      "description": "Optional study-desk extras for the coa plugin: see which data lookups grounded an answer and read a passage beside the conversation. Terminal and desktop app only.",
+      "version": "0.1.0",
+      "author": {
+        "name": "@davebream",
+        "email": "dawid.leszczynski@hey.com"
+      },
+      "homepage": "https://github.com/davebream/claude-of-alexandria#readme",
+      "repository": "https://github.com/davebream/claude-of-alexandria",
+      "license": "GPL-3.0",
+      "keywords": [
+        "bible-study",
+        "exegesis",
+        "evidence",
+        "scripture"
+      ],
+      "category": "education"
     }
   ],
   "renames": {

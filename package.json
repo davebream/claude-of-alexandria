@@ -3,8 +3,8 @@
   "private": true,
   "description": "Root workspace; promptfoo evals live in tests/promptfoo.",
   "scripts": {
-    "test:model-free": "node --test tests/validation/*.test.mjs tests/workflows/*.test.mjs",
-    "validate:model-free": "npm run test:model-free && node scripts/validate-plugin.mjs && ./scripts/validate-versions.sh && ./scripts/validate-readme-counts.sh && ./scripts/validate-agent-spawns.sh && ./scripts/validate-skill-tools.sh --strict",
+    "test:model-free": "node --test tests/validation/*.test.mjs tests/workflows/*.test.mjs tests/desk/*.test.mjs",
+    "validate:model-free": "npm run test:model-free && node scripts/validate-plugin.mjs && ./scripts/validate-versions.sh && ./scripts/validate-readme-counts.sh && ./scripts/validate-agent-spawns.sh && ./scripts/validate-skill-tools.sh --strict && node scripts/run-mod-tests.mjs",
     "eval": "npm run eval --prefix tests/promptfoo",
     "eval:exegetical-notes:red": "npm run eval:exegetical-notes:red --prefix tests/promptfoo",
     "eval:exegetical-notes:green": "npm run eval:exegetical-notes:green --prefix tests/promptfoo",

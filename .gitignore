@@ -107,3 +107,8 @@ server/scripts/output/
 # kombajn CLI — pipeline artifacts and local config are not part of the
 # distributed project (see CLAUDE.md: no private tooling in a public repo).
 .kombajn/
+
+# Claude Code writes these while a mod is developed with --plugin-dir; they
+# point at per-build types that are not committed.
+plugins/coa-desk/tsconfig.json
+plugins/coa-desk/.claude-plugin/types/

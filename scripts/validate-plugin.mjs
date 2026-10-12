@@ -14,25 +14,13 @@ import {
   readPluginIdentity,
   runNativeValidation,
 } from "./lib/plugin-validation.mjs";
+import { claudeBinary } from "./lib/claude-binary.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const EVAL_ROOT = path.join(ROOT, "tests", "promptfoo");
 
 function relative(filePath) {
   return path.relative(ROOT, filePath).split(path.sep).join("/");
-}
-
-function bundledClaudePath() {
-  const platform = process.platform;
-  const arch = process.arch === "x64" ? "x64" : "arm64";
-  const suffix = platform === "win32" ? ".exe" : "";
-  return path.join(
-    ROOT,
-    "node_modules",
-    "@anthropic-ai",
-    `claude-code-${platform}-${arch}`,
-    `claude${suffix}`,
-  );
 }
 
 async function exists(filePath) {
@@ -154,8 +142,7 @@ async function validateEvalReferences() {
   return errors;
 }
 
-const claudeBin = process.env.CLAUDE_BIN ||
-  ((await exists(bundledClaudePath())) ? bundledClaudePath() : "claude");
+const claudeBin = await claudeBinary(ROOT);
 const errors = [...(await checkMarketplaceEntries(ROOT))];
 const summary = [];
 let nativeOk = true;
