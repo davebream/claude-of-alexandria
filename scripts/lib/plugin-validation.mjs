@@ -498,6 +498,26 @@ export async function inspectWorkflows(pluginDir, options = {}) {
   };
 }
 
+function nativeErrorMessages(report) {
+  const messages = [];
+  const visit = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (Array.isArray(node)) return node.forEach(visit);
+    if (Array.isArray(node.errors)) {
+      for (const error of node.errors) {
+        if (error && typeof error.message === "string") {
+          messages.push(error.path ? `${error.path}: ${error.message}` : error.message);
+        }
+      }
+    }
+    for (const [key, value] of Object.entries(node)) {
+      if (key !== "errors") visit(value);
+    }
+  };
+  visit(report);
+  return messages;
+}
+
 export function runNativeValidation(pluginDir, options = {}) {
   const claudeBin = options.claudeBin ?? process.env.CLAUDE_BIN ?? "claude";
   try {
@@ -512,7 +532,15 @@ export function runNativeValidation(pluginDir, options = {}) {
     }
     return { ok: true, report };
   } catch (error) {
-    const detail = error.stderr?.toString().trim() || error.message;
+    let reasons = [];
+    try {
+      reasons = nativeErrorMessages(JSON.parse(error.stdout?.toString() ?? ""));
+    } catch {
+      // Not a JSON report; fall back to stderr below.
+    }
+    const detail = reasons.length > 0
+      ? reasons.join("; ")
+      : error.stderr?.toString().trim() || error.message;
     return { ok: false, error: `native strict validation failed: ${detail}` };
   }
 }
