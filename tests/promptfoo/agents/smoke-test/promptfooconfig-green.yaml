@@ -2,7 +2,7 @@ description: "smoke-test agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:smoke-test
+      agent_name: coa:smoke-test
 prompts:
   - "{{prompt}}"
 tests:

@@ -1,17 +1,21 @@
 #!/usr/bin/env node
+import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseDocument } from "yaml";
 
 import {
+  checkMarketplaceEntries,
+  findLegacyIdentifiers,
   inspectDefinitions,
   inspectWorkflows,
+  nativeValidationTargets,
+  readPluginIdentity,
   runNativeValidation,
 } from "./lib/plugin-validation.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PLUGIN_DIR = path.join(ROOT, "plugins", "claude-of-alexandria");
 const EVAL_ROOT = path.join(ROOT, "tests", "promptfoo");
 
 function relative(filePath) {
@@ -40,7 +44,7 @@ async function exists(filePath) {
   }
 }
 
-async function validateEvalCoverage(inventory, workflowInventory) {
+async function validateEvalCoverage(pluginName, inventory, workflowInventory) {
   const errors = [];
   const groups = [
     ["skills", inventory.skills],
@@ -67,8 +71,8 @@ async function validateEvalCoverage(inventory, workflowInventory) {
           if (!source.includes("providers/sdk-direct-agent.mjs")) {
             errors.push(`${relative(file)}: agent GREEN config must use sdk-direct-agent.mjs`);
           }
-          if (!source.includes(`agent_name: claude-of-alexandria:${name}`)) {
-            errors.push(`${relative(file)}: agent GREEN config must select claude-of-alexandria:${name}`);
+          if (!source.includes(`agent_name: ${pluginName}:${name}`)) {
+            errors.push(`${relative(file)}: agent GREEN config must select ${pluginName}:${name}`);
           }
         }
         if (
@@ -150,33 +154,51 @@ async function validateEvalReferences() {
   return errors;
 }
 
-const definitions = await inspectDefinitions(PLUGIN_DIR, {
-  pluginName: "claude-of-alexandria",
-  serverSourceDir: path.join(ROOT, "server", "src"),
-});
-const workflows = await inspectWorkflows(PLUGIN_DIR, {
-  pluginName: "claude-of-alexandria",
-  agentNames: new Set(definitions.inventory.agents),
-});
-const native = runNativeValidation(PLUGIN_DIR, {
-  claudeBin: process.env.CLAUDE_BIN ||
-    ((await exists(bundledClaudePath()))
-      ? bundledClaudePath()
-      : "claude"),
-});
-const errors = [
-  ...definitions.errors,
-  ...workflows.errors,
-  ...(native.ok ? [] : [native.error]),
-  ...(await validateEvalCoverage(definitions.inventory, workflows.inventory)),
-  ...(await validateEvalReferences()),
-];
+const claudeBin = process.env.CLAUDE_BIN ||
+  ((await exists(bundledClaudePath())) ? bundledClaudePath() : "claude");
+const errors = [...(await checkMarketplaceEntries(ROOT))];
+const summary = [];
+let nativeOk = true;
+
+for (const target of await nativeValidationTargets(ROOT)) {
+  const native = runNativeValidation(target, { claudeBin });
+  if (!native.ok) {
+    nativeOk = false;
+    errors.push(`${relative(target)}: ${native.error}`);
+  }
+  if (target.endsWith(".json")) continue;
+
+  const identity = await readPluginIdentity(target);
+  const definitions = await inspectDefinitions(target, {
+    serverSourceDir: path.join(ROOT, "server", "src"),
+  });
+  const workflows = await inspectWorkflows(target, {
+    agentNames: new Set(definitions.inventory.agents),
+  });
+  errors.push(
+    ...definitions.errors.map((error) => `${relative(target)}/${error}`),
+    ...workflows.errors.map((error) => `${relative(target)}/${error}`),
+  );
+  if (identity) {
+    errors.push(
+      ...(await validateEvalCoverage(identity.name, definitions.inventory, workflows.inventory)),
+    );
+  }
+  summary.push({ name: identity?.name ?? relative(target), definitions, workflows });
+}
+errors.push(...(await validateEvalReferences()));
+const trackedFiles = execFileSync("git", ["ls-files", "-z"], { cwd: ROOT, encoding: "utf8" })
+  .split("\0")
+  .filter(Boolean);
+errors.push(...(await findLegacyIdentifiers(ROOT, trackedFiles)));
 
 console.log("=== COA Plugin Validation ===");
-console.log(`Agents discovered: ${definitions.inventory.agents.length}`);
-console.log(`Skills discovered: ${definitions.inventory.skills.length}`);
-console.log(`Workflows discovered: ${workflows.inventory.workflows.length}`);
-console.log(`Native strict validation: ${native.ok ? "passed" : "failed"}`);
+for (const { name, definitions, workflows } of summary) {
+  console.log(
+    `${name}: ${definitions.inventory.skills.length} skills, ${definitions.inventory.agents.length} agents, ${workflows.inventory.workflows.length} workflows`,
+  );
+}
+console.log(`Native strict validation: ${nativeOk ? "passed" : "failed"}`);
 
 if (errors.length > 0) {
   for (const error of errors) console.error(`ERROR: ${error}`);

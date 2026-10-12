@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-of-alexandria",
+  "name": "coa",
   "description": "AI agent skills for rigorous biblical study built on faithful exegetical principles",
   "owner": {
     "name": "@davebream",
@@ -8,10 +8,11 @@
   },
   "plugins": [
     {
-      "name": "claude-of-alexandria",
+      "name": "coa",
+      "displayName": "Claude of Alexandria",
       "source": "./plugins/claude-of-alexandria",
       "description": "Rigorous analytical skills for biblical study, exegetical analysis, and faithful application. Built with TDD methodology to prevent AI exegetical malpractice.",
-      "version": "5.1.0",
+      "version": "6.0.0",
       "author": {
         "name": "@davebream",
         "email": "dawid.leszczynski@hey.com"
@@ -35,5 +36,8 @@
       ],
       "category": "education"
     }
-  ]
+  ],
+  "renames": {
+    "claude-of-alexandria": "coa"
+  }
 }

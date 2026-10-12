@@ -1,9 +1,9 @@
 ---
 name: consult-biblical-scholar
 description: Use when user asks about a biblical passage's meaning, wants to validate an analogy or idea against the text, or needs cross-references with scholarly evidence. Also use when a question about Scripture lacks a passage anchor. Requires explicit confidence tiering, MCP data before answering, and formal verdict for analogy questions.
-allowed-tools: Agent, Read, WebSearch, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_theme_distribution, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_cross_references, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_person_network, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_speakers, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_people, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_places, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_controversies
-version: 1.4.0
-changed: "2026-09-30"
+allowed-tools: Agent, Read, WebSearch, mcp__plugin_coa_coa__query_discourse_features, mcp__plugin_coa_coa__query_paragraph_breaks, mcp__plugin_coa_coa__query_vocabulary, mcp__plugin_coa_coa__query_morphology, mcp__plugin_coa_coa__query_ot_quotes, mcp__plugin_coa_coa__query_lemmas, mcp__plugin_coa_coa__query_themes_for_lemmas, mcp__plugin_coa_coa__query_theme_distribution, mcp__plugin_coa_coa__query_cross_references, mcp__plugin_coa_coa__query_person_network, mcp__plugin_coa_coa__query_speakers, mcp__plugin_coa_coa__query_people, mcp__plugin_coa_coa__query_places, mcp__plugin_coa_coa__query_lexicon, mcp__plugin_coa_coa__query_syntax, mcp__plugin_coa_coa__query_variants, mcp__plugin_coa_coa__bible_lookup, mcp__plugin_coa_coa__commentary_lookup, mcp__plugin_coa_coa__parallel_text, mcp__plugin_coa_coa__query_controversies
+version: 1.4.1
+changed: "2026-10-12"
 ---
 
 # Consult Biblical Scholar
@@ -343,7 +343,7 @@ consult-biblical-scholar (skill, user's model)
 **How to spawn:**
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:biblical-scholar"
+  subagent_type: "coa:biblical-scholar"
   run_in_background: false
   prompt: "[MODE] [passage]. [question/claim]"
 ```
@@ -479,19 +479,19 @@ Note the fallback in the response.
 ## Reference Data Access
 
 ### NT Morphological Data
-Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology` with `{"book": "[Book]", "range": "[chapter:verse-chapter:verse]"}`
+Call `mcp__plugin_coa_coa__query_morphology` with `{"book": "[Book]", "range": "[chapter:verse-chapter:verse]"}`
 
 ### OT Morphological Data
-Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology` with `{"book": "[Book]", "testament": "ot", "range": "[chapter:verse-chapter:verse]"}`
+Call `mcp__plugin_coa_coa__query_morphology` with `{"book": "[Book]", "testament": "ot", "range": "[chapter:verse-chapter:verse]"}`
 
 ### Vocabulary and Lemma Frequencies
-Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary` with `{"mode": "frequency", "book": "[Book]", "testament": "[nt|ot]"}`
+Call `mcp__plugin_coa_coa__query_vocabulary` with `{"mode": "frequency", "book": "[Book]", "testament": "[nt|ot]"}`
 
 ### Levinsohn Discourse Features (NT)
-Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features` with `{"book": "[Book]"}`
+Call `mcp__plugin_coa_coa__query_discourse_features` with `{"book": "[Book]"}`
 
 ### Masoretic Paragraph Markers (OT)
-Call `mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks` with `{"book": "[Book]"}`
+Call `mcp__plugin_coa_coa__query_paragraph_breaks` with `{"book": "[Book]"}`
 
 ---
 

@@ -7,8 +7,9 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SKILLS_DIR="$REPO_ROOT/plugins/claude-of-alexandria/skills"
-AGENTS_DIR="$REPO_ROOT/plugins/claude-of-alexandria/agents"
+PLUGIN_DIR="$REPO_ROOT/plugins/claude-of-alexandria"
+SKILLS_DIR="$PLUGIN_DIR/skills"
+AGENTS_DIR="$PLUGIN_DIR/agents"
 SERVER_SRC="$REPO_ROOT/server/src"
 
 RED='\033[0;31m'
@@ -37,7 +38,9 @@ echo "Found ${TOOL_COUNT} registered tools."
 echo ""
 
 WARNINGS=0
-MCP_PREFIX="mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__"
+PLUGIN_NAME=$(jq -r '.name' "$PLUGIN_DIR/.claude-plugin/plugin.json")
+SERVER_KEY=$(jq -r '.mcpServers | keys[0]' "$PLUGIN_DIR/.mcp.json")
+MCP_PREFIX="mcp__plugin_${PLUGIN_NAME}_${SERVER_KEY}__"
 
 # Check skills
 for skill_dir in "$SKILLS_DIR"/*/; do
@@ -49,7 +52,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
   echo "Checking skill: ${skill_name}"
 
   # Primary: extract tool names from allowed-tools: frontmatter
-  # Format: mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology
+  # Format: mcp__plugin_<plugin>_<server-key>__query_morphology
   FRONTMATTER_TOOLS=$(grep '^allowed-tools:' "$skill_file" | \
     grep -oE "${MCP_PREFIX}[a-z_]+" | \
     sed "s/${MCP_PREFIX}//" | \

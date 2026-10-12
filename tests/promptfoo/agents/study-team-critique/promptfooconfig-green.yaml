@@ -2,7 +2,7 @@ description: "study-team critique agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:study-team-critique
+      agent_name: coa:study-team-critique
 prompts:
   - "{{prompt}}"
 tests:

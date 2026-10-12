@@ -20,7 +20,7 @@ test("consumer install uses an external cwd and no injected repair prompt", () =
   assert.ok(options.allowedTools.some((tool) => tool.endsWith("__*")));
   assert.equal(options.strictMcpConfig, true);
   assert.deepEqual(options.mcpServers, {
-    "plugin_claude-of-alexandria_claude-of-alexandria-mcp": {
+    "plugin_coa_coa": {
       type: "http", url: "https://coa.davebream.com/mcp",
     },
   });
@@ -28,15 +28,15 @@ test("consumer install uses an external cwd and no injected repair prompt", () =
 
 test("direct-agent provider selects the real definition and verifies its model family", () => {
   const provider = new SdkDirectAgentProvider({
-    config: { agent_name: "claude-of-alexandria:smoke-test" },
+    config: { agent_name: "coa:smoke-test" },
   });
 
-  assert.equal(provider.buildOptions().agent, "claude-of-alexandria:smoke-test");
+  assert.equal(provider.buildOptions().agent, "coa:smoke-test");
   assert.equal(provider.expectedModelFamily(), "sonnet");
 
   const inherited = new SdkDirectAgentProvider({
     config: {
-      agent_name: "claude-of-alexandria:deep-study-analysis",
+      agent_name: "coa:deep-study-analysis",
       model: "claude-sonnet-5",
     },
   });
@@ -59,7 +59,7 @@ test("evaluation child processes route background Haiku work to default Sonnet",
 test("every eval provider refuses Haiku before loading the SDK", async () => {
   for (const Provider of [SdkBareProvider, SdkGraderProvider, SdkWithSkillProvider, SdkConsumerInstallProvider, SdkDirectAgentProvider]) {
     for (const model of ["haiku", "claude-haiku-4-5", "Haiku"]) {
-      const provider = new Provider({ config: { model, agent_name: "claude-of-alexandria:smoke-test" } });
+      const provider = new Provider({ config: { model, agent_name: "coa:smoke-test" } });
       provider._loadSdk = async () => { throw new Error("SDK must not load"); };
       const result = await provider.callApi("prompt");
       assert.match(result.error, /haiku.*not permitted/i);

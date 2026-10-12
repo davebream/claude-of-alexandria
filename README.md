@@ -156,7 +156,7 @@ Runs a bounded, evidence-first exegetical study as a native Claude Code workflow
 validate → retrieve → boundary → two parallel analyses → verify → optional one-time repair → synthesize
 ```
 
-Invoke `/claude-of-alexandria:deep-study` with a passage, research question, output language,
+Invoke `/coa:deep-study` with a passage, research question, output language,
 context, and explicit constraints. The workflow permits at most two simultaneous agent calls,
 eight calls total, and one repair cycle. Missing input produces a clarification; unavailable
 essential evidence or unresolved verification produces an explicitly incomplete report.
@@ -209,12 +209,23 @@ before every commit.
 
 ### Claude Code (Marketplace)
 
+From your shell:
+
+```bash
+claude plugin install coa --marketplace davebream/claude-of-alexandria
+```
+
+Or inside a Claude Code session:
+
 ```
 /plugin marketplace add davebream/claude-of-alexandria
-/plugin install claude-of-alexandria@claude-of-alexandria
+/plugin install coa@coa
 ```
 
 The MCP server is included and auto-configured.
+
+Upgrading from 5.x, when the plugin was named `claude-of-alexandria`? Follow
+[the v6 rename migration](docs/v6-rename-migration.md).
 
 [Claude Code 2.1.263](https://github.com/anthropics/claude-code/releases/tag/v2.1.263)
 and later require an explicit opt-in for nested sub-agent delegation. Set the
@@ -257,16 +268,18 @@ set -x CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS 1
 claude --teammate-mode in-process
 ```
 
-Then complete `/claude-of-alexandria:deep-study` and explicitly invoke
-`/claude-of-alexandria:study-team`. Split panes are not certified by this release.
+Then complete `/coa:deep-study` and explicitly invoke
+`/coa:study-team`. Split panes are not certified by this release.
 
 ### Claude Code (Manual)
 
 ```bash
 git clone https://github.com/davebream/claude-of-alexandria.git
 cd claude-of-alexandria
-ln -s $(pwd)/plugins/claude-of-alexandria ~/.claude/plugins/claude-of-alexandria
+claude --plugin-dir ./plugins/claude-of-alexandria
 ```
+
+`--plugin-dir` loads the plugin for that session only.
 
 The MCP server runs remotely on Cloudflare Workers.
 
@@ -282,7 +295,7 @@ The MCP server runs remotely on Cloudflare Workers.
 ```json
 {
   "mcpServers": {
-    "claude-of-alexandria-mcp": {
+    "coa": {
       "command": "npx",
       "args": ["mcp-remote", "https://coa.davebream.com/mcp"]
     }
@@ -294,7 +307,7 @@ Requires Node.js. Restart Claude Desktop after saving.
 
 ### Verify Installation
 
-- **Claude Code:** Run `/skills` and look for the seven scholarly skills plus the `smoke-test` utility; plugin agents are discovered under their `claude-of-alexandria:` namespace
+- **Claude Code:** Run `/skills` and look for the seven scholarly skills plus the `smoke-test` utility; plugin skills and agents are discovered under the `coa:` namespace
 - **Claude Desktop:** Ask Claude to use `query_vocabulary` for any biblical book
 
 ## Reference Server

@@ -1,9 +1,9 @@
 ---
 name: passage-glossary
 description: Use when producing a passage reader with a deduplicated lemma glossary. Use when user asks for a vocabulary list, glossary, lemmas in a passage, deduplicated glossary for a text, or a graded-reader study artifact. Combines passage text with an ordered, MCP-grounded glossary of every distinct headword. Always English output.
-allowed-tools: Read, Write, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lexicon, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup
-version: 1.1.0
-changed: "2026-09-30"
+allowed-tools: Read, Write, mcp__plugin_coa_coa__query_morphology, mcp__plugin_coa_coa__query_lexicon, mcp__plugin_coa_coa__bible_lookup
+version: 1.1.1
+changed: "2026-10-12"
 ---
 
 # Passage Glossary

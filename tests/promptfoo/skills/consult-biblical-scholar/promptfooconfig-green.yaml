@@ -90,8 +90,8 @@ tests:
       - type: javascript
         value: |
           const required = [
-            'claude-of-alexandria:biblical-scholar',
-            'claude-of-alexandria:data-retriever',
+            'coa:biblical-scholar',
+            'coa:data-retriever',
           ];
           const actual = context.providerResponse?.metadata?.subagents || [];
           const missing = required.filter(name => !actual.includes(name));

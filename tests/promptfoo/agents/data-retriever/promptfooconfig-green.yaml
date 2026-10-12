@@ -2,7 +2,7 @@ description: "data-retriever agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:data-retriever
+      agent_name: coa:data-retriever
 prompts:
   - "{{prompt}}"
 defaultTest:

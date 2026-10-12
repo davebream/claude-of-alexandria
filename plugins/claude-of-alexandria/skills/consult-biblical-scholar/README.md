@@ -26,7 +26,7 @@ Five documented failure patterns from baseline testing (all 6 scenarios, unstruc
 
 ## Infrastructure Dependencies
 
-- MCP server: `claude-of-alexandria-mcp` with 4 query tools
+- MCP server: `coa` (https://coa.davebream.com/mcp); the skill's `allowed-tools` lists the tools it may call
 - `query_morphology` — morphological parsing for key terms
 - `query_discourse_features` — NT Levinsohn discourse analysis
 - `query_paragraph_breaks` — OT Masoretic markers

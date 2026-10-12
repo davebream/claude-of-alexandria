@@ -12,7 +12,7 @@ tests:
   - description: "GREEN: installed workflow produces an evidence-linked verified report"
     vars:
       prompt: |
-        Run /claude-of-alexandria:deep-study with the following JSON object as its
+        Run /coa:deep-study with the following JSON object as its
         inputs. Wait for the workflow to finish and return the actual final report,
         including its verification outcome; a launch acknowledgement is not a report.
         {"passage":"Philippians 2:5-11","researchQuestion":"How does the passage present Christ's humiliation and exaltation?","outputLanguage":"English","context":"Exegetical teaching outline","constraints":["Distinguish evidence from interpretation"]}

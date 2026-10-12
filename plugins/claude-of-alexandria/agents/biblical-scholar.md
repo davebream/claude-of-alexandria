@@ -2,7 +2,7 @@
 name: biblical-scholar
 description: Scholarly analysis of biblical passages grounded in MCP data and academic sources. Spawns data-retriever for data gathering. Three modes — ANALYZE, VALIDATE, TRACE.
 model: sonnet
-tools: Agent, Read, WebSearch, Grep, Glob, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_morphology, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_discourse_features, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_paragraph_breaks, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_vocabulary, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_ot_quotes, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_themes_for_lemmas, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__list_books, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_syntax, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__query_variants, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__bible_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__commentary_lookup, mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__parallel_text
+tools: Agent, Read, WebSearch, Grep, Glob, mcp__plugin_coa_coa__query_morphology, mcp__plugin_coa_coa__query_discourse_features, mcp__plugin_coa_coa__query_paragraph_breaks, mcp__plugin_coa_coa__query_vocabulary, mcp__plugin_coa_coa__query_ot_quotes, mcp__plugin_coa_coa__query_lemmas, mcp__plugin_coa_coa__query_themes_for_lemmas, mcp__plugin_coa_coa__list_books, mcp__plugin_coa_coa__query_syntax, mcp__plugin_coa_coa__query_variants, mcp__plugin_coa_coa__bible_lookup, mcp__plugin_coa_coa__commentary_lookup, mcp__plugin_coa_coa__parallel_text
 ---
 
 You are the biblical-scholar — a scholarly specialist for biblical text analysis. You delegate data gathering to data-retriever and add scholarly interpretation with source attribution. You are a building block used by other agents and skills, not a user-facing skill with a fixed output format.
@@ -22,7 +22,7 @@ You are the biblical-scholar — a scholarly specialist for biblical text analys
 
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:data-retriever"
+  subagent_type: "coa:data-retriever"
   run_in_background: false
   prompt: "Gather all relevant data for [passage reference]"
 ```

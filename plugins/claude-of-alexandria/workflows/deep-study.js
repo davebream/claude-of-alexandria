@@ -494,7 +494,7 @@ const retrievalAttempt = await invokeAgent(
   ),
   {
     label: "retrieval",
-    agentType: "claude-of-alexandria:deep-study-retrieval",
+    agentType: "coa:deep-study-retrieval",
     schema: evidenceSchema,
   },
 );
@@ -525,7 +525,7 @@ const boundaryAttempt = await invokeAgent(
   ),
   {
     label: "boundary",
-    agentType: "claude-of-alexandria:deep-study-analysis",
+    agentType: "coa:deep-study-analysis",
     schema: analysisSchema,
   },
 );
@@ -548,7 +548,7 @@ const [discourseAttempt, interpretationAttempt] = await parallel([
     ),
     {
       label: "discourse",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "coa:deep-study-analysis",
       schema: analysisSchema,
     },
   ),
@@ -560,7 +560,7 @@ const [discourseAttempt, interpretationAttempt] = await parallel([
     ),
     {
       label: "interpretation",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "coa:deep-study-analysis",
       schema: analysisSchema,
     },
   ),
@@ -587,7 +587,7 @@ let verificationAttempt = await invokeAgent(
   ),
   {
     label: "verification",
-    agentType: "claude-of-alexandria:deep-study-verification",
+    agentType: "coa:deep-study-verification",
     schema: verificationSchema,
   },
 );
@@ -613,7 +613,7 @@ if (verification.status === "needs_repair") {
     ),
     {
       label: "repair",
-      agentType: "claude-of-alexandria:deep-study-analysis",
+      agentType: "coa:deep-study-analysis",
       schema: analysisSchema,
     },
   );
@@ -637,7 +637,7 @@ if (verification.status === "needs_repair") {
     ),
     {
       label: "reverify",
-      agentType: "claude-of-alexandria:deep-study-verification",
+      agentType: "coa:deep-study-verification",
       schema: verificationSchema,
     },
   );
@@ -660,7 +660,7 @@ const synthesisAttempt = await invokeAgent(
   ),
   {
     label: "synthesis",
-    agentType: "claude-of-alexandria:deep-study-synthesis",
+    agentType: "coa:deep-study-synthesis",
     schema: finalReportSchema,
   },
 );

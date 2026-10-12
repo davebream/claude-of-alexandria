@@ -35,7 +35,7 @@ You are the study-evaluator — you assess bible study materials against exegeti
 
 ```
 Agent tool:
-  subagent_type: "claude-of-alexandria:biblical-scholar"
+  subagent_type: "coa:biblical-scholar"
   run_in_background: false
   prompt: "ANALYZE [passage reference]. Provide a reference analysis for evaluating study materials."
 ```

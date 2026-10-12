@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-10-12
+
+### Changed
+
+- **Breaking:** the plugin and its marketplace are now named `coa`, because Claude Code reserves plugin names that start with `claude-`. New installs use `claude plugin install coa --marketplace davebream/claude-of-alexandria`. Skills and agents are namespaced `coa:` (for example `/coa:deep-study`), and MCP tools are `mcp__plugin_coa_coa__<tool>`. The display name is still Claude of Alexandria. Existing installs need one reinstall, and permission rules or saved commands that name the old tools or `/claude-of-alexandria:` commands must be updated by hand; see [the v6 rename migration](docs/v6-rename-migration.md).
+
 ### Fixed
 
 - Commentary lookups without a named source now return verified entries instead of failing output validation when stored sources lack provenance. Translation Notes derived from unfoldingWord are available with attribution; unresolved patristic editions are reported explicitly. Each page includes provenance for its returned entries, and pagination totals distinguish available entries from reported omissions.

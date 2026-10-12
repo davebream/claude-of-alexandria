@@ -3,8 +3,8 @@ name: CI
 on:
   push:
     branches: [main]
+  # Every pull request, including stacked ones whose base is another branch.
   pull_request:
-    branches: [main]
 
 concurrency:
   group: ci-${{ github.ref }}

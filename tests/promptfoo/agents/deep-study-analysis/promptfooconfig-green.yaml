@@ -2,7 +2,7 @@ description: "deep-study analysis adapter — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:deep-study-analysis
+      agent_name: coa:deep-study-analysis
 prompts:
   - "{{prompt}}"
 tests:

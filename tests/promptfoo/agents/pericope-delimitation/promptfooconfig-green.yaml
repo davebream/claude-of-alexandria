@@ -2,7 +2,7 @@ description: "pericope-delimitation agent — GREEN direct-agent gate"
 providers:
   - id: file://../../providers/sdk-direct-agent.mjs
     config:
-      agent_name: claude-of-alexandria:pericope-delimitation
+      agent_name: coa:pericope-delimitation
 prompts:
   - "{{prompt}}"
 tests:

@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "claude-of-alexandria-mcp": {
+    "coa": {
       "type": "http",
       "url": "https://coa.davebream.com/mcp"
     }

@@ -196,12 +196,12 @@ test("runs the fixed graph with at most two concurrent and eight total calls", a
   assert.deepEqual(
     run.options.map(({ label, agentType }) => [label, agentType]),
     [
-      ["retrieval", "claude-of-alexandria:deep-study-retrieval"],
-      ["boundary", "claude-of-alexandria:deep-study-analysis"],
-      ["discourse", "claude-of-alexandria:deep-study-analysis"],
-      ["interpretation", "claude-of-alexandria:deep-study-analysis"],
-      ["verification", "claude-of-alexandria:deep-study-verification"],
-      ["synthesis", "claude-of-alexandria:deep-study-synthesis"],
+      ["retrieval", "coa:deep-study-retrieval"],
+      ["boundary", "coa:deep-study-analysis"],
+      ["discourse", "coa:deep-study-analysis"],
+      ["interpretation", "coa:deep-study-analysis"],
+      ["verification", "coa:deep-study-verification"],
+      ["synthesis", "coa:deep-study-synthesis"],
     ],
   );
   assert.equal(run.result.status, "complete");
@@ -234,7 +234,7 @@ test("leaf agent types enforce workflow tool boundaries", async () => {
   const analysisTools = await agentTools("deep-study-analysis");
   const synthesisTools = await agentTools("deep-study-synthesis");
   const readOnlyMcpPrefix =
-    "mcp__plugin_claude-of-alexandria_claude-of-alexandria-mcp__";
+    "mcp__plugin_coa_coa__";
 
   assert.ok(retrievalTools.length > 0);
   assert.ok(verificationTools.length > 0);

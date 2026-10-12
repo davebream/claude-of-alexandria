@@ -10,7 +10,7 @@ Read these instructions completely before touching a single scroll. If you belie
 
 Claude of Alexandria is a public, GPL-3.0 project with two halves that ship together:
 
-1. **The plugin** (`plugins/claude-of-alexandria/`) — skills and agents for rigorous biblical study, developed with Test-Driven Development and validated with promptfoo evals.
+1. **The plugin** (`plugins/claude-of-alexandria/`, installed as `coa`) — skills, agents, and a workflow for rigorous biblical study, developed with Test-Driven Development and validated with promptfoo evals. Its machine name is `coa`; the display name stays "Claude of Alexandria", because Claude Code reserves plugin names starting with `claude-` (see `docs/adr/0004-rename-off-reserved-claude-prefix.md`).
 2. **The MCP server** (`server/`) — a Cloudflare Worker backed by a D1 database, serving the biblical data the skills query (text, lexicon, morphology, cross-references, confessions, and more). Deployed at `https://coa.davebream.com/mcp`.
 
 **The principle you will internalize**: Skills are structured documentation that prevents agent failure patterns. Every skill MUST have test evidence proving it prevents documented failures.
@@ -216,7 +216,7 @@ This project has two, clearly separated paths for getting data into D1. Which on
 
 **A reseed can silently wipe a backfill.** Do not run `seed-d1.sh` against production. Use the target-specific manual backfill command after any recovery operation.
 
-**A new tool is not done until it is wired.** `scripts/validate-skill-tools.sh` checks that the tools a skill declares actually exist on the server, and CI runs it on every PR.
+**A new tool is not done until it is wired.** `scripts/validate-skill-tools.sh` checks that the tools a skill declares actually exist on the server. It runs inside `npm run validate:model-free`, so CI runs it on every PR.
 
 ---
 
@@ -226,13 +226,18 @@ Every PR runs `.github/workflows/ci.yml`:
 
 | Job | What it enforces |
 | --- | --- |
+| `install` | `server && npm ci` |
 | `typecheck` | `server && npm run typecheck` |
-| `test` | `server && npm test` (vitest) |
-| `audit` | server production dependency audit |
-| `validate-plugin` | version consistency, skill-tool wiring, agent spawn blocks, README counts, LICENSE and CHANGELOG present |
+| `test` | `server && npm test` (vitest) and the NOTICE check |
+| `python-etl-tests` | ETL fixture suites under `server/scripts/` |
+| `verify-masoretic-corpus` | Masoretic corpus goldens and drift check |
+| `audit` | server production dependency audit (critical) |
+| `validate-plugin` | `npm run validate:model-free` with the pinned Claude Code CLI: node tests, native `claude plugin validate --strict` on the marketplace and every plugin it lists, definitions and tool wiring, eval coverage, retired-identifier guard, version consistency, README counts, agent spawn blocks, skill-tool wiring; then LICENSE and CHANGELOG present |
 | `secret-scan` | Betterleaks over the PR diff (full history on push) |
 
-Lefthook runs a subset before each commit (`lefthook.yml`): version sync, agent spawn blocks, and Betterleaks. If a gate fails, fix the cause. Do not bypass the hook.
+Required checks on `main`: Install Dependencies, TypeScript Typecheck, Server Tests, Dependency Audit, Plugin Validation, Secret Scanning.
+
+Lefthook runs a subset before each commit (`lefthook.yml`): version sync, agent spawn blocks, the NOTICE check, and Betterleaks. If a gate fails, fix the cause. Do not bypass the hook.
 
 The validation scripts live in `scripts/` and run standalone — `./scripts/validate-versions.sh`, `./scripts/validate-skill-tools.sh`, `./scripts/validate-readme-counts.sh`, `./scripts/validate-agent-spawns.sh`. Run them before you push rather than discovering the failure in CI.
 
@@ -260,7 +265,7 @@ Follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Entries go unde
 - One entry per user-facing change. Internal refactors and test additions do not need entries.
 - Write for users, not for developers. "Added a liturgical calendar lookup so skills can resolve a date to its lectionary readings" — not "feat(mcp): liturgical_lookup".
 - Version heading format: `## [X.Y.Z] - YYYY-MM-DD`
-- The version appears in `.claude-plugin/marketplace.json` and `plugins/claude-of-alexandria/.claude-plugin/plugin.json`. Both must match, and `validate-versions.sh` will tell you when they do not. Bump both and tag git in the same release commit.
+- The version appears in `.claude-plugin/marketplace.json`, `plugins/claude-of-alexandria/.claude-plugin/plugin.json`, and `server/package.json`. All three must match, and `validate-versions.sh` will tell you when they do not. Bump all three and tag git in the same release commit.
 
 ---
 
@@ -277,10 +282,11 @@ claude-of-alexandria/
 │   └── claude-of-alexandria/     # The plugin (the distributed artifact)
 │       ├── .claude-plugin/
 │       │   └── plugin.json       # Plugin manifest
-│       ├── .mcp.json             # Points the plugin at the hosted MCP server
+│       ├── .mcp.json             # Points the plugin at the hosted MCP server (key: coa)
 │       ├── agents/               # Sub-agent collection
 │       │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
-│       ├── servers/              # MCP server packaging for the plugin
+│       ├── schemas/              # JSON schemas for the deep-study workflow
+│       ├── workflows/            # Generated workflow scripts (deep-study.js)
 │       ├── skills/               # The skill collection
 │       │   └── skill-name/
 │       │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)

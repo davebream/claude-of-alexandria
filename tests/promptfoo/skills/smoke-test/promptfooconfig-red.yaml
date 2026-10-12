@@ -6,7 +6,7 @@ prompts:
 tests:
   - description: "RED: bare model cannot load the smoke skill"
     vars:
-      prompt: "Run the /claude-of-alexandria:smoke-test skill."
+      prompt: "Run the /coa:smoke-test skill."
     assert:
       - type: not-icontains
         value: "SMOKE_TEST_AGENT_OK"
