@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- An optional companion plugin, Claude of Alexandria Study Desk (`coa-desk`), for the terminal and the desktop app. It adds a line under each answer naming the data lookups that grounded it, and warns when a skill answered without any. It also adds `/evidence` to list the session's lookups, `/passage Rom 8:1-4 BSB,KJV` to read a passage in parallel translations beside the conversation, and book-name autocomplete. It keeps `coa` agents and the `deep-study` workflow off Haiku, which the project does not support. Install it with `claude plugin install coa-desk --marketplace davebream/claude-of-alexandria`.
+
 ## [6.0.0] - 2026-10-12
 
 ### Changed
