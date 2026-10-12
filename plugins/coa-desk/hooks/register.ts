@@ -5,7 +5,7 @@
 //   when a coa skill answered without any.
 // - /evidence lists the session's lookups; /passage <ref> shows parallel text.
 // - Book names autocomplete in the prompt.
-// - coa agents never run on Haiku, which the project does not support.
+// The guard that keeps coa agents off Haiku lives in coa itself (docs/adr/0006).
 
 import { BOOKS } from './books'
 import { groundingWarning } from './grounding'
@@ -16,7 +16,6 @@ import { datasetIdsOf } from './provenance'
 import { parseReference, suggestBooks, USAGE } from './reference'
 
 const COA_TOOL = /^mcp__plugin_coa_coa__/
-const HAIKU = /haiku/i
 const EVIDENCE_PANE = 'coa-evidence'
 const PASSAGE_PANE = 'coa-passage'
 
@@ -147,25 +146,4 @@ export function register(on) {
     if (suggestions.length === 0) return next(e)
     return { suggestions }
   })
-
-  // Haiku is not supported for coa work (docs/adr/0002, 2026-09-30 amendment).
-  // An Agent-tool spawn can be moved to Sonnet; a workflow agent's model cannot
-  // be changed from a hook, so a Haiku workflow override is refused instead.
-  on('agent.spawn', { subagentType: /^coa:/ }, async ($, e, next) => {
-    if (e.workflow) {
-      const forced = await $.env.get('CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL')
-      if (HAIKU.test(String(forced ?? '')) || HAIKU.test(String(e.model ?? ''))) {
-        return {
-          deny: `coa workflow agents do not run on Haiku. Unset CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL or set it to sonnet or opus, then run the workflow again.`,
-        }
-      }
-      return next(e)
-    }
-    if (HAIKU.test(String(e.model ?? ''))) {
-      await $.ui.log(`${e.subagentType} asked for ${e.model}; coa agents run on Sonnet instead.`)
-      return next({ ...e, model: 'sonnet' })
-    }
-    return next(e)
-  // Fail open: a fault in this guard must never stop coa agents from starting.
-  }).catch(async ($, e, next) => next(e))
 }

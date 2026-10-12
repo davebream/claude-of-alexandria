@@ -16,10 +16,27 @@ The deep-study request accepts optional `model: "sonnet" | "opus"`; omission mea
 model applies to every stage, including repair and re-verification. For ordinary
 agent calls, use the explicit `model: opus` override when escalation is justified.
 
-This policy governs plugin-controlled selections. A host's forced model settings
-or organizational substitutions can override plugin defaults; the plugin does not
-rewrite them. Evaluation traces reject observed Haiku execution rather than
+This policy governs plugin-controlled selections. The plugin also ships one small
+guard (`hooks/guard.ts`, Claude Code 2.1.287 or later) for the two ways a session
+could still put its agents on Haiku:
+
+- a `coa:` agent spawned with `model: haiku` runs on Sonnet instead;
+- `/coa:deep-study` refuses to start while `CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL`
+  names Haiku, and says to unset it or set it to `sonnet` or `opus`.
+
+Other forced model settings or organizational substitutions can still override
+plugin defaults. Evaluation traces reject observed Haiku execution rather than
 certifying such a run. Installed copies receive changes through plugin updates.
+
+### What runs on your machine
+
+The guard is the plugin's only code. It runs inside Claude Code as a
+[mod](https://code.claude.com/docs/en/plugins/mods/overview), reads one
+environment variable (`CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL`), and touches no
+files, network or processes. `claude plugin validate plugins/claude-of-alexandria`
+lists exactly what it does. Where Anthropic or an organisation switches mods off,
+the guard does not load and the skills work as before. Optional extras that run
+more code live in the separate `coa-desk` plugin.
 
 ## Architecture
 

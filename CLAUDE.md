@@ -10,7 +10,7 @@ Read these instructions completely before touching a single scroll. If you belie
 
 Claude of Alexandria is a public, GPL-3.0 project with two halves that ship together:
 
-1. **The plugin** (`plugins/claude-of-alexandria/`, installed as `coa`) — skills, agents, and a workflow for rigorous biblical study, developed with Test-Driven Development and validated with promptfoo evals. Its machine name is `coa`; the display name stays "Claude of Alexandria", because Claude Code reserves plugin names starting with `claude-` (see `docs/adr/0004-rename-off-reserved-claude-prefix.md`).
+1. **The plugin** (`plugins/claude-of-alexandria/`, installed as `coa`) — skills, agents, and a workflow for rigorous biblical study, developed with Test-Driven Development and validated with promptfoo evals. Its machine name is `coa`; the display name stays "Claude of Alexandria", because Claude Code reserves plugin names starting with `claude-` (see `docs/adr/0004-rename-off-reserved-claude-prefix.md`). Its only code is a small model guard in `hooks/guard.ts` (`docs/adr/0006-model-guard-ships-in-coa.md`); `tests/validation/core-hooks.test.mjs` keeps it that way, so anything else that needs code goes in the opt-in `plugins/coa-desk/`.
 2. **The MCP server** (`server/`) — a Cloudflare Worker backed by a D1 database, serving the biblical data the skills query (text, lexicon, morphology, cross-references, confessions, and more). Deployed at `https://coa.davebream.com/mcp`.
 
 **The principle you will internalize**: Skills are structured documentation that prevents agent failure patterns. Every skill MUST have test evidence proving it prevents documented failures.
@@ -130,7 +130,7 @@ Agents follow the same structure under `tests/promptfoo/agents/{agent-name}/`.
 
 **Do not create additional test files** beyond these three canonical configs. No `promptfooconfig-edge-cases.yaml`. No `extra-scenarios.yaml`. If it does not fit RED, GREEN, or EXTENDED, reconsider whether it belongs.
 
-This rule governs promptfoo evals of skills and agents. Model-free code tests are a different kind of test and are allowed: `tests/validation/`, `tests/workflows/`, `tests/desk/` (Node), and `plugins/coa-desk/tests/*.test.ts`, which `claude plugin test` runs against the companion mod. A mod change that alters how an agent behaves still needs RED evidence first (see `docs/adr/0005-companion-mods-plugin.md`).
+This rule governs promptfoo evals of skills and agents. Model-free code tests are a different kind of test and are allowed: `tests/validation/`, `tests/workflows/`, `tests/desk/` (Node), and the `*.test.ts` files in `plugins/claude-of-alexandria/tests/` and `plugins/coa-desk/tests/`, which `claude plugin test` runs against each plugin's hooks. A mod change that alters how an agent behaves still needs RED evidence first (see `docs/adr/0005-companion-mods-plugin.md`).
 
 **Rationale**: Consistency across all skills. A known structure. GREEN stays cheap enough for CI (one llm-rubric per failure mode). EXTENDED runs on-demand for advanced validation.
 
@@ -289,6 +289,8 @@ claude-of-alexandria/
 │   │   │   └── agent-name.md     # Agent file (YAML frontmatter + prompt)
 │   │   ├── schemas/              # JSON schemas for the deep-study workflow
 │   │   ├── workflows/            # Generated workflow scripts (deep-study.js)
+│   │   ├── hooks/                # hooks.json + guard.ts: the model guard, the plugin's only code (ADR 0006)
+│   │   ├── tests/                # guard.test.ts for `claude plugin test`
 │   │   ├── skills/               # The skill collection
 │   │   │   └── skill-name/
 │   │   │       ├── SKILL.md      # Main skill file (YAML frontmatter + content)
@@ -341,6 +343,7 @@ Every file has a place. Every place has a file. If you find yourself creating a 
 | Database migrations | `server/migrations/` (numbered, idempotent) |
 | Skill test configs | `tests/promptfoo/skills/skill-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
 | Agent test configs | `tests/promptfoo/agents/agent-name/{promptfooconfig-red,promptfooconfig-green,promptfooconfig-extended}.yaml` |
+| Model guard and its tests | `plugins/claude-of-alexandria/hooks/guard.ts`, `plugins/claude-of-alexandria/tests/guard.test.ts` |
 | Companion mod code and hook tests | `plugins/coa-desk/hooks/`, `plugins/coa-desk/tests/*.test.ts` |
 | Companion mod helper tests (Node) | `tests/desk/*.test.mjs` |
 
